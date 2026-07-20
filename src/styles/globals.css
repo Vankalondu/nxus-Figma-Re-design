@@ -1,0 +1,456 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ── Base ── */
+  --font-size: 16px;
+  --background: #d2e7fa;
+  --foreground: #061b2e;
+
+  /* ── Card & Popover surfaces ── */
+  --card: #f4faff;
+  --card-foreground: #061b2e;
+  --popover: #f4faff;
+  --popover-foreground: #061b2e;
+
+  /* ── Brand tokens — Athletic Blue as primary ── */
+  --primary: #1e88e5;
+  --primary-foreground: #f4faff;
+
+  /* ── Secondary & muted ── */
+  --secondary: #e8f3fc;
+  --secondary-foreground: #061b2e;
+  --muted: #e8f3fc;
+  --muted-foreground: #304151;
+
+  /* ── Accent ── */
+  --accent: #d2e7fa;
+  --accent-foreground: #061b2e;
+
+  /* ── Destructive ── */
+  --destructive: #E05C4B;
+  --destructive-foreground: #f4faff;
+
+  /* ── Borders & inputs ── */
+  --border: #b4d7f6;
+  --input: transparent;
+  --input-background: #f0f7fd;
+  --switch-background: #b4d7f6;
+
+  /* ── Ring — focus state ── */
+  --ring: #1e88e5;
+
+  /* ── Font weights ── */
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* ── Charts ── */
+  --chart-1: #1e88e5;
+  --chart-2: #061b2e;
+  --chart-3: #E8A838;
+  --chart-4: #8B5CF6;
+  --chart-5: #E05C4B;
+
+  /* ── Border radius ── */
+  --radius: 0.75rem;
+
+  /* ── Sidebar ── */
+  --sidebar: #f4faff;
+  --sidebar-foreground: #061b2e;
+  --sidebar-primary: #1e88e5;
+  --sidebar-primary-foreground: #f4faff;
+  --sidebar-accent: #e9f3fd;
+  --sidebar-accent-foreground: #061b2e;
+  --sidebar-border: #b4d7f6;
+  --sidebar-ring: #1e88e5;
+  --sidebar-muted: #596774;
+
+  /* ── Spacing system — multiples of 4 ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ── Qaza SVG palette — Primary Blue scale ── */
+  --blue-50: #d2e7fa;
+  --blue-100: #b4d7f6;
+  --blue-200: #8fc4f2;
+  --blue-300: #69b0ee;
+  --blue-400: #449ce9;
+  --blue-500: #1e88e5;
+  --blue-600: #1971bf;
+  --blue-700: #145b99;
+  --blue-800: #0f4473;
+  --blue-900: #0a2d4c;
+  --blue-950: #061b2e;
+
+  /* ── Qaza SVG palette — Dark/Navy scale (for text in light mode) ── */
+  --navy-50: #cdd1d5;
+  --navy-100: #acb3b9;
+  --navy-200: #838d97;
+  --navy-300: #596774;
+  --navy-400: #304151;
+  --navy-500: #061b2e;
+  --navy-600: #051726;
+  --navy-700: #04121f;
+  --navy-800: #030e17;
+  --navy-900: #02090f;
+  --navy-950: #010509;
+
+  /* ── Qaza SVG palette — Light scale (for text in dark mode) ── */
+  --light-50: #f6fafe;
+  --light-100: #f0f7fd;
+  --light-200: #e9f3fd;
+  --light-300: #e1effc;
+  --light-400: #daebfb;
+  --light-500: #d2e7fa;
+  --light-600: #afc1d0;
+  --light-700: #8c9aa7;
+  --light-800: #69747d;
+  --light-900: #464d53;
+  --light-950: #2a2e32;
+
+  /* ── Named semantic tokens ── */
+  --ember: #1e88e5;
+  --ember-light: #d2e7fa;
+  --ember-hover: #1565c0;
+  --midnight: #061b2e;
+  --chalk: #d2e7fa;
+  --scout-green: #22C55E;
+  --scout-red: #E05C4B;
+  --scout-amber: #E8A838;
+  --midtone: #b4d7f6;
+  --canvas: #d2e7fa;
+
+  /* ── Elevation shadows (light mode: dark navy shadows) ── */
+  --shadow-xs: 0 1px 2px rgba(6, 27, 46, 0.05);
+  --shadow-sm: 0 2px 8px rgba(6, 27, 46, 0.06);
+  --shadow-md: 0 4px 16px rgba(6, 27, 46, 0.08);
+  --shadow-lg: 0 8px 30px rgba(6, 27, 46, 0.08);
+  --shadow-xl: 0 12px 40px rgba(6, 27, 46, 0.10);
+  --shadow-2xl: 0 20px 50px rgba(6, 27, 46, 0.14);
+  --shadow-sidebar: 4px 0 24px rgba(6, 27, 46, 0.08);
+  --shadow-bottom-nav: 0 -4px 16px rgba(6, 27, 46, 0.08);
+
+  /* ── Responsive type ramp — base 16 × ratio 1.2, snapped (2px < 24, 4px ≥ 24). ──
+     Values here are MOBILE (base). @media md/lg below step headings up one notch
+     per tier — these numbers mirror the Figma `Responsive` collection 1:1.
+     Body and smaller (16/14/12/10) are FLOORED: identical on every tier. */
+  --fs-h1: 32px;      --lh-h1: 40px;
+  --fs-h2: 28px;      --lh-h2: 32px;
+  --fs-h3: 24px;      --lh-h3: 28px;
+  --fs-h4: 20px;      --lh-h4: 24px;
+  --fs-h5: 20px;      --lh-h5: 24px;
+  --fs-h6: 20px;      --lh-h6: 24px;
+  --fs-body-lg: 20px; --lh-body-lg: 24px;
+  --fs-body: 16px;    --lh-body: 20px;
+  --fs-body-sm: 14px; --lh-body-sm: 16px;
+  --fs-caption: 12px; --lh-caption: 14px;
+  --fs-micro: 10px;   --lh-micro: 12px;
+
+  /* ── Jumper spacing — steps smaller on smaller screens (values PROVISIONAL). ──
+     Page rhythm only; atomic --space-1..24 above stay fixed (component internals). */
+  --pad-page: 12px;
+  --gap-section: 16px;
+  --gap-grid: 8px;
+  --pad-card: 12px;
+  --gap-stack: 8px;
+}
+
+/* ── Tablet (768–1023): headings step up one notch; jumper gaps widen. ── */
+@media (min-width: 768px) {
+  :root {
+    --fs-h1: 40px;      --lh-h1: 48px;
+    --fs-h2: 32px;      --lh-h2: 40px;
+    --fs-h3: 28px;      --lh-h3: 32px;
+    --fs-h4: 24px;      --lh-h4: 28px;
+    --fs-h5: 20px;      --lh-h5: 24px;
+
+    --pad-page: 16px;
+    --gap-section: 28px;
+    --gap-grid: 12px;
+    --pad-card: 16px;
+    --gap-stack: 12px;
+  }
+}
+
+/* ── Desktop (≥1024): headings at full scale; jumper gaps widest. ── */
+@media (min-width: 1024px) {
+  :root {
+    --fs-h1: 48px;      --lh-h1: 56px;
+    --fs-h2: 40px;      --lh-h2: 48px;
+    --fs-h3: 32px;      --lh-h3: 40px;
+    --fs-h4: 28px;      --lh-h4: 32px;
+    --fs-h5: 24px;      --lh-h5: 28px;
+
+    --pad-page: 24px;
+    --gap-section: 40px;
+    --gap-grid: 16px;
+    --pad-card: 20px;
+    --gap-stack: 12px;
+  }
+}
+
+.dark {
+  /* ── Base ── */
+  --background: #061b2e;
+  --foreground: #d2e7fa;
+
+  /* ── Card & Popover surfaces ── */
+  --card: #0a2d4c;
+  --card-foreground: #d2e7fa;
+  --popover: #0a2d4c;
+  --popover-foreground: #d2e7fa;
+
+  /* ── Brand tokens ── */
+  --primary: #449ce9;
+  --primary-foreground: #061b2e;
+
+  /* ── Secondary & muted ── */
+  --secondary: #0f4473;
+  --secondary-foreground: #d2e7fa;
+  --muted: #0f4473;
+  --muted-foreground: #afc1d0;
+
+  /* ── Accent ── */
+  --accent: #0f4473;
+  --accent-foreground: #d2e7fa;
+
+  /* ── Destructive ── */
+  --destructive: #E05C4B;
+  --destructive-foreground: #f4faff;
+
+  /* ── Borders & inputs ── */
+  --border: #145b99;
+  --input: #0f4473;
+  --input-background: #0f4473;
+  --switch-background: #1971bf;
+
+  /* ── Ring ── */
+  --ring: #449ce9;
+
+  /* ── Font weights ── */
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* ── Charts ── */
+  --chart-1: #449ce9;
+  --chart-2: #d2e7fa;
+  --chart-3: #E8A838;
+  --chart-4: #8B5CF6;
+  --chart-5: #E05C4B;
+
+  /* ── Sidebar ── */
+  --sidebar: #030e17;
+  --sidebar-foreground: #d2e7fa;
+  --sidebar-primary: #449ce9;
+  --sidebar-primary-foreground: #061b2e;
+  --sidebar-accent: #0f4473;
+  --sidebar-accent-foreground: #d2e7fa;
+  --sidebar-border: #145b99;
+  --sidebar-ring: #449ce9;
+  --sidebar-muted: #8c9aa7;
+
+  /* ── Elevation shadows (dark mode: deeper blacks) ── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.20);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.30);
+  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --shadow-2xl: 0 20px 50px rgba(0, 0, 0, 0.40);
+  --shadow-sidebar: 4px 0 24px rgba(0, 0, 0, 0.30);
+  --shadow-bottom-nav: 0 -4px 16px rgba(0, 0, 0, 0.25);
+
+  /* ── Named semantic tokens — dark context ── */
+  --ember: #449ce9;
+  --ember-light: #0f4473;
+  --ember-hover: #69b0ee;
+  --midnight: #061b2e;
+  --chalk: #d2e7fa;
+  --scout-green: #22C55E;
+  --scout-red: #E05C4B;
+  --scout-amber: #E8A838;
+  --midtone: #1971bf;
+  --canvas: #061b2e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-primary-foreground: var(--primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-midnight: var(--midnight);
+  --color-chalk: var(--chalk);
+  --color-canvas: var(--canvas);
+}
+
+/* ── Base layer ── */
+* {
+  border-color: var(--border);
+  outline-color: var(--ring);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--font-size);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography utilities ── */
+.font-heading {
+  font-family: 'Figtree', sans-serif;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Two-font system: numbers use Plus Jakarta with tabular-nums for column alignment (JetBrains Mono retired). */
+.font-mono {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Responsive type ramp utilities ──
+   Size + line-height only — pair with .font-heading/.font-body + a weight class.
+   Each reads a token that steps per breakpoint (see :root + @media above), so a
+   single class is responsive across mobile/tablet/desktop with no call-site variants. */
+.text-h1      { font-size: var(--fs-h1);      line-height: var(--lh-h1); }
+.text-h2      { font-size: var(--fs-h2);      line-height: var(--lh-h2); }
+.text-h3      { font-size: var(--fs-h3);      line-height: var(--lh-h3); }
+.text-h4      { font-size: var(--fs-h4);      line-height: var(--lh-h4); }
+.text-h5      { font-size: var(--fs-h5);      line-height: var(--lh-h5); }
+.text-h6      { font-size: var(--fs-h6);      line-height: var(--lh-h6); }
+.text-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); }
+.text-body    { font-size: var(--fs-body);    line-height: var(--lh-body); }
+.text-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body-sm); }
+.text-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.text-micro   { font-size: var(--fs-micro);   line-height: var(--lh-micro); }
+
+/* ── Responsive data-table density (TABLE-LOCAL exception to the type floor) ──
+   Add `rtable` to a <table>: cell padding tightens per tier so scouts keep a real
+   spreadsheet on small screens (denser rows, existing horizontal-scroll + frozen
+   first column stay intact). Column widths + sticky offsets are handled per-table.
+   Values below are MOBILE (tightest); desktop matches the current px-2 py-3. */
+:root {
+  --tbl-px: 4px;
+  --tbl-py: 6px;
+}
+@media (min-width: 768px) { :root { --tbl-px: 6px; --tbl-py: 9px; } }
+@media (min-width: 1024px) { :root { --tbl-px: 8px; --tbl-py: 12px; } }
+.rtable td, .rtable th {
+  padding-left: var(--tbl-px);
+  padding-right: var(--tbl-px);
+  padding-top: var(--tbl-py);
+  padding-bottom: var(--tbl-py);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+  border: 2px solid var(--background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Focus ring ── */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ── Animations ── */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.15s ease-out forwards;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.animate-count-up {
+  animation: count-up 0.6s ease-out forwards;
+}

@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+*.local
+
+# Cloudflare Pages / Wrangler
+.wrangler/
+
+# Distributable archives
+*.zip
+
+# Figma Make backups
+*.figma-backup
+
+# One-off scratch scripts / stray files (kept on disk, excluded from repo)
+check_divs.js
+check_divs2.js
+fix_div.js
+runScript.js
+src/test.txt
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Playwright (added in Phase 3)
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
