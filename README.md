@@ -4,7 +4,7 @@ The NXUS (formerly Qaza) football scouting terminal. A React single-page app
 exported from Figma Make, covering role-based scout dashboards, player and match
 management, reporting, and an admin interface.
 
-Original design: https://www.figma.com/design/car8FJe9v4Y0tUpvTvtsKi/Latest-Qaza-Version
+Original design: https://qaza-2so.pages.dev/
 
 ## Tech stack
 
