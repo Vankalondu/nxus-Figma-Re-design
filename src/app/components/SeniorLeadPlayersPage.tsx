@@ -374,6 +374,27 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
   );
 };
 
+// Inline action icons — every action shown as its own round button (no dropdown)
+const ActionButtons = ({ items }: { items: ActionItem[] }) => {
+  if (!items.length) return null;
+  return (
+    <div className="flex items-center justify-center gap-1">
+      {items.map((item, i) => (
+        <button key={i} onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
+          className={`w-7 h-7 rounded-full flex items-center justify-center transition-all border shrink-0 ${
+            item.danger
+              ? 'bg-[#E05C4B]/10 text-[#E05C4B] hover:bg-[#E05C4B] hover:text-white border-[#E05C4B]/20'
+              : item.label === 'Restore'
+                ? 'bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500 hover:text-white border-emerald-500/20'
+                : 'bg-accent text-foreground hover:bg-primary hover:text-primary-foreground border-border'
+          }`}>
+          {item.icon}
+        </button>
+      ))}
+    </div>
+  );
+};
+
 // ─── Notes + Tasks Popup ──────────────────────────────────────────────────────────
 const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; playerName: string; onClose: () => void; }) => {
   const [notes, setNotes] = useState<PlayerNote[]>([
@@ -651,6 +672,9 @@ const PlayerTable = ({
 
   const TOTAL_COLS = (currentTab === 'long-list' ? 14 : 16) + extraCols.length;
   const showDirectLadder = loggedInRole === 'Senior Scout' || loggedInRole === 'Lead Scout';
+  // Action column width depends on how many inline action buttons the tab shows (DB=1, Long=2).
+  const actWCls = currentTab === 'long-list' ? 'w-[76px]' : 'w-[44px]';
+  const idLeftCls = currentTab === 'long-list' ? 'left-[76px]' : 'left-[44px]';
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
   const [showTop, setShowTop] = useState(false);
@@ -713,9 +737,9 @@ const PlayerTable = ({
 
             {/* ── COLUMN SUB-HEADER ROW — light grey background, dark text ── */}
             <tr className="bg-card border-b-2 border-border">
-              <th className="sticky left-0 z-40 bg-card px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"></th>
+              <th className={`sticky left-0 z-40 bg-card px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center ${actWCls}`}></th>
               {/* Player — vertical divider after (end of Player ID group) */}
-              <th className={`sticky z-40 bg-card pl-3 pr-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[200px] border-r-2 border-border left-[32px]`}><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className={`sticky z-40 bg-card pl-3 pr-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[200px] border-r-2 border-border ${idLeftCls}`}><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[92px]">DOB</th>
               <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[56px]">POS</th>
               <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[120px] border-r-2 border-border">Team</th>
@@ -784,17 +808,17 @@ const PlayerTable = ({
                       <tr key={player.id} id={`row-${player.id}`}
                         className={`border-b border-border last:border-0 group transition-colors ${isArchived ? 'opacity-50' : isRaised ? 'border-l-4 border-l-primary hover:bg-accent' : 'hover:bg-accent'}${highlightId === player.id ? ' ring-2 ring-primary ring-inset bg-primary/5' : ''}`}>
                         {/* Action — icon forward button (all list tabs) */}
-                        <td className="sticky left-0 z-20 bg-card group-hover:bg-accent px-2 py-2 w-[32px]">
-                          <ActionDropdown playerId={player.id} items={actionItems} openId={openDropdownId} setOpenId={setOpenDropdownId} primaryIcon={<ArrowRight size={13} />} />
+                        <td className={`sticky left-0 z-20 bg-card group-hover:bg-accent px-2 py-2 ${actWCls}`}>
+                          <ActionButtons items={actionItems} />
                         </td>
 
                         {/* Identity — vertical divider after (Player ID group end) */}
-                        <td className={`sticky z-20 bg-card group-hover:bg-accent pl-3 pr-2 py-2 border-r-2 border-border left-[32px]`}>
+                        <td className={`sticky z-20 bg-card group-hover:bg-accent pl-3 pr-2 py-2 border-r-2 border-border ${idLeftCls}`}>
                           <div className="flex items-center gap-2 min-w-[190px]">
                             <div className="w-8 h-8 rounded-xl bg-card text-foreground flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
                               <div className="flex items-center gap-1">
-                                <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-foreground text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
+                                <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                                 {isArchived && <span className="bg-muted-foreground/15 text-muted-foreground font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
                               <div className="flex items-center gap-2 mt-0.5">
@@ -989,9 +1013,9 @@ const TargetSuperTable = ({
               {/* Rank — first sticky col */}
               <th className="sticky left-0 z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Rnk" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Action — second sticky col */}
-              <th className="sticky left-[36px] z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[52px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[36px] z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Player */}
-              <th className="sticky left-[88px] z-40 bg-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[180px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[112px] z-40 bg-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[180px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* DOB / POS / Team */}
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[80px] border-l border-border">DOB</th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[48px]">POS</th>
@@ -1071,15 +1095,15 @@ const TargetSuperTable = ({
                           </select>
                         </td>
                         {/* Action — SECOND column */}
-                        <td className="sticky left-[36px] z-20 bg-card group-hover:bg-accent px-1 py-2 w-[52px] text-center">
-                          <ActionDropdown playerId={player.id} items={tItems} openId={openDropdownId} setOpenId={setOpenDropdownId} primaryIcon={<ArrowLeft size={13} />} />
+                        <td className="sticky left-[36px] z-20 bg-card group-hover:bg-accent px-1 py-2 w-[76px] text-center">
+                          <ActionButtons items={tItems} />
                         </td>
                         {/* Player */}
-                        <td className="sticky left-[88px] z-20 bg-card group-hover:bg-accent pl-2 pr-1 py-2 border-r-2 border-border">
+                        <td className="sticky left-[112px] z-20 bg-card group-hover:bg-accent pl-2 pr-1 py-2 border-r-2 border-border">
                           <div className="flex items-center gap-2 min-w-[160px]">
                             <div className="w-7 h-7 rounded-lg bg-accent text-foreground flex items-center justify-center font-body font-bold text-[12px] shrink-0 border border-border">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
-                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-foreground text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
+                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1 mt-0.5">
                                 <span className="font-body text-[12px] text-muted-foreground">{player.age}</span>
                                 <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-[#E05C4B]'}`} />
@@ -1310,8 +1334,8 @@ const ShortListTable = ({
             </tr>
             {/* Sub-header row */}
             <tr className="bg-card border-b-2 border-border">
-              <th className="sticky left-0 z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[40px]"></th>
-              <th className="sticky left-[40px] z-40 bg-card px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[180px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-0 z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[108px]"></th>
+              <th className="sticky left-[108px] z-40 bg-card px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[180px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[80px]"><EditableColHeaderLight label="DOB" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="Pos" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[110px]"><EditableColHeaderLight label="Team" onRename={()=>{}} onRemove={()=>{}} /></th>
@@ -1368,16 +1392,16 @@ const ShortListTable = ({
                       <tr key={player.id} id={`row-${player.id}`}
                         className={`border-b border-border last:border-0 group transition-colors ${isArchived ? 'opacity-50' : isMonitor ? 'border-l-4 border-l-[#E8A838] hover:bg-[#FEF8EC]' : 'hover:bg-accent'}${highlightId === player.id ? ' ring-2 ring-primary ring-inset bg-primary/5' : ''}`}>
                         {/* Action */}
-                        <td className="sticky left-0 z-20 bg-card group-hover:bg-inherit px-1 py-2 w-[40px] text-center">
-                          <ActionDropdown playerId={player.id} items={slItems} openId={openDropdownId} setOpenId={setOpenDropdownId} primaryIcon={<ArrowRight size={13} />} />
+                        <td className="sticky left-0 z-20 bg-card group-hover:bg-inherit px-1 py-2 w-[108px] text-center">
+                          <ActionButtons items={slItems} />
                         </td>
                         {/* Player name + monitor pill */}
-                        <td className="sticky left-[40px] z-20 bg-card group-hover:bg-inherit px-2 py-2 border-r-2 border-border w-[180px]">
+                        <td className="sticky left-[108px] z-20 bg-card group-hover:bg-inherit px-2 py-2 border-r-2 border-border w-[180px]">
                           <div className="flex items-center gap-2 min-w-0">
                             <div className="w-8 h-8 rounded-xl bg-card text-foreground flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
                             <div className="flex items-center gap-1">
-                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-foreground text-[14px] leading-tight truncate max-w-[120px] hover:underline cursor-pointer">{player.name}</span>
+                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-primary text-[14px] leading-tight truncate max-w-[120px] hover:underline cursor-pointer">{player.name}</span>
                               {raisedPlayerIds?.has(player.id) && <span title="Raised directly"><ArrowUpRight size={10} className="text-foreground shrink-0" /></span>}
                               {isArchived && <span className="bg-muted-foreground/15 text-muted-foreground font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               {(() => {
@@ -1687,7 +1711,7 @@ const SignedListTab = ({ extraCols = [], visibleColIds, setVisibleColIds }: {
                               {p.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
                             </div>
                             <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout'}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team, matchVideos: p.matchVideos, highlightVideos: p.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: 'Signed List', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })}
-                              className="font-body font-bold text-[14px] text-foreground hover:underline cursor-pointer whitespace-nowrap">{p.name}</span>
+                              className="font-body font-bold text-[14px] text-primary hover:underline cursor-pointer whitespace-nowrap">{p.name}</span>
                             <FlagBadge code={flagCode} label={p.nation} />
                           </div>
                         </td>

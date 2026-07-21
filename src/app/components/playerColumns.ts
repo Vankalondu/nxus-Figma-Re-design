@@ -72,11 +72,11 @@ export const PLAYER_COLUMNS: PlayerColumn[] = [
     value: (p, i) => p?.ctry ?? p?.country ?? pick(COUNTRIES, seedFor(p, i, 'ctry')),
   },
   {
-    id: 'pos', label: 'Pos', group: 'BIO DATA', defaultVisible: true, align: 'left',
+    id: 'pos', label: 'Pos', group: 'BIO DATA', defaultVisible: false, align: 'left',
     value: (p, i) => p?.pos ?? p?.position ?? pick(POSITIONS, seedFor(p, i, 'pos')),
   },
   {
-    id: 'team', label: 'Team', group: 'BIO DATA', defaultVisible: true, align: 'left',
+    id: 'team', label: 'Team', group: 'BIO DATA', defaultVisible: false, align: 'left',
     value: (p, i) => p?.team ?? p?.club ?? pick(TEAMS, seedFor(p, i, 'team')),
   },
 

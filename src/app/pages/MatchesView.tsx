@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import {
   ArrowLeft, ArrowLeftRight, Briefcase, Calendar, CalendarX, ChevronDown, ChevronRight,
   ClipboardList, Clock, Info, MapPin, Pencil, Search, SearchX, Trophy, Video,
@@ -297,9 +298,24 @@ function CompetitionCard({ comp, onOpen }: { comp: Competition; onOpen: (c: Comp
   );
 }
 
-function MatchCard({ match, onEntry }: { match: Match; onEntry: (m: Match) => void }) {
+// Locate a match by id across all competitions/rounds (for ?match= deep-links from the dashboard).
+function findMatchLocation(matchId: string): { comp: Competition; round: Round } | null {
+  for (const comp of competitionsData) {
+    for (const round of comp.rounds ?? []) {
+      if (round.matches.some(mm => mm.id === matchId)) return { comp, round };
+    }
+  }
+  return null;
+}
+
+function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntry: (m: Match) => void; highlight?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (highlight && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [highlight]);
   return (
-    <div className="bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 transition-all hover:shadow-[var(--shadow-xl)]">
+    <div ref={ref} id={`match-card-${match.id}`}
+      className={`bg-card rounded-[20px] border shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 transition-all hover:shadow-[var(--shadow-xl)] ${highlight ? 'border-primary ring-2 ring-primary ring-offset-2 ring-offset-background' : 'border-border'}`}>
       {/* Top row: date + visible icon actions */}
       <div className="flex items-center justify-between gap-3">
         <span className="inline-flex items-center gap-2 font-body font-bold text-[12px] text-muted-foreground min-w-0">
@@ -402,6 +418,23 @@ export function MatchesView() {
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [season, setSeason] = useState('All Seasons');
+  const [searchParams] = useSearchParams();
+  const [highlightMatchId, setHighlightMatchId] = useState<string | null>(null);
+
+  // Deep-link: ?match=<id> opens that fixture's competition/round with the card highlighted.
+  useEffect(() => {
+    const mid = searchParams.get('match');
+    if (!mid) return;
+    const loc = findMatchLocation(mid);
+    if (!loc) return;
+    setSelectedComp(loc.comp);
+    setSelectedRound(loc.round.id);
+    setSelectedMatch(null);
+    setView('competition');
+    setHighlightMatchId(mid);
+    const t = setTimeout(() => setHighlightMatchId(null), 3000);
+    return () => clearTimeout(t);
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -515,7 +548,7 @@ export function MatchesView() {
             {currentRound && currentRound.matches.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 {currentRound.matches.map(match => (
-                  <MatchCard key={match.id} match={match} onEntry={openEntry} />
+                  <MatchCard key={match.id} match={match} onEntry={openEntry} highlight={highlightMatchId === match.id} />
                 ))}
               </div>
             ) : (

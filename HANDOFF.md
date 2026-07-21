@@ -92,8 +92,18 @@ Vanessa: "everything in view without scrolling; no gaps between breakdown bars; 
 - Verified interactively (`scratchpad/vidshot/`): video modal opens w/ name+pos, Pipeline shows only the 2 cards, Tasks tab present. Build clean.
 - **DEPLOYED** to https://qaza-2so.pages.dev (deployment 94c48e14; HTTP 200).
 
+## Overview reorg #2 — image-matched layout + match deep-link (DONE, NOT deployed) 2026-07-21
+Ref image: breakdown left (tall), Upcoming Matches top-right, Latest Videos bottom-right.
+- **Layout:** KPI cards now a **full-width horizontal row on top** (pulled out of the old left column). Below: `grid lg:grid-cols-3 lg:items-stretch` → Target breakdown `col-span-2` (left) + right column (Upcoming Matches top, Latest Videos bottom). items-stretch makes breakdown == right-column height; breakdown body `flex-1 flex flex-col justify-between` so it fills (bottoms align, no leftover void).
+- **KPI cards:** removed ALL pills/badges; label top, big number bottom-left, action link bottom-right (with inline ↗). Kept `rounded-[36px]`. `min-h-[120px]`, `p-5`, bottom row `flex-wrap` (prevents 390px overflow). Shared class consts `KPI_CARD/KPI_LABEL/KPI_NUM/KPI_LINK/KPI_ARROW`.
+- **Target breakdown data** rebuilt to the image (VISA excluded): Pathway ACH13·Feeder3·AB2·Partner2·VPS1; Status Reviewing4·Nat Pro2·Negotiating2·Scout2·ACH trial1·Paper work1·Signed1(green). Label col widened `w-20`.
+- **Upcoming Matches:** removed competition/player pills; whole row is a button → `navigate('/lead-scout/matches?match=<matchId>')` with a `→` (ArrowRight) affordance. Data (`MOCK_MATCHES`) now has `matchId` mapping to real fixtures `match-1/5/7` in MatchesView.
+- **Latest Videos:** table avatar (`w-8 h-8 rounded-xl bg-card border text-foreground` initials, not blue circle); removed **Live** pill; Short/Target pill now uniform `bg-background text-foreground border border-border` (black text, like the match pills). **Click still opens the video popup** (user chose to keep that). Feed `max-h-[150px]` internal scroll.
+- **MatchesView.tsx:** added `useSearchParams` + `findMatchLocation(matchId)` helper + effect: `?match=<id>` opens that comp/round (`view='competition'`) and sets `highlightMatchId` (cleared after 3s). `MatchCard` gained `highlight` prop → `id={match-card-<id>}`, `ring-2 ring-primary`, and `scrollIntoView`. Match ids are the deterministic `match-N` from `matchSeq`.
+- **Fit:** 1440×900 → docH 902 (~0 scroll). 0 horizontal overflow at 390/834/1440. Tablet/mobile stack & page-scroll (expected). Verified `scratchpad/ov5shot/` incl. match-link (lands on Group Stage w/ highlighted card) + video popup still opens.
+
 ## NEXT (remaining)
-- Live is now up to date. Standing rule: remind before/after future changes; don't redeploy without go-ahead.
+- Awaiting review of Overview reorg #2. NOT deployed — ask before pushing (live still shows the previous version).
 0. **Dropdown UI consistency**: DONE earlier (MiniDropdown/Sel/NumIn/Country filters → pill). 
 1. Optional Lead-dashboard follow-ups: richer deep-link FILTERS (e.g. Eyeball≥8, no-pathway) need new players-page filters; wire "Set pathway" + "→ Target" to real state; port Matchday into Packages/Overview if wanted.
 1. **Guidelines.md** §4/§6 rewrite to the ratio system + **Figma** `Responsive` collection reconcile (read first via MCP, fileKey `qefpAyr3MEEklQRV96YlSv`) + 3 canonical frames.

@@ -34,8 +34,8 @@ interface Pkg {
   list: 'short' | 'target'; clipCount: number; watched: boolean; uploadDate: string;
 }
 interface MatchItem {
-  id: string; home: string; away: string; date: string;
-  competition: string; targetPlayers: string[];
+  id: string; matchId: string; home: string; away: string; date: string;
+  competition: string;
 }
 interface AppNotif {
   id: string; text: string; time: string; read: boolean;
@@ -80,10 +80,12 @@ const MOCK_PKGS: Pkg[] = [
   { id:'p5', playerName:'Cheikh Diop',   initials:'CD', scout:'Tom',   list:'short',  clipCount:5,  watched:true,  uploadDate:'2 weeks ago' },
 ];
 
+// matchId values map to real fixtures in MatchesView (competitionsData, comp 1) so
+// clicking a row opens that exact match on the Matches page.
 const MOCK_MATCHES: MatchItem[] = [
-  { id:'m1', home:'Enyimba FC',   away:'Kano Pillars', date:'Dec 16', competition:'NPFL',           targetPlayers:['Kofi Mensah'] },
-  { id:'m2', home:'Hawks FC',     away:'Fauve Azur',   date:'Dec 18', competition:'Liga Revelação', targetPlayers:['David Conteh','Kazungu Nesta'] },
-  { id:'m3', home:'Imperial FC',  away:'ATS',          date:'Dec 21', competition:'CAF U20',        targetPlayers:['Amadou Sarr'] },
+  { id:'m1', matchId:'match-1', home:'Espoirs De Guediawaye', away:'Kadji Sports Academy',  date:'Sat, 11 Oct', competition:'U-17 AFCON Qualifiers · Group Stage' },
+  { id:'m2', matchId:'match-5', home:'Espoirs De Guediawaye', away:'Diambars FC',           date:'Sat, 25 Oct', competition:'U-17 AFCON Qualifiers · Semi-Finals' },
+  { id:'m3', matchId:'match-7', home:'Espoirs De Guediawaye', away:'Right to Dream Academy', date:'Sat, 1 Nov',  competition:'U-17 AFCON Qualifiers · Final' },
 ];
 
 const INITIAL_NOTIFS: AppNotif[] = [
@@ -893,103 +895,88 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
 
   const BY_PATHWAY = [
     { label: 'ACH',     count: 13 },
-    { label: 'Partner', count: 10 },
-    { label: 'Feeder',  count: 15 },
-    { label: 'AB',      count: 8  },
+    { label: 'Feeder',  count: 3  },
+    { label: 'AB',      count: 2  },
+    { label: 'Partner', count: 2  },
+    { label: 'VPS',     count: 1  },
   ];
   const maxPathway = Math.max(...BY_PATHWAY.map(p => p.count));
   const BY_STATUS = [
-    { label: 'Trialing', count: 21, bar: 'bg-primary'    },
-    { label: 'Offer',    count: 11, bar: 'bg-primary/60' },
-    { label: 'Signed',   count: 4,  bar: '',             style: { backgroundColor: 'var(--scout-green)' } as React.CSSProperties },
+    { label: 'Reviewing',   count: 4, bar: 'bg-primary' },
+    { label: 'Nat Pro',     count: 2, bar: 'bg-primary' },
+    { label: 'Negotiating', count: 2, bar: 'bg-primary' },
+    { label: 'Scout',       count: 2, bar: 'bg-primary' },
+    { label: 'ACH trial',   count: 1, bar: 'bg-primary' },
+    { label: 'Paper work',  count: 1, bar: 'bg-primary' },
+    { label: 'Signed',      count: 1, bar: '', style: { backgroundColor: 'var(--scout-green)' } as React.CSSProperties },
   ];
   const maxStatus = Math.max(...BY_STATUS.map(s => s.count));
 
+  const KPI_CARD = "flex flex-col justify-between gap-3 p-5 bg-card rounded-[36px] border border-border shadow-[var(--shadow-lg)] min-h-[120px] hover:-translate-y-1 hover:shadow-xl transition-all group text-left w-full";
+  const KPI_LABEL = "font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground";
+  const KPI_NUM = "font-heading font-extrabold text-3xl tabular-nums text-foreground leading-none";
+  const KPI_LINK = "text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap inline-flex items-center gap-1";
+  const KPI_ARROW = <ArrowUpRight size={13} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />;
+
   return (
     <div className="flex flex-col gap-[var(--gap-grid)]">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--gap-grid)] lg:items-start">
 
-        {/* LEFT COLUMN — KPI row + Target breakdown */}
-        <div className="lg:col-span-2 flex flex-col gap-[var(--gap-grid)]">
-
-          {/* KPI cards — single horizontal row (4-up desktop / 2-up mobile) */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--gap-grid)]">
+      {/* KPI cards — full-width horizontal row (4-up desktop / 2-up mobile), no pills, link bottom-right */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--gap-grid)]">
 
         {/* Card 1 — Reports */}
-        <button onClick={() => onNavigate('reports')} className="flex flex-col justify-between p-6 bg-card rounded-[36px] border border-border shadow-[var(--shadow-lg)] min-h-[204px] hover:-translate-y-1 hover:shadow-xl transition-all group text-left w-full">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground">Reports by senior scouts</span>
-            <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform shrink-0" />
-          </div>
-          <div className="flex items-end justify-between gap-2 flex-wrap">
-            <div className="flex items-end gap-2 min-w-0">
-              <span className="font-heading font-extrabold text-3xl tabular-nums text-foreground leading-none">27</span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap" style={{ backgroundColor: 'color-mix(in srgb, var(--scout-green) 15%, transparent)', color: 'var(--scout-green)' }}>+4 today</span>
-            </div>
-            <span className="text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap">Opens Reports</span>
+        <button onClick={() => onNavigate('reports')} className={KPI_CARD}>
+          <span className={KPI_LABEL}>Reports by senior scouts</span>
+          <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
+            <span className={KPI_NUM}>27</span>
+            <span className={KPI_LINK}>Opens Reports {KPI_ARROW}</span>
           </div>
         </button>
 
         {/* Card 2 — Coverage */}
-        <button onClick={() => onNavigate('reports')} className="flex flex-col justify-between p-6 bg-card rounded-[36px] border border-border shadow-[var(--shadow-lg)] min-h-[204px] hover:-translate-y-1 hover:shadow-xl transition-all group text-left w-full">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground">Shortlist report coverage</span>
-            <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform shrink-0" />
-          </div>
-          <div className="flex items-end justify-between gap-2 flex-wrap">
-            <div className="flex items-end gap-2 min-w-0">
-              <span className="font-heading font-extrabold text-3xl tabular-nums text-foreground leading-none">8<span className="text-muted-foreground">/14</span></span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap" style={{ backgroundColor: 'color-mix(in srgb, var(--scout-amber) 15%, transparent)', color: 'var(--scout-amber)' }}>6 Pending</span>
-            </div>
-            <span className="text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap">View Coverage</span>
+        <button onClick={() => onNavigate('reports')} className={KPI_CARD}>
+          <span className={KPI_LABEL}>Shortlist report coverage</span>
+          <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
+            <span className={KPI_NUM}>8<span className="text-muted-foreground">/14</span></span>
+            <span className={KPI_LINK}>View Coverage {KPI_ARROW}</span>
           </div>
         </button>
 
         {/* Card 3 — Players */}
-        <button onClick={() => goToSection('short-list')} className="flex flex-col justify-between p-6 bg-card rounded-[36px] border border-border shadow-[var(--shadow-lg)] min-h-[204px] hover:-translate-y-1 hover:shadow-xl transition-all group text-left w-full">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground">Players in Target + Short</span>
-            <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform shrink-0" />
-          </div>
-          <div className="flex items-end justify-between gap-2 flex-wrap">
-            <div className="flex items-end gap-2 min-w-0">
-              <span className="font-heading font-extrabold text-3xl tabular-nums text-foreground leading-none">20</span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap bg-accent text-muted-foreground font-semibold">14 Short</span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap bg-accent text-muted-foreground font-semibold">6 Target</span>
-            </div>
-            <span className="text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap">Opens Short List</span>
+        <button onClick={() => goToSection('short-list')} className={KPI_CARD}>
+          <span className={KPI_LABEL}>Players in Target + Short</span>
+          <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
+            <span className={KPI_NUM}>20</span>
+            <span className={KPI_LINK}>Opens Short List {KPI_ARROW}</span>
           </div>
         </button>
 
         {/* Card 4 — A+ Grade */}
-        <button onClick={() => navigate('/lead-scout/players?section=short-list&grade=A%2B')} className="flex flex-col justify-between p-6 bg-card rounded-[36px] border border-border shadow-[var(--shadow-lg)] min-h-[204px] hover:-translate-y-1 hover:shadow-xl transition-all group text-left w-full">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground">A+ in reports</span>
-            <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform shrink-0" />
+        <button onClick={() => navigate('/lead-scout/players?section=short-list&grade=A%2B')} className={KPI_CARD}>
+          <span className={KPI_LABEL}>A+ in reports</span>
+          <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
+            <span className={KPI_NUM}>33%</span>
+            <span className={KPI_LINK}>A+ on Short List {KPI_ARROW}</span>
           </div>
-          <div className="flex items-end justify-between gap-2 flex-wrap">
-            <div className="flex items-end gap-2 min-w-0">
-              <span className="font-heading font-extrabold text-3xl tabular-nums text-foreground leading-none">33%</span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap bg-primary/10 text-primary">Elite Tier</span>
-            </div>
-            <span className="text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap">A+ on Short List</span>
-          </div>
-          </button>
-          </div>
+        </button>
+      </div>
 
-          {/* Target breakdown — grows to fill remaining height */}
-          <div className="bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
-            <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center justify-between gap-2 shrink-0">
-              <h3 className="font-heading font-black text-[16px] text-foreground">Target breakdown</h3>
-              <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Derivable</span>
-            </div>
-            <div className="p-4 sm:p-6 space-y-5">
+      {/* Below KPIs — Target breakdown (left) + right column (Matches, Videos); equal height */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--gap-grid)] lg:items-stretch">
+
+        {/* LEFT — Target breakdown (fills to match the right column's height) */}
+        <div className="lg:col-span-2 bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
+          <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center justify-between gap-2 shrink-0">
+            <h3 className="font-heading font-black text-[16px] text-foreground">Target breakdown</h3>
+            <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Derivable</span>
+          </div>
+          <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between gap-6">
             <div>
               <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">By pathway</span>
               <div className="space-y-2 mt-2">
                 {BY_PATHWAY.map(p => (
                   <div key={p.label} className="flex items-center gap-2">
-                    <span className="font-body font-bold text-[12px] text-muted-foreground w-14 shrink-0 truncate">{p.label}</span>
+                    <span className="font-body font-bold text-[12px] text-muted-foreground w-20 shrink-0 truncate">{p.label}</span>
                     <div className="flex-1 h-4 bg-accent rounded-full overflow-hidden min-w-0">
                       <div className="h-full bg-primary rounded-full" style={{ width: `${Math.max((p.count / maxPathway) * 100, 8)}%` }} />
                     </div>
@@ -1003,7 +990,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
               <div className="space-y-2 mt-2">
                 {BY_STATUS.map(s => (
                   <div key={s.label} className="flex items-center gap-2">
-                    <span className="font-body font-bold text-[12px] text-muted-foreground w-14 shrink-0 truncate">{s.label}</span>
+                    <span className="font-body font-bold text-[12px] text-muted-foreground w-20 shrink-0 truncate">{s.label}</span>
                     <div className="flex-1 h-4 bg-accent rounded-full overflow-hidden min-w-0">
                       <div className={`h-full rounded-full ${s.bar}`} style={{ width: `${Math.max((s.count / maxStatus) * 100, 8)}%`, ...(s.style || {}) }} />
                     </div>
@@ -1013,36 +1000,54 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
               </div>
             </div>
           </div>
-          </div>
         </div>
 
-        {/* RIGHT COLUMN — Latest Highlights + Upcoming Matches (unchanged) */}
+        {/* RIGHT COLUMN — Upcoming Matches (top) + Latest Videos (bottom) */}
         <div className="lg:col-span-1 flex flex-col gap-[var(--gap-grid)]">
 
-          {/* Latest Videos */}
-          <div className="bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
+          {/* Upcoming Matches — each row deep-links to that fixture on the Matches page */}
+          <div className="bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
+            <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3 shrink-0">
+              <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-foreground" /></div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-heading font-black text-[16px] text-foreground">Upcoming Matches</h3>
+                <p className="font-body text-[12px] text-muted-foreground font-medium">Your tracked fixtures</p>
+              </div>
+              <ArrowUpRight size={16} className="text-muted-foreground shrink-0" />
+            </div>
+            <div className="divide-y divide-border">
+              {MOCK_MATCHES.map(match => (
+                <button key={match.id} onClick={() => navigate(`/lead-scout/matches?match=${match.matchId}`)}
+                  className="w-full px-4 sm:px-6 py-2.5 flex items-center gap-3 hover:bg-accent transition-colors text-left group">
+                  <div className="flex-1 min-w-0">
+                    <span className="font-body font-bold text-[14px] text-foreground block truncate">{match.home} vs {match.away}</span>
+                    <span className="font-body text-[12px] text-muted-foreground font-medium block truncate">{match.date} · {match.competition}</span>
+                  </div>
+                  <ArrowRight size={15} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0" />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Latest Videos — table avatars, uniform list pill, opens the video workspace */}
+          <div className="bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
             <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3 shrink-0">
               <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-foreground" /></div>
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-heading font-black text-[16px] text-foreground">Latest Videos</h3>
-                  <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Live</span>
-                </div>
+                <h3 className="font-heading font-black text-[16px] text-foreground">Latest Videos</h3>
                 <p className="font-body text-[12px] text-muted-foreground font-medium">Newest videos by player</p>
               </div>
               <ArrowUpRight size={16} className="text-muted-foreground shrink-0" />
             </div>
-            <div className="divide-y divide-border max-h-[200px] lg:max-h-[220px] overflow-y-auto">
+            <div className="divide-y divide-border overflow-y-auto max-h-[150px] lg:max-h-[150px]">
               {HIGHLIGHTS_FEED.map(h => (
                 <button key={h.id} onClick={() => setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym })}
                   className="w-full px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-accent transition-colors text-left">
-                  <div className="w-9 h-9 rounded-full bg-primary text-chalk flex items-center justify-center font-body font-black text-[12px] shrink-0">{h.initials}</div>
+                  <div className="w-8 h-8 rounded-xl bg-card text-foreground flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border">{h.initials}</div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-body font-bold text-[14px] text-foreground truncate">{h.name}</span>
-                      <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${h.list === 'short' ? 'bg-primary/15 text-primary' : 'bg-accent text-foreground'}`}>
-                        {h.list === 'short' ? 'Short' : 'Target'}
-                      </span>
+                      <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-background text-foreground border border-border">{h.list === 'short' ? 'Short' : 'Target'}</span>
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
                       {h.matchVideos > 0 && <span className="bg-primary/20 text-foreground font-body font-bold px-1.5 py-0.5 rounded text-[11px]">F{h.matchVideos}</span>}
@@ -1051,35 +1056,6 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                   </div>
                   <span className="font-body text-[12px] text-muted-foreground font-medium tabular-nums shrink-0">{h.hoursAgo}h ago</span>
                 </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Upcoming Matches */}
-          <div className="bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
-            <div className="px-6 py-4 border-b border-border flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-foreground" /></div>
-                <div>
-                  <h3 className="font-heading font-semibold text-[16px] text-foreground">Upcoming Matches</h3>
-                  <p className="font-body text-[12px] text-muted-foreground font-medium">Target List players</p>
-                </div>
-              </div>
-            </div>
-            <div className="divide-y divide-border">
-              {MOCK_MATCHES.map(match => (
-                <div key={match.id} className="px-6 py-4 hover:bg-accent transition-colors cursor-pointer">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-body font-bold text-[14px] text-foreground">{match.home} vs {match.away}</span>
-                    <span className="font-body text-[12px] font-black text-foreground">{match.date}</span>
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-body text-[10px] font-medium text-muted-foreground">{match.competition}</span>
-                    {match.targetPlayers.map(name => (
-                      <span key={name} className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-background text-foreground border border-border">{name}</span>
-                    ))}
-                  </div>
-                </div>
               ))}
             </div>
           </div>
