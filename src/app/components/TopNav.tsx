@@ -54,7 +54,7 @@ export function TopNav({
   const bandPadX = responsive ? 'px-4 md:px-8' : 'px-8';
 
   return (
-    <div className={(sticky ? 'sticky top-0 z-50 bg-background ' : '') + bandPadX + ' pt-4 pb-2 shrink-0'}>
+    <div className={(sticky ? 'sticky top-0 z-50 short:static short:top-auto short:z-auto bg-background ' : '') + bandPadX + ' pt-4 pb-2 short:pt-1 short:pb-1 shrink-0'}>
     <div className={'relative z-50 flex items-center justify-between gap-2 bg-card border border-border p-2 ' + pl + ' rounded-[20px] shadow-[var(--shadow-xl)]'}>
       {/* Hamburger — mobile only; opens the Sidebar drawer via a decoupled event */}
       {responsive && (

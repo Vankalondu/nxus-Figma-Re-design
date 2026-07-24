@@ -886,10 +886,10 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate }: {
       </div>
 
       {/* ── Below KPIs: 2-column layout ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6">
 
         {/* Left column — My Tasks (spans 2) */}
-        <div className="lg:col-span-2 bg-card rounded-[40px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
+        <div className="lg:col-span-2 portrait-tablet:col-span-full bg-card rounded-[40px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
           <div className="px-8 py-6 border-b border-border flex items-center justify-between shrink-0">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-[16px] bg-primary flex items-center justify-center shrink-0"><CheckCircle size={20} className="text-chalk" /></div>
@@ -1062,9 +1062,9 @@ const ReportsTab = ({ reports, onOpenReport, onAddReport }: {
   return (
     <div className="flex flex-col gap-6 pb-8">
       {/* Top section: Summary + Champion */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6">
         {/* Report Summary */}
-        <div className="lg:col-span-2 bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] p-8 flex flex-col gap-6">
+        <div className="lg:col-span-2 portrait-tablet:col-span-full bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] p-8 flex flex-col gap-6">
           <h3 className="font-heading font-semibold text-[16px] text-foreground">Report Summary</h3>
           <div className="grid grid-cols-4 gap-6">
             {[
@@ -1485,7 +1485,7 @@ export default function SeniorScoutDashboard() {
                   </span>
                   David
                 </h1>
-                <p className="font-body font-medium text-[15px] text-muted-foreground mt-2">{subtitle}</p>
+                <p className="font-body font-medium text-[15px] text-muted-foreground mt-2 short:hidden">{subtitle}</p>
               </div>
 
               {/* Tab row */}

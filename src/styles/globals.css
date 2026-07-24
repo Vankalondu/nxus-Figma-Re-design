@@ -1,4 +1,6 @@
 @custom-variant dark (&:is(.dark *));
+@custom-variant portrait-tablet (@media (min-width:768px) and (orientation:portrait));
+@custom-variant short (@media (max-height:500px));
 
 :root {
   /* ── Base ── */

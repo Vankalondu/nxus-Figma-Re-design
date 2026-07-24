@@ -405,13 +405,13 @@ export default function CountryScoutDashboardPage() {
                     </span>
                     Oluniyi
                   </h1>
-                  <p className="font-body text-muted-foreground text-body mt-2 font-medium max-w-xl">{funSubtitle}</p>
+                  <p className="font-body text-muted-foreground text-body mt-2 font-medium max-w-xl short:hidden">{funSubtitle}</p>
                   <ResponsiveTabs className="mt-4" activeId={dashTab} onSelect={setDashTab}
                     tabs={['Overview','Active Players','Pending Reports','Analytics','Reports'].map(t=>({id:t,label:t}))} />
                 </div>
                 <div className="md:contents">{userRoleState==='Head Scout'?<HeadScoutStatsCards/>:<StatsCards/>}</div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--gap-grid)] w-full mt-4 pb-4">
-                  <div className="lg:col-span-2 bg-accent border border-border rounded-[40px] p-[var(--pad-card)] shadow-[0_4px_24px_rgba(6,27,46,0.12),0_1px_4px_rgba(6,27,46,0.10)] h-[550px] flex flex-col">
+                <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-[var(--gap-grid)] w-full mt-4 pb-4">
+                  <div className="lg:col-span-2 portrait-tablet:col-span-full bg-accent border border-border rounded-[40px] p-[var(--pad-card)] shadow-[0_4px_24px_rgba(6,27,46,0.12),0_1px_4px_rgba(6,27,46,0.10)] h-[550px] flex flex-col">
                     <div className="flex items-center gap-4 mb-6 shrink-0">
                       <div className="w-12 h-12 rounded-full bg-card flex items-center justify-center text-foreground"><Users size={20} /></div>
                       <h2 className="font-heading font-bold text-h5 text-foreground flex items-center">
@@ -610,7 +610,7 @@ export default function CountryScoutDashboardPage() {
                 {/* COMBINED TOP 10 */}
                 {activeTab==='combined-top-10' && (
                   <div className="flex-1 space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full min-h-[500px]">
+                    <div className="grid grid-cols-1 md:grid-cols-2 portrait-tablet:grid-cols-1 gap-8 h-full min-h-[500px]">
                       <div className="bg-card border border-border rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-2 h-full bg-primary" />
                         <div className="flex items-center justify-between mb-8">
@@ -1003,7 +1003,7 @@ export default function CountryScoutDashboardPage() {
                 <div className="w-24 h-24 rounded-full border-2 border-dashed border-primary/30 bg-card flex items-center justify-center text-muted-foreground hover:bg-primary/5 cursor-pointer transition-colors group"><Plus size={24} className="group-hover:scale-110 transition-transform" /></div>
                 <span className="font-heading font-bold text-[10px] text-muted-foreground mt-3 uppercase tracking-widest">Upload Photo</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 portrait-tablet:grid-cols-1 gap-8">
                 <div className="space-y-5">
                   <h3 className="font-heading font-black text-[10px] uppercase tracking-widest text-foreground pb-2 border-b border-border">Bio Data</h3>
                   <div className="space-y-4">

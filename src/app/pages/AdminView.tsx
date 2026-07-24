@@ -108,7 +108,7 @@ export function AdminView() {
           </span>
           Panel
         </h1>
-        <p className="font-body font-medium text-[15px] text-muted-foreground mt-2">
+        <p className="font-body font-medium text-[15px] text-muted-foreground mt-2 short:hidden">
           {tabSubtitles[activeTab]}
         </p>
       </div>

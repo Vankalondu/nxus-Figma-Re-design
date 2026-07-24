@@ -1698,15 +1698,13 @@ const NATION_FLAG_MAP: Record<string, string> = {
   'Mali': 'ml', 'Kenya': 'ke', 'Burundi': 'bi',
 };
 
-const SignedListTab = ({ extraCols = [], visibleColIds, setVisibleColIds }: {
+const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
   extraCols?: PlayerColumn[];
-  visibleColIds: Set<string>;
-  setVisibleColIds: (v: Set<string>) => void;
+  showAdd: boolean;
+  setShowAdd: (v: boolean) => void;
 }) => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState<SignedPlayer[]>(INITIAL_SIGNED_PLAYERS);
-  const [showAdd, setShowAdd] = useState(false);
-  const [colsModalOpen, setColsModalOpen] = useState(false);
   const [newPlayer, setNewPlayer] = useState<Partial<SignedPlayer>>({ move: 'Signed', year: new Date().getFullYear() });
 
   const handleAdd = () => {
@@ -1742,19 +1740,6 @@ const SignedListTab = ({ extraCols = [], visibleColIds, setVisibleColIds }: {
 
   return (
     <div className="flex flex-col gap-6">
-      <EditColumnsModal open={colsModalOpen} columns={PLAYER_COLUMNS} visible={visibleColIds} onApply={setVisibleColIds} onClose={() => setColsModalOpen(false)} />
-      {/* Toolbar row — Columns + secondary Add, top-right (matches other tables) */}
-      <div className="flex items-center justify-end flex-wrap gap-2">
-        <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-          className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border bg-card text-muted-foreground hover:border-primary hover:text-foreground shrink-0 transition-colors">
-          <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
-        </button>
-        <button onClick={() => setShowAdd(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border bg-card text-primary hover:border-primary hover:bg-accent shrink-0 transition-colors">
-          <Plus size={14} /> Add Signed Player
-        </button>
-      </div>
-
       {/* Table */}
       <div className="w-full overflow-hidden">
         <div className="overflow-x-auto">
@@ -2978,6 +2963,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   const orderedTabs = tabOrder.map(id => TABS.find(t => t.id === id)).filter(Boolean) as typeof TABS;
   const isCustomOrder = tabOrder.join(',') !== DEFAULT_TAB_ORDER.join(',');
   const [colsModalOpen, setColsModalOpen] = useState(false);   // Edit Columns modal
+  const [signedAddOpen, setSignedAddOpen] = useState(false);   // Add Signed Player modal (lifted so the trigger can live in the tab strip)
   const [visibleColIds, setVisibleColIds] = useState<Set<string>>(() => new Set(DEFAULT_VISIBLE_IDS));
   const extraCols: PlayerColumn[] = useMemo(() => PLAYER_COLUMNS.filter(c => visibleColIds.has(c.id)), [visibleColIds]);
   const [playerTierMap, setPlayerTierMap] = useState<Map<string, PipelineTier>>(() => INITIAL_TIER_MAP());
@@ -3161,7 +3147,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
           </div>
           {PAGE_TITLES[activeTab].rest}
         </h1>
-        <p className="font-body font-medium text-[15px] text-muted-foreground mt-2">{TAB_SUBTITLES[activeTab]}</p>
+        <p className="font-body font-medium text-[15px] text-muted-foreground mt-2 short:hidden">{TAB_SUBTITLES[activeTab]}</p>
       </div>
 
       <div className={`bg-card border border-border rounded-[24px] mb-6 ${isListTab ? 'h-[calc(100vh-210px)] flex flex-col overflow-hidden' : ''}`}>
@@ -3231,6 +3217,18 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
           )}
         </div>
         <div className="flex-1" />
+        {activeTab === 'signed-list' && (
+          <>
+            <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border bg-card text-muted-foreground hover:border-primary hover:text-foreground shrink-0 transition-colors">
+              <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
+            </button>
+            <button onClick={() => setSignedAddOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border bg-card text-primary hover:border-primary hover:bg-accent shrink-0 transition-colors">
+              <Plus size={14} /> Add Signed Player
+            </button>
+          </>
+        )}
         {isListTab && (
           <div className="flex items-center bg-accent rounded-full p-1 gap-1 shrink-0">
             <button onClick={() => setViewMode('table')} title="Table View"
@@ -3274,7 +3272,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
 
       {activeTab === 'reports' && <div className="p-4"><ReportsHub extraSubmissions={filedSubmissions} /></div>}
 
-      {activeTab === 'signed-list' && <div className="p-4"><SignedListTab extraCols={extraCols} visibleColIds={visibleColIds} setVisibleColIds={setVisibleColIds} /></div>}
+      {activeTab === 'signed-list' && <div className="p-4"><SignedListTab extraCols={extraCols} showAdd={signedAddOpen} setShowAdd={setSignedAddOpen} /></div>}
 
       {isListTab && (
         <>

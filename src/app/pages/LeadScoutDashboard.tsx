@@ -5,7 +5,7 @@ import {
   Eye, EyeOff, Star, Crosshair, Zap, ArrowRight,
   MoreVertical, Edit2, Trash2, LogOut,
   Radio, Play, Check, Trophy, Medal, Download, User, RefreshCw,
-  Phone, Route, ArrowUpRight, Film, ChevronDown, Crown, Smile
+  Phone, Route, Users, Film, ChevronDown, Crown, Smile
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate, useLocation } from 'react-router';
@@ -706,7 +706,7 @@ const PipelineTab = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-4 lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] portrait-tablet:grid-cols-1 gap-4 lg:items-stretch portrait-tablet:items-stretch">
 
       {/* ── Pipeline Overview: donut (top) + stage legend (below) ── */}
       <div className="bg-card rounded-[20px] border border-border p-6 shadow-[var(--shadow-lg)] flex flex-col">
@@ -895,7 +895,7 @@ function TargetTab({ tasks, onToggle, onAdd }: { tasks: any[]; onToggle: (id: an
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-2 portrait-tablet:grid-cols-1 gap-4 lg:items-stretch">
 
         {/* LEFT — Weekly task distribution */}
         <div className="bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
@@ -1084,7 +1084,8 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
   const KPI_LABEL = "font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground";
   const KPI_NUM = "font-heading font-extrabold text-4xl tabular-nums text-foreground leading-none";
   const KPI_LINK = "text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap";
-  const KPI_ARROW = <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform shrink-0" />;
+  const KPI_ICON_CHIP = "w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors";
+  const KPI_DESC = "font-heading font-bold text-sm text-foreground leading-tight self-end pb-0.5";
 
   return (
     <div className="flex flex-col gap-[var(--gap-grid)]">
@@ -1094,54 +1095,70 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
 
         {/* Card 1 — Reports */}
         <button onClick={() => onNavigate('reports')} className={KPI_CARD}>
-          <div className="flex items-start justify-between gap-2">
-            <span className={KPI_LABEL}>Reports by senior scouts</span>{KPI_ARROW}
+          <div className="flex items-center gap-3">
+            <span className={KPI_ICON_CHIP}><FileText size={18} className="text-primary" /></span>
+            <span className={KPI_LABEL}>Reports</span>
           </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
-            <span className={KPI_NUM}>27</span>
+            <div className="flex items-end gap-2 min-w-0">
+              <span className={KPI_NUM}>27</span>
+              <span className={KPI_DESC}>by senior scouts</span>
+            </div>
             <span className={KPI_LINK}>Opens Reports</span>
           </div>
         </button>
 
         {/* Card 2 — Coverage */}
         <button onClick={() => onNavigate('reports')} className={KPI_CARD}>
-          <div className="flex items-start justify-between gap-2">
-            <span className={KPI_LABEL}>Shortlist report coverage</span>{KPI_ARROW}
+          <div className="flex items-center gap-3">
+            <span className={KPI_ICON_CHIP}><Target size={18} className="text-primary" /></span>
+            <span className={KPI_LABEL}>Coverage</span>
           </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
-            <span className={KPI_NUM}>8<span className="text-muted-foreground">/14</span></span>
+            <div className="flex items-end gap-2 min-w-0">
+              <span className={KPI_NUM}>8<span className="text-muted-foreground">/14</span></span>
+              <span className={KPI_DESC}>shortlist reported</span>
+            </div>
             <span className={KPI_LINK}>View Coverage</span>
           </div>
         </button>
 
         {/* Card 3 — Players */}
         <button onClick={() => goToSection('short-list')} className={KPI_CARD}>
-          <div className="flex items-start justify-between gap-2">
-            <span className={KPI_LABEL}>Players in Target + Short</span>{KPI_ARROW}
+          <div className="flex items-center gap-3">
+            <span className={KPI_ICON_CHIP}><Users size={18} className="text-primary" /></span>
+            <span className={KPI_LABEL}>Pipeline</span>
           </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
-            <span className={KPI_NUM}>20</span>
+            <div className="flex items-end gap-2 min-w-0">
+              <span className={KPI_NUM}>20</span>
+              <span className={KPI_DESC}>in Target + Short</span>
+            </div>
             <span className={KPI_LINK}>Opens Short List</span>
           </div>
         </button>
 
         {/* Card 4 — A+ Grade */}
         <button onClick={() => navigate('/lead-scout/players?section=short-list&grade=A%2B')} className={KPI_CARD}>
-          <div className="flex items-start justify-between gap-2">
-            <span className={KPI_LABEL}>A+ in reports</span>{KPI_ARROW}
+          <div className="flex items-center gap-3">
+            <span className={KPI_ICON_CHIP}><Star size={18} className="text-primary" /></span>
+            <span className={KPI_LABEL}>Top Grade</span>
           </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
-            <span className={KPI_NUM}>33%</span>
+            <div className="flex items-end gap-2 min-w-0">
+              <span className={KPI_NUM}>33%</span>
+              <span className={KPI_DESC}>rated A+</span>
+            </div>
             <span className={KPI_LINK}>A+ on Short List</span>
           </div>
         </button>
       </div>
 
       {/* Below KPIs — Target breakdown (left) + right column (Latest Videos + combined Matches) */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-[var(--gap-grid)] lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-5 portrait-tablet:grid-cols-1 gap-[var(--gap-grid)] lg:items-stretch">
 
         {/* Target breakdown (wide) */}
-        <div className="lg:col-span-3 min-w-0 bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
+        <div className="lg:col-span-3 portrait-tablet:col-span-full min-w-0 bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
           <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center justify-between gap-2 shrink-0">
             <h3 className="font-heading font-bold text-[16px] text-foreground">Target breakdown</h3>
             <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Derivable</span>
@@ -1179,7 +1196,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
         </div>
 
         {/* Right column — Latest Videos (top) + combined Matches (bottom) */}
-        <div className="lg:col-span-2 min-w-0 flex flex-col gap-[var(--gap-grid)]">
+        <div className="lg:col-span-2 portrait-tablet:col-span-full min-w-0 flex flex-col gap-[var(--gap-grid)]">
 
           {/* Latest Videos */}
           <div className="min-w-0 bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
@@ -1716,7 +1733,7 @@ const AnalyticsTab = () => {
     <div className="flex flex-col gap-6">
 
       {/* ── Row 1: Leaderboards + Talent map ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
 
         {/* Card 3 — Leaderboards */}
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
@@ -1807,7 +1824,7 @@ const AnalyticsTab = () => {
       </div>
 
       {/* ── Row 2: Conversion trend + Archived by stage ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
 
         {/* Card 1 — Conversion trend */}
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
@@ -2196,7 +2213,7 @@ export default function LeadScoutDashboard() {
 
           {activePage==='dashboard' && (
             <>
-              <div className="pt-8 mb-3">
+              <div className="pt-8 short:pt-2 mb-3 short:mb-1">
                 <h1 className="font-heading font-semibold text-[24px] md:text-[32px] tracking-tight text-foreground flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm shrink-0">
@@ -2204,7 +2221,7 @@ export default function LeadScoutDashboard() {
                   </span>
                   Tom
                 </h1>
-                <p className="font-body font-medium text-[15px] text-muted-foreground mt-1">{subtitle}</p>
+                <p className="font-body font-medium text-[15px] text-muted-foreground mt-1 short:hidden">{subtitle}</p>
               </div>
 
               <ResponsiveTabs className="mt-4 mb-4" tabs={tabs} activeId={activeTab} onSelect={(id) => setActiveTab(id as LeadTab)} />

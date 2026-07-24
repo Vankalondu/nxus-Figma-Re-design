@@ -585,7 +585,7 @@ export function MatchesView() {
             <Calendar size={28} className="text-chalk" />
           </span>
         </h1>
-        <p className="font-body font-medium text-[15px] text-muted-foreground mt-2">
+        <p className="font-body font-medium text-[15px] text-muted-foreground mt-2 short:hidden">
           Track upload progress across your competitions.
         </p>
         </div>
