@@ -5,13 +5,14 @@ import {
   Eye, EyeOff, Star, Crosshair, Zap, ArrowRight,
   MoreVertical, Edit2, Trash2, LogOut,
   Radio, Play, Check, Trophy, Medal, Download, User, RefreshCw,
-  Phone, Route, ArrowUpRight, Film
+  Phone, Route, ArrowUpRight, Film, ChevronDown, Crown, Smile
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate, useLocation } from 'react-router';
 import { Sidebar } from '../components/Sidebar';
 import { SeniorLeadPlayersPage, HIGHLIGHTS_FEED } from '../components/SeniorLeadPlayersPage';
 import { PlayerVideoWorkspace } from '../components/PlayerVideoWorkspace';
+import { EditFormBlueprintModal } from '../components/EditFormBlueprintModal';
 import { TopNav } from '../components/TopNav';
 import { ResponsiveTabs } from '../components/ResponsiveTabs';
 import { MatchesView } from './MatchesView';
@@ -26,17 +27,15 @@ interface SignedPlayer {
 }
 interface GradeColorMap { [grade: string]: string; }
 interface Task {
-  id: string; text: string; priority: 'High' | 'Low'; dueDate: string;
-  assignedTo: string; playerName?: string; isTargetTask?: boolean; completed: boolean;
+  id: string; text: string; priority: 'High' | 'Medium' | 'Low'; dueDate: string;
+  assignedTo: string; allocated?: string; playerName?: string; isTargetTask?: boolean; completed: boolean;
 }
 interface Pkg {
   id: string; playerName: string; initials: string; scout: string;
   list: 'short' | 'target'; clipCount: number; watched: boolean; uploadDate: string;
 }
-interface MatchItem {
-  id: string; matchId: string; home: string; away: string; date: string;
-  competition: string;
-}
+interface MatchItem { id: string; home: string; away: string; date: string; }
+interface ResultItem { id: string; home: string; away: string; date: string; hs: number; as: number; }
 interface AppNotif {
   id: string; text: string; time: string; read: boolean;
   type: 'task' | 'report' | 'nudge' | 'package';
@@ -64,12 +63,14 @@ const DEFAULT_GRADE_COLORS: GradeColorMap = {
   'A+':'#061b2e','A':'#E8A838','B+':'#061b2e','B':'#7baac7','C+':'#b8d4ef','C':'#d2e7fa',
 };
 
+const TASK_ASSIGNEES = ['Me', 'David (Senior)', 'Nene', 'Mbugua', 'Tom'];
 const MOCK_TASKS: Task[] = [
-  { id:'t1', text:'Review Kofi Mensah target package', priority:'High', dueDate:'Today', assignedTo:'David (Senior)', playerName:'Kofi Mensah', isTargetTask:true, completed:false },
-  { id:'t2', text:'File report on Amadou Sarr', priority:'High', dueDate:'Today', assignedTo:'Me', completed:false },
-  { id:'t3', text:'Cross-check David Conteh stats', priority:'Low', dueDate:'Dec 18', assignedTo:'David (Senior)', playerName:'David Conteh', isTargetTask:true, completed:false },
-  { id:'t4', text:'Submit Combined Top 10 — Ghana cycle', priority:'High', dueDate:'Dec 19', assignedTo:'Me', completed:false },
-  { id:'t5', text:'Update PLR grades on Short List', priority:'Low', dueDate:'Dec 22', assignedTo:'Me', completed:true },
+  { id:'t1', text:'Review Kofi Mensah target package', priority:'High',   dueDate:'Jul 23', allocated:'Jul 21', assignedTo:'David (Senior)', playerName:'Kofi Mensah', isTargetTask:true, completed:false },
+  { id:'t2', text:'File report on Amadou Sarr',        priority:'High',   dueDate:'Jul 23', allocated:'Jul 22', assignedTo:'Me', completed:false },
+  { id:'t3', text:'Cross-check David Conteh stats',    priority:'Medium', dueDate:'Jul 25', allocated:'Jul 20', assignedTo:'David (Senior)', playerName:'David Conteh', isTargetTask:true, completed:false },
+  { id:'t4', text:'Submit Combined Top 10 — Ghana cycle', priority:'High', dueDate:'Jul 26', allocated:'Jul 19', assignedTo:'Me', completed:false },
+  { id:'t5', text:'Update PLR grades on Short List',   priority:'Low',    dueDate:'Jul 18', allocated:'Jul 12', assignedTo:'Me', completed:true },
+  { id:'t6', text:'Shortlist review — Nene batch',     priority:'Medium', dueDate:'Jul 15', allocated:'Jul 10', assignedTo:'Nene', completed:true },
 ];
 
 const MOCK_PKGS: Pkg[] = [
@@ -80,12 +81,15 @@ const MOCK_PKGS: Pkg[] = [
   { id:'p5', playerName:'Cheikh Diop',   initials:'CD', scout:'Tom',   list:'short',  clipCount:5,  watched:true,  uploadDate:'2 weeks ago' },
 ];
 
-// matchId values map to real fixtures in MatchesView (competitionsData, comp 1) so
-// clicking a row opens that exact match on the Matches page.
-const MOCK_MATCHES: MatchItem[] = [
-  { id:'m1', matchId:'match-1', home:'Espoirs De Guediawaye', away:'Kadji Sports Academy',  date:'Sat, 11 Oct', competition:'U-17 AFCON Qualifiers · Group Stage' },
-  { id:'m2', matchId:'match-5', home:'Espoirs De Guediawaye', away:'Diambars FC',           date:'Sat, 25 Oct', competition:'U-17 AFCON Qualifiers · Semi-Finals' },
-  { id:'m3', matchId:'match-7', home:'Espoirs De Guediawaye', away:'Right to Dream Academy', date:'Sat, 1 Nov',  competition:'U-17 AFCON Qualifiers · Final' },
+const UPCOMING_MATCHES: MatchItem[] = [
+  { id:'u1', home:'Gor Mahia',        away:'Tusker FC',        date:'Sat, 25 Jul' },
+  { id:'u2', home:'AFC Leopards',     away:'Bandari FC',       date:'Sun, 26 Jul' },
+  { id:'u3', home:'Kakamega Homeboyz', away:'Kenya Police FC', date:'Wed, 29 Jul' },
+];
+const RECENT_RESULTS: ResultItem[] = [
+  { id:'r1', home:'Gor Mahia',    away:'Tusker FC',    date:'Sat, 12 Jul', hs:2, as:1 },
+  { id:'r2', home:'KCB FC',       away:'AFC Leopards', date:'Sun, 13 Jul', hs:0, as:0 },
+  { id:'r3', home:'Ulinzi Stars', away:'Bandari FC',   date:'Wed, 9 Jul',  hs:1, as:3 },
 ];
 
 const INITIAL_NOTIFS: AppNotif[] = [
@@ -94,13 +98,13 @@ const INITIAL_NOTIFS: AppNotif[] = [
   { id:'n3', text:"Wekesa O. hasn't submitted Top 10",  time:'Yesterday', read:true,  type:'nudge'   },
 ];
 
-const PriorityPill = ({ p }: { p: 'High' | 'Low' }) => (
-  <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black border ${p==='High'?'bg-background text-foreground border-border':'bg-muted-foreground/10 text-muted-foreground border-transparent'}`}>{p}</span>
+const PriorityPill = ({ p }: { p: 'High' | 'Medium' | 'Low' }) => (
+  <span className="inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-bold bg-primary/15 text-foreground shrink-0">{p}</span>
 );
 
 // ─── Grade Colour Panel ───────────────────────────────────────────────────────
 const GradeColorPanel = ({ colors, onUpdate, onClose }: { colors: GradeColorMap; onUpdate: (g: string, c: string) => void; onClose: () => void }) => (
-  <div className="absolute right-0 top-12 z-50 bg-card rounded-[24px] shadow-2xl border border-border p-6 w-64" onClick={e => e.stopPropagation()}>
+  <div className="absolute right-0 top-12 z-50 bg-card rounded-[20px] shadow-2xl border border-border p-6 w-64" onClick={e => e.stopPropagation()}>
     <div className="flex items-center justify-between mb-4">
       <span className="font-heading font-black text-[14px] text-foreground">Grade Colours</span>
       <button onClick={onClose} className="text-muted-foreground hover:text-foreground"><X size={14} /></button>
@@ -131,8 +135,8 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
-      <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
-        <div className="px-8 py-6 bg-primary rounded-t-[32px] flex items-center justify-between">
+      <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
+        <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between">
           <div>
             <span className="font-heading font-semibold text-[16px] text-white">Add Signed Player</span>
             <p className="font-body text-[12px] text-white/50 mt-1">Record a player officially signed</p>
@@ -288,7 +292,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
     id: string; label: string; selected: boolean; onClick: ()=>void; icon?: React.ReactNode;
   }) => (
     <button onClick={onClick}
-      className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
+      className={`w-full px-4 py-3 rounded-[20px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
         selected ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-border hover:border-primary/50'
       }`}>
       {icon && <span className={selected ? 'text-white' : 'text-foreground'}>{icon}</span>}
@@ -311,10 +315,10 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
-      <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-lg border border-border max-h-[92vh] flex flex-col" onClick={e => e.stopPropagation()}>
+      <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-lg border border-border max-h-[92vh] flex flex-col" onClick={e => e.stopPropagation()}>
 
         {/* ── Header ── */}
-        <div className="px-8 py-5 bg-primary rounded-t-[32px] flex items-center justify-between shrink-0">
+        <div className="px-8 py-5 bg-primary rounded-t-[16px] flex items-center justify-between shrink-0">
           <div className="flex-1 min-w-0">
             <span className="font-heading font-semibold text-[16px] text-white">Add Scouting Report</span>
             <div className="flex items-center gap-2 mt-2">
@@ -472,7 +476,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                     onClick={() => { setSelectedSource(s.id); setAddingManually(false); }} />
                 ))}
                 <button onClick={() => { setAddingManually(true); setSelectedSource(''); }}
-                  className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-2 ${
+                  className={`w-full px-4 py-3 rounded-[20px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-2 ${
                     addingManually ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-dashed border-border hover:border-primary/50'
                   }`}>
                   <Plus size={14} /> Not on platform — add manually
@@ -480,7 +484,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
               </div>
               {/* Manual entry form */}
               {addingManually && (
-                <div className="mt-2 p-4 bg-card border border-border rounded-[16px] space-y-3">
+                <div className="mt-2 p-4 bg-card border border-border rounded-[20px] space-y-3">
                   {sourceType === 'highlight' ? (
                     <div>
                       <label className={labelCls}>Highlight / Package Title</label>
@@ -606,7 +610,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                   </div>
                 ))}
               </div>
-              <div className="bg-card rounded-[16px] border border-border p-4">
+              <div className="bg-card rounded-[20px] border border-border p-4">
                 <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">
                   {reportLength === 'full' && selectedTemplate ? selectedTemplate + ' — ' : ''}Notes
                 </span>
@@ -644,16 +648,21 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
 
 
 const LEAD_SIGNED_DATA: SignedPipelinePlayer[] = [
-  { id:'ls1', name:'Yamirou Ouorou',   pos:'LW', birthYear:2006, yearSigned:2024, grade:'A'  },
-  { id:'ls2', name:'Abdul Moro',       pos:'DM', birthYear:2008, yearSigned:2024, grade:'A+' },
-  { id:'ls3', name:'Tape Christ',      pos:'LB', birthYear:2006, yearSigned:2024, grade:'A+' },
-  { id:'ls4', name:'Seyi Ogunniyi',    pos:'RB', birthYear:2007, yearSigned:2025, grade:'A'  },
-  { id:'ls5', name:'Abdoulaye Gouba',  pos:'CM', birthYear:2007, yearSigned:2025, grade:'A+' },
-  { id:'ls6', name:'Ismaila Ceesay',   pos:'RW', birthYear:2008, yearSigned:2026, grade:'A'  },
-  { id:'ls7', name:'Kingsley Bimpong', pos:'LW', birthYear:2007, yearSigned:2026, grade:'A'  },
-  { id:'ls8', name:'Arnold Adu',       pos:'AM', birthYear:2008, yearSigned:2026, grade:'A'  },
-  { id:'ls9', name:'Francis Gomez',    pos:'RW', birthYear:2009, yearSigned:2028, grade:'A+' },
+  { id:'ls10', name:'Moussa Diarra',   pos:'ST',  birthYear:2004, yearSigned:2022, grade:'A'  },
+  { id:'ls11', name:'Kwame Mensah',    pos:'RCB', birthYear:2004, yearSigned:2022, grade:'A+' },
+  { id:'ls12', name:'Ibrahim Touré',   pos:'CM',  birthYear:2005, yearSigned:2023, grade:'A'  },
+  { id:'ls13', name:'Samuel Osei',     pos:'GK',  birthYear:2005, yearSigned:2023, grade:'B+' },
+  { id:'ls1',  name:'Yamirou Ouorou',  pos:'LW',  birthYear:2006, yearSigned:2024, grade:'A'  },
+  { id:'ls2',  name:'Abdul Moro',      pos:'DM',  birthYear:2008, yearSigned:2024, grade:'A+' },
+  { id:'ls3',  name:'Tape Christ',     pos:'LB',  birthYear:2006, yearSigned:2024, grade:'A+' },
+  { id:'ls4',  name:'Seyi Ogunniyi',   pos:'RB',  birthYear:2007, yearSigned:2025, grade:'A'  },
+  { id:'ls5',  name:'Abdoulaye Gouba', pos:'CM',  birthYear:2007, yearSigned:2025, grade:'A+' },
+  { id:'ls6',  name:'Ismaila Ceesay',  pos:'RW',  birthYear:2008, yearSigned:2026, grade:'A'  },
+  { id:'ls7',  name:'Kingsley Bimpong', pos:'LW', birthYear:2007, yearSigned:2026, grade:'A'  },
+  { id:'ls8',  name:'Arnold Adu',      pos:'AM',  birthYear:2008, yearSigned:2026, grade:'A'  },
+  { id:'ls9',  name:'Francis Gomez',   pos:'RW',  birthYear:2009, yearSigned:2026, grade:'A+' },
 ];
+const SIGNED_YEARS = [2022, 2023, 2024, 2025, 2026];
 const LEAD_POSITIONS = ['ST','RW','LW','AM','CM','DM','RB','LB','RCB','LCB','GK'];
 const LEAD_GRADE_BG: Record<string,string> = { 'A+':'#061b2e','A':'#E8A838','B+':'#061b2e','B':'#7baac7' };
 
@@ -661,24 +670,28 @@ const PipelineTab = () => {
   const [signedPlayers, setSignedPlayers] = React.useState<SignedPipelinePlayer[]>(LEAD_SIGNED_DATA);
   const [showAddSigned, setShowAddSigned] = React.useState(false);
   const [newSigned, setNewSigned] = React.useState<Partial<SignedPipelinePlayer>>({});
+  const [hoveredStage, setHoveredStage] = React.useState<number | null>(null);
   const navigate = useNavigate();
-
-  const signedYears = React.useMemo(() => {
-    const ys = [...new Set(signedPlayers.map(p => p.yearSigned))].sort();
-    return ys.length === 0 ? [new Date().getFullYear()] : ys;
-  }, [signedPlayers]);
 
   const getSignedAt = (pos: string, year: number) =>
     signedPlayers.filter(p => p.pos === pos && p.yearSigned === year);
 
   const funnelStages = [
-    { label: 'Database',    count: 60, path: '/lead-scout/players', color: '#d2e7fa', textColor: 'text-muted-foreground' },
-    { label: 'Long List',   count: 28, path: '/lead-scout/players', color: '#E8A838', textColor: 'text-white' },
-    { label: 'Short List',  count: 14, path: '/lead-scout/players', color: '#061b2e', textColor: 'text-white' },
-    { label: 'Target List', count: 6,  path: '/lead-scout/players', color: '#061b2e', textColor: 'text-foreground' },
-    { label: 'Signed',      count: signedPlayers.length, path: '/lead-scout/players', color: '#061b2e', textColor: 'text-white' },
+    { label: 'Database',    count: 60,                   color: '#b8d4ef',          path: '/lead-scout/players' },
+    { label: 'Long List',   count: 28,                   color: '#E8A838',          path: '/lead-scout/players' },
+    { label: 'Short List',  count: 14,                   color: '#7baac7',          path: '/lead-scout/players' },
+    { label: 'Target List', count: 6,                    color: '#061b2e',          path: '/lead-scout/players' },
+    { label: 'Signed',      count: signedPlayers.length, color: 'var(--scout-green)', path: '/lead-scout/players' },
   ];
-  const maxCount = Math.max(...funnelStages.map(s => s.count));
+  // Donut geometry — r=15.915 gives circumference 100, so dash values ARE percentages.
+  const donutTotal = funnelStages.reduce((a, s) => a + s.count, 0) || 1;
+  let donutAcc = 0;
+  const donutSegments = funnelStages.map(s => {
+    const pct = (s.count / donutTotal) * 100;
+    const seg = { color: s.color, pct, offset: 25 - donutAcc };
+    donutAcc += pct;
+    return seg;
+  });
 
   const handleAddSigned = () => {
     if (!newSigned.name) return;
@@ -692,38 +705,59 @@ const PipelineTab = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-4 lg:items-stretch">
 
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_2fr] gap-4 xl:items-start">
-
-      {/* ── Section A: Funnel Graph ── */}
-      <div className="bg-card rounded-[32px] border border-border p-6 shadow-[var(--shadow-lg)]">
-        <div className="mb-4">
+      {/* ── Pipeline Overview: donut (top) + stage legend (below) ── */}
+      <div className="bg-card rounded-[20px] border border-border p-6 shadow-[var(--shadow-lg)] flex flex-col">
+        <div className="mb-5 shrink-0">
           <h3 className="font-heading font-bold text-[20px] text-foreground">Pipeline Overview</h3>
-          <span className="font-body text-[12px] font-medium text-muted-foreground">Click a stage to open that list</span>
+          <span className="font-body text-[12px] font-medium text-muted-foreground">Hover a slice for its count · click to open the list</span>
         </div>
-        <div className="space-y-3">
-          {funnelStages.map((s) => (
-            <div key={s.label} className="flex items-center gap-3 group cursor-pointer" onClick={() => navigate(s.path)}>
-              <span className="font-body text-[13px] font-bold text-muted-foreground w-20 shrink-0">{s.label}</span>
-              <div className="flex-1 h-10 bg-accent rounded-xl overflow-hidden hover:shadow-md transition-shadow">
-                <div className="h-full rounded-xl flex items-center px-4 transition-all duration-700 group-hover:opacity-90"
-                  style={{ width: `${Math.max((s.count / maxCount) * 100, 8)}%`, backgroundColor: s.color }}>
-                  <span className={`font-mono font-black text-[14px] ${s.textColor}`}>{s.count}</span>
-                </div>
-              </div>
+        <div className="flex-1 flex flex-col items-center justify-center gap-8">
+
+          {/* Donut — hover shows the slice's count in the center; click opens the list */}
+          <div className="relative w-48 h-48 shrink-0">
+            <svg viewBox="0 0 42 42" className="w-full h-full">
+              <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--accent)" strokeWidth="5" />
+              {donutSegments.map((seg, i) => (
+                <circle key={i} cx="21" cy="21" r="15.915" fill="transparent"
+                  stroke={seg.color} strokeWidth={hoveredStage === i ? 6.5 : 5}
+                  strokeDasharray={`${seg.pct} ${100 - seg.pct}`} strokeDashoffset={seg.offset}
+                  className={`cursor-pointer transition-all ${hoveredStage !== null && hoveredStage !== i ? 'opacity-30' : 'opacity-100'}`}
+                  onMouseEnter={() => setHoveredStage(i)} onMouseLeave={() => setHoveredStage(null)}
+                  onClick={() => navigate(funnelStages[i].path)} />
+              ))}
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2 text-center">
+              <span className="font-heading font-black text-[30px] leading-none text-foreground tabular-nums">{hoveredStage !== null ? funnelStages[hoveredStage].count : funnelStages[0].count}</span>
+              <span className="font-body text-[11px] text-muted-foreground font-medium mt-1">{hoveredStage !== null ? funnelStages[hoveredStage].label : 'in pipeline'}</span>
             </div>
-          ))}
+          </div>
+
+          {/* Stage legend — what each colour represents */}
+          <div className="w-full flex flex-col gap-1.5">
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground mb-1">By stage</span>
+            {funnelStages.map((s, i) => (
+              <button key={s.label} onClick={() => navigate(s.path)}
+                onMouseEnter={() => setHoveredStage(i)} onMouseLeave={() => setHoveredStage(null)}
+                className={`flex items-center gap-2.5 group text-left rounded-lg px-2 py-1.5 -mx-2 transition-colors ${hoveredStage === i ? 'bg-accent' : 'hover:bg-accent'}`}>
+                <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: s.color }} />
+                <span className="font-body font-bold text-[13px] text-foreground flex-1 min-w-0 truncate group-hover:text-primary">{s.label}</span>
+                <span className="font-mono font-black text-[13px] text-foreground tabular-nums shrink-0">{s.count}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* ── Section B: Signed Pipeline Grid ── */}
-      <div className="bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] overflow-hidden">
+      <div className="bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] overflow-hidden min-w-0">
         <div className="px-6 py-4 border-b border-border flex items-center justify-between">
           <div>
             <h3 className="font-heading font-semibold text-[24px] text-foreground">Signed Pipeline</h3>
             <p className="font-body text-[12px] text-muted-foreground font-medium mt-1">
-              {signedPlayers.length} signed · Year column = age 18 (eligible to play)
+              {signedPlayers.length} signed · Columns show the year each player was signed
             </p>
           </div>
           <button onClick={() => setShowAddSigned(true)}
@@ -732,38 +766,34 @@ const PipelineTab = () => {
           </button>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full border-separate border-spacing-0">
+          <table className="w-full table-fixed border-separate border-spacing-0">
             <thead>
               <tr>
-                <th className="sticky left-0 z-10 bg-primary px-5 py-3 text-left w-12 border-r border-white/10">
+                <th className="sticky left-0 z-10 bg-primary px-3 py-3 text-left w-[56px] border-r border-white/10">
                   <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">Pos</span>
                 </th>
-                {signedYears.map(year => (
-                  <th key={year} className="bg-primary px-6 py-3 text-center border-r border-white/10 min-w-[180px]">
-                    <span className="font-heading font-bold text-[14px] text-chalk">{year + 18}</span>
-                    <span className="font-body text-[10px] text-muted-foreground block">({year})</span>
+                {SIGNED_YEARS.map(year => (
+                  <th key={year} className="bg-primary px-4 py-3 text-center border-r border-white/10 last:border-r-0 min-w-[120px]">
+                    <span className="font-heading font-bold text-[15px] text-chalk tabular-nums">{year}</span>
                   </th>
                 ))}
-                <th className="bg-primary px-4 py-3 text-center min-w-[80px]">
-                  <span className="font-body text-[12px] text-white/20 font-medium">+ future</span>
-                </th>
               </tr>
             </thead>
             <tbody>
               {LEAD_POSITIONS.filter(pos => signedPlayers.some(p => p.pos === pos)).map((pos, rowIdx) => (
                 <tr key={pos} className={rowIdx % 2 === 0 ? 'bg-card' : 'bg-accent'}>
-                  <td className={`sticky left-0 z-10 px-5 py-3 border-r border-border border-b border-border ${rowIdx % 2 === 0 ? 'bg-card' : 'bg-accent'}`}>
+                  <td className={`sticky left-0 z-10 px-3 py-3 border-r border-border border-b border-border ${rowIdx % 2 === 0 ? 'bg-card' : 'bg-accent'}`}>
                     <span className="font-heading font-black text-[14px] text-foreground">{pos}</span>
                   </td>
-                  {signedYears.map(year => {
+                  {SIGNED_YEARS.map(year => {
                     const cell = getSignedAt(pos, year);
                     return (
-                      <td key={year} className="px-4 py-3 border-r border-border border-b border-border align-top min-w-[180px]">
+                      <td key={year} className="px-4 py-3 border-r border-border last:border-r-0 border-b border-border align-top min-w-[120px]">
                         {cell.length === 0 ? <div className="h-7" /> : (
                           <div className="flex flex-col gap-2">
                             {cell.map(player => (
                               <div key={player.id} className="flex items-center gap-2">
-                                <span className="font-body font-bold text-[14px] text-foreground truncate flex-1 min-w-0">{player.name}</span>
+                                <span title={player.name} className="font-body font-bold text-[14px] text-foreground truncate flex-1 min-w-0">{player.name}</span>
                                 <span className="font-mono text-[10px] font-bold text-muted-foreground shrink-0">{player.birthYear}</span>
                                 <span className="font-body font-black text-[10px] px-2 py-0.5 rounded-full shrink-0 text-white min-w-[28px] text-center"
                                   style={{ backgroundColor: LEAD_GRADE_BG[player.grade] || '#7baac7' }}>{player.grade}</span>
@@ -774,7 +804,6 @@ const PipelineTab = () => {
                       </td>
                     );
                   })}
-                  <td className="px-3 py-3 border-b border-border" />
                 </tr>
               ))}
             </tbody>
@@ -786,8 +815,8 @@ const PipelineTab = () => {
       {/* Add signed player modal */}
       {showAddSigned && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddSigned(false)}>
-          <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
-            <div className="px-8 py-6 bg-primary rounded-t-[32px] flex items-center justify-between">
+          <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
+            <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between">
               <span className="font-heading font-semibold text-[16px] text-white">Sign Player to Pipeline</span>
               <button onClick={() => setShowAddSigned(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
             </div>
@@ -825,63 +854,202 @@ const PipelineTab = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
 // ─── Overview Tab ─────────────────────────────────────────────────────────────
 // ─── Target Tab ───────────────────────────────────────────────────────────────
-function TargetTab({ tasks, onToggle, onAdd }: { tasks: any[]; onToggle: (id: any) => void; onAdd: (label: string) => void }) {
-  const total = tasks.length;
-  const completed = tasks.filter(t => t.completed).length;
-  const open = total - completed;
-  const openTasks = tasks.filter(t => !t.completed);
+// ── Weekly task distribution (mock) — per day [completed, pending, assigned] ──
+const WEEK_DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const WEEK_TASKS: Record<string, [number, number, number]> = {
+  Mon:[3,2,1], Tue:[2,1,2], Wed:[4,2,1], Thu:[3,3,2], Fri:[5,1,1], Sat:[1,1,0], Sun:[0,1,1],
+};
+const WEEK_HOURS: Record<string, [number, number, number]> = {
+  Mon:[4.5,2,1], Tue:[3,1.5,2.5], Wed:[6,2,1], Thu:[5,3,2], Fri:[7,1,1.5], Sat:[1.5,1,0], Sun:[0,1,1],
+};
+const TASK_STATUS = [
+  { key: 'Completed', color: '#061b2e' },
+  { key: 'Pending',   color: '#E8A838' },
+  { key: 'Assigned',  color: '#b8d4ef' },
+];
+
+type TaskInput = string | { text: string; assignedTo?: string; dueDate?: string; priority?: 'High' | 'Medium' | 'Low' };
+function TargetTab({ tasks, onToggle, onAdd }: { tasks: any[]; onToggle: (id: any) => void; onAdd: (input: TaskInput) => void }) {
+  const activeTasks = tasks.filter(t => !t.completed);
+  const archivedTasks = tasks.filter(t => t.completed);
+  const [archiveView, setArchiveView] = useState<'active' | 'archived'>('active');
+  const [showAssign, setShowAssign] = useState(false);
+  const [form, setForm] = useState<{ text: string; assignedTo: string; dueDate: string; priority: 'High' | 'Medium' | 'Low' }>({ text: '', assignedTo: 'Me', dueDate: '', priority: 'Medium' });
+
+  const dataset = WEEK_TASKS;
+  const maxTotal = Math.max(...WEEK_DAYS.map(d => dataset[d][0] + dataset[d][1] + dataset[d][2]), 1);
+  const shown = archiveView === 'active' ? activeTasks : archivedTasks;
+
+  const submitAssign = () => {
+    if (!form.text.trim()) return;
+    onAdd({ text: form.text.trim(), assignedTo: form.assignedTo, dueDate: form.dueDate.trim() || 'This week', priority: form.priority });
+    setForm({ text: '', assignedTo: 'Me', dueDate: '', priority: 'Medium' });
+    setShowAssign(false);
+  };
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className="bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center gap-4 p-6 border-b border-border">
-          <div className="w-12 h-12 rounded-[16px] bg-primary flex items-center justify-center shrink-0">
-            <Target size={20} className="text-primary-foreground" />
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:items-stretch">
+
+        {/* LEFT — Weekly task distribution */}
+        <div className="bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
+          <div className="p-6 border-b border-border flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-foreground" /></div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-heading font-bold text-[16px] text-foreground">Task distribution</h3>
+              <p className="font-body text-[12px] text-muted-foreground font-medium">This week · by status</p>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-heading font-black text-[24px] text-foreground leading-none">Target Tasks</h3>
-            <p className="font-body text-[12px] text-muted-foreground font-medium mt-1">{completed}/{total} done · {open} remaining</p>
+          <div className="flex-1 flex flex-col justify-between p-6">
+            <div className="flex-1 flex flex-col justify-center gap-3">
+              {WEEK_DAYS.map(day => {
+                const [done, pending, assigned] = dataset[day];
+                const total = done + pending + assigned;
+                const seg = (v: number) => total > 0 ? `${(v / total) * 100}%` : '0%';
+                return (
+                  <div key={day} className="flex items-center gap-3">
+                    <span className="font-body text-[11px] font-bold text-muted-foreground w-9 shrink-0">{day}</span>
+                    <div className="flex-1 h-5 bg-accent rounded-full overflow-hidden min-w-0">
+                      {total > 0 && (
+                        <div className="h-full flex" style={{ width: `${(total / maxTotal) * 100}%` }}>
+                          <div style={{ width: seg(done), backgroundColor: '#061b2e' }} title={`Completed: ${done}`} />
+                          <div style={{ width: seg(pending), backgroundColor: '#E8A838' }} title={`Pending: ${pending}`} />
+                          <div style={{ width: seg(assigned), backgroundColor: '#b8d4ef' }} title={`Assigned: ${assigned}`} />
+                        </div>
+                      )}
+                    </div>
+                    <span className="font-mono font-black text-[12px] text-foreground w-4 text-right shrink-0 tabular-nums">{total}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex items-center justify-center gap-4 mt-5 flex-wrap">
+              {TASK_STATUS.map(s => (
+                <span key={s.key} className="inline-flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: s.color }} />
+                  <span className="font-body text-[12px] font-bold text-muted-foreground">{s.key}</span>
+                </span>
+              ))}
+            </div>
           </div>
-          <button onClick={() => onAdd('New assigned task')}
-            className="shrink-0 font-body text-[13px] font-black px-4 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
-            ＋ Assign
-          </button>
         </div>
 
-        {/* Body */}
-        <div className="divide-y divide-border">
-          {openTasks.length === 0 && (
-            <div className="px-6 py-8 text-center font-body text-[14px] text-muted-foreground">No open tasks.</div>
-          )}
-          {openTasks.map(task => (
-            <div key={task.id}
-              className={`flex items-center gap-3 px-6 py-4 flex-wrap ${task.isTargetTask ? 'border-l-[3px] border-primary' : ''}`}>
-              <button onClick={() => onToggle(task.id)}
-                className="w-5 h-5 rounded-full border-2 border-border hover:border-primary shrink-0 transition-colors"
-                aria-label="Mark task complete" />
-              <span className="flex-1 min-w-0 font-body font-bold text-[14px] text-foreground">{task.text}</span>
-              {task.isTargetTask && (
-                <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-full font-body text-[10px] font-black bg-primary/15 text-foreground border border-primary/20">
-                  <Crosshair size={10} /> Target
-                </span>
-              )}
-              <PriorityPill p={task.priority} />
-              <span className="inline-flex items-center gap-1 px-2 py-[2px] rounded-full font-body text-[10px] font-black bg-accent text-muted-foreground">
-                <Clock size={10} /> {task.dueDate}
-              </span>
-              <span className="font-body text-[12px] text-muted-foreground font-medium">→ {task.assignedTo}</span>
+        {/* RIGHT — Task manager */}
+        <div className="bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
+          <div className="p-6 border-b border-border flex flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Target size={18} className="text-foreground" /></div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-heading font-bold text-[16px] text-foreground">Tasks</h3>
+                <p className="font-body text-[12px] text-muted-foreground font-medium">{activeTasks.length} active · {archivedTasks.length} archived</p>
+              </div>
+              <button onClick={() => setShowAssign(true)}
+                className="shrink-0 inline-flex items-center gap-1.5 bg-transparent border border-primary text-foreground px-4 py-2 rounded-full font-body font-bold text-[13px] hover:bg-primary/10 transition-colors">
+                <Plus size={14} /> Assign task
+              </button>
             </div>
-          ))}
+            <div className="flex items-center gap-1 p-1 bg-card border border-border rounded-full self-start">
+              {([['active', `Active (${activeTasks.length})`], ['archived', `Archived (${archivedTasks.length})`]] as const).map(([id, label]) => (
+                <button key={id} onClick={() => setArchiveView(id)}
+                  className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${archiveView===id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex-1 overflow-y-auto max-h-[440px] p-4 flex flex-col gap-3">
+            {shown.length === 0 && (
+              <div className="py-10 text-center font-body text-[14px] text-muted-foreground">
+                {archiveView === 'active' ? 'No active tasks. Assign one to get started.' : 'No archived tasks yet.'}
+              </div>
+            )}
+            {shown.map(task => (
+              <div key={task.id}
+                className={`rounded-[16px] border border-border p-3 ${task.isTargetTask ? 'border-l-[3px] border-l-primary' : ''} ${task.completed ? 'opacity-70' : ''}`}>
+                {/* top: name + priority (left) · assignee (right) */}
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    {archiveView === 'active' ? (
+                      <button onClick={() => onToggle(task.id)} className="w-5 h-5 rounded-full border-2 border-border hover:border-primary shrink-0 transition-colors" aria-label="Complete task" />
+                    ) : (
+                      <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0"><CheckCircle size={12} className="text-white" /></div>
+                    )}
+                    <span className={`font-body font-bold text-[14px] truncate ${task.completed ? 'text-muted-foreground line-through' : 'text-foreground'}`}>{task.text}</span>
+                    <PriorityPill p={task.priority} />
+                  </div>
+                  <span className="font-body text-[11px] text-foreground font-medium shrink-0">{task.assignedTo}</span>
+                </div>
+                {/* bottom: due (left) · allocated / restore (right) */}
+                <div className="flex items-center justify-between gap-2 mt-2 pl-7">
+                  <span className="inline-flex items-center gap-1 font-body text-[11px] text-muted-foreground font-medium"><Calendar size={11} /> Due {task.dueDate}</span>
+                  {archiveView === 'archived' ? (
+                    <button onClick={() => onToggle(task.id)} className="inline-flex items-center gap-1.5 bg-transparent border border-primary text-foreground font-body text-[12px] font-bold px-3 py-1 rounded-full hover:bg-primary/10 transition-colors">
+                      <RefreshCw size={12} /> Restore
+                    </button>
+                  ) : (
+                    task.allocated && <span className="inline-flex items-center gap-1 font-body text-[11px] text-muted-foreground font-medium"><Clock size={11} /> Allocated {task.allocated}</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Assign task modal */}
+      {showAssign && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAssign(false)}>
+          <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
+            <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between">
+              <span className="font-heading font-semibold text-[16px] text-white">Assign a Task</span>
+              <button onClick={() => setShowAssign(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+            </div>
+            <div className="p-8 space-y-4">
+              <div>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Description</label>
+                <input autoFocus type="text" value={form.text} onChange={e => setForm(f => ({ ...f, text: e.target.value }))} placeholder="What needs doing?"
+                  onKeyDown={e => { if (e.key === 'Enter') submitAssign(); }}
+                  className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Assignee</label>
+                  <select value={form.assignedTo} onChange={e => setForm(f => ({ ...f, assignedTo: e.target.value }))}
+                    className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none appearance-none cursor-pointer">
+                    {TASK_ASSIGNEES.map(a => <option key={a}>{a}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Due date</label>
+                  <input type="text" value={form.dueDate} onChange={e => setForm(f => ({ ...f, dueDate: e.target.value }))} placeholder="e.g. Jul 25"
+                    className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" />
+                </div>
+              </div>
+              <div>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Priority</label>
+                <div className="flex gap-2">
+                  {(['High','Medium','Low'] as const).map(p => (
+                    <button key={p} onClick={() => setForm(f => ({ ...f, priority: p }))}
+                      className={`px-4 py-2 rounded-full font-body text-[12px] font-black border transition-all ${form.priority === p ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border hover:border-primary'}`}>{p}</button>
+                  ))}
+                </div>
+              </div>
+              <button onClick={submitAssign} disabled={!form.text.trim()}
+                className="w-full bg-primary border-2 border-primary text-white rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                Assign Task
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -912,72 +1080,80 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
   ];
   const maxStatus = Math.max(...BY_STATUS.map(s => s.count));
 
-  const KPI_CARD = "flex flex-col justify-between gap-3 p-5 bg-card rounded-[36px] border border-border shadow-[var(--shadow-lg)] min-h-[120px] hover:-translate-y-1 hover:shadow-xl transition-all group text-left w-full";
+  const KPI_CARD = "flex flex-col justify-between gap-3 p-6 bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] min-h-[190px] hover:-translate-y-1 hover:shadow-xl transition-all group text-left w-full";
   const KPI_LABEL = "font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground";
-  const KPI_NUM = "font-heading font-extrabold text-3xl tabular-nums text-foreground leading-none";
-  const KPI_LINK = "text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap inline-flex items-center gap-1";
-  const KPI_ARROW = <ArrowUpRight size={13} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />;
+  const KPI_NUM = "font-heading font-extrabold text-4xl tabular-nums text-foreground leading-none";
+  const KPI_LINK = "text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap";
+  const KPI_ARROW = <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform shrink-0" />;
 
   return (
     <div className="flex flex-col gap-[var(--gap-grid)]">
 
-      {/* KPI cards — full-width horizontal row (4-up desktop / 2-up mobile), no pills, link bottom-right */}
+      {/* KPI cards — full-width horizontal row (4-up desktop / 2-up mobile); top-right arrow */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--gap-grid)]">
 
         {/* Card 1 — Reports */}
         <button onClick={() => onNavigate('reports')} className={KPI_CARD}>
-          <span className={KPI_LABEL}>Reports by senior scouts</span>
+          <div className="flex items-start justify-between gap-2">
+            <span className={KPI_LABEL}>Reports by senior scouts</span>{KPI_ARROW}
+          </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
             <span className={KPI_NUM}>27</span>
-            <span className={KPI_LINK}>Opens Reports {KPI_ARROW}</span>
+            <span className={KPI_LINK}>Opens Reports</span>
           </div>
         </button>
 
         {/* Card 2 — Coverage */}
         <button onClick={() => onNavigate('reports')} className={KPI_CARD}>
-          <span className={KPI_LABEL}>Shortlist report coverage</span>
+          <div className="flex items-start justify-between gap-2">
+            <span className={KPI_LABEL}>Shortlist report coverage</span>{KPI_ARROW}
+          </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
             <span className={KPI_NUM}>8<span className="text-muted-foreground">/14</span></span>
-            <span className={KPI_LINK}>View Coverage {KPI_ARROW}</span>
+            <span className={KPI_LINK}>View Coverage</span>
           </div>
         </button>
 
         {/* Card 3 — Players */}
         <button onClick={() => goToSection('short-list')} className={KPI_CARD}>
-          <span className={KPI_LABEL}>Players in Target + Short</span>
+          <div className="flex items-start justify-between gap-2">
+            <span className={KPI_LABEL}>Players in Target + Short</span>{KPI_ARROW}
+          </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
             <span className={KPI_NUM}>20</span>
-            <span className={KPI_LINK}>Opens Short List {KPI_ARROW}</span>
+            <span className={KPI_LINK}>Opens Short List</span>
           </div>
         </button>
 
         {/* Card 4 — A+ Grade */}
         <button onClick={() => navigate('/lead-scout/players?section=short-list&grade=A%2B')} className={KPI_CARD}>
-          <span className={KPI_LABEL}>A+ in reports</span>
+          <div className="flex items-start justify-between gap-2">
+            <span className={KPI_LABEL}>A+ in reports</span>{KPI_ARROW}
+          </div>
           <div className="flex items-end justify-between gap-x-2 gap-y-1 flex-wrap">
             <span className={KPI_NUM}>33%</span>
-            <span className={KPI_LINK}>A+ on Short List {KPI_ARROW}</span>
+            <span className={KPI_LINK}>A+ on Short List</span>
           </div>
         </button>
       </div>
 
-      {/* Below KPIs — Target breakdown (left) + right column (Matches, Videos); equal height */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-[var(--gap-grid)] lg:items-stretch">
+      {/* Below KPIs — Target breakdown (left) + right column (Latest Videos + combined Matches) */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-[var(--gap-grid)] lg:items-stretch">
 
-        {/* LEFT — Target breakdown (fills to match the right column's height) */}
-        <div className="lg:col-span-2 bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
+        {/* Target breakdown (wide) */}
+        <div className="lg:col-span-3 min-w-0 bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
           <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center justify-between gap-2 shrink-0">
-            <h3 className="font-heading font-black text-[16px] text-foreground">Target breakdown</h3>
+            <h3 className="font-heading font-bold text-[16px] text-foreground">Target breakdown</h3>
             <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Derivable</span>
           </div>
-          <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between gap-6">
+          <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between gap-8">
             <div>
               <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">By pathway</span>
-              <div className="space-y-2 mt-2">
+              <div className="space-y-3 mt-3">
                 {BY_PATHWAY.map(p => (
                   <div key={p.label} className="flex items-center gap-2">
                     <span className="font-body font-bold text-[12px] text-muted-foreground w-20 shrink-0 truncate">{p.label}</span>
-                    <div className="flex-1 h-4 bg-accent rounded-full overflow-hidden min-w-0">
+                    <div className="flex-1 h-6 bg-accent rounded-full overflow-hidden min-w-0">
                       <div className="h-full bg-primary rounded-full" style={{ width: `${Math.max((p.count / maxPathway) * 100, 8)}%` }} />
                     </div>
                     <span className="font-mono font-black text-[12px] text-foreground w-6 text-right shrink-0 tabular-nums">{p.count}</span>
@@ -987,11 +1163,11 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
             </div>
             <div>
               <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">By status</span>
-              <div className="space-y-2 mt-2">
+              <div className="space-y-3 mt-3">
                 {BY_STATUS.map(s => (
                   <div key={s.label} className="flex items-center gap-2">
                     <span className="font-body font-bold text-[12px] text-muted-foreground w-20 shrink-0 truncate">{s.label}</span>
-                    <div className="flex-1 h-4 bg-accent rounded-full overflow-hidden min-w-0">
+                    <div className="flex-1 h-6 bg-accent rounded-full overflow-hidden min-w-0">
                       <div className={`h-full rounded-full ${s.bar}`} style={{ width: `${Math.max((s.count / maxStatus) * 100, 8)}%`, ...(s.style || {}) }} />
                     </div>
                     <span className="font-mono font-black text-[12px] text-foreground w-6 text-right shrink-0 tabular-nums">{s.count}</span>
@@ -1002,44 +1178,19 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
           </div>
         </div>
 
-        {/* RIGHT COLUMN — Upcoming Matches (top) + Latest Videos (bottom) */}
-        <div className="lg:col-span-1 flex flex-col gap-[var(--gap-grid)]">
+        {/* Right column — Latest Videos (top) + combined Matches (bottom) */}
+        <div className="lg:col-span-2 min-w-0 flex flex-col gap-[var(--gap-grid)]">
 
-          {/* Upcoming Matches — each row deep-links to that fixture on the Matches page */}
-          <div className="bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
-            <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-foreground" /></div>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-heading font-black text-[16px] text-foreground">Upcoming Matches</h3>
-                <p className="font-body text-[12px] text-muted-foreground font-medium">Your tracked fixtures</p>
-              </div>
-              <ArrowUpRight size={16} className="text-muted-foreground shrink-0" />
-            </div>
-            <div className="divide-y divide-border">
-              {MOCK_MATCHES.map(match => (
-                <button key={match.id} onClick={() => navigate(`/lead-scout/matches?match=${match.matchId}`)}
-                  className="w-full px-4 sm:px-6 py-2.5 flex items-center gap-3 hover:bg-accent transition-colors text-left group">
-                  <div className="flex-1 min-w-0">
-                    <span className="font-body font-bold text-[14px] text-foreground block truncate">{match.home} vs {match.away}</span>
-                    <span className="font-body text-[12px] text-muted-foreground font-medium block truncate">{match.date} · {match.competition}</span>
-                  </div>
-                  <ArrowRight size={15} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0" />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Latest Videos — table avatars, uniform list pill, opens the video workspace */}
-          <div className="bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
+          {/* Latest Videos */}
+          <div className="min-w-0 bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
             <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3 shrink-0">
               <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-foreground" /></div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-heading font-black text-[16px] text-foreground">Latest Videos</h3>
+                <h3 className="font-heading font-bold text-[16px] text-foreground">Latest Videos</h3>
                 <p className="font-body text-[12px] text-muted-foreground font-medium">Newest videos by player</p>
               </div>
-              <ArrowUpRight size={16} className="text-muted-foreground shrink-0" />
             </div>
-            <div className="divide-y divide-border overflow-y-auto max-h-[150px] lg:max-h-[150px]">
+            <div className="divide-y divide-border overflow-y-auto max-h-[240px]">
               {HIGHLIGHTS_FEED.map(h => (
                 <button key={h.id} onClick={() => setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym })}
                   className="w-full px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-accent transition-colors text-left">
@@ -1057,6 +1208,49 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                   <span className="font-body text-[12px] text-muted-foreground font-medium tabular-nums shrink-0">{h.hoursAgo}h ago</span>
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Matches — combined: Recent Results | Upcoming (two columns) */}
+          <div className="min-w-0 bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
+            <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3 shrink-0">
+              <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-foreground" /></div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-heading font-bold text-[16px] text-foreground">Matches</h3>
+                <p className="font-body text-[12px] text-muted-foreground font-medium">Results &amp; fixtures</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 divide-x divide-border">
+              {/* Recent Results */}
+              <div className="min-w-0">
+                <div className="px-3 sm:px-4 py-2 border-b border-border">
+                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">Recent Results</span>
+                </div>
+                <div className="divide-y divide-border">
+                  {RECENT_RESULTS.map(r => (
+                    <button key={r.id} onClick={() => navigate('/lead-scout/matches')}
+                      className="w-full px-3 sm:px-4 py-2.5 hover:bg-accent transition-colors text-left block min-w-0">
+                      <span className="font-body font-bold text-[12px] text-foreground block truncate">{r.home} <span className="text-primary tabular-nums">{r.hs}–{r.as}</span> {r.away}</span>
+                      <span className="font-body text-[11px] text-muted-foreground font-medium block">{r.date}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Upcoming */}
+              <div className="min-w-0">
+                <div className="px-3 sm:px-4 py-2 border-b border-border">
+                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">Upcoming</span>
+                </div>
+                <div className="divide-y divide-border">
+                  {UPCOMING_MATCHES.map(m => (
+                    <button key={m.id} onClick={() => navigate('/lead-scout/matches')}
+                      className="w-full px-3 sm:px-4 py-2.5 hover:bg-accent transition-colors text-left block min-w-0">
+                      <span className="font-body font-bold text-[12px] text-foreground block truncate">{m.home} vs {m.away}</span>
+                      <span className="font-body text-[11px] text-muted-foreground font-medium block">{m.date}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1122,45 +1316,56 @@ const PackagesTab = ({ onNudge }: { onNudge: (name: string) => void }) => {
 
 // ─── Reports Tab ──────────────────────────────────────────────────────────────
 // ─── Report Champion Podium ───────────────────────────────────────────────────
+const CHAMP_KEYFRAMES = `
+@keyframes champFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes champGlow{0%,100%{box-shadow:0 0 12px rgba(245,158,11,.35)}50%{box-shadow:0 0 25px rgba(245,158,11,.55)}}
+@keyframes champShine{0%{transform:translateX(-160%) skewX(-20deg)}60%,100%{transform:translateX(260%) skewX(-20deg)}}
+@keyframes champRise{0%{transform:scaleY(0)}70%{transform:scaleY(1.06)}100%{transform:scaleY(1)}}
+.champ-float{animation:champFloat 2.4s ease-in-out infinite}
+.champ-glow{animation:champGlow 2.2s ease-in-out infinite}
+.champ-rise{transform-origin:bottom;animation:champRise .6s cubic-bezier(.34,1.56,.64,1) both}
+.champ-shine{animation:champShine 4s ease-in-out infinite}
+.champ-winner{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.champ-winner:hover{transform:scale(1.04)}
+`;
 const ChampionPodium = ({ scouts }: { scouts: { name: string; role: string; count: number }[] }) => {
   const sorted = [...scouts].sort((a, b) => b.count - a.count);
   const first = sorted[0]; const second = sorted[1]; const third = sorted[2];
-  const PodiumPerson = ({ scout, rank, height }: { scout: { name: string; role: string; count: number }; rank: 1|2|3; height: string }) => {
-    const c = rank === 1 ? { bg: 'bg-primary', text: 'text-chalk', border: 'border-primary' }
-            : rank === 2 ? { bg: 'bg-accent', text: 'text-foreground', border: 'border-border' }
-            : { bg: 'bg-card', text: 'text-muted-foreground', border: 'border-border' };
+  const lead = first && second ? first.count - second.count : 0;
+
+  const TEAL = '#3fb4c0';
+  // Podium — smiley avatars, crown on 1st. 1st=primary blue · 2nd=silver · 3rd=soft teal.
+  const Person = ({ scout, rank }: { scout: { name: string; role: string; count: number }; rank: 1 | 2 | 3 }) => {
+    const cfg = rank === 1
+      ? { ring: 'var(--primary)', badgeBg: 'var(--primary)', badgeText: 'var(--primary-foreground)', label: '1st', av: 'w-12 h-12', smile: 24 }
+      : rank === 2
+      ? { ring: '#cbd5e1', badgeBg: '#cbd5e1', badgeText: '#334155', label: '2nd', av: 'w-10 h-10', smile: 18 }
+      : { ring: TEAL, badgeBg: TEAL, badgeText: '#ffffff', label: '3rd', av: 'w-10 h-10', smile: 18 };
     return (
-      <div className="flex flex-col items-center gap-2">
-        <div className="relative">
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center font-heading font-semibold text-[16px] border-2 ${c.bg} ${c.text} ${c.border}`}>
-            {scout.name[0]}
+      <div className="flex flex-col items-center gap-1 flex-1 min-w-0">
+        <div className="relative mb-1.5">
+          {rank === 1 && <Crown size={15} className="champ-float absolute -top-4 left-1/2 -translate-x-1/2 text-primary" fill="currentColor" />}
+          <div className={`rounded-full bg-card flex items-center justify-center border-2 shadow-sm ${cfg.av}`} style={{ borderColor: cfg.ring }}>
+            <Smile size={cfg.smile} style={{ color: 'var(--scout-green)' }} />
           </div>
-          {rank === 1 && <div className="absolute -top-3 left-1/2 -translate-x-1/2"><Trophy size={16} className="text-[#E8A838]" /></div>}
-          {rank === 2 && <div className="absolute -top-2.5 left-1/2 -translate-x-1/2"><Medal size={13} className="text-muted-foreground" /></div>}
-          {rank === 3 && <div className="absolute -top-2.5 left-1/2 -translate-x-1/2"><Medal size={13} className="text-[#CD7F32]" /></div>}
+          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full font-heading font-bold text-[8px] shadow-sm" style={{ backgroundColor: cfg.badgeBg, color: cfg.badgeText }}>{cfg.label}</span>
         </div>
-        <div className="text-center">
-          <p className="font-heading font-black text-[14px] text-foreground">{scout.name}</p>
-          <p className="font-body text-[10px] text-muted-foreground">{scout.role}</p>
-        </div>
-        <div className={`flex flex-col items-center justify-end rounded-t-[8px] w-[72px] ${c.bg}`} style={{ height }}>
-          <span className={`font-heading font-black text-[20px] mb-2 ${c.text}`}>{scout.count}</span>
-          <span className={`font-body text-[10px] font-bold mb-2 uppercase tracking-wide ${rank === 1 ? 'text-chalk/60' : 'text-muted-foreground/70'}`}>reports</span>
+        <div className="text-center min-w-0 w-full mt-1">
+          <p className="font-body text-[11px] text-foreground truncate leading-tight">{scout.name}</p>
+          <p className="font-body text-[13px] text-foreground leading-tight">{scout.count}</p>
         </div>
       </div>
     );
   };
+
   return (
-    <div className="bg-card rounded-[28px] border border-border p-6 flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Trophy size={16} className="text-[#E8A838]" />
-        <h3 className="font-heading font-black text-[15px] text-foreground">Report Champion</h3>
-        <span className="font-body text-[12px] text-muted-foreground ml-1">This cycle</span>
-      </div>
-      <div className="flex items-end justify-center gap-3 pt-4">
-        {second && <PodiumPerson scout={second} rank={2} height="64px" />}
-        {first  && <PodiumPerson scout={first}  rank={1} height="88px" />}
-        {third  && <PodiumPerson scout={third}  rank={3} height="48px" />}
+    <div className="h-full min-h-[135px] rounded-[20px] border-2 border-primary/40 bg-transparent p-4 flex flex-col">
+      <style>{CHAMP_KEYFRAMES}</style>
+      <h3 className="font-heading font-bold text-[14px] text-foreground text-left shrink-0">Report Champion</h3>
+      <div className="flex-1 flex items-end justify-center gap-2 pt-2 pb-2">
+        {second && <Person scout={second} rank={2} />}
+        {first  && <Person scout={first}  rank={1} />}
+        {third  && <Person scout={third}  rank={3} />}
       </div>
     </div>
   );
@@ -1169,89 +1374,164 @@ const ChampionPodium = ({ scouts }: { scouts: { name: string; role: string; coun
 const REPORT_GRADE_SCORE: Record<string, number> = { 'A+': 96, 'A': 90, 'B+': 82, 'B': 74, 'C+': 66, 'C': 60 };
 const gradeToScore = (g: string) => REPORT_GRADE_SCORE[g] ?? 70;
 
+// Inline filter dropdown for the Reports toolbar. Custom (not a native <select>) so BOTH the
+// pill trigger AND the options panel match the app's UI. 'All' shows as `allLabel`; set filter
+// highlights in primary; selected option gets a check.
+const InlineSel = ({ value, onChange, opts, allLabel }: { value: string; onChange: (v: string) => void; opts: string[]; allLabel: string }) => {
+  const active = value !== 'All';
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    const onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDoc); document.addEventListener('keydown', onEsc);
+    return () => { document.removeEventListener('mousedown', onDoc); document.removeEventListener('keydown', onEsc); };
+  }, [open]);
+  const label = (o: string) => (o === 'All' ? allLabel : o);
+  return (
+    <div className="relative shrink-0" ref={ref}>
+      <button type="button" onClick={() => setOpen(o => !o)}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-primary text-primary-foreground border-transparent' : 'bg-card/60 border-primary/40 text-foreground hover:bg-card'}`}>
+        {label(value)}
+        <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''} ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+      </button>
+      {open && (
+        <div className="absolute z-40 mt-1 left-0 min-w-[150px] bg-card border border-border rounded-[20px] shadow-2xl py-2 flex flex-col max-h-[280px] overflow-y-auto">
+          {opts.map(o => {
+            const sel = o === value;
+            return (
+              <button key={o} type="button" onClick={() => { onChange(o); setOpen(false); }}
+                className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-accent text-foreground' : 'text-foreground hover:bg-accent'}`}>
+                {label(o)}
+                {sel && <Check size={13} className="text-primary shrink-0" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const ReportsTab = ({ onAddReport }: { onAddReport: () => void }) => {
-  const [filter, setFilter] = React.useState<'all' | 'unread'>('all');
   const [refreshing, setRefreshing] = React.useState(false);
-  const reports = [
-    { id:'r1', player:'Kofi Mensah',   initials:'KM', pos:'ST',  plr:'A+', pog:'A',  nxt:'T', date:'Dec 14', scout:'Mbugua', viewed:false, notes:'Exceptional finishing ability. Outstanding movement off the ball.' },
-    { id:'r2', player:'David Conteh',  initials:'DC', pos:'LW',  plr:'A',  pog:'B',  nxt:'M', date:'Dec 12', scout:'Tom',    viewed:true,  notes:'Impressive left foot. Dribbling past defenders with ease.' },
-    { id:'r3', player:'Amadou Sarr',   initials:'AS', pos:'CDM', plr:'B',  pog:'B',  nxt:'M', date:'Dec 10', scout:'Tom',    viewed:true,  notes:'Solid defensive midfielder. Consistent performance.' },
-    { id:'r4', player:'Kazungu Nesta', initials:'KN', pos:'CM',  plr:'B',  pog:'B',  nxt:'M', date:'Dec 8',  scout:'Nene',   viewed:false, notes:'Good vision, passing range excellent.' },
-    { id:'r5', player:'Francis Gomez', initials:'FG', pos:'RW',  plr:'A',  pog:'A',  nxt:'T', date:'Nov 28', scout:'Nene',   viewed:true,  notes:'Outstanding on the right flank. Ready for the next level.' },
-    { id:'r6', player:'Abdul Moro',    initials:'AM', pos:'CM',  plr:'B',  pog:'A',  nxt:'T', date:'Nov 25', scout:'Mbugua', viewed:true,  notes:'Very composed on the ball. Reads the game well.' },
-  ];
+  const [search, setSearch] = React.useState('');
+  const [fStatus, setFStatus] = React.useState<'all' | 'unread'>('all');
+  const [fScout, setFScout] = React.useState('All');
+  const [fGrade, setFGrade] = React.useState('All');
+  const [fPos, setFPos] = React.useState('All');
+  const [fRecency, setFRecency] = React.useState<'all' | 'month' | 'week'>('all');
+  const [viewReport, setViewReport] = React.useState<any>(null);
+  const [visibleCount, setVisibleCount] = React.useState(6);
+
+  // status: 'unseen' (blue outline) · 'seen' (default) · 'opened' (faded)
+  const [reports, setReports] = React.useState(() => {
+    const base = [
+      { id:'r1', player:'Kofi Mensah',   initials:'KM', pos:'ST',  plr:'A+', pog:'A',  nxt:'T', date:'Dec 14', daysAgo:3,  scout:'Mbugua', status:'unseen', notes:'' },
+      { id:'r2', player:'David Conteh',  initials:'DC', pos:'LW',  plr:'A',  pog:'B',  nxt:'M', date:'Dec 12', daysAgo:5,  scout:'Tom',    status:'seen',   notes:'' },
+      { id:'r3', player:'Amadou Sarr',   initials:'AS', pos:'CDM', plr:'B',  pog:'B',  nxt:'M', date:'Dec 10', daysAgo:7,  scout:'Tom',    status:'opened', notes:'' },
+      { id:'r4', player:'Kazungu Nesta', initials:'KN', pos:'CM',  plr:'B',  pog:'B',  nxt:'M', date:'Dec 8',  daysAgo:9,  scout:'Nene',   status:'unseen', notes:'' },
+      { id:'r5', player:'Francis Gomez', initials:'FG', pos:'RW',  plr:'A',  pog:'A',  nxt:'T', date:'Nov 28', daysAgo:19, scout:'Nene',   status:'opened', notes:'' },
+      { id:'r6', player:'Abdul Moro',    initials:'AM', pos:'CM',  plr:'B',  pog:'A',  nxt:'T', date:'Nov 25', daysAgo:22, scout:'Mbugua', status:'seen',   notes:'' },
+    ];
+    const NAMES = ['Kwame Boateng','Yaw Owusu','Sory Camara','Ismael Toure','Cheikh Diop','Musa Kante','Prince Mensah','Daniel Osei','Emmanuel Adjei','Lamine Cisse','Joseph Njoroge','Wekesa Omondi','Baba Traore','Kofi Annan','Samuel Eto','Riyad Sane','Nabil Fassi','Omar Diallo','Karim Toure','Yusuf Bah'];
+    const POS = ['ST','LW','RW','CM','CDM','CB','RB','GK']; const GR = ['A+','A','B+','B','C']; const SC = ['Mbugua','Tom','Nene','Brice','David']; const MO = ['Nov','Oct','Sep','Aug'];
+    const gen = Array.from({ length: 651 }, (_, i) => {
+      const nm = NAMES[i % NAMES.length];
+      return { id:`g${i}`, player: nm, initials: nm.split(' ').map(w => w[0]).join(''), pos: POS[i%POS.length], plr: GR[i%GR.length], pog: GR[(i+2)%GR.length], nxt: i%2 ? 'M' : 'T', date: `${MO[i%MO.length]} ${1+(i%27)}`, daysAgo: 25+i, scout: SC[i%SC.length], status: i%7===0 ? 'unseen' : (i%3===0 ? 'opened' : 'seen'), notes:'' };
+    });
+    return [...base, ...gen];
+  });
+  const markOpened = (id: string) => setReports(prev => prev.map(r => r.id === id ? { ...r, status: 'opened' } : r));
+  const openReport = (r: any) => { setViewReport(r); markOpened(r.id); };
   const scoutCounts = [
-    { name: 'Mbugua', role: 'Senior Scout', count: 2 },
-    { name: 'Tom',    role: 'Lead Scout',   count: 2 },
-    { name: 'Nene',   role: 'Head Scout',   count: 2 },
+    { name: 'Mbugua', role: 'Senior Scout', count: 9 },
+    { name: 'Tom',    role: 'Lead Scout',   count: 6 },
+    { name: 'Nene',   role: 'Head Scout',   count: 4 },
   ];
-  const unreadCount = reports.filter(r => !r.viewed).length;
+  const scoutOpts = ['All', ...Array.from(new Set(reports.map(r => r.scout)))];
+  const gradeOpts = ['All', ...Array.from(new Set(reports.map(r => r.plr)))];
+  const posOpts   = ['All', ...Array.from(new Set(reports.map(r => r.pos)))];
+
+  const unreadCount = reports.filter(r => r.status === 'unseen').length;
   const gradeACount = reports.filter(r => r.plr === 'A' || r.plr === 'A+').length;
-  const shown = filter === 'unread' ? reports.filter(r => !r.viewed) : reports;
+
+  const q = search.trim().toLowerCase();
+  const filtered = reports.filter(r =>
+    (q === '' || r.player.toLowerCase().includes(q) || r.scout.toLowerCase().includes(q)) &&
+    (fStatus === 'all' || r.status === 'unseen') &&
+    (fScout === 'All' || r.scout === fScout) &&
+    (fGrade === 'All' || r.plr === fGrade) &&
+    (fPos === 'All' || r.pos === fPos) &&
+    (fRecency === 'all' || (fRecency === 'week' ? r.daysAgo <= 7 : r.daysAgo <= 31))
+  );
+  const shown = filtered.slice(0, visibleCount);
+  const remaining = filtered.length - shown.length;
+  const activeFilters = [fStatus !== 'all', fScout !== 'All', fGrade !== 'All', fPos !== 'All', fRecency !== 'all'].filter(Boolean).length;
+  const clearFilters = () => { setFStatus('all'); setFScout('All'); setFGrade('All'); setFPos('All'); setFRecency('all'); };
+
   const summaryStats = [
     { label: 'Total', value: reports.length.toString(), sub: 'All time', icon: FileText },
     { label: 'Unread', value: unreadCount.toString(), sub: 'Need review', icon: Eye },
     { label: 'Grade A/A+', value: gradeACount.toString(), sub: 'Top PLR', icon: Star },
     { label: 'This Month', value: reports.length.toString(), sub: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }), icon: Calendar },
   ];
-  const champion = [...scoutCounts].sort((a, b) => b.count - a.count)[0];
   return (
     <div className="flex flex-col gap-4 pb-8">
-      {/* Stat tiles + champion (elevated, no wrapper card) */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {/* KPI tiles (one row) + Champion (far right) */}
+      <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 lg:items-stretch">
         {summaryStats.map(stat => {
           const Icon = stat.icon;
           return (
-            <div key={stat.label} className="bg-card border border-border rounded-[24px] p-5 shadow-[var(--shadow-lg)] flex flex-col gap-2 hover:-translate-y-1 hover:shadow-xl transition-all">
-              <div className="flex items-center justify-between">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">{stat.label}</span>
+            <div key={stat.label} className="lg:col-span-1 min-w-0 bg-card border border-border rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-all">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground truncate">{stat.label}</span>
                 <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-primary" /></div>
               </div>
-              <div className="font-heading font-extrabold text-[36px] text-foreground leading-none">{stat.value}</div>
+              <div className="font-heading font-extrabold text-[32px] text-foreground leading-none">{stat.value}</div>
               <span className="font-body text-[12px] text-muted-foreground font-medium">{stat.sub}</span>
             </div>
           );
         })}
-        {/* Champion — winner (not a card) */}
-        <div className="col-span-2 md:col-span-1 flex flex-col items-center justify-center gap-2 py-2">
-          <style>{`@keyframes champBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}.champ-bob{animation:champBob 2.4s ease-in-out infinite}`}</style>
-          <Trophy size={44} strokeWidth={1.5} className="text-[#E8A838] champ-bob" />
-          <div className="text-center">
-            <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">Champion</div>
-            <div className="font-heading font-black text-[16px] text-foreground leading-tight">{champion.name}</div>
-            <div className="font-body text-[11px] text-muted-foreground">{champion.count} reports</div>
-          </div>
-        </div>
+        <div className="col-span-2 min-w-0"><ChampionPodium scouts={scoutCounts} /></div>
       </div>
 
-      {/* Toolbar */}
-      <div className="flex items-center justify-between gap-3 flex-wrap">
-        <div className="flex items-center gap-2">
-          {(['all', 'unread'] as const).map(f => (
-            <button key={f} onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-full font-body font-bold text-[14px] border transition-colors ${filter === f ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border hover:border-primary hover:text-foreground'}`}>
-              {f === 'all' ? `All (${reports.length})` : `Unread (${unreadCount})`}
-            </button>
-          ))}
+      {/* Toolbar: search (left) · inline filters · Refresh + Add Report (right) */}
+      <div className="flex items-center gap-2 flex-wrap">
+        {/* Search — outlined like the filters, wider */}
+        <div className="relative flex-1 min-w-[240px] max-w-md">
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or scout…"
+            className="w-full bg-card/60 border border-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary hover:bg-card transition-colors" />
         </div>
-        <div className="flex items-center gap-2">
-          <button onClick={() => { setRefreshing(true); setTimeout(() => setRefreshing(false), 600); }}
-            className="flex items-center gap-2 bg-card border border-border text-foreground px-4 py-2 rounded-full font-body font-bold text-[14px] hover:border-primary hover:text-primary transition-colors">
-            <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />Refresh
-          </button>
-          <button onClick={onAddReport} className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2 rounded-full font-body font-bold text-[14px] hover:bg-primary/80 shadow-md">
-            <Plus size={14} />Add Report
-          </button>
-        </div>
+
+        {/* Inline filters — always in view */}
+        <InlineSel value={fStatus === 'all' ? 'All' : 'Unread'} onChange={v => setFStatus(v === 'Unread' ? 'unread' : 'all')} opts={['All', 'Unread']} allLabel="All reports" />
+        <InlineSel value={fScout} onChange={setFScout} opts={scoutOpts} allLabel="All scouts" />
+        <InlineSel value={fGrade} onChange={setFGrade} opts={gradeOpts} allLabel="All grades" />
+        <InlineSel value={fPos} onChange={setFPos} opts={posOpts} allLabel="All positions" />
+        <InlineSel value={fRecency === 'all' ? 'All' : fRecency === 'month' ? 'This month' : 'This week'} onChange={v => setFRecency(v === 'This week' ? 'week' : v === 'This month' ? 'month' : 'all')} opts={['All', 'This month', 'This week']} allLabel="All time" />
+        {activeFilters > 0 && <button onClick={clearFilters} className="font-body text-[12px] font-bold text-primary hover:underline px-1 shrink-0">Clear</button>}
+
+        <button onClick={() => { setRefreshing(true); setTimeout(() => setRefreshing(false), 600); }}
+          className="ml-auto shrink-0 flex items-center gap-2 bg-transparent border border-primary text-foreground px-4 py-2 rounded-full font-body font-bold text-[13px] hover:bg-primary/10 transition-colors">
+          <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />Refresh
+        </button>
       </div>
 
       {/* Report cards */}
+      {shown.length === 0 && (
+        <div className="bg-card border border-border rounded-[20px] p-10 text-center font-body text-[14px] text-muted-foreground shadow-[var(--shadow-lg)]">
+          No reports match your search or filters.
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {shown.map(r => {
           const overall = Math.round((gradeToScore(r.plr) + gradeToScore(r.pog)) / 2);
           return (
           <div key={r.id}
-            className={`bg-card rounded-[24px] border p-5 flex flex-col gap-3 hover:shadow-xl transition-all ${r.viewed ? 'border-border shadow-[var(--shadow-lg)]' : 'border-primary shadow-md'}`}>
+            className={`bg-card rounded-[20px] border p-5 flex flex-col gap-3 hover:shadow-xl transition-all ${r.status === 'unseen' ? 'border-primary ring-2 ring-primary/40 shadow-md' : r.status === 'opened' ? 'border-border shadow-[var(--shadow-lg)] opacity-60' : 'border-border shadow-[var(--shadow-lg)]'}`}>
             {/* Header */}
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3 min-w-0">
@@ -1267,15 +1547,12 @@ const ReportsTab = ({ onAddReport }: { onAddReport: () => void }) => {
                   </div>
                 </div>
               </div>
-              {!r.viewed && <span className="w-2.5 h-2.5 rounded-full bg-primary shrink-0 mt-1" />}
             </div>
-            {/* Notes */}
-            <p className="font-body text-[13px] text-muted-foreground line-clamp-2">{r.notes}</p>
             {/* Grade strip */}
             <div className="grid grid-cols-3 gap-2">
               {([['PLR', r.plr], ['POG', r.pog], ['NXT', r.nxt]] as const).map(([k, v]) => (
                 <div key={k} className="bg-accent/50 rounded-[14px] py-2 text-center">
-                  <div className="font-heading font-black text-[16px] text-foreground leading-none">{v}</div>
+                  <div className="font-heading font-bold text-[16px] text-foreground leading-none">{v}</div>
                   <div className="font-heading font-bold text-[9px] uppercase tracking-widest text-muted-foreground mt-1">{k}</div>
                 </div>
               ))}
@@ -1291,31 +1568,34 @@ const ReportsTab = ({ onAddReport }: { onAddReport: () => void }) => {
               </div>
             </div>
             {/* Footer */}
-            <div className="flex items-center gap-2 pt-3 border-t border-border/60">
-              <button className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-full py-2 transition-colors"><Eye size={14} />View</button>
+            <div className="flex items-center gap-2 pt-1">
+              <button onClick={() => openReport(r)} className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-full py-2 transition-colors"><Eye size={14} />View</button>
               <button className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-border text-muted-foreground hover:bg-accent hover:text-foreground hover:border-primary rounded-full py-2 transition-colors"><Download size={14} />Export</button>
             </div>
           </div>
           );
         })}
       </div>
+
+      {remaining > 0 && (
+        <button onClick={() => setVisibleCount(v => v + 9)} className="mx-auto flex items-center gap-2 bg-transparent border border-primary text-foreground px-6 py-2 rounded-full font-body font-bold text-[13px] hover:bg-primary/10 transition-colors">
+          Load more ({remaining} remaining)
+        </button>
+      )}
+
+      {viewReport && <EditFormBlueprintModal editTemplate={viewReport} onClose={() => setViewReport(null)} />}
     </div>
   );
 };
 
 // ─── Analytics Tab ─────────────────────────────────────────────────────────────
 const AnalyticsTab = () => {
-  const navigate = useNavigate();
-  const goToSection = (section: string) => navigate(`/lead-scout/players?section=${section}`);
-  const [board, setBoard] = useState<'scouts' | 'players'>('scouts');
-
-  const months = ['Aug','Sep','Oct','Nov','Dec','Jan'];
-  const data = [8,11,14,12,18,14];
-  const maxVal = Math.max(...data);
-  const spW=300; const spH=80;
-  const pts = data.map((v,i) => ({ x:(i/(data.length-1))*spW, y:spH-(v/maxVal)*(spH-10) }));
-  const linePath = pts.map((p,i) => `${i===0?'M':'L'} ${p.x} ${p.y}`).join(' ');
-  const areaPath = `${linePath} L ${pts[pts.length-1].x} ${spH} L 0 ${spH} Z`;
+  const [board, setBoard] = useState<'scouts' | 'players'>('players');
+  const [removedScouts, setRemovedScouts] = useState<string[]>([]);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const [country, setCountry] = useState('All countries');
+  const [hoverPt, setHoverPt] = useState<{ s:number; i:number } | null>(null);
+  const COUNTRIES = ['All countries','Ghana','Nigeria','Senegal','Kenya'];
 
   // ── Talent map (scatter) — reversed age axis: younger → right so top-right = priority ──
   const TALENT = [
@@ -1343,49 +1623,150 @@ const AnalyticsTab = () => {
   const isPriority=(age:number,rt:number)=> age<=19 && rt>=7.8;
   const zoneX=sx(19), zoneY=pT, zoneW=pR-zoneX, zoneH=sy(7.8)-pT;
 
-  // ── Leaderboards ──
-  const TOP_SCOUTS = [
-    { name:'Kwame Asante',  value:38 },
-    { name:'Chidi Obinna',  value:24 },
-    { name:'Wekesa Omondi', value:18 },
-    { name:'Emeka Okafor',  value:14 },
-    { name:'Joseph Njoroge',value:11 },
+  // ── Conversion trend — 3 line series, Feb–Jul, driven by country ──
+  const convMonths = ['Feb 26','Mar 26','Apr 26','May 26','Jun 26','Jul 26'];
+  const CONV_DATA: Record<string, { long:number[]; short:number[]; moved:number[]; stats:{ longAdded:number; shortAdded:number; moved:number; signed:number; longToShort:string; shortToTarget:string } }> = {
+    'All countries': { long:[20,45,31,23,29,19], short:[8,12,47,20,15,11], moved:[4,6,5,7,6,8], stats:{ longAdded:187, shortAdded:241, moved:34, signed:1, longToShort:'128.9%', shortToTarget:'14.1%' } },
+    Ghana:           { long:[12,28,19,14,17,11], short:[5,7,26,12,9,7],   moved:[2,3,3,4,3,5], stats:{ longAdded:101, shortAdded:66,  moved:20, signed:1, longToShort:'96.4%',  shortToTarget:'18.2%' } },
+    Nigeria:         { long:[8,15,11,9,12,7],    short:[3,5,14,8,6,4],     moved:[1,2,2,2,2,3], stats:{ longAdded:62,  shortAdded:40,  moved:12, signed:0, longToShort:'82.5%',  shortToTarget:'15.0%' } },
+    Senegal:         { long:[6,11,9,7,8,6],      short:[2,4,10,6,5,3],     moved:[1,1,2,2,1,2], stats:{ longAdded:47,  shortAdded:30,  moved:9,  signed:0, longToShort:'78.7%',  shortToTarget:'13.3%' } },
+    Kenya:           { long:[4,8,6,5,6,4],       short:[1,3,7,4,3,2],      moved:[0,1,1,1,1,1], stats:{ longAdded:33,  shortAdded:20,  moved:5,  signed:0, longToShort:'71.4%',  shortToTarget:'10.0%' } },
+  };
+  const cd = CONV_DATA[country] ?? CONV_DATA['All countries'];
+  const convStats: [string,string][] = [
+    ['LONG ADDED', String(cd.stats.longAdded)],
+    ['SHORT ADDED', String(cd.stats.shortAdded)],
+    ['MOVED TO TARGET', String(cd.stats.moved)],
+    ['SIGNED', String(cd.stats.signed)],
+    ['LONG TO SHORT', cd.stats.longToShort],
+    ['SHORT TO TARGET', cd.stats.shortToTarget],
   ];
-  const TOP_PLAYERS = [
-    { name:'Sory Traore', value:'8.6' },
-    { name:'Kofi Mensah', value:'8.4' },
-    { name:'Yaw Boateng', value:'8.3' },
-    { name:'Musa Kamara', value:'8.2' },
-    { name:'Amadou Sarr', value:'8.1' },
+  const CV_W=600, CV_H=240, cvML=34, cvMR=16, cvMT=16, cvMB=34;
+  const cvpL=cvML, cvpR=CV_W-cvMR, cvpT=cvMT, cvpB=CV_H-cvMB;
+  const cvPlotW=cvpR-cvpL, cvPlotH=cvpB-cvpT;
+  const cvPeak = Math.max(10, ...cd.long, ...cd.short, ...cd.moved);
+  const cvMax = Math.ceil(cvPeak/10)*10;
+  const cvStep = cvMax/5;
+  const cvGrid = [0,1,2,3,4,5].map(i => i*cvStep);
+  const cvX=(i:number)=> cvpL + (i/(convMonths.length-1))*cvPlotW;
+  const cvY=(v:number)=> cvpB - (v/cvMax)*cvPlotH;
+  const cvPath=(arr:number[])=> arr.map((v,i)=>`${i===0?'M':'L'} ${cvX(i).toFixed(1)} ${cvY(v).toFixed(1)}`).join(' ');
+  const cvSeries=[
+    { label:'Long added',     data:cd.long,  color:'#2563eb' },
+    { label:'Short added',    data:cd.short, color:'#E8A838' },
+    { label:'Moved to Target',data:cd.moved, color:'#8b5cf6' },
   ];
-  const rankStyle = (rank:number): React.CSSProperties =>
-    rank===1 ? { backgroundColor:'#E8A838', color:'#fff' }
-    : rank===2 ? { backgroundColor:'#b8d4ef', color:'#061b2e' }
-    : rank===3 ? { backgroundColor:'#CD7F32', color:'#fff' }
-    : {};
 
-  // ── Short→Target hit-rate trend ──
-  const convMonths = ['Aug','Sep','Oct','Nov','Dec','Jan'];
-  const convData = [22,28,31,35,38,41];
-  const convMax = 50;
-  const cW=300, cH=80;
-  const cPts = convData.map((v,i) => ({ x:(i/(convData.length-1))*cW, y:cH-(v/convMax)*(cH-10) }));
-  const cLine = cPts.map((p,i) => `${i===0?'M':'L'} ${p.x} ${p.y}`).join(' ');
-  const cArea = `${cLine} L ${cPts[cPts.length-1].x} ${cH} L 0 ${cH} Z`;
+  // ── Archived by stage — stacked vertical bars, Jan–Jul (mock, Jul dominant) ──
+  const archMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const archived = [
+    { long:3,  short:8,   target:1  },
+    { long:2,  short:6,   target:0  },
+    { long:4,  short:11,  target:1  },
+    { long:3,  short:7,   target:0  },
+    { long:5,  short:13,  target:2  },
+    { long:6,  short:16,  target:1  },
+    { long:75, short:341, target:11 },
+  ];
+  const AR_W=480, AR_H=240, arML=30, arMR=14, arMT=16, arMB=34;
+  const arpL=arML, arpR=AR_W-arMR, arpT=arMT, arpB=AR_H-arMB;
+  const arPlotW=arpR-arpL, arPlotH=arpB-arpT;
+  const arMax=Math.max(...archived.map(a=>a.long+a.short+a.target));
+  const arSlot=arPlotW/archived.length;
+  const arBarW=arSlot*0.46;
+  const arSeg=(v:number)=> (v/arMax)*arPlotH;
+  const arGrid=[0,0.25,0.5,0.75,1];
+
+  // ── Leaderboards ──
+  const TOP_PLAYERS = [
+    { n:'Bisenty Mendy',      c:14 },
+    { n:'Daniel Japhet',      c:14 },
+    { n:'Luis Narh',          c:12 },
+    { n:'FRANCIS SIOLOLO',    c:11 },
+    { n:'Jean Michel Briton', c:11 },
+    { n:'Kwaku Boahen',       c:10 },
+    { n:'Ismael Coulibaly',   c:9  },
+    { n:'Peter Etim',         c:9  },
+    { n:'Youssouf Sané',      c:8  },
+    { n:'Collins Otieno',     c:7  },
+  ];
+  // Highest shortlist submissions — senior + country + head scouts.
+  // Only Senior Scouts can be removed by the lead scout.
+  const SCOUT_BOARD = [
+    { n:'Kwame Asante',   role:'Country Scout', c:38 },
+    { n:'Chidi Obinna',   role:'Country Scout', c:31 },
+    { n:'David Mbugua',   role:'Senior Scout',  c:27 },
+    { n:'Wekesa Omondi',  role:'Head Scout',    c:24 },
+    { n:'Emeka Okafor',   role:'Country Scout', c:22 },
+    { n:'Nene',           role:'Senior Scout',  c:19 },
+    { n:'Joseph Njoroge', role:'Head Scout',    c:17 },
+    { n:'Brice',          role:'Senior Scout',  c:15 },
+    { n:'Amara Diallo',   role:'Country Scout', c:13 },
+    { n:'Tunde Bakare',   role:'Head Scout',    c:11 },
+    { n:'Samuel Kipruto', role:'Country Scout', c:9  },
+    { n:'Fatou Ndiaye',   role:'Country Scout', c:8  },
+  ].map(s => ({ ...s, removable: s.role === 'Senior Scout' }));
+  const scoutLeaders  = SCOUT_BOARD.filter(s => !removedScouts.includes(s.n)).slice(0, 10);
+  const playerLeaders = TOP_PLAYERS.slice(0, 10);
+  const leaders = board === 'players' ? playerLeaders : scoutLeaders;
+
+  const CARD = 'bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] overflow-hidden';
 
   return (
     <div className="flex flex-col gap-6">
 
-      {/* ── Talent map + Leaderboards ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-start">
+      {/* ── Row 1: Leaderboards + Talent map ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-stretch">
 
-        {/* Talent map — scatter */}
-        <div className="lg:col-span-2 bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] overflow-hidden">
+        {/* Card 3 — Leaderboards */}
+        <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
+          <div className="px-5 py-4 border-b border-border flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-[#E8A838]" /></div>
+            <div className="min-w-0">
+              <h3 className="font-heading font-bold text-[16px] text-foreground">Leaderboards</h3>
+              <p className="font-body text-[12px] text-muted-foreground font-medium">{board === 'scouts' ? 'Ranked by highest shortlist submissions' : "This cycle's standouts"}</p>
+            </div>
+          </div>
+          <div className="px-5 py-4 flex-1 flex flex-col">
+            {/* segmented toggle */}
+            <div className="flex items-center bg-card border border-border rounded-full p-1 gap-1 mb-3">
+              {([['scouts','Scouts'],['players','Top players']] as const).map(([key,label]) => (
+                <button key={key} type="button" onClick={() => setBoard(key)}
+                  className={`flex-1 px-3 py-1.5 rounded-full font-body font-bold text-[12px] ${board === key ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            {/* ranked list */}
+            <div className="flex flex-col">
+              {leaders.map((p,i) => (
+                <div key={p.n} className="flex items-center gap-3 py-2 border-b border-border last:border-0">
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-accent text-muted-foreground'}`}>{i+1}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-body font-bold text-[14px] text-foreground truncate">{p.n}</div>
+                    {board === 'scouts' && <div className="font-body text-[11px] text-muted-foreground truncate">{(p as any).role}</div>}
+                  </div>
+                  <span className="font-heading font-black text-[14px] text-foreground tabular-nums">{p.c}</span>
+                  {board === 'scouts' && (p as any).removable && (
+                    <button type="button" onClick={() => setRemovedScouts(prev => [...prev, p.n])}
+                      title="Remove senior scout from list" aria-label={`Remove ${p.n}`}
+                      className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors">
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Card 4 — Talent map (scatter) — kept as-is */}
+        <div className={`lg:col-span-2 ${CARD}`}>
           <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3">
             <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-foreground" /></div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-heading font-black text-[16px] text-foreground">Talent map</h3>
+                <h3 className="font-heading font-bold text-[16px] text-foreground">Talent map</h3>
                 <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Derivable</span>
               </div>
               <p className="font-body text-[12px] text-muted-foreground font-medium">Eyeball rating vs age — bubble = video coverage</p>
@@ -1423,134 +1804,159 @@ const AnalyticsTab = () => {
             </svg>
           </div>
         </div>
+      </div>
 
-        {/* Leaderboards */}
-        <div className="bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] overflow-hidden">
-          <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-[#E8A838]" /></div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <h3 className="font-heading font-black text-[16px] text-foreground">Leaderboards</h3>
-                <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Live</span>
-              </div>
-              <p className="font-body text-[12px] text-muted-foreground font-medium">This cycle's standouts</p>
+      {/* ── Row 2: Conversion trend + Archived by stage ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-stretch">
+
+        {/* Card 1 — Conversion trend */}
+        <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
+          <div className="px-5 py-4 border-b border-border flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-foreground" /></div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-heading font-bold text-[16px] text-foreground">Conversion trend</h3>
+              <p className="font-body text-[12px] text-muted-foreground font-medium">Active pipeline, monthly</p>
+            </div>
+            {/* Country pill dropdown — drives the chart + stat data */}
+            <div className="relative shrink-0">
+              <button type="button" onClick={() => setCountryOpen(o => !o)}
+                className="flex items-center gap-2 px-3 py-2 rounded-full bg-card border border-border font-body font-bold text-[12px] text-foreground hover:border-primary">
+                <Search size={14} />
+                <span className="whitespace-nowrap">{country}</span>
+                <ChevronDown size={12} />
+              </button>
+              {countryOpen && (
+                <div className="absolute right-0 mt-2 z-20 min-w-[160px] bg-card border border-border rounded-[12px] shadow-[var(--shadow-lg)] overflow-hidden py-1">
+                  {COUNTRIES.map(c => (
+                    <button key={c} type="button" onClick={() => { setCountry(c); setCountryOpen(false); }}
+                      className={`w-full text-left px-3 py-2 font-body font-bold text-[12px] hover:bg-accent ${c === country ? 'text-primary' : 'text-foreground'}`}>
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-          <div className="px-4 sm:px-5 py-4">
-            {/* toggle */}
-            <div className="flex items-center gap-1 p-1 bg-accent rounded-full mb-3">
-              {([['scouts','Top scouts'],['players','Top players']] as const).map(([id,label]) => (
-                <button key={id} onClick={() => setBoard(id)}
-                  className={`flex-1 font-heading font-black text-[11px] py-1.5 rounded-full transition-colors ${board===id ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
-                  {label}
-                </button>
+
+          {/* Stat row */}
+          <div className="px-5 py-4 border-b border-border flex flex-wrap gap-x-8 gap-y-3">
+            {convStats.map(([label,val]) => (
+              <div key={label} className="flex flex-col gap-1">
+                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
+                <span className="font-heading font-black text-[16px] text-foreground">{val}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Chart */}
+          <div className="px-5 py-4 flex-1 flex flex-col">
+            <svg viewBox={`0 0 ${CV_W} ${CV_H}`} className="w-full" style={{ height:220 }} preserveAspectRatio="xMidYMid meet">
+              {/* gridlines */}
+              {cvGrid.map(g => (
+                <g key={g}>
+                  <line x1={cvpL} y1={cvY(g)} x2={cvpR} y2={cvY(g)} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" />
+                  <text x={cvpL-6} y={cvY(g)+3} textAnchor="end" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text>
+                </g>
+              ))}
+              {/* month labels */}
+              {convMonths.map((m,i) => (
+                <text key={m} x={cvX(i)} y={cvpB+20} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>
+              ))}
+              {/* series */}
+              {cvSeries.map((s,si) => (
+                <g key={s.label}>
+                  <path d={cvPath(s.data)} fill="none" stroke={s.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  {s.data.map((v,i) => {
+                    const isH = hoverPt?.s===si && hoverPt?.i===i;
+                    return (
+                      <g key={i}>
+                        <circle cx={cvX(i)} cy={cvY(v)} r={isH?6:3} fill={s.color} className="transition-all" />
+                        {isH && (
+                          <text x={cvX(i)} y={cvY(v)-10} textAnchor="middle" fontSize="11" fontWeight="800" fill={s.color} fontFamily="Figtree, sans-serif">{v}</text>
+                        )}
+                        <circle cx={cvX(i)} cy={cvY(v)} r={11} fill="transparent" className="cursor-pointer"
+                          onMouseEnter={()=>setHoverPt({s:si,i})} onMouseLeave={()=>setHoverPt(null)}>
+                          <title>{`${convMonths[i]} · ${s.label}: ${v}`}</title>
+                        </circle>
+                      </g>
+                    );
+                  })}
+                </g>
+              ))}
+            </svg>
+            {/* legend */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">
+              {cvSeries.map(s => (
+                <div key={s.label} className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background:s.color }} />
+                  <span className="font-heading font-bold text-[12px] text-foreground">{s.label}</span>
+                </div>
               ))}
             </div>
-            <div className="flex flex-col gap-1">
-              {board==='scouts'
-                ? TOP_SCOUTS.map((s,i) => (
-                    <div key={s.name} className="flex items-center gap-3 px-2 py-2 rounded-[12px]">
-                      <span className="w-6 h-6 rounded-full bg-accent text-muted-foreground flex items-center justify-center font-heading font-black text-[11px] shrink-0" style={rankStyle(i+1)}>{i+1}</span>
-                      <span className="flex-1 min-w-0 font-body font-bold text-[14px] text-foreground truncate">{s.name}</span>
-                      <span className="font-heading font-black text-[14px] tabular-nums text-foreground">{s.value}</span>
-                    </div>
-                  ))
-                : TOP_PLAYERS.map((p,i) => (
-                    <button key={p.name} onClick={() => goToSection('short-list')}
-                      className="flex items-center gap-3 px-2 py-2 rounded-[12px] hover:bg-accent transition-colors text-left">
-                      <span className="w-6 h-6 rounded-full bg-accent text-muted-foreground flex items-center justify-center font-heading font-black text-[11px] shrink-0" style={rankStyle(i+1)}>{i+1}</span>
-                      <span className="flex-1 min-w-0 font-body font-bold text-[14px] text-foreground truncate">{p.name}</span>
-                      <span className="font-heading font-black text-[14px] tabular-nums text-foreground flex items-center gap-1"><Eye size={11} className="text-muted-foreground" />{p.value}</span>
-                    </button>
-                  ))
-              }
-            </div>
-            <p className="font-body text-[11px] text-muted-foreground font-medium mt-3 px-2">
-              {board==='scouts' ? 'Grade-A players found this season' : 'Highest eyeball rating on Short List'}
-            </p>
+            <p className="font-body text-[11px] text-muted-foreground mt-2">Signed dates tracked from deployment onward.</p>
           </div>
         </div>
-      </div>
 
-      {/* ── Short→Target conversion trend ── */}
-      <div className="bg-card rounded-[24px] border border-border shadow-[var(--shadow-lg)] overflow-hidden">
-        <div className="px-4 sm:px-6 py-4 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-foreground" /></div>
+        {/* Card 2 — Archived by stage */}
+        <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
+          <div className="px-5 py-4 border-b border-border flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-foreground" /></div>
             <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <h3 className="font-heading font-black text-[16px] text-foreground">Conversion trend</h3>
-                <span className="font-heading font-bold text-micro bg-accent text-muted-foreground rounded-full px-2">Derivable</span>
-              </div>
-              <p className="font-body text-[12px] text-muted-foreground font-medium">Short → Target hit-rate · last 6 months</p>
+              <h3 className="font-heading font-bold text-[16px] text-foreground">Archived by stage</h3>
+              <p className="font-body text-[12px] text-muted-foreground font-medium">Archived from the pipeline, monthly</p>
             </div>
           </div>
-          <div className="text-left sm:text-right pl-13 sm:pl-0">
-            <span className="font-heading font-extrabold text-h2 text-foreground leading-none tabular-nums">41%</span>
-            <p className="font-body text-[12px] text-foreground font-bold mt-0.5">+19 pts since Aug</p>
-          </div>
-        </div>
-        <div className="px-4 sm:px-6 py-4">
-          <svg viewBox={`0 0 ${cW} ${cH+24}`} className="w-full" style={{ height:110 }}>
-            <defs>
-              <linearGradient id="convGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#061b2e" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="#061b2e" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path d={cArea} fill="url(#convGrad)" />
-            <path d={cLine} fill="none" stroke="#061b2e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            {cPts.map((p,i) => (
-              <g key={i}>
-                <circle cx={p.x} cy={p.y} r={i===cPts.length-1?4:3} fill={i===cPts.length-1?'#061b2e':'#fff'} stroke="#061b2e" strokeWidth="2" />
-                <text x={p.x} y={cH+18} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{convMonths[i]}</text>
-              </g>
-            ))}
-          </svg>
-        </div>
-      </div>
 
-      {/* ── Existing: Short List Tracked + Grade Breakdown ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-card rounded-[40px] border border-border shadow-[var(--shadow-lg)] p-[var(--pad-card)]">
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
-            <div>
-              <h3 className="font-heading font-semibold text-h5 text-foreground">Short List Tracked</h3>
-              <p className="font-body text-[12px] text-muted-foreground font-medium mt-1">Lead Scout · last 6 months</p>
-            </div>
-            <div className="text-left sm:text-right">
-              <span className="font-heading font-extrabold text-h2 text-foreground leading-none">+27%</span>
-              <p className="font-body text-[12px] text-foreground font-bold mt-0.5">vs last period</p>
+          {/* Stat row */}
+          <div className="px-5 py-4 border-b border-border flex flex-wrap gap-x-8 gap-y-3">
+            {[['LONG','98'],['SHORT','402'],['TARGET','17']].map(([label,val]) => (
+              <div key={label} className="flex flex-col gap-1">
+                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
+                <span className="font-heading font-black text-[16px] text-foreground">{val}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Chart — stacked bars */}
+          <div className="px-5 py-4 flex-1 flex flex-col">
+            <svg viewBox={`0 0 ${AR_W} ${AR_H}`} className="w-full" style={{ height:220 }} preserveAspectRatio="xMidYMid meet">
+              {/* gridlines */}
+              {arGrid.map(f => {
+                const y = arpB - f*arPlotH;
+                return <line key={f} x1={arpL} y1={y} x2={arpR} y2={y} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" />;
+              })}
+              {/* bars */}
+              {archived.map((a,i) => {
+                const cx = arpL + (i+0.5)*arSlot;
+                const x = cx - arBarW/2;
+                const lh = arSeg(a.long), sh = arSeg(a.short), th = arSeg(a.target);
+                const yLong = arpB - lh, yShort = yLong - sh, yTarget = yShort - th;
+                return (
+                  <g key={i}>
+                    <rect x={x} y={yLong}   width={arBarW} height={lh} fill="#2563eb" className="cursor-pointer transition-opacity hover:opacity-70">
+                      <title>{`${archMonths[i]} · Long: ${a.long}`}</title>
+                    </rect>
+                    <rect x={x} y={yShort}  width={arBarW} height={sh} fill="#E8A838" className="cursor-pointer transition-opacity hover:opacity-70">
+                      <title>{`${archMonths[i]} · Short: ${a.short}`}</title>
+                    </rect>
+                    <rect x={x} y={yTarget} width={arBarW} height={th} fill="#8b5cf6" className="cursor-pointer transition-opacity hover:opacity-70">
+                      <title>{`${archMonths[i]} · Target: ${a.target}`}</title>
+                    </rect>
+                    <text x={cx} y={arpB+20} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{archMonths[i]}</text>
+                  </g>
+                );
+              })}
+            </svg>
+            {/* legend */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">
+              {[['Long','#2563eb'],['Short','#E8A838'],['Target','#8b5cf6']].map(([label,color]) => (
+                <div key={label} className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background:color }} />
+                  <span className="font-heading font-bold text-[12px] text-foreground">{label}</span>
+                </div>
+              ))}
             </div>
           </div>
-          <svg viewBox={`0 0 ${spW} ${spH+24}`} className="w-full mt-4" style={{ height:110 }}>
-            <defs>
-              <linearGradient id="leadGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#061b2e" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="#061b2e" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path d={areaPath} fill="url(#leadGrad)" />
-            <path d={linePath} fill="none" stroke="#061b2e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            {pts.map((p,i) => (
-              <g key={i}>
-                <circle cx={p.x} cy={p.y} r={i===pts.length-1?4:3} fill={i===pts.length-1?'#061b2e':'#fff'} stroke="#061b2e" strokeWidth="2" />
-                <text x={p.x} y={spH+18} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{months[i]}</text>
-              </g>
-            ))}
-          </svg>
-        </div>
-        <div className="bg-primary rounded-[40px] p-[var(--pad-card)] flex flex-col gap-4">
-          <h3 className="font-heading font-semibold text-h5 text-chalk">Grade Breakdown</h3>
-          {[{g:'A+',n:4,w:80},{g:'A',n:6,w:60},{g:'B+',n:3,w:40},{g:'B',n:2,w:20}].map(({g,n,w}) => (
-            <div key={g} className="flex items-center gap-3">
-              <span className="font-body font-black text-[14px] text-chalk w-6">{g}</span>
-              <div className="flex-1 h-3 bg-card/10 rounded-full overflow-hidden">
-                <div className="h-full bg-primary rounded-full" style={{ width:`${w}%` }} />
-              </div>
-              <span className="font-mono font-bold text-[14px] text-muted-foreground w-4">{n}</span>
-            </div>
-          ))}
         </div>
       </div>
     </div>
@@ -1578,7 +1984,15 @@ export default function LeadScoutDashboard() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const toggleTask = (id: string) => setTasks(prev => prev.map(t => t.id===id ? { ...t, completed:!t.completed } : t));
-  const addTask = (text: string) => setTasks(prev => [...prev, { id:`t${Date.now()}`, text, priority:'High', dueDate:'This Week', assignedTo:'Me', completed:false }]);
+  const addTask = (input: string | { text: string; assignedTo?: string; dueDate?: string; priority?: Task['priority'] }) => {
+    const t = typeof input === 'string' ? { text: input } : input;
+    const nowLabel = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    setTasks(prev => [...prev, {
+      id: `t${Date.now()}`, text: t.text,
+      priority: t.priority ?? 'Medium', dueDate: t.dueDate || 'This week',
+      assignedTo: t.assignedTo || 'Me', allocated: nowLabel, completed: false,
+    }]);
+  };
   const addNotif = (text: string, type: AppNotif['type']) =>
     setNotifications(prev => [{ id:`n${Date.now()}`, text, time:'Just now', read:false, type }, ...prev]);
   const handleNudge = (name: string) => addNotif(`You nudged ${name} to watch pending packages`, 'nudge');
@@ -1612,8 +2026,8 @@ export default function LeadScoutDashboard() {
       {/* ── Modals ── */}
       {showThisWeek && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowThisWeek(false)}>
-          <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-md border border-border flex flex-col max-h-[80vh]" onClick={e => e.stopPropagation()}>
-            <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[32px] shrink-0">
+          <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border flex flex-col max-h-[80vh]" onClick={e => e.stopPropagation()}>
+            <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[16px] shrink-0">
               <div className="flex items-center gap-3">
                 <Calendar size={20} className="text-foreground" />
                 <span className="font-heading font-semibold text-[16px] text-white">Tasks This Week</span>
@@ -1629,7 +2043,7 @@ export default function LeadScoutDashboard() {
             </div>
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
               {tasks.filter(t => !t.completed).map(task => (
-                <div key={task.id} className="flex items-start gap-3 p-3 rounded-[16px] hover:bg-accent cursor-pointer group" onClick={() => toggleTask(task.id)}>
+                <div key={task.id} className="flex items-start gap-3 p-3 rounded-[20px] hover:bg-accent cursor-pointer group" onClick={() => toggleTask(task.id)}>
                   <div className="w-5 h-5 rounded-full border-2 border-border group-hover:border-primary shrink-0 mt-0.5 transition-colors" />
                   <div className="flex-1 min-w-0">
                     <p className="font-body font-bold text-[14px] text-foreground">{task.text}</p>
@@ -1648,7 +2062,7 @@ export default function LeadScoutDashboard() {
                     <div className="flex-1 h-px bg-secondary" />
                   </div>
                   {tasks.filter(t => t.completed).map(task => (
-                    <div key={task.id} className="flex items-start gap-3 p-3 rounded-[16px] opacity-50 cursor-pointer" onClick={() => toggleTask(task.id)}>
+                    <div key={task.id} className="flex items-start gap-3 p-3 rounded-[20px] opacity-50 cursor-pointer" onClick={() => toggleTask(task.id)}>
                       <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0 mt-0.5"><CheckCircle size={12} className="text-white" /></div>
                       <p className="font-body font-bold text-[14px] text-muted-foreground line-through">{task.text}</p>
                     </div>
@@ -1664,8 +2078,8 @@ export default function LeadScoutDashboard() {
 
       {showAddPlayer && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
-          <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-2xl border border-border max-h-[90vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
-            <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[32px] shrink-0">
+          <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-border max-h-[90vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
+            <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[16px] shrink-0">
               <span className="font-heading font-semibold text-[20px] text-white">Add New Player</span>
               <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
             </div>
@@ -1729,8 +2143,8 @@ export default function LeadScoutDashboard() {
           notifOpen={showNotifPanel}
           onNotifToggle={() => setShowNotifPanel(p => !p)}
           notifPanel={(
-            <div className="absolute right-0 mt-3 w-80 bg-card rounded-[24px] shadow-2xl border border-border z-50 overflow-hidden">
-              <div className="px-6 py-4 bg-primary rounded-t-[24px] flex items-center justify-between">
+            <div className="absolute right-0 mt-3 w-80 bg-card rounded-[20px] shadow-2xl border border-border z-50 overflow-hidden">
+              <div className="px-6 py-4 bg-primary rounded-t-[16px] flex items-center justify-between">
                 <span className="font-heading font-black text-[14px] text-white">Notifications</span>
                 <button onClick={() => setShowNotifPanel(false)} className="text-white/60 hover:text-white"><X size={16} /></button>
               </div>
@@ -1757,7 +2171,7 @@ export default function LeadScoutDashboard() {
           profileOpen={showProfileMenu}
           onProfileToggle={() => setShowProfileMenu(p => !p)}
           profileMenu={(
-            <div className="absolute right-0 mt-3 w-64 bg-card rounded-[24px] shadow-xl border border-border z-50 overflow-hidden">
+            <div className="absolute right-0 mt-3 w-64 bg-card rounded-[20px] shadow-xl border border-border z-50 overflow-hidden">
               <div className="px-5 py-4 border-b border-border flex items-center gap-3 bg-card">
                 <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=faces&q=80" alt="Tom" className="w-10 h-10 rounded-full object-cover shrink-0" />
                 <div>
@@ -1766,7 +2180,7 @@ export default function LeadScoutDashboard() {
                 </div>
               </div>
               <div className="p-2">
-                <button onClick={() => { setShowProfileMenu(false); sessionStorage.clear(); navigate('/login'); }} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors">
+                <button onClick={() => { setShowProfileMenu(false); sessionStorage.clear(); navigate('/login'); }} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[20px] transition-colors">
                   <LogOut size={16} className="mr-3" />Log out
                 </button>
               </div>

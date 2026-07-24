@@ -1,45 +1,29 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router';
-import { 
-  ChevronDown, ArrowRight, Archive, UserCircle, Star, Bookmark, Trash2, ArrowUpRight
+import {
+  ChevronDown, ArrowRight, ArrowLeft, Archive, UserCircle, Star, Bookmark, Trash2, ArrowUpRight
 } from 'lucide-react';
 
-// ─── Action Dropdown ──────────────────────────────────────────────────────────────
+// ─── Grouped action buttons (single pill, all actions inline) ─────────────────────
 interface ActionItem { label: string; action: () => void; danger?: boolean; icon: React.ReactNode; }
 
-const ActionDropdown = ({ playerId, items }: {
-  playerId: string; items: ActionItem[];
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const primaryItem = items[0];
-  const restItems = items.slice(1);
-
-  if (!primaryItem) return null;
-
+const ActionGroup = ({ items }: { items: ActionItem[] }) => {
+  if (!items.length) return null;
   return (
-    <div className="flex items-center gap-0 relative">
-      <button onClick={(e) => { e.stopPropagation(); primaryItem.action(); }} title={primaryItem.label}
-        className={`w-7 h-7 rounded-l-lg flex items-center justify-center transition-all border border-r-0 bg-accent text-foreground hover:bg-primary/80 hover:text-primary-foreground border-border`}>
-        {primaryItem.icon}
-      </button>
-      {restItems.length > 0 && (
-        <div className="relative">
-          <button onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
-            className="w-5 h-7 rounded-r-lg bg-accent border border-border text-foreground hover:bg-primary/80 hover:text-primary-foreground flex items-center justify-center transition-all">
-            <ChevronDown size={10} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+    <div className="inline-flex items-center rounded-full bg-[#eaf2fb] border border-[#b4d7f6] p-0.5 shrink-0">
+      {items.map((item, i) => (
+        <React.Fragment key={i}>
+          {i > 0 && <span className="w-px h-4 bg-[#b4d7f6] self-center shrink-0" />}
+          <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
+            className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+              item.label === 'Restore'
+                ? 'text-emerald-600 hover:bg-emerald-500 hover:text-white'
+                : 'text-[#061b2e] hover:bg-primary hover:text-white'
+            }`}>
+            {item.icon}
           </button>
-          {isOpen && (
-            <div className="absolute top-full right-0 mt-1 z-[100] bg-card border border-border rounded-[12px] shadow-2xl min-w-[140px] overflow-hidden animate-fade-in">
-              {restItems.map((item, i) => (
-                <button key={i} onClick={(e) => { e.stopPropagation(); item.action(); setIsOpen(false); }}
-                  className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors ${item.danger ? 'text-[#E05C4B] hover:bg-[#E05C4B]/10' : 'text-foreground hover:bg-accent'}`}>
-                  {item.icon}{item.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+        </React.Fragment>
+      ))}
     </div>
   );
 };
@@ -51,21 +35,25 @@ export const CardView = ({
   archiveView = 'active', 
   flagMap = {}, 
   currentTab, 
-  onReserve, 
-  onShort, 
-  onSendForward, 
+  onReserve,
+  onShort,
+  onSendForward,
   onArchive,
+  onSendBackward,
+  onRestore,
   onRaise
 }: {
-  players: any[]; 
-  archivedSet?: Set<string>; 
+  players: any[];
+  archivedSet?: Set<string>;
   archiveView?: 'active' | 'audit';
-  flagMap?: Record<string, string>; 
+  flagMap?: Record<string, string>;
   currentTab: string;
-  onReserve: (id: string) => void; 
+  onReserve: (id: string) => void;
   onShort: (id: string) => void;
-  onSendForward: (id: string) => void; 
+  onSendForward: (id: string) => void;
   onArchive: (id: string) => void;
+  onSendBackward?: (id: string) => void;
+  onRestore?: (id: string) => void;
   onRaise?: (id: string, name: string) => void;
 }) => {
   const navigate = useNavigate();
@@ -116,7 +104,7 @@ export const CardView = ({
             {/* Position header (STRIKERS …) */}
             <button
               onClick={() => toggleGroup(posKey)}
-              className="flex items-center gap-3 w-full hover:opacity-70 transition-opacity group text-left"
+              className="sticky top-0 z-20 bg-[#f4faff] -mx-4 px-4 py-2 flex items-center gap-3 w-full hover:opacity-70 transition-opacity group text-left"
             >
               <ChevronDown size={18} className={`text-[#061b2e] transition-transform shrink-0 ${posCollapsed ? '-rotate-90' : ''}`} />
               <span className="font-heading font-bold text-[16px] text-[#061b2e] uppercase tracking-wider whitespace-nowrap">
@@ -133,7 +121,7 @@ export const CardView = ({
               return (
                 <div key={groupKey} className="flex flex-col gap-4">
                   {!isArchiveGroup && (
-                    <div className="flex flex-col gap-1 w-full pl-1">
+                    <div className="sticky top-[40px] z-10 bg-[#f4faff] -mx-4 px-4 py-1 flex flex-col gap-1 w-full">
                       <button
                         onClick={() => toggleGroup(groupKey)}
                         className="flex items-center gap-2 w-fit hover:opacity-70 transition-opacity group text-left"
@@ -150,14 +138,14 @@ export const CardView = ({
                   )}
 
                   {!isCollapsed && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fade-in">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 animate-fade-in">
                 {grpPlayers.map(player => {
                   const isArchived = archivedSet.has(player.id);
                   const natCode = flagMap[player.nationality] || 'un';
                   
                   // Generic Action Builder
                   const getActions = () => {
-                    if (isArchived) return [{ label: 'Restore', action: () => {}, icon: <ArrowUpRight size={12} /> }];
+                    if (isArchived) return [{ label: 'Restore', action: () => onRestore?.(player.id), icon: <ArrowUpRight size={12} /> }];
                     if (currentTab === 'players-in-scope') return [
                       { label: 'Top 10', action: () => onShort(player.id), icon: <Star size={12} /> },
                       { label: 'Reserve', action: () => onReserve(player.id), icon: <Bookmark size={12} /> },
@@ -172,30 +160,51 @@ export const CardView = ({
                       { label: 'Top 10', action: () => onShort(player.id), icon: <Star size={12} /> },
                       { label: 'Remove', action: () => onArchive(player.id), icon: <Trash2 size={12} />, danger: true }
                     ];
-                    // Senior/Lead list tabs
+                    // Senior/Lead list tabs — mirror the table action sets per tab
+                    if (currentTab === 'database') return [
+                      { label: 'Forward', action: () => onSendForward(player.id), icon: <ArrowRight size={12} /> },
+                    ];
+                    if (currentTab === 'long-list') return [
+                      { label: 'Forward', action: () => onSendForward(player.id), icon: <ArrowRight size={12} /> },
+                      { label: 'Archive', action: () => onArchive(player.id), icon: <Archive size={12} />, danger: true },
+                    ];
+                    if (currentTab === 'short-list') return [
+                      { label: 'Forward', action: () => onSendForward(player.id), icon: <ArrowRight size={12} /> },
+                      { label: 'Back',    action: () => onSendBackward?.(player.id), icon: <ArrowLeft size={12} /> },
+                      { label: 'Archive', action: () => onArchive(player.id), icon: <Archive size={12} />, danger: true },
+                    ];
+                    if (currentTab === 'target-list') return [
+                      { label: 'Back',    action: () => onSendBackward?.(player.id), icon: <ArrowLeft size={12} /> },
+                      { label: 'Archive', action: () => onArchive(player.id), icon: <Archive size={12} />, danger: true },
+                    ];
                     return [
                       { label: 'Forward', action: () => onSendForward(player.id), icon: <ArrowRight size={12} /> },
-                      { label: 'Profile', action: () => navigate(`/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } }), icon: <UserCircle size={12} /> },
-                      { label: 'Archive', action: () => onArchive(player.id), icon: <Archive size={12} />, danger: true }
                     ];
                   };
 
                   return (
-                    <div key={player.id} className={`bg-[#f4faff] relative rounded-[32px] overflow-hidden border border-[#b4d7f6] shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-[380px] ${isArchived ? 'opacity-50' : ''}`}>
+                    <div key={player.id} className={`bg-[#f4faff] relative rounded-[32px] overflow-hidden border border-[#b4d7f6] shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-none ${isArchived ? 'opacity-50' : ''}`}>
                       {isArchived && (
                         <div className="bg-muted-foreground/80 py-2 px-4 text-center">
                           <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-chalk">Archived – Not Visible to Scouts</span>
                         </div>
                       )}
-                      <div className="p-[24.8px] flex flex-col gap-[16px]">
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-[12px]">
-                            <div className="bg-[#f0f7fd] drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[56px] rounded-full shrink-0 border border-[#b4d7f6] relative">
-                              <p className="font-heading font-bold text-[#061b2e] text-[14px]">{player.initials}</p>
+                      <div className="p-[16px] flex flex-col gap-[10px]">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex items-center gap-[10px] min-w-0 flex-1">
+                            <div className="bg-[#f0f7fd] drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[44px] rounded-full shrink-0 border border-[#b4d7f6] relative">
+                              <p className="font-heading font-bold text-[#061b2e] text-[12px]">{player.initials}</p>
+                              <span className={`absolute bottom-0 right-0 w-[13px] h-[13px] rounded-full border-2 border-[#f4faff] ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-[#E05C4B]'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                             </div>
-                            <div className="flex flex-col gap-[6px]">
-                              <p onClick={() => navigate(`/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[#061b2e] text-[16px] hover:underline cursor-pointer truncate max-w-[140px] leading-tight">{player.name}</p>
-                              <div className="flex gap-[6px] items-center">
+                            <div className="flex flex-col gap-[6px] min-w-0">
+                              <div className="flex items-center gap-[6px] min-w-0">
+                                <p onClick={() => navigate(`/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[#061b2e] text-[15px] hover:underline cursor-pointer leading-tight truncate min-w-0">{player.name}</p>
+                                <span className="size-[16px] rounded-full overflow-hidden border border-[#b4d7f6] shrink-0">
+                                  <img src={`https://flagcdn.com/w40/${natCode}.png`} alt={player.nationality} className="size-full object-cover" />
+                                </span>
+                                {player.dotColor && <div className={`w-2 h-2 rounded-full shrink-0 ${player.dotColor}`} />}
+                              </div>
+                              <div className="flex gap-[6px] items-center flex-wrap">
                                 <div className="bg-[#d2e7fa] px-[8px] py-[2px] rounded-[4px]">
                                   <p className="font-heading font-bold text-[#304151] text-[12px] whitespace-nowrap">{player.age}</p>
                                 </div>
@@ -205,40 +214,44 @@ export const CardView = ({
                                 <div className="bg-[#d2e7fa] px-[8px] py-[2px] rounded-[4px]">
                                   <p className="font-heading font-bold text-[#304151] text-[12px] whitespace-nowrap">H{player.highlightVideos || 0}</p>
                                 </div>
-                                {player.dotColor && <div className={`w-2 h-2 rounded-full self-center ${player.dotColor}`} />}
+                                <div className="bg-[#d2e7fa] px-[8px] py-[2px] rounded-[4px]">
+                                  <p className="font-heading font-bold text-[#304151] text-[12px] whitespace-nowrap">{player.foot === 'Left' ? 'LF' : player.foot === 'Right' ? 'RF' : 'LF/RF'}</p>
+                                </div>
                               </div>
                             </div>
                           </div>
-                          <ActionDropdown playerId={player.id} items={getActions()} />
+                          <ActionGroup items={getActions()} />
                         </div>
 
                         <div className="flex items-stretch gap-[10px] w-full">
-                          <div className="relative bg-[#f4faff] border border-[#b4d7f6] rounded-[16px] px-[12px] py-[10px] flex-1 min-w-0 flex flex-col items-start justify-center">
-                            <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
-                            <div className="flex items-center gap-[6px] w-full min-w-0">
-                              <p className="font-heading font-bold text-[#061b2e] text-[14px] truncate leading-tight min-w-0">{player.team || player.pTeam}</p>
-                              <span className="size-[18px] rounded-full overflow-hidden border border-[#b4d7f6] shrink-0">
-                                <img src={`https://flagcdn.com/w40/${natCode}.png`} alt={player.nationality} className="size-full object-cover" />
-                              </span>
+                          <div className="relative bg-[#f4faff] border border-[#b4d7f6] rounded-[16px] px-[12px] py-[7px] flex-1 min-w-0 flex items-center gap-[10px]">
+                            <div className="flex flex-col items-start min-w-0 flex-1">
+                              <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
+                              <p className="font-heading font-bold text-[#061b2e] text-[14px] leading-tight truncate w-full">{player.team || player.pTeam}</p>
+                            </div>
+                            <div className="w-px self-stretch bg-[#b4d7f6] shrink-0" />
+                            <div className="flex flex-col items-center shrink-0">
+                              <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Pos</p>
+                              <p className="font-heading font-bold text-[#061b2e] text-[14px] leading-tight whitespace-nowrap">{player.posAcronym || player.pos}</p>
                             </div>
                           </div>
 
                           <div className="flex items-center justify-end gap-[14px] shrink-0">
                             <div className="flex flex-col items-center">
                               <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">APP</p>
-                              <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">{player.app}</p>
+                              <p className="font-mono font-bold text-[#061b2e] text-[15px] leading-[18px]">{player.app}</p>
                             </div>
                             <div className="flex flex-col items-center">
                               <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">G</p>
-                              <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">{player.goals}</p>
+                              <p className="font-mono font-bold text-[#061b2e] text-[15px] leading-[18px]">{player.goals}</p>
                             </div>
                             <div className="flex flex-col items-center">
                               <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">A</p>
-                              <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">{player.ass}</p>
+                              <p className="font-mono font-bold text-[#061b2e] text-[15px] leading-[18px]">{player.ass}</p>
                             </div>
                             <div className="flex flex-col items-center">
                               <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">SCOUTS</p>
-                              <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">1</p>
+                              <p className="font-mono font-bold text-[#061b2e] text-[15px] leading-[18px]">1</p>
                             </div>
                           </div>
                         </div>

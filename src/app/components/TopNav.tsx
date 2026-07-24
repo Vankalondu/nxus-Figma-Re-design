@@ -51,10 +51,11 @@ export function TopNav({
   const btnText = responsive ? 'hidden lg:inline' : '';
   const btnPad = responsive ? 'px-3 lg:px-6' : 'px-6';
   const actionsGap = responsive ? 'gap-2 lg:gap-3' : 'gap-3';
-  const stick = sticky ? 'sticky top-6' : 'relative';
+  const bandPadX = responsive ? 'px-4 md:px-8' : 'px-8';
 
   return (
-    <div className={stick + ' z-50 flex items-center justify-between gap-2 ' + mx + ' mb-2 bg-card/90 backdrop-blur-xl border border-border p-2 ' + pl + ' rounded-[24px] shadow-[var(--shadow-xl)] shrink-0'}>
+    <div className={(sticky ? 'sticky top-0 z-50 bg-background ' : '') + bandPadX + ' pt-4 pb-2 shrink-0'}>
+    <div className={'relative z-50 flex items-center justify-between gap-2 bg-card border border-border p-2 ' + pl + ' rounded-[20px] shadow-[var(--shadow-xl)]'}>
       {/* Hamburger — mobile only; opens the Sidebar drawer via a decoupled event */}
       {responsive && (
         <button onClick={() => window.dispatchEvent(new CustomEvent('nxus:open-menu'))} aria-label="Open menu"
@@ -114,12 +115,13 @@ export function TopNav({
 
       {/* Mobile expanded search overlay */}
       {responsive && searchOpen && (
-        <div className="md:hidden absolute inset-0 z-20 flex items-center gap-3 bg-card rounded-[24px] px-4">
+        <div className="md:hidden absolute inset-0 z-20 flex items-center gap-3 bg-card rounded-[20px] px-4">
           <Search size={18} className="text-muted-foreground shrink-0" />
           <input autoFocus type="text" placeholder={searchPlaceholder} className="flex-1 min-w-0 bg-transparent border-none font-body text-body-sm focus:outline-none text-foreground placeholder:text-muted-foreground font-bold" />
           <button onClick={() => setSearchOpen(false)} aria-label="Close search" className="shrink-0 text-muted-foreground hover:text-foreground"><X size={18} /></button>
         </div>
       )}
+    </div>
     </div>
   );
 }

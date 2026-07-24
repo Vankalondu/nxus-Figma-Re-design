@@ -28,7 +28,7 @@ interface ExtPlayer {
   id: string; name: string; initials: string; age: number;
   nationality: string; country: string; pos: string; posAcronym: string;
   foot: 'Left' | 'Right' | 'Both'; height: number;
-  profile: 'Wonderkid' | 'Prospect' | 'Journeyman';
+  profile: 'Wonderkid' | 'Prospect' | 'Performance';
   scout: string; goals: number; ass: number; app: number; pens: number;
   matchVideos: number; highlightVideos: number; scouted: boolean; yob: number;
   submissionDate: string; dob: string; team: string; monitor: boolean;
@@ -57,14 +57,31 @@ const POS_COLORS: Record<string, string> = {
 };
 const POS_ORDER = ['Strikers', 'Wingers', 'Midfielders', 'Full Backs', 'Centre Backs'];
 const TABS: { id: SeniorTab; label: string }[] = [
-  { id: 'settings',    label: 'Settings'    },
-  { id: 'reports',     label: 'Reports'     },
-  { id: 'database',    label: 'Database'    },
-  { id: 'long-list',   label: 'Long List'   },
-  { id: 'short-list',  label: 'Short List'  },
   { id: 'target-list', label: 'Target List' },
+  { id: 'short-list',  label: 'Short List'  },
+  { id: 'long-list',   label: 'Long List'   },
+  { id: 'database',    label: 'Database'    },
   { id: 'signed-list', label: 'Signed List' },
+  { id: 'reports',     label: 'Reports'     },
+  { id: 'settings',    label: 'Settings'    },
 ];
+// ─── User-arrangeable tab order (persisted per role) ───────────────────────────
+// No backend/per-email identity exists (login role lives in sessionStorage), so a
+// user's chosen order is saved to localStorage keyed by their role — persists across
+// sessions until they reorder again or reset.
+const DEFAULT_TAB_ORDER: SeniorTab[] = TABS.map(t => t.id);
+const tabOrderKey = (role?: string) => `nxus:playerTabOrder:${(role || 'default').toLowerCase().replace(/\s+/g, '-')}`;
+const loadTabOrder = (role?: string): SeniorTab[] => {
+  try {
+    const raw = window.localStorage.getItem(tabOrderKey(role));
+    if (!raw) return DEFAULT_TAB_ORDER;
+    const saved = JSON.parse(raw) as string[];
+    // Keep only ids we still know, then append any tabs added since the order was saved.
+    const known = saved.filter((id): id is SeniorTab => (DEFAULT_TAB_ORDER as string[]).includes(id));
+    const missing = DEFAULT_TAB_ORDER.filter(id => !known.includes(id));
+    return known.length ? [...known, ...missing] : DEFAULT_TAB_ORDER;
+  } catch { return DEFAULT_TAB_ORDER; }
+};
 const PAGE_TITLES: Record<SeniorTab, { first: string; rest: string }> = {
   'settings':    { first: 'Scope',   rest: 'Settings' },
   'reports':     { first: 'Scouting', rest: 'Reports' },
@@ -95,7 +112,7 @@ const TAB_SUBTITLES: Record<SeniorTab, string> = {
 const SCOUTS   = ['Kwame A.', 'Chidi O.', 'Wekesa O.', 'Emeka E.', 'Pape S.'];
 const HEIGHTS  = [165, 170, 172, 175, 177, 180, 182, 185, 188, 190];
 const FEET: Array<'Left' | 'Right' | 'Both'> = ['Left', 'Right', 'Right', 'Right', 'Both'];
-const PROFILES: Array<'Wonderkid' | 'Prospect' | 'Journeyman'> = ['Wonderkid', 'Prospect', 'Prospect', 'Prospect', 'Journeyman'];
+const PROFILES: Array<'Wonderkid' | 'Prospect' | 'Performance'> = ['Wonderkid', 'Prospect', 'Prospect', 'Performance', 'Performance'];
 const POS_ACRONYM_MAP: Record<string, string[]> = {
   Strikers: ['ST'], Wingers: ['LW', 'RW'], Midfielders: ['CM', 'CDM', 'CAM'],
   'Full Backs': ['FB'], 'Centre Backs': ['CB'],
@@ -378,20 +395,88 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
 const ActionButtons = ({ items }: { items: ActionItem[] }) => {
   if (!items.length) return null;
   return (
-    <div className="flex items-center justify-center gap-1">
+    <div className="inline-flex items-center justify-center rounded-full bg-accent border border-border p-0.5">
       {items.map((item, i) => (
-        <button key={i} onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
-          className={`w-7 h-7 rounded-full flex items-center justify-center transition-all border shrink-0 ${
-            item.danger
-              ? 'bg-[#E05C4B]/10 text-[#E05C4B] hover:bg-[#E05C4B] hover:text-white border-[#E05C4B]/20'
-              : item.label === 'Restore'
-                ? 'bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500 hover:text-white border-emerald-500/20'
-                : 'bg-accent text-foreground hover:bg-primary hover:text-primary-foreground border-border'
-          }`}>
-          {item.icon}
-        </button>
+        <React.Fragment key={i}>
+          {i > 0 && <span className="w-px h-4 bg-border/70 self-center shrink-0" />}
+          <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
+            className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
+              item.label === 'Restore'
+                ? 'text-emerald-600 hover:bg-emerald-500 hover:text-white'
+                : 'text-foreground hover:bg-primary hover:text-primary-foreground'
+            }`}>
+            {item.icon}
+          </button>
+        </React.Fragment>
       ))}
     </div>
+  );
+};
+
+// ─── Muted tint — any non-palette colour renders as a soft tonal chip ──────────────
+// System rule: fill = hue@~13% (#hex22), text = full hue, border = hue@~30% (#hex55).
+// Never a solid saturated fill; keeps semantic colours blended with the palette.
+const tintStyle = (hex?: string): React.CSSProperties => {
+  const h = hex && /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : '#1E88E5';
+  return { backgroundColor: `${h}22`, color: h, borderColor: `${h}55` };
+};
+const RANK_TINT: Record<string, string> = { '1': '#22C55E', '2': '#E8A838', '3': '#E05C4B' };
+
+// ─── Cell Select — on-brand dropdown for table cells (portalled so it isn't clipped) ─
+const CellSelect = ({ value, options, onChange, placeholder = '–', renderValue, menuWidth = 140, triggerClass = '' }: {
+  value: string; options: string[]; onChange: (v: string) => void;
+  placeholder?: string; renderValue?: (v: string) => React.ReactNode;
+  menuWidth?: number; triggerClass?: string;
+}) => {
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const uid = React.useId();
+  const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState({ top: 0, left: 0, width: menuWidth });
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      const menu = document.getElementById(`cs-${uid}`);
+      if (!btnRef.current?.contains(e.target as Node) && !menu?.contains(e.target as Node)) setOpen(false);
+    };
+    const onScroll = () => setOpen(false);
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('scroll', onScroll, true);
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('scroll', onScroll, true); };
+  }, [open, uid]);
+  const toggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (open) { setOpen(false); return; }
+    const r = btnRef.current?.getBoundingClientRect();
+    if (r) {
+      const w = Math.max(menuWidth, r.width);
+      const left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
+      setPos({ top: r.bottom + 4, left, width: w });
+    }
+    setOpen(true);
+  };
+  const menu = open ? createPortal(
+    <div id={`cs-${uid}`}
+      style={{ position: 'fixed', top: pos.top, left: pos.left, minWidth: pos.width, zIndex: 9999, boxShadow: '0 8px 24px rgba(6,27,46,0.18)' }}
+      className="bg-card rounded-[12px] overflow-hidden border border-border py-1 max-h-[240px] overflow-y-auto">
+      {options.map(opt => {
+        const selected = opt === value;
+        return (
+          <button key={opt || '__blank'} type="button" onClick={(e) => { e.stopPropagation(); onChange(opt); setOpen(false); }}
+            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors ${selected ? 'bg-accent text-primary' : 'text-foreground hover:bg-accent'}`}>
+            {renderValue ? renderValue(opt) : <span>{opt || placeholder}</span>}
+          </button>
+        );
+      })}
+    </div>, document.body) : null;
+  return (
+    <>
+      <button ref={btnRef} type="button" onClick={toggle}
+        className={`inline-flex items-center justify-center gap-1 cursor-pointer focus:outline-none ${triggerClass}`}>
+        {renderValue ? renderValue(value) : <span className="font-body text-[12px] font-bold text-foreground">{value || placeholder}</span>}
+        <ChevronDown size={10} className={`text-muted-foreground pointer-events-none transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {menu}
+    </>
   );
 };
 
@@ -574,7 +659,7 @@ const FilterBar = ({
       </div>
       <div className="flex items-center gap-2">
         <span className="font-body text-[14px] font-bold text-muted-foreground">Profile:</span>
-        <Sel value={filterProfile} onChange={setFilterProfile} opts={['All','Wonderkid','Prospect','Performance','Journeyman']} />
+        <Sel value={filterProfile} onChange={setFilterProfile} opts={['All','Performance','Prospect','Wonderkid']} />
       </div>
       <div className="flex items-center gap-2">
         <span className="font-body text-[14px] font-bold text-muted-foreground">Scout:</span>
@@ -605,7 +690,7 @@ const FilterBar = ({
 // ─── Group Header Rows ────────────────────────────────────────────────────────────
 const PosHeader = ({ pos, count, colSpan }: { pos: string; count: number; colSpan: number }) => (
   <tr className="bg-primary">
-    <td colSpan={colSpan} className="py-2 px-4 sticky top-[85px] z-20 bg-primary">
+    <td colSpan={colSpan} className="py-2 px-4 sticky top-[58px] md:top-[70px] lg:top-[82px] z-30 bg-primary">
       <span className="inline-flex items-center gap-2">
         <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-white">{pos}</span>
         <span className="inline-flex items-center justify-center bg-white/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-white">{count}</span>
@@ -616,7 +701,7 @@ const PosHeader = ({ pos, count, colSpan }: { pos: string; count: number; colSpa
 
 const YobHeader = ({ yob, colSpan }: { yob: number; colSpan: number }) => (
   <tr className="border-t border-border">
-    <td colSpan={colSpan} className="py-2 px-4 bg-accent sticky top-[113px] z-10">
+    <td colSpan={colSpan} className="py-2 px-4 bg-accent sticky top-[95px] md:top-[113px] lg:top-[131px] z-30">
       <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-primary">{yob}</span>
     </td>
   </tr>
@@ -824,7 +909,6 @@ const PlayerTable = ({
                               <div className="flex items-center gap-2 mt-0.5">
                                 <span className="font-body text-[12px] text-muted-foreground shrink-0">{player.age}</span>
                                 <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-[#E05C4B]'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
-                                {currentTab !== 'database' && player.matchVideos > 0 && <Video size={9} className="text-muted-foreground shrink-0" />}
                                 <FlagBadge code={natCode} label={player.nationality} />
                               </div>
                             </div>
@@ -954,7 +1038,8 @@ const TargetSuperTable = ({
 
   const getTD = (id: string): TargetData => targetDataMap.get(id) || DEFAULT_TARGET;
   const upd = (id: string, field: keyof TargetData) => (v: string) => onUpdateTarget(id, field, v);
-  const TOTAL_COLS = 25 + extraCols.length;
+  const profileColor = (name: string) => profileTypes?.find(p => p.name === name)?.color || '#1E88E5';
+  const TOTAL_COLS = 23 + extraCols.length;
 
   const grouped = useMemo(() => {
     const result: { pos: string; yob: number; players: ExtPlayer[] }[] = [];
@@ -976,6 +1061,16 @@ const TargetSuperTable = ({
     return result;
   }, [displayPlayers, targetDataMap]);
 
+  const scrollBoxRef = useRef<HTMLDivElement>(null);
+  const [showTop, setShowTop] = useState(false);
+  useEffect(() => {
+    const el = scrollBoxRef.current;
+    if (!el) return;
+    const onScroll = () => setShowTop(el.scrollTop > 400);
+    el.addEventListener('scroll', onScroll);
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [displayPlayers.length]);
+
   const ColHd = ({ label, cls = '' }: { label: string; cls?: string }) => (
     <th className={`px-2 py-2 font-heading font-bold text-[12px] text-chalk uppercase tracking-widest text-center whitespace-nowrap ${cls}`}>{label}</th>
   );
@@ -992,16 +1087,18 @@ const TargetSuperTable = ({
   );
 
   return (
-    <div className="w-full">
-      <div className="overflow-x-auto w-full">
+    <div className="w-full flex-1 min-h-0 flex flex-col">
+      <div ref={scrollBoxRef} id="tl-scroll-box" className="overflow-auto w-full flex-1 min-h-0 hide-scrollbar rounded-b-[24px]">
         <table className="rtable w-full text-left whitespace-nowrap border-separate border-spacing-0">
           <thead className="sticky top-0 z-30">
             {/* Group header row — dark, matches Short List */}
             <tr className="bg-primary">
-              <th colSpan={7} className="sticky left-0 z-40 bg-primary border-b border-white/15" />
+              <th colSpan={2} className="sticky left-0 z-40 bg-primary border-b border-white/15" />
+              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">Status</th>
               <th colSpan={2} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Grades" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={5} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Links" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Links" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Match Data" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Financials" onRename={()=>{}} onRemove={()=>{}} /></th>
               {extraCols.length > 0 && (
@@ -1010,18 +1107,16 @@ const TargetSuperTable = ({
             </tr>
             {/* Sub-header row — light, matches Short List */}
             <tr className="bg-card border-b-2 border-border">
-              {/* Rank — first sticky col */}
-              <th className="sticky left-0 z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Rnk" onRename={()=>{}} onRemove={()=>{}} /></th>
-              {/* Action — second sticky col */}
-              <th className="sticky left-[36px] z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
+              {/* Action — first sticky col */}
+              <th className="sticky left-0 z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Player */}
-              <th className="sticky left-[112px] z-40 bg-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[180px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[76px] z-40 bg-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[180px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* DOB / POS / Team */}
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[80px] border-l border-border">DOB</th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[48px]">POS</th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[110px]">Team</th>
-              {/* T&N — tasks/notes */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[36px] border-l border-border"><EditableColHeaderLight label="T&N" onRename={()=>{}} onRemove={()=>{}} /></th>
+              {/* Status — N&T + F/H + video popup */}
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[120px] border-l border-border">Status</th>
               {/* Lead */}
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[70px] border-l border-border"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[60px]"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
@@ -1030,11 +1125,8 @@ const TargetSuperTable = ({
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="PLR" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POR" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
-              {/* Video */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px] border-l border-border">
-                <div className="flex justify-center items-center"><Video size={10} /></div>
-              </th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              {/* Video Links */}
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px] border-l border-border"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
@@ -1082,26 +1174,26 @@ const TargetSuperTable = ({
                         <TCell value={(td as any)[field]} onChange={upd(player.id, field)} opts={opts} type={type} placeholder={ph} />
                       </td>
                     );
+                    // Styled dropdown cell (matches Short List CellSelect); tint=true → muted profile pill
+                    const ECSel = ({ field, opts, tint = false }: { field: keyof TargetData; opts: string[]; tint?: boolean }) => (
+                      <td className="px-1 py-2 border-b border-border text-center">
+                        <CellSelect value={(td as any)[field] || ''} options={opts} menuWidth={tint ? 140 : 88}
+                          onChange={upd(player.id, field)}
+                          renderValue={tint
+                            ? (v => v ? <span style={tintStyle(profileColor(v))} className="inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v}</span> : <span className="font-body text-[12px] font-bold text-muted-foreground">–</span>)
+                            : (v => <span className="font-body text-[12px] font-bold text-foreground">{v || '–'}</span>)} />
+                      </td>
+                    );
                     return (
                       <tr key={player.id} id={`row-${player.id}`} className={`border-b border-border last:border-0 group transition-colors ${isArchived ? 'opacity-50' : 'hover:bg-accent'}${highlightId === player.id ? ' ring-2 ring-primary ring-inset bg-primary/5' : ''}`}>
-                        {/* Rank — FIRST column */}
-                        <td className="sticky left-0 z-20 bg-card group-hover:bg-accent px-1 py-2 w-[36px] text-center">
-                          <select value={td.rank || ''} onChange={e => upd(player.id, 'rank' as any)(e.target.value)}
-                            className="w-full bg-transparent font-mono font-black text-[12px] text-foreground focus:outline-none text-center appearance-none cursor-pointer">
-                            <option value="">—</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                          </select>
-                        </td>
-                        {/* Action — SECOND column */}
-                        <td className="sticky left-[36px] z-20 bg-card group-hover:bg-accent px-1 py-2 w-[76px] text-center">
+                        {/* Action — first column */}
+                        <td className="sticky left-0 z-20 bg-card group-hover:bg-accent px-1 py-2 w-[76px] text-center">
                           <ActionButtons items={tItems} />
                         </td>
                         {/* Player */}
-                        <td className="sticky left-[112px] z-20 bg-card group-hover:bg-accent pl-2 pr-1 py-2 border-r-2 border-border">
+                        <td className="sticky left-[76px] z-20 bg-card group-hover:bg-accent pl-2 pr-1 py-2 border-r-2 border-border">
                           <div className="flex items-center gap-2 min-w-[160px]">
-                            <div className="w-7 h-7 rounded-lg bg-accent text-foreground flex items-center justify-center font-body font-bold text-[12px] shrink-0 border border-border">{player.initials}</div>
+                            <div className="w-8 h-8 rounded-xl bg-card text-foreground flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1 mt-0.5">
@@ -1116,29 +1208,24 @@ const TargetSuperTable = ({
                         <td className="px-1 py-2 border-b border-border text-center w-[80px]"><span className="font-body text-[12px] text-muted-foreground">{player.dob}</span></td>
                         <td className="px-1 py-2 border-b border-border text-center w-[48px]"><span className="font-body text-[12px] font-bold text-muted-foreground">{player.posAcronym}</span></td>
                         <td className="px-1 py-2 border-b border-border text-center w-[110px]"><span className="font-body text-[12px] text-muted-foreground truncate block max-w-[100px]">{player.team}</span></td>
-                        {/* Notes/Tasks icon */}
-                        <td className="px-1 py-2 border-b border-border text-center w-[40px]">
+                        {/* Status — N&T, F/H video counts, video popup */}
+                        <td className="px-2 py-2 border-b border-border border-l border-border text-center w-[120px]">
                           {openNotesId === player.id && <NotesTasksPopup playerId={player.id} playerName={player.name} onClose={() => setOpenNotesId(null)} />}
-                          <button onClick={() => setOpenNotesId(player.id)}
-                            className="w-6 h-6 rounded-lg bg-accent hover:bg-primary/80 hover:text-primary-foreground text-foreground flex items-center justify-center mx-auto transition-all">
-                            <StickyNote size={11} />
-                          </button>
+                          <div className="flex items-center justify-center gap-1">
+                            <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-accent hover:bg-primary/80 hover:text-primary-foreground text-foreground flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
+                            {player.matchVideos > 0 && <span className="bg-primary/20 text-foreground font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
+                            {player.highlightVideos > 0 && <span className="bg-primary/10 text-foreground font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
+                            <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-chalk flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
+                          </div>
                         </td>
-                        <EC field="profile" opts={['', ...(profileTypes?.map((pt:any)=>pt.name) || ['Wonderkid','Prospect','Performance','Journeyman'])]} />
-                        <EC field="lead" opts={['', 'Tom', 'Mbugua', 'Brice', 'Nene', 'All']} />
-                        <EC field="rpt" opts={['1','2','3']} />
-                        <EC field="plr" opts={GRADE_OPTS} />
-                        <EC field="por" opts={GRADE_OPTS} />
-                        <EC field="nxt" opts={NXT_OPTS} />
-                        {/* Watch videos — opens Player Video Workspace */}
-                        <td className="px-1 py-2 border-b border-border text-center w-[32px]">
-                          <button onClick={() => onOpenVideos?.(player)} title="Watch videos"
-                            className="w-8 h-8 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-chalk flex items-center justify-center mx-auto transition-colors">
-                            <Play size={13} className="ml-0.5" />
-                          </button>
-                        </td>
+                        <ECSel field="profile" opts={['', ...(profileTypes?.map((pt:any)=>pt.name) || ['Performance','Prospect','Wonderkid'])]} tint />
+                        <ECSel field="lead" opts={['', 'Tom', 'Mbugua', 'Brice', 'Nene', 'All']} />
+                        <ECSel field="rpt" opts={['', '1','2','3']} />
+                        <ECSel field="plr" opts={GRADE_OPTS} />
+                        <ECSel field="por" opts={GRADE_OPTS} />
+                        <ECSel field="nxt" opts={NXT_OPTS} />
                         {/* Video links — underlined Link text */}
-                        <td className="px-1 py-2 border-b border-border text-center w-[56px]">
+                        <td className="px-1 py-2 border-b border-border border-l border-border text-center w-[56px]">
                           {td.h1
                             ? <a href={td.h1} className="font-body text-[12px] font-bold text-foreground underline">Link</a>
                             : <TCell value={(td as any).h1} onChange={upd(player.id, 'h1')} placeholder="url" />}
@@ -1181,6 +1268,12 @@ const TargetSuperTable = ({
           <Archive size={10} className="text-muted-foreground" />
           <span className="font-body text-[12px] font-bold text-muted-foreground">{displayPlayers.filter(p => archivedSet.has(p.id)).length} archived</span>
         </div>
+      )}
+      {showTop && (
+        <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground shadow-lg font-body font-bold text-[14px] hover:bg-primary/90 transition-colors">
+          <ArrowUp size={14} /> Top
+        </button>
       )}
     </div>
   );
@@ -1254,6 +1347,20 @@ const ShortListTable = ({
     return m;
   };
   const [videoFields, setVideoFields] = useState<Map<string, any>>(() => buildSeedVideoFields());
+  // Rank (1/2/3) — muted priority tier, seeded so the column isn't empty
+  const [rankMap, setRankMap] = useState<Map<string, string>>(() => {
+    const m = new Map<string, string>();
+    SL_PLAYERS.forEach((p, i) => { if (i < 12) m.set(p.id, String((i % 3) + 1)); });
+    return m;
+  });
+  // Profile — editable per player; any legacy 'Journeyman' coerced to Prospect
+  const PROFILE_OPTS = ['Performance', 'Prospect', 'Wonderkid'];
+  const [profileMap, setProfileMap] = useState<Map<string, string>>(() => {
+    const m = new Map<string, string>();
+    SL_PLAYERS.forEach(p => m.set(p.id, ((p as any).profile === 'Journeyman' ? 'Prospect' : (p as any).profile) || 'Prospect'));
+    return m;
+  });
+  const profileColor = (name: string) => profileTypes?.find(p => p.name === name)?.color || '#1E88E5';
 
   const getSD = (id: string, scout: string) => scoutData.get(id)?.[scout] || { plg:'', pog:'', nxt:'' };
   const updSD = (id: string, scout: string, field: 'plg'|'pog'|'nxt', val: string) => {
@@ -1292,18 +1399,31 @@ const ShortListTable = ({
     return result;
   }, [displayPlayers, archivedSet, archiveView]);
 
-  // Action(1) + Player(1) + DOB,Pos,Team,Nat,Profile,Pathway,Notes(7) + 3 scouts × 3 cols (9) + watch(1) + 8 videos = 27
+  const scrollBoxRef = useRef<HTMLDivElement>(null);
+  const [showTop, setShowTop] = useState(false);
+  useEffect(() => {
+    const el = scrollBoxRef.current;
+    if (!el) return;
+    const onScroll = () => setShowTop(el.scrollTop > 400);
+    el.addEventListener('scroll', onScroll);
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [displayPlayers.length]);
+
+  // Action(1) + Rank(1) + Player(1) + DOB,Pos,Team,Profile,Pathway(5) + Status(1) + 3 scouts × 3 (9) + 8 videos = 26
   const TOTAL_COLS = 26;
 
   const GradeOpts = GRADE_OPTS;
   const NxtOpts   = NXT_OPTS;
 
-  const CI = ({ val, onChange, opts, ph='' }: {val:string; onChange:(v:string)=>void; opts?:string[]; ph?:string}) => (
+  const CI = ({ val, onChange, opts, ph='', chevron=false }: {val:string; onChange:(v:string)=>void; opts?:string[]; ph?:string; chevron?:boolean}) => (
     opts ? (
-      <select value={val} onChange={e=>onChange(e.target.value)}
-        className="w-full bg-transparent font-body text-[12px] font-bold text-foreground focus:outline-none appearance-none text-center cursor-pointer">
-        {opts.map(o=><option key={o} value={o}>{o||'–'}</option>)}
-      </select>
+      <div className="relative inline-flex items-center w-full">
+        <select value={val} onChange={e=>onChange(e.target.value)}
+          className={`w-full bg-transparent font-body text-[12px] font-bold text-foreground focus:outline-none appearance-none text-center cursor-pointer ${chevron ? 'pr-4' : ''}`}>
+          {opts.map(o=><option key={o} value={o}>{o||'–'}</option>)}
+        </select>
+        {chevron && <ChevronDown size={10} className="absolute right-0 text-muted-foreground pointer-events-none" />}
+      </div>
     ) : (
       <input value={val} onChange={e=>onChange(e.target.value)} placeholder={ph}
         className="w-full bg-transparent font-body text-[12px] font-bold text-foreground focus:outline-none placeholder:text-muted-foreground text-center" />
@@ -1319,29 +1439,31 @@ const ShortListTable = ({
   );
 
   return (
-    <div className="w-full">
-      <div className="overflow-x-auto w-full">
+    <div className="w-full flex-1 min-h-0 flex flex-col">
+      <div ref={scrollBoxRef} id="sl-scroll-box" className="overflow-auto w-full flex-1 min-h-0 hide-scrollbar rounded-b-[24px]">
         <table className="rtable w-full text-left whitespace-nowrap border-separate border-spacing-0">
           <thead className="sticky top-0 z-30">
             {/* Group header row */}
             <tr className="bg-primary">
-              <th colSpan={2} className="sticky left-0 z-40 bg-primary px-3 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15"><EditableColHeaderLight label="Action" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={8} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={3} className="sticky left-0 z-40 bg-primary px-3 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15">Player ID</th>
+              <th colSpan={5} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">Status</th>
               {SCOUT_COLS.map(s => (
                 <th key={s.key} colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">{s.label}</th>
               ))}
-              <th colSpan={9} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Codes" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={8} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Codes" onRename={()=>{}} onRemove={()=>{}} /></th>
             </tr>
             {/* Sub-header row */}
             <tr className="bg-card border-b-2 border-border">
               <th className="sticky left-0 z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[108px]"></th>
-              <th className="sticky left-[108px] z-40 bg-card px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[180px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[108px] z-40 bg-card px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center min-w-[56px] w-[56px]"><EditableColHeaderLight label="Rank" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[164px] z-40 bg-card px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[190px] border-r-2 border-border"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[80px]"><EditableColHeaderLight label="DOB" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="Pos" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[110px]"><EditableColHeaderLight label="Team" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[110px] border-r border-border"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[90px] border-r-2 border-border"><EditableColHeaderLight label="Pathway" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[36px] border-r-2 border-border"><EditableColHeaderLight label="T&N" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest w-[64px] border-r-2 border-border"><EditableColHeaderLight label="Pathway" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[130px] border-r-2 border-border">Status</th>
               {SCOUT_COLS.map(s => (
                 <React.Fragment key={s.key}>
                   <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[40px] border-l border-border"><EditableColHeaderLight label="PLG" onRename={()=>{}} onRemove={()=>{}} /></th>
@@ -1349,10 +1471,7 @@ const ShortListTable = ({
                   <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[40px] border-r border-border"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
                 </React.Fragment>
               ))}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px] border-l-2 border-border">
-                <div className="flex justify-center items-center"><Video size={10} /></div>
-              </th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px] border-l-2 border-border"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM3" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted-foreground uppercase tracking-widest text-center w-[32px] border-l border-border"><EditableColHeaderLight label="PK1" onRename={()=>{}} onRemove={()=>{}} /></th>
@@ -1390,19 +1509,27 @@ const ShortListTable = ({
                     const isMonitor = player.monitor && !isArchived;
                     return (
                       <tr key={player.id} id={`row-${player.id}`}
-                        className={`border-b border-border last:border-0 group transition-colors ${isArchived ? 'opacity-50' : isMonitor ? 'border-l-4 border-l-[#E8A838] hover:bg-[#FEF8EC]' : 'hover:bg-accent'}${highlightId === player.id ? ' ring-2 ring-primary ring-inset bg-primary/5' : ''}`}>
+                        className={`border-b border-border last:border-0 group transition-colors ${isArchived ? 'opacity-50' : isMonitor ? 'border-l-4 border-l-[#E8A838] hover:bg-accent' : 'hover:bg-accent'}${highlightId === player.id ? ' ring-2 ring-primary ring-inset bg-primary/5' : ''}`}>
                         {/* Action */}
                         <td className="sticky left-0 z-20 bg-card group-hover:bg-inherit px-1 py-2 w-[108px] text-center">
                           <ActionButtons items={slItems} />
                         </td>
+                        {/* Rank — muted 1/2/3, height matches the action pill */}
+                        <td className="sticky left-[108px] z-20 bg-card group-hover:bg-inherit px-1 py-2 min-w-[56px] w-[56px] text-center">
+                          <CellSelect value={rankMap.get(player.id) || ''} options={['', '1', '2', '3']} menuWidth={96}
+                            onChange={v => setRankMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
+                            triggerClass="h-8 mx-auto"
+                            renderValue={v => v
+                              ? <span style={tintStyle(RANK_TINT[v])} className="inline-flex items-center justify-center w-6 h-6 rounded-full border font-body text-[10px] font-black">{v}</span>
+                              : <span className="font-body text-[12px] font-bold text-muted-foreground">–</span>} />
+                        </td>
                         {/* Player name + monitor pill */}
-                        <td className="sticky left-[108px] z-20 bg-card group-hover:bg-inherit px-2 py-2 border-r-2 border-border w-[180px]">
+                        <td className="sticky left-[164px] z-20 bg-card group-hover:bg-inherit px-2 py-2 border-r-2 border-border w-[190px]">
                           <div className="flex items-center gap-2 min-w-0">
                             <div className="w-8 h-8 rounded-xl bg-card text-foreground flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
                             <div className="flex items-center gap-1">
-                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-primary text-[14px] leading-tight truncate max-w-[120px] hover:underline cursor-pointer">{player.name}</span>
-                              {raisedPlayerIds?.has(player.id) && <span title="Raised directly"><ArrowUpRight size={10} className="text-foreground shrink-0" /></span>}
+                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                               {isArchived && <span className="bg-muted-foreground/15 text-muted-foreground font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               {(() => {
                                 const nxtVals = Object.values(scoutData.get(player.id) || {});
@@ -1415,7 +1542,6 @@ const ShortListTable = ({
                             </div>
                             <div className="flex items-center gap-1 mt-0.5">
                               <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-[#E05C4B]'}`} />
-                              {player.matchVideos > 0 && <Video size={8} className="text-muted-foreground shrink-0" />}
                               <FlagBadge code={natCode} label={player.nationality} />
                             </div>
                           </div>
@@ -1427,58 +1553,57 @@ const ShortListTable = ({
                         </td>
                         {/* Pos */}
                         <td className="px-1 py-2 text-center w-[32px]">
-                          <PosPill pos={player.posAcronym} />
+                          <span className="font-body text-[12px] font-bold text-muted-foreground">{player.posAcronym}</span>
                         </td>
                         {/* Team */}
                         <td className="px-2 py-2 w-[110px]">
                           <span className="font-body text-[12px] font-medium text-muted-foreground truncate block max-w-[100px]">{player.team}</span>
                         </td>
-                        {/* Profile — colour-coded pill from profileTypes (matches Database/Long List) */}
+                        {/* Profile — editable dropdown, muted tint pill */}
                         <td className="px-1 py-2 w-[110px] border-r border-border">
                           {(() => {
-                            const pt = profileTypes?.find(p => p.name === player.profile);
-                            const bg = pt ? pt.color : 'var(--accent)';
-                            const isLight = bg === '#d2e7fa' || bg === '#7baac7' || !pt;
+                            const pv = profileMap.get(player.id) || ((player.profile as any) === 'Journeyman' ? 'Prospect' : player.profile) || 'Prospect';
                             return (
-                              <span style={{ backgroundColor: bg, color: isLight ? 'var(--muted-foreground)' : 'var(--accent)' }} className="inline-block font-body text-[10px] font-black px-2 py-0.5 rounded-full">{player.profile}</span>
+                              <CellSelect value={pv} options={PROFILE_OPTS} menuWidth={140}
+                                onChange={v => setProfileMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
+                                renderValue={val => <span style={tintStyle(profileColor(val))} className="inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{val}</span>} />
                             );
                           })()}
                         </td>
                         {/* Pathway */}
-                        <td className="px-1 py-2 w-[90px] border-r-2 border-border">
-                          <CI val={pathwayMap.get(player.id) || ''} onChange={v => setPathwayMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })} opts={PATHWAY_OPTS} />
+                        <td className="px-1 py-2 w-[64px] border-r-2 border-border">
+                          <CellSelect value={pathwayMap.get(player.id) || ''} options={PATHWAY_OPTS} menuWidth={120}
+                            onChange={v => setPathwayMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-foreground">{v || '–'}</span>} />
                         </td>
-                        {/* Notes/Tasks icon */}
-                        <td className="px-1 py-2 text-center border-l-2 border-border w-[36px]">
+                        {/* Status — N&T, F/H video counts, video popup */}
+                        <td className="px-2 py-2 border-r-2 border-border w-[130px]">
                           {openNotesId === player.id && <NotesTasksPopup playerId={player.id} playerName={player.name} onClose={() => setOpenNotesId(null)} />}
-                          <button onClick={() => setOpenNotesId(player.id)} className="w-6 h-6 rounded-lg bg-accent hover:bg-primary/80 hover:text-primary-foreground text-foreground flex items-center justify-center mx-auto transition-all"><StickyNote size={11} /></button>
+                          <div className="flex items-center justify-center gap-1">
+                            <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-accent hover:bg-primary/80 hover:text-primary-foreground text-foreground flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
+                            {player.matchVideos > 0 && <span className="bg-primary/20 text-foreground font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
+                            {player.highlightVideos > 0 && <span className="bg-primary/10 text-foreground font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
+                            <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-chalk flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
+                          </div>
                         </td>
                         {/* Scout columns: PLG / POG / NXT each */}
                         {SCOUT_COLS.map(s => {
                           const sd = getSD(player.id, s.key);
+                          const gcell = (val: string, field: 'plg'|'pog'|'nxt', opts: string[]) => (
+                            <CellSelect value={val} options={opts} menuWidth={72}
+                              onChange={v=>updSD(player.id,s.key,field,v)}
+                              renderValue={x => <span className="font-body text-[12px] font-bold text-foreground">{x || '–'}</span>} />
+                          );
                           return (
                             <React.Fragment key={s.key}>
-                              <td className="px-1 py-2 text-center w-[40px] border-l border-border">
-                                <CI val={sd.plg} onChange={v=>updSD(player.id,s.key,'plg',v)} opts={GradeOpts} />
-                              </td>
-                              <td className="px-1 py-2 text-center w-[40px]">
-                                <CI val={sd.pog} onChange={v=>updSD(player.id,s.key,'pog',v)} opts={GradeOpts} />
-                              </td>
-                              <td className="px-1 py-2 text-center w-[40px] border-r border-border">
-                                <CI val={sd.nxt} onChange={v=>updSD(player.id,s.key,'nxt',v)} opts={NxtOpts} />
-                              </td>
+                              <td className="px-1 py-2 text-center w-[40px] border-l border-border">{gcell(sd.plg,'plg',GradeOpts)}</td>
+                              <td className="px-1 py-2 text-center w-[40px]">{gcell(sd.pog,'pog',GradeOpts)}</td>
+                              <td className="px-1 py-2 text-center w-[40px] border-r border-border">{gcell(sd.nxt,'nxt',NxtOpts)}</td>
                             </React.Fragment>
                           );
                         })}
-                        {/* Watch videos — opens Player Video Workspace */}
-                        <td className="px-1 py-2 text-center w-[32px] border-l-2 border-border">
-                          <button onClick={() => onOpenVideos?.(player)} title="Watch videos"
-                            className="w-8 h-8 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-chalk flex items-center justify-center mx-auto transition-colors">
-                            <Play size={13} className="ml-0.5" />
-                          </button>
-                        </td>
                         {/* Video codes — 8 columns */}
-                        {[['fm1','FM1',''],['fm2','FM2',''],['fm3','FM3',''],
+                        {[['fm1','FM1','border-l-2 border-border'],['fm2','FM2',''],['fm3','FM3',''],
                           ['pk1','PK1','border-l border-border'],['pk2','PK2',''],['pk3','PK3',''],
                           ['hl1','HL1','border-l border-border'],['hl2','HL2','']].map(([field, label, cls]) => (
                           <td key={field} className={`px-1 py-2 text-center w-[32px] ${cls}`}>
@@ -1496,6 +1621,12 @@ const ShortListTable = ({
           </tbody>
         </table>
       </div>
+      {showTop && (
+        <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground shadow-lg font-body font-bold text-[14px] hover:bg-primary/90 transition-colors">
+          <ArrowUp size={14} /> Top
+        </button>
+      )}
     </div>
   );
 };
@@ -1601,49 +1732,33 @@ const SignedListTab = ({ extraCols = [], visibleColIds, setVisibleColIds }: {
     return result;
   }, [players]);
 
-  const StatusPill = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
-    const colors: Record<string, string> = {
-      'Success':      'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20',
-      'Unsuccessful': 'bg-[#E05C4B]/10 text-[#E05C4B] border-[#E05C4B]/20',
-      'Pending':      'bg-[#E8A838]/10 text-[#E8A838] border-[#E8A838]/20',
-    };
-    const cls = colors[value] || 'bg-accent text-muted-foreground border-border';
-    return (
-      <select value={value} onChange={e => onChange(e.target.value)}
-        className={`font-body text-[12px] font-black px-2 py-1 rounded-full border cursor-pointer appearance-none text-center ${cls}`}>
-        <option value="Success">Success</option>
-        <option value="Unsuccessful">Unsuccessful</option>
-        <option value="Pending">Pending</option>
-      </select>
-    );
-  };
+  const STATUS_TINT: Record<string, string> = { 'Success': '#22C55E', 'Unsuccessful': '#E05C4B', 'Pending': '#E8A838' };
+  const StatusPill = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => (
+    <CellSelect value={value} options={['Success', 'Unsuccessful', 'Pending']} menuWidth={140} onChange={onChange}
+      renderValue={v => <span style={tintStyle(STATUS_TINT[v])} className="inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v || '–'}</span>} />
+  );
 
   const TOTAL_COLS = 14 + extraCols.length;
 
   return (
     <div className="flex flex-col gap-6">
       <EditColumnsModal open={colsModalOpen} columns={PLAYER_COLUMNS} visible={visibleColIds} onApply={setVisibleColIds} onClose={() => setColsModalOpen(false)} />
-      {/* Header row */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <p className="font-body text-[14px] font-medium text-muted-foreground">
-          {players.length} signed players
-        </p>
-        <div className="flex items-center gap-3">
-          <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-            className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border bg-card text-muted-foreground hover:border-primary hover:text-foreground shrink-0 transition-colors">
-            <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
-          </button>
-          <button onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 bg-primary border-2 border-primary text-chalk px-6 py-3 rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors shadow-md">
-            <Plus size={14} />Add Signed Player
-          </button>
-        </div>
+      {/* Toolbar row — Columns + secondary Add, top-right (matches other tables) */}
+      <div className="flex items-center justify-end flex-wrap gap-2">
+        <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
+          className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border bg-card text-muted-foreground hover:border-primary hover:text-foreground shrink-0 transition-colors">
+          <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
+        </button>
+        <button onClick={() => setShowAdd(true)}
+          className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border bg-card text-primary hover:border-primary hover:bg-accent shrink-0 transition-colors">
+          <Plus size={14} /> Add Signed Player
+        </button>
       </div>
 
       {/* Table */}
       <div className="w-full overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="rtable w-full border-separate border-spacing-0">
+          <table className="rtable w-full whitespace-nowrap border-separate border-spacing-0">
             {/* Two-row header system matching other tables */}
             <thead className="sticky top-0 z-30">
               {/* Row 1: Group header */}
@@ -1707,7 +1822,7 @@ const SignedListTab = ({ extraCols = [], visibleColIds, setVisibleColIds }: {
                         {/* Name with initials avatar */}
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-primary text-chalk flex items-center justify-center font-body font-black text-[12px] shrink-0">
+                            <div className="w-8 h-8 rounded-xl bg-card text-foreground flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border">
                               {p.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
                             </div>
                             <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout'}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team, matchVideos: p.matchVideos, highlightVideos: p.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: 'Signed List', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })}
@@ -1721,19 +1836,23 @@ const SignedListTab = ({ extraCols = [], visibleColIds, setVisibleColIds }: {
                         <td className="px-3 py-2 text-center"><span className="font-body text-[12px] font-bold text-muted-foreground">{p.pos}</span></td>
                         {/* Team (Club) */}
                         <td className="px-3 py-2 border-r border-border/10">
-                          <InlineSelect value={p.club} opts={['AC Horsens','VPN']} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, club: v} : x))} />
+                          <CellSelect value={p.club} options={['AC Horsens','VPN']} menuWidth={140} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, club: v} : x))}
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-foreground">{v || '–'}</span>} />
                         </td>
                         {/* Identified/Source */}
                         <td className="px-3 py-2 border-r border-border/10">
-                          <InlineSelect value={p.identified} opts={['Scouted','Social','Agent']} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, identified: v} : x))} />
+                          <CellSelect value={p.identified} options={['Scouted','Social','Agent']} menuWidth={120} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, identified: v} : x))}
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-foreground">{v || '–'}</span>} />
                         </td>
                         {/* Scout */}
                         <td className="px-3 py-2 border-r border-border/10">
-                          <InlineSelect value={p.scout} opts={['Tom','Mbugua','Brice','Nene','Scott','Sekou','Sall','Buba']} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, scout: v} : x))} />
+                          <CellSelect value={p.scout} options={['Tom','Mbugua','Brice','Nene','Scott','Sekou','Sall','Buba']} menuWidth={120} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, scout: v} : x))}
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-foreground">{v || '–'}</span>} />
                         </td>
                         {/* Move */}
                         <td className="px-3 py-2 border-r border-border/30">
-                          <InlineSelect value={p.move} opts={['Signed','Loan','Trial','Trial/Signed','Loan/Signed']} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, move: v} : x))} />
+                          <CellSelect value={p.move} options={['Signed','Loan','Trial','Trial/Signed','Loan/Signed']} menuWidth={140} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, move: v} : x))}
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-foreground">{v || '–'}</span>} />
                         </td>
                         {/* Year */}
                         <td className="px-3 py-2 text-center border-r border-border/10">
@@ -2483,7 +2602,7 @@ function genPlayers(count: number, idPrefix: string, yearMin = 2008, yearMax = 2
     const yob = yearMin + (i % (yearRange + 1));
     const age = 2026 - yob;
     const foot = (['Right','Right','Right','Left','Both'] as const)[i % 5];
-    const prof = (['Wonderkid','Prospect','Prospect','Prospect','Journeyman'] as const)[i % 5];
+    const prof = (['Wonderkid','Prospect','Prospect','Performance','Performance'] as const)[i % 5];
     const scout = SCOUTS[i % SCOUTS.length];
     players.push({
       id: `${idPrefix}-${i}`,
@@ -2749,7 +2868,7 @@ const ListFilterToolbar = ({
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
   }, []);
-  const num = "w-14 px-3 py-2 rounded-full bg-card border border-border font-body font-bold text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors";
+  const num = "w-16 px-2 py-2 rounded-full bg-card border border-border font-body font-bold text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors";
   const RangePair = ({ label, minV, setMin, maxV, setMax }: { label: string; minV: string; setMin: (v: string) => void; maxV: string; setMax: (v: string) => void }) => (
     <div className="flex flex-col gap-0.5 shrink-0">
       <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-muted-foreground px-1">{label}</span>
@@ -2776,7 +2895,7 @@ const ListFilterToolbar = ({
       <RangePair label="Age" minV={filterAgeMin} setMin={setFilterAgeMin} maxV={filterAgeMax} setMax={setFilterAgeMax} />
       <RangePair label="Height" minV={filterHeightMin} setMin={setFilterHeightMin} maxV={filterHeightMax} setMax={setFilterHeightMax} />
       <LLSelect label="Position" value={filterPos} setValue={setFilterPos} options={['ST', 'LW', 'RW', 'CM', 'CDM', 'CAM', 'FB', 'CB']} openKey={openKey} setOpenKey={setOpenKey} />
-      <LLSelect label="Profile" value={filterProfile} setValue={setFilterProfile} options={['Wonderkid', 'Prospect', 'Performance', 'Journeyman']} openKey={openKey} setOpenKey={setOpenKey} />
+      <LLSelect label="Profile" value={filterProfile} setValue={setFilterProfile} options={['Performance', 'Prospect', 'Wonderkid']} openKey={openKey} setOpenKey={setOpenKey} />
       <LLSelect label="Scout" value={filterScout} setValue={setFilterScout} options={SCOUTS} openKey={openKey} setOpenKey={setOpenKey} />
       <LLSelect label="Grade" value={filterGrade} setValue={setFilterGrade} options={GRADE_FILTER_OPTS.filter(o => o !== 'All')} openKey={openKey} setOpenKey={setOpenKey} />
       <div className="ml-auto shrink-0">
@@ -2826,6 +2945,38 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   const [showFilters, setShowFilters] = useState(true);        // desktop: inline filters toggle (visible by default)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false); // mobile: bottom-sheet
   const [tabsMenuOpen, setTabsMenuOpen] = useState(false);     // mobile: 'More ▾' tab dropdown
+  // User-arrangeable tab order (drag on desktop / up-down on mobile), persisted per role
+  const [tabOrder, setTabOrder] = useState<SeniorTab[]>(() => loadTabOrder(loggedInRole));
+  const [dragTabId, setDragTabId] = useState<SeniorTab | null>(null);
+  useEffect(() => { setTabOrder(loadTabOrder(loggedInRole)); }, [loggedInRole]);
+  const persistTabOrder = (order: SeniorTab[]) => {
+    setTabOrder(order);
+    try { window.localStorage.setItem(tabOrderKey(loggedInRole), JSON.stringify(order)); } catch {}
+  };
+  const reorderTab = (dragId: SeniorTab, overId: SeniorTab) => {
+    if (dragId === overId) return;
+    const from = tabOrder.indexOf(dragId);
+    const to = tabOrder.indexOf(overId);
+    if (from < 0 || to < 0) return;
+    const next = [...tabOrder];
+    next.splice(from, 1);
+    next.splice(to, 0, dragId);
+    persistTabOrder(next);
+  };
+  const moveTab = (id: SeniorTab, dir: -1 | 1) => {
+    const i = tabOrder.indexOf(id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= tabOrder.length) return;
+    const next = [...tabOrder];
+    [next[i], next[j]] = [next[j], next[i]];
+    persistTabOrder(next);
+  };
+  const resetTabOrder = () => {
+    try { window.localStorage.removeItem(tabOrderKey(loggedInRole)); } catch {}
+    setTabOrder(DEFAULT_TAB_ORDER);
+  };
+  const orderedTabs = tabOrder.map(id => TABS.find(t => t.id === id)).filter(Boolean) as typeof TABS;
+  const isCustomOrder = tabOrder.join(',') !== DEFAULT_TAB_ORDER.join(',');
   const [colsModalOpen, setColsModalOpen] = useState(false);   // Edit Columns modal
   const [visibleColIds, setVisibleColIds] = useState<Set<string>>(() => new Set(DEFAULT_VISIBLE_IDS));
   const extraCols: PlayerColumn[] = useMemo(() => PLAYER_COLUMNS.filter(c => visibleColIds.has(c.id)), [visibleColIds]);
@@ -2841,7 +2992,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
     TL_PLAYERS.forEach((p, i) => {
       m.set(p.id, {
         rank: i < 10 ? String((i % 3) + 1) : '',
-        profile: ['Wonderkid','Prospect','Prospect','Performance','Journeyman'][i % 5],
+        profile: ['Wonderkid','Prospect','Prospect','Performance','Performance'][i % 5],
         lead: scouts[i % scouts.length],
         rpt: String((i % 3) + 1),
         plr: plrVals[i % plrVals.length],
@@ -2898,10 +3049,9 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
 
   // Profile types — managed in Settings, used as dropdown in tables
   const DEFAULT_PROFILES: ProfileType[] = [
-    { id: 'wk',  name: 'Wonderkid',    color: '#061b2e' },
-    { id: 'pr',  name: 'Prospect',     color: '#061b2e' },
-    { id: 'jm',  name: 'Journeyman',   color: 'var(--muted-foreground)' },
-    { id: 'pe',  name: 'Performance',  color: '#061b2e' },
+    { id: 'wk',  name: 'Wonderkid',    color: '#8B5CF6' },
+    { id: 'pr',  name: 'Prospect',     color: '#1E88E5' },
+    { id: 'pe',  name: 'Performance',  color: '#06B6D4' },
   ];
   const [profileTypes, setProfileTypes] = useState<ProfileType[]>(DEFAULT_PROFILES);
   const addProfile = (name: string, color: string) =>
@@ -2962,7 +3112,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
     'long-list':   extPlayers.filter(p => playerTierMap.get(p.id) === 'long-list').length,
     'short-list':  extPlayers.filter(p => playerTierMap.get(p.id) === 'short-list').length,
     'target-list': extPlayers.filter(p => playerTierMap.get(p.id) === 'target-list').length,
-    'signed-list': 0, // fed by SignedListTab internal state
+    'signed-list': INITIAL_SIGNED_PLAYERS.length,
     'reports':     null,
     'settings':    null,
   }), [extPlayers, playerTierMap]);
@@ -3014,16 +3164,23 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         <p className="font-body font-medium text-[15px] text-muted-foreground mt-2">{TAB_SUBTITLES[activeTab]}</p>
       </div>
 
-      <div className={`bg-card border border-border rounded-[24px] mb-6 ${((activeTab === 'database' || activeTab === 'long-list') && viewMode === 'table') ? 'h-[calc(100vh-210px)] flex flex-col overflow-hidden' : ''}`}>
+      <div className={`bg-card border border-border rounded-[24px] mb-6 ${isListTab ? 'h-[calc(100vh-210px)] flex flex-col overflow-hidden' : ''}`}>
       <div className="flex items-center gap-2 flex-wrap px-4 py-3 border-b border-border rounded-t-[24px] bg-card">
-        {/* Tabs — desktop: all inline */}
+        {/* Tabs — desktop: all inline, drag to reorder */}
         <div className="hidden md:flex items-center gap-1 flex-wrap">
-          {TABS.map(tab => {
+          {orderedTabs.map(tab => {
             const count = counts[tab.id as keyof typeof counts];
             const isActive = activeTab === tab.id;
+            const isDragging = dragTabId === tab.id;
             return (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm transition-colors border whitespace-nowrap ${isActive ? 'bg-primary text-primary-foreground border-primary shadow-sm' : 'bg-card text-muted-foreground border-border hover:border-primary hover:text-foreground'}`}>
+                draggable
+                onDragStart={e => { setDragTabId(tab.id); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', tab.id); }}
+                onDragOver={e => { e.preventDefault(); if (dragTabId) reorderTab(dragTabId, tab.id); }}
+                onDrop={e => { e.preventDefault(); setDragTabId(null); }}
+                onDragEnd={() => setDragTabId(null)}
+                title="Drag to reorder"
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-primary' : ''} ${isActive ? 'bg-primary text-primary-foreground border-primary shadow-sm' : 'bg-card text-muted-foreground border-border hover:border-primary hover:text-foreground'}`}>
                 {tab.label}
                 {count !== null && count > 0 && (
                   <span className={`font-body text-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-card/20 text-white' : 'bg-primary/15 text-foreground'}`}>{count}</span>
@@ -3031,6 +3188,12 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
               </button>
             );
           })}
+          {isCustomOrder && (
+            <button onClick={resetTabOrder} title="Reset tab order"
+              className="flex items-center justify-center w-8 h-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent transition-colors shrink-0">
+              <RotateCcw size={14} />
+            </button>
+          )}
         </div>
         {/* Tabs — mobile: active label + 'More ▾' dropdown */}
         <div className="md:hidden relative">
@@ -3041,23 +3204,32 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
           </button>
           {tabsMenuOpen && (
             <div className="absolute left-0 top-full mt-1 z-50 bg-card border border-border rounded-[16px] shadow-2xl overflow-hidden min-w-[200px] py-1">
-              {TABS.map(tab => {
+              {orderedTabs.map((tab, idx) => {
                 const count = counts[tab.id as keyof typeof counts];
                 const isActive = activeTab === tab.id;
                 return (
-                  <button key={tab.id} onClick={() => { setActiveTab(tab.id); setTabsMenuOpen(false); }}
-                    className={`w-full flex items-center justify-between gap-2 px-4 py-2 font-body font-bold text-body-sm ${isActive ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:bg-accent'}`}>
-                    {tab.label}
-                    {count !== null && count > 0 && <span className="font-body text-micro font-black px-2 py-0.5 rounded-full bg-primary/15 text-foreground">{count}</span>}
-                  </button>
+                  <div key={tab.id} className="flex items-center gap-1 pl-2 pr-1">
+                    <button onClick={() => { setActiveTab(tab.id); setTabsMenuOpen(false); }}
+                      className={`flex-1 flex items-center justify-between gap-2 px-2 py-2 rounded-lg font-body font-bold text-body-sm ${isActive ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:bg-accent'}`}>
+                      {tab.label}
+                      {count !== null && count > 0 && <span className="font-body text-micro font-black px-2 py-0.5 rounded-full bg-primary/15 text-foreground">{count}</span>}
+                    </button>
+                    <button onClick={() => moveTab(tab.id, -1)} disabled={idx === 0} title="Move up"
+                      className="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground hover:bg-accent disabled:opacity-30 shrink-0"><ChevronDown size={13} className="rotate-180" /></button>
+                    <button onClick={() => moveTab(tab.id, 1)} disabled={idx === orderedTabs.length - 1} title="Move down"
+                      className="w-6 h-6 rounded-md flex items-center justify-center text-muted-foreground hover:bg-accent disabled:opacity-30 shrink-0"><ChevronDown size={13} /></button>
+                  </div>
                 );
               })}
+              {isCustomOrder && (
+                <button onClick={resetTabOrder}
+                  className="w-full flex items-center gap-2 px-4 py-2 mt-1 border-t border-border font-body font-bold text-body-sm text-muted-foreground hover:bg-accent">
+                  <RotateCcw size={13} /> Reset order
+                </button>
+              )}
             </div>
           )}
         </div>
-        {isListTab && (
-          <span className="hidden md:inline font-body font-bold text-[13px] text-muted-foreground shrink-0"><span className="text-foreground">{currentPoolPlayers.length}</span> players</span>
-        )}
         <div className="flex-1" />
         {isListTab && (
           <div className="flex items-center bg-accent rounded-full p-1 gap-1 shrink-0">
@@ -3152,12 +3324,13 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
               </div>
             </div>
           )}
-          <div className={`w-full ${viewMode === 'card' ? 'p-4' : ''} ${((activeTab === 'database' || activeTab === 'long-list') && viewMode === 'table') ? 'flex-1 min-h-0 flex flex-col' : ''}`}>
+          <div className={`w-full ${viewMode === 'card' ? 'flex-1 min-h-0 overflow-auto hide-scrollbar px-4 pb-4' : 'flex-1 min-h-0 flex flex-col'}`}>
             {viewMode === 'card' ? (
               <CardView players={currentPoolPlayers} archivedSet={currentArchivedSet} archiveView={archiveView}
                 flagMap={flagMap} currentTab={activeTab as Exclude<SeniorTab, 'settings'>}
                 onReserve={id => moveTo(id, 'long-list')} onShort={id => moveTo(id, 'short-list')}
-                onSendForward={sendForward} onArchive={archivePlayer} />
+                onSendForward={sendForward} onArchive={archivePlayer}
+                onSendBackward={sendBackward} onRestore={restorePlayer} />
             ) : activeTab === 'target-list' ? (
               <TargetSuperTable players={currentPoolPlayers} archivedSet={currentArchivedSet} archiveView={archiveView}
                 currentTab={activeTab as Exclude<SeniorTab, 'settings'>}

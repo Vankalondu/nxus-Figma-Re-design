@@ -379,6 +379,10 @@ body {
   padding-top: var(--tbl-py);
   padding-bottom: var(--tbl-py);
 }
+/* Clear full-width row divider between body rows (border-separate ignores <tr> borders,
+   so the line must live on the cells — this keeps it continuous across frozen columns). */
+.rtable tbody > tr > td { border-bottom: 1px solid var(--border); }
+.rtable tbody > tr:last-child > td { border-bottom: none; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
