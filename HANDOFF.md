@@ -25,6 +25,18 @@ Build clean, **Playwright 20/20**, 0 h-overflow @1440/834/390.
 - Verified shots: `<scratchpad>/searchproof/` (search-dropdown-1440, search-kebab-1440, search-mobile, topnav-theme, vm-nav-addplayer, sidebar-full).
 - **Follow-ups (flagged, not done):** real shortlist/target persistence from search needs hoisting tier state to a shared store; optional "recent players" empty-state; players have no photos so avatars are initials chips.
 
+### Search kebab actions made real + highlight upload (2026-07-31 — DONE, NOT deployed)
+Build clean, **Playwright 20/20**. The global-search kebab now has THREE working options.
+- **New shared store `src/app/state/playerStore.ts`** (`useSyncExternalStore`, module singleton keyed by stable player ids):
+  - **Tiers**: `useTierMap`/`setTier`/`clearTier`/`seedTiers`. `SeniorLeadPlayersPage` now reads `useTierMap()` instead of local `useState` (seeded once via `seedTiers(INITIAL_TIER_MAP())` at module load); `moveTo`/`sendBackward` call `setTier`. Read/write sites otherwise unchanged.
+  - **Uploaded highlights**: `addHighlight`/`getHighlightsFor`/`useHighlightsFor` (playerId → UploadedHighlight[]).
+  - NOTE: it's a module-level in-memory store → persists across CLIENT-SIDE nav (react-router), resets on a full page reload. (Verified with client-nav: Short List 40→45 after adding 5 from search. `pg.goto` full-reload resets it — don't test that way.)
+- **PlayerSearch kebab → 3 options**: *Add to shortlist* / *Add to target* now call `setTier(id, …)` for real (player appears in that tab); *Upload highlight* opens the new modal. All toast on success.
+- **New `components/UploadHighlightModal.tsx`**: title + **Paste link** OR **drag-drop / choose file** toggle → `addHighlight(...)` + toast.
+- **Reflection of uploaded highlights**: `PlayerProfile` Videos & Highlights tab prepends them (count updates; verified "QA TEST HIGHLIGHT" shows as H1, Highlights 4→5) and `PlayerVideoWorkspace` seeds them at open. **Table H# badge counts (SeniorLeadPlayersPage/CardView/CountryScout/LeadScout) are NOT incremented** — computed independently across ~6 files; left as-is (flagged, low value).
+- **Toaster → `position="top-right"`** in `App.tsx` (was bottom-right; global — affects all toasts).
+- Verified shots: `<scratchpad>/storeproof/` (kebab-3options, upload-modal, upload-modal-file, profile-uploaded-highlight [+ top-right toast], shortlist-clientnav).
+
 ## Earlier context
 
 ## What this is

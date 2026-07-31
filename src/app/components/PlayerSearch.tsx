@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
-import { Search, MoreVertical, Bookmark, Crosshair } from 'lucide-react';
+import { Search, MoreVertical, Bookmark, Crosshair, Film } from 'lucide-react';
 import { toast } from 'sonner';
 import { ALL_GENERATED_PLAYERS } from './SeniorLeadPlayersPage';
+import { setTier } from '../state/playerStore';
+import { UploadHighlightModal } from './UploadHighlightModal';
 
 // nationality codes on players are 3-letter; flagcdn uses 2-letter
 const FLAG3TO2: Record<string, string> = {
@@ -19,6 +21,7 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const [menuId, setMenuId] = useState<string | null>(null);
+  const [uploadFor, setUploadFor] = useState<{ id: string; name: string } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   const q = query.trim().toLowerCase();
@@ -52,9 +55,14 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
       matchVideos: p.matchVideos, highlightVideos: p.highlightVideos,
     } } });
   };
-  const addTo = (p: typeof ALL_GENERATED_PLAYERS[number], tier: 'Short List' | 'Target List') => {
+  const addTo = (p: typeof ALL_GENERATED_PLAYERS[number], tier: 'short-list' | 'target-list') => {
+    setMenuId(null); setOpen(false);
+    setTier(p.id, tier);
+    toast.success(`Added ${p.name} to ${tier === 'short-list' ? 'Short List' : 'Target List'}`);
+  };
+  const startUpload = (p: typeof ALL_GENERATED_PLAYERS[number]) => {
     setMenuId(null);
-    toast.success(`Added ${p.name} to ${tier}`);
+    setUploadFor({ id: p.id, name: p.name });
   };
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -108,14 +116,18 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
                     <MoreVertical size={16} />
                   </button>
                   {menuId === p.id && (
-                    <div className="absolute right-0 top-full mt-1 z-50 w-44 bg-card border border-border rounded-[14px] shadow-2xl py-1.5" onClick={e => e.stopPropagation()}>
-                      <button type="button" onClick={() => addTo(p, 'Short List')}
+                    <div className="absolute right-0 top-full mt-1 z-50 w-48 bg-card border border-border rounded-[14px] shadow-2xl py-1.5" onClick={e => e.stopPropagation()}>
+                      <button type="button" onClick={() => addTo(p, 'short-list')}
                         className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-foreground hover:bg-accent transition-colors">
                         <Bookmark size={14} className="text-primary" /> Add to shortlist
                       </button>
-                      <button type="button" onClick={() => addTo(p, 'Target List')}
+                      <button type="button" onClick={() => addTo(p, 'target-list')}
                         className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-foreground hover:bg-accent transition-colors">
                         <Crosshair size={14} className="text-primary" /> Add to target
+                      </button>
+                      <button type="button" onClick={() => startUpload(p)}
+                        className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-foreground hover:bg-accent transition-colors">
+                        <Film size={14} className="text-primary" /> Upload highlight
                       </button>
                     </div>
                   )}
@@ -129,6 +141,10 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
             </div>
           )}
         </div>
+      )}
+
+      {uploadFor && (
+        <UploadHighlightModal playerId={uploadFor.id} playerName={uploadFor.name} onClose={() => setUploadFor(null)} />
       )}
     </div>
   );

@@ -8,6 +8,7 @@ import {
   GRADE_SCALE, Grade, MOCK_CURRENT_SCOUT, MOCK_REPORT_TIMESTAMP,
   REPORT_CRITERIA_TOTAL, SHORT_REPORT_TEMPLATE, Submission,
 } from '../data/reports';
+import { getHighlightsFor } from '../state/playerStore';
 
 // ─── Types ───────────────────────────────────────────────────────────────────────
 export interface VideoWorkspacePlayer {
@@ -439,7 +440,15 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
 
 // ─── Workspace ───────────────────────────────────────────────────────────────────
 export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
-  const [videos, setVideos] = useState<PlayerVideo[]>(() => getPlayerVideos(player));
+  const [videos, setVideos] = useState<PlayerVideo[]>(() => {
+    // Surface any highlights uploaded via the global search for this player.
+    const uploaded: PlayerVideo[] = getHighlightsFor(player.id).map(u => ({
+      id: u.id, kind: 'highlight', home: '', away: '',
+      competition: u.source === 'link' ? 'External link' : 'Uploaded file',
+      season: '2026', round: 'Clip', date: u.addedLabel, title: u.title, hasReport: false,
+    }));
+    return [...uploaded, ...getPlayerVideos(player)];
+  });
   const [selectedVideo, setSelectedVideo] = useState<PlayerVideo | null>(null);
   const [panelMode, setPanelMode] = useState<PanelMode>('reports');
   const [focus, setFocus] = useState(false);

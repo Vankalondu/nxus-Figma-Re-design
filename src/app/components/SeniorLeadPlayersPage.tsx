@@ -17,6 +17,7 @@ import { EditColumnsModal } from './EditColumnsModal';
 import { PLAYER_COLUMNS, DEFAULT_VISIBLE_IDS, type PlayerColumn } from './playerColumns';
 import { PlayerVideoWorkspace } from './PlayerVideoWorkspace';
 import { Submission } from '../data/reports';
+import { useTierMap, setTier, seedTiers } from '../state/playerStore';
 
 // ─── Types ───────────────────────────────────────────────────────────────────────
 type SeniorTab = 'settings' | 'reports' | 'database' | 'long-list' | 'short-list' | 'target-list' | 'signed-list';
@@ -2640,6 +2641,9 @@ const INITIAL_TIER_MAP = (): Map<string, PipelineTier> => {
 export const ALL_GENERATED_PLAYERS = [...DB_PLAYERS, ...LL_PLAYERS, ...SL_PLAYERS, ...TL_PLAYERS];
 export type SearchPlayer = ExtPlayer;
 
+// Seed the shared tier store once (idempotent) so the global search and this page agree.
+seedTiers(INITIAL_TIER_MAP());
+
 // ─── Highlights feed — real player ids so dashboard deep-links scroll to real rows ──
 // Deterministic (no Date.now / Math.random). First 3 Short + first 3 Target players,
 // interleaved via sort by hoursAgo ascending (newest first).
@@ -2969,7 +2973,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   const [signedAddOpen, setSignedAddOpen] = useState(false);   // Add Signed Player modal (lifted so the trigger can live in the tab strip)
   const [visibleColIds, setVisibleColIds] = useState<Set<string>>(() => new Set(DEFAULT_VISIBLE_IDS));
   const extraCols: PlayerColumn[] = useMemo(() => PLAYER_COLUMNS.filter(c => visibleColIds.has(c.id)), [visibleColIds]);
-  const [playerTierMap, setPlayerTierMap] = useState<Map<string, PipelineTier>>(() => INITIAL_TIER_MAP());
+  const playerTierMap = useTierMap();
   const [archivedByTier, setArchivedByTier] = useState<Map<PipelineTier, Set<string>>>(
     new Map([['long-list', new Set()], ['short-list', new Set()], ['target-list', new Set()]]));
   // Seed target data per player
@@ -3106,15 +3110,15 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
     'settings':    null,
   }), [extPlayers, playerTierMap]);
 
-  const moveTo = (id: string, tier: PipelineTier) => { setPlayerTierMap(prev => { const n = new Map(prev); n.set(id, tier); return n; }); setOpenDropdownId(null); };
+  const moveTo = (id: string, tier: PipelineTier) => { setTier(id, tier); setOpenDropdownId(null); };
   const sendForward   = (id: string) => {
     if (activeTab === 'database')   moveTo(id, 'long-list');
     if (activeTab === 'long-list')  moveTo(id, 'short-list');
     if (activeTab === 'short-list') moveTo(id, 'target-list');
   };
   const sendBackward  = (id: string) => {
-    if (activeTab === 'short-list')  { setPlayerTierMap(prev => { const n = new Map(prev); n.set(id, 'long-list'); return n; }); }
-    if (activeTab === 'target-list') { setPlayerTierMap(prev => { const n = new Map(prev); n.set(id, 'short-list'); return n; }); }
+    if (activeTab === 'short-list')  { setTier(id, 'long-list'); }
+    if (activeTab === 'target-list') { setTier(id, 'short-list'); }
     setOpenDropdownId(null);
   };
   const archivePlayer = (id: string) => {

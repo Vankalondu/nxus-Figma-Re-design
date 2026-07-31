@@ -4,6 +4,7 @@ import { Sidebar } from '../components/Sidebar';
 import { EditPlayerModal } from '../components/EditPlayerModal';
 import { TopNav } from '../components/TopNav';
 import { toast } from 'sonner';
+import { useHighlightsFor } from '../state/playerStore';
 import { Calendar, Trophy, Activity, ShieldCheck, Search, ChevronDown, ChevronRight, Edit2, Trash2, Plus, Play, Video, Check, TrendingUp, Footprints, Ruler, Scale, Flag, Clock, X, CornerDownRight, MessageSquare } from 'lucide-react';
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, BarChart, Bar, XAxis, ResponsiveContainer, Cell } from 'recharts';
 
@@ -175,6 +176,7 @@ export default function PlayerProfile() {
 
   const tabs = ['Videos & Highlights', 'Statistics', 'Career History', 'Notes'];
   const roleLabel = getRoleLabel();
+  const uploadedHighlights = useHighlightsFor(player.id);
 
   const defaultTrail = [
     { label: 'Players', path: getRoleBasePath() + '/players' },
@@ -265,7 +267,12 @@ export default function PlayerProfile() {
 
   const renderVideos = () => {
     const matches = VIDEOS.filter(v => v.type === 'Match');
-    const highlights = VIDEOS.filter(v => v.type === 'Highlight');
+    const uploadedCards = uploadedHighlights.map(u => ({
+      title: u.title, date: u.addedLabel,
+      dur: u.source === 'link' ? 'External link' : (u.fileName || 'Uploaded file'),
+      type: 'Highlight', tags: ['New', u.source === 'link' ? 'Link' : 'File'],
+    }));
+    const highlights = [...uploadedCards, ...VIDEOS.filter(v => v.type === 'Highlight')];
     const showMatches = videoFilter === 'All' || videoFilter === 'Matches';
     const showHighlights = videoFilter === 'All' || videoFilter === 'Highlights';
     const both = showMatches && showHighlights;
