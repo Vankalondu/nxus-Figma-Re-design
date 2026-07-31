@@ -16,9 +16,10 @@ import { useTheme } from 'next-themes';
 // ─── Role → base path mapping ─────────────────────────────────────────────────
 function getRoleBasePath(): string {
   const role = sessionStorage.getItem('loginRole') || sessionStorage.getItem('userRole') || '';
-  if (role === 'Lead Scout')   return '/lead-scout';
-  if (role === 'Senior Scout') return '/senior-scout';
-  if (role === 'Head Scout')   return '/head-scout';
+  if (role === 'Lead Scout')     return '/lead-scout';
+  if (role === 'Senior Scout')   return '/senior-scout';
+  if (role === 'Head Scout')     return '/head-scout';
+  if (role === 'Video Manager')  return '/video-manager';
   return '/country-scout';
 }
 
@@ -102,27 +103,6 @@ export function Sidebar({ actions = [] }: SidebarProps) {
           })}
         </nav>
 
-        {/* Bottom: Theme toggle + User */}
-        <div className="mt-auto px-5 w-[232px] flex flex-col gap-4 pb-4">
-          <button
-            onClick={(e) => { e.stopPropagation(); setTheme(theme === 'dark' ? 'light' : 'dark'); }}
-            className="w-9 h-9 rounded-[12px] flex items-center justify-center bg-accent text-muted-foreground hover:text-foreground hover:bg-border transition-colors shrink-0"
-            title="Toggle Theme"
-          >
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <div className="cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-4">
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80"
-              alt="Profile"
-              className="w-10 h-10 rounded-full border-2 border-border object-cover shrink-0"
-            />
-            <div className="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden whitespace-nowrap">
-              <span className="font-body font-bold text-[14px] text-foreground">{displayName}</span>
-              <span className="font-body text-[12px] font-semibold text-muted-foreground">{displayRole}</span>
-            </div>
-          </div>
-        </div>
       </aside>
 
       {/* ── Mobile: Overlay Sidebar ── */}
@@ -170,20 +150,6 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                 </div>
               )}
             </nav>
-            <div className="mt-auto px-6 flex flex-col gap-6 pb-8">
-              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-accent text-muted-foreground hover:text-foreground hover:bg-border transition-colors">
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              <div className="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80"
-                  alt="Profile" className="w-10 h-10 rounded-full border-2 border-border object-cover" />
-                <div>
-                  <div className="font-body font-bold text-[14px] text-foreground">{displayName}</div>
-                  <div className="font-body text-[12px] text-muted-foreground">{displayRole}</div>
-                </div>
-              </div>
-            </div>
           </aside>
         </div>
       )}

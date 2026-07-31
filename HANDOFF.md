@@ -1,6 +1,31 @@
 # HANDOFF — NXUS Responsive System v1
 
-_Last updated: 2026-07-14. Resume by reading this file._
+_Last updated: 2026-07-29. Resume by reading this file._
+
+## LATEST (2026-07-29) — Video Manager dashboard + shared KPI/Tasks refactor (DONE, NOT deployed)
+Built the **Video Manager** as a new role/dashboard, plus polish that touches Lead + Senior. All verified: `npm run build` clean, **Playwright 20/20 pass**, 0 h-overflow @1440/834/390. **Not deployed** (pre-meeting draft — the video dashboard is a first draft to review with the video team; all its data is mock).
+- **Shared `KpiCard`** (`components/dashboard/KpiCard.tsx`): one source of truth for the clean KPI card (chip + SHORT HEADING · big number + descriptor · actionable link + `ArrowUpRight`). `rounded-[32px]` (was 20). Robust bottom row (fixes the Lead Coverage link mis-wrap). Lead + Senior + Video Manager all use it.
+  - Actionable link copy: Lead `Opens Reports·View Coverage·Opens Short List·View A+ Players`; Senior `Opens Reports·Opens Short List·View Packages·Opens Target List`.
+- **Shared `TasksTab`**: Active/Archived toggle moved onto the header row next to "Assign task" (was under the title). Affects Lead/Senior/VM (parity).
+- **`SeniorLeadPlayersPage`**: `orderedTabs` now filters out `reports` + `settings` when `loggedInRole === 'Video Manager'` (line ~2963, `hiddenTabs`). Scouts unchanged.
+- **`TopNav`**: `This Week` + `Add Player` now gated on their handlers (like `Add Report` already was). VM passes none → clean nav; all scout dashboards still pass them → unchanged.
+- **New `VideoManagerDashboard.tsx`** (cloned from Senior shell): tabs **Overview · Highlights · Full Matches · Analytics · Tasks** (no Reports). Overview = 4 KPIs (Missing Highlights/Full · Highlights/Full uploaded; % coverage in descriptor) + **Raised Requests queue** (centerpiece) + Upcoming Matches + Team Activity. Highlights/Full Matches = mirrored `CoverageTab` (stat strip + player coverage table + recent uploads). Analytics = coverage-over-time (2-line SVG) + turnaround + editor/uploader leaderboards + demand. Tasks = shared `TasksTab`. Reuses `SeniorLeadPlayersPage`/`MatchesView`/`AdminView` as-is.
+- **Role wiring**: `App.tsx` (4 `/video-manager/*` routes + player/:id), `LoginSuccess.tsx` (`Video Manager`→`/video-manager`), `Sidebar.tsx` `getRoleBasePath` (`Video Manager`→`/video-manager`). Login already produced the "Video Manager" role.
+- **Open questions for the video-team meeting** (design forks, in the shared design draft): what counts as "covered"; who closes a raised request (auto vs Lead accepts); coverage-% denominator (pipeline vs raised); role work-flow (chain vs independent); do requests carry deadlines; pipeline scale. KPI mock numbers (Short List 14 / Target 6 on Senior; VM counts) are placeholders.
+- Prior-art dead code mined but NOT used: `VideoDepartmentDashboard.tsx` / `GlobalPulseDashboard.tsx` / `OperationsDashboard.tsx` (different design system + recharts) — built fresh in house style instead.
+- Verified shots: `<scratchpad>/vmproof/` (vm-overview/highlights/full-matches/analytics/tasks/players, lead-overview/tasks, nav bars).
+
+### Global player search + nav polish (2026-07-29, same session — DONE, NOT deployed)
+Build clean, **Playwright 20/20**, 0 h-overflow @1440/834/390.
+- **KPI cards** earlier this session: extracted shared `components/dashboard/KpiCard.tsx` (rounded-[32px], up-arrow on link, actionable copy, fixed Lead Coverage mis-wrap); Lead + Senior use it. Shared `TasksTab` toggle moved next to "Assign task".
+- **New `components/PlayerSearch.tsx`**: live player search dropdown off the top-nav search. Queries `ALL_GENERATED_PLAYERS` (now `export`ed from `SeniorLeadPlayersPage.tsx`). Two-line rows (initials-chip avatar + blue name / flag·team·age), kebab → "Add to shortlist"/"Add to target" (mock `toast` — real tier state still lives inside SeniorLeadPlayersPage, not hoisted). Whole row → `navigate('{base}/player/{id}', {state:{player}})` with base = lead/senior/video-manager path or `/player` fallback (verified lands on `/lead-scout/player/db-18`). 6-row cap + "Showing N of M" footer; keyboard (↑/↓/Enter/Esc), outside-click close. Placeholder **"Find a player"**. Flags via 3→2 letter map (GHA→gh …) + flagcdn.
+- **TopNav**: desktop AND mobile-overlay search now render `<PlayerSearch>` (mobile finally matches desktop/tablet). Added a **theme toggle (Moon/Sun via next-themes) next to the notification bell**. `searchPlaceholder` prop now unused (PlayerSearch owns copy).
+- **Sidebar**: removed the bottom profile block (avatar + name + role) AND the theme toggle from BOTH desktop and mobile drawer (avatar was a decorative dup of the top-nav one; theme moved to nav). `useTheme`/`Moon`/`Sun`/`displayName`/`displayRole` may now be unused there (harmless).
+- **VideoManagerDashboard**: added `showAddPlayer` + `onAddPlayer` + the mock Add-Player modal, so the VM top nav shows **Add Player** again.
+- Verified shots: `<scratchpad>/searchproof/` (search-dropdown-1440, search-kebab-1440, search-mobile, topnav-theme, vm-nav-addplayer, sidebar-full).
+- **Follow-ups (flagged, not done):** real shortlist/target persistence from search needs hoisting tier state to a shared store; optional "recent players" empty-state; players have no photos so avatars are initials chips.
+
+## Earlier context
 
 ## What this is
 Building a ratio-driven responsive system (Figma + Tailwind) for the NXUS/Qaza scouting terminal, per the plan at `~/.claude/plans/reflective-splashing-balloon.md`. Tiers: **Mobile <768 (frame 390) · Tablet 768–1023 (frame 834) · Desktop ≥1024 (frame 1440)**, Tailwind `md`/`lg`, mobile-first.

@@ -21,9 +21,14 @@ import { ResponsiveTabs } from '../components/ResponsiveTabs';
 import { MatchesView } from './MatchesView';
 import { AdminView } from './AdminView';
 import CountryScoutDashboardPage from './CountryScoutDashboard';
+import { MOCK_TASKS as SHARED_MOCK_TASKS, TaskInput } from '../components/dashboard/shared';
+import { KpiCard } from '../components/dashboard/KpiCard';
+import { ReportsTab } from '../components/dashboard/ReportsTab';
+import { AnalyticsTab } from '../components/dashboard/AnalyticsTab';
+import { TasksTab } from '../components/dashboard/TasksTab';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type DashTab = 'overview' | 'reports' | 'packages' | 'pipeline' | 'analytics';
+type DashTab = 'overview' | 'reports' | 'packages' | 'analytics' | 'tasks';
 type ActivePage = 'dashboard' | 'players' | 'matches' | 'admin';
 type TaskGroup = 'today' | 'week' | 'upcoming';
 
@@ -775,114 +780,35 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
 
 
 // ─── OverviewTab — task list + at-a-glance stats ─────────────────────────────────
-const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate }: {
+const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers }: {
   tasks: Task[];
   onToggleTask: (id: string) => void;
   onAddTask: (t: Omit<Task, 'id' | 'completed'>) => void;
   onNavigate: (tab: DashTab) => void;
+  onOpenPlayers: (section: 'short-list' | 'target') => void;
 }) => {
   const [newTask, setNewTask] = useState('');
   const incomplete = tasks.filter(t => !t.completed);
   const complete   = tasks.filter(t => t.completed);
 
+  // Clean KPI card style — matches the Lead Scout Overview cards
   return (
     <div className="flex flex-col gap-6 pb-8">
-      {/* ── 4 KPI cards — matches Country Scout layout ── */}
+      {/* ── 4 KPI cards — shared KpiCard ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-
-        {/* Card 1 — Open Tasks */}
-        <button onClick={() => onNavigate('overview')}
-          className="bg-card border border-border rounded-[40px] p-8 flex flex-col justify-between text-left hover:-translate-y-1 hover:shadow-xl transition-all group shadow-[var(--shadow-lg)] h-[220px]">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shrink-0"><CheckCircle size={18} className="text-muted-foreground" /></div>
-              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground leading-tight">Open Tasks</span>
-            </div>
-          </div>
-          <div className="flex items-end gap-3 mt-auto">
-            <span className="font-heading font-extrabold text-[44px] leading-none tracking-tight tabular-nums text-foreground">{incomplete.length}</span>
-            <div className="flex flex-col pb-3 gap-1">
-              <span className="font-heading font-black text-[14px] text-muted-foreground leading-none">Due this week</span>
-              {incomplete.filter(t => t.priority === 'High').length > 0 && (
-                <span className="font-body text-[12px] font-black px-2 py-0.5 rounded-full bg-[#E05C4B]/15 text-[#E05C4B] w-fit">{incomplete.filter(t => t.priority === 'High').length} high priority</span>
-              )}
-            </div>
-          </div>
-          <div className="flex items-center gap-2 mt-4">
-            {Array.from({ length: 7 }).map((_, i) => (
-              <div key={i} className={`w-5 h-5 rounded-full ${i < Math.min(incomplete.length, 7) ? 'bg-primary' : 'border-2 border-dashed border-border'}`} />
-            ))}
-          </div>
-        </button>
-
-        {/* Card 2 — New Reports */}
-        <button onClick={() => onNavigate('reports')}
-          className="bg-card border border-border rounded-[40px] p-8 flex flex-col justify-between text-left hover:-translate-y-1 hover:shadow-xl transition-all group shadow-[var(--shadow-lg)] h-[220px]">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shrink-0"><FileText size={18} className="text-muted-foreground" /></div>
-              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground leading-tight">New Reports</span>
-            </div>
-          </div>
-          <div className="flex items-end gap-3 mt-auto">
-            <span className="font-heading font-extrabold text-[44px] leading-none tracking-tight tabular-nums text-foreground">5</span>
-            <div className="flex flex-col pb-3 gap-1">
-              <span className="font-heading font-black text-[14px] text-muted-foreground leading-none">Unread</span>
-              <span className="font-body text-[12px] font-black px-2 py-0.5 rounded-full bg-primary/20 text-foreground w-fit">2 this week</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 mt-4">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className={`w-5 h-5 rounded-full ${i < 5 ? 'bg-primary' : 'border-2 border-dashed border-border'}`} />
-            ))}
-          </div>
-        </button>
-
-        {/* Card 3 — Packages (IMAGE CARD) */}
-        <button onClick={() => onNavigate('packages')}
-          className="relative rounded-[40px] overflow-hidden h-[220px] hover:-translate-y-1 hover:shadow-xl transition-all group">
-          <img src="https://images.unsplash.com/photo-1776465960036-918a03931b03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHBsYXllciUyMGRhcmslMjBncmVlbiUyMGFic3RyYWN0fGVufDF8fHx8MTc3NzQwMTAwM3ww&ixlib=rb-4.1.0&q=80&w=1080" alt="Packages" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-          <div className="relative h-full flex flex-col justify-between p-8 text-white">
-            <div className="flex items-center justify-between">
-              <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-white/80">Packages to Review</span>
-              <TrendingUp size={16} className="text-white/60" />
-            </div>
-            <div>
-              <span className="font-heading font-extrabold text-[44px] leading-none">12</span>
-              <div className="flex items-center gap-3 mt-2">
-                <span className="font-body text-[12px] font-bold text-white/70">4 unwatched</span>
-                <button className="flex items-center gap-1 bg-primary px-3 py-2 rounded-full font-body text-[12px] font-bold text-chalk hover:bg-primary/80 transition-colors">
-                  Review <ArrowRight size={12} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </button>
-
-        {/* Card 4 — Pipeline */}
-        <button onClick={() => onNavigate('pipeline')}
-          className="bg-card border border-border rounded-[40px] p-8 flex flex-col justify-between text-left hover:-translate-y-1 hover:shadow-xl transition-all group shadow-[var(--shadow-lg)] h-[220px]">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center shrink-0"><Users size={18} className="text-muted-foreground" /></div>
-              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground leading-tight">Pipeline</span>
-            </div>
-            <ArrowRight size={14} className="text-muted-foreground" />
-          </div>
-          <div className="flex items-end gap-3 mt-auto">
-            <span className="font-heading font-extrabold text-[44px] leading-none tracking-tight tabular-nums text-foreground">40</span>
-            <div className="flex flex-col pb-3 gap-1">
-              <span className="font-heading font-black text-[14px] text-muted-foreground leading-none">Active players</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 mt-4">
-            <div className="flex-1 h-2 bg-border rounded-full overflow-hidden">
-              <div className="h-full bg-primary rounded-full" style={{ width: '65%' }} />
-            </div>
-            <span className="font-heading font-black text-[12px] text-foreground tabular-nums">65%</span>
-          </div>
-        </button>
+        <KpiCard icon={FileText} heading="Reports"
+          value={MOCK_REPORTS.filter(r => r.author === 'tom').length}
+          descriptor="made by Tom" action="Opens Reports"
+          onClick={() => onNavigate('reports')} />
+        <KpiCard icon={Users} heading="Short List" value={14}
+          descriptor="on the short list" action="Opens Short List"
+          onClick={() => onOpenPlayers('short-list')} />
+        <KpiCard icon={Video} heading="Packages" value={MOCK_PACKAGES.length}
+          descriptor="recently uploaded" action="View Packages"
+          onClick={() => onNavigate('packages')} />
+        <KpiCard icon={Target} heading="Target List" value={6}
+          descriptor="on the target list" action="Opens Target List"
+          onClick={() => onOpenPlayers('target')} />
       </div>
 
       {/* ── Below KPIs: 2-column layout ── */}
@@ -1001,127 +927,6 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate }: {
   );
 };
 
-// ─── Report Champion Podium ───────────────────────────────────────────────────
-const ChampionPodium = ({ scouts }: { scouts: { name: string; role: string; count: number }[] }) => {
-  const sorted = [...scouts].sort((a, b) => b.count - a.count);
-  const first = sorted[0]; const second = sorted[1]; const third = sorted[2];
-  const PodiumPerson = ({ scout, rank, height }: { scout: { name: string; role: string; count: number }; rank: 1|2|3; height: string }) => {
-    const c = rank === 1 ? { bg: 'bg-primary', text: 'text-chalk', border: 'border-primary' }
-            : rank === 2 ? { bg: 'bg-accent', text: 'text-foreground', border: 'border-border' }
-            : { bg: 'bg-card', text: 'text-muted-foreground', border: 'border-border' };
-    return (
-      <div className="flex flex-col items-center gap-2">
-        <div className="relative">
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center font-heading font-semibold text-[16px] border-2 ${c.bg} ${c.text} ${c.border}`}>
-            {scout.name[0]}
-          </div>
-          {rank === 1 && <div className="absolute -top-3 left-1/2 -translate-x-1/2"><Trophy size={16} className="text-[#E8A838]" /></div>}
-          {rank === 2 && <div className="absolute -top-2.5 left-1/2 -translate-x-1/2"><Medal size={13} className="text-muted-foreground" /></div>}
-          {rank === 3 && <div className="absolute -top-2.5 left-1/2 -translate-x-1/2"><Medal size={13} className="text-[#CD7F32]" /></div>}
-        </div>
-        <div className="text-center">
-          <p className="font-heading font-black text-[14px] text-foreground">{scout.name}</p>
-          <p className="font-body text-[10px] text-muted-foreground">{scout.role}</p>
-        </div>
-        <div className={`flex flex-col items-center justify-end rounded-t-[8px] w-[72px] ${c.bg}`} style={{ height }}>
-          <span className={`font-heading font-black text-[20px] mb-2 ${c.text}`}>{scout.count}</span>
-          <span className={`font-body text-[10px] font-bold mb-2 uppercase tracking-wide ${rank === 1 ? 'text-chalk/60' : 'text-muted-foreground/70'}`}>reports</span>
-        </div>
-      </div>
-    );
-  };
-  return (
-    <div className="bg-card rounded-[28px] border border-border p-6 flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Trophy size={16} className="text-[#E8A838]" />
-        <h3 className="font-heading font-black text-[15px] text-foreground">Report Champion</h3>
-        <span className="font-body text-[12px] text-muted-foreground ml-1">This cycle</span>
-      </div>
-      <div className="flex items-end justify-center gap-3 pt-4">
-        {second && <PodiumPerson scout={second} rank={2} height="64px" />}
-        {first  && <PodiumPerson scout={first}  rank={1} height="88px" />}
-        {third  && <PodiumPerson scout={third}  rank={3} height="48px" />}
-      </div>
-    </div>
-  );
-};
-
-// ─── ReportsTab — list of incoming reports from Lead/Head scouts ─────────────────
-const ReportsTab = ({ reports, onOpenReport, onAddReport }: {
-  reports: Report[];
-  onOpenReport: (r: Report) => void;
-  onAddReport: () => void;
-}) => {
-  const scoutCounts = [
-    { name: 'Mbugua', role: 'Senior Scout', count: reports.filter(r => r.author === 'mbugua').length || 3 },
-    { name: 'Tom',    role: 'Lead Scout',   count: reports.filter(r => r.author === 'tom').length || 3 },
-    { name: 'Nene',   role: 'Head Scout',   count: reports.filter(r => r.author === 'nene').length || 2 },
-  ];
-  const unreadCount = reports.filter(r => !r.viewed).length;
-  const gradeACount = reports.filter(r => r.plr === 'A' || r.plr === 'A+').length;
-  return (
-    <div className="flex flex-col gap-6 pb-8">
-      {/* Top section: Summary + Champion */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6">
-        {/* Report Summary */}
-        <div className="lg:col-span-2 portrait-tablet:col-span-full bg-card rounded-[32px] border border-border shadow-[var(--shadow-lg)] p-8 flex flex-col gap-6">
-          <h3 className="font-heading font-semibold text-[16px] text-foreground">Report Summary</h3>
-          <div className="grid grid-cols-4 gap-6">
-            {[
-              { label: 'Total', value: reports.length.toString(), sub: 'All time' },
-              { label: 'Unread', value: unreadCount.toString(), sub: 'Need review' },
-              { label: 'Grade A/A+', value: gradeACount.toString(), sub: 'Top PLR' },
-              { label: 'This Month', value: reports.length.toString(), sub: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) },
-            ].map(stat => (
-              <div key={stat.label}>
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">{stat.label}</span>
-                <div className="font-heading font-extrabold text-[36px] text-foreground leading-none mt-1">{stat.value}</div>
-                <span className="font-body text-[12px] text-muted-foreground font-medium">{stat.sub}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Champion Podium */}
-        <ChampionPodium scouts={scoutCounts} />
-      </div>
-
-      {/* Header + Add button */}
-      <div className="flex items-center justify-between">
-        <p className="font-body text-[14px] font-medium text-muted-foreground">{reports.length} reports</p>
-        <button onClick={onAddReport}
-          className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2 rounded-full font-body font-bold text-[14px] hover:bg-primary/80 shadow-md">
-          <Plus size={14} />Add Report
-        </button>
-      </div>
-
-      {/* Report cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {reports.map(r => (
-          <button key={r.id} onClick={() => onOpenReport(r)}
-            className={`bg-card rounded-[20px] border p-5 text-left hover:shadow-md transition-all ${r.viewed ? 'border-border' : 'border-primary shadow-sm'}`}>
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-xl bg-accent text-foreground flex items-center justify-center font-black text-[12px]">{r.initials}</div>
-                <div>
-                  <div className="font-body font-bold text-[14px] text-foreground">{r.playerName}</div>
-                  <div className="font-body text-[12px] text-muted-foreground">{r.pos} • {r.date}</div>
-                </div>
-              </div>
-              {!r.viewed && <span className="w-2 h-2 rounded-full bg-primary" />}
-            </div>
-            <p className="font-body text-[12px] text-muted-foreground line-clamp-2 mb-3">{r.notes}</p>
-            <div className="flex items-center gap-2">
-              <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-primary/10 text-foreground">PLR {r.plr}</span>
-              <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-primary/10 text-foreground">POR {r.por}</span>
-              <span className="font-body text-[10px] text-muted-foreground ml-auto">by {r.author === 'tom' ? 'Tom' : 'You'}</span>
-            </div>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 // ─── PackagesTab — video packages awaiting review ────────────────────────────────
 const PackagesTab = () => {
   return (
@@ -1156,86 +961,6 @@ const PackagesTab = () => {
   );
 };
 
-// ─── PipelineTab — high-priority players overview ────────────────────────────────
-const PipelineTab = () => {
-  return (
-    <div className="flex flex-col gap-4 pb-8">
-      <p className="font-body text-[14px] font-medium text-muted-foreground">High-priority players</p>
-      <div className="bg-card rounded-[20px] border border-border overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-primary">
-              {['Player', 'Pos', 'Avg Grade', 'Last Report'].map(h => (
-                <th key={h} className="px-4 py-3 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-chalk/70">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {MOCK_HIGH_PRIORITY.map(p => (
-              <tr key={p.id} className="border-b border-border last:border-0 hover:bg-accent transition-colors">
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-accent text-foreground flex items-center justify-center font-black text-[12px]">{p.initials}</div>
-                    <span className="font-body font-bold text-[14px] text-foreground">{p.name}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-3"><PosPill pos={p.pos} /></td>
-                <td className="px-4 py-3"><GradePill grade={p.avgGrade} /></td>
-                <td className="px-4 py-3"><span className="font-body text-[12px] text-muted-foreground">{p.lastReport}d ago</span></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
-
-// ─── AnalyticsTab — scout coverage & nudge tools ─────────────────────────────────
-const AnalyticsTab = ({ onNudge }: { onNudge: (scout: string) => void }) => {
-  const coverage = [
-    { scout: 'Kwame A.',   submitted: 18, pending: 4, color: '#3A8C6A' },
-    { scout: 'Chidi O.',   submitted: 14, pending: 6, color: '#E8A838' },
-    { scout: 'Wekesa O.',  submitted:  8, pending: 8, color: '#E05C4B' },
-    { scout: 'Emeka E.',   submitted: 22, pending: 2, color: '#3A8C6A' },
-    { scout: 'Pape S.',    submitted: 10, pending: 5, color: '#E8A838' },
-  ];
-
-  return (
-    <div className="flex flex-col gap-4 pb-8">
-      <p className="font-body text-[14px] font-medium text-muted-foreground">Scout submission coverage</p>
-      <div className="bg-card rounded-[24px] border border-border p-6">
-        <div className="flex flex-col gap-4">
-          {coverage.map(c => {
-            const pct = Math.round((c.submitted / (c.submitted + c.pending)) * 100);
-            return (
-              <div key={c.scout} className="flex items-center gap-4">
-                <div className="w-9 h-9 rounded-xl bg-accent text-foreground flex items-center justify-center font-black text-[12px]">
-                  {c.scout.split(' ').map(x => x[0]).join('')}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-body font-bold text-[14px] text-foreground">{c.scout}</span>
-                    <span className="font-body text-[12px] font-bold text-muted-foreground">{c.submitted}/{c.submitted + c.pending} • {pct}%</span>
-                  </div>
-                  <div className="h-2 bg-accent rounded-full overflow-hidden">
-                    <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: c.color }} />
-                  </div>
-                </div>
-                {c.pending > 3 && (
-                  <button onClick={() => onNudge(c.scout)}
-                    className="flex items-center gap-2 bg-primary text-white px-3 py-2 rounded-full font-body font-bold text-[12px] hover:bg-[#0d2a45]">
-                    <Zap size={11} />Nudge
-                  </button>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default function SeniorScoutDashboard() {
   const location = useLocation();
@@ -1259,6 +984,25 @@ export default function SeniorScoutDashboard() {
   const toggleTask = (id: string) => setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   const addTask = (task: Omit<Task, 'id' | 'completed'>) => setTasks(prev => [...prev, { ...task, id: `t${Date.now()}`, completed: false }]);
   const addTaskFromModal = (text: string) => addTask({ text, priority: 'High', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' });
+
+  // Lead-style task store — feeds the shared Tasks tab (distinct from the Overview task list above)
+  const [leadTasks, setLeadTasks] = useState<any[]>(SHARED_MOCK_TASKS);
+  const toggleLeadTask = (id: any) => setLeadTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  const addLeadTask = (input: TaskInput) => {
+    const base = typeof input === 'string' ? { text: input } : input;
+    setLeadTasks(prev => [...prev, {
+      id: `lt${prev.length + 1}`,
+      text: base.text,
+      priority: (typeof input === 'string' ? 'Low' : base.priority) || 'Low',
+      dueDate: (typeof input === 'string' ? '' : base.dueDate) || 'This week',
+      assignedTo: (typeof input === 'string' ? 'Me' : base.assignedTo) || 'Me',
+      allocated: 'Today',
+      completed: false,
+    }]);
+  };
+
+  // Deep-link to the players page section (short list / target list)
+  const goToPlayers = (section: 'short-list' | 'target') => navigate(`/senior-scout/players?section=${section}`);
 
   // Reports state
   const [reports, setReports] = useState<Report[]>(MOCK_REPORTS);
@@ -1301,8 +1045,8 @@ export default function SeniorScoutDashboard() {
     { id: 'overview',  label: 'Overview'  },
     { id: 'reports',   label: 'Reports'   },
     { id: 'packages',  label: 'Packages'  },
-    { id: 'pipeline',  label: 'Pipeline'  },
     { id: 'analytics', label: 'Analytics' },
+    { id: 'tasks',     label: 'Tasks'     },
   ];
 
   // Head Scout mode — write role to sessionStorage so CountryScoutDashboard
@@ -1492,11 +1236,11 @@ export default function SeniorScoutDashboard() {
               <ResponsiveTabs className="mt-4 mb-6" tabs={tabs} activeId={activeTab} onSelect={(id) => setActiveTab(id as DashTab)} />
 
               {/* Tab content */}
-              {activeTab === 'overview'  && <OverviewTab tasks={tasks} onToggleTask={toggleTask} onAddTask={addTask} onNavigate={setActiveTab} />}
-              {activeTab === 'reports'   && <ReportsTab reports={reports} onOpenReport={openReport} onAddReport={() => setShowAddReport(true)} />}
+              {activeTab === 'overview'  && <OverviewTab tasks={tasks} onToggleTask={toggleTask} onAddTask={addTask} onNavigate={setActiveTab} onOpenPlayers={goToPlayers} />}
+              {activeTab === 'reports'   && <ReportsTab onAddReport={() => setShowAddReport(true)} />}
               {activeTab === 'packages'  && <PackagesTab />}
-              {activeTab === 'pipeline'  && <PipelineTab />}
-              {activeTab === 'analytics' && <AnalyticsTab onNudge={handleNudge} />}
+              {activeTab === 'analytics' && <AnalyticsTab />}
+              {activeTab === 'tasks'     && <TasksTab tasks={leadTasks} onToggle={toggleLeadTask} onAdd={addLeadTask} />}
             </>
           )}
         </div>

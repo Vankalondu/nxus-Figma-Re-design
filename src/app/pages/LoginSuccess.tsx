@@ -18,7 +18,9 @@ export default function LoginSuccess() {
         navigate('/lead-scout');
       } else if (role === 'Head Scout') {
         navigate('/head-scout');
-      } else if (role === 'Video Uploader' || role === 'Video Manager' || role === 'Video Editor' || role === 'Basic Data Entry' || role === 'Detailed Data Entry' || role === 'Advanced Data Entry') {
+      } else if (role === 'Video Manager') {
+        navigate('/video-manager');
+      } else if (role === 'Video Uploader' || role === 'Video Editor' || role === 'Basic Data Entry' || role === 'Detailed Data Entry' || role === 'Advanced Data Entry') {
         navigate('/matches');
       } else {
         navigate('/country-scout');

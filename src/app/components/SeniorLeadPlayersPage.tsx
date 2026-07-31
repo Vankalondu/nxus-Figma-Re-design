@@ -2636,8 +2636,9 @@ const INITIAL_TIER_MAP = (): Map<string, PipelineTier> => {
   return m;
 };
 
-// All players pool = union of all tiers
-const ALL_GENERATED_PLAYERS = [...DB_PLAYERS, ...LL_PLAYERS, ...SL_PLAYERS, ...TL_PLAYERS];
+// All players pool = union of all tiers. Exported so the global top-nav search can query it.
+export const ALL_GENERATED_PLAYERS = [...DB_PLAYERS, ...LL_PLAYERS, ...SL_PLAYERS, ...TL_PLAYERS];
+export type SearchPlayer = ExtPlayer;
 
 // ─── Highlights feed — real player ids so dashboard deep-links scroll to real rows ──
 // Deterministic (no Date.now / Math.random). First 3 Short + first 3 Target players,
@@ -2960,7 +2961,9 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
     try { window.localStorage.removeItem(tabOrderKey(loggedInRole)); } catch {}
     setTabOrder(DEFAULT_TAB_ORDER);
   };
-  const orderedTabs = tabOrder.map(id => TABS.find(t => t.id === id)).filter(Boolean) as typeof TABS;
+  // Video Manager has no scouting Reports or scope Settings on the players page.
+  const hiddenTabs: SeniorTab[] = loggedInRole === 'Video Manager' ? ['reports', 'settings'] : [];
+  const orderedTabs = tabOrder.map(id => TABS.find(t => t.id === id)).filter((t): t is typeof TABS[number] => !!t && !hiddenTabs.includes(t.id));
   const isCustomOrder = tabOrder.join(',') !== DEFAULT_TAB_ORDER.join(',');
   const [colsModalOpen, setColsModalOpen] = useState(false);   // Edit Columns modal
   const [signedAddOpen, setSignedAddOpen] = useState(false);   // Add Signed Player modal (lifted so the trigger can live in the tab strip)

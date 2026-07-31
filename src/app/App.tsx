@@ -6,6 +6,7 @@ import CountryScoutDashboardPage from './pages/CountryScoutDashboard';
 import HeadScoutDashboard from './pages/HeadScoutDashboard';
 import SeniorScoutDashboard from './pages/SeniorScoutDashboard';
 import LeadScoutDashboard from './pages/LeadScoutDashboard';
+import VideoManagerDashboard from './pages/VideoManagerDashboard';
 import PlayerProfile from './pages/PlayerProfile';
 import AdminPage from './pages/AdminPage';
 import { Toaster } from './components/ui/sonner';
@@ -103,6 +104,13 @@ const router = createBrowserRouter([
       { path: 'senior-scout/admin',    Component: SeniorScoutDashboard },
       { path: 'senior-scout/player/:id', Component: PlayerProfile },
       { path: 'lead-scout/player/:id',   Component: PlayerProfile },
+
+      // Video Manager
+      { path: 'video-manager',         Component: VideoManagerDashboard },
+      { path: 'video-manager/players', Component: VideoManagerDashboard },
+      { path: 'video-manager/matches', Component: VideoManagerDashboard },
+      { path: 'video-manager/admin',   Component: VideoManagerDashboard },
+      { path: 'video-manager/player/:id', Component: PlayerProfile },
 
       { path: '*', Component: NotFound },
     ],
