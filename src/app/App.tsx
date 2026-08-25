@@ -7,6 +7,7 @@ import HeadScoutDashboard from './pages/HeadScoutDashboard';
 import SeniorScoutDashboard from './pages/SeniorScoutDashboard';
 import LeadScoutDashboard from './pages/LeadScoutDashboard';
 import VideoManagerDashboard from './pages/VideoManagerDashboard';
+import UploaderDashboard from './pages/UploaderDashboard';
 import PlayerProfile from './pages/PlayerProfile';
 import AdminPage from './pages/AdminPage';
 import { Toaster } from './components/ui/sonner';
@@ -111,6 +112,18 @@ const router = createBrowserRouter([
       { path: 'video-manager/matches', Component: VideoManagerDashboard },
       { path: 'video-manager/admin',   Component: VideoManagerDashboard },
       { path: 'video-manager/player/:id', Component: PlayerProfile },
+
+      // Package Uploader
+      { path: 'package-uploader',         Component: UploaderDashboard },
+      { path: 'package-uploader/players', Component: UploaderDashboard },
+      { path: 'package-uploader/matches', Component: UploaderDashboard },
+      { path: 'package-uploader/admin',   Component: UploaderDashboard },
+
+      // Full Match Uploader
+      { path: 'full-match-uploader',         Component: UploaderDashboard },
+      { path: 'full-match-uploader/players', Component: UploaderDashboard },
+      { path: 'full-match-uploader/matches', Component: UploaderDashboard },
+      { path: 'full-match-uploader/admin',   Component: UploaderDashboard },
 
       { path: '*', Component: NotFound },
     ],

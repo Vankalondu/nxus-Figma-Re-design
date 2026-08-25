@@ -20,6 +20,10 @@ export default function LoginSuccess() {
         navigate('/head-scout');
       } else if (role === 'Video Manager') {
         navigate('/video-manager');
+      } else if (role === 'Package Uploader') {
+        navigate('/package-uploader');
+      } else if (role === 'Full Match Uploader') {
+        navigate('/full-match-uploader');
       } else if (role === 'Video Uploader' || role === 'Video Editor' || role === 'Basic Data Entry' || role === 'Detailed Data Entry' || role === 'Advanced Data Entry') {
         navigate('/matches');
       } else {

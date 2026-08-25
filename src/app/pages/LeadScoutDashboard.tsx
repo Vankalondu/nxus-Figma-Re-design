@@ -1091,14 +1091,16 @@ export default function LeadScoutDashboard() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const toggleTask = (id: string) => setTasks(prev => prev.map(t => t.id===id ? { ...t, completed:!t.completed } : t));
-  const addTask = (input: string | { text: string; assignedTo?: string; dueDate?: string; priority?: Task['priority'] }) => {
+  const setTaskStatus = (id: any, status: any) => setTasks(prev => prev.map(t => t.id===id ? { ...t, status, completed: status==='done' } : t));
+  const addTask = (input: any) => {
     const t = typeof input === 'string' ? { text: input } : input;
     const nowLabel = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    setTasks(prev => [...prev, {
-      id: `t${Date.now()}`, text: t.text,
-      priority: t.priority ?? 'Medium', dueDate: t.dueDate || 'This week',
+    setTasks(prev => [{
+      id: `t${Date.now()}`, text: t.text, description: t.description,
+      priority: t.priority ?? 'Medium', dueDate: t.dueDate || 'This week', deadline: t.deadline,
+      assignedDate: new Date().toISOString().slice(0, 10), status: 'pending',
       assignedTo: t.assignedTo || 'Me', allocated: nowLabel, completed: false,
-    }]);
+    }, ...prev]);
   };
   const addNotif = (text: string, type: AppNotif['type']) =>
     setNotifications(prev => [{ id:`n${Date.now()}`, text, time:'Just now', read:false, type }, ...prev]);
@@ -1112,12 +1114,12 @@ export default function LeadScoutDashboard() {
   ];
   const [subtitle] = useState(subtitles[Math.floor(Math.random() * subtitles.length)]);
 
-  const tabs: { id: LeadTab; label: string }[] = [
+  const tabs = [
     { id:'overview',  label:'Overview'  },
     { id:'pipeline',  label:'Pipeline'  },
     { id:'reports',   label:'Reports'   },
     { id:'analytics', label:'Analytics' },
-    { id:'target',    label:'Tasks'     },
+    { id:'target',    label:'Tasks', count: tasks.filter(t => !t.completed).length, countTone: 'muted' as const },
   ];
 
   const FLAG_MAP: Record<string,string> = { "GAM":"gm","CMR":"cm","MLI":"ml","SEN":"sn","BDI":"bi","NGA":"ng","GHA":"gh","CIV":"ci","ENG":"gb-eng" };
@@ -1320,7 +1322,7 @@ export default function LeadScoutDashboard() {
               {activeTab==='pipeline'  && <PipelineTab />}
               {activeTab==='reports'   && <ReportsTab onAddReport={() => setShowAddReport(true)} />}
               {activeTab==='analytics' && <AnalyticsTab />}
-              {activeTab==='target'    && <TasksTab tasks={tasks} onToggle={toggleTask} onAdd={addTask} />}
+              {activeTab==='target'    && <TasksTab tasks={tasks} onToggle={toggleTask} onSetStatus={setTaskStatus} onAdd={addTask} />}
             </>
           )}
         </div>

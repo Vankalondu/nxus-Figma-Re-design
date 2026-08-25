@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bell, Calendar, FileText, Plus, Menu, X, Moon, Sun } from 'lucide-react';
+import { Search, Bell, Calendar, FileText, Plus, Menu, X, Moon, Sun, UploadCloud } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { PlayerSearch } from './PlayerSearch';
 
@@ -17,6 +17,8 @@ interface TopNavProps {
   onThisWeek?: () => void;
   onAddReport?: () => void; // omit to hide the button (Country Scout)
   onAddPlayer?: () => void;
+  onUploadVideo?: () => void; // uploader roles (primary); Video Manager (secondary)
+  uploadVideoVariant?: 'primary' | 'secondary';
   avatarImg: string;
   profileOpen?: boolean;
   onProfileToggle?: () => void;
@@ -35,6 +37,8 @@ export function TopNav({
   onThisWeek,
   onAddReport,
   onAddPlayer,
+  onUploadVideo,
+  uploadVideoVariant = 'primary',
   avatarImg,
   profileOpen,
   onProfileToggle,
@@ -104,6 +108,13 @@ export function TopNav({
         {onAddReport && (
           <button onClick={onAddReport} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-primary text-foreground hover:bg-primary/10 rounded-full font-body text-body-sm font-bold transition-colors'}>
             <FileText size={15} strokeWidth={2.5} /><span className={btnText}>Add Report</span>
+          </button>
+        )}
+
+        {onUploadVideo && (
+          <button onClick={onUploadVideo}
+            className={(uploadVideoVariant === 'secondary' ? secondaryCls : 'flex') + ' items-center gap-2 ' + btnPad + ' py-3 rounded-full font-body text-body-sm font-bold transition-colors ' + (uploadVideoVariant === 'secondary' ? 'bg-transparent border-2 border-primary text-foreground hover:bg-primary/10' : 'bg-primary border-2 border-primary text-white hover:bg-primary/80 shadow-md')}>
+            <UploadCloud size={15} strokeWidth={2.5} /><span className={btnText}>Upload Video</span>
           </button>
         )}
 

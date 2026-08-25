@@ -316,6 +316,10 @@
   --color-midnight: var(--midnight);
   --color-chalk: var(--chalk);
   --color-canvas: var(--canvas);
+  /* Semantic status/priority colors — enable text-scout-green, bg-scout-amber/15, etc. */
+  --color-scout-green: var(--scout-green);
+  --color-scout-amber: var(--scout-amber);
+  --color-scout-red: var(--scout-red);
 }
 
 /* ── Base layer ── */

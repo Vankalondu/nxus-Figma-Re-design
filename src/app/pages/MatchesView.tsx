@@ -308,6 +308,18 @@ function findMatchLocation(matchId: string): { comp: Competition; round: Round }
   return null;
 }
 
+// Resolve a fixture's id from its team names (dashboards link "upcoming matches" here by
+// name, so the id survives any re-numbering of the match data).
+export function findMatchIdByTeams(home: string, away: string): string | null {
+  for (const comp of competitionsData) {
+    for (const round of comp.rounds ?? []) {
+      const hit = round.matches.find(mm => mm.home === home && mm.away === away);
+      if (hit) return hit.id;
+    }
+  }
+  return null;
+}
+
 function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntry: (m: Match) => void; highlight?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {

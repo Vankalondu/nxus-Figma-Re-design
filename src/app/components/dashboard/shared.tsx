@@ -2,22 +2,71 @@ import React from 'react';
 import { Crown, Smile, ChevronDown, Check } from 'lucide-react';
 
 // ─── Shared dashboard types ─────────────────────────────────────────────────
+export type TaskStatus = 'pending' | 'in-progress' | 'done';
 export interface Task {
-  id: string; text: string; priority: 'High' | 'Medium' | 'Low'; dueDate: string;
-  assignedTo: string; allocated?: string; playerName?: string; isTargetTask?: boolean; completed: boolean;
+  id: string; text: string; priority: 'High' | 'Medium' | 'Low'; dueDate: string; assignedTo: string;
+  status?: TaskStatus; description?: string; assignedDate?: string; deadline?: string; // deadline: ISO yyyy-mm-dd
+  allocated?: string; playerName?: string; isTargetTask?: boolean; completed: boolean;
 }
-export type TaskInput = string | { text: string; assignedTo?: string; dueDate?: string; priority?: 'High' | 'Medium' | 'Low' };
+export type TaskInput = string | { text: string; assignedTo?: string; dueDate?: string; priority?: 'High' | 'Medium' | 'Low'; description?: string; deadline?: string };
+
+// Effective status (back-compat with legacy `completed`), overdue derivation, date format.
+export const taskStatus = (t: Task): TaskStatus => t.status ?? (t.completed ? 'done' : 'pending');
+export const isOverdue = (t: Task): boolean => {
+  if (taskStatus(t) === 'done' || !t.deadline) return false;
+  const today = new Date(new Date().toDateString());
+  return new Date(t.deadline) < today;
+};
+export const fmtDate = (iso?: string) => {
+  if (!iso) return '—';
+  const d = new Date(iso); if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+};
+export const TASK_STATE_META: Record<'pending' | 'in-progress' | 'done' | 'overdue', { label: string; cls: string }> = {
+  'pending':     { label: 'Pending',     cls: 'bg-scout-amber/15 text-scout-amber' },
+  'in-progress': { label: 'In progress', cls: 'bg-primary/15 text-primary' },
+  'done':        { label: 'Done',        cls: 'bg-scout-green/15 text-scout-green' },
+  'overdue':     { label: 'Overdue',     cls: 'bg-scout-red/15 text-scout-red' },
+};
 
 // ─── Task data + helpers (Tasks tab) ────────────────────────────────────────
 export const TASK_ASSIGNEES = ['Me', 'David (Senior)', 'Nene', 'Mbugua', 'Tom'];
-export const MOCK_TASKS: Task[] = [
-  { id:'t1', text:'Review Kofi Mensah target package', priority:'High',   dueDate:'Jul 23', allocated:'Jul 21', assignedTo:'David (Senior)', playerName:'Kofi Mensah', isTargetTask:true, completed:false },
-  { id:'t2', text:'File report on Amadou Sarr',        priority:'High',   dueDate:'Jul 23', allocated:'Jul 22', assignedTo:'Me', completed:false },
-  { id:'t3', text:'Cross-check David Conteh stats',    priority:'Medium', dueDate:'Jul 25', allocated:'Jul 20', assignedTo:'David (Senior)', playerName:'David Conteh', isTargetTask:true, completed:false },
-  { id:'t4', text:'Submit Combined Top 10 — Ghana cycle', priority:'High', dueDate:'Jul 26', allocated:'Jul 19', assignedTo:'Me', completed:false },
-  { id:'t5', text:'Update PLR grades on Short List',   priority:'Low',    dueDate:'Jul 18', allocated:'Jul 12', assignedTo:'Me', completed:true },
-  { id:'t6', text:'Shortlist review — Nene batch',     priority:'Medium', dueDate:'Jul 15', allocated:'Jul 10', assignedTo:'Nene', completed:true },
+const BASE_TASKS: Task[] = [
+  { id:'t1', text:'Review Kofi Mensah target package', description:'Verify player tagging + edit quality against the scout request', priority:'High',   status:'in-progress', assignedDate:'2026-08-02', deadline:'2026-08-14', dueDate:'Aug 14', assignedTo:'David (Senior)', playerName:'Kofi Mensah', isTargetTask:true, completed:false },
+  { id:'t2', text:'File report on Amadou Sarr',        description:'Match report from the Ghana friendly',                          priority:'High',   status:'pending',     assignedDate:'2026-08-03', deadline:'2026-08-08', dueDate:'Aug 8',  assignedTo:'Me', completed:false },
+  { id:'t3', text:'Cross-check David Conteh stats',    description:'Confirm minutes + goals vs the data feed',                      priority:'Medium', status:'in-progress', assignedDate:'2026-07-28', deadline:'2026-08-05', dueDate:'Aug 5',  assignedTo:'David (Senior)', playerName:'David Conteh', isTargetTask:true, completed:false },
+  { id:'t4', text:'Submit Combined Top 10 — Ghana cycle', description:'Compile the cycle shortlist for review',                     priority:'High',   status:'pending',     assignedDate:'2026-08-05', deadline:'2026-08-20', dueDate:'Aug 20', assignedTo:'Me', completed:false },
+  { id:'t5', text:'Update PLR grades on Short List',   description:'Apply the latest grading pass',                                 priority:'Low',    status:'done',        assignedDate:'2026-07-20', deadline:'2026-07-30', dueDate:'Jul 30', assignedTo:'Me', completed:true },
+  { id:'t6', text:'Shortlist review — Nene batch',     description:'Review Nene’s submitted batch',                                 priority:'Medium', status:'done',        assignedDate:'2026-07-15', deadline:'2026-07-25', dueDate:'Jul 25', assignedTo:'Nene', completed:true },
+  { id:'t7', text:'Tag Cheikh Diop package clips',     description:'Add moment tags to the defensive reel',                         priority:'Medium', status:'pending',     assignedDate:'2026-08-08', deadline:'2026-08-18', dueDate:'Aug 18', assignedTo:'Nene', playerName:'Cheikh Diop', completed:false },
+  { id:'t8', text:'Source full match — Gor Mahia',     description:'Locate raw footage for the fixture',                            priority:'High',   status:'in-progress', assignedDate:'2026-08-02', deadline:'2026-08-12', dueDate:'Aug 12', assignedTo:'Mbugua', completed:false },
 ];
+// Generate ~92 more so the list is 100 tasks (large-scale test of pagination/filters).
+const TASK_VERBS = ['Tag', 'Review', 'Cut', 'Source', 'Upload', 'Cross-check', 'Grade', 'Verify', 'Compile', 'Clip'];
+const TASK_OBJECTS = ['package clips', 'full match', 'highlight reel', 'defensive actions', 'scout report', 'set-piece reel', 'top 10 list', 'coverage gaps', 'player stats', 'trial footage'];
+const TASK_PLAYERS = ['Yaw Owusu', 'Sory Camara', 'Ismael Toure', 'Musa Kante', 'Prince Mensah', 'Daniel Osei', 'Lamine Cisse', 'Baba Traore', 'Omar Diallo', 'Karim Toure', 'Kwame Boateng', 'Cheikh Diop'];
+const pad = (n: number) => String(n).padStart(2, '0');
+const genTasks = (n: number): Task[] => Array.from({ length: n }, (_, i) => {
+  const status: TaskStatus = (['pending', 'in-progress', 'done'] as const)[i % 3];
+  const priority = (['High', 'Medium', 'Low'] as const)[i % 3];
+  const month = 7 + (i % 3);                         // Jul, Aug, Sep 2026
+  const day = 1 + (i * 7) % 28;
+  const aMonth = month === 7 ? 6 : month - 1;
+  return {
+    id: `g${i}`,
+    text: `${TASK_VERBS[i % TASK_VERBS.length]} ${TASK_OBJECTS[i % TASK_OBJECTS.length]}`,
+    description: `Auto-generated task #${i + 1} for scale testing`,
+    priority,
+    status,
+    assignedDate: `2026-${pad(aMonth)}-${pad(1 + (i % 27))}`,
+    deadline: `2026-${pad(month)}-${pad(day)}`,
+    dueDate: `${['Jul', 'Aug', 'Sep'][month - 7]} ${day}`,
+    assignedTo: TASK_ASSIGNEES[i % TASK_ASSIGNEES.length],
+    playerName: i % 4 === 0 ? TASK_PLAYERS[i % TASK_PLAYERS.length] : undefined,
+    completed: status === 'done',
+  };
+});
+export const MOCK_TASKS: Task[] = [...BASE_TASKS, ...genTasks(92)];
 
 export const WEEK_DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 export const WEEK_TASKS: Record<string, [number, number, number]> = {
@@ -26,14 +75,21 @@ export const WEEK_TASKS: Record<string, [number, number, number]> = {
 export const WEEK_HOURS: Record<string, [number, number, number]> = {
   Mon:[4.5,2,1], Tue:[3,1.5,2.5], Wed:[6,2,1], Thu:[5,3,2], Fri:[7,1,1.5], Sat:[1.5,1,0], Sun:[0,1,1],
 };
+// Semantic distribution colors: green = done, amber = pending, blue = assigned.
 export const TASK_STATUS = [
-  { key: 'Completed', color: '#061b2e' },
+  { key: 'Completed', color: '#22C55E' },
   { key: 'Pending',   color: '#E8A838' },
-  { key: 'Assigned',  color: '#b8d4ef' },
+  { key: 'Assigned',  color: '#1e88e5' },
 ];
 
+// Priority pill: high = red (needs attention), medium = amber, low = muted. Soft tints, no shout.
+const PRIORITY_PILL: Record<'High' | 'Medium' | 'Low', string> = {
+  High:   'bg-scout-red/15 text-scout-red',
+  Medium: 'bg-scout-amber/15 text-scout-amber',
+  Low:    'bg-accent text-muted-foreground',
+};
 export const PriorityPill = ({ p }: { p: 'High' | 'Medium' | 'Low' }) => (
-  <span className="inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-bold bg-primary/15 text-foreground shrink-0">{p}</span>
+  <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black shrink-0 ${PRIORITY_PILL[p]}`}>{p}</span>
 );
 
 // ─── Report Champion Podium (Reports tab) ───────────────────────────────────

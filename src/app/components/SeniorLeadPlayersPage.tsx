@@ -18,9 +18,12 @@ import { PLAYER_COLUMNS, DEFAULT_VISIBLE_IDS, type PlayerColumn } from './player
 import { PlayerVideoWorkspace } from './PlayerVideoWorkspace';
 import { Submission } from '../data/reports';
 import { useTierMap, setTier, seedTiers } from '../state/playerStore';
+// Lazy import breaks the SeniorLeadPlayersPage → VideoTrackerGrid → videoStore →
+// SeniorLeadPlayersPage cycle (videoStore's seed reads ALL_GENERATED_PLAYERS at init).
+const VideoTrackerGrid = React.lazy(() => import('./VideoTrackerGrid').then(m => ({ default: m.VideoTrackerGrid })));
 
 // ─── Types ───────────────────────────────────────────────────────────────────────
-type SeniorTab = 'settings' | 'reports' | 'database' | 'long-list' | 'short-list' | 'target-list' | 'signed-list';
+type SeniorTab = 'settings' | 'reports' | 'video-tracker' | 'database' | 'long-list' | 'short-list' | 'target-list' | 'signed-list';
 type PipelineTier = 'long-list' | 'short-list' | 'target-list';
 type ArchiveView = 'active' | 'audit';
 type ViewMode = 'table' | 'card';
@@ -84,6 +87,7 @@ const loadTabOrder = (role?: string): SeniorTab[] => {
   } catch { return DEFAULT_TAB_ORDER; }
 };
 const PAGE_TITLES: Record<SeniorTab, { first: string; rest: string }> = {
+  'video-tracker': { first: 'Video Analyst', rest: 'Tracker' },
   'settings':    { first: 'Scope',   rest: 'Settings' },
   'reports':     { first: 'Scouting', rest: 'Reports' },
   'database':    { first: 'Players', rest: 'Database' },
@@ -93,6 +97,7 @@ const PAGE_TITLES: Record<SeniorTab, { first: string; rest: string }> = {
   'signed-list': { first: 'Signed',  rest: 'List'     },
 };
 const PAGE_ICON_NODES: Record<SeniorTab, React.ReactNode> = {
+  'video-tracker': <List size={28} className="text-chalk" />,
   'settings':    <Crosshair size={28} className="text-chalk" />,
   'reports':     <FileText  size={28} className="text-chalk" />,
   'database':    <Database  size={28} className="text-chalk" />,
@@ -102,6 +107,7 @@ const PAGE_ICON_NODES: Record<SeniorTab, React.ReactNode> = {
   'signed-list': <TrendingUp size={28} className="text-chalk" />,
 };
 const TAB_SUBTITLES: Record<SeniorTab, string> = {
+  'video-tracker': 'Every pipeline player’s video coverage — spot and close the gaps.',
   'settings':    'Configure the parameters that define your active scouting scope.',
   'reports':     'Scouting reports filed by the team.',
   'database':    'All players within your active scouting scope.',
@@ -2909,7 +2915,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   // plus ?grade=<grade> (grade filter) and ?player=<id> (scroll + highlight a row).
   useEffect(() => {
     const section = searchParams.get('section');
-    const validTabs: SeniorTab[] = ['database', 'long-list', 'short-list', 'target-list', 'signed-list', 'reports', 'settings'];
+    const validTabs: SeniorTab[] = ['video-tracker', 'database', 'long-list', 'short-list', 'target-list', 'signed-list', 'reports', 'settings'];
     if (section && (validTabs as string[]).includes(section)) {
       setActiveTab(section as SeniorTab);
     }
@@ -2967,7 +2973,11 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   };
   // Video Manager has no scouting Reports or scope Settings on the players page.
   const hiddenTabs: SeniorTab[] = loggedInRole === 'Video Manager' ? ['reports', 'settings'] : [];
-  const orderedTabs = tabOrder.map(id => TABS.find(t => t.id === id)).filter((t): t is typeof TABS[number] => !!t && !hiddenTabs.includes(t.id));
+  const baseTabs = tabOrder.map(id => TABS.find(t => t.id === id)).filter((t): t is typeof TABS[number] => !!t && !hiddenTabs.includes(t.id));
+  // Video Manager gets a Video Analyst Tracker tab, placed before Target List.
+  const orderedTabs = loggedInRole === 'Video Manager'
+    ? [{ id: 'video-tracker' as SeniorTab, label: 'Video Analyst Tracker' }, ...baseTabs]
+    : baseTabs;
   const isCustomOrder = tabOrder.join(',') !== DEFAULT_TAB_ORDER.join(',');
   const [colsModalOpen, setColsModalOpen] = useState(false);   // Edit Columns modal
   const [signedAddOpen, setSignedAddOpen] = useState(false);   // Add Signed Player modal (lifted so the trigger can live in the tab strip)
@@ -3134,7 +3144,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
     setOpenDropdownId(null);
   };
 
-  const isListTab = activeTab !== 'settings' && activeTab !== 'signed-list' && activeTab !== 'reports';
+  const isListTab = activeTab !== 'settings' && activeTab !== 'signed-list' && activeTab !== 'reports' && activeTab !== 'video-tracker';
 
   const filterBarProps = {
     filterFoot, setFilterFoot, filterHeightMin, setFilterHeightMin, filterHeightMax, setFilterHeightMax,
@@ -3278,6 +3288,8 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
       {activeTab === 'settings' && <div className="p-4"><ScopeSettingsPanel profileTypes={profileTypes} onAddProfile={addProfile} onEditProfile={editProfile} onDeleteProfile={deleteProfile} loggedInRole={loggedInRole} scopeYearMin={scopeYearMin} setScopeYearMin={setScopeYearMin} scopeYearMax={scopeYearMax} setScopeYearMax={setScopeYearMax} /></div>}
 
       {activeTab === 'reports' && <div className="p-4"><ReportsHub extraSubmissions={filedSubmissions} /></div>}
+
+      {activeTab === 'video-tracker' && <div className="p-4"><React.Suspense fallback={<div className="p-8 text-center font-body text-muted-foreground">Loading…</div>}><VideoTrackerGrid mode="manager" /></React.Suspense></div>}
 
       {activeTab === 'signed-list' && <div className="p-4"><SignedListTab extraCols={extraCols} showAdd={signedAddOpen} setShowAdd={setSignedAddOpen} /></div>}
 

@@ -34,6 +34,8 @@ export default function LoginCredentials() {
       else if (emailLower.includes('@head') || emailLower.startsWith('head')) role = 'Head Scout';
       else if (emailLower.includes('@country') || emailLower.startsWith('country')) role = 'Country Scout';
       // Legacy / other department roles
+      else if (emailLower.includes('package')) role = 'Package Uploader';
+      else if (emailLower.includes('fullmatch') || emailLower.includes('full-match')) role = 'Full Match Uploader';
       else if (emailLower.includes('uploader')) role = 'Video Uploader';
       else if (emailLower.includes('manager')) role = 'Video Manager';
       else if (emailLower.includes('editor')) role = 'Video Editor';
@@ -44,6 +46,8 @@ export default function LoginCredentials() {
       // Store both current view role and immutable login role
       sessionStorage.setItem('userRole', role);
       sessionStorage.setItem('loginRole', role);
+      if (role === 'Package Uploader') sessionStorage.setItem('userName', 'Ama Serwaa');
+      if (role === 'Full Match Uploader') sessionStorage.setItem('userName', 'Zawadi Juma');
 
       // Mode-picker is bypassed — go straight to the success interstitial,
       // which routes to the correct role dashboard.

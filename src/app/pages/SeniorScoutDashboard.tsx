@@ -988,17 +988,18 @@ export default function SeniorScoutDashboard() {
   // Lead-style task store — feeds the shared Tasks tab (distinct from the Overview task list above)
   const [leadTasks, setLeadTasks] = useState<any[]>(SHARED_MOCK_TASKS);
   const toggleLeadTask = (id: any) => setLeadTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
-  const addLeadTask = (input: TaskInput) => {
+  const setLeadTaskStatus = (id: any, status: any) => setLeadTasks(prev => prev.map(t => t.id === id ? { ...t, status, completed: status === 'done' } : t));
+  const addLeadTask = (input: any) => {
     const base = typeof input === 'string' ? { text: input } : input;
-    setLeadTasks(prev => [...prev, {
-      id: `lt${prev.length + 1}`,
-      text: base.text,
-      priority: (typeof input === 'string' ? 'Low' : base.priority) || 'Low',
-      dueDate: (typeof input === 'string' ? '' : base.dueDate) || 'This week',
-      assignedTo: (typeof input === 'string' ? 'Me' : base.assignedTo) || 'Me',
-      allocated: 'Today',
-      completed: false,
-    }]);
+    setLeadTasks(prev => [{
+      id: `lt${Date.now()}`,
+      text: base.text, description: base.description,
+      priority: base.priority || 'Medium',
+      dueDate: base.dueDate || 'This week', deadline: base.deadline,
+      assignedDate: new Date().toISOString().slice(0, 10), status: 'pending',
+      assignedTo: base.assignedTo || 'Me',
+      allocated: 'Today', completed: false,
+    }, ...prev]);
   };
 
   // Deep-link to the players page section (short list / target list)
@@ -1041,12 +1042,12 @@ export default function SeniorScoutDashboard() {
   ];
   const [subtitle] = useState(funSubtitles[Math.floor(Math.random() * funSubtitles.length)]);
 
-  const tabs: { id: DashTab; label: string }[] = [
+  const tabs = [
     { id: 'overview',  label: 'Overview'  },
     { id: 'reports',   label: 'Reports'   },
     { id: 'packages',  label: 'Packages'  },
     { id: 'analytics', label: 'Analytics' },
-    { id: 'tasks',     label: 'Tasks'     },
+    { id: 'tasks',     label: 'Tasks', count: leadTasks.filter(t => !t.completed).length, countTone: 'muted' as const },
   ];
 
   // Head Scout mode — write role to sessionStorage so CountryScoutDashboard
@@ -1240,7 +1241,7 @@ export default function SeniorScoutDashboard() {
               {activeTab === 'reports'   && <ReportsTab onAddReport={() => setShowAddReport(true)} />}
               {activeTab === 'packages'  && <PackagesTab />}
               {activeTab === 'analytics' && <AnalyticsTab />}
-              {activeTab === 'tasks'     && <TasksTab tasks={leadTasks} onToggle={toggleLeadTask} onAdd={addLeadTask} />}
+              {activeTab === 'tasks'     && <TasksTab tasks={leadTasks} onToggle={toggleLeadTask} onSetStatus={setLeadTaskStatus} onAdd={addLeadTask} />}
             </>
           )}
         </div>

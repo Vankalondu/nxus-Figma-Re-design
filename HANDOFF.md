@@ -37,6 +37,34 @@ Build clean, **Playwright 20/20**. The global-search kebab now has THREE working
 - **Toaster → `position="top-right"`** in `App.tsx` (was bottom-right; global — affects all toasts).
 - Verified shots: `<scratchpad>/storeproof/` (kebab-3options, upload-modal, upload-modal-file, profile-uploaded-highlight [+ top-right toast], shortlist-clientnav).
 
+### Video Manager overhaul + semantic colors + Tasks redesign (2026-08-05 — DONE, NOT deployed)
+Build clean, **Playwright 20/20**, 0 h-overflow @1440/834/390, verified light + dark.
+- **Semantic color system** (locked with user): green=done · amber=pending/in-progress · blue=assigned · red=attention. Added `--color-scout-green/amber/red` @theme bridges in `globals.css` (were only reachable via inline style; now `bg-scout-red/15`, `text-scout-green` work). `shared.tsx`: PriorityPill High=red/Med=amber/Low=muted; TASK_STATUS Completed=#22C55E green, Pending=#E8A838 amber, Assigned=#1e88e5 blue.
+- **`ResponsiveTabs`** extended: `TabItem` now supports `count?` + `countTone?: 'muted'|'red'` → pill after label. Tasks tab shows a **muted** open-task count on Lead/Senior/VM; VM Approval tab shows a **red** pending count.
+- **Shared `TasksTab` redesign**: vertical **stacked-column** chart (green base→blue→amber) with **Weekly/Monthly** toggle (Monthly = 4 weekly-aggregate cols); task list is now a **compact table** (priority·title·assignee·due) with a **segmented priority filter** (All/High/Med/Low + counts). Affects all 3 dashboards.
+- **New `videoStore.ts`** (useSyncExternalStore): approval queue + assignments + approved set. **Coverage status is DERIVED** (unassigned default → Assign→assigned → upload pending→in-progress → Approve→has-video), never hand-set. Actions `assignVideo/approveVideo/redoVideo`.
+- **VideoManagerDashboard rewritten**:
+  - **Overview KPIs** now: Approvals (red when >0) · Tasks (+"N overdue") · Missing Packages · Missing Full Matches (Target+Short).
+  - **Highlights → Packages** rename throughout (Packages = in-house edited; external Highlights untouched = the search upload action).
+  - **Coverage tabs** (Packages/Full Matches): 3 Reports-style KPI tiles · tier toggle (Target/Short/Long) · status filter chips w/ counts · table (flag+name·pos·team·**derived StatusPill**·Assign/View/Nudge; Nudge disabled unless assigned/in-progress). Recent-uploads strip removed. Overview "Missing X" deep-links here via `startNeeds` + remount key.
+  - **New Approval tab** (red count badge): inbox (oldest first) + type filter · row = play-thumb·name·type·uploader·linked player (amber "No player linked" warning)·date·**Approve**(green)/**Redo**. Play → modal. Redo → **popover** (reason + quick chips) → `redoVideo` + **creates a High-priority editor task** (Approval↔Tasks tied). "Recently reviewed" collapsible. Approve → player flips to Has video (verified Short-missing 37→36).
+  - **Notifications** now derived live from the approval queue (bell count = pending); was a static "caught up".
+- Verified functionally: Approve 6→5 (count drops + coverage reflects), Redo creates task (tasks 4→5). Shots: `<scratchpad>/vmoverhaulproof/` (overview, packages, packages-dark, approval, tasks, tasks-monthly, lead-tasks).
+- **Open pushback the user accepted**: pending=amber (not red); in-progress=amber (user corrected from blue). Status fully system-derived (unassigned = default, not a manual option).
+
+### Video-dept feature-request — Phase 1 & 3 DONE (2026-08-11, NOT deployed); Phases 2/5/6/7 REMAIN
+Big multi-part spec (video dept dashboards + Tasks module). Build clean, **Playwright 20/20**, 0 overflow. Delivered the two most cross-cutting phases; the rest is the larger new-UI build.
+**DONE:**
+- **Tasks module overhaul (global, shared `TasksTab`)** — data model expanded in `shared.tsx`: `Task.status` (pending/in-progress/done) + `description`/`assignedDate`/`deadline`; helpers `taskStatus`/`isOverdue`/`fmtDate`/`TASK_STATE_META`; MOCK_TASKS re-seeded with real deadlines (some overdue vs today). TasksTab rebuilt: **task card LEFT, distribution chart RIGHT**; **5 status tabs** Pending/In Progress/Done/**Overdue**(derived, red, past-deadline)/Archived(placeholder); **search + priority filter**; **pagination (10/page, top+bottom, prev/1..6/next)**; table cols Task·Priority·Description·Assignee·Assigned·Deadline·**Status(dropdown)**·**checkbox far-right**; semantic status colors. **Distribution card gated** via `showDistribution` (uploaders pass false). All 4 dashboards (Lead/Senior/VM/Uploader) got `onSetStatus` + enriched `addTask` (status/description/deadline/assignedDate) — checkbox marks Done, status dropdown flips Pending↔In-Progress.
+- **Approval = Packages only** (`videoStore`): removed full-match items from the queue (badge 6→4). **Full-match availability model**: `fmStatus` map (available/not-available) + `setFullMatchAvailability`; new `CoverageStatus` `'not-available'` (muted pill). `coverageStatus()` branches by type (full-match: unassigned→assigned→available(has-video)|not-available; no in-progress). VM `missingCount` excludes not-available. VM STATUS_META gained not-available.
+**Phases 2/5/6/7 — DONE (2026-08-11, same session). Build clean, Playwright 20/20, 0 overflow.**
+- **(2) Upload rules** (`UploadVideoModal` rewritten): `allowedTypes` prop; per-type rules — **Highlight = File|Link, Package = File-only, Full Match = File-only** (link toggle hidden + explanation for file-only types). Submit routing: package→approval queue; full-match→bypass (toast; availability set on the tracker); highlight→`addHighlightUpload()` (KPI, no approval). Package Uploader → `['highlight','package']`; Full Match Uploader → `['full-match']`; VM → all three.
+- **(5) `VideoTrackerGrid.tsx`** — spreadsheet: priority badge (tier→1/2/3, colored), #·Player·Pos·Year·Age·DOB·Team·Nat(flag)·JRSY(mock hash)·PKG·FM1·FM2·FM3, color-coded slots (cyan=uploaded/play, amber=in-progress, red=missing, grey=N/A), tier filter + "Needs video only" + search. `canPkg`/`canFm`/`onUpload` props.
+- **(6) Uploader Players page** = the grid. Re-enabled Players nav for uploaders (Sidebar), added `/…/players` routes (App.tsx), UploaderDashboard renders `<VideoTrackerGrid mode="uploader">` (Full-Match uploader gets the FM Available/Not-available toggle wired to `setFullMatchAvailability`).
+- **(7) VM**: **Highlights KPI** (5th Overview card, `vstate.highlightsCount`, seeded 34); new **"Players Needing Videos"** tab → `<VideoTrackerGrid mode="manager">`. (Inline coverage tools already had Assign/View/Nudge; "uploaded this week" tile is the total counter.)
+- videoStore: `highlightsCount` + `addHighlightUpload`. `Task` model status transitions (`onSetStatus`) wired in all 4 dashboards.
+- Verified shots: `<scratchpad>/gridproof/` (vm-tracker, vm-overview5, fmuploader-grid, fm-upload-modal, pkg-upload-modal) + `phaseproof/` (lead-tasks-new, vm-fullmatch).
+
 ## Earlier context
 
 ## What this is

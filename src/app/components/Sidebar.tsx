@@ -20,6 +20,8 @@ function getRoleBasePath(): string {
   if (role === 'Senior Scout')   return '/senior-scout';
   if (role === 'Head Scout')     return '/head-scout';
   if (role === 'Video Manager')  return '/video-manager';
+  if (role === 'Package Uploader')    return '/package-uploader';
+  if (role === 'Full Match Uploader') return '/full-match-uploader';
   return '/country-scout';
 }
 
