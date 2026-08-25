@@ -283,7 +283,9 @@ package; Figma → token automation with Code Connect.
 - Every Law passes all three tests in §5.
 - No example anywhere in the rulebook violates any Law in it.
 - Every Pattern that cites a measurement matches shipped code, verified by file reference.
-- Each hex appears exactly once across all five documents.
+- Each **palette** hex appears exactly once across all five documents, in `REFERENCE.md`.
+  Forbidden values (`#FFFFFF`, `#000000`) and off-system offenders cited as violations are
+  exempt — they are named where a rule needs to name them.
 - `npm run build` clean and Playwright 20/20 unaffected — phase 1 touches no application
   code.
 
