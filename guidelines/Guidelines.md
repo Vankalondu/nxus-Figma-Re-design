@@ -1,803 +1,815 @@
-# Qaza Platform — Unified Design System Guidelines
-> Version 2.0
-> This is the single source of truth for every Figma Make generation.
-> Read this file completely before making any change to any file.
-> Every rule here applies to every page, every component, and every
-> future generation unless a prompt explicitly overrides a specific rule.
+# NXUS — UI Style Guide
+
+> The design system for the NXUS scouting terminal. This document is the reference for
+> anyone writing UI code for NXUS, and for any team building on the NXUS design system.
+>
+> **All design decisions belong to Vanessa.** This document records them; it does not make
+> them. If you believe a rule is wrong, raise it — do not work around it.
 
 ---
 
-## 1. What Qaza Is
+## How to use this document
 
-Qaza is a Bloomberg-style professional football scouting terminal.
-It is used by professional scouts who spend hours inside the system daily.
-Every design decision must serve one of these three values:
+Every rule carries a **tier** and a **stable ID**.
+
+| Tier | Means | If you break it |
+|---|---|---|
+| **Law** | Non-negotiable. Portable to any product using this system. | The PR is rejected. No discussion needed. |
+| **Pattern** | The recommended shape. Deviating is allowed. | Say why in the PR. |
+| **Reference** | Lookup tables. Facts, not judgements. | You used a value that doesn't exist. |
+
+**IDs are permanent.** `L-C3` is Law, Colour, third. `P-CO2` is Pattern, Components, second.
+Cite them in code comments and PR reviews — `// per L-C1` — so the reason for a line survives
+the person who wrote it.
+
+Topic codes: `G` general · `C` colour · `TY` type · `S` spacing · `E` elevation · `R` radius
+· `CO` components · `M` motion · `I` icons.
+
+Serials are **append-only**. A new colour law becomes the next free number even if it belongs
+logically elsewhere — document order is curated, the ID never encodes position. Retired rules
+keep their ID as a tombstone (see the end) so old citations stay truthful.
+
+**When this document and the code disagree**, the code describes what *is* and this document
+should be corrected to match — but only after Vanessa has agreed the change. Drift is raised
+as a question, never synced silently.
+
+---
+
+## 0. What NXUS is
+
+A Bloomberg-style professional football scouting terminal, used by scouts who spend hours
+inside it daily. Every design decision serves one of three values:
 
 - **Density** — show as much meaningful data as possible without clutter
-- **Clarity** — every element has a clear purpose and clear hierarchy
-- **Authority** — the interface feels premium, professional and trustworthy
+- **Clarity** — every element has a clear purpose and a clear hierarchy
+- **Authority** — the interface feels premium, professional, trustworthy
 
-The aesthetic rule: a visually appealing interface makes users want to
-use the system. Functionality comes first, aesthetics second — but
-aesthetics are never ignored. When two solutions are equally functional,
-always choose the more visually refined one.
+**In code terms:** density means resisting whitespace that costs a row. Clarity means a
+scout should never have to ask what a colour or badge means. Authority means that when two
+implementations are equally functional, you choose the more refined one — aesthetics come
+second to function, never last.
 
 ---
 
-## 2. Colour System
+## 1. Colour
 
-### The 60/30/10 Rule
-Three colour roles define the entire platform. This is a guiding principle,
-not a rigid pixel ratio. Aesthetics can bend the rule when visually
-justified — but every deviation must be intentional and purposeful.
+### L-G1 · Law — Bind tokens, never raw values
+Every colour, shadow, radius and spacing value in component code resolves to a token. Never
+a literal hex, never a raw rgba, never a Tailwind default that bypasses the theme.
 
-| Role | Name | Light Mode | Dark Mode | Token | Usage |
-|---|---|---|---|---|---|
-| 60% | Background | `#D2E7FA` | `#061B2E` | `bg-background` | Page backgrounds, layout canvas |
-| 30% | Surface | `#F4FAFF` | `#0A2D4C` | `bg-card` | Cards, KPIs, panels, modals, dropdowns, sidebar |
-| 10% | Primary | `#1E88E5` | `#449CE9` | `bg-primary` | Buttons, CTAs, active tabs, structural headers, filter bars, modal headers |
+**Why:** the token layer is the single point where a theme change, a dark-mode fix, or a
+brand adjustment takes effect. A literal value is invisible to that mechanism and silently
+stops tracking the system — and it is the one defect that cannot be caught by looking at a
+screenshot.
 
-### Functional status colours
-Used only to communicate status. Never used for decoration or branding.
+**Do:** `bg-card`, `text-muted-foreground`, `shadow-[var(--shadow-lg)]`
+**Don't:** `bg-[#F4FAFF]`, `style={{ color: '#304151' }}`, Tailwind's own `shadow-lg`
+**Exceptions:** none in application code. See §11.3 for the quarantined `src/app/imports/`.
 
-| Name | Hex | Strictly used for |
-|---|---|---|
-| Scout Green | `#22C55E` | Submitted, scouted dot, approved, complete, success status |
-| Scout Red | `#E05C4B` | Late, flagged, unscouted dot, destructive actions, unsuccessful status |
-| Scout Amber | `#E8A838` | Warning, pending, in-progress, monitor status |
-| Muted Light | `#304151` | Secondary labels, helper text in light mode |
-| Muted Dark | `#AFC1D0` | Secondary labels, helper text in dark mode |
+### L-C1 · Law — No pure white, no pure black
+`#FFFFFF` and `#000000` never appear — in any mode, in any property, including SVG fills and
+gradient stops.
 
-### The full palette scales
-All colours derive from three scales. Use these for any custom tints or gradients.
+**Why:** every neutral in this system is blue-cast. A single pure-white surface reads as a
+hole punched in the page and breaks the tinted atmosphere the product is recognised by.
 
-**Primary Blue Scale:**
-```
-#D2E7FA → #B4D7F6 → #8FC4F2 → #69B0EE → #449CE9 → #1E88E5 → #1971BF → #145B99 → #0F4473 → #0A2D4C → #061B2E
- blue-50   blue-100   blue-200   blue-300   blue-400   blue-500   blue-600   blue-700   blue-800   blue-900   blue-950
-```
+**Do:** `bg-card`, `text-foreground`, `--light-50` for the brightest surface
+**Don't:** `bg-white`, `text-black`, `#fff` in an imported SVG
+**Catch:** `grep -riE '#fff\b|#ffffff|#000\b|#000000|bg-white|text-black' src/app`
 
-**Dark/Navy Scale (text in light mode):**
-```
-#CDD1D5 → #ACB3B9 → #838D97 → #596774 → #304151 → #061B2E → #051726 → #04121F → #030E17 → #02090F → #010509
- navy-50   navy-100   navy-200   navy-300   navy-400   navy-500   navy-600   navy-700   navy-800   navy-900   navy-950
-```
+### L-C2 · Law — No colour from outside the system
+No `gray-*`, `slate-*`, `zinc-*` or any other Tailwind palette class. No colour that is not
+in the scales or semantic tokens in R-C1 and R-C2.
 
-**Light Scale (text in dark mode):**
-```
-#F6FAFE → #F0F7FD → #E9F3FD → #E1EFFC → #DAEBFB → #D2E7FA → #AFC1D0 → #8C9AA7 → #69747D → #464D53 → #2A2E32
-light-50   light-100  light-200  light-300  light-400  light-500  light-600  light-700  light-800  light-900  light-950
-```
+**Why:** Tailwind's neutrals are grey; ours are blue-cast. Mixed together they read as a
+rendering bug rather than a design choice.
 
-### Complete semantic token map
+**Catch:** `grep -rE '(bg|text|border)-(gray|slate|zinc|stone|neutral)-' src/app`
 
-| Token | Light Mode | Dark Mode | Usage |
+### L-C3 · Law — Status colour carries meaning, never decoration
+`--scout-green` = success, complete, scouted, approved. `--scout-red` = late, flagged,
+unscouted, destructive. `--scout-amber` = pending, in progress, warning, monitor.
+Identical in both themes.
+
+**Why:** scouts scan hundreds of rows. A green dot must mean the same thing in every view,
+or the scanning skill a user builds stops transferring between pages.
+
+**Do:** `bg-scout-amber/15 text-scout-amber` for a pending pill
+**Don't:** green as a decorative accent; a red border purely for emphasis
+**Catch:** in review, ask "what state does this colour report?" No answer, no colour.
+
+### L-C4 · Law — Consume status colour through the semantic tokens
+Use `scout-green` / `scout-amber` / `scout-red` utility classes. Never bracketed hex.
+
+**Why:** `globals.css` exposes `--color-scout-*` bridges precisely so `text-scout-green` and
+`bg-scout-amber/15` resolve. Bracketed hex bypasses them and breaks L-G1.
+
+**Do:** see `TASK_STATE_META` — `src/app/components/dashboard/shared.tsx:25`
+**Don't:** `bg-[#22C55E]/10 text-[#22C55E]`
+
+### L-C5 · Law — `#061B2E` is the dark-mode background only
+Navy `--blue-950` is exclusively the dark-mode page background. It must never appear as a
+button, table header, filter bar, modal header, card surface or logo background. Use
+`bg-primary` for all of those.
+
+**Why:** it is the canvas. Anything painted with the canvas colour stops reading as a raised
+element and the surface hierarchy collapses. Historically the most common palette violation.
+
+### L-C6 · Law — Text on primary is always `text-chalk`
+Never `text-foreground` on a `bg-primary` surface, in either theme.
+
+**Why:** `--foreground` flips between themes; `bg-primary` does not flip enough to stay
+legible against it. `--chalk` is theme-invariant by design.
+
+### L-C7 · Law — Primary is scarce
+`bg-primary` is the 10% colour. Within a single view, at most one card may use primary as
+its background. Structural anchors (table group headers, modal headers, active tabs) are not
+cards and are exempt.
+
+**Why:** the accent stops being an accent the moment it is common. Scarcity is what makes it
+read as "this one matters".
+
+### P-C1 · Pattern — The 60/30/10 split
+| Share | Role | Token | Used for |
 |---|---|---|---|
-| `--background` | `#D2E7FA` | `#061B2E` | Page backgrounds |
-| `--foreground` | `#061B2E` | `#D2E7FA` | Primary text |
-| `--card` | `#F4FAFF` | `#0A2D4C` | Card surfaces |
-| `--card-foreground` | `#061B2E` | `#D2E7FA` | Text on cards |
-| `--primary` | `#1E88E5` | `#449CE9` | Accent, CTAs |
-| `--primary-foreground` | `#F4FAFF` | `#061B2E` | Text on primary |
-| `--secondary` | `#E8F3FC` | `#0F4473` | Secondary surfaces |
-| `--muted` | `#E8F3FC` | `#0F4473` | Muted backgrounds |
-| `--muted-foreground` | `#304151` | `#AFC1D0` | Secondary text, labels |
-| `--accent` | `#D2E7FA` | `#0F4473` | Tinted backgrounds |
-| `--border` | `#B4D7F6` | `#145B99` | All borders, dividers |
-| `--ring` | `#1E88E5` | `#449CE9` | Focus rings |
-| `--destructive` | `#E05C4B` | `#E05C4B` | Error states, delete actions |
-| `--chalk` | `#D2E7FA` | `#D2E7FA` | Always-light text on primary |
+| 60% | Background | `bg-background` | Page background, layout canvas |
+| 30% | Surface | `bg-card` | Cards, KPIs, panels, modals, dropdowns, sidebar |
+| 10% | Primary | `bg-primary` | Buttons, CTAs, active tabs, structural headers, filter bars, modal headers |
 
-### What is absolutely forbidden
-- `#FFFFFF` (pure white) anywhere — use `#F4FAFF`, `#F6FAFE`, or `#D2E7FA`
-- `#000000` (pure black) anywhere — use `#061B2E`, `#030E17`, or `#010509`
-- Any `gray-*`, `slate-*`, `zinc-*` Tailwind colour classes — use semantic tokens
-- Any colour outside this system for any reason
-- No gradients unless explicitly specified in a prompt
+A guiding proportion, not a pixel ratio. Aesthetics may bend it — deviation should be
+intentional, and L-C7 still binds.
 
-### The #061B2E rule — non-negotiable
-Dark navy `#061B2E` is used EXCLUSIVELY as the dark mode background.
-It must never appear as buttons, table headers, filter bars, modal
-headers, card surfaces, or logo backgrounds. Use `bg-primary` for all
-of those. This is the most common palette violation.
+### P-C2 · Pattern — The accent card
+In a dashboard's below-KPI section, the right-hand sidebar column carries the one primary
+card permitted by L-C7. It uses `text-chalk` for all text and `border-white/10` for internal
+borders. All other cards use `bg-card`.
 
-### The one accent card rule
-In every dashboard below-KPI section, the right sidebar column must
-contain exactly one `bg-primary` accent card. This is the only place
-where a card uses primary blue as its background. All other cards use
-`bg-card`. The accent card always uses `text-chalk` for all text and
-`border-white/10` for internal borders.
+### R-C1 · Reference — Palette scales
+Every custom tint or gradient derives from these. Defined in `src/styles/globals.css`.
 
----
+**Primary Blue** — `--blue-50` … `--blue-950`
+```
+#d2e7fa  #b4d7f6  #8fc4f2  #69b0ee  #449ce9  #1e88e5  #1971bf  #145b99  #0f4473  #0a2d4c  #061b2e
+   50      100      200      300      400      500      600      700      800      900      950
+```
 
-## 3. Light Mode and Dark Mode
+**Dark / Navy** (text in light mode) — `--navy-50` … `--navy-950`
+```
+#cdd1d5  #acb3b9  #838d97  #596774  #304151  #061b2e  #051726  #04121f  #030e17  #02090f  #010509
+   50      100      200      300      400      500      600      700      800      900      950
+```
 
-### Default mode
-**Light mode is the default.** Users land on light mode on first login.
-Dark mode is fully built and available as a toggle on day one.
+**Light** (text in dark mode) — `--light-50` … `--light-950`
+```
+#f6fafe  #f0f7fd  #e9f3fd  #e1effc  #daebfb  #d2e7fa  #afc1d0  #8c9aa7  #69747d  #464d53  #2a2e32
+   50      100      200      300      400      500      600      700      800      900      950
+```
 
-### Theme persistence
-Theme preference saves to the user's profile and persists across
-all sessions. It never resets on login.
+### R-C2 · Reference — Semantic tokens
+Hex values appear here and nowhere else in this document.
 
-### Light mode colour application
-| Element | Value |
-|---|---|
-| Page background | `#D2E7FA` |
-| Card surface | `#F4FAFF` |
-| Card border | `#B4D7F6` |
-| Table rows | `#F4FAFF` alternating `#D2E7FA` (accent/30) |
-| Table group headers | `#1E88E5` with `#D2E7FA` text — same in both modes |
-| Sidebar surface | `#F4FAFF` |
-| Primary text | `#061B2E` |
-| Muted text | `#304151` |
-| Primary accent | `#1E88E5` |
-
-### Dark mode colour application
-| Element | Value |
-|---|---|
-| Page background | `#061B2E` |
-| Card surface | `#0A2D4C` |
-| Card border | `#145B99` |
-| Table rows | `#0A2D4C` alternating `#0F4473` |
-| Table group headers | `#449CE9` with `#D2E7FA` text — structural anchor |
-| Sidebar surface | `#030E17` |
-| Primary text | `#D2E7FA` |
-| Muted text | `#AFC1D0` |
-| Primary accent | `#449CE9` |
-
-### Elements that never flip
-- Text on `bg-primary` always uses `text-chalk` (`#D2E7FA`) — light in both modes
-- Semantic status colours stay constant: green (`#22C55E`), red (`#E05C4B`), amber (`#E8A838`)
-- Image overlays use fixed dark gradients regardless of mode
-- The accent card in the sidebar always has light text
-
-### Theme toggle location
-The theme toggle lives in the sidebar near the bottom.
-It is present on every page and every role.
-
----
-
-## 4. Typography System
-
-Two typefaces only. No other fonts permitted under any circumstance.
-
-| Font | Role | Class |
-|---|---|---|
-| **Figtree** | Headings, page titles, KPI numbers, column labels, group headers, tab text, uppercase labels | `font-heading` |
-| **Plus Jakarta Sans** | Body text, table data, descriptions, button labels, form fields, pills, badges | `font-body` |
-| **JetBrains Mono** | Statistical columns and numerical table values only | `font-mono` |
-
-### Rejected fonts — do not use
-- Manrope — previously considered, replaced by Figtree
-- Plus Jakarta Sans was never used for headings, only body
-
-### Fonts — TWO ONLY
-- **Figtree** (`font-heading`) — all headings, titles, and uppercase labels.
-- **Plus Jakarta Sans** (`font-body`) — all body text AND all numbers. `.font-mono` is aliased to Plus Jakarta with `tabular-nums` for aligned numeric columns.
-- **JetBrains Mono and Manrope are retired — never use them.** No third font, ever.
-
-### Type scale — STANDARD RAMP (anchor h1 = 32)
-Titles use ONE weight — **semibold (600)** — so hierarchy comes from SIZE, not weight. Only KPI stat numbers are heavier (extrabold). Only sizes in this ramp may be used (all even): **44, 36, 32, 24, 20, 16, 14, 12, 10** (+ 15 for the hero subtitle only).
-
-| Element | Size | Weight | Font |
+| Token | Light | Dark | Role |
 |---|---|---|---|
-| KPI large number | 44px | 800 ExtraBold | Figtree |
-| KPI stat (secondary) | 36px | 800 ExtraBold | Figtree |
-| Page hero title (h1) | 32px (24 mobile) | 600 Semibold | Figtree |
-| Card / major section title (h2) | 24px | 600 Semibold | Figtree |
-| Section / widget title (h3) | 20px | 600 Semibold | Figtree |
-| Sub-heading (h4) | 16px | 600 Semibold | Figtree |
-| Page subtitle (under h1) | 15px | 500 Medium | Plus Jakarta Sans |
-| Body text / button text | 14px | 700 Bold (500 for prose) | Plus Jakarta Sans |
-| Small / secondary / table data | 12px | 700 Bold | Plus Jakarta Sans |
-| Column labels / micro labels (pills) | 10px | 700 Bold uppercase tracked | Figtree |
-| Stats / numbers | 14px | 700 Bold + tabular-nums | Plus Jakarta Sans (`font-mono`) |
+| `--background` | `--blue-50` | `--blue-950` | Page background |
+| `--foreground` | `--blue-950` | `--blue-50` | Primary text |
+| `--card` / `--popover` | `#f4faff` | `--blue-900` | Card and popover surfaces |
+| `--card-foreground` | `--blue-950` | `--blue-50` | Text on cards |
+| `--primary` | `--blue-500` | `--blue-400` | Accent, CTAs |
+| `--primary-foreground` | same as `--card` | `--blue-950` | Text on primary |
+| `--secondary` / `--muted` | `#e8f3fc` | `--blue-800` | Secondary and muted surfaces |
+| `--muted-foreground` | `--navy-400` | `--light-600` | Secondary text, labels |
+| `--accent` | `--blue-50` | `--blue-800` | Tinted backgrounds |
+| `--border` | `--blue-100` | `--blue-700` | All borders and dividers |
+| `--ring` | `--blue-500` | `--blue-400` | Focus rings |
+| `--input-background` | `--light-100` | — | Input field fill |
+| `--destructive` | same as `--scout-red` | same | Errors, delete actions |
+| `--chalk` | `--blue-50` | same | Always-light text on primary |
+| `--midnight` | `--blue-950` | same | Theme-invariant darkest |
+| `--scout-green` | `#22C55E` | same | Status: success |
+| `--scout-red` | `#E05C4B` | same | Status: attention |
+| `--scout-amber` | `#E8A838` | same | Status: pending |
+| `--midtone` | `--blue-100` | same | Mid surface |
+| `--canvas` | `--blue-50` | same | Canvas |
 
-**Forbidden sizes** (fold to nearest ramp step): 8, 9, 11, 13, 17, 18, 22, 28, 30, 40, 42, 48, 56. **Forbidden on titles:** `font-black` / `font-extrabold` (those weights are for KPI numbers only).
+**Sidebar family:** `--sidebar` (same as `--card` light / `--navy-800` dark), `--sidebar-foreground`,
+`--sidebar-primary`, `--sidebar-primary-foreground`, `--sidebar-accent`,
+`--sidebar-accent-foreground`, `--sidebar-border`, `--sidebar-ring`, `--sidebar-muted`
+(`--navy-300`).
 
-### Text colour assignments
+**Charts:** `--chart-1` … `--chart-5`. See open ruling **OR-3** — `--chart-4` is currently
+outside the palette.
+
+**Shared values are intentional, not duplication.** Some tokens deliberately resolve to the
+same colour because they express different *roles*: `--destructive` and `--scout-red`;
+`--chalk`, `--canvas` and `--blue-50`; `--midnight` and `--blue-950`. Change the role token,
+never the shared literal — having both names is the whole point.
+
+**Two scales overlap by design.** `#d2e7fa` is both `--blue-50` and `--light-500`; `#061b2e`
+is both `--blue-950` and `--navy-500`. The scales meet where light and dark hand over.
+
+---
+
+## 2. Light and dark
+
+### L-C8 · Law — Both themes are fully supported
+No element may be styled for one theme only. Every surface, border and text colour resolves
+through a token that has a value in both.
+
+### L-C9 · Law — Some things never flip
+- Text on `bg-primary` is always `text-chalk` (see L-C6)
+- Status colours are theme-invariant: `--scout-green`, `--scout-red`, `--scout-amber`
+- Table group headers stay primary-on-chalk in both themes — they are structural anchors
+- Image overlays use fixed dark gradients regardless of theme
+
+### R-C3 · Reference — Surface application
+Both themes resolve from R-C2; this table shows where each token lands.
+
+| Element | Token |
+|---|---|
+| Page background | `--background` |
+| Card surface | `--card` |
+| Card border | `--border` |
+| Table rows | `--card`, alternating `--accent` at 30% |
+| Table group headers | `--primary` with `--chalk` text — same in both themes |
+| Sidebar surface | `--sidebar` |
+| Primary text | `--foreground` |
+| Muted text | `--muted-foreground` |
+
+**Default theme:** light. Preference persists to the user's profile and never resets on
+login. *(Product decision — see D-1.)*
+
+---
+
+## 3. Typography
+
+### L-TY1 · Law — Two typefaces, no exceptions
+**Figtree** (`font-heading`) — headings, titles, uppercase labels.
+**Plus Jakarta Sans** (`font-body`) — body text, table data, and all numbers.
+
+`.font-mono` is an alias for Plus Jakarta Sans with `tabular-nums` — it is not a third font
+(`globals.css:350`). **JetBrains Mono and Manrope are retired.** No third font, ever.
+
+### L-TY2 · Law — Titles use one weight
+Semibold (600). Hierarchy comes from **size**, not weight. `font-bold`, `font-extrabold` and
+`font-black` are forbidden on titles — those weights belong to KPI stat numbers only.
+
+**Why:** with a responsive ramp doing the work, weight variation on titles produces two
+competing hierarchies that disagree at different breakpoints.
+
+### L-TY3 · Law — Use the ramp classes, not literal sizes
+Apply `.text-h1` … `.text-micro`. Do not hard-code `text-[28px]` or equivalent.
+
+**Why:** each ramp class reads a token that steps per breakpoint, so one class is responsive
+with no call-site variants. A literal size is frozen at one tier and breaks on the others.
+
+### L-TY4 · Law — `tabular-nums` on every large numeral
+Any number displayed at h4 size or above — KPI values, stat counts, table numerics — uses
+tabular figures.
+
+**Why:** proportional digits change width as values change, so a counting animation or a
+live figure visibly jitters. See `KpiCard.tsx:28`.
+
+### R-TY1 · Reference — The responsive ramp
+Defined in `globals.css`. Headings step per tier; body and below are floored — identical at
+every breakpoint. These values mirror the Figma `Responsive` collection 1:1.
+
+| Class | Mobile | Tablet ≥768 | Desktop ≥1024 | Line height (desktop) |
+|---|---|---|---|---|
+| `.text-h1` | 32 | 40 | 48 | 56 |
+| `.text-h2` | 28 | 32 | 40 | 48 |
+| `.text-h3` | 24 | 28 | 32 | 40 |
+| `.text-h4` | 20 | 24 | 28 | 32 |
+| `.text-h5` | 20 | 20 | 24 | 28 |
+| `.text-h6` | 20 | 20 | 20 | 24 |
+| `.text-body-lg` | 20 | 20 | 20 | 24 |
+| `.text-body` | 16 | 16 | 16 | 20 |
+| `.text-body-sm` | 14 | 14 | 14 | 16 |
+| `.text-caption` | 12 | 12 | 12 | 14 |
+| `.text-micro` | 10 | 10 | 10 | 12 |
+
+Base 16 × ratio 1.2, snapped (2px below 24, 4px at and above 24).
+
+### R-TY2 · Reference — Role assignments
+| Element | Class | Weight | Font |
+|---|---|---|---|
+| KPI large number | `text-4xl`+ | 800 ExtraBold | Figtree |
+| Page hero title | `.text-h1` | 600 Semibold | Figtree |
+| Card / major section title | `.text-h2` | 600 Semibold | Figtree |
+| Section / widget title | `.text-h3` | 600 Semibold | Figtree |
+| Sub-heading | `.text-h4` | 600 Semibold | Figtree |
+| Page subtitle | `.text-body-lg` | 500 Medium | Plus Jakarta Sans |
+| Body / button text | `.text-body-sm` | 700 Bold (500 prose) | Plus Jakarta Sans |
+| Table data | `.text-caption` | 700 Bold | Plus Jakarta Sans |
+| Column / micro labels | `.text-micro` | 700 Bold, uppercase, tracked | Figtree |
+
+### R-TY3 · Reference — Text colour
 | Context | Token |
 |---|---|
-| Primary headings, names, values | `text-foreground` |
-| Secondary labels, descriptions, metadata | `text-muted-foreground` |
-| Text on primary blue surfaces | `text-chalk` or `text-primary-foreground` |
-| Interactive/link text | `text-primary` |
-| Destructive/error text | `text-destructive` (`#E05C4B`) |
-| Warning text | `text-[#E8A838]` |
-| Success text | `text-[#22C55E]` |
+| Headings, names, values | `text-foreground` |
+| Secondary labels, metadata | `text-muted-foreground` |
+| On primary surfaces | `text-chalk` / `text-primary-foreground` |
+| Interactive / link | `text-primary` |
+| Destructive | `text-destructive` |
+| Warning | `text-scout-amber` |
+| Success | `text-scout-green` |
 
 ---
 
-## 5. Page Header Standard
+## 4. Spacing
 
-Every single page uses this exact header pattern without exception.
+### L-S1 · Law — 4-point grid for layout
+Every gap, padding and margin **between blocks** is a multiple of 4px. Use the `--space-*`
+scale or its Tailwind equivalents.
 
-### Structure
-```
-[Title line: First word + Primary icon circle + remaining title]
-[Subtitle line — 18px Plus Jakarta Sans Medium muted]
-[Tab row — only on pages that have tabs]
-```
+**Scoped exception:** spacing **inside an atom** — within a pill, badge, chip or hairline,
+at or below 8px — may use 2px steps. This is why `px-2 py-[2px]` on a priority pill is
+correct (`shared.tsx:92`) while `gap-1.5` between two cards is not.
 
-### The Primary icon circle
-Every page title has a relevant icon inside a Primary Blue filled
-circle placed between the first word and the rest of the title.
+**Why the exception exists:** a 4px floor inside a 10px-text badge produces a pill twice the
+height it needs, and density is the first value of this system. The exception is deliberately
+narrow — if you are spacing two things that are both visible as separate elements, it does
+not apply.
 
-Circle: `w-14 h-14 rounded-full bg-primary flex items-center
-         justify-center shadow-sm shrink-0`
-Icon: `text-chalk` at `size={28}`
-
-| Page / View | Icon | Title format |
+### R-S1 · Reference — Approved scale
+| px | Token | Tailwind |
 |---|---|---|
-| Dashboard | Sun | Welcome ☀️ [First Name] |
-| Players — Country/Head | Users | Qaza 👥 Players |
-| Players — Senior/Lead Database | Database | Players 🗄 Database |
-| Long List | List | Long 📋 List |
-| Short List | Star | Short ⭐ List |
-| Target List | Crosshair | Target 🎯 List |
-| Scope Settings | Target | Scope 🎯 Settings |
-| Matches | Calendar | Competitions 📅 |
-| Admin | Settings | Admin ⚙️ Panel |
-| Player Profile | User | Player 👤 Profile |
+| 2 (intra-atom only) | — | `p-0.5` `gap-0.5` |
+| 4 | `--space-1` | `p-1` `gap-1` |
+| 8 | `--space-2` | `p-2` `gap-2` |
+| 12 | `--space-3` | `p-3` `gap-3` |
+| 16 | `--space-4` | `p-4` `gap-4` |
+| 20 | `--space-5` | `p-5` `gap-5` |
+| 24 | `--space-6` | `p-6` `gap-6` |
+| 32 | `--space-8` | `p-8` `gap-8` |
+| 40 | `--space-10` | `p-10` `gap-10` |
+| 48 | `--space-12` | `p-12` `gap-12` |
+| 64 | `--space-16` | `p-16` |
+| 80 | `--space-20` | `p-20` |
+| 96 | `--space-24` | `p-24` |
 
-### Subtitle rule
-Every page has a subtitle directly below the title.
-`font-body font-medium text-[18px] text-muted-foreground mt-4`
-
-| View | Subtitle |
-|---|---|
-| Dashboard | Rotating fun football subtitle — see Section 12 |
-| Players in Scope | "All players within your active scouting scope." |
-| Top 10 | "Your current top ten performance and prospect selections." |
-| Reserve List | "Players held in reserve for future consideration." |
-| Combined Top 10 | "Track regional scout submissions and pipeline status." |
-| Database | "All players within your active scouting scope." |
-| Long List | "Players flagged for closer evaluation." |
-| Short List | "Prioritised candidates for your current cycle." |
-| Target List | "Players actively being pursued for acquisition." |
-| Scope Settings | "Configure the parameters that define your active scouting scope." |
-| Reports | "Scouting reports filed by the team." |
-| Matches | "Track fixtures and review match footage for scouted players." |
-| Admin | "Manage platform data across bodies, competitions, teams, players, and transfers." |
-
----
-
-## 6. Spacing System
-
-**Strict 4-point grid.** Every spacing value MUST be a multiple of 4px. 2px (`*-0.5`) is allowed ONLY for hairlines. **6px (`*-1.5`) and 10px (`*-2.5`) are forbidden** — round to the nearest 4-step (6→8, 10→8, 14→16). Any odd value is forbidden.
-
-### Approved spacing scale
-| px | Tailwind |
-|---|---|
-| 2px (hairline only) | `p-0.5` `gap-0.5` |
-| 4px | `p-1` `m-1` `gap-1` |
-| 8px | `p-2` `m-2` `gap-2` |
-| 12px | `p-3` `m-3` `gap-3` |
-| 16px | `p-4` `m-4` `gap-4` |
-| 20px | `p-5` `m-5` `gap-5` |
-| 24px | `p-6` `m-6` `gap-6` |
-| 32px | `p-8` `m-8` `gap-8` |
-| 40px | `p-10` `m-10` `gap-10` |
-| 48px | `p-12` `m-12` `gap-12` |
-
-### Page layout spacing rules
+### R-S2 · Reference — Layout spacing
 | Element | Value |
 |---|---|
-| Page horizontal padding — standard pages | `px-16` (64px) |
-| Page horizontal padding — full-width table pages | `px-8` (32px) |
-| KPI card grid gap | `gap-6` (24px) |
-| Below-KPI section gap | `gap-6` (24px) |
-| Large card internal padding | `p-8` (32px) |
-| Standard card internal padding | `p-6` (24px) |
-| Sidebar card padding | `p-5` (20px) |
-| Table cell padding | `px-2 py-3` (8px / 12px) |
-| Modal internal padding | `p-8` (32px) |
-| Tab pills gap | `gap-2` (8px) |
-| Button padding (pills) | `px-6 py-2` (24px / 8px) |
-| Button padding (CTAs) | `px-6 py-3` (24px / 12px) |
+| Page horizontal padding — standard | `px-16` |
+| Page horizontal padding — full-width tables | `px-8` |
+| KPI card grid gap | `gap-6` |
+| Below-KPI section gap | `gap-6` |
+| Large card padding | `p-8` |
+| Standard card padding | `p-6` |
+| Sidebar card padding | `p-5` |
+| Table cell padding | `px-2 py-3` |
+| Modal padding | `p-8` |
+| Tab pill gap | `gap-2` |
+| Button padding — pills | `px-6 py-2` |
+| Button padding — CTAs | `px-6 py-3` |
+
+A second, responsive page-rhythm system (`--pad-page`, `--gap-section`, `--gap-grid`,
+`--pad-card`, `--gap-stack`) also exists in `globals.css`, marked PROVISIONAL. See open
+ruling **OR-2**.
 
 ---
 
-## 7. Elevation & Shadow System
+## 5. Elevation
 
-Shadows use navy-tinted rgba in light mode and pure black in dark mode.
+### L-E1 · Law — Shadows come from the shadow tokens
+Always `shadow-[var(--shadow-lg)]`. Never Tailwind's own `shadow-lg` — it is a different
+value and is not theme-aware.
 
-| Token | Light Mode | Dark Mode | Usage |
-|---|---|---|---|
-| `--shadow-xs` | `0 1px 2px rgba(6,27,46,0.05)` | `0 1px 2px rgba(0,0,0,0.20)` | Subtle lift |
-| `--shadow-sm` | `0 2px 8px rgba(6,27,46,0.06)` | `0 2px 8px rgba(0,0,0,0.25)` | Buttons, small cards |
-| `--shadow-md` | `0 4px 16px rgba(6,27,46,0.08)` | `0 4px 16px rgba(0,0,0,0.30)` | Dropdowns, popovers |
-| `--shadow-lg` | `0 8px 30px rgba(6,27,46,0.08)` | `0 8px 30px rgba(0,0,0,0.30)` | KPI cards, content cards |
-| `--shadow-xl` | `0 12px 40px rgba(6,27,46,0.10)` | `0 12px 40px rgba(0,0,0,0.35)` | Hover state on cards |
-| `--shadow-2xl` | `0 20px 50px rgba(6,27,46,0.14)` | `0 20px 50px rgba(0,0,0,0.40)` | Modals, drawers |
-| `--shadow-sidebar` | `4px 0 24px rgba(6,27,46,0.08)` | `4px 0 24px rgba(0,0,0,0.30)` | Sidebar panel |
+### R-E1 · Reference — Shadow tokens
+Navy-tinted in light mode, black in dark. All defined in `globals.css`.
 
-When to use:
-- **No shadow**: Table rows, list items, inline elements
-- **shadow-sm**: Active tab pills, small interactive elements
-- **shadow-lg**: All cards (KPI, content, sidebar), default elevation
-- **shadow-xl**: Card hover state (`hover:shadow-xl`)
-- **shadow-2xl**: Modals, drawers, dropdown portals
+| Token | Usage |
+|---|---|
+| `--shadow-xs` | Subtle lift |
+| `--shadow-sm` | Buttons, active tab pills, small interactive elements |
+| `--shadow-md` | Dropdowns, popovers |
+| `--shadow-lg` | All cards — default elevation |
+| `--shadow-xl` | Card hover |
+| `--shadow-2xl` | Modals, drawers, dropdown portals |
+| `--shadow-sidebar` | Sidebar panel |
+| `--shadow-bottom-nav` | Mobile bottom nav |
 
----
-
-## 8. Border Radius System
-
-| Element | Radius | Tailwind |
-|---|---|---|
-| KPI cards | 40px | `rounded-[40px]` |
-| Dashboard content cards | 40px | `rounded-[40px]` |
-| Sidebar stacked cards | 40px | `rounded-[40px]` |
-| Report Summary cards | 32px | `rounded-[32px]` |
-| Table container | 32px | `rounded-[32px]` |
-| Signed List table | 32px | `rounded-[32px]` |
-| Modal/dialog | 32px | `rounded-[32px]` |
-| Form/settings cards | 20px | `rounded-[20px]` |
-| Standard tables | 20px | `rounded-[20px]` |
-| Report cards (small) | 20px | `rounded-[20px]` |
-| Dropdown menus | 12px | `rounded-xl` |
-| Input fields | 12px | `rounded-xl` |
-| Icon squares | 16px | `rounded-[16px]` |
-| All buttons | pill | `rounded-full` |
-| Badges and tab pills | pill | `rounded-full` |
-| Avatar circles | pill | `rounded-full` |
-| Icon circles | pill | `rounded-full` |
-| Position badges | 4px | `rounded` |
+**No shadow:** table rows, list items, inline elements.
 
 ---
 
-## 9. Component Specifications
+## 6. Border radius
 
-### 9.1 Buttons
-Three variants only. No other button styles anywhere in the application.
+### L-R1 · Law — Buttons, badges, pills and avatars are fully round
+`rounded-full`. This is the most recognisable signature of the system.
 
-**Primary — filled:**
-```
-bg-primary border-2 border-primary text-primary-foreground
-hover:bg-primary/80 rounded-full px-6 py-3
-font-body font-bold text-[14px] transition-colors shadow-md
-```
+### R-R1 · Reference — Radius by element
+| Element | Radius |
+|---|---|
+| KPI cards, dashboard content cards, sidebar cards | `rounded-[40px]` |
+| Report summary cards, table containers, modals | `rounded-[32px]` |
+| Form and settings cards, standard tables, small report cards | `rounded-[20px]` |
+| Icon squares | `rounded-[16px]` |
+| Dropdown menus, input fields | `rounded-xl` |
+| Buttons, badges, tab pills, avatars, icon circles | `rounded-full` |
+| Position badges | `rounded` |
 
-**Secondary — outline:**
-```
-bg-card text-muted-foreground border border-border
-hover:border-primary hover:text-foreground
-rounded-full px-6 py-2
-font-body font-bold text-[14px] transition-colors
-```
+---
 
-**Destructive — red outline:**
-```
-border-2 border-destructive text-destructive
-hover:bg-destructive/10 rounded-full px-6 py-3
-font-body font-bold text-[14px] transition-colors
-```
+## 7. Icons
 
-### 9.2 Tab navigation pills
-One consistent tab component used on every page with tabs.
+### L-I1 · Law — `lucide-react` only
+No other icon library, no inline custom SVG where a Lucide icon exists.
 
-**Active tab:**
-```
-bg-primary text-primary-foreground border-primary shadow-sm
-rounded-full px-6 py-2 font-body font-bold text-[14px]
-```
+### R-I1 · Reference — Icon sizes and containers
+| Context | Size |
+|---|---|
+| Page title circle | 28 |
+| Card header | 20 |
+| Sidebar nav | 20 |
+| KPI card | 18 |
+| Table action | 13 |
+| Inline small | 12 |
+| Dropdown item | 11 |
+| Tiny indicator | 9–10 |
 
-**Inactive tab:**
-```
-bg-card text-muted-foreground border-border
-hover:border-primary hover:text-foreground
-rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors
-```
+| Container | Spec |
+|---|---|
+| Large (page title) | `w-14 h-14 rounded-full bg-primary`, icon `text-chalk` |
+| Medium (card header) | `w-12 h-12 rounded-[16px] bg-primary`, icon `text-chalk` |
+| Standard (KPI) | `w-10 h-10 rounded-full bg-accent`, icon `text-muted-foreground` |
+| Small (sidebar) | `w-9 h-9 rounded-xl bg-accent`, icon `text-foreground` |
 
-**Tab row container:**
-`flex items-center gap-2`
+---
 
-### 9.3 Cards
-**Standard card — light:**
-```
-bg-card rounded-[40px] border border-border
-shadow-[var(--shadow-lg)]
-hover:-translate-y-1 hover:shadow-xl transition-all
-```
+## 8. Motion
 
-**Accent card — one per dashboard section:**
-```
-bg-primary rounded-[40px]
-Text: text-chalk
-Internal borders: border-white/10
-Internal backgrounds: bg-white/10
-```
+### L-M1 · Law — Content is never gated on JavaScript
+Content is visible by default via CSS. Animation enhances; it never hides. Only elements
+below the fold may start hidden. If JS fails, every piece of content must still be readable.
 
-### 9.4 Top navigation bar
-Identical on every page. Never varies between pages.
-```
-sticky top-6 z-50
-flex items-center justify-between
-bg-card/90 backdrop-blur-xl
-border border-border
-p-2 pl-6 rounded-[24px]
-shadow-[var(--shadow-lg)]
-```
+**Why:** a scroll animation that sets `opacity: 0` on load turns a JS error into a blank
+page. This is the difference between a degraded experience and a broken one.
 
-Contents left to right:
-1. Search input — transparent background, placeholder "Search..."
-2. Role indicator pill or Senior/Head toggle
-3. Notification bell with unread count badge
-4. This Week button — secondary outline
-5. Add Report button — secondary outline
-6. Add Player button — primary filled
-7. Avatar — `w-12 h-12 rounded-full`
+### R-M1 · Reference — Timings
+| Element | Motion |
+|---|---|
+| Dropdown menus | `animate-fade-in`, 150ms ease-out |
+| KPI numbers on load | Count up from 0, 600ms ease-out |
+| Modal open | Fade + scale 95→100%, 200ms ease-out |
+| Card hover | `hover:-translate-y-1`, 200ms |
+| Hover states | `transition-colors duration-150` |
+| Pulse dot | 2s ease-in-out infinite |
+| Tab switch, theme switch, navigation | Instant — no animation |
 
-### 9.5 Sidebar
-Surface colour: `bg-card` in light mode, `bg-[#030E17]` in dark mode.
+---
 
-**Active nav item:**
-`bg-primary/10 text-primary border-l-[3px] border-primary`
+## 9. Components
 
-**Inactive nav item:**
-`text-muted-foreground hover:text-foreground hover:bg-accent transition-colors`
+All of §9 is **Pattern** tier: recommended anatomy. Deviating is allowed with a stated
+reason, but the Laws above still bind — a variant button is still `rounded-full` (L-R1) and
+still binds tokens (L-G1).
 
-**Theme toggle:** Positioned near the bottom of the sidebar.
-
-### 9.6 Data tables
-
-**Table container:**
-`w-full max-w-none bg-card rounded-[32px] shadow-[var(--shadow-lg)] border border-border overflow-hidden`
-
-**Column group header row (Row 1 — BIO DATA, GAME STATS, VIDEOS etc):**
-```
-bg-primary text-primary-foreground
-font-heading font-bold text-[10px] uppercase tracking-widest
-px-4 py-3 text-center
-```
-This is the 10% colour used as a structural anchor. Identical in both modes.
-
-**Column sub-header row (Row 2):**
-```
-bg-card text-muted-foreground
-font-heading font-bold text-[11px] uppercase tracking-widest
-px-3 py-3
-```
-
-**Data rows:**
-```
-border-b border-border/40 hover:bg-accent transition-colors
-py-3 px-2 font-body text-[12px] font-bold
-```
-
-**Position group header rows (STRIKERS, MIDFIELDERS etc):**
-```
-bg-primary text-primary-foreground
-font-heading font-bold text-[10px] uppercase tracking-widest
-px-4 py-2
-```
-Player count in parentheses: `STRIKERS (9)`
-
-**Year separator rows:**
-```
-bg-card text-muted-foreground
-font-heading font-bold text-[10px] uppercase tracking-widest
-px-4 py-2
-```
-Show year number only — e.g. `2009`. No YOB prefix.
-
-**Alternating row shading:**
-Rows alternate between `bg-card` and `bg-accent/30`.
-Shading resets at every position group header — the first player
-row after a position header always starts on `bg-card`.
-
-**Full width rule:**
-All table pages use `w-full max-w-none` with no max-width constraint.
-Page horizontal padding is `px-8` (32px) on table pages.
-
-### 9.7 Identity cluster (frozen left column)
-The identity cluster is the sticky left column in every player table.
+### P-CO1 — Buttons
+Three variants. Anything else needs a reason in the PR.
 
 ```
-[Initials circle]
-w-8 h-8 rounded-full bg-primary text-chalk
-font-body font-black text-[11px]
+Primary    bg-primary border-2 border-primary text-primary-foreground
+           hover:bg-primary/80 rounded-full px-6 py-3
+           font-body font-bold .text-body-sm transition-colors shadow-md
 
-[Player name]
-font-body font-bold text-[13px] text-foreground hover:underline cursor-pointer
-onClick → navigate to player profile
+Secondary  bg-card text-muted-foreground border border-border
+           hover:border-primary hover:text-foreground rounded-full px-6 py-2
+           font-body font-bold .text-body-sm transition-colors
 
-[Age] text-[12px] text-muted-foreground
-
-[Scout dot]
-w-2 h-2 rounded-full
-Green #22C55E = scouted
-Red #E05C4B = unscouted
-
-[Flag circle]
-w-5 h-5 rounded-full overflow-hidden border border-border
+Destructive  border-2 border-destructive text-destructive
+             hover:bg-destructive/10 rounded-full px-6 py-3
+             font-body font-bold .text-body-sm transition-colors
 ```
 
-### 9.8 Videos cluster
-Present on ALL table views across ALL scout tiers. Never removed.
-
+### P-CO2 — Tab pills
 ```
-[F{n} badge — match footage count]
-bg-primary/20 text-foreground font-bold
-px-2 py-0.5 rounded text-[12px]
-
-[H{n} badge — highlight count]
-bg-primary/20 text-foreground font-bold
-px-2 py-0.5 rounded text-[12px]
+Active    bg-primary text-primary-foreground border-primary shadow-sm
+          rounded-full px-6 py-2 font-body font-bold .text-body-sm
+Inactive  bg-card text-muted-foreground border-border
+          hover:border-primary hover:text-foreground
+          rounded-full px-6 py-2 font-body font-bold .text-body-sm transition-colors
+Container flex items-center gap-2
 ```
 
-### 9.9 Split button (action column — ActionDropdown)
-Used in the Action column of all tables.
-Single pill container divided by 1px vertical divider.
-Left zone: current action icon — executes action immediately on click.
-Right zone: chevron — opens dropdown on click.
-
+### P-CO3 — Cards
 ```
-Primary side: w-7 h-7 rounded-l-lg bg-accent text-foreground border border-r-0 border-border
-Chevron side: w-5 h-7 rounded-r-lg bg-accent border border-border text-foreground
-Hover: hover:bg-primary/80 hover:text-primary-foreground
+Standard  bg-card rounded-[40px] border border-border shadow-[var(--shadow-lg)]
+          hover:-translate-y-1 hover:shadow-xl transition-all
+Accent    bg-primary rounded-[40px]; text text-chalk;
+          internal borders border-white/10; internal fills bg-white/10
 ```
 
-**Behaviour:** Selecting from the dropdown only changes the primary icon
-— does NOT execute the action. The user clicks the primary button to
-execute. This gives the user control over which action sits on the surface.
+### P-CO4 — KPI stat card
+Canonical implementation: `src/app/components/dashboard/KpiCard.tsx`.
 
-**Dropdown portal:**
 ```
-bg-card rounded-[12px] border border-border shadow-[var(--shadow-2xl)]
-Renders via createPortal to document.body
-position: fixed, z-index: 9999
-Positioned via getBoundingClientRect()
-Closes on: option select, outside click, table scroll
-```
-
-### 9.10 KPI stat cards
-```
-Container:
-bg-card rounded-[40px] border border-border p-8
-shadow-[var(--shadow-lg)] h-[220px]
-
-KPI number:
-font-heading font-extrabold text-[56px] tracking-tight text-foreground
-Animates count-up from 0 on page load (600ms ease-out)
-
-Label:
-font-heading font-bold text-[10px] uppercase tracking-widest
-text-muted-foreground
-
-Dot indicators:
-Filled: w-5 h-5 rounded-full bg-primary
-Empty: w-5 h-5 rounded-full border-2 border-dashed border-border
-Container: flex items-center gap-1.5 mt-4
-
-Progress bar variant:
-Track: flex-1 h-2 bg-border rounded-full overflow-hidden
-Fill: h-full bg-primary rounded-full
+Container  bg-card rounded-[32px] border border-border p-6
+           shadow-[var(--shadow-lg)] min-h-[190px]
+           hover:-translate-y-1 hover:shadow-xl transition-all
+           rendered as <button> — keyboard focusable
+Icon chip  circular, bg-primary/10 text-primary
+Heading    short, uppercase, .text-micro tracked, text-muted-foreground
+Value      font-heading font-extrabold text-4xl tabular-nums leading-none
+Descriptor beside the value, muted
+Action     named link with an ArrowUpRight
 ```
 
-**Image KPI card (one per dashboard):**
-Same runners image across all dashboards.
-Overlay: `bg-gradient-to-t from-black/70 via-black/30 to-transparent`
-CTA button: `bg-primary text-chalk rounded-full`
+Format: icon chip + short heading, then a big number with a short descriptor beside it, and
+an actionable link. One source of truth so dashboards cannot visually drift.
 
-### 9.11 Form inputs
-Applied to every input field across every page.
+### P-CO5 — Status pills
+Soft translucent tint, never a heavy solid fill.
+
 ```
-bg-card border border-border rounded-xl
-px-4 py-2 text-[14px] font-bold text-foreground
-focus:outline-none focus:ring-2 focus:ring-ring/20
-focus:border-ring transition-all
+bg-scout-green/15 text-scout-green    success / done
+bg-scout-amber/15 text-scout-amber    pending / in progress
+bg-scout-red/15   text-scout-red      attention / overdue
+bg-primary/15     text-primary        assigned
+```
+
+**Why the tint:** solid status fills compete with `bg-primary` structural anchors.
+Translucent tints keep dozens of pills per screen scannable without shouting.
+Reference: `TASK_STATE_META`, `shared.tsx:25`.
+
+### P-CO6 — Priority pills
+High = `bg-scout-red/15 text-scout-red` · Medium = `bg-scout-amber/15 text-scout-amber` ·
+Low = muted. Reference: `PRIORITY_PILL`, `shared.tsx:86`.
+
+### P-CO7 — Top navigation
+Identical on every page.
+```
+sticky top-6 z-50 flex items-center justify-between
+bg-card/90 backdrop-blur-xl border border-border
+p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]
+```
+Left to right: player search · role pill · notification bell with unread count · This Week ·
+Add Report · Add Player · theme toggle · avatar (`w-12 h-12 rounded-full`).
+
+### P-CO8 — Sidebar
+Surface `bg-sidebar`. Active item `bg-primary/10 text-primary border-l-[3px] border-primary`.
+Inactive `text-muted-foreground hover:text-foreground hover:bg-accent transition-colors`.
+
+### P-CO9 — Data tables
+```
+Container   w-full max-w-none bg-card rounded-[32px]
+            shadow-[var(--shadow-lg)] border border-border overflow-hidden
+Group header (row 1)   bg-primary text-primary-foreground
+            font-heading font-bold .text-micro uppercase tracking-widest px-4 py-3 text-center
+Sub-header (row 2)     bg-card text-muted-foreground
+            font-heading font-bold uppercase tracking-widest px-3 py-3
+Data rows   border-b border-border/40 hover:bg-accent transition-colors
+            py-3 px-2 font-body .text-caption font-bold
+Position group rows    bg-primary text-primary-foreground — e.g. STRIKERS (9)
+Year separator rows    bg-card text-muted-foreground — year only, no prefix
+```
+Rows alternate `bg-card` / `bg-accent` at 30%, resetting at every position group header — the
+first player row after a header always starts on `bg-card`. Table pages use `w-full
+max-w-none` with no max-width, and `px-8` page padding.
+
+An `rtable` class provides responsive cell density so small screens keep a real spreadsheet.
+
+### P-CO10 — Identity cluster
+The sticky left column of every player table: initials circle (`w-8 h-8 rounded-full
+bg-primary text-chalk`) · player name (bold, hover underline, navigates to profile) · age
+(muted) · scout dot (`w-2 h-2 rounded-full`, `--scout-green` scouted / `--scout-red` not) ·
+flag circle (`w-5 h-5 rounded-full border border-border`).
+
+### P-CO11 — Videos cluster
+Present on all table views across all tiers. Never removed.
+`F{n}` match footage and `H{n}` highlight badges: `bg-primary/20 text-foreground font-bold
+px-2 py-0.5 rounded .text-caption`.
+
+### P-CO12 — Split button (action column)
+One pill divided by a 1px vertical rule. Left zone executes the current action on click;
+right zone opens the dropdown.
+
+**Behaviour:** selecting from the dropdown only *changes* the surfaced icon — it does not
+execute. The user clicks the primary side to execute. This gives control over which action
+sits on the surface.
+
+Portal: `bg-card rounded-[12px] border border-border shadow-[var(--shadow-2xl)]`, rendered
+via `createPortal` to `document.body`, positioned with `getBoundingClientRect()`, closing on
+select, outside click, or table scroll.
+
+### P-CO13 — Form inputs
+```
+bg-card border border-border rounded-xl px-4 py-2
+.text-body-sm font-bold text-foreground
+focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
 placeholder:text-muted-foreground
 ```
+Field label: `font-heading font-bold .text-micro uppercase tracking-widest
+text-muted-foreground mb-2`.
 
-Field label:
-`font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground mb-2`
-
-### 9.12 Status pills (Signed List)
-Soft translucent backgrounds — never heavy solid fills.
-
+### P-CO14 — Modals
 ```
-Success:    bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20
-Unsuccessful: bg-[#E05C4B]/10 text-[#E05C4B] border-[#E05C4B]/20
-Pending:    bg-[#E8A838]/10 text-[#E8A838] border-[#E8A838]/20
-```
-
-### 9.13 Grade pills
-```
-A+: bg-primary text-primary-foreground
-A:  bg-primary/12 text-foreground
-B:  bg-muted-foreground/10 text-muted-foreground
-C:  bg-accent text-muted-foreground
+Overlay  fixed inset-0 bg-midnight/60 backdrop-blur-sm z-[200]
+Card     bg-card rounded-[32px] shadow-[var(--shadow-2xl)] border border-border
+Header   px-8 py-6 bg-primary rounded-t-[32px] text-chalk
+Body     p-8 space-y-4
+Actions  w-full bg-primary text-primary-foreground rounded-full py-3
+Close    w-8 h-8 rounded-full bg-card/10 text-chalk/60 hover:text-chalk
 ```
 
-### 9.14 NXT (Next Step) indicators
+### P-CO15 — Grade, NXT and position pills
 ```
-T (Target):  bg-primary text-primary-foreground
-M (Monitor): bg-[#E8A838]/15 text-[#E8A838]
-D (Discard): bg-[#E05C4B]/10 text-[#E05C4B]
-```
-
-### 9.15 Position pills
-```
-inline-block px-1.5 py-[2px] rounded font-body text-[10px] font-bold
-ST:         bg-destructive/10 text-destructive
-LW/RW/CDM/FB: bg-primary/10 text-foreground
-CAM:        bg-[#E8A838]/10 text-[#E8A838]
-CM:         bg-muted-foreground/10 text-muted-foreground
-CB:         bg-muted-foreground/20 text-muted-foreground
+Grade  A+ bg-primary text-primary-foreground · A bg-primary/12 text-foreground
+       B  bg-muted-foreground/10 text-muted-foreground · C bg-accent text-muted-foreground
+NXT    T bg-primary text-primary-foreground · M bg-scout-amber/15 text-scout-amber
+       D bg-scout-red/10 text-scout-red
+Position  inline-block px-1.5 py-[2px] rounded font-body .text-micro font-bold
+       ST bg-destructive/10 text-destructive · LW/RW/CDM/FB bg-primary/10 text-foreground
+       CAM bg-scout-amber/10 text-scout-amber · CM bg-muted-foreground/10 text-muted-foreground
+       CB bg-muted-foreground/20 text-muted-foreground
 ```
 
-### 9.16 Modal windows
-```
-Overlay: fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm z-[200]
-Card: bg-card rounded-[32px] shadow-[var(--shadow-2xl)] border border-border
-Header: px-8 py-6 bg-primary rounded-t-[32px] text-chalk
-Body: p-8 space-y-4
-Actions: w-full bg-primary text-primary-foreground rounded-full py-3
-Close: w-8 h-8 rounded-full bg-card/10 text-chalk/60 hover:text-chalk
-```
+### P-CO16 — Date picker
+Replaces browser-default date inputs. Popup `bg-card border border-border/50 rounded-xl
+shadow-[var(--shadow-2xl)] w-[260px]`. Month and year as separate dropdown buttons; month
+opens a 3-column grid, year a scrollable ±10-year list, chevrons step one month. 7-column
+day grid; selected `bg-primary text-primary-foreground rounded-full shadow-sm`; today
+`bg-primary/10 text-primary`; footer "Clear" and "Today" as primary text links.
 
-### 9.17 Custom DatePicker
-Replaces browser-default date inputs on Scope Settings.
+---
+
+## 10. Page and dashboard layout
+
+### P-L1 — Page header
 ```
-Popup: bg-card border border-border/50 rounded-xl shadow-[var(--shadow-2xl)] w-[260px]
-Header: Month and Year as separate dropdown buttons (font-heading font-bold text-[13px])
-  Month click → 3-column grid overlay (Jan–Dec)
-  Year click → scrollable vertical list (±10 years)
-  Chevron arrows → step one month at a time
-Day grid: 7-column, font-body font-bold text-[12px]
-  Selected: bg-primary text-primary-foreground rounded-full shadow-sm
-  Today: bg-primary/10 text-primary font-black
-  Hover: hover:bg-accent
-Footer: "Clear" and "Today" text action links in primary colour
+[Title line: first word + primary icon circle + rest of title]
+[Subtitle line]
+[Tab row, on pages that have tabs]
+```
+Every page title carries a relevant icon in a primary-filled circle placed between the first
+word and the rest of the title. Every page has a subtitle directly below.
+
+### P-L2 — Dashboard structure
+```
+1. Welcome header — h1 with icon circle + name
+2. Tab pills row — horizontal, gap-2
+3. KPI cards row — grid grid-cols-2 lg:grid-cols-4 gap-6
+4. Below-KPI section — grid grid-cols-1 lg:grid-cols-3 gap-6
+   Left  (col-span-2): main content card, bg-card
+   Right (col-span-1): stacked sidebar cards
+       top    neutral (bg-card)
+       bottom accent  (bg-primary, text-chalk) — the one primary card, per L-C7
 ```
 
 ---
 
-## 10. Dashboard Layout
+## 11. NXUS application reference
 
-Every role-based dashboard follows the same structural pattern.
+**This section is NXUS-specific.** It records how the rules above are applied in this
+product. Another team building on this design system should read it as a worked example and
+adapt it — not copy it literally.
 
-### Page structure (top to bottom)
-```
-1. Welcome Header — h1 with icon circle + name
-2. Tab Pills Row — horizontal, gap-2
-3. KPI Cards Row — grid grid-cols-2 lg:grid-cols-4 gap-6, h-[220px]
-4. Below-KPI Section — grid grid-cols-1 lg:grid-cols-3 gap-6
-   Left (col-span-2): main content card on bg-card
-   Right (col-span-1): stacked sidebar cards
-     Top card: neutral (bg-card)
-     Bottom card: accent (bg-primary with text-chalk)
-```
+### 11.1 Page titles and subtitles
+| Page | Icon | Title | Subtitle |
+|---|---|---|---|
+| Dashboard | Sun | Welcome ☀️ [First Name] | Rotating football subtitle |
+| Players — Country/Head | Users | Qaza 👥 Players | All players within your active scouting scope. |
+| Players — Senior/Lead | Database | Players 🗄 Database | All players within your active scouting scope. |
+| Long List | List | Long 📋 List | Players flagged for closer evaluation. |
+| Short List | Star | Short ⭐ List | Prioritised candidates for your current cycle. |
+| Target List | Crosshair | Target 🎯 List | Players actively being pursued for acquisition. |
+| Scope Settings | Target | Scope 🎯 Settings | Configure the parameters that define your active scouting scope. |
+| Matches | Calendar | Competitions 📅 | Track fixtures and review match footage for scouted players. |
+| Admin | Settings | Admin ⚙️ Panel | Manage platform data across bodies, competitions, teams, players, and transfers. |
+| Player Profile | User | Player 👤 Profile | — |
+| Reports | — | — | Scouting reports filed by the team. |
+| Top 10 | — | — | Your current top ten performance and prospect selections. |
+| Reserve List | — | — | Players held in reserve for future consideration. |
+| Combined Top 10 | — | — | Track regional scout submissions and pipeline status. |
 
-### Per-role dashboard content
+The dashboard subtitle rotates per page load via the Anthropic API, falling back to a
+randomised array if unavailable.
 
-| Section | Country Scout | Head Scout | Lead Scout | Senior Scout |
+### 11.2 Roles and pipeline
+| Mode | Roles |
+|---|---|
+| Scout | Country Scout, Head Scout, Senior Scout, Lead Scout |
+| Video | Video Uploader, Video Editor, Video Manager |
+| Match Entry | Basic, Detailed, Advanced Data Entry |
+| God Mode | Operations Manager (admin superuser) |
+
+**Tab sets.** Country and Head Scout: Players in Scope, Top 10, Reserve List, Combined Top 10.
+Senior and Lead Scout: Scope Settings, Reports, Database, Long List, Short List, Target List,
+Signed List.
+
+**Pipeline.** Tier A: Players in Scope → Top 10 → Reserve List → Combined Top 10.
+Tier B: Scope Settings → Database → Long List → Short List → Target List → Signed List.
+When a Country Scout raises a player, an in-platform and email notification fires and the
+player auto-appears on the Senior Scout Long List with a Direct Ladder icon.
+
+**Reports** has no standalone page — its content lives in the dashboard's Reports tab. The
+sidebar has no Reports nav item.
+
+**Per-role dashboard KPIs**
+| Slot | Country | Head | Lead | Senior |
 |---|---|---|---|---|
 | KPI 1 | Missing Videos | Missing Videos | Tracked Players | Open Tasks |
 | KPI 2 | Missing Match Data | Missing Match Data | Grade A Rate | New Reports |
-| KPI 3 | Ready Reports (image) | Ready Reports (image) | Shortlist vs Pending (image) | Packages to Review (image) |
+| KPI 3 | Ready Reports | Ready Reports | Shortlist vs Pending | Packages to Review |
 | KPI 4 | Grade A Players | Grade A Players | Pkgs Unwatched | Pipeline |
-| Left content | Scout Leaderboard | Scout Leaderboard | Target Tasks | My Tasks |
-| Right top | Top Prospect (neutral) | Top Prospect (neutral) | Upcoming Matches (neutral) | Recent Reports (neutral) |
-| Right bottom | Upcoming Matches (accent) | Upcoming Matches (accent) | Latest Packages (accent) | Upcoming Packages (accent) |
+| Left | Scout Leaderboard | Scout Leaderboard | Target Tasks | My Tasks |
+| Right top | Top Prospect | Top Prospect | Upcoming Matches | Recent Reports |
+| Right bottom | Upcoming Matches | Upcoming Matches | Latest Packages | Upcoming Packages |
+
+### 11.3 Enforcement scope
+L-G1, L-C1 and L-C2 are enforced across `src/app` **except** `src/app/imports/`, which is raw
+Figma export and is quarantined — it is generated output, not authored code, and is not
+edited by hand.
+
+Current state: 1003 bracketed-hex uses across 42 of 119 `.tsx` files, concentrated in the
+quarantine and in unrouted dead code. Live files carry a small tail, migrated opportunistically
+when next touched. See open ruling **OR-4**.
 
 ---
 
-## 11. Icon System
+## 12. Pull request checklist
 
-All icons come from **lucide-react**. No other icon library.
-
-| Context | Size |
-|---|---|
-| Page title icon circle | 28px |
-| Card header icon | 20px |
-| KPI card icon | 18px |
-| Sidebar nav icon | 20px |
-| Table action button | 13px |
-| Inline small icon | 12px |
-| Dropdown menu item icon | 11px |
-| Tiny indicator | 9–10px |
-
-### Icon circle containers
-```
-Large (page title):  w-14 h-14 rounded-full bg-primary — icon: text-chalk
-Medium (card header): w-12 h-12 rounded-[16px] bg-primary — icon: text-chalk
-Standard (KPI):      w-10 h-10 rounded-full bg-accent — icon: text-muted-foreground
-Small (sidebar):     w-9 h-9 rounded-xl bg-accent — icon: text-foreground
-```
+- [ ] Every colour, shadow and radius resolves to a token — **L-G1**
+- [ ] No pure white or black, no off-system colour — **L-C1**, **L-C2**
+- [ ] Status colour reports a state; consumed via `scout-*` classes — **L-C3**, **L-C4**
+- [ ] `#061B2E` used only as dark-mode background — **L-C5**
+- [ ] Text on primary is `text-chalk` — **L-C6**
+- [ ] At most one primary-background card in the view — **L-C7**
+- [ ] Renders correctly in both themes — **L-C8**, **L-C9**
+- [ ] Two fonts only; titles at one weight — **L-TY1**, **L-TY2**
+- [ ] Ramp classes, not literal sizes; `tabular-nums` on large numerals — **L-TY3**, **L-TY4**
+- [ ] Layout spacing on the 4-pt grid — **L-S1**
+- [ ] Shadow tokens, not Tailwind defaults — **L-E1**
+- [ ] Buttons and pills fully round — **L-R1**
+- [ ] Lucide icons only — **L-I1**
+- [ ] Content readable with JS disabled — **L-M1**
+- [ ] No horizontal overflow at 1440 / 834 / 390
 
 ---
 
-## 12. Role Architecture
+## 13. Proposed rules — awaiting Vanessa's approval
 
-### The 11 roles across three modes
-| Mode | Roles |
-|---|---|
-| Scout Mode | Country Scout, Head Scout, Senior Scout, Lead Scout |
-| Video Mode | Video Uploader, Video Editor, Video Manager |
-| Match Entry Mode | Basic Match Entry, Detailed Match Entry, Advanced Data Entry |
-| God Mode | Operations Manager (Admin Superuser) |
+These describe behaviour the code already follows consistently but which was never written
+down. They are **not binding** until approved. On approval they move into the body above and
+take the next free serial in their topic.
 
-### Scout tier tab sets
-| Role | Tab set |
-|---|---|
-| Country Scout | Players in Scope, Top 10, Reserve List, Combined Top 10 |
-| Head Scout | Players in Scope, Top 10, Reserve List, Combined Top 10 |
-| Senior Scout | Scope Settings, Reports, Database, Long List, Short List, Target List, Signed List |
-| Lead Scout | Scope Settings, Reports, Database, Long List, Short List, Target List, Signed List |
+| Ref | Proposed rule | Evidence |
+|---|---|---|
+| PR-1 | Status/priority colour consumed via `scout-*` tokens, never bracketed hex — *drafted above as L-C4* | `globals.css:320-322`; `shared.tsx:26-29`, `:87-88` |
+| PR-2 | Priority semantics: High red, Medium amber, Low muted — *drafted above as P-CO6* | `shared.tsx:86-89` |
+| PR-3 | `tabular-nums` on every large numeral — *drafted above as L-TY4* | `KpiCard.tsx:28` |
+| PR-4 | Content never gated on JavaScript — *drafted above as L-M1* | Currently only in `CLAUDE.md`, not in this document |
 
-### The Scout pipeline flow
-**Tier A → Tier B bridge:**
-When a Country Scout raises a player, an in-platform and email notification fires.
-Player auto-appears on Senior Scout Long List. Direct Ladder icon appears.
+## 14. Open rulings — need a decision
 
-**Tier A pipeline:** Players in Scope → Top 10 → Reserve List → Combined Top 10
-**Tier B pipeline:** Scope Settings → Database → Long List → Short List → Target List → Signed List
+Found while reconciling this document against the code. Each is a design decision, so none
+has been decided here.
 
-### Reports location
-Reports no longer has a standalone page. Report content (summary stats,
-champion podium, report cards) lives inside the dashboard's Reports tab.
-The players page has a blank Reports tab placeholder.
-The sidebar does not have a Reports nav item.
+**OR-1 · "Editable column headers on all tables."** The old §16 checklist asked reviewers to
+confirm this, but no rule anywhere in the document ever stated it. Write the rule, or drop
+the check?
 
----
+**OR-2 · Two spacing systems coexist.** R-S1's atomic `--space-*` scale is fixed. A second
+responsive page-rhythm system also exists in `globals.css` — `--pad-page` (12/16/24px),
+`--gap-section` (16/28/40px), `--gap-grid`, `--pad-card`, `--gap-stack` — marked PROVISIONAL
+in the source. R-S2 documents `px-16` page padding, which is a third answer. Which governs
+page rhythm?
 
-## 13. Animation and Interaction Rules
+**OR-3 · `--chart-4` is outside the palette.** Chart tokens are `--chart-1` = `--blue-500`,
+`--chart-2` = `--blue-950`, `--chart-3` = `--scout-amber`, `--chart-5` = `--scout-red` — all in-system.
+`--chart-4` is `#8B5CF6`, a violet that appears in no scale. Under L-C2 that is a violation.
+Replace it, or admit a documented chart-only exception?
 
-| Element | Animation |
-|---|---|
-| Dropdown menus | `animate-fade-in` 150ms ease-out |
-| KPI numbers on load | Count up from 0, 600ms ease-out |
-| Tab switching | Instant — no animation |
-| Modal open | Fade + scale 95%→100%, 200ms ease-out |
-| Card hover lift | `hover:-translate-y-1` 200ms |
-| All hover states | `transition-colors duration-150` |
-| Theme switch | Instant — no transition |
-| Page navigation | Instant — no transition |
-| Pulse dot | 2s ease-in-out infinite, opacity + scale |
+**OR-4 · Dead code.** `VideoDepartmentDashboard.tsx`, `GlobalPulseDashboard.tsx` and
+`OperationsDashboard.tsx` are unrouted and hold 114+ bracketed-hex uses between them. Delete
+them rather than migrate?
+
+**OR-5 · The old §4 forbidden-size list.** It forbade 28, 40 and 48 — but the shipped
+responsive ramp uses exactly those at tablet and desktop tiers. The list has been replaced by
+L-TY3 ("use the ramp classes"), which achieves the intent without contradicting the CSS.
+Confirm that is the right resolution.
 
 ---
 
-## 14. Dashboard Subtitle — Dynamic Football Context
+## Decision log
 
-The dashboard subtitle rotates on every page load via Anthropic API.
-Falls back to a randomised array if the API is unavailable.
+Not rules — the record of choices already made, kept so they are not relitigated.
 
----
+**D-1 · Light mode is the default.** Users land on light on first login. Dark is fully built
+and available from day one. Theme preference persists to the profile.
 
-## 15. What Figma Make Must Never Do
+**D-2 · Retired fonts.** Manrope was considered and replaced by Figtree. JetBrains Mono was
+used for statistical columns and is retired; `.font-mono` now aliases Plus Jakarta Sans with
+`tabular-nums`.
 
-- Never introduce any colour not defined in this guide
-- Never use `#FFFFFF` (pure white) or `#000000` (pure black)
-- Never use `gray-*`, `slate-*`, `zinc-*` Tailwind classes
-- Never add a new page not specified in a prompt
-- Never remove an existing page or feature
-- Never use a font other than Figtree, Plus Jakarta Sans, or JetBrains Mono
-- Never use Manrope under any circumstance
-- Never use a spacing value that is not a multiple of 2px
-- Never use a border radius not listed in Section 8
-- Never remove the Videos cluster from any table view
-- Never apply a max-width that causes dead horizontal space
-- Never change the default mode from light to dark
-- Never use `#061B2E` for anything other than dark mode background
-- Never put `text-foreground` on `bg-primary` surfaces — use `text-chalk`
-- Never use `shadow-lg` (Tailwind default) — use `shadow-[var(--shadow-lg)]`
+**D-3 · Theme toggle location.** Moved from the sidebar to the top navigation, beside the
+notification bell.
+
+**D-4 · Image KPI card.** One per dashboard, sharing the same runners image, with a dark
+gradient overlay and a primary CTA.
 
 ---
 
-## 16. Before Every Generation — Checklist
+## Tombstones
 
-1. Have I read the full Guidelines? If no — stop and read it.
-2. Does every colour used exist in Section 2? If no — remove it.
-3. Is every spacing value a multiple of 2px? If no — fix it.
-4. Is every font Figtree, Plus Jakarta Sans, or JetBrains Mono? If no — fix it.
-5. Does every page use the Section 5 header pattern? If no — fix it.
-6. Does every table have the Videos cluster? If no — add it.
-7. Are editable column headers present on all tables? If no — add it.
-8. Is light mode the default? If no — fix it.
-9. Is the accent card present in the dashboard sidebar? If no — add it.
-10. Do dot indicators use w-5 h-5 with dashed empty borders? If no — fix it.
-11. Is every button one of the three variants in Section 9.1? If no — fix it.
-12. Am I adding or removing any page or feature not in the prompt? If yes — stop.
+Retired rule IDs are never reused. None yet — this numbering begins with this revision.
