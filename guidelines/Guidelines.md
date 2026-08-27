@@ -196,8 +196,10 @@ Hex values appear here and nowhere else in this document.
 `--sidebar-accent-foreground`, `--sidebar-border`, `--sidebar-ring`, `--sidebar-muted`
 (`--navy-300`).
 
-**Charts:** `--chart-1` … `--chart-5`. See open ruling **OR-3** — `--chart-4` is currently
-outside the palette.
+**Charts:** `--chart-1` = `--blue-500`, `--chart-2` = `--blue-950`, `--chart-3` =
+`--scout-amber`, `--chart-4` = `--scout-green`, `--chart-5` = `--scout-red`. All in-scale as of
+27 Aug 2026. Note these tokens are not currently consumed by app code — the live charts in
+`AnalyticsTab.tsx` use their own literals. See open ruling **OR-3**.
 
 **Shared values are intentional, not duplication.** Some tokens deliberately resolve to the
 same colour because they express different *roles*: `--destructive` and `--scout-red`;
@@ -363,9 +365,26 @@ not apply.
 | Button padding — pills | `px-6 py-2` |
 | Button padding — CTAs | `px-6 py-3` |
 
-A second, responsive page-rhythm system (`--pad-page`, `--gap-section`, `--gap-grid`,
-`--pad-card`, `--gap-stack`) also exists in `globals.css`, marked PROVISIONAL. See open
-ruling **OR-2**.
+### L-S2 · Law — Page rhythm uses the responsive tokens
+`--pad-page`, `--gap-section`, `--gap-grid`, `--pad-card` and `--gap-stack` govern spacing
+**between page-level blocks**. They step per breakpoint, so one declaration is responsive.
+The atomic `--space-*` scale in R-S1 governs spacing **inside components** and does not step.
+
+**Why:** page rhythm that does not breathe at 390px produces either a cramped desktop or a
+wasteful mobile. Component internals must stay fixed, or a button changes shape between
+tiers.
+
+| Token | Mobile | Tablet | Desktop |
+|---|---|---|---|
+| `--pad-page` | 12 | 16 | 24 |
+| `--gap-section` | 16 | 28 | 40 |
+| `--gap-grid` | 8 | 12 | 16 |
+| `--pad-card` | 12 | 16 | 20 |
+| `--gap-stack` | 8 | 12 | 12 |
+
+**Migration in progress.** Page code currently still uses the fixed values in R-S2
+(`px-16` / `px-8`). Those are the desktop-equivalent legacy usage; new page-level work uses
+the tokens above, and existing pages migrate when next touched.
 
 ---
 
@@ -631,6 +650,19 @@ opens a 3-column grid, year a scrollable ±10-year list, chevrons step one month
 day grid; selected `bg-primary text-primary-foreground rounded-full shadow-sm`; today
 `bg-primary/10 text-primary`; footer "Clear" and "Today" as primary text links.
 
+### P-CO17 — Editable columns
+Every player data table lets the user choose which columns are visible, via an Edit Columns
+modal. Canonical implementation: `src/app/components/EditColumnsModal.tsx`, used by
+`SeniorLeadPlayersPage` and `CountryScoutDashboard`.
+
+The modal keeps a **local draft** of the visible set, re-seeded from the current selection
+each time it opens. Apply commits the draft; the X and the backdrop dismiss without
+committing. Named presets can be saved and recalled.
+
+**Why:** scouts work different competitions with different relevant stats. A fixed column set
+either buries what one scout needs or shows everyone everything, and density is the first
+value of this system.
+
 ---
 
 ## 10. Page and dashboard layout
@@ -739,6 +771,8 @@ when next touched. See open ruling **OR-4**.
 - [ ] Two fonts only; titles at one weight — **L-TY1**, **L-TY2**
 - [ ] Ramp classes, not literal sizes; `tabular-nums` on large numerals — **L-TY3**, **L-TY4**
 - [ ] Layout spacing on the 4-pt grid — **L-S1**
+- [ ] Page-level spacing uses the responsive rhythm tokens — **L-S2**
+- [ ] New data tables offer editable columns — **P-CO17**
 - [ ] Shadow tokens, not Tailwind defaults — **L-E1**
 - [ ] Buttons and pills fully round — **L-R1**
 - [ ] Lucide icons only — **L-I1**
@@ -747,47 +781,20 @@ when next touched. See open ruling **OR-4**.
 
 ---
 
-## 13. Proposed rules — awaiting Vanessa's approval
+## 13. Open rulings — still need a decision
 
-These describe behaviour the code already follows consistently but which was never written
-down. They are **not binding** until approved. On approval they move into the body above and
-take the next free serial in their topic.
-
-| Ref | Proposed rule | Evidence |
-|---|---|---|
-| PR-1 | Status/priority colour consumed via `scout-*` tokens, never bracketed hex — *drafted above as L-C4* | `globals.css:320-322`; `shared.tsx:26-29`, `:87-88` |
-| PR-2 | Priority semantics: High red, Medium amber, Low muted — *drafted above as P-CO6* | `shared.tsx:86-89` |
-| PR-3 | `tabular-nums` on every large numeral — *drafted above as L-TY4* | `KpiCard.tsx:28` |
-| PR-4 | Content never gated on JavaScript — *drafted above as L-M1* | Currently only in `CLAUDE.md`, not in this document |
-
-## 14. Open rulings — need a decision
-
-Found while reconciling this document against the code. Each is a design decision, so none
-has been decided here.
-
-**OR-1 · "Editable column headers on all tables."** The old §16 checklist asked reviewers to
-confirm this, but no rule anywhere in the document ever stated it. Write the rule, or drop
-the check?
-
-**OR-2 · Two spacing systems coexist.** R-S1's atomic `--space-*` scale is fixed. A second
-responsive page-rhythm system also exists in `globals.css` — `--pad-page` (12/16/24px),
-`--gap-section` (16/28/40px), `--gap-grid`, `--pad-card`, `--gap-stack` — marked PROVISIONAL
-in the source. R-S2 documents `px-16` page padding, which is a third answer. Which governs
-page rhythm?
-
-**OR-3 · `--chart-4` is outside the palette.** Chart tokens are `--chart-1` = `--blue-500`,
-`--chart-2` = `--blue-950`, `--chart-3` = `--scout-amber`, `--chart-5` = `--scout-red` — all in-system.
-`--chart-4` is `#8B5CF6`, a violet that appears in no scale. Under L-C2 that is a violation.
-Replace it, or admit a documented chart-only exception?
+**OR-3 · Off-palette colour in live UI.** The unused `--chart-4` token has been brought
+in-scale. But the same violet, and several other off-system colours, are used directly in
+visible code: `AnalyticsTab.tsx` chart series (`#2563eb` Long, `#8b5cf6` Target, plus axis
+greys `#7baac7` / `#b8d4ef`), the tag colour picker and Wonderkid tag in
+`SeniorLeadPlayersPage.tsx` (`#8b5cf6`, `#06b6d4`, `#7c5cfc`, `#3a8c6a`), and
+`shared.tsx` (`#334155`, `#cbd5e1`, `#3fb4c0`, and a `#ffffff` that violates L-C1).
+Replacing these changes what users see, so each needs a decision. See the chart-series
+question first.
 
 **OR-4 · Dead code.** `VideoDepartmentDashboard.tsx`, `GlobalPulseDashboard.tsx` and
 `OperationsDashboard.tsx` are unrouted and hold 114+ bracketed-hex uses between them. Delete
 them rather than migrate?
-
-**OR-5 · The old §4 forbidden-size list.** It forbade 28, 40 and 48 — but the shipped
-responsive ramp uses exactly those at tablet and desktop tiers. The list has been replaced by
-L-TY3 ("use the ramp classes"), which achieves the intent without contradicting the CSS.
-Confirm that is the right resolution.
 
 ---
 
@@ -804,6 +811,21 @@ used for statistical columns and is retired; `.font-mono` now aliases Plus Jakar
 
 **D-3 · Theme toggle location.** Moved from the sidebar to the top navigation, beside the
 notification bell.
+
+**D-5 · Four rules ratified (27 Aug 2026).** L-C4 (status colour via `scout-*` tokens),
+P-CO6 (priority semantics), L-TY4 (`tabular-nums` on large numerals) and L-M1 (content never
+gated on JavaScript) were drafted from behaviour the code already followed and are now
+binding.
+
+**D-6 · Page rhythm (27 Aug 2026).** The responsive token system governs page-level spacing;
+the atomic `--space-*` scale governs component internals. Recorded as L-S2.
+
+**D-7 · Editable columns (27 Aug 2026).** Confirmed as a real requirement, not a phantom
+checklist item. Recorded as P-CO17.
+
+**D-8 · Type ramp (27 Aug 2026).** The shipped responsive ramp supersedes the old fixed ramp,
+and the forbidden-size list that barred 28/40/48 is replaced by L-TY3, since the responsive
+ramp uses those sizes at tablet and desktop.
 
 **D-4 · Image KPI card.** One per dashboard, sharing the same runners image, with a dark
 gradient overlay and a primary CTA.
