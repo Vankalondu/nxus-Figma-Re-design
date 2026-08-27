@@ -194,7 +194,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
               onUpdate(formData);
               onClose();
             }}
-            className="bg-primary text-primary-foreground hover:bg-[#0d2a45] px-12 py-4 rounded-xl font-heading font-black text-sm transition-all shadow-lg shadow-primary/20 uppercase tracking-widest flex items-center gap-2"
+            className="bg-primary text-primary-foreground hover:bg-[#0a2d4c] px-12 py-4 rounded-xl font-heading font-black text-sm transition-all shadow-lg shadow-primary/20 uppercase tracking-widest flex items-center gap-2"
           >
             Update
           </button>

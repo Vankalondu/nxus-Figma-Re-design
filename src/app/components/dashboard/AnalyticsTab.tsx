@@ -64,9 +64,9 @@ export const AnalyticsTab = () => {
   const cvY=(v:number)=> cvpB - (v/cvMax)*cvPlotH;
   const cvPath=(arr:number[])=> arr.map((v,i)=>`${i===0?'M':'L'} ${cvX(i).toFixed(1)} ${cvY(v).toFixed(1)}`).join(' ');
   const cvSeries=[
-    { label:'Long added',     data:cd.long,  color:'#2563eb' },
+    { label:'Long added',     data:cd.long,  color:'#69b0ee' },
     { label:'Short added',    data:cd.short, color:'#E8A838' },
-    { label:'Moved to Target',data:cd.moved, color:'#8b5cf6' },
+    { label:'Moved to Target',data:cd.moved, color:'#145b99' },
   ];
 
   // ── Archived by stage — stacked vertical bars, Jan–Jul (mock, Jul dominant) ──
@@ -207,7 +207,7 @@ export const AnalyticsTab = () => {
                 const prio = isPriority(d.age, d.r);
                 return (
                   <circle key={d.n} cx={sx(d.age)} cy={sy(d.r)} r={rad(d.v)}
-                    fill={prio ? '#061b2e' : '#b8d4ef'} fillOpacity={prio ? 0.9 : 0.85}
+                    fill={prio ? '#061b2e' : '#b4d7f6'} fillOpacity={prio ? 0.9 : 0.85}
                     stroke={prio ? '#061b2e' : '#7baac7'} strokeWidth="1.5">
                     <title>{`${d.n} · age ${d.age} · eyeball ${d.r.toFixed(1)} · ${d.v} videos`}</title>
                   </circle>
@@ -345,13 +345,13 @@ export const AnalyticsTab = () => {
                 const yLong = arpB - lh, yShort = yLong - sh, yTarget = yShort - th;
                 return (
                   <g key={i}>
-                    <rect x={x} y={yLong}   width={arBarW} height={lh} fill="#2563eb" className="cursor-pointer transition-opacity hover:opacity-70">
+                    <rect x={x} y={yLong}   width={arBarW} height={lh} fill="#69b0ee" className="cursor-pointer transition-opacity hover:opacity-70">
                       <title>{`${archMonths[i]} · Long: ${a.long}`}</title>
                     </rect>
                     <rect x={x} y={yShort}  width={arBarW} height={sh} fill="#E8A838" className="cursor-pointer transition-opacity hover:opacity-70">
                       <title>{`${archMonths[i]} · Short: ${a.short}`}</title>
                     </rect>
-                    <rect x={x} y={yTarget} width={arBarW} height={th} fill="#8b5cf6" className="cursor-pointer transition-opacity hover:opacity-70">
+                    <rect x={x} y={yTarget} width={arBarW} height={th} fill="#145b99" className="cursor-pointer transition-opacity hover:opacity-70">
                       <title>{`${archMonths[i]} · Target: ${a.target}`}</title>
                     </rect>
                     <text x={cx} y={arpB+20} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{archMonths[i]}</text>
@@ -361,7 +361,7 @@ export const AnalyticsTab = () => {
             </svg>
             {/* legend */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">
-              {[['Long','#2563eb'],['Short','#E8A838'],['Target','#8b5cf6']].map(([label,color]) => (
+              {[['Long','#69b0ee'],['Short','#E8A838'],['Target','#145b99']].map(([label,color]) => (
                 <div key={label} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background:color }} />
                   <span className="font-heading font-bold text-[12px] text-foreground">{label}</span>

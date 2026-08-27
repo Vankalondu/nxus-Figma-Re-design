@@ -61,7 +61,7 @@ const INITIAL_SIGNED: SignedPlayer[] = [
 ];
 
 const DEFAULT_GRADE_COLORS: GradeColorMap = {
-  'A+':'#061b2e','A':'#E8A838','B+':'#061b2e','B':'#7baac7','C+':'#b8d4ef','C':'#d2e7fa',
+  'A+':'#061b2e','A':'#E8A838','B+':'#061b2e','B':'#7baac7','C+':'#b4d7f6','C':'#d2e7fa',
 };
 
 const MOCK_PKGS: Pkg[] = [
@@ -620,11 +620,11 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
           {step < TOTAL_STEPS
             ? <button onClick={() => { if (canContinue()) setStep(s => (s + 1) as StepNum); }}
                 disabled={!canContinue()}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0d2a45]">
+                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0a2d4c]">
                 Continue →
               </button>
             : <button onClick={onClose}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-[#0d2a45] transition-colors">
+                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-[#0a2d4c] transition-colors">
                 Submit Report ✓
               </button>}
         </div>
@@ -664,7 +664,7 @@ const PipelineTab = () => {
     signedPlayers.filter(p => p.pos === pos && p.yearSigned === year);
 
   const funnelStages = [
-    { label: 'Database',    count: 60,                   color: '#b8d4ef',          path: '/lead-scout/players' },
+    { label: 'Database',    count: 60,                   color: '#b4d7f6',          path: '/lead-scout/players' },
     { label: 'Long List',   count: 28,                   color: '#E8A838',          path: '/lead-scout/players' },
     { label: 'Short List',  count: 14,                   color: '#7baac7',          path: '/lead-scout/players' },
     { label: 'Target List', count: 6,                    color: '#061b2e',          path: '/lead-scout/players' },
@@ -1128,7 +1128,7 @@ export default function LeadScoutDashboard() {
     <div className="flex min-h-screen bg-background font-body text-foreground">
       <style dangerouslySetInnerHTML={{__html:`
         ::-webkit-scrollbar{width:6px;height:6px;}::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:#b8d4ef;border-radius:4px;}::-webkit-scrollbar-thumb:hover{background:#7baac7;}
+        ::-webkit-scrollbar-thumb{background:#b4d7f6;border-radius:4px;}::-webkit-scrollbar-thumb:hover{background:#7baac7;}
         .hide-scrollbar::-webkit-scrollbar{display:none;}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
       `}} />
 

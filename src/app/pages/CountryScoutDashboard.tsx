@@ -316,7 +316,7 @@ export default function CountryScoutDashboardPage() {
     <div className="flex min-h-screen bg-background font-body text-foreground">
       <style dangerouslySetInnerHTML={{__html:`
         ::-webkit-scrollbar{width:8px;height:8px;}::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:#b8d4ef;border-radius:4px;border:2px solid #d2e7fa;}
+        ::-webkit-scrollbar-thumb{background:#b4d7f6;border-radius:4px;border:2px solid #d2e7fa;}
         ::-webkit-scrollbar-thumb:hover{background:#7baac7;}.hide-scrollbar::-webkit-scrollbar{display:none;}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
       `}} />
 
@@ -716,7 +716,7 @@ export default function CountryScoutDashboardPage() {
                               if (!posPlayers.length) return null;
                               return (
                                 <Fragment key={posGroup}>
-                                  <tr className="bg-primary border-b border-[#061b2e] sticky top-[87px] z-[40] cursor-pointer hover:bg-[#0d2a45] transition-colors" onClick={()=>togglePosition(posGroup)}>
+                                  <tr className="bg-primary border-b border-[#061b2e] sticky top-[87px] z-[40] cursor-pointer hover:bg-[#0a2d4c] transition-colors" onClick={()=>togglePosition(posGroup)}>
                                     <td colSpan={columns.length+1+extraCols.length} className="bg-primary p-0">
                                       <div className="sticky left-0 z-[40] px-6 py-3 font-heading font-bold text-[10px] text-chalk uppercase tracking-widest flex items-center gap-2 w-max bg-primary">
                                         <ChevronDown size={16} className={`transition-transform ${collapsedPositions[posGroup]?'-rotate-90':''}`} />

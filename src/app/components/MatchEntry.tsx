@@ -52,12 +52,12 @@ const DEFAULT_PALETTE: { hex: string; name: string }[] = [
   { hex: '#FBC02D', name: 'Yellow' },
   { hex: '#EF6C00', name: 'Orange' },
   { hex: '#6A1B9A', name: 'Purple' },
-  { hex: '#F5F5F5', name: 'White' },
-  { hex: '#111111', name: 'Black' },
+  { hex: '#F0F7FD', name: 'White' },
+  { hex: '#030E17', name: 'Black' },
   { hex: '#EC4899', name: 'Pink' },
   { hex: '#06B6D4', name: 'Cyan' },
   { hex: '#800000', name: 'Maroon' },
-  { hex: '#6B7280', name: 'Gray' },
+  { hex: '#69747D', name: 'Gray' },
 ];
 
 function colorName(hex: string, palette: { hex: string; name: string }[]) {
@@ -78,7 +78,7 @@ function p(
 function seedTeams(): { home: TeamState; away: TeamState } {
   return {
     home: {
-      kit: { jersey: '#D32F2F', shorts: '#111111' },
+      kit: { jersey: '#D32F2F', shorts: '#030E17' },
       players: [
         p('Nana Kwame Nkpanibake', 7, 2007, true, false, 12, 2),
         p('Daniel Goku', 10, 2008, true, false, 9, 1),
@@ -92,7 +92,7 @@ function seedTeams(): { home: TeamState; away: TeamState } {
       ],
     },
     away: {
-      kit: { jersey: '#1565C0', shorts: '#F5F5F5' },
+      kit: { jersey: '#1565C0', shorts: '#F0F7FD' },
       players: [
         p('Abdoulaye Diallo', 1, 2007, true, false, 13, 0),
         p('Cheikh Ndiaye', 3, 2008, false, false, 2, 3),
@@ -723,7 +723,7 @@ function MatchEventsTab({
         </div>
 
         {/* Video player (mock) */}
-        <div className="bg-[#0B0B0B] rounded-[20px] overflow-hidden border border-border shadow-[var(--shadow-lg)]">
+        <div className="bg-[#02090F] rounded-[20px] overflow-hidden border border-border shadow-[var(--shadow-lg)]">
           <div className="aspect-video relative flex items-center justify-center">
             <button
               className="w-16 h-16 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center transition-colors shadow-[var(--shadow-md)]"

@@ -116,8 +116,8 @@ export const ChampionPodium = ({ scouts }: { scouts: { name: string; role: strin
     const cfg = rank === 1
       ? { ring: 'var(--primary)', badgeBg: 'var(--primary)', badgeText: 'var(--primary-foreground)', label: '1st', av: 'w-12 h-12', smile: 24 }
       : rank === 2
-      ? { ring: '#cbd5e1', badgeBg: '#cbd5e1', badgeText: '#334155', label: '2nd', av: 'w-10 h-10', smile: 18 }
-      : { ring: TEAL, badgeBg: TEAL, badgeText: '#ffffff', label: '3rd', av: 'w-10 h-10', smile: 18 };
+      ? { ring: '#cdd1d5', badgeBg: '#cdd1d5', badgeText: '#304151', label: '2nd', av: 'w-10 h-10', smile: 18 }
+      : { ring: TEAL, badgeBg: TEAL, badgeText: '#f6fafe', label: '3rd', av: 'w-10 h-10', smile: 18 };
     return (
       <div className="flex flex-col items-center gap-1 flex-1 min-w-0">
         <div className="relative mb-1.5">

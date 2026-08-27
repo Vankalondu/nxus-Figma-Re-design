@@ -10,7 +10,7 @@ interface ActionItem { label: string; action: () => void; danger?: boolean; icon
 const ActionGroup = ({ items }: { items: ActionItem[] }) => {
   if (!items.length) return null;
   return (
-    <div className="inline-flex items-center rounded-full bg-[#eaf2fb] border border-[#b4d7f6] p-0.5 shrink-0">
+    <div className="inline-flex items-center rounded-full bg-[#e9f3fd] border border-[#b4d7f6] p-0.5 shrink-0">
       {items.map((item, i) => (
         <React.Fragment key={i}>
           {i > 0 && <span className="w-px h-4 bg-[#b4d7f6] self-center shrink-0" />}

@@ -506,15 +506,15 @@ const AnalyticsTab = () => {
                 <AreaChart data={TREND_DATA}>
                   <defs>
                     <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#095fbb" stopOpacity={0.15} />
-                      <stop offset="100%" stopColor="#095fbb" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#1565c0" stopOpacity={0.15} />
+                      <stop offset="100%" stopColor="#1565c0" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid stroke="rgba(0,0,0,0.04)" strokeDasharray="4 4" vertical={false} />
                   <XAxis dataKey="month" tick={{ fontSize: 11, fontFamily: 'Plus Jakarta Sans', fill: 'var(--muted-foreground)' }} axisLine={false} tickLine={false} dy={10} />
                   <YAxis tick={{ fontSize: 11, fontFamily: 'Plus Jakarta Sans', fill: 'var(--muted-foreground)' }} axisLine={false} tickLine={false} width={30} dx={-10} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Area type="monotone" dataKey="count" stroke="#095fbb" strokeWidth={2} fill="url(#areaGrad)" dot={false} activeDot={{ r: 5, strokeWidth: 0, fill: '#095fbb' }} animationDuration={200} />
+                  <Area type="monotone" dataKey="count" stroke="#1565c0" strokeWidth={2} fill="url(#areaGrad)" dot={false} activeDot={{ r: 5, strokeWidth: 0, fill: '#1565c0' }} animationDuration={200} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>

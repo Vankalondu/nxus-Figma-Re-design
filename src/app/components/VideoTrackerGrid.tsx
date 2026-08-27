@@ -129,7 +129,7 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
       {playing && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => setPlaying(null)}>
           <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-border overflow-hidden" onClick={e => e.stopPropagation()}>
-            <div className="relative aspect-video bg-gradient-to-br from-[#061b2e] to-[#0d2a45] flex items-center justify-center">
+            <div className="relative aspect-video bg-gradient-to-br from-[#061b2e] to-[#0a2d4c] flex items-center justify-center">
               <span className="w-16 h-16 rounded-full bg-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-primary ml-1" /></span>
               <button onClick={() => setPlaying(null)} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-card/20 text-white flex items-center justify-center hover:bg-card/40"><X size={18} /></button>
             </div>

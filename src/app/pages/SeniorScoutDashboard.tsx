@@ -159,9 +159,9 @@ const ProgressRing = ({ value, total, size = 40, stroke = 3 }: { value: number; 
 // ─── Google Docs style icon ───────────────────────────────────────────────────
 // Portrait rectangle with folded top-right corner and text lines inside
 const DocIcon = ({ unviewed, isTom }: { unviewed: boolean; isTom: boolean }) => {
-  const bg    = unviewed ? '#0d2a45' : '#d2e7fa';
+  const bg    = unviewed ? '#0a2d4c' : '#d2e7fa';
   const fold  = unviewed ? '#061b2e' : '#d2e7fa';
-  const line1 = unviewed ? (isTom ? '#E8A838' : '#061b2e') : '#b8d4ef';
+  const line1 = unviewed ? (isTom ? '#E8A838' : '#061b2e') : '#b4d7f6';
   const line2 = unviewed ? '#061b2e' : '#d2e7fa';
   const border= unviewed ? '#061b2e' : '#d2e7fa';
   return (
@@ -764,11 +764,11 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {step < TOTAL_STEPS
             ? <button onClick={() => { if (canContinue()) setStep(s => (s + 1) as StepNum); }}
                 disabled={!canContinue()}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0d2a45]">
+                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0a2d4c]">
                 Continue →
               </button>
             : <button onClick={onClose}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-[#0d2a45] transition-colors">
+                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-[#0a2d4c] transition-colors">
                 Submit Report ✓
               </button>}
         </div>
@@ -1063,7 +1063,7 @@ export default function SeniorScoutDashboard() {
       <style dangerouslySetInnerHTML={{__html: `
         ::-webkit-scrollbar{width:6px;height:6px;}
         ::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:#b8d4ef;border-radius:4px;}
+        ::-webkit-scrollbar-thumb{background:#b4d7f6;border-radius:4px;}
         ::-webkit-scrollbar-thumb:hover{background:#7baac7;}
         .hide-scrollbar::-webkit-scrollbar{display:none;}
         .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}

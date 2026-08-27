@@ -171,7 +171,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
           <div className="fixed bottom-6 right-6 z-50 bg-card border border-border shadow-lg rounded-xl p-4 flex items-center space-x-4 animate-in slide-in-from-bottom-5">
             <div>
               <p className="text-sm font-semibold text-[#1a1c1d]">Column deleted</p>
-              <p className="text-xs text-[#8a8c8d]">You can restore it for a short time</p>
+              <p className="text-xs text-[#838d97]">You can restore it for a short time</p>
             </div>
             <button 
               onClick={undoDelete}
