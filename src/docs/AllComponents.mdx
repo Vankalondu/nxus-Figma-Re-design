@@ -86,19 +86,20 @@ applies.
 `Primitives/Sidebar` is a **stale duplicate** — not shadcn's sidebar, but an old
 copy of the NXUS one. Use `src/app/components/Sidebar.tsx`.
 
-## Still being catalogued
+## Coverage
 
-Documented so far: **10 components + 46 primitives**, across 116 stories.
+**17 components + 46 primitives**, across 131 stories. Every shared component
+in NXUS is now documented.
 
 Components: `KpiCard` · `Status pills` · `ResponsiveTabs` · `ChampionPodium` ·
 `PlayerSearch` · `TasksTab` · `InlineSel` · `VideoTrackerGrid` ·
-`UploadVideoModal` · `TopNav`
+`UploadVideoModal` · `TopNav` · `CardView` · `EditColumnsModal` ·
+`AnalyticsTab` · `ReportsTab` · `Sidebar` · `PlayerVideoWorkspace` ·
+`EditFormBlueprintModal`
 
-**Not yet documented:** `Sidebar` · `CardView` · `EditColumnsModal` ·
-`AnalyticsTab` · `ReportsTab` · `EditFormBlueprintModal` ·
-`PlayerVideoWorkspace`
-
-These take large prop surfaces that need mock data built first — `CardView`
-alone takes twelve props including a player array and four callbacks.
+Not documented, deliberately: the role dashboards themselves
+(`LeadScoutDashboard`, `VideoManagerDashboard`, …) are pages rather than
+reusable components, and the 25 unrouted files that stay in the repo but out
+of the catalogue.
 
 </div>

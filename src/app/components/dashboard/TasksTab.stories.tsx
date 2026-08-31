@@ -22,7 +22,14 @@ const meta = {
           'must be reachable without scrolling.\n\n' +
           'Status colours come from `TASK_STATE_META` and the `scout-*` tokens (**L-C4**), and ' +
           'priority follows **P-CO6**. The done control is a **square checkbox**, far right — a ' +
-          'circle reads as picking an option rather than completing something.',
+          'circle reads as picking an option rather than completing something.\n\n' +
+          '> **Known issue — the seed data has aged out.** `MOCK_TASKS` carries hardcoded ' +
+          'deadlines between 2026-07-25 and 2026-08-20. Because Overdue is derived from the ' +
+          'deadline against *today*, every unfinished task now reads as overdue, leaving Pending ' +
+          'and In Progress empty. That is the derivation working correctly on stale input, not a ' +
+          'bug in this component — but it means the tab misrepresents itself in both the app and ' +
+          'these stories. The fix is to seed deadlines relative to the current date rather than ' +
+          'as fixed strings.',
       },
     },
   },
