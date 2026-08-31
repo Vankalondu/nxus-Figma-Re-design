@@ -479,11 +479,11 @@ const VmAnalyticsTab = () => {
   const X = (i: number) => pL + (i / (months.length - 1)) * plotW;
   const Y = (v: number) => pB - (v / 100) * plotH;
   const path = (arr: number[]) => arr.map((v, i) => `${i === 0 ? 'M' : 'L'} ${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
-  const series = [{ label: 'Packages %', data: hSeries, color: '#2563eb' }, { label: 'Full Matches %', data: fSeries, color: '#E8A838' }];
+  const series = [{ label: 'Packages %', data: hSeries, color: '#1E88E5' }, { label: 'Full Matches %', data: fSeries, color: '#E8A838' }];
   const editors = TEAM.filter(t => t.role === 'Editor').sort((a, b) => b.submitted - a.submitted);
   const uploaders = TEAM.filter(t => t.role === 'Uploader').sort((a, b) => b.submitted - a.submitted);
   const maxEd = Math.max(...editors.map(e => e.submitted), 1), maxUp = Math.max(...uploaders.map(u => u.submitted), 1);
-  const demand = [{ label: 'Packages requested', v: 24, color: '#2563eb' }, { label: 'Full matches requested', v: 15, color: '#E8A838' }];
+  const demand = [{ label: 'Packages requested', v: 24, color: '#1E88E5' }, { label: 'Full matches requested', v: 15, color: '#E8A838' }];
   const maxDemand = Math.max(...demand.map(d => d.v));
   const Board = ({ title, rows, max }: { title: string; rows: TeamMember[]; max: number }) => (
     <div className="flex-1 min-w-0">
@@ -509,8 +509,8 @@ const VmAnalyticsTab = () => {
           </div>
           <div className="px-5 py-4 flex-1 flex flex-col">
             <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 220 }} preserveAspectRatio="xMidYMid meet">
-              {[0, 25, 50, 75, 100].map(g => (<g key={g}><line x1={pL} y1={Y(g)} x2={pR} y2={Y(g)} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" /><text x={pL - 6} y={Y(g) + 3} textAnchor="end" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text></g>))}
-              {months.map((m, i) => (<text key={m} x={X(i)} y={pB + 20} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>))}
+              {[0, 25, 50, 75, 100].map(g => (<g key={g}><line x1={pL} y1={Y(g)} x2={pR} y2={Y(g)} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" /><text x={pL - 6} y={Y(g) + 3} textAnchor="end" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text></g>))}
+              {months.map((m, i) => (<text key={m} x={X(i)} y={pB + 20} textAnchor="middle" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>))}
               {series.map(s => (<g key={s.label}><path d={path(s.data)} fill="none" stroke={s.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />{s.data.map((v, i) => <circle key={i} cx={X(i)} cy={Y(v)} r={3} fill={s.color} />)}</g>))}
             </svg>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">{series.map(s => (<div key={s.label} className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} /><span className="font-heading font-bold text-[12px] text-foreground">{s.label}</span></div>))}</div>

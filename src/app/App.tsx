@@ -25,7 +25,7 @@ function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background">
       <div className="w-16 h-16 rounded-full bg-border flex items-center justify-center mb-4">
-        <span style={{ fontSize: 28, color: '#7baac7' }}>404</span>
+        <span style={{ fontSize: 28, color: 'var(--muted-foreground)' }}>404</span>
       </div>
       <h1 className="font-heading font-black text-[18px] text-foreground">Page not found</h1>
       <p className="font-body text-[14px] text-muted-foreground font-medium mt-2 max-w-xs text-center">
@@ -45,7 +45,7 @@ function ErrorBoundaryPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background">
       <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-4">
-        <span style={{ fontSize: 24, color: '#EF4444' }}>!</span>
+        <span style={{ fontSize: 24, color: '#E05C4B' }}>!</span>
       </div>
       <h1 className="font-heading font-black text-[18px] text-foreground">Something went wrong</h1>
       <p className="font-body text-[14px] text-muted-foreground font-medium mt-2 max-w-xs text-center">

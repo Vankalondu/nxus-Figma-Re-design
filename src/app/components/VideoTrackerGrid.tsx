@@ -17,7 +17,7 @@ const TIER_PRIO: Record<PipelineTier, { n: number; cls: string; label: string }>
 
 // coverage status → slot appearance
 const slotCls = (kind: 'filled' | 'progress' | 'missing' | 'na') =>
-  kind === 'filled' ? 'bg-[#22d3ee]/15 text-[#0e7490] border-[#22d3ee]/40'   // cyan = uploaded
+  kind === 'filled' ? 'bg-[#22d3ee]/15 text-[#145B99] border-[#22d3ee]/40'   // cyan = uploaded
   : kind === 'progress' ? 'bg-scout-amber/15 text-scout-amber border-scout-amber/30'
   : kind === 'na' ? 'bg-accent text-muted-foreground border-border'
   : 'bg-scout-red/15 text-scout-red border-scout-red/30';                     // red = missing

@@ -189,26 +189,26 @@ export const AnalyticsTab = () => {
               {/* priority quadrant tint */}
               <rect x={zoneX} y={zoneY} width={zoneW} height={zoneH} fill="#061b2e" opacity="0.06" rx="8" />
               <rect x={zoneX} y={zoneY} width={zoneW} height={zoneH} fill="none" stroke="#061b2e" strokeOpacity="0.18" strokeDasharray="4 4" rx="8" />
-              <text x={pR-6} y={zoneY+16} textAnchor="end" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="800">PRIORITY</text>
+              <text x={pR-6} y={zoneY+16} textAnchor="end" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="800">PRIORITY</text>
               {/* horizontal gridlines + Y labels (rating) */}
               {[6,7,8,9].map(g => (
                 <g key={g}>
                   <line x1={pL} y1={sy(g)} x2={pR} y2={sy(g)} stroke="#d2e7fa" strokeWidth="1" />
-                  <text x={pL-8} y={sy(g)+3} textAnchor="end" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{g.toFixed(1)}</text>
+                  <text x={pL-8} y={sy(g)+3} textAnchor="end" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{g.toFixed(1)}</text>
                 </g>
               ))}
               {/* X axis ticks (age) — reversed, younger to the right */}
               {[22,20,18,16].map(a => (
-                <text key={a} x={sx(a)} y={pB+16} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{a}</text>
+                <text key={a} x={sx(a)} y={pB+16} textAnchor="middle" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{a}</text>
               ))}
-              <text x={(pL+pR)/2} y={H-3} textAnchor="middle" fontSize="9" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="800">AGE — younger →</text>
+              <text x={(pL+pR)/2} y={H-3} textAnchor="middle" fontSize="9" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="800">AGE — younger →</text>
               {/* dots */}
               {TALENT.map(d => {
                 const prio = isPriority(d.age, d.r);
                 return (
                   <circle key={d.n} cx={sx(d.age)} cy={sy(d.r)} r={rad(d.v)}
                     fill={prio ? '#061b2e' : '#b4d7f6'} fillOpacity={prio ? 0.9 : 0.85}
-                    stroke={prio ? '#061b2e' : '#7baac7'} strokeWidth="1.5">
+                    stroke={prio ? '#061b2e' : 'var(--muted-foreground)'} strokeWidth="1.5">
                     <title>{`${d.n} · age ${d.age} · eyeball ${d.r.toFixed(1)} · ${d.v} videos`}</title>
                   </circle>
                 );
@@ -267,12 +267,12 @@ export const AnalyticsTab = () => {
               {cvGrid.map(g => (
                 <g key={g}>
                   <line x1={cvpL} y1={cvY(g)} x2={cvpR} y2={cvY(g)} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" />
-                  <text x={cvpL-6} y={cvY(g)+3} textAnchor="end" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text>
+                  <text x={cvpL-6} y={cvY(g)+3} textAnchor="end" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text>
                 </g>
               ))}
               {/* month labels */}
               {convMonths.map((m,i) => (
-                <text key={m} x={cvX(i)} y={cvpB+20} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>
+                <text key={m} x={cvX(i)} y={cvpB+20} textAnchor="middle" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>
               ))}
               {/* series */}
               {cvSeries.map((s,si) => (
@@ -354,7 +354,7 @@ export const AnalyticsTab = () => {
                     <rect x={x} y={yTarget} width={arBarW} height={th} fill="#145b99" className="cursor-pointer transition-opacity hover:opacity-70">
                       <title>{`${archMonths[i]} · Target: ${a.target}`}</title>
                     </rect>
-                    <text x={cx} y={arpB+20} textAnchor="middle" fontSize="10" fill="#7baac7" fontFamily="Figtree, sans-serif" fontWeight="700">{archMonths[i]}</text>
+                    <text x={cx} y={arpB+20} textAnchor="middle" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{archMonths[i]}</text>
                   </g>
                 );
               })}
