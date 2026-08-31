@@ -31,36 +31,49 @@ export const TASK_STATE_META: Record<'pending' | 'in-progress' | 'done' | 'overd
 
 // ─── Task data + helpers (Tasks tab) ────────────────────────────────────────
 export const TASK_ASSIGNEES = ['Me', 'David (Senior)', 'Nene', 'Mbugua', 'Tom'];
+// Deadlines are RELATIVE to today, not fixed dates. Overdue is derived by
+// isOverdue() against the current date, so hardcoded deadlines silently age
+// into the past — seeded on 2026-08-11 they read as a healthy mix, and by
+// 2026-08-31 every unfinished task had become overdue (68 overdue, 0 pending,
+// 0 in-progress). Offsets keep the intended spread indefinitely.
+const dayOffset = (days: number): string => {
+  const d = new Date(new Date().toDateString());
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+};
+
 const BASE_TASKS: Task[] = [
-  { id:'t1', text:'Review Kofi Mensah target package', description:'Verify player tagging + edit quality against the scout request', priority:'High',   status:'in-progress', assignedDate:'2026-08-02', deadline:'2026-08-14', dueDate:'Aug 14', assignedTo:'David (Senior)', playerName:'Kofi Mensah', isTargetTask:true, completed:false },
-  { id:'t2', text:'File report on Amadou Sarr',        description:'Match report from the Ghana friendly',                          priority:'High',   status:'pending',     assignedDate:'2026-08-03', deadline:'2026-08-08', dueDate:'Aug 8',  assignedTo:'Me', completed:false },
-  { id:'t3', text:'Cross-check David Conteh stats',    description:'Confirm minutes + goals vs the data feed',                      priority:'Medium', status:'in-progress', assignedDate:'2026-07-28', deadline:'2026-08-05', dueDate:'Aug 5',  assignedTo:'David (Senior)', playerName:'David Conteh', isTargetTask:true, completed:false },
-  { id:'t4', text:'Submit Combined Top 10 — Ghana cycle', description:'Compile the cycle shortlist for review',                     priority:'High',   status:'pending',     assignedDate:'2026-08-05', deadline:'2026-08-20', dueDate:'Aug 20', assignedTo:'Me', completed:false },
-  { id:'t5', text:'Update PLR grades on Short List',   description:'Apply the latest grading pass',                                 priority:'Low',    status:'done',        assignedDate:'2026-07-20', deadline:'2026-07-30', dueDate:'Jul 30', assignedTo:'Me', completed:true },
-  { id:'t6', text:'Shortlist review — Nene batch',     description:'Review Nene’s submitted batch',                                 priority:'Medium', status:'done',        assignedDate:'2026-07-15', deadline:'2026-07-25', dueDate:'Jul 25', assignedTo:'Nene', completed:true },
-  { id:'t7', text:'Tag Cheikh Diop package clips',     description:'Add moment tags to the defensive reel',                         priority:'Medium', status:'pending',     assignedDate:'2026-08-08', deadline:'2026-08-18', dueDate:'Aug 18', assignedTo:'Nene', playerName:'Cheikh Diop', completed:false },
-  { id:'t8', text:'Source full match — Gor Mahia',     description:'Locate raw footage for the fixture',                            priority:'High',   status:'in-progress', assignedDate:'2026-08-02', deadline:'2026-08-12', dueDate:'Aug 12', assignedTo:'Mbugua', completed:false },
+  { id:'t1', text:'Review Kofi Mensah target package', description:'Verify player tagging + edit quality against the scout request', priority:'High',   status:'in-progress', assignedDate:dayOffset(-12), deadline:dayOffset(3), dueDate:fmtDate(dayOffset(3)), assignedTo:'David (Senior)', playerName:'Kofi Mensah', isTargetTask:true, completed:false },
+  { id:'t2', text:'File report on Amadou Sarr',        description:'Match report from the Ghana friendly',                          priority:'High',   status:'pending',     assignedDate:dayOffset(-14), deadline:dayOffset(-4), dueDate:fmtDate(dayOffset(-4)),  assignedTo:'Me', completed:false },
+  { id:'t3', text:'Cross-check David Conteh stats',    description:'Confirm minutes + goals vs the data feed',                      priority:'Medium', status:'in-progress', assignedDate:dayOffset(-16), deadline:dayOffset(7), dueDate:fmtDate(dayOffset(7)),  assignedTo:'David (Senior)', playerName:'David Conteh', isTargetTask:true, completed:false },
+  { id:'t4', text:'Submit Combined Top 10 — Ghana cycle', description:'Compile the cycle shortlist for review',                     priority:'High',   status:'pending',     assignedDate:dayOffset(-9), deadline:dayOffset(14), dueDate:fmtDate(dayOffset(14)), assignedTo:'Me', completed:false },
+  { id:'t5', text:'Update PLR grades on Short List',   description:'Apply the latest grading pass',                                 priority:'Low',    status:'done',        assignedDate:dayOffset(-24), deadline:dayOffset(-12), dueDate:fmtDate(dayOffset(-12)), assignedTo:'Me', completed:true },
+  { id:'t6', text:'Shortlist review — Nene batch',     description:'Review Nene’s submitted batch',                                 priority:'Medium', status:'done',        assignedDate:dayOffset(-30), deadline:dayOffset(-18), dueDate:fmtDate(dayOffset(-18)), assignedTo:'Nene', completed:true },
+  { id:'t7', text:'Tag Cheikh Diop package clips',     description:'Add moment tags to the defensive reel',                         priority:'Medium', status:'pending',     assignedDate:dayOffset(-11), deadline:dayOffset(-2), dueDate:fmtDate(dayOffset(-2)), assignedTo:'Nene', playerName:'Cheikh Diop', completed:false },
+  { id:'t8', text:'Source full match — Gor Mahia',     description:'Locate raw footage for the fixture',                            priority:'High',   status:'in-progress', assignedDate:dayOffset(-13), deadline:dayOffset(1), dueDate:fmtDate(dayOffset(1)), assignedTo:'Mbugua', completed:false },
 ];
 // Generate ~92 more so the list is 100 tasks (large-scale test of pagination/filters).
 const TASK_VERBS = ['Tag', 'Review', 'Cut', 'Source', 'Upload', 'Cross-check', 'Grade', 'Verify', 'Compile', 'Clip'];
 const TASK_OBJECTS = ['package clips', 'full match', 'highlight reel', 'defensive actions', 'scout report', 'set-piece reel', 'top 10 list', 'coverage gaps', 'player stats', 'trial footage'];
 const TASK_PLAYERS = ['Yaw Owusu', 'Sory Camara', 'Ismael Toure', 'Musa Kante', 'Prince Mensah', 'Daniel Osei', 'Lamine Cisse', 'Baba Traore', 'Omar Diallo', 'Karim Toure', 'Kwame Boateng', 'Cheikh Diop'];
-const pad = (n: number) => String(n).padStart(2, '0');
 const genTasks = (n: number): Task[] => Array.from({ length: n }, (_, i) => {
   const status: TaskStatus = (['pending', 'in-progress', 'done'] as const)[i % 3];
   const priority = (['High', 'Medium', 'Low'] as const)[i % 3];
-  const month = 7 + (i % 3);                         // Jul, Aug, Sep 2026
-  const day = 1 + (i * 7) % 28;
-  const aMonth = month === 7 ? 6 : month - 1;
+  // Deadline offset must NOT share a period with `status`, or the two correlate
+  // and every pending task lands in the same window. The original used i % 3 for
+  // both, so all pending tasks were overdue and everything in the future was
+  // already done. 49 and 3 are coprime, so the pairing cycles over 147 > n.
+  const offset = -21 + ((i * 13) % 49);               // −21 … +27 days
+  const deadline = dayOffset(offset);
   return {
     id: `g${i}`,
     text: `${TASK_VERBS[i % TASK_VERBS.length]} ${TASK_OBJECTS[i % TASK_OBJECTS.length]}`,
     description: `Auto-generated task #${i + 1} for scale testing`,
     priority,
     status,
-    assignedDate: `2026-${pad(aMonth)}-${pad(1 + (i % 27))}`,
-    deadline: `2026-${pad(month)}-${pad(day)}`,
-    dueDate: `${['Jul', 'Aug', 'Sep'][month - 7]} ${day}`,
+    assignedDate: dayOffset(offset - 10 - (i % 7)),
+    deadline,
+    dueDate: fmtDate(deadline),
     assignedTo: TASK_ASSIGNEES[i % TASK_ASSIGNEES.length],
     playerName: i % 4 === 0 ? TASK_PLAYERS[i % TASK_PLAYERS.length] : undefined,
     completed: status === 'done',
