@@ -1,0 +1,13 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks'
+
+{/*
+  The rulebook is NOT duplicated here. It is imported raw from
+  guidelines/Guidelines.md — the same file a developer reads in the repo and
+  the same file another team copies. One source, so this page can never drift
+  from the rules it displays.
+*/}
+import guidelines from '../../guidelines/Guidelines.md?raw'
+
+<Meta title="Guides/UI Style Guide" parameters={{ docs: { toc: true } }} />
+
+<Markdown>{guidelines}</Markdown>

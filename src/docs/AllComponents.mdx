@@ -1,0 +1,81 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="All Components" />
+
+<div className="font-body">
+
+# All components
+
+Everything in the NXUS design system, in one place. Click through to a live demo,
+the import line, and a props table generated from the component's own types.
+
+New here? Read the <a href="/?path=/docs/guides-ui-style-guide--docs">UI Style Guide</a> first —
+it carries the Laws that bind every component below.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+  gap: '16px',
+  marginTop: '24px',
+}}>
+
+{[
+  { name: 'KpiCard', desc: 'Dashboard stat card. Icon chip, big number, action link.', href: '/?path=/docs/components-kpicard--docs', rule: 'P-CO4' },
+  { name: 'Status pills', desc: 'Priority and task-state pills. The colour vocabulary.', href: '/?path=/docs/components-status-pills--docs', rule: 'P-CO5' },
+  { name: 'ResponsiveTabs', desc: 'The tab strip, with optional count badges.', href: '/?path=/docs/components-responsivetabs--docs', rule: 'P-CO2' },
+].map((c) => (
+  <a key={c.name} href={c.href} style={{ textDecoration: 'none' }}>
+    <div style={{
+      border: '1px solid var(--border)',
+      background: 'var(--card)',
+      borderRadius: '20px',
+      padding: '20px',
+      height: '100%',
+      transition: 'all 150ms',
+    }}>
+      <div style={{
+        fontFamily: 'Figtree, sans-serif',
+        fontWeight: 600,
+        fontSize: '16px',
+        color: 'var(--foreground)',
+        marginBottom: '6px',
+      }}>{c.name}</div>
+      <div style={{
+        fontFamily: '"Plus Jakarta Sans", sans-serif',
+        fontSize: '12px',
+        color: 'var(--muted-foreground)',
+        lineHeight: 1.5,
+        marginBottom: '12px',
+      }}>{c.desc}</div>
+      <span style={{
+        display: 'inline-block',
+        padding: '2px 8px',
+        borderRadius: '999px',
+        background: 'color-mix(in srgb, var(--primary) 12%, transparent)',
+        color: 'var(--primary)',
+        fontFamily: '"Plus Jakarta Sans", sans-serif',
+        fontSize: '10px',
+        fontWeight: 800,
+      }}>{c.rule}</span>
+    </div>
+  </a>
+))}
+
+</div>
+
+<hr style={{ margin: '32px 0', border: 0, borderTop: '1px solid var(--border)' }} />
+
+## Still being catalogued
+
+This index grows as stories land. Currently documented: **3 of ~63**.
+
+**Next up — the shared component layer:** `TopNav` · `Sidebar` · `TasksTab` ·
+`VideoTrackerGrid` · `CardView` · `EditColumnsModal` · `UploadVideoModal` ·
+`AnalyticsTab` · `ReportsTab` · `PlayerSearch` · `ChampionPodium` · `InlineSel`
+
+**Then the primitives** — 46 in `components/ui/`. Note only 7 are currently
+imported anywhere in NXUS (`button`, `input`, `select`, `checkbox`, `tooltip`,
+`switch`, `sonner`); the other 39 are stock shadcn scaffolding that shipped with
+the Figma Make export and nothing in the app uses yet.
+
+</div>
