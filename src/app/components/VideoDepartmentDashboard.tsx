@@ -334,7 +334,7 @@ export function VideoDepartmentDashboard() {
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${
                           editor.rank === 1 ? 'bg-[#FFD700] text-[#8B6914]' :
                           editor.rank === 2 ? 'bg-[#C0C0C0] text-[#4A4A4A]' :
-                          editor.rank === 3 ? 'bg-[#CD7F32] text-white' :
+                          editor.rank === 3 ? 'bg-[#CD7F32] text-chalk' :
                           'bg-[#F1F5F9] text-muted-foreground'
                         }`} style={{ fontFamily: "'Figtree', sans-serif" }}>
                           {editor.rank}
@@ -343,7 +343,7 @@ export function VideoDepartmentDashboard() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1E88E5] to-[#1565C0] flex items-center justify-center text-white font-semibold text-sm"
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1E88E5] to-[#1565C0] flex items-center justify-center text-chalk font-semibold text-sm"
                           style={{ fontFamily: "'Figtree', sans-serif" }}>
                           {editor.avatar}
                         </div>

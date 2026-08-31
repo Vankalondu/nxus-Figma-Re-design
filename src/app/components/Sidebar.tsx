@@ -110,7 +110,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
       {/* ── Mobile: Overlay Sidebar ── */}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-[200] flex">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <div className="absolute inset-0 bg-midnight/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
           <aside className="relative z-10 w-[280px] bg-card border-r border-border flex flex-col py-8 min-h-screen shadow-[4px_0_24px_rgba(6,27,46,0.12)]">
             <div className="flex items-center justify-between px-6 mb-10">
               <div className="flex items-center gap-3">

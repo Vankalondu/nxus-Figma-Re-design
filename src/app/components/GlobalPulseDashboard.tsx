@@ -281,7 +281,7 @@ export function GlobalPulseDashboard() {
       {/* Department Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Scouting Summary */}
-        <div className="bg-gradient-to-br from-[#E8F5E9] to-white border border-[#43A047]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[#E8F5E9] to-chalk border border-[#43A047]/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-card shadow-sm">
               <Users className="w-6 h-6 text-[#43A047]" strokeWidth={2.5} />
@@ -323,7 +323,7 @@ export function GlobalPulseDashboard() {
         </div>
 
         {/* Video Department Summary */}
-        <div className="bg-gradient-to-br from-[#E3F2FD] to-white border border-[#1E88E5]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[#E3F2FD] to-chalk border border-[#1E88E5]/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-card shadow-sm">
               <Video className="w-6 h-6 text-[#1E88E5]" strokeWidth={2.5} />
@@ -365,7 +365,7 @@ export function GlobalPulseDashboard() {
         </div>
 
         {/* Data Entry Summary */}
-        <div className="bg-gradient-to-br from-[#FFF9C4] to-white border border-[#F9A825]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[#FFF9C4] to-chalk border border-[#F9A825]/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-card shadow-sm">
               <FileCheck className="w-6 h-6 text-[#F9A825]" strokeWidth={2.5} />

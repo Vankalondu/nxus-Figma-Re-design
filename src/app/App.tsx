@@ -33,7 +33,7 @@ function NotFound() {
       </p>
       <button
         onClick={() => window.history.back()}
-        className="mt-6 bg-primary border-2 border-primary text-white hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
+        className="mt-6 bg-primary border-2 border-primary text-chalk hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
       >
         Go back
       </button>
@@ -53,7 +53,7 @@ function ErrorBoundaryPage() {
       </p>
       <button
         onClick={() => (window.location.href = '/')}
-        className="mt-6 bg-primary border-2 border-primary text-white hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
+        className="mt-6 bg-primary border-2 border-primary text-chalk hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
       >
         Return to login
       </button>

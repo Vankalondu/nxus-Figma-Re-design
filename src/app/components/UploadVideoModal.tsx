@@ -44,11 +44,11 @@ export function UploadVideoModal({ allowedTypes = ['highlight', 'package', 'full
   const onDrop = (e: React.DragEvent) => { e.preventDefault(); setDrag(false); const f = e.dataTransfer.files?.[0]; if (f) setFile(f); };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={onClose}>
       <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
         <div className="px-8 py-6 bg-primary rounded-t-[20px] flex items-center justify-between">
-          <div className="flex items-center gap-2.5"><Film size={18} className="text-white" /><span className="font-heading font-semibold text-[16px] text-white">Upload {TYPE_LABEL[type].toLowerCase()}</span></div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+          <div className="flex items-center gap-2.5"><Film size={18} className="text-chalk" /><span className="font-heading font-semibold text-[16px] text-chalk">Upload {TYPE_LABEL[type].toLowerCase()}</span></div>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
         </div>
 
         <div className="p-8 space-y-4">
@@ -90,7 +90,7 @@ export function UploadVideoModal({ allowedTypes = ['highlight', 'package', 'full
             </div>
           )}
 
-          <button onClick={submit} disabled={!canSubmit} className="w-full bg-primary border-2 border-primary text-white rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">Upload {TYPE_LABEL[type].toLowerCase()}</button>
+          <button onClick={submit} disabled={!canSubmit} className="w-full bg-primary border-2 border-primary text-chalk rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">Upload {TYPE_LABEL[type].toLowerCase()}</button>
         </div>
       </div>
     </div>

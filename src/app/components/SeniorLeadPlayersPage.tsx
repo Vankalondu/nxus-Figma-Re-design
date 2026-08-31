@@ -224,12 +224,12 @@ const EditableColHeader = ({ label, onRename, onRemove }: {
           onChange={e => setDraft(e.target.value)}
           onBlur={() => { onRename(draft); setEditing(false); }}
           onKeyDown={e => { if (e.key === 'Enter') { onRename(draft); setEditing(false); }}}
-          className="bg-transparent border-b border-white/50 text-chalk font-heading font-bold text-[10px] uppercase tracking-widest w-[80px] focus:outline-none" />
+          className="bg-transparent border-b border-chalk/50 text-chalk font-heading font-bold text-[10px] uppercase tracking-widest w-[80px] focus:outline-none" />
       ) : (
         <span className="font-heading font-bold text-[10px] uppercase tracking-widest">{label}</span>
       )}
       <button onClick={() => setOpen(o => !o)}
-        className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white/40 hover:text-white/80 ml-0.5">
+        className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-chalk/40 hover:text-chalk/80 ml-0.5">
         <ChevronDown size={8} />
       </button>
       {open && (
@@ -380,7 +380,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
       <button onClick={(e) => { e.stopPropagation(); primaryItem.action(); }} title={primaryItem.label}
         className={`w-7 h-7 rounded-l-lg flex items-center justify-center transition-all border border-r-0 ${
           primaryItem.danger
-            ? 'bg-[#E05C4B]/10 text-[#E05C4B] hover:bg-[#E05C4B] hover:text-white border-[#E05C4B]/20'
+            ? 'bg-[#E05C4B]/10 text-[#E05C4B] hover:bg-[#E05C4B] hover:text-chalk border-[#E05C4B]/20'
             : 'bg-accent text-foreground hover:bg-primary/80 hover:text-primary-foreground border-border'
         }`}>
         {primaryItem.icon}
@@ -409,7 +409,7 @@ const ActionButtons = ({ items }: { items: ActionItem[] }) => {
           <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
             className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
               item.label === 'Restore'
-                ? 'text-emerald-600 hover:bg-emerald-500 hover:text-white'
+                ? 'text-emerald-600 hover:bg-emerald-500 hover:text-chalk'
                 : 'text-foreground hover:bg-primary hover:text-primary-foreground'
             }`}>
             {item.icon}
@@ -502,14 +502,14 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
   const [newDue, setNewDue] = useState('');
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-midnight/50 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={onClose}>
       <div className="bg-card rounded-[28px] shadow-2xl w-full max-w-md border border-border max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="px-6 py-4 bg-primary rounded-t-[28px] flex items-center justify-between shrink-0">
           <div>
-            <span className="font-heading font-semibold text-[16px] text-white">Notes & Tasks</span>
-            <p className="font-body text-[12px] text-white/40 mt-0.5">{playerName}</p>
+            <span className="font-heading font-semibold text-[16px] text-chalk">Notes & Tasks</span>
+            <p className="font-body text-[12px] text-chalk/40 mt-0.5">{playerName}</p>
           </div>
-          <button onClick={onClose} className="w-7 h-7 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={14} /></button>
+          <button onClick={onClose} className="w-7 h-7 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={14} /></button>
         </div>
         <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
           {/* Tasks */}
@@ -522,7 +522,7 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
                 <div key={t.id} className={`flex items-start gap-2 px-3 py-2 rounded-xl border ${t.done ? 'opacity-50 bg-accent border-border' : 'bg-card border-border'}`}>
                   <button onClick={() => setTasks(prev => prev.map(x => x.id === t.id ? { ...x, done: !x.done } : x))}
                     className={`w-4 h-4 rounded border-2 shrink-0 mt-0.5 flex items-center justify-center transition-all ${t.done ? 'bg-primary border-primary' : 'border-border'}`}>
-                    {t.done && <Check size={9} className="text-white" />}
+                    {t.done && <Check size={9} className="text-chalk" />}
                   </button>
                   <div className="flex-1 min-w-0">
                     <p className={`font-body text-[12px] font-bold ${t.done ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{t.text}</p>
@@ -635,7 +635,7 @@ const FilterBar = ({
   );
 
   return (
-    <div className="bg-primary rounded-[24px] px-[var(--pad-card)] py-4 flex flex-col md:flex-row md:items-center md:flex-wrap gap-3 md:gap-4 border border-white/5 w-full">
+    <div className="bg-primary rounded-[24px] px-[var(--pad-card)] py-4 flex flex-col md:flex-row md:items-center md:flex-wrap gap-3 md:gap-4 border border-chalk/5 w-full">
       {/* BIO section */}
       <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground shrink-0">BIO</span>
       <div className="flex items-center gap-2">
@@ -645,13 +645,13 @@ const FilterBar = ({
       <div className="flex items-center gap-2">
         <span className="font-body text-[14px] font-bold text-muted-foreground">Ht:</span>
         <NumIn value={filterHeightMin} onChange={setFilterHeightMin} ph="min" />
-        <span className="text-white/20 font-body text-[14px]">–</span>
+        <span className="text-chalk/20 font-body text-[14px]">–</span>
         <NumIn value={filterHeightMax} onChange={setFilterHeightMax} ph="max" />
       </div>
       <div className="flex items-center gap-2">
         <span className="font-body text-[14px] font-bold text-muted-foreground">Age:</span>
         <NumIn value={filterAgeMin} onChange={setFilterAgeMin} ph="min" />
-        <span className="text-white/20 font-body text-[14px]">–</span>
+        <span className="text-chalk/20 font-body text-[14px]">–</span>
         <NumIn value={filterAgeMax} onChange={setFilterAgeMax} ph="max" />
       </div>
 
@@ -679,13 +679,13 @@ const FilterBar = ({
 
       {/* Active/Audit toggle — right-aligned */}
       <div className="ml-auto flex items-center shrink-0">
-        <div className="flex items-center bg-card/5 border border-white/10 rounded-full p-1">
+        <div className="flex items-center bg-card/5 border border-chalk/10 rounded-full p-1">
           <button onClick={() => setArchiveView('active')}
-            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'active' ? 'bg-card text-foreground shadow-sm' : 'text-white/40 hover:text-white'}`}>
+            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'active' ? 'bg-card text-foreground shadow-sm' : 'text-chalk/40 hover:text-chalk'}`}>
             Active
           </button>
           <button onClick={() => setArchiveView('audit')}
-            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'audit' ? 'bg-primary text-chalk shadow-sm' : 'text-white/40 hover:text-white'}`}>
+            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'audit' ? 'bg-primary text-chalk shadow-sm' : 'text-chalk/40 hover:text-chalk'}`}>
             Archive
           </button>
         </div>
@@ -699,8 +699,8 @@ const PosHeader = ({ pos, count, colSpan }: { pos: string; count: number; colSpa
   <tr className="bg-primary">
     <td colSpan={colSpan} className="py-2 px-4 sticky top-[58px] md:top-[70px] lg:top-[82px] z-30 bg-primary">
       <span className="inline-flex items-center gap-2">
-        <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-white">{pos}</span>
-        <span className="inline-flex items-center justify-center bg-white/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-white">{count}</span>
+        <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-chalk">{pos}</span>
+        <span className="inline-flex items-center justify-center bg-chalk/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-chalk">{count}</span>
       </span>
     </td>
   </tr>
@@ -795,33 +795,33 @@ const PlayerTable = ({
             {/* ── GROUP HEADER ROW — navy background, group names ── */}
             <tr className="bg-primary">
               <th colSpan={2}
-                className="sticky left-0 z-40 bg-primary px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15">
+                className="sticky left-0 z-40 bg-primary px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15">
                 Player ID
               </th>
-              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">Bio</th>
+              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">Bio</th>
               {currentTab === 'long-list'
-                ? <th className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                ? <th className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                     Status
                   </th>
                 : <th colSpan={3}
-                    className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                    className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                     Videos
                   </th>}
               <th colSpan={2}
-                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                 Bio Data
               </th>
               <th colSpan={1}
-                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                 Scout
               </th>
               <th colSpan={currentTab === 'database' ? Math.max(1, ['app','gls','pen','ast'].filter(k => visibleStats.has(k)).length) : 4}
-                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                 Game Stats
               </th>
               {extraCols.length > 0 && (
                 <th colSpan={extraCols.length}
-                  className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                  className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                   Custom
                 </th>
               )}
@@ -1082,7 +1082,7 @@ const TargetSuperTable = ({
     <th className={`px-2 py-2 font-heading font-bold text-[12px] text-chalk uppercase tracking-widest text-center whitespace-nowrap ${cls}`}>{label}</th>
   );
   const GrpHd = ({ label, span, amber = false }: { label: string; span: number; amber?: boolean }) => (
-    <th colSpan={span} className={`px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-center border-b border-white/10 ${amber ? 'text-foreground' : 'text-chalk/50'}`}>{label}</th>
+    <th colSpan={span} className={`px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-center border-b border-chalk/10 ${amber ? 'text-foreground' : 'text-chalk/50'}`}>{label}</th>
   );
 
   if (displayPlayers.length === 0) return (
@@ -1100,16 +1100,16 @@ const TargetSuperTable = ({
           <thead className="sticky top-0 z-30">
             {/* Group header row — dark, matches Short List */}
             <tr className="bg-primary">
-              <th colSpan={2} className="sticky left-0 z-40 bg-primary border-b border-white/15" />
-              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">Status</th>
-              <th colSpan={2} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Grades" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Links" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Match Data" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Financials" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={2} className="sticky left-0 z-40 bg-primary border-b border-chalk/15" />
+              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">Status</th>
+              <th colSpan={2} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Grades" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Links" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Match Data" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Financials" onRename={()=>{}} onRemove={()=>{}} /></th>
               {extraCols.length > 0 && (
-                <th colSpan={extraCols.length} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">Custom</th>
+                <th colSpan={extraCols.length} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">Custom</th>
               )}
             </tr>
             {/* Sub-header row — light, matches Short List */}
@@ -1452,13 +1452,13 @@ const ShortListTable = ({
           <thead className="sticky top-0 z-30">
             {/* Group header row */}
             <tr className="bg-primary">
-              <th colSpan={3} className="sticky left-0 z-40 bg-primary px-3 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15">Player ID</th>
-              <th colSpan={5} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">Status</th>
+              <th colSpan={3} className="sticky left-0 z-40 bg-primary px-3 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15">Player ID</th>
+              <th colSpan={5} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">Status</th>
               {SCOUT_COLS.map(s => (
-                <th key={s.key} colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">{s.label}</th>
+                <th key={s.key} colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">{s.label}</th>
               ))}
-              <th colSpan={8} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Codes" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={8} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Codes" onRename={()=>{}} onRemove={()=>{}} /></th>
             </tr>
             {/* Sub-header row */}
             <tr className="bg-card border-b-2 border-border">
@@ -1663,7 +1663,7 @@ const InlineSelect = ({ value, opts, onChange, colorMap }: {
   );
   return (
     <span onClick={() => setEditing(true)} title="Click to edit"
-      style={color ? { backgroundColor: color, color: '#fff' } : undefined}
+      style={color ? { backgroundColor: color, color: 'var(--chalk)' } : undefined}
       className={`inline-block font-body text-[12px] font-bold cursor-pointer hover:opacity-80 rounded px-2 py-0.5 ${!color ? 'text-foreground' : ''}`}>
       {value || '—'}
     </span>
@@ -1755,20 +1755,20 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
             <thead className="sticky top-0 z-30">
               {/* Row 1: Group header */}
               <tr className="bg-primary">
-                <th colSpan={4} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15">
+                <th colSpan={4} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15">
                   Player Identity
                 </th>
-                <th colSpan={3} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                <th colSpan={3} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                   Acquisition
                 </th>
-                <th colSpan={4} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                <th colSpan={4} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                   Financials
                 </th>
-                <th colSpan={3} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                <th colSpan={3} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                   Outcome
                 </th>
                 {extraCols.length > 0 && (
-                  <th colSpan={extraCols.length} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-white text-center border-b border-white/15 border-l border-l-white/15">
+                  <th colSpan={extraCols.length} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-chalk text-center border-b border-chalk/15 border-l border-l-white/15">
                     Custom
                   </th>
                 )}
@@ -1801,8 +1801,8 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                   <tr className="bg-primary">
                     <td colSpan={TOTAL_COLS} className="py-2 px-4">
                       <span className="inline-flex items-center gap-2">
-                        <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-white">{group}</span>
-                        <span className="inline-flex items-center justify-center bg-white/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-white">{grpPlayers.length}</span>
+                        <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-chalk">{group}</span>
+                        <span className="inline-flex items-center justify-center bg-chalk/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-chalk">{grpPlayers.length}</span>
                       </span>
                     </td>
                   </tr>
@@ -3186,7 +3186,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-primary' : ''} ${isActive ? 'bg-primary text-primary-foreground border-primary shadow-sm' : 'bg-card text-muted-foreground border-border hover:border-primary hover:text-foreground'}`}>
                 {tab.label}
                 {count !== null && count > 0 && (
-                  <span className={`font-body text-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-card/20 text-white' : 'bg-primary/15 text-foreground'}`}>{count}</span>
+                  <span className={`font-body text-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-card/20 text-chalk' : 'bg-primary/15 text-foreground'}`}>{count}</span>
                 )}
               </button>
             );
@@ -3331,7 +3331,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
           {/* Mobile: filters as a bottom-sheet that slides up */}
           {activeTab !== 'database' && activeTab !== 'long-list' && mobileFiltersOpen && (
             <div className="md:hidden fixed inset-0 z-[200] flex flex-col justify-end">
-              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setMobileFiltersOpen(false)} />
+              <div className="absolute inset-0 bg-midnight/60 backdrop-blur-sm" onClick={() => setMobileFiltersOpen(false)} />
               <div className="relative z-10 bg-background rounded-t-[24px] max-h-[80vh] overflow-y-auto p-4 pb-8 shadow-2xl">
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-heading font-bold text-body-lg text-foreground">Filters</span>

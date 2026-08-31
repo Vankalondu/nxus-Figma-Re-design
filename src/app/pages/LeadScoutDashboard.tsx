@@ -121,14 +121,14 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
   const [grade, setGrade] = useState('A');
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
       <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
         <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between">
           <div>
-            <span className="font-heading font-semibold text-[16px] text-white">Add Signed Player</span>
-            <p className="font-body text-[12px] text-white/50 mt-1">Record a player officially signed</p>
+            <span className="font-heading font-semibold text-[16px] text-chalk">Add Signed Player</span>
+            <p className="font-body text-[12px] text-chalk/50 mt-1">Record a player officially signed</p>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
         </div>
         <div className="p-8 space-y-4">
           <div>
@@ -167,7 +167,7 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
             </div>
           </div>
           <button onClick={() => { if (name.trim()) { onAdd({ name, position, birthYear, yearSigned, grade }); onClose(); } }} disabled={!name.trim()}
-            className="w-full bg-primary border-2 border-primary text-white rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed mt-2">
+            className="w-full bg-primary border-2 border-primary text-chalk rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed mt-2">
             Add to Pipeline
           </button>
         </div>
@@ -282,7 +282,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
       className={`w-full px-4 py-3 rounded-[20px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
         selected ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-border hover:border-primary/50'
       }`}>
-      {icon && <span className={selected ? 'text-white' : 'text-foreground'}>{icon}</span>}
+      {icon && <span className={selected ? 'text-chalk' : 'text-foreground'}>{icon}</span>}
       {label}
     </button>
   );
@@ -301,24 +301,24 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
       <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-lg border border-border max-h-[92vh] flex flex-col" onClick={e => e.stopPropagation()}>
 
         {/* ── Header ── */}
         <div className="px-8 py-5 bg-primary rounded-t-[16px] flex items-center justify-between shrink-0">
           <div className="flex-1 min-w-0">
-            <span className="font-heading font-semibold text-[16px] text-white">Add Scouting Report</span>
+            <span className="font-heading font-semibold text-[16px] text-chalk">Add Scouting Report</span>
             <div className="flex items-center gap-2 mt-2">
               {Array.from({length: TOTAL_STEPS}).map((_,i) => (
                 <div key={i}
                   className={`h-1.5 rounded-full transition-all duration-300 ${i < step ? 'bg-card' : 'bg-card/20'}`}
                   style={{width: i < step ? 24 : 12}} />
               ))}
-              <span className="font-body text-[12px] text-white/40 ml-1">Step {step} of {TOTAL_STEPS}</span>
+              <span className="font-body text-[12px] text-chalk/40 ml-1">Step {step} of {TOTAL_STEPS}</span>
             </div>
-            <p className="font-body text-[12px] text-white/50 mt-1 truncate">{STEP_TITLES[step]}</p>
+            <p className="font-body text-[12px] text-chalk/50 mt-1 truncate">{STEP_TITLES[step]}</p>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white ml-4 shrink-0">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk ml-4 shrink-0">
             <X size={16} />
           </button>
         </div>
@@ -415,7 +415,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                     reportLength === 'full' ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-border hover:border-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Full Report</div>
-                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-white/60' : 'text-muted-foreground'}`}>
+                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-chalk/60' : 'text-muted-foreground'}`}>
                     Detailed scouting report using a template. Includes structured sections and performance analysis.
                   </div>
                 </button>
@@ -424,7 +424,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                     reportLength === 'short' ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-border hover:border-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Short Report</div>
-                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-white/60' : 'text-muted-foreground'}`}>
+                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-chalk/60' : 'text-muted-foreground'}`}>
                     Quick entry. One performance note and PLR, POG, NXT grades. Fast and efficient.
                   </div>
                 </button>
@@ -620,11 +620,11 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
           {step < TOTAL_STEPS
             ? <button onClick={() => { if (canContinue()) setStep(s => (s + 1) as StepNum); }}
                 disabled={!canContinue()}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0a2d4c]">
+                className="px-8 py-2 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0a2d4c]">
                 Continue →
               </button>
             : <button onClick={onClose}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-[#0a2d4c] transition-colors">
+                className="px-8 py-2 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] hover:bg-[#0a2d4c] transition-colors">
                 Submit Report ✓
               </button>}
         </div>
@@ -756,11 +756,11 @@ const PipelineTab = () => {
           <table className="w-full table-fixed border-separate border-spacing-0">
             <thead>
               <tr>
-                <th className="sticky left-0 z-10 bg-primary px-3 py-3 text-left w-[56px] border-r border-white/10">
+                <th className="sticky left-0 z-10 bg-primary px-3 py-3 text-left w-[56px] border-r border-chalk/10">
                   <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">Pos</span>
                 </th>
                 {SIGNED_YEARS.map(year => (
-                  <th key={year} className="bg-primary px-4 py-3 text-center border-r border-white/10 last:border-r-0 min-w-[120px]">
+                  <th key={year} className="bg-primary px-4 py-3 text-center border-r border-chalk/10 last:border-r-0 min-w-[120px]">
                     <span className="font-heading font-bold text-[15px] text-chalk tabular-nums">{year}</span>
                   </th>
                 ))}
@@ -782,7 +782,7 @@ const PipelineTab = () => {
                               <div key={player.id} className="flex items-center gap-2">
                                 <span title={player.name} className="font-body font-bold text-[14px] text-foreground truncate flex-1 min-w-0">{player.name}</span>
                                 <span className="font-mono text-[10px] font-bold text-muted-foreground shrink-0">{player.birthYear}</span>
-                                <span className="font-body font-black text-[10px] px-2 py-0.5 rounded-full shrink-0 text-white min-w-[28px] text-center"
+                                <span className="font-body font-black text-[10px] px-2 py-0.5 rounded-full shrink-0 text-chalk min-w-[28px] text-center"
                                   style={{ backgroundColor: LEAD_GRADE_BG[player.grade] || '#7baac7' }}>{player.grade}</span>
                               </div>
                             ))}
@@ -801,11 +801,11 @@ const PipelineTab = () => {
 
       {/* Add signed player modal */}
       {showAddSigned && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddSigned(false)}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddSigned(false)}>
           <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between">
-              <span className="font-heading font-semibold text-[16px] text-white">Sign Player to Pipeline</span>
-              <button onClick={() => setShowAddSigned(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+              <span className="font-heading font-semibold text-[16px] text-chalk">Sign Player to Pipeline</span>
+              <button onClick={() => setShowAddSigned(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
             </div>
             <div className="p-8 space-y-4">
               {[{label:'Player Name',key:'name',type:'text'},{label:'Birth Year',key:'birthYear',type:'number'},{label:'Year Signed',key:'yearSigned',type:'number'}].map(f => (
@@ -834,7 +834,7 @@ const PipelineTab = () => {
                 </div>
               </div>
               <button onClick={handleAddSigned} disabled={!newSigned.name}
-                className="w-full bg-primary border-2 border-primary text-white rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                className="w-full bg-primary border-2 border-primary text-chalk rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                 Add to Signed Pipeline
               </button>
             </div>
@@ -1134,20 +1134,20 @@ export default function LeadScoutDashboard() {
 
       {/* ── Modals ── */}
       {showThisWeek && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowThisWeek(false)}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowThisWeek(false)}>
           <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border flex flex-col max-h-[80vh]" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[16px] shrink-0">
               <div className="flex items-center gap-3">
                 <Calendar size={20} className="text-foreground" />
-                <span className="font-heading font-semibold text-[16px] text-white">Tasks This Week</span>
+                <span className="font-heading font-semibold text-[16px] text-chalk">Tasks This Week</span>
               </div>
-              <button onClick={() => setShowThisWeek(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+              <button onClick={() => setShowThisWeek(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
             </div>
             <div className="px-6 py-4 border-b border-border shrink-0">
               <div className="flex items-center gap-3">
                 <input type="text" placeholder="Add a task..." onKeyDown={e => { if (e.key === 'Enter' && e.currentTarget.value.trim()) { addTask(e.currentTarget.value.trim()); e.currentTarget.value = ''; } }}
                   className="flex-1 bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" />
-                <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white shrink-0"><Plus size={18} /></div>
+                <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-chalk shrink-0"><Plus size={18} /></div>
               </div>
             </div>
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
@@ -1172,7 +1172,7 @@ export default function LeadScoutDashboard() {
                   </div>
                   {tasks.filter(t => t.completed).map(task => (
                     <div key={task.id} className="flex items-start gap-3 p-3 rounded-[20px] opacity-50 cursor-pointer" onClick={() => toggleTask(task.id)}>
-                      <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0 mt-0.5"><CheckCircle size={12} className="text-white" /></div>
+                      <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0 mt-0.5"><CheckCircle size={12} className="text-chalk" /></div>
                       <p className="font-body font-bold text-[14px] text-muted-foreground line-through">{task.text}</p>
                     </div>
                   ))}
@@ -1186,11 +1186,11 @@ export default function LeadScoutDashboard() {
       {showAddReport && <AddReportModal onClose={() => setShowAddReport(false)} scoutName="Tom" />}
 
       {showAddPlayer && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
           <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-border max-h-[90vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[16px] shrink-0">
-              <span className="font-heading font-semibold text-[20px] text-white">Add New Player</span>
-              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+              <span className="font-heading font-semibold text-[20px] text-chalk">Add New Player</span>
+              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
             </div>
             <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
@@ -1227,7 +1227,7 @@ export default function LeadScoutDashboard() {
             </div>
             <div className="px-8 py-5 border-t border-border bg-card flex justify-end gap-3 shrink-0">
               <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-transparent border-2 border-border text-muted-foreground rounded-full font-body font-bold text-[14px] hover:border-muted-foreground transition-colors">Cancel</button>
-              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors">Add Player</button>
+              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors">Add Player</button>
             </div>
           </div>
         </div>
@@ -1254,8 +1254,8 @@ export default function LeadScoutDashboard() {
           notifPanel={(
             <div className="absolute right-0 mt-3 w-80 bg-card rounded-[20px] shadow-2xl border border-border z-50 overflow-hidden">
               <div className="px-6 py-4 bg-primary rounded-t-[16px] flex items-center justify-between">
-                <span className="font-heading font-black text-[14px] text-white">Notifications</span>
-                <button onClick={() => setShowNotifPanel(false)} className="text-white/60 hover:text-white"><X size={16} /></button>
+                <span className="font-heading font-black text-[14px] text-chalk">Notifications</span>
+                <button onClick={() => setShowNotifPanel(false)} className="text-chalk/60 hover:text-chalk"><X size={16} /></button>
               </div>
               <div className="max-h-72 overflow-y-auto divide-y divide-border">
                 {notifications.map(n => (

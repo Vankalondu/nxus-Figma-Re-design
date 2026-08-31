@@ -158,7 +158,7 @@ export function ScoutQualityLeaderboard() {
 
           {/* Avatar & Info */}
           <div className="flex items-center gap-4 flex-1 min-w-0">
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-white shrink-0 shadow-sm ${
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-chalk shrink-0 shadow-sm ${
               isHeadScout 
                 ? 'bg-gradient-to-br from-[#0D47A1] to-[#1565C0]' 
                 : 'bg-gradient-to-br from-[#1E88E5] to-[#1976D2]'
@@ -292,7 +292,7 @@ export function ScoutQualityLeaderboard() {
       
       {/* Right Pane - Scouts */}
       <div className="w-full md:w-2/3 xl:w-[65%] flex flex-col bg-card">
-        <div className="p-5 border-b border-[#e0e7ef] flex items-center justify-between bg-gradient-to-b from-[#fbfcff] to-white">
+        <div className="p-5 border-b border-[#e0e7ef] flex items-center justify-between bg-gradient-to-b from-[#fbfcff] to-chalk">
           <div className="flex items-center gap-2">
             <span className="text-2xl leading-none">{activeData.flag}</span>
             <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>

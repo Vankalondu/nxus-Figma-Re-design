@@ -26,8 +26,8 @@ export default function LoginDepartment() {
       <div className="max-w-[1200px] w-full flex flex-col md:flex-row gap-6 min-h-[700px] animate-fade-in">
         
         {/* Left Side: Light Blue Rounded Section (Logo and Mascot only) */}
-        <div className="w-full md:w-1/2 bg-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center p-10 relative overflow-hidden border border-white/50">
-          <div className="absolute top-10 flex items-center space-x-3 bg-card/80 backdrop-blur-md p-4 rounded-3xl shadow-sm border border-white/60">
+        <div className="w-full md:w-1/2 bg-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center p-10 relative overflow-hidden border border-chalk/50">
+          <div className="absolute top-10 flex items-center space-x-3 bg-card/80 backdrop-blur-md p-4 rounded-3xl shadow-sm border border-chalk/60">
             <div className="w-12 h-12 rounded-[16px] bg-primary text-chalk flex items-center justify-center font-heading font-black text-2xl shadow-md">
               Q
             </div>
@@ -47,7 +47,7 @@ export default function LoginDepartment() {
         </div>
 
         {/* Right Side: Form / Select Mode (White Section) */}
-        <div className="w-full md:w-1/2 bg-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-center p-10 relative border border-white/50">
+        <div className="w-full md:w-1/2 bg-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-center p-10 relative border border-chalk/50">
           <div className="max-w-md mx-auto w-full relative z-10">
             <h1 className="font-heading font-extrabold text-[32px] text-foreground mb-4 tracking-tight leading-tight">
               Select your Primary Mode
@@ -68,7 +68,7 @@ export default function LoginDepartment() {
                   className={`w-full flex items-center p-5 rounded-[24px] border-2 transition-all duration-300 text-left group ${
                     selectedDepartment === mode.id
                       ? 'border-primary bg-card shadow-[0_8px_20px_rgba(30,136,229,0.08)] transform scale-[1.02]'
-                      : 'border-border hover:border-white hover:shadow-[0_8px_20px_rgba(6,27,46,0.08)] bg-card'
+                      : 'border-border hover:border-chalk hover:shadow-[0_8px_20px_rgba(6,27,46,0.08)] bg-card'
                   }`}
                 >
                   <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center mr-5 transition-colors duration-300 ${

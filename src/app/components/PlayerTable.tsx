@@ -46,7 +46,7 @@ export function PlayerTable() {
 
       <div className="border rounded-lg overflow-hidden">
         <table className="w-full">
-          <thead className="bg-blue-600 text-white">
+          <thead className="bg-blue-600 text-chalk">
             <tr>
               <th className="px-4 py-3 text-left uppercase text-xs">Actions</th>
               <th className="px-4 py-3 text-left uppercase text-xs">Name</th>
@@ -60,7 +60,7 @@ export function PlayerTable() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-black text-white">
+            <tr className="bg-midnight text-chalk">
               <td colSpan={9} className="px-4 py-2 font-medium">Strikers</td>
             </tr>
             <tr className="bg-accent">
@@ -71,7 +71,7 @@ export function PlayerTable() {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <Checkbox />
-                    <button className="p-2 bg-red-500 text-white rounded hover:bg-red-600">
+                    <button className="p-2 bg-red-500 text-chalk rounded hover:bg-red-600">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

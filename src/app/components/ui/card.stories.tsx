@@ -57,7 +57,7 @@ export const AccentCard: Story = {
       description: {
         story:
           'The one primary-background card permitted per view. All text is `text-chalk` ' +
-          '(**L-C6**) and internal borders are `border-white/10`.',
+          '(**L-C6**) and internal borders are `border-chalk/10`.',
       },
     },
   },
@@ -65,7 +65,7 @@ export const AccentCard: Story = {
     <div className="bg-primary rounded-[40px] p-8 w-[380px]">
       <h3 className="font-heading font-semibold text-[20px] text-chalk mb-2">Latest Packages</h3>
       <p className="font-body text-[14px] text-chalk/80">Four packages uploaded since Monday.</p>
-      <div className="mt-4 pt-4 border-t border-white/10">
+      <div className="mt-4 pt-4 border-t border-chalk/10">
         <span className="font-body font-bold text-[12px] text-chalk">Open Packages</span>
       </div>
     </div>

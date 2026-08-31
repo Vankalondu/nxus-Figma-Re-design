@@ -159,7 +159,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId }: {
       <button onClick={(e) => { e.stopPropagation(); primaryItem.action(); }} title={primaryItem.label}
         className={`w-7 h-7 rounded-l-lg flex items-center justify-center transition-all border border-r-0 ${
           primaryItem.danger
-            ? 'bg-destructive/10 text-destructive hover:bg-destructive hover:text-white border-destructive/20'
+            ? 'bg-destructive/10 text-destructive hover:bg-destructive hover:text-chalk border-destructive/20'
             : 'bg-accent text-foreground hover:bg-primary/80 hover:text-primary-foreground border-border'
         }`}>
         {primaryItem.icon}
@@ -348,8 +348,8 @@ export default function CountryScoutDashboardPage() {
             notifPanel={(
               <div className="absolute right-0 mt-3 w-80 bg-card rounded-[20px] shadow-2xl border border-border z-50 overflow-hidden">
                 <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-primary">
-                  <span className="font-heading font-black text-[14px] text-white">Raised to Long List</span>
-                  <button onClick={()=>setShowNotifPanel(false)} className="text-white/60 hover:text-white"><X size={16} /></button>
+                  <span className="font-heading font-black text-[14px] text-chalk">Raised to Long List</span>
+                  <button onClick={()=>setShowNotifPanel(false)} className="text-chalk/60 hover:text-chalk"><X size={16} /></button>
                 </div>
                 <div className="max-h-72 overflow-y-auto">
                   {raiseNotifications.length===0
@@ -436,7 +436,7 @@ export default function CountryScoutDashboardPage() {
                   </div>
                   <div className="lg:col-span-1 flex flex-col gap-[var(--gap-grid)] h-[550px]">
                     <div className="bg-card border border-border rounded-[40px] p-[var(--pad-card)] shadow-[var(--shadow-lg)] flex flex-col flex-1 relative overflow-hidden group cursor-pointer h-1/2">
-                      <div className="w-12 h-12 rounded-full bg-card/10 flex items-center justify-center text-foreground mb-auto shrink-0 border border-white/5"><TrendingUp size={18} strokeWidth={2.5} /></div>
+                      <div className="w-12 h-12 rounded-full bg-card/10 flex items-center justify-center text-foreground mb-auto shrink-0 border border-chalk/5"><TrendingUp size={18} strokeWidth={2.5} /></div>
                       <div className="mt-8"><h4 className="font-heading font-bold text-body text-foreground mb-1">Top Prospect</h4><p className="font-body text-caption text-muted-foreground font-medium mb-3">Based on scout rating</p><div className="font-heading font-bold text-h5 tracking-tight text-foreground leading-tight">Kofi Mensah</div></div>
                     </div>
                     <div className="bg-primary rounded-[40px] p-[var(--pad-card)] shadow-sm flex flex-col flex-1 relative overflow-hidden group h-1/2">
@@ -451,7 +451,7 @@ export default function CountryScoutDashboardPage() {
                             </div>
                           ))}
                         </div>
-                        <button onClick={()=>navigate('/matches')} className="bg-primary text-primary-foreground hover:bg-black w-fit font-bold text-[14px] px-6 py-3 rounded-full transition-colors mt-auto">View Matches</button>
+                        <button onClick={()=>navigate('/matches')} className="bg-primary text-primary-foreground hover:bg-midnight w-fit font-bold text-[14px] px-6 py-3 rounded-full transition-colors mt-auto">View Matches</button>
                       </div>
                     </div>
                   </div>
@@ -475,7 +475,7 @@ export default function CountryScoutDashboardPage() {
                   <div>
                     <h1 className="font-heading font-semibold text-[24px] md:text-[32px] tracking-tight text-foreground flex items-center gap-4 leading-[1]">
                       NXUS
-                      <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm shrink-0"><Users size={28} className="text-white" /></span>
+                      <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm shrink-0"><Users size={28} className="text-chalk" /></span>
                       Players
                     </h1>
                     <p className="font-body text-muted-foreground text-[16px] mt-4 font-medium">
@@ -501,10 +501,10 @@ export default function CountryScoutDashboardPage() {
                 <div className="flex items-center gap-2 mb-6 overflow-x-auto hide-scrollbar flex-nowrap">
                   {([{id:'players-in-scope',label:'Players in Scope'},{id:'top-10',label:'Top 10'},{id:'reserve-list',label:'Reserve List'},{id:'combined-top-10',label:'Combined Top 10'}] as {id:typeof activeTab;label:string}[]).map(tab=>(
                     <button key={tab.id} onClick={()=>handleTabChange(tab.id)}
-                      className={`relative shrink-0 px-6 py-2 rounded-full font-body font-bold text-[14px] transition-all flex items-center gap-2 border ${activeTab===tab.id?'bg-primary text-primary-foreground border-primary shadow-sm':'bg-card text-muted-foreground border-white hover:border-primary hover:text-foreground'}`}>
+                      className={`relative shrink-0 px-6 py-2 rounded-full font-body font-bold text-[14px] transition-all flex items-center gap-2 border ${activeTab===tab.id?'bg-primary text-primary-foreground border-primary shadow-sm':'bg-card text-muted-foreground border-chalk hover:border-primary hover:text-foreground'}`}>
                       <span>{tab.label}</span>
-                      {tab.id==='top-10'&&top10PlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='top-10'?'bg-card/20 text-white':'bg-primary/15 text-foreground'}`}>{top10PlayerIds.length}</span>}
-                      {tab.id==='reserve-list'&&reservePlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='reserve-list'?'bg-card/20 text-white':'bg-accent text-foreground'}`}>{reservePlayerIds.length}</span>}
+                      {tab.id==='top-10'&&top10PlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='top-10'?'bg-card/20 text-chalk':'bg-primary/15 text-foreground'}`}>{top10PlayerIds.length}</span>}
+                      {tab.id==='reserve-list'&&reservePlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='reserve-list'?'bg-card/20 text-chalk':'bg-accent text-foreground'}`}>{reservePlayerIds.length}</span>}
                     </button>
                   ))}
                 </div>
@@ -520,7 +520,7 @@ export default function CountryScoutDashboardPage() {
                         <div key={f.label} className="relative inline-flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary transition-colors shadow-sm cursor-pointer">
                           <span className="font-body text-[14px] font-bold text-muted-foreground">{f.label}:</span>
                           <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-foreground focus:outline-none cursor-pointer pr-5">
-                            {f.opts.map(o=><option key={o} className="text-black">{o}</option>)}
+                            {f.opts.map(o=><option key={o} className="text-midnight">{o}</option>)}
                           </select>
                           <ChevronDown size={14} className="absolute right-4 text-muted-foreground pointer-events-none" />
                         </div>
@@ -532,7 +532,7 @@ export default function CountryScoutDashboardPage() {
                         <div key={f.label} className="relative inline-flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary transition-colors shadow-sm cursor-pointer">
                           <span className="font-body text-[14px] font-bold text-muted-foreground">{f.label}:</span>
                           <select value={f.state} onChange={e=>f.set(e.target.value)} className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-foreground focus:outline-none cursor-pointer pr-5">
-                            {f.opts.map(o=><option key={o} className="text-black">{o}</option>)}
+                            {f.opts.map(o=><option key={o} className="text-midnight">{o}</option>)}
                           </select>
                           <ChevronDown size={14} className="absolute right-4 text-muted-foreground pointer-events-none" />
                         </div>
@@ -542,9 +542,9 @@ export default function CountryScoutDashboardPage() {
                       <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground shrink-0">Show</span>
                       <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary transition-colors shadow-sm cursor-pointer">
                         <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-foreground focus:outline-none cursor-pointer pr-5" value={showFilter} onChange={e=>setShowFilter(e.target.value)}>
-                          <option value="All players" className="text-black">All Players</option>
-                          <option value="Raised" className="text-black">Raised</option>
-                          <option value="Can add" className="text-black">Can add</option>
+                          <option value="All players" className="text-midnight">All Players</option>
+                          <option value="Raised" className="text-midnight">Raised</option>
+                          <option value="Can add" className="text-midnight">Can add</option>
                         </select>
                         <ChevronDown size={14} className="absolute right-4 text-muted-foreground pointer-events-none" />
                       </div>
@@ -553,18 +553,18 @@ export default function CountryScoutDashboardPage() {
                       <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground shrink-0">Stats</span>
                       <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary transition-colors shadow-sm cursor-pointer">
                         <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-foreground focus:outline-none cursor-pointer pr-5" value={statFilter} onChange={e=>setStatFilter(e.target.value)}>
-                          {['All Stats','Goals','Assists','Mins','xG','xA','Shots','SOT','Pass%','Tackles','Interceptions','Clearances','Starts'].map(s=><option key={s} className="text-black">{s}</option>)}
+                          {['All Stats','Goals','Assists','Mins','xG','xA','Shots','SOT','Pass%','Tackles','Interceptions','Clearances','Starts'].map(s=><option key={s} className="text-midnight">{s}</option>)}
                         </select>
                         <ChevronDown size={14} className="absolute right-4 text-muted-foreground pointer-events-none" />
                       </div>
                       {/* Active/Audit + Apply */}
                       <div className="ml-auto flex items-center gap-3 shrink-0">
-                        <div className="flex items-center bg-card/5 border border-white/10 rounded-full p-1">
+                        <div className="flex items-center bg-card/5 border border-chalk/10 rounded-full p-1">
                           {['Active','Audit'].map((mode,i)=>(
                             <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-primary text-primary-foreground':'text-muted-foreground hover:text-primary-foreground'}`}>{mode}</button>
                           ))}
                         </div>
-                        <button className="px-6 py-2 bg-primary border-2 border-primary text-white hover:bg-primary/80 rounded-full font-body text-[14px] font-bold transition-colors">Apply</button>
+                        <button className="px-6 py-2 bg-primary border-2 border-primary text-chalk hover:bg-primary/80 rounded-full font-body text-[14px] font-bold transition-colors">Apply</button>
                       </div>
                     </div>
                     {/* Mobile filter bar */}
@@ -685,12 +685,12 @@ export default function CountryScoutDashboardPage() {
                             <tr>
                               {groupHeaders.map((grp,idx)=>(
                                 <th key={idx} colSpan={grp.count}
-                                  className={`px-4 py-3 text-center font-heading font-bold text-[10px] text-chalk uppercase tracking-widest bg-primary border-b border-white/10 ${grp.group==='PLAYER IDENTIFICATION'?'sticky left-0 z-[60] bg-primary':''} ${grp.group==='GAME STATS'||grp.group==='VIDEOS'?'text-foreground':'text-chalk/60'}`}>
+                                  className={`px-4 py-3 text-center font-heading font-bold text-[10px] text-chalk uppercase tracking-widest bg-primary border-b border-chalk/10 ${grp.group==='PLAYER IDENTIFICATION'?'sticky left-0 z-[60] bg-primary':''} ${grp.group==='GAME STATS'||grp.group==='VIDEOS'?'text-foreground':'text-chalk/60'}`}>
                                   {grp.group}
                                 </th>
                               ))}
                               {extraCols.length>0 && (
-                                <th colSpan={extraCols.length} className="px-4 py-3 text-center font-heading font-bold text-[10px] text-chalk/60 uppercase tracking-widest bg-primary border-b border-white/10 border-l border-l-white/10">
+                                <th colSpan={extraCols.length} className="px-4 py-3 text-center font-heading font-bold text-[10px] text-chalk/60 uppercase tracking-widest bg-primary border-b border-chalk/10 border-l border-l-white/10">
                                   CUSTOM
                                 </th>
                               )}
@@ -948,16 +948,16 @@ export default function CountryScoutDashboardPage() {
 
       {/* Raise Toast */}
       {raiseToast && (
-        <div className="fixed bottom-6 right-6 z-[200] bg-primary text-white px-6 py-4 rounded-[24px] shadow-2xl border border-white/10 flex items-center gap-4 max-w-sm">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-sm"><ArrowUpRight size={18} className="text-white" /></div>
-          <div><div className="font-heading font-black text-[14px]">{raiseToast}</div><div className="font-body text-[12px] text-white/70 font-medium mt-0.5">Raised to Long List · Senior & Lead Scouts notified</div></div>
-          <button onClick={()=>setRaiseToast(null)} className="ml-2 text-white/40 hover:text-white/80 transition-colors"><X size={16} /></button>
+        <div className="fixed bottom-6 right-6 z-[200] bg-primary text-chalk px-6 py-4 rounded-[24px] shadow-2xl border border-chalk/10 flex items-center gap-4 max-w-sm">
+          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-sm"><ArrowUpRight size={18} className="text-chalk" /></div>
+          <div><div className="font-heading font-black text-[14px]">{raiseToast}</div><div className="font-body text-[12px] text-chalk/70 font-medium mt-0.5">Raised to Long List · Senior & Lead Scouts notified</div></div>
+          <button onClick={()=>setRaiseToast(null)} className="ml-2 text-chalk/40 hover:text-chalk/80 transition-colors"><X size={16} /></button>
         </div>
       )}
 
       {/* Task Modal */}
       {isTaskModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={()=>setIsTaskModalOpen(false)}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={()=>setIsTaskModalOpen(false)}>
           <div className="bg-card border border-border w-full max-w-md rounded-[32px] shadow-2xl flex flex-col max-h-[80vh] overflow-hidden" onClick={e=>e.stopPropagation()}>
             <div className="p-6 border-b border-border flex justify-between items-center bg-accent/50 shrink-0">
               <h2 className="font-heading font-extrabold text-2xl text-foreground flex items-center gap-3"><Calendar className="text-foreground" size={24} />Tasks for This Week</h2>
@@ -992,7 +992,7 @@ export default function CountryScoutDashboardPage() {
 
       {/* Add Player Modal */}
       {isAddPlayerModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
           <div className="bg-card border border-border w-full max-w-2xl rounded-[32px] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden" onClick={e=>e.stopPropagation()}>
             <div className="px-8 py-6 border-b border-border flex justify-between items-center bg-card shrink-0">
               <h2 className="font-heading font-black text-2xl text-foreground">Add New Player</h2>

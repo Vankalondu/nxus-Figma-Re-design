@@ -61,8 +61,8 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
             <div className="w-28 h-28 rounded-full bg-accent border-4 border-border/50 flex items-center justify-center text-primary font-heading font-black text-3xl relative group cursor-pointer overflow-hidden shadow-inner">
               {formData.initials}
               <div className="absolute inset-0 bg-[#061B2E]/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                 <Camera size={24} className="text-white mb-1" />
-                 <span className="text-[10px] text-white uppercase font-black tracking-widest">Update</span>
+                 <Camera size={24} className="text-chalk mb-1" />
+                 <span className="text-[10px] text-chalk uppercase font-black tracking-widest">Update</span>
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@ export default function NotFound() {
       </p>
       <button
         onClick={() => navigate(-1)}
-        className="mt-6 bg-primary border-2 border-primary text-white hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
+        className="mt-6 bg-primary border-2 border-primary text-chalk hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
       >
         Go back
       </button>

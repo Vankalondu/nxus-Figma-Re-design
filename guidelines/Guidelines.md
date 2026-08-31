@@ -85,16 +85,28 @@ rebrand of NXUS change this colour?” If no, it is data.
 **Still applies:** the *chrome* around the data — the swatch border, the label, the picker
 panel — is styling and binds tokens normally.
 
-### L-C1 · Law — No pure white, no pure black
-`#FFFFFF` and `#000000` never appear — in any mode, in any property, including SVG fills and
-gradient stops.
+### L-C1 · Law — Light and dark come from the palette, never from white or black
+`#FFFFFF` and `#000000` never appear — in any mode, in any property, at **any opacity**,
+including SVG fills and gradient stops. Where you need a light or dark value, use the
+palette's own: **`--chalk`**, the light version of the primary blue, and **`--midnight`**, its
+dark counterpart. Both are theme-invariant and both have Tailwind bridges, so `text-chalk`,
+`border-chalk/15` and `bg-midnight/60` all resolve.
 
-**Why:** every neutral in this system is blue-cast. A single pure-white surface reads as a
-hole punched in the page and breaks the tinted atmosphere the product is recognised by.
+**Why:** every neutral in this system is blue-cast. A pure-white surface reads as a hole
+punched in the page and breaks the tinted atmosphere the product is recognised by — and a
+translucent white scrim has the same problem in miniature, because it drifts the surface
+beneath it toward a grey the palette never contains. A chalk scrim lightens *along the
+palette* instead.
 
-**Do:** `bg-card`, `text-foreground`, `--light-50` for the brightest surface
-**Don't:** `bg-white`, `text-black`, `#fff` in an imported SVG
-**Catch:** `grep -riE '#fff\b|#ffffff|#000\b|#000000|bg-white|text-black' src/app`
+**Do:** `text-chalk` on primary · `border-chalk/15` inside an accent card · `bg-midnight/60`
+for a modal overlay · `bg-card` for the brightest ordinary surface
+**Don't:** `text-white`, `bg-white/10`, `bg-black/60`, `color: '#fff'` in an inline style
+**Exception:** an attribute selector that *matches* a third-party library's own hardcoded
+output in order to override it. `[&_.recharts-dot[stroke='#fff']]:stroke-transparent` in
+`components/ui/chart.tsx` targets recharts' default rather than setting a colour; rewriting it
+would break the override.
+**Catch:** `grep -rE '\-(white|black)(/[0-9]+)?\b' src/app` and
+`grep -riE '#fff\b|#ffffff|#000\b|#000000' src/app`
 
 ### L-C2 · Law — No colour from outside the system
 No `gray-*`, `slate-*`, `zinc-*` or any other Tailwind palette class. No colour that is not
@@ -160,8 +172,11 @@ intentional, and L-C7 still binds.
 
 ### P-C2 · Pattern — The accent card
 In a dashboard's below-KPI section, the right-hand sidebar column carries the one primary
-card permitted by L-C7. It uses `text-chalk` for all text and `border-white/10` for internal
-borders. All other cards use `bg-card`.
+card permitted by L-C7. It uses `text-chalk` for all text, `border-chalk/15` for internal
+borders and `bg-chalk/10` for internal fills. All other cards use `bg-card`.
+
+(Earlier revisions said `border-white/10`. Superseded by L-C1 on 31 Aug 2026 — translucent
+white drifts toward grey; chalk lightens along the palette.)
 
 ### R-C1 · Reference — Palette scales
 Every custom tint or gradient derives from these. Defined in `src/styles/globals.css`.
@@ -535,7 +550,7 @@ Container flex items-center gap-2
 Standard  bg-card rounded-[40px] border border-border shadow-[var(--shadow-lg)]
           hover:-translate-y-1 hover:shadow-xl transition-all
 Accent    bg-primary rounded-[40px]; text text-chalk;
-          internal borders border-white/10; internal fills bg-white/10
+          internal borders border-chalk/15; internal fills bg-chalk/10
 ```
 
 ### P-CO4 — KPI stat card
@@ -782,7 +797,7 @@ when next touched. See open ruling **OR-4**.
 
 - [ ] Every colour, shadow and radius resolves to a token — **L-G1**
 - [ ] Real-world colour (kit, user-picked tag) left unmapped — **L-G2**
-- [ ] No pure white or black, no off-system colour — **L-C1**, **L-C2**
+- [ ] No white or black at any opacity; light and dark from chalk and midnight — **L-C1**, **L-C2**
 - [ ] Status colour reports a state; consumed via `scout-*` classes — **L-C3**, **L-C4**
 - [ ] `#061B2E` used only as dark-mode background — **L-C5**
 - [ ] Text on primary is `text-chalk` — **L-C6**
@@ -812,16 +827,11 @@ when next touched. See open ruling **OR-4**.
 | `#22d3ee` | video tracker, `VideoTrackerGrid.tsx` | Cyan marks *uploaded / playable*, a deliberate fourth state beside amber and red. The palette has no cyan. |
 | `#ccff00` `#b3e600` `#1a1c1d` | `TableColumns.tsx` | A dark-plus-lime block matching nothing else in NXUS. Likely leftover styling from another source — worth a look before mapping or deleting. |
 | `#3fb4c0` | `shared.tsx` | A lone teal. No in-scale equivalent. |
-| `#7baac7` | grade-B badge background, pipeline chip, 2 scrollbar hovers | The badge is a *background* carrying `text-white`; swapping it to a dark token would make the label unreadable. Contrast needs deciding, not guessing. |
+| `#7baac7` | grade-B badge background, pipeline chip, 2 scrollbar hovers | The badge is a *background* carrying `text-chalk` (since D-9). Chalk on `#7baac7` is about 1.6:1 — swapping the background to a dark token would fix contrast but change the grade scale, so this needs a decision rather than a guess. |
 
 Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
 
-**OR-6 · 149 bare `text-white` / `bg-white` classes.** The hex scan could not see these; they
-are Tailwind classes, not literals, and each is a pure-white L-C1 violation. Concentrated in
-`SeniorLeadPlayersPage.tsx` (38), `LeadScoutDashboard.tsx` (21), `SeniorScoutDashboard.tsx`
-(17), `CountryScoutDashboard.tsx` (10). Most are likely `text-white` on `bg-primary`, where
-L-C6 already prescribes `text-chalk` — but chalk is a pale blue, not white, so this is a
-visible change across many surfaces and needs a ruling before any sweep.
+*(OR-6 — bare `text-white` / `bg-white` classes — resolved 31 Aug 2026 by D-9.)*
 
 **OR-4 · Dead code.** `VideoDepartmentDashboard.tsx`, `GlobalPulseDashboard.tsx` and
 `OperationsDashboard.tsx` are unrouted and hold 114+ bracketed-hex uses between them. Delete
@@ -842,6 +852,14 @@ used for statistical columns and is retired; `.font-mono` now aliases Plus Jakar
 
 **D-3 · Theme toggle location.** Moved from the sidebar to the top navigation, beside the
 notification bell.
+
+**D-9 · Light and dark are palette-derived (31 Aug 2026).** The ruling: *"do not use white
+(#FFFFFF), but use variations derived from the colours in our palette."* L-C1 now covers
+translucent white and black as well as opaque, and names `--chalk` and `--midnight` as the
+replacements. 283 sites swept across 44 files — `text-white` → `text-chalk`,
+`border-white/15` → `border-chalk/15`, `bg-black/60` → `bg-midnight/60`. This also removed a
+real contradiction: the accent-card spec prescribed `border-white/10` while L-C1 forbade pure
+white.
 
 **D-5 · Four rules ratified (27 Aug 2026).** L-C4 (status colour via `scout-*` tokens),
 P-CO6 (priority semantics), L-TY4 (`tabular-nums` on large numerals) and L-M1 (content never

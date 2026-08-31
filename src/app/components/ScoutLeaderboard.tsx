@@ -91,7 +91,7 @@ export function ScoutLeaderboard() {
             <Trophy className="w-6 h-6 text-yellow-400" />
           </div>
           <div>
-            <h2 className="text-white text-xl font-semibold">Scout Leaderboard</h2>
+            <h2 className="text-chalk text-xl font-semibold">Scout Leaderboard</h2>
             <p className="text-muted-foreground text-sm">This week's top performers 🚀</p>
           </div>
         </div>
@@ -120,14 +120,14 @@ export function ScoutLeaderboard() {
               </div>
 
               {/* Avatar */}
-              <div className={`w-12 h-12 ${scout.initialsColor} rounded-lg flex items-center justify-center text-white font-bold shadow-lg`}>
+              <div className={`w-12 h-12 ${scout.initialsColor} rounded-lg flex items-center justify-center text-chalk font-bold shadow-lg`}>
                 {scout.initials}
               </div>
 
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-white font-medium truncate">{scout.name}</h3>
+                  <h3 className="text-chalk font-medium truncate">{scout.name}</h3>
                   {scout.badge && (
                     <div className="flex items-center">
                       {getBadgeIcon(scout.badge)}
@@ -144,7 +144,7 @@ export function ScoutLeaderboard() {
 
               {/* Score */}
               <div className="text-right">
-                <div className="text-white text-2xl font-bold">{scout.score}</div>
+                <div className="text-chalk text-2xl font-bold">{scout.score}</div>
                 <div className="text-muted-foreground text-xs">points</div>
               </div>
             </div>

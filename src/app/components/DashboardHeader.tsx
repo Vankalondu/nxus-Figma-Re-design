@@ -25,7 +25,7 @@ export function DashboardHeader() {
             <span>This Week</span>
           </button>
           
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#1E88E5] text-white rounded-lg hover:bg-[#1976D2] transition-colors"
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#1E88E5] text-chalk rounded-lg hover:bg-[#1976D2] transition-colors"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <Plus className="w-4 h-4" />
             <span>Add Player</span>

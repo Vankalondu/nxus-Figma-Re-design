@@ -59,7 +59,7 @@ export default function LoginCredentials() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4 md:p-6 font-body">
       <div className="max-w-[1200px] w-full flex flex-col md:flex-row gap-6 md:min-h-[700px] animate-fade-in">
         {/* Left Side - Form Area (No Logo) */}
-        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center bg-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 relative">
+        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center bg-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-chalk/50 relative">
           <div className="max-w-md mx-auto w-full relative z-10">
             <h1 className="font-heading font-extrabold text-[32px] text-foreground mb-4 tracking-tight leading-tight">
               Sign In
@@ -143,9 +143,9 @@ export default function LoginCredentials() {
         </div>
 
         {/* Right Side - Branded panel (hidden on mobile) */}
-        <div className="hidden md:flex w-full md:w-1/2 bg-primary rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 flex-col items-center justify-center p-10 relative overflow-hidden">
+        <div className="hidden md:flex w-full md:w-1/2 bg-primary rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-chalk/50 flex-col items-center justify-center p-10 relative overflow-hidden">
           <div className="flex flex-col items-center text-center gap-6">
-            <div className="w-24 h-24 rounded-[28px] bg-white/10 backdrop-blur-md text-chalk flex items-center justify-center font-heading font-black text-5xl shadow-md">
+            <div className="w-24 h-24 rounded-[28px] bg-chalk/10 backdrop-blur-md text-chalk flex items-center justify-center font-heading font-black text-5xl shadow-md">
               Q
             </div>
             <div className="flex flex-col gap-1">

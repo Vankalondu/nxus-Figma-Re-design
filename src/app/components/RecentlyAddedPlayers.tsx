@@ -47,8 +47,8 @@ export function RecentlyAddedPlayers() {
   return (
     <div className="bg-[#0F1419] border border-border rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-white text-xl font-semibold">Recently Added Players</h2>
-        <button className="flex items-center gap-2 text-muted-foreground hover:text-white transition-colors">
+        <h2 className="text-chalk text-xl font-semibold">Recently Added Players</h2>
+        <button className="flex items-center gap-2 text-muted-foreground hover:text-chalk transition-colors">
           <span className="text-sm">View All</span>
           <ArrowRight className="w-4 h-4" />
         </button>
@@ -62,7 +62,7 @@ export function RecentlyAddedPlayers() {
           >
             <div className="flex items-start gap-3">
               <div className="relative">
-                <div className={`w-12 h-12 ${player.initialsColor} rounded-lg flex items-center justify-center text-white font-semibold`}>
+                <div className={`w-12 h-12 ${player.initialsColor} rounded-lg flex items-center justify-center text-chalk font-semibold`}>
                   {player.initials}
                 </div>
                 <div
@@ -73,7 +73,7 @@ export function RecentlyAddedPlayers() {
               </div>
               
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-medium truncate">{player.name}</h3>
+                <h3 className="text-chalk font-medium truncate">{player.name}</h3>
                 <p className="text-muted-foreground text-sm truncate">{player.team}</p>
                 
                 <div className="flex items-center gap-4 mt-3">

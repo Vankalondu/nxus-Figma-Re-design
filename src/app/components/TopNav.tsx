@@ -94,7 +94,7 @@ export function TopNav({
         <div className="relative">
           <button onClick={onNotifToggle} className="relative w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center hover:bg-accent transition-colors shadow-sm">
             <Bell size={16} className="text-foreground" />
-            {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full text-white text-micro font-black flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
+            {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full text-chalk text-micro font-black flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
           </button>
           {notifOpen && notifPanel}
         </div>
@@ -113,13 +113,13 @@ export function TopNav({
 
         {onUploadVideo && (
           <button onClick={onUploadVideo}
-            className={(uploadVideoVariant === 'secondary' ? secondaryCls : 'flex') + ' items-center gap-2 ' + btnPad + ' py-3 rounded-full font-body text-body-sm font-bold transition-colors ' + (uploadVideoVariant === 'secondary' ? 'bg-transparent border-2 border-primary text-foreground hover:bg-primary/10' : 'bg-primary border-2 border-primary text-white hover:bg-primary/80 shadow-md')}>
+            className={(uploadVideoVariant === 'secondary' ? secondaryCls : 'flex') + ' items-center gap-2 ' + btnPad + ' py-3 rounded-full font-body text-body-sm font-bold transition-colors ' + (uploadVideoVariant === 'secondary' ? 'bg-transparent border-2 border-primary text-foreground hover:bg-primary/10' : 'bg-primary border-2 border-primary text-chalk hover:bg-primary/80 shadow-md')}>
             <UploadCloud size={15} strokeWidth={2.5} /><span className={btnText}>Upload Video</span>
           </button>
         )}
 
         {onAddPlayer && (
-          <button onClick={onAddPlayer} className={'flex items-center gap-2 ' + btnPad + ' py-3 bg-primary border-2 border-primary text-white hover:bg-primary/80 rounded-full font-body text-body-sm font-bold transition-colors shadow-md'}>
+          <button onClick={onAddPlayer} className={'flex items-center gap-2 ' + btnPad + ' py-3 bg-primary border-2 border-primary text-chalk hover:bg-primary/80 rounded-full font-body text-body-sm font-bold transition-colors shadow-md'}>
             <Plus size={15} strokeWidth={3} /><span className={btnText}>Add Player</span>
           </button>
         )}

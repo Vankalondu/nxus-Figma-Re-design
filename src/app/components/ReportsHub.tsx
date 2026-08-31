@@ -319,7 +319,7 @@ const Pagination = ({ page, totalPages, onPage }: { page: number; totalPages: nu
       <button onClick={() => onPage(Math.max(1, page - 1))} disabled={page === 1} className={pill + ' bg-card border border-border text-muted-foreground hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed'}>Prev</button>
       {nums.map((n, i) => typeof n === 'string'
         ? <span key={n + i} className="px-1 text-muted-foreground">…</span>
-        : <button key={n} onClick={() => onPage(n)} className={pill + (n === page ? ' bg-primary text-white' : ' bg-card border border-border text-foreground hover:border-primary')}>{n}</button>
+        : <button key={n} onClick={() => onPage(n)} className={pill + (n === page ? ' bg-primary text-chalk' : ' bg-card border border-border text-foreground hover:border-primary')}>{n}</button>
       )}
       <button onClick={() => onPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className={pill + ' bg-card border border-border text-primary hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed'}>Next</button>
     </div>

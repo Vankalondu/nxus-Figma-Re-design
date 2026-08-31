@@ -108,10 +108,10 @@ export const StatsCards = () => {
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:gap-3 mt-auto">
             <div className="font-heading font-extrabold text-2xl md:text-[36px] tracking-tight text-chalk leading-none">14</div>
-            <button className="sm:hidden w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center self-end shrink-0 transition-colors">
+            <button className="sm:hidden w-9 h-9 rounded-full bg-primary text-chalk flex items-center justify-center self-end shrink-0 transition-colors">
               <ChevronRight size={18} />
             </button>
-            <button className="hidden sm:flex bg-primary text-white hover:bg-primary/80 font-bold text-[14px] px-5 py-2 rounded-full w-fit items-center gap-2 transition-colors ml-auto">
+            <button className="hidden sm:flex bg-primary text-chalk hover:bg-primary/80 font-bold text-[14px] px-5 py-2 rounded-full w-fit items-center gap-2 transition-colors ml-auto">
               Review <ChevronRight size={16} />
             </button>
           </div>
@@ -218,8 +218,8 @@ export const HeadScoutStatsCards = () => {
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
           <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-chalk leading-none">18</div>
           <div className="flex flex-col sm:pb-2">
-            <div className="bg-card/10 text-chalk text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1 border border-white/20">
-              68% <span className="w-1.5 h-1.5 rounded-full border border-white/60 ml-1"></span>
+            <div className="bg-card/10 text-chalk text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1 border border-chalk/20">
+              68% <span className="w-1.5 h-1.5 rounded-full border border-chalk/60 ml-1"></span>
             </div>
             <div className="text-muted-foreground font-bold text-[12px]">/ 26</div>
           </div>
@@ -231,7 +231,7 @@ export const HeadScoutStatsCards = () => {
           </div>
           <div className="hidden sm:flex items-center gap-1">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((dot, i) => (
-              <div key={i} className={`w-5 h-5 rounded-full ${i < 6 ? 'bg-primary' : 'border-2 border-dashed border-white/20'}`} />
+              <div key={i} className={`w-5 h-5 rounded-full ${i < 6 ? 'bg-primary' : 'border-2 border-dashed border-chalk/20'}`} />
             ))}
           </div>
         </div>
@@ -260,10 +260,10 @@ export const HeadScoutStatsCards = () => {
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:gap-3 mt-auto">
             <div className="font-heading font-extrabold text-2xl md:text-[36px] tracking-tight text-chalk leading-none">10</div>
-            <button className="sm:hidden w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center self-end shrink-0 transition-colors">
+            <button className="sm:hidden w-9 h-9 rounded-full bg-primary text-chalk flex items-center justify-center self-end shrink-0 transition-colors">
               <ChevronRight size={18} />
             </button>
-            <button className="hidden sm:flex bg-primary text-white hover:bg-primary/80 font-bold text-[14px] px-5 py-2 rounded-full w-fit items-center gap-2 transition-colors ml-auto">
+            <button className="hidden sm:flex bg-primary text-chalk hover:bg-primary/80 font-bold text-[14px] px-5 py-2 rounded-full w-fit items-center gap-2 transition-colors ml-auto">
               Review <ChevronRight size={16} />
             </button>
           </div>

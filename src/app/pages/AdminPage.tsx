@@ -27,7 +27,7 @@ export default function AdminPage() {
         </div>
       </main>
 
-      <button className="fixed bottom-8 right-8 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
+      <button className="fixed bottom-8 right-8 bg-primary hover:bg-primary/80 text-chalk px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
         <Plus className="w-5 h-5" />
         New Player
       </button>

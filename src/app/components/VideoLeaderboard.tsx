@@ -109,7 +109,7 @@ export function VideoLeaderboard() {
             className="bg-card border border-[#e8edf2] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-all hover:shadow-sm flex items-center gap-4"
           >
             {/* Avatar with initials */}
-            <div className={`w-11 h-11 ${editor.initialsColor} rounded-xl flex items-center justify-center text-white shrink-0`}
+            <div className={`w-11 h-11 ${editor.initialsColor} rounded-xl flex items-center justify-center text-chalk shrink-0`}
               style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
               {editor.initials}
             </div>

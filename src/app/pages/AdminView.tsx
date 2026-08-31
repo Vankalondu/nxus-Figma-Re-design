@@ -128,7 +128,7 @@ export function AdminView() {
             className={`px-6 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
               activeTab === tab.id
                 ? 'bg-primary text-primary-foreground shadow-sm border border-primary'
-                : 'bg-card text-muted-foreground border border-white hover:border-primary hover:text-foreground'
+                : 'bg-card text-muted-foreground border border-chalk hover:border-primary hover:text-foreground'
             }`}
           >
             {tab.label}
@@ -226,7 +226,7 @@ export function AdminView() {
                       <div className="font-body font-bold text-[14px] text-foreground truncate">{player.name}</div>
                       <div className="font-body font-medium text-[12px] text-muted-foreground">{player.position}</div>
                     </div>
-                    <button onClick={() => handleTransferToTeam(player)} title="Transfer to Team" className="w-8 h-8 rounded-full bg-primary/10 text-primary inline-flex items-center justify-center hover:bg-primary hover:text-white transition-colors shrink-0"><ArrowRight size={14} /></button>
+                    <button onClick={() => handleTransferToTeam(player)} title="Transfer to Team" className="w-8 h-8 rounded-full bg-primary/10 text-primary inline-flex items-center justify-center hover:bg-primary hover:text-chalk transition-colors shrink-0"><ArrowRight size={14} /></button>
                   </div>
                 ))}
                 {availablePlayers.length === 0 && (
@@ -254,7 +254,7 @@ export function AdminView() {
                       <div className="font-body font-bold text-[14px] text-foreground truncate">{player.name}</div>
                       <div className="font-body font-medium text-[12px] text-muted-foreground">{player.position}</div>
                     </div>
-                    <button onClick={() => handleRemoveFromTeam(player)} title="Remove from Team" className="w-8 h-8 rounded-full bg-destructive/10 text-destructive inline-flex items-center justify-center hover:bg-destructive hover:text-white transition-colors shrink-0"><X size={14} /></button>
+                    <button onClick={() => handleRemoveFromTeam(player)} title="Remove from Team" className="w-8 h-8 rounded-full bg-destructive/10 text-destructive inline-flex items-center justify-center hover:bg-destructive hover:text-chalk transition-colors shrink-0"><X size={14} /></button>
                   </div>
                 ))}
                 {teamRoster.length === 0 && (

@@ -27,7 +27,7 @@ export function Header() {
           </button>
           <button className="p-2 hover:bg-accent rounded-full relative">
             <User className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">5</span>
+            <span className="absolute -top-1 -right-1 bg-blue-500 text-chalk text-xs rounded-full w-4 h-4 flex items-center justify-center">5</span>
           </button>
         </div>
       </div>

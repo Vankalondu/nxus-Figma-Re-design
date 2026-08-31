@@ -140,7 +140,7 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
                         className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-body font-black text-[11px] ${meta.cls}`}>{meta.label}<ChevronDown size={11} /></button>
                     </td>
                     <td className="px-3 py-3 text-right">
-                      <button onClick={() => toggleDone(t)} role="checkbox" aria-checked={st === 'done'} aria-label="Mark task done" title={st === 'done' ? 'Mark not done' : 'Mark done'} className={`w-5 h-5 rounded-[6px] shrink-0 transition-colors inline-flex items-center justify-center ${st === 'done' ? 'bg-scout-green border-2 border-scout-green' : 'bg-card border-2 border-border hover:border-primary'}`}>{st === 'done' && <Check size={13} strokeWidth={3} className="text-white" />}</button>
+                      <button onClick={() => toggleDone(t)} role="checkbox" aria-checked={st === 'done'} aria-label="Mark task done" title={st === 'done' ? 'Mark not done' : 'Mark done'} className={`w-5 h-5 rounded-[6px] shrink-0 transition-colors inline-flex items-center justify-center ${st === 'done' ? 'bg-scout-green border-2 border-scout-green' : 'bg-card border-2 border-border hover:border-primary'}`}>{st === 'done' && <Check size={13} strokeWidth={3} className="text-chalk" />}</button>
                     </td>
                   </tr>
                 );
@@ -206,9 +206,9 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
       )}
 
       {showAssign && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAssign(false)}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAssign(false)}>
           <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
-            <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between"><span className="font-heading font-semibold text-[16px] text-white">Assign a Task</span><button onClick={() => setShowAssign(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button></div>
+            <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between"><span className="font-heading font-semibold text-[16px] text-chalk">Assign a Task</span><button onClick={() => setShowAssign(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button></div>
             <div className="p-8 space-y-4">
               <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Task name</label><input autoFocus type="text" value={form.text} onChange={e => setForm(f => ({ ...f, text: e.target.value }))} placeholder="What needs doing?" onKeyDown={e => { if (e.key === 'Enter') submitAssign(); }} className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" /></div>
               <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Description</label><input type="text" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Optional details" className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" /></div>
@@ -217,7 +217,7 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
                 <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Deadline</label><input type="date" value={form.deadline} onChange={e => setForm(f => ({ ...f, deadline: e.target.value }))} className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" /></div>
               </div>
               <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Priority</label><div className="flex gap-2">{(['High', 'Medium', 'Low'] as const).map(pp => (<button key={pp} onClick={() => setForm(f => ({ ...f, priority: pp }))} className={`px-4 py-2 rounded-full font-body text-[12px] font-black border transition-all ${form.priority === pp ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-muted-foreground border-border hover:border-primary'}`}>{pp}</button>))}</div></div>
-              <button onClick={submitAssign} disabled={!form.text.trim()} className="w-full bg-primary border-2 border-primary text-white rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">Assign Task</button>
+              <button onClick={submitAssign} disabled={!form.text.trim()} className="w-full bg-primary border-2 border-primary text-chalk rounded-full py-3 font-body font-black text-[14px] hover:bg-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">Assign Task</button>
             </div>
           </div>
         </div>

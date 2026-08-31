@@ -108,7 +108,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
   return (
     <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
       {/* Backdrop — click closes without applying */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-midnight/60 backdrop-blur-sm" onClick={onClose} />
 
       {/* Panel */}
       <div className="relative bg-background rounded-[24px] max-w-5xl w-[92vw] max-h-[88vh] flex flex-col shadow-2xl border border-border overflow-hidden">

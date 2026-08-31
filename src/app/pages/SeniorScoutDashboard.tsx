@@ -186,7 +186,7 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
   const isTom = report.author === 'tom';
   return (
     <div className="fixed inset-0 z-[300] flex">
-      <div className="flex-1 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="flex-1 bg-midnight/40 backdrop-blur-sm" onClick={onClose} />
       <div className="w-full max-w-[440px] bg-card h-full flex flex-col shadow-2xl overflow-y-auto">
         <div className={`px-6 py-5 flex items-start justify-between shrink-0 ${isTom ? 'bg-primary' : 'bg-card border-b border-border'}`}>
           <div className="flex flex-col gap-2">
@@ -196,13 +196,13 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
               <GradePill grade={report.grade} />
             </div>
             <div className="flex items-center gap-2 flex-wrap">
-              {isTom && <span className="font-body text-[12px] font-black px-2 py-1 rounded-full bg-primary text-white">Lead Scout</span>}
+              {isTom && <span className="font-body text-[12px] font-black px-2 py-1 rounded-full bg-primary text-chalk">Lead Scout</span>}
               <span className={`font-body text-[12px] font-medium ${isTom ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
                 {isTom ? 'Tom' : 'David (Me)'} · {report.scoutingDate}
               </span>
             </div>
           </div>
-          <button onClick={onClose} className={`mt-0.5 shrink-0 ${isTom ? 'text-white/50 hover:text-white' : 'text-muted-foreground hover:text-foreground'}`}><X size={18} /></button>
+          <button onClick={onClose} className={`mt-0.5 shrink-0 ${isTom ? 'text-chalk/50 hover:text-chalk' : 'text-muted-foreground hover:text-foreground'}`}><X size={18} /></button>
         </div>
         <div className="px-6 py-4 border-b border-border flex items-center gap-6 bg-card shrink-0">
           {[['Overall', report.grade], ['PLR', report.plr], ['POR', report.por]].map(([label, val]) => (
@@ -245,15 +245,15 @@ const ThisWeekModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
       <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-md border border-border flex flex-col max-h-[80vh]" onClick={e => e.stopPropagation()}>
         {/* Header */}
         <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[32px] shrink-0">
           <div className="flex items-center gap-3">
             <Calendar size={20} className="text-foreground" />
-            <span className="font-heading font-semibold text-[16px] text-white">Tasks This Week</span>
+            <span className="font-heading font-semibold text-[16px] text-chalk">Tasks This Week</span>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white transition-colors">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk transition-colors">
             <X size={16} />
           </button>
         </div>
@@ -270,7 +270,7 @@ const ThisWeekModal = ({
               className="flex-1 bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all"
             />
             <button onClick={handleAdd}
-              className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white hover:bg-primary/80 transition-colors shrink-0">
+              className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-chalk hover:bg-primary/80 transition-colors shrink-0">
               <Plus size={18} />
             </button>
           </div>
@@ -307,7 +307,7 @@ const ThisWeekModal = ({
                   className="flex items-start gap-3 p-3 rounded-[16px] hover:bg-accent transition-colors group cursor-pointer opacity-50"
                   onClick={() => onToggle(task.id)}>
                   <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle size={12} className="text-white" />
+                    <CheckCircle size={12} className="text-chalk" />
                   </div>
                   <p className="font-body font-bold text-[14px] text-muted-foreground line-through">{task.text}</p>
                 </div>
@@ -426,7 +426,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
       className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
         selected ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-border hover:border-primary/50'
       }`}>
-      {icon && <span className={selected ? 'text-white' : 'text-foreground'}>{icon}</span>}
+      {icon && <span className={selected ? 'text-chalk' : 'text-foreground'}>{icon}</span>}
       {label}
     </button>
   );
@@ -445,24 +445,24 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
       <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-lg border border-border max-h-[92vh] flex flex-col" onClick={e => e.stopPropagation()}>
 
         {/* ── Header ── */}
         <div className="px-8 py-5 bg-primary rounded-t-[32px] flex items-center justify-between shrink-0">
           <div className="flex-1 min-w-0">
-            <span className="font-heading font-semibold text-[16px] text-white">Add Scouting Report</span>
+            <span className="font-heading font-semibold text-[16px] text-chalk">Add Scouting Report</span>
             <div className="flex items-center gap-2 mt-2">
               {Array.from({length: TOTAL_STEPS}).map((_,i) => (
                 <div key={i}
                   className={`h-1.5 rounded-full transition-all duration-300 ${i < step ? 'bg-card' : 'bg-card/20'}`}
                   style={{width: i < step ? 24 : 12}} />
               ))}
-              <span className="font-body text-[12px] text-white/40 ml-1">Step {step} of {TOTAL_STEPS}</span>
+              <span className="font-body text-[12px] text-chalk/40 ml-1">Step {step} of {TOTAL_STEPS}</span>
             </div>
-            <p className="font-body text-[12px] text-white/50 mt-1 truncate">{STEP_TITLES[step]}</p>
+            <p className="font-body text-[12px] text-chalk/50 mt-1 truncate">{STEP_TITLES[step]}</p>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white ml-4 shrink-0">
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk ml-4 shrink-0">
             <X size={16} />
           </button>
         </div>
@@ -559,7 +559,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                     reportLength === 'full' ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-border hover:border-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Full Report</div>
-                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-white/60' : 'text-muted-foreground'}`}>
+                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-chalk/60' : 'text-muted-foreground'}`}>
                     Detailed scouting report using a template. Includes structured sections and performance analysis.
                   </div>
                 </button>
@@ -568,7 +568,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                     reportLength === 'short' ? 'bg-primary text-primary-foreground border-primary' : 'bg-card text-foreground border-border hover:border-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Short Report</div>
-                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-white/60' : 'text-muted-foreground'}`}>
+                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-chalk/60' : 'text-muted-foreground'}`}>
                     Quick entry. One performance note and PLR, POG, NXT grades. Fast and efficient.
                   </div>
                 </button>
@@ -764,11 +764,11 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {step < TOTAL_STEPS
             ? <button onClick={() => { if (canContinue()) setStep(s => (s + 1) as StepNum); }}
                 disabled={!canContinue()}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0a2d4c]">
+                className="px-8 py-2 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0a2d4c]">
                 Continue →
               </button>
             : <button onClick={onClose}
-                className="px-8 py-2 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-[#0a2d4c] transition-colors">
+                className="px-8 py-2 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] hover:bg-[#0a2d4c] transition-colors">
                 Submit Report ✓
               </button>}
         </div>
@@ -850,7 +850,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
             {complete.length > 0 && complete.slice(0, 3).map(t => (
               <div key={t.id} className="px-8 py-4 flex items-start gap-4 opacity-40">
                 <button onClick={() => onToggleTask(t.id)} className="shrink-0 mt-0.5">
-                  <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center"><Check size={11} className="text-white" /></div>
+                  <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center"><Check size={11} className="text-chalk" /></div>
                 </button>
                 <p className="font-body text-[14px] font-bold text-muted-foreground line-through">{t.text}</p>
               </div>
@@ -895,25 +895,25 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
 
           {/* Upcoming Packages — accent card (bg-primary) */}
           <div className="bg-primary rounded-[40px] flex flex-col overflow-hidden flex-1">
-            <div className="px-6 py-5 border-b border-white/10 flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 rounded-[12px] bg-white/10 flex items-center justify-center shrink-0"><Package size={16} className="text-chalk" /></div>
+            <div className="px-6 py-5 border-b border-chalk/10 flex items-center gap-3 shrink-0">
+              <div className="w-10 h-10 rounded-[12px] bg-chalk/10 flex items-center justify-center shrink-0"><Package size={16} className="text-chalk" /></div>
               <div>
                 <h3 className="font-heading font-semibold text-[16px] text-chalk">Upcoming Packages</h3>
                 <p className="font-body text-[12px] text-chalk/60 font-medium">Awaiting review</p>
               </div>
             </div>
-            <div className="flex-1 divide-y divide-white/5">
+            <div className="flex-1 divide-y divide-chalk/5">
               {[
                 { name: 'Kofi Mensah', list: 'Target', clips: 8 },
                 { name: 'David Conteh', list: 'Short', clips: 6 },
                 { name: 'Amadou Sarr', list: 'Target', clips: 5 },
               ].map(pkg => (
-                <div key={pkg.name} className="px-6 py-4 flex items-center gap-3 hover:bg-white/5 transition-colors cursor-pointer">
-                  <div className="w-9 h-9 rounded-xl bg-white/10 text-chalk flex items-center justify-center font-body font-black text-[12px] shrink-0">{pkg.name.split(' ').map(n=>n[0]).join('')}</div>
+                <div key={pkg.name} className="px-6 py-4 flex items-center gap-3 hover:bg-chalk/5 transition-colors cursor-pointer">
+                  <div className="w-9 h-9 rounded-xl bg-chalk/10 text-chalk flex items-center justify-center font-body font-black text-[12px] shrink-0">{pkg.name.split(' ').map(n=>n[0]).join('')}</div>
                   <div className="flex-1 min-w-0">
                     <span className="font-body font-bold text-[14px] text-chalk">{pkg.name}</span>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="font-body text-[10px] font-black px-2 py-0.5 rounded bg-white/10 text-chalk/80">{pkg.list}</span>
+                      <span className="font-body text-[10px] font-black px-2 py-0.5 rounded bg-chalk/10 text-chalk/80">{pkg.list}</span>
                       <span className="font-body text-[10px] text-chalk/60 font-medium">{pkg.clips} clips</span>
                     </div>
                   </div>
@@ -1074,11 +1074,11 @@ export default function SeniorScoutDashboard() {
       {showAddReport && <AddReportModal onClose={() => setShowAddReport(false)} />}
       {activeDrawer  && <ReportDrawer report={activeDrawer} onClose={() => setActiveDrawer(null)} />}
       {showAddPlayer && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
           <div className="bg-card rounded-[32px] shadow-2xl w-full max-w-2xl border border-border max-h-[90vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 border-b border-border flex items-center justify-between bg-primary rounded-t-[32px] shrink-0">
-              <span className="font-heading font-semibold text-[20px] text-white">Add New Player</span>
-              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+              <span className="font-heading font-semibold text-[20px] text-chalk">Add New Player</span>
+              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
             </div>
             <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
@@ -1125,7 +1125,7 @@ export default function SeniorScoutDashboard() {
             </div>
             <div className="px-8 py-5 border-t border-border bg-card flex justify-end gap-3 shrink-0">
               <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-transparent border-2 border-border text-muted-foreground rounded-full font-body font-bold text-[14px] hover:border-muted-foreground transition-colors">Cancel</button>
-              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors">Add Player</button>
+              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors">Add Player</button>
             </div>
           </div>
         </div>
@@ -1161,8 +1161,8 @@ export default function SeniorScoutDashboard() {
           notifPanel={(
             <div className="absolute right-0 mt-3 w-80 bg-card rounded-[24px] shadow-2xl border border-border z-50 overflow-hidden">
               <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-primary rounded-t-[24px]">
-                <span className="font-heading font-black text-[14px] text-white">Notifications</span>
-                <button onClick={() => setShowNotifPanel(false)} className="text-white/60 hover:text-white"><X size={16} /></button>
+                <span className="font-heading font-black text-[14px] text-chalk">Notifications</span>
+                <button onClick={() => setShowNotifPanel(false)} className="text-chalk/60 hover:text-chalk"><X size={16} /></button>
               </div>
               <div className="max-h-72 overflow-y-auto divide-y divide-border">
                 {notifications.map(n => (

@@ -444,11 +444,11 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
 
       {/* Play modal */}
       {playing && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => { setPlaying(null); setRedoFor(null); }}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => { setPlaying(null); setRedoFor(null); }}>
           <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-border overflow-hidden" onClick={e => e.stopPropagation()}>
             <div className="relative aspect-video bg-gradient-to-br from-[#061b2e] to-[#0a2d4c] flex items-center justify-center">
               <span className="w-16 h-16 rounded-full bg-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-primary ml-1" /></span>
-              <button onClick={() => { setPlaying(null); setRedoFor(null); }} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-card/20 text-white flex items-center justify-center hover:bg-card/40"><X size={18} /></button>
+              <button onClick={() => { setPlaying(null); setRedoFor(null); }} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-card/20 text-chalk flex items-center justify-center hover:bg-card/40"><X size={18} /></button>
             </div>
             <div className="p-6">
               <div className="flex items-center gap-2 mb-1">
@@ -610,8 +610,8 @@ export default function VideoManagerDashboard() {
           notifPanel={(
             <div className="absolute right-0 mt-3 w-80 bg-card rounded-[24px] shadow-2xl border border-border z-50 overflow-hidden">
               <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-primary rounded-t-[24px]">
-                <span className="font-heading font-black text-[14px] text-white">Notifications</span>
-                <button onClick={() => setShowNotif(false)} className="text-white/60 hover:text-white"><X size={16} /></button>
+                <span className="font-heading font-black text-[14px] text-chalk">Notifications</span>
+                <button onClick={() => setShowNotif(false)} className="text-chalk/60 hover:text-chalk"><X size={16} /></button>
               </div>
               <div className="max-h-80 overflow-y-auto divide-y divide-border">
                 {vstate.approvals.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-muted-foreground">You're all caught up.</div>}
@@ -676,11 +676,11 @@ export default function VideoManagerDashboard() {
       {showUpload && <UploadVideoModal uploaderName="Marcus" onClose={() => setShowUpload(false)} />}
 
       {showAddPlayer && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
+        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
           <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between">
-              <span className="font-heading font-semibold text-[16px] text-white">Add a Player</span>
-              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-white/60 hover:text-white"><X size={16} /></button>
+              <span className="font-heading font-semibold text-[16px] text-chalk">Add a Player</span>
+              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
             </div>
             <div className="p-8 space-y-4">
               <div>
@@ -693,7 +693,7 @@ export default function VideoManagerDashboard() {
               </div>
               <div className="flex gap-3 pt-2">
                 <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-transparent border-2 border-border text-muted-foreground rounded-full font-body font-bold text-[14px] hover:border-muted-foreground transition-colors">Cancel</button>
-                <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-primary border-2 border-primary text-white rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors">Add Player</button>
+                <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors">Add Player</button>
               </div>
             </div>
           </div>
