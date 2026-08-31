@@ -64,7 +64,26 @@ screenshot.
 
 **Do:** `bg-card`, `text-muted-foreground`, `shadow-[var(--shadow-lg)]`
 **Don't:** `bg-[#F4FAFF]`, `style={{ color: '#304151' }}`, Tailwind's own `shadow-lg`
-**Exceptions:** none in application code. See §11.3 for the quarantined `src/app/imports/`.
+**Exceptions:** none in application code. See §11.3 for the quarantined `src/app/imports/`,
+and L-G2 for colour that is data rather than styling.
+
+### L-G2 · Law — Colour that is *data* is not governed by the palette
+When a colour describes something in the real world rather than styling the interface, it is
+data. It does not bind a token, and the palette Laws do not apply to it.
+
+In NXUS this covers **team kit colours** (`DEFAULT_PALETTE` and each team’s `kit.jersey` /
+`kit.shorts` in `src/app/components/MatchEntry.tsx`) and any colour a **user picks and
+stores**, such as custom tag colours.
+
+**Why:** a team that plays in maroon plays in maroon. Mapping its strip onto the brand scale
+would make the interface lie about the world it describes — and the closer the mapped colour
+looks, the more convincing the lie. The test is not “is this hex in the scale?” but “would a
+rebrand of NXUS change this colour?” If no, it is data.
+
+**Do:** store real kit colours verbatim; render them through a neutral swatch component.
+**Don’t:** “correct” a kit or a saved tag colour to the nearest token.
+**Still applies:** the *chrome* around the data — the swatch border, the label, the picker
+panel — is styling and binds tokens normally.
 
 ### L-C1 · Law — No pure white, no pure black
 `#FFFFFF` and `#000000` never appear — in any mode, in any property, including SVG fills and
@@ -762,6 +781,7 @@ when next touched. See open ruling **OR-4**.
 ## 12. Pull request checklist
 
 - [ ] Every colour, shadow and radius resolves to a token — **L-G1**
+- [ ] Real-world colour (kit, user-picked tag) left unmapped — **L-G2**
 - [ ] No pure white or black, no off-system colour — **L-C1**, **L-C2**
 - [ ] Status colour reports a state; consumed via `scout-*` classes — **L-C3**, **L-C4**
 - [ ] `#061B2E` used only as dark-mode background — **L-C5**
@@ -783,14 +803,25 @@ when next touched. See open ruling **OR-4**.
 
 ## 13. Open rulings — still need a decision
 
-**OR-3 · Off-palette colour in live UI.** The unused `--chart-4` token has been brought
-in-scale. But the same violet, and several other off-system colours, are used directly in
-visible code: `AnalyticsTab.tsx` chart series (`#2563eb` Long, `#8b5cf6` Target, plus axis
-greys `#7baac7` / `#b8d4ef`), the tag colour picker and Wonderkid tag in
-`SeniorLeadPlayersPage.tsx` (`#8b5cf6`, `#06b6d4`, `#7c5cfc`, `#3a8c6a`), and
-`shared.tsx` (`#334155`, `#cbd5e1`, `#3fb4c0`, and a `#ffffff` that violates L-C1).
-Replacing these changes what users see, so each needs a decision. See the chart-series
-question first.
+**OR-3 · Off-palette colour in live UI.** 59 of the original 99 occurrences are resolved
+(31 Aug). What remains, and why each was held:
+
+| Colour(s) | Where | Why it needs a decision |
+|---|---|---|
+| `#8b5cf6` `#7c5cfc` `#06b6d4` `#3a8c6a` | tag colour picker + Wonderkid tag, `SeniorLeadPlayersPage.tsx` | User-facing swatches. A picker offering only blues and greys is a worse picker — this may argue for extending the palette rather than restricting the code. |
+| `#22d3ee` | video tracker, `VideoTrackerGrid.tsx` | Cyan marks *uploaded / playable*, a deliberate fourth state beside amber and red. The palette has no cyan. |
+| `#ccff00` `#b3e600` `#1a1c1d` | `TableColumns.tsx` | A dark-plus-lime block matching nothing else in NXUS. Likely leftover styling from another source — worth a look before mapping or deleting. |
+| `#3fb4c0` | `shared.tsx` | A lone teal. No in-scale equivalent. |
+| `#7baac7` | grade-B badge background, pipeline chip, 2 scrollbar hovers | The badge is a *background* carrying `text-white`; swapping it to a dark token would make the label unreadable. Contrast needs deciding, not guessing. |
+
+Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
+
+**OR-6 · 149 bare `text-white` / `bg-white` classes.** The hex scan could not see these; they
+are Tailwind classes, not literals, and each is a pure-white L-C1 violation. Concentrated in
+`SeniorLeadPlayersPage.tsx` (38), `LeadScoutDashboard.tsx` (21), `SeniorScoutDashboard.tsx`
+(17), `CountryScoutDashboard.tsx` (10). Most are likely `text-white` on `bg-primary`, where
+L-C6 already prescribes `text-chalk` — but chalk is a pale blue, not white, so this is a
+visible change across many surfaces and needs a ruling before any sweep.
 
 **OR-4 · Dead code.** `VideoDepartmentDashboard.tsx`, `GlobalPulseDashboard.tsx` and
 `OperationsDashboard.tsx` are unrouted and hold 114+ bracketed-hex uses between them. Delete
