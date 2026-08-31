@@ -23,10 +23,22 @@ export const KpiCard = ({ icon: Icon, heading, value, descriptor, action, onClic
       </span>
       <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted-foreground">{heading}</span>
     </div>
-    <div className="flex items-end justify-between gap-2">
-      <div className="flex items-end gap-2 min-w-0">
+    {/* Bottom row wraps rather than overflows. The action link is shrink-0 +
+        whitespace-nowrap by design (a truncated "Review Full Matc…" is worse
+        than a wrap), so without a floor on the value/descriptor group the
+        descriptor was squeezed to a sliver and its text spilled over the link
+        — visible on the Video Manager, which is the only dashboard running
+        five KPIs across (lg:grid-cols-5) instead of four. The min-w gives the
+        group a floor, so once both no longer fit the link drops to its own
+        line instead. */}
+    <div className="flex items-end justify-between gap-x-3 gap-y-1 flex-wrap">
+      {/* basis matters: `flex-1` sets flex-basis:0, and a zero hypothetical size
+          means flex-wrap never triggers — the group just gets squeezed and the
+          descriptor breaks mid-word. A real basis makes the browser wrap the
+          link down instead. */}
+      <div className="flex items-end gap-x-2 gap-y-0.5 flex-wrap flex-[1_1_7rem] min-w-0">
         <span className="font-heading font-extrabold text-4xl tabular-nums text-foreground leading-none shrink-0">{value}</span>
-        <span className="font-heading font-bold text-sm text-foreground leading-tight self-end pb-0.5 min-w-0">{descriptor}</span>
+        <span className="font-heading font-bold text-sm text-foreground leading-tight self-end pb-0.5 min-w-0 break-words">{descriptor}</span>
       </div>
       <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-primary group-hover:underline shrink-0 whitespace-nowrap self-end pb-0.5">
         {action}<ArrowUpRight size={13} className="shrink-0" />
