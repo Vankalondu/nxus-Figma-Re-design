@@ -126,9 +126,13 @@ const POS_COLORS: Record<string, string> = {
   CM: 'bg-muted-foreground/10 text-muted-foreground', CDM: 'bg-primary/10 text-foreground',
   FB: 'bg-primary/10 text-foreground', CB: 'bg-muted-foreground/20 text-muted-foreground',
 };
+// Senior grades are TINTED pills, unlike the Lead dashboard's solid fills —
+// the two dashboards present the same scale differently. Flagged, not resolved:
+// unifying them is an information-hierarchy decision, not a styling one.
+// B+ now binds the scout-amber token instead of bracketed hex (L-C4).
 const GRADE_COLORS: Record<string, string> = {
   'A+': 'bg-primary text-primary-foreground', 'A': 'bg-primary/15 text-foreground',
-  'B+': 'bg-[#E8A838]/15 text-[#E8A838]', 'B': 'bg-muted-foreground/10 text-muted-foreground',
+  'B+': 'bg-scout-amber/15 text-scout-amber', 'B': 'bg-muted-foreground/10 text-muted-foreground',
   'C+': 'bg-accent text-muted-foreground', 'C': 'bg-accent text-muted-foreground',
 };
 const PosPill = ({ pos }: { pos: string }) => (
@@ -1063,8 +1067,8 @@ export default function SeniorScoutDashboard() {
       <style dangerouslySetInnerHTML={{__html: `
         ::-webkit-scrollbar{width:6px;height:6px;}
         ::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:#b4d7f6;border-radius:4px;}
-        ::-webkit-scrollbar-thumb:hover{background:#7baac7;}
+        ::-webkit-scrollbar-thumb{background:var(--blue-100);border-radius:4px;}
+        ::-webkit-scrollbar-thumb:hover{background:var(--blue-200);}
         .hide-scrollbar::-webkit-scrollbar{display:none;}
         .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
       `}} />

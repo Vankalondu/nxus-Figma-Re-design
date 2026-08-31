@@ -60,8 +60,11 @@ const INITIAL_SIGNED: SignedPlayer[] = [
   { id:'s13', name:'Emilio Sadio',      position:'DM',  birthYear:2010, yearSigned:2029, grade:'A+', color:'#061b2e' },
 ];
 
+// Seeds GradeColorPanel. Kept in step with LEAD_GRADE_STYLE below so the
+// panel's defaults match what the badges actually render — B off the
+// off-palette #7baac7, and B+ distinct from A+ rather than the same navy.
 const DEFAULT_GRADE_COLORS: GradeColorMap = {
-  'A+':'#061b2e','A':'#E8A838','B+':'#061b2e','B':'#7baac7','C+':'#b4d7f6','C':'#d2e7fa',
+  'A+':'#061b2e','A':'#E8A838','B+':'#0f4473','B':'#8fc4f2','C+':'#b4d7f6','C':'#d2e7fa',
 };
 
 const MOCK_PKGS: Pkg[] = [
@@ -651,7 +654,22 @@ const LEAD_SIGNED_DATA: SignedPipelinePlayer[] = [
 ];
 const SIGNED_YEARS = [2022, 2023, 2024, 2025, 2026];
 const LEAD_POSITIONS = ['ST','RW','LW','AM','CM','DM','RB','LB','RCB','LCB','GK'];
-const LEAD_GRADE_BG: Record<string,string> = { 'A+':'#061b2e','A':'#E8A838','B+':'#061b2e','B':'#7baac7' };
+// Grade badge: a background AND the text colour that stays readable on it.
+// Text cannot be one value — chalk on the dark grades, midnight on the light
+// ones. Measured contrast for every pairing below is >= 7.9:1. A single text
+// colour leaves four of six grades unreadable: with chalk throughout, A was
+// 1.64:1, B 1.97:1, C+ 1.18:1 and C 1.00:1 — chalk on chalk, invisible.
+// Bound to tokens rather than hex per L-G1; B was previously the off-palette
+// #7baac7, and B+ previously duplicated A+'s navy so the two looked identical.
+const LEAD_GRADE_STYLE: Record<string, { bg: string; text: string }> = {
+  'A+': { bg: 'var(--blue-950)',    text: 'var(--chalk)'    }, // 13.75:1
+  'A':  { bg: 'var(--scout-amber)', text: 'var(--midnight)' }, //  8.38:1
+  'B+': { bg: 'var(--blue-800)',    text: 'var(--chalk)'    }, //  7.90:1
+  'B':  { bg: 'var(--blue-200)',    text: 'var(--midnight)' }, //  9.42:1
+  'C+': { bg: 'var(--blue-100)',    text: 'var(--midnight)' }, // 11.62:1
+  'C':  { bg: 'var(--blue-50)',     text: 'var(--midnight)' }, // 13.75:1
+};
+const GRADE_FALLBACK = { bg: 'var(--blue-200)', text: 'var(--midnight)' };
 
 const PipelineTab = () => {
   const [signedPlayers, setSignedPlayers] = React.useState<SignedPipelinePlayer[]>(LEAD_SIGNED_DATA);
@@ -664,10 +682,10 @@ const PipelineTab = () => {
     signedPlayers.filter(p => p.pos === pos && p.yearSigned === year);
 
   const funnelStages = [
-    { label: 'Database',    count: 60,                   color: '#b4d7f6',          path: '/lead-scout/players' },
-    { label: 'Long List',   count: 28,                   color: '#E8A838',          path: '/lead-scout/players' },
-    { label: 'Short List',  count: 14,                   color: '#7baac7',          path: '/lead-scout/players' },
-    { label: 'Target List', count: 6,                    color: '#061b2e',          path: '/lead-scout/players' },
+    { label: 'Database',    count: 60,                   color: 'var(--blue-100)',  path: '/lead-scout/players' },
+    { label: 'Long List',   count: 28,                   color: 'var(--scout-amber)', path: '/lead-scout/players' },
+    { label: 'Short List',  count: 14,                   color: 'var(--blue-600)',  path: '/lead-scout/players' },
+    { label: 'Target List', count: 6,                    color: 'var(--blue-950)',  path: '/lead-scout/players' },
     { label: 'Signed',      count: signedPlayers.length, color: 'var(--scout-green)', path: '/lead-scout/players' },
   ];
   // Donut geometry — r=15.915 gives circumference 100, so dash values ARE percentages.
@@ -782,8 +800,17 @@ const PipelineTab = () => {
                               <div key={player.id} className="flex items-center gap-2">
                                 <span title={player.name} className="font-body font-bold text-[14px] text-foreground truncate flex-1 min-w-0">{player.name}</span>
                                 <span className="font-mono text-[10px] font-bold text-muted-foreground shrink-0">{player.birthYear}</span>
-                                <span className="font-body font-black text-[10px] px-2 py-0.5 rounded-full shrink-0 text-chalk min-w-[28px] text-center"
-                                  style={{ backgroundColor: LEAD_GRADE_BG[player.grade] || '#7baac7' }}>{player.grade}</span>
+                                {/* ring-foreground/20 delineates the badge whatever the row is
+                                    doing. Grade fills are fixed values while row surfaces flip,
+                                    so without it the dark grades vanish into a dark row (B+ on
+                                    the alt row measured 1.00:1) and the pale ones vanish into a
+                                    light row (C measured 1.00:1 in light). The ring inverts with
+                                    the theme, so it reads in both. */}
+                                <span className="font-body font-black text-[10px] px-2 py-0.5 rounded-full shrink-0 min-w-[28px] text-center ring-1 ring-inset ring-foreground/20"
+                                  style={{
+                                    backgroundColor: (LEAD_GRADE_STYLE[player.grade] ?? GRADE_FALLBACK).bg,
+                                    color: (LEAD_GRADE_STYLE[player.grade] ?? GRADE_FALLBACK).text,
+                                  }}>{player.grade}</span>
                               </div>
                             ))}
                           </div>
@@ -1128,7 +1155,7 @@ export default function LeadScoutDashboard() {
     <div className="flex min-h-screen bg-background font-body text-foreground">
       <style dangerouslySetInnerHTML={{__html:`
         ::-webkit-scrollbar{width:6px;height:6px;}::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:#b4d7f6;border-radius:4px;}::-webkit-scrollbar-thumb:hover{background:#7baac7;}
+        ::-webkit-scrollbar-thumb{background:var(--blue-100);border-radius:4px;}::-webkit-scrollbar-thumb:hover{background:var(--blue-200);}
         .hide-scrollbar::-webkit-scrollbar{display:none;}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
       `}} />
 

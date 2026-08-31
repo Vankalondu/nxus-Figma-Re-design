@@ -316,8 +316,8 @@ export default function CountryScoutDashboardPage() {
     <div className="flex min-h-screen bg-background font-body text-foreground">
       <style dangerouslySetInnerHTML={{__html:`
         ::-webkit-scrollbar{width:8px;height:8px;}::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:#b4d7f6;border-radius:4px;border:2px solid #d2e7fa;}
-        ::-webkit-scrollbar-thumb:hover{background:#7baac7;}.hide-scrollbar::-webkit-scrollbar{display:none;}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+        ::-webkit-scrollbar-thumb{background:var(--blue-100);border-radius:4px;border:2px solid #d2e7fa;}
+        ::-webkit-scrollbar-thumb:hover{background:var(--blue-200);}.hide-scrollbar::-webkit-scrollbar{display:none;}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
       `}} />
 
       <Sidebar actions={[
