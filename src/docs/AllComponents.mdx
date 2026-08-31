@@ -88,13 +88,17 @@ copy of the NXUS one. Use `src/app/components/Sidebar.tsx`.
 
 ## Still being catalogued
 
-Documented so far: **5 components + 46 primitives**, across 100 stories.
+Documented so far: **10 components + 46 primitives**, across 116 stories.
 
-**Next — the rest of the shared component layer:** `TopNav` · `Sidebar` ·
-`TasksTab` · `VideoTrackerGrid` · `CardView` · `EditColumnsModal` ·
-`UploadVideoModal` · `AnalyticsTab` · `ReportsTab` · `InlineSel`
+Components: `KpiCard` · `Status pills` · `ResponsiveTabs` · `ChampionPodium` ·
+`PlayerSearch` · `TasksTab` · `InlineSel` · `VideoTrackerGrid` ·
+`UploadVideoModal` · `TopNav`
 
-These need mock data built before they render in isolation — `CardView` alone
-takes twelve props including a player array and four callbacks.
+**Not yet documented:** `Sidebar` · `CardView` · `EditColumnsModal` ·
+`AnalyticsTab` · `ReportsTab` · `EditFormBlueprintModal` ·
+`PlayerVideoWorkspace`
+
+These take large prop surfaces that need mock data built first — `CardView`
+alone takes twelve props including a player array and four callbacks.
 
 </div>
