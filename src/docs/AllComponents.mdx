@@ -65,17 +65,36 @@ it carries the Laws that bind every component below.
 
 <hr style={{ margin: '32px 0', border: 0, borderTop: '1px solid var(--border)' }} />
 
+## Primitives
+
+All **46** primitives in `src/app/components/ui/` are documented under
+**Primitives** in the sidebar — form controls, overlays, navigation, data
+display.
+
+Two things to know before reaching for one:
+
+**Only 7 are actually used in NXUS** — `button`, `input`, `select`, `checkbox`,
+`tooltip`, `switch`, `sonner`. The other 39 are stock shadcn scaffolding that
+shipped with the Figma Make export; nothing in the app imports them. They are
+documented so you know what exists, not to suggest they are load-bearing.
+
+**Where a primitive and the style guide disagree, the style guide wins.** The
+shadcn button ships `rounded-md` variants; NXUS buttons are `rounded-full`
+(**L-R1**) in the three shapes of **P-CO1**. Each story flags this where it
+applies.
+
+`Primitives/Sidebar` is a **stale duplicate** — not shadcn's sidebar, but an old
+copy of the NXUS one. Use `src/app/components/Sidebar.tsx`.
+
 ## Still being catalogued
 
-This index grows as stories land. Currently documented: **3 of ~63**.
+Documented so far: **5 components + 46 primitives**, across 100 stories.
 
-**Next up — the shared component layer:** `TopNav` · `Sidebar` · `TasksTab` ·
-`VideoTrackerGrid` · `CardView` · `EditColumnsModal` · `UploadVideoModal` ·
-`AnalyticsTab` · `ReportsTab` · `PlayerSearch` · `ChampionPodium` · `InlineSel`
+**Next — the rest of the shared component layer:** `TopNav` · `Sidebar` ·
+`TasksTab` · `VideoTrackerGrid` · `CardView` · `EditColumnsModal` ·
+`UploadVideoModal` · `AnalyticsTab` · `ReportsTab` · `InlineSel`
 
-**Then the primitives** — 46 in `components/ui/`. Note only 7 are currently
-imported anywhere in NXUS (`button`, `input`, `select`, `checkbox`, `tooltip`,
-`switch`, `sonner`); the other 39 are stock shadcn scaffolding that shipped with
-the Figma Make export and nothing in the app uses yet.
+These need mock data built before they render in isolation — `CardView` alone
+takes twelve props including a player array and four callbacks.
 
 </div>
