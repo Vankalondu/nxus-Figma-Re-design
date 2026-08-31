@@ -12,4 +12,9 @@ export default defineConfig({
   resolve: {
     alias: resolveAlias,
   },
+  server: {
+    // Storybook writes into storybook-static/; without this the app's dev
+    // server treats every docs build as a source change and hot-reloads.
+    watch: { ignored: ['**/storybook-static/**'] },
+  },
 })

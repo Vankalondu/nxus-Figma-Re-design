@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react-vite'
 import { withThemeByClassName } from '@storybook/addon-themes'
+import { MemoryRouter } from 'react-router'
 
 // The real token layer — fonts, Tailwind, default theme, then globals.css.
 // Stories render against exactly the CSS the app ships, so a component that
@@ -35,10 +36,15 @@ const preview: Preview = {
       themes: { light: '', dark: 'dark' },
       defaultTheme: 'light',
     }),
+    // Several components navigate (Sidebar, PlayerSearch, the player tables).
+    // Without a router they throw on useNavigate/useLocation, so every story
+    // gets a memory router — harmless for components that never route.
     (Story) => (
-      <div className="bg-background text-foreground p-6 min-h-[120px]">
-        <Story />
-      </div>
+      <MemoryRouter initialEntries={['/lead-scout']}>
+        <div className="bg-background text-foreground p-6 min-h-[120px]">
+          <Story />
+        </div>
+      </MemoryRouter>
     ),
   ],
 
