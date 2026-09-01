@@ -8,6 +8,23 @@ on:
   workflow_dispatch: {} # manual "go live" trigger — deploy only fires from here
 
 jobs:
+  # Enforces the colour Laws in guidelines/Guidelines.md. Runs alongside the
+  # tests rather than gating them — a token violation and a broken test are
+  # independent failures, and seeing both at once is more useful than one
+  # hiding the other. Deploy is unaffected: it still needs `test` only, and
+  # still only fires on workflow_dispatch.
+  lint-tokens:
+    name: Token lint (L-C1 / L-C2 / L-G1)
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Lint design tokens
+        run: node scripts/lint-tokens.mjs
+
   test:
     name: Build & E2E tests
     timeout-minutes: 20

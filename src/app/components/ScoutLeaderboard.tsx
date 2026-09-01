@@ -101,7 +101,7 @@ export function ScoutLeaderboard() {
         {scouts.map((scout) => (
           <div
             key={scout.name}
-            className={`bg-[#0a2d4c] border ${scout.borderColor} rounded-lg p-4 hover:border-primary/50 transition-all hover:shadow-md hover:shadow-blue-500/10`}
+            className={`bg-[#0a2d4c] border ${scout.borderColor} rounded-lg p-4 hover:border-primary/50 transition-all hover:shadow-md hover:shadow-primary/10`}
           >
             <div className="flex items-center gap-4">
               {/* Rank */}
