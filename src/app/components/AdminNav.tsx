@@ -24,7 +24,7 @@ export function AdminNav() {
             variant={index === 0 ? 'default' : 'ghost'}
             className={`rounded-none border-b-2 ${
               index === 0 
-                ? 'bg-blue-600 hover:bg-blue-700 border-blue-600' 
+                ? 'bg-primary hover:bg-primary/80 border-primary' 
                 : 'bg-transparent hover:bg-accent border-transparent text-muted-foreground'
             } rounded-t-lg`}
           >

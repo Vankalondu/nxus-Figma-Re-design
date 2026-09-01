@@ -17,7 +17,7 @@ const ActionGroup = ({ items }: { items: ActionItem[] }) => {
           <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
             className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
               item.label === 'Restore'
-                ? 'text-emerald-600 hover:bg-emerald-500 hover:text-chalk'
+                ? 'text-scout-green hover:bg-scout-green hover:text-chalk'
                 : 'text-[#061b2e] hover:bg-primary hover:text-chalk'
             }`}>
             {item.icon}

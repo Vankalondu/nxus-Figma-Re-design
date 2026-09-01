@@ -10,7 +10,7 @@ export function YearSelector() {
         {years.map((year) => (
           <Button
             key={year}
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-primary hover:bg-primary/80"
           >
             {year}
           </Button>

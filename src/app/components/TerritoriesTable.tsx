@@ -68,7 +68,7 @@ export function TerritoriesTable() {
 
       <div className="border rounded-lg overflow-hidden bg-card">
         <table className="w-full">
-          <thead className="bg-blue-600 text-chalk">
+          <thead className="bg-primary text-chalk">
             <tr>
               <th className="px-4 py-3 text-left w-16">No.</th>
               <th className="px-4 py-3 text-left">Territory</th>

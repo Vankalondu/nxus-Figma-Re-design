@@ -340,7 +340,7 @@ export function AdminView() {
                     <td className="px-6 py-3 font-body font-bold text-[14px] text-foreground">{comp.name}</td>
                     <td className="px-6 py-3">
                       <span className={`px-2 py-1 rounded font-heading font-bold text-[10px] uppercase tracking-widest ${
-                        comp.category === 'National' ? 'bg-primary/10 text-foreground' : 'bg-emerald-500/10 text-emerald-600'
+                        comp.category === 'National' ? 'bg-primary/10 text-foreground' : 'bg-scout-green/10 text-scout-green'
                       }`}>
                         {comp.category}
                       </span>

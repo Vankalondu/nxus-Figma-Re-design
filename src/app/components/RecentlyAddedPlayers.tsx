@@ -10,7 +10,7 @@ export function RecentlyAddedPlayers() {
       position: 'LW',
       age: 18,
       country: 'England',
-      initialsColor: 'bg-blue-500',
+      initialsColor: 'bg-primary',
     },
     {
       initials: 'LY',
@@ -20,7 +20,7 @@ export function RecentlyAddedPlayers() {
       position: 'RW',
       age: 17,
       country: 'Spain',
-      initialsColor: 'bg-blue-500',
+      initialsColor: 'bg-primary',
     },
     {
       initials: 'EF',
@@ -30,7 +30,7 @@ export function RecentlyAddedPlayers() {
       position: 'ST',
       age: 18,
       country: 'Brazil',
-      initialsColor: 'bg-blue-500',
+      initialsColor: 'bg-primary',
     },
     {
       initials: 'WZ',
@@ -40,7 +40,7 @@ export function RecentlyAddedPlayers() {
       position: 'CM',
       age: 18,
       country: 'France',
-      initialsColor: 'bg-blue-500',
+      initialsColor: 'bg-primary',
     },
   ];
 
@@ -67,7 +67,7 @@ export function RecentlyAddedPlayers() {
                 </div>
                 <div
                   className={`absolute -bottom-1 -right-1 w-3 h-3 ${
-                    player.status === 'online' ? 'bg-green-500' : 'bg-[#596774]'
+                    player.status === 'online' ? 'bg-scout-green' : 'bg-[#596774]'
                   } border-2 border-[#0a2d4c] rounded-full`}
                 />
               </div>
@@ -79,7 +79,7 @@ export function RecentlyAddedPlayers() {
                 <div className="flex items-center gap-4 mt-3">
                   <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 ${
-                      player.status === 'online' ? 'bg-green-500/10 text-green-400' : 'bg-accent0/10 text-muted-foreground'
+                      player.status === 'online' ? 'bg-scout-green/10 text-scout-green' : 'bg-muted text-muted-foreground'
                     } rounded text-xs font-medium`}>
                       {player.position}
                     </span>

@@ -135,7 +135,7 @@ export default function LoginCredentials() {
 
             <div className="pt-8 border-t border-border text-center">
               <div className="flex items-center justify-center space-x-2 text-[14px] text-muted-foreground font-medium">
-                <ShieldCheck size={16} className="text-green-500" />
+                <ShieldCheck size={16} className="text-scout-green" />
                 <span>Protected by NXUS Enterprise Security</span>
               </div>
             </div>

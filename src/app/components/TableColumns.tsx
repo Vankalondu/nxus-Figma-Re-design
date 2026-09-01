@@ -154,7 +154,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
               <Plus size={14} className="mr-2" /> Insert column right
             </button>
             <div className="h-px bg-accent my-1"></div>
-            <button className="w-full text-left px-4 py-2 hover:bg-rose-50 flex items-center text-rose-500 font-semibold transition-colors" onClick={deleteColumn}>
+            <button className="w-full text-left px-4 py-2 hover:bg-scout-red/10 flex items-center text-scout-red font-semibold transition-colors" onClick={deleteColumn}>
               <Trash2 size={14} className="mr-2" /> Delete column
             </button>
             <button className="w-full text-left px-4 py-2 hover:bg-accent flex items-center text-primary font-semibold transition-colors" onClick={clearColumn}>

@@ -409,7 +409,7 @@ const ActionButtons = ({ items }: { items: ActionItem[] }) => {
           <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
             className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
               item.label === 'Restore'
-                ? 'text-emerald-600 hover:bg-emerald-500 hover:text-chalk'
+                ? 'text-scout-green hover:bg-scout-green hover:text-chalk'
                 : 'text-foreground hover:bg-primary hover:text-primary-foreground'
             }`}>
             {item.icon}
@@ -576,7 +576,7 @@ const buildActionItems = (
   onRestore?: () => void, isArchived?: boolean,
 ): ActionItem[] => {
   if (isArchived && onRestore) return [
-    { label: 'Restore', action: onRestore, icon: <RotateCcw size={12} className="text-emerald-400" /> },
+    { label: 'Restore', action: onRestore, icon: <RotateCcw size={12} className="text-scout-green" /> },
   ];
   if (currentTab === 'database') return [
     { label: 'Send Forward', action: onSendForward, icon: <ArrowRight size={12} /> },
@@ -2114,7 +2114,7 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
       {items.map((c, i) => (
         <span key={i} className="inline-flex items-center gap-1 bg-accent border border-border rounded-full px-2 py-1 font-body font-black text-[12px] text-foreground">
           {c}
-          <button onClick={() => onRemove(i)} className="text-muted-foreground hover:text-[#E05C4B] transition-colors leading-none"><X size={9} /></button>
+          <button onClick={() => onRemove(i)} className="text-muted-foreground hover:text-scout-red transition-colors leading-none"><X size={9} /></button>
         </span>
       ))}
     </div>
@@ -2447,7 +2447,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                 {customGrades.map((g, i) => (
                   <span key={i} className="inline-flex items-center gap-2 bg-accent border border-border rounded-full px-4 py-2 font-body font-black text-[14px] text-foreground">
                     {g}
-                    <button onClick={() => setCustomGrades(p => p.filter((_, j) => j !== i))} className="text-muted-foreground hover:text-[#E05C4B] transition-colors"><X size={11} /></button>
+                    <button onClick={() => setCustomGrades(p => p.filter((_, j) => j !== i))} className="text-muted-foreground hover:text-scout-red transition-colors"><X size={11} /></button>
                   </span>
                 ))}
               </div>
@@ -2468,7 +2468,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                 {customNxt.map((n, i) => (
                   <span key={i} className="inline-flex items-center gap-2 bg-accent border border-border rounded-full px-4 py-2 font-body font-black text-[14px] text-foreground">
                     {n}
-                    <button onClick={() => setCustomNxt(p => p.filter((_, j) => j !== i))} className="text-muted-foreground hover:text-[#E05C4B] transition-colors"><X size={11} /></button>
+                    <button onClick={() => setCustomNxt(p => p.filter((_, j) => j !== i))} className="text-muted-foreground hover:text-scout-red transition-colors"><X size={11} /></button>
                   </span>
                 ))}
               </div>
@@ -2489,7 +2489,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                 {customPathways.map((p, i) => (
                   <span key={i} className="inline-flex items-center gap-2 bg-accent border border-border rounded-full px-4 py-2 font-body font-black text-[14px] text-foreground">
                     {p}
-                    <button onClick={() => setCustomPathways(prev => prev.filter((_, j) => j !== i))} className="text-muted-foreground hover:text-[#E05C4B] transition-colors"><X size={11} /></button>
+                    <button onClick={() => setCustomPathways(prev => prev.filter((_, j) => j !== i))} className="text-muted-foreground hover:text-scout-red transition-colors"><X size={11} /></button>
                   </span>
                 ))}
               </div>
