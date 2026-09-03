@@ -9,20 +9,20 @@
   --foreground: #061b2e;
 
   /* ── Card & Popover surfaces ── */
-  --card: #f4faff;
+  --card: #f6fafe;
   --card-foreground: #061b2e;
-  --popover: #f4faff;
+  --popover: #f6fafe;
   --popover-foreground: #061b2e;
 
   /* ── Brand tokens — Athletic Blue as primary ── */
   --primary: #1e88e5;
-  --primary-foreground: #f4faff;
+  --primary-foreground: #f6fafe;
 
   /* ── Secondary & muted ── */
   --secondary: #e8f3fc;
   --secondary-foreground: #061b2e;
   --muted: #e8f3fc;
-  --muted-foreground: #304151;
+  --muted-foreground: #2f4151;
 
   /* ── Accent ── */
   --accent: #d2e7fa;
@@ -30,7 +30,7 @@
 
   /* ── Destructive ── */
   --destructive: #E05C4B;
-  --destructive-foreground: #f4faff;
+  --destructive-foreground: #f6fafe;
 
   /* ── Borders & inputs ── */
   --border: #b4d7f6;
@@ -56,11 +56,11 @@
   --radius: 0.75rem;
 
   /* ── Sidebar ── */
-  --sidebar: #f4faff;
+  --sidebar: #f6fafe;
   --sidebar-foreground: #061b2e;
   --sidebar-primary: #1e88e5;
-  --sidebar-primary-foreground: #f4faff;
-  --sidebar-accent: #e9f3fd;
+  --sidebar-primary-foreground: #f6fafe;
+  --sidebar-accent: #e8f3fc;
   --sidebar-accent-foreground: #061b2e;
   --sidebar-border: #b4d7f6;
   --sidebar-ring: #1e88e5;
@@ -83,24 +83,24 @@
   /* ── Qaza SVG palette — Primary Blue scale ── */
   --blue-50: #d2e7fa;
   --blue-100: #b4d7f6;
-  --blue-200: #8fc4f2;
+  --blue-200: #8ec4f2;
   --blue-300: #69b0ee;
   --blue-400: #449ce9;
   --blue-500: #1e88e5;
   --blue-600: #1971bf;
   --blue-700: #145b99;
-  --blue-800: #0f4473;
+  --blue-800: #0f4472;
   --blue-900: #0a2d4c;
   --blue-950: #061b2e;
 
   /* ── Qaza SVG palette — Dark/Navy scale (for text in light mode) ── */
   --navy-50: #cdd1d5;
   --navy-100: #acb3b9;
-  --navy-200: #838d97;
+  --navy-200: #828d96;
   --navy-300: #596774;
-  --navy-400: #304151;
+  --navy-400: #2f4151;
   --navy-500: #061b2e;
-  --navy-600: #051726;
+  --navy-600: #051626;
   --navy-700: #04121f;
   --navy-800: #030e17;
   --navy-900: #02090f;
@@ -109,11 +109,11 @@
   /* ── Qaza SVG palette — Light scale (for text in dark mode) ── */
   --light-50: #f6fafe;
   --light-100: #f0f7fd;
-  --light-200: #e9f3fd;
+  --light-200: #e8f3fc;
   --light-300: #e1effc;
   --light-400: #daebfb;
   --light-500: #d2e7fa;
-  --light-600: #afc1d0;
+  --light-600: #afc0d0;
   --light-700: #8c9aa7;
   --light-800: #69747d;
   --light-900: #464d53;
@@ -122,7 +122,7 @@
   /* ── Named semantic tokens ── */
   --ember: #1e88e5;
   --ember-light: #d2e7fa;
-  --ember-hover: #1565c0;
+  --ember-hover: #1971bf;
   --midnight: #061b2e;
   --chalk: #d2e7fa;
   --scout-green: #22C55E;
@@ -216,23 +216,23 @@
   --primary-foreground: #061b2e;
 
   /* ── Secondary & muted ── */
-  --secondary: #0f4473;
+  --secondary: #0f4472;
   --secondary-foreground: #d2e7fa;
-  --muted: #0f4473;
-  --muted-foreground: #afc1d0;
+  --muted: #0f4472;
+  --muted-foreground: #afc0d0;
 
   /* ── Accent ── */
-  --accent: #0f4473;
+  --accent: #0f4472;
   --accent-foreground: #d2e7fa;
 
   /* ── Destructive ── */
   --destructive: #E05C4B;
-  --destructive-foreground: #f4faff;
+  --destructive-foreground: #f6fafe;
 
   /* ── Borders & inputs ── */
   --border: #145b99;
-  --input: #0f4473;
-  --input-background: #0f4473;
+  --input: #0f4472;
+  --input-background: #0f4472;
   --switch-background: #1971bf;
 
   /* ── Ring ── */
@@ -254,7 +254,7 @@
   --sidebar-foreground: #d2e7fa;
   --sidebar-primary: #449ce9;
   --sidebar-primary-foreground: #061b2e;
-  --sidebar-accent: #0f4473;
+  --sidebar-accent: #0f4472;
   --sidebar-accent-foreground: #d2e7fa;
   --sidebar-border: #145b99;
   --sidebar-ring: #449ce9;
@@ -272,7 +272,7 @@
 
   /* ── Named semantic tokens — dark context ── */
   --ember: #449ce9;
-  --ember-light: #0f4473;
+  --ember-light: #0f4472;
   --ember-hover: #69b0ee;
   --midnight: #061b2e;
   --chalk: #d2e7fa;
