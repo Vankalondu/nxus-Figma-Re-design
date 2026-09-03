@@ -40,10 +40,10 @@ const CARD = 'bg-card rounded-[20px] border border-border shadow-[var(--shadow-l
 
 // ── semantic status pill ──
 const STATUS_META: Record<CoverageStatus, { label: string; cls: string }> = {
-  'unassigned':    { label: 'Unassigned',    cls: 'bg-scout-red/15 text-scout-red' },
+  'unassigned':    { label: 'Unassigned',    cls: 'bg-scout-red/15 text-status-error-fg' },
   'assigned':      { label: 'Assigned',      cls: 'bg-primary/15 text-primary' },
-  'in-progress':   { label: 'In progress',   cls: 'bg-scout-amber/15 text-scout-amber' },
-  'has-video':     { label: 'Has video',     cls: 'bg-scout-green/15 text-scout-green' },
+  'in-progress':   { label: 'In progress',   cls: 'bg-scout-amber/15 text-status-warning-fg' },
+  'has-video':     { label: 'Has video',     cls: 'bg-scout-green/15 text-status-success-fg' },
   'not-available': { label: 'Not available', cls: 'bg-accent text-muted-foreground' },
 };
 const StatusPill = ({ s }: { s: CoverageStatus }) => (
@@ -349,7 +349,7 @@ const RedoPanel = ({ onConfirm, onCancel }: { onConfirm: (reason: string) => voi
       <div className="flex justify-end gap-2 mt-2">
         <button onClick={onCancel} className="font-body font-bold text-[12px] text-muted-foreground hover:text-foreground px-2">Cancel</button>
         <button onClick={() => reason.trim() && onConfirm(reason.trim())} disabled={!reason.trim()}
-          className="inline-flex items-center gap-1 bg-scout-red/15 text-scout-red border border-scout-red/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full disabled:opacity-40"><RotateCcw size={12} /> Send back</button>
+          className="inline-flex items-center gap-1 bg-scout-red/15 text-status-error-fg border border-scout-red/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full disabled:opacity-40"><RotateCcw size={12} /> Send back</button>
       </div>
     </div>
   );
@@ -407,7 +407,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
                 </div>
               </div>
               <div className="relative flex items-center gap-1.5 shrink-0">
-                <button onClick={() => approve(item)} className="inline-flex items-center gap-1 bg-scout-green/15 text-scout-green border border-scout-green/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full hover:bg-scout-green/25 transition-colors"><Check size={13} /> Approve</button>
+                <button onClick={() => approve(item)} className="inline-flex items-center gap-1 bg-scout-green/15 text-status-success-fg border border-scout-green/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full hover:bg-scout-green/25 transition-colors"><Check size={13} /> Approve</button>
                 <button onClick={() => setRedoFor(redoFor === item.id ? null : item.id)} className="inline-flex items-center gap-1 bg-transparent border border-border text-muted-foreground font-body font-bold text-[12px] px-3 py-1.5 rounded-full hover:border-scout-red hover:text-scout-red transition-colors"><RotateCcw size={12} /> Redo</button>
                 {redoFor === item.id && (
                   <div className="absolute right-0 top-full mt-2 z-30"><RedoPanel onConfirm={r => redo(item, r)} onCancel={() => setRedoFor(null)} /></div>
@@ -430,7 +430,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
             <div className="divide-y divide-border border-t border-border">
               {vstate.reviewed.map(r => (
                 <div key={r.id} className="px-5 py-3 flex items-center gap-3">
-                  <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${r.outcome === 'approved' ? 'bg-scout-green/15 text-scout-green' : 'bg-scout-red/15 text-scout-red'}`}>{r.outcome === 'approved' ? <Check size={13} /> : <RotateCcw size={12} />}</span>
+                  <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${r.outcome === 'approved' ? 'bg-scout-green/15 text-status-success-fg' : 'bg-scout-red/15 text-status-error-fg'}`}>{r.outcome === 'approved' ? <Check size={13} /> : <RotateCcw size={12} />}</span>
                   <div className="min-w-0 flex-1">
                     <span className="font-body font-bold text-[13px] text-foreground">{r.videoName}</span>
                     <p className="font-body text-[12px] text-muted-foreground">{r.outcome === 'approved' ? 'Approved' : `Sent back — ${r.reason}`} · {r.uploader}</p>
@@ -457,7 +457,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
               </div>
               <p className="font-body text-[13px] text-muted-foreground">{playing.uploader} · {playing.uploaderRole} · {playing.dateLabel} · {playing.playerId ? playing.playerName : 'No player linked'}</p>
               <div className="flex items-center gap-2 mt-5 relative">
-                <button onClick={() => approve(playing)} className="inline-flex items-center gap-1.5 bg-scout-green/15 text-scout-green border border-scout-green/30 font-body font-black text-[13px] px-5 py-2.5 rounded-full hover:bg-scout-green/25 transition-colors"><Check size={15} /> Approve</button>
+                <button onClick={() => approve(playing)} className="inline-flex items-center gap-1.5 bg-scout-green/15 text-status-success-fg border border-scout-green/30 font-body font-black text-[13px] px-5 py-2.5 rounded-full hover:bg-scout-green/25 transition-colors"><Check size={15} /> Approve</button>
                 <button onClick={() => setRedoFor(redoFor === playing.id ? null : playing.id)} className="inline-flex items-center gap-1.5 bg-transparent border border-border text-muted-foreground font-body font-bold text-[13px] px-5 py-2.5 rounded-full hover:border-scout-red hover:text-scout-red transition-colors"><RotateCcw size={14} /> Redo</button>
                 {redoFor === playing.id && <div className="absolute left-0 bottom-full mb-2 z-30"><RedoPanel onConfirm={r => redo(playing, r)} onCancel={() => setRedoFor(null)} /></div>}
               </div>
@@ -617,7 +617,7 @@ export default function VideoManagerDashboard() {
                 {vstate.approvals.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-muted-foreground">You're all caught up.</div>}
                 {[...vstate.approvals].sort((a, b) => b.daysAgo - a.daysAgo).map(a => (
                   <button key={a.id} onClick={() => { setActiveTab('approval'); setShowNotif(false); }} className="w-full text-left px-5 py-3 flex items-start gap-3 hover:bg-accent transition-colors">
-                    <span className="w-8 h-8 rounded-full bg-scout-red/15 text-scout-red flex items-center justify-center shrink-0 mt-0.5"><ClipboardCheck size={13} /></span>
+                    <span className="w-8 h-8 rounded-full bg-scout-red/15 text-status-error-fg flex items-center justify-center shrink-0 mt-0.5"><ClipboardCheck size={13} /></span>
                     <div className="flex-1 min-w-0">
                       <p className="font-body text-[13px] font-bold text-foreground leading-snug">{a.uploader} uploaded “{a.videoName}” — needs approval</p>
                       <p className="font-body text-[12px] text-muted-foreground mt-0.5">{a.dateLabel}</p>

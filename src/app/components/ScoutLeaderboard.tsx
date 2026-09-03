@@ -108,7 +108,7 @@ export function ScoutLeaderboard() {
               <div className="flex items-center justify-center w-8 h-8">
                 {scout.rank <= 3 ? (
                   <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                    scout.rank === 1 ? 'bg-scout-amber/20 text-scout-amber' :
+                    scout.rank === 1 ? 'bg-scout-amber/20 text-status-warning-fg' :
                     scout.rank === 2 ? 'bg-muted-foreground/20 text-muted-foreground' :
                     'bg-primary/20 text-primary'
                   } font-bold`}>

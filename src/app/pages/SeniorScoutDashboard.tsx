@@ -132,7 +132,7 @@ const POS_COLORS: Record<string, string> = {
 // B+ now binds the scout-amber token instead of bracketed hex (L-C4).
 const GRADE_COLORS: Record<string, string> = {
   'A+': 'bg-primary text-primary-foreground', 'A': 'bg-primary/15 text-foreground',
-  'B+': 'bg-scout-amber/15 text-scout-amber', 'B': 'bg-muted-foreground/10 text-muted-foreground',
+  'B+': 'bg-scout-amber/15 text-status-warning-fg', 'B': 'bg-muted-foreground/10 text-muted-foreground',
   'C+': 'bg-accent text-muted-foreground', 'C': 'bg-accent text-muted-foreground',
 };
 const PosPill = ({ pos }: { pos: string }) => (

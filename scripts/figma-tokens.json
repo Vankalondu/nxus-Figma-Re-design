@@ -1,26 +1,132 @@
 {
   "_comment": "Snapshot of every variable in QAZA_FE, extracted via the Figma MCP plugin bridge. The extract needs the MCP (an agent runs it); this file is the committed result so scripts/figma-css-diff.mjs can run standalone and the diff is reviewable in a PR. Refresh by re-running the extract and replacing this file.",
-  "extractedAt": "2026-09-01",
+  "extractedAt": "2026-09-03",
   "fileKey": "qefpAyr3MEEklQRV96YlSv",
   "scaleSteps": "Figma colour families run 100,200,300,400,500,Base,600,700,800,900,1000 — 11 steps with Base in the middle (the tonal anchor). CSS runs 50,100,...,900,950. So Figma/100 = CSS/-50, Figma/Base = CSS/-500, Figma/1000 = CSS/-950.",
-
   "Qaza": {
     "_role": "Raw hardcoded values. Every value in its raw form.",
-    "Colors/Blue": { "100": "#d2e7fa", "200": "#b4d7f6", "300": "#8ec4f2", "400": "#69b0ee", "500": "#449ce9", "Base": "#1e88e5", "600": "#1971bf", "700": "#145b99", "800": "#0f4472", "900": "#0a2d4c", "1000": "#061b2e" },
-    "Colors/Light Blue": { "100": "#f6fafe", "200": "#f0f7fd", "300": "#e8f3fc", "400": "#e1effc", "500": "#daebfb", "Base": "#d2e7fa", "600": "#afc0d0", "700": "#8c9aa7", "800": "#69747d", "900": "#464d53", "1000": "#2a2e32" },
-    "Colors/Dark Blue": { "100": "#cdd1d5", "200": "#acb3b9", "300": "#828d96", "400": "#596774", "500": "#2f4151", "Base": "#061b2e", "600": "#051626", "700": "#04121f", "800": "#030e17", "900": "#02090f", "1000": "#010509" },
-    "Colors/Red": { "100": "#fce9e5", "200": "#f8c9c0", "300": "#f3a698", "400": "#ec8470", "500": "#e76d58", "Base": "#e05c4b", "600": "#c44537", "700": "#a23425", "800": "#7a2419", "900": "#52160e", "1000": "#2e0b07" },
-    "Colors/Amber": { "100": "#fbefd6", "200": "#f7dfaa", "300": "#f3cd7a", "400": "#efbc52", "500": "#ebb244", "Base": "#e8a838", "600": "#c68b20", "700": "#996a15", "800": "#6e4b0d", "900": "#473006", "1000": "#291b03" },
-    "Colors/Green": { "100": "#d9ede3", "200": "#b0d9c3", "300": "#83c2a2", "400": "#5bab85", "500": "#479974", "Base": "#3a8c6a", "600": "#2e7256", "700": "#235742", "800": "#193d2e", "900": "#0f2519", "1000": "#08160d" },
-    "Scale": { "0": 0, "25": 1, "50": 2, "100": 4, "200": 8, "300": 12, "350": 14, "400": 16, "500": 20, "600": 24, "700": 28, "800": 32, "900": 36, "1000": 40, "1200": 44, "1300": 48, "1400": 64, "1500": 96, "1600": 120, "1700": 240, "1800": 400, "1900": 440, "2000": 480 },
+    "Colors/Blue": {
+      "100": "#d2e7fa",
+      "200": "#b4d7f6",
+      "300": "#8ec4f2",
+      "400": "#69b0ee",
+      "500": "#449ce9",
+      "600": "#1971bf",
+      "700": "#145b99",
+      "800": "#0f4472",
+      "900": "#0a2d4c",
+      "1000": "#061b2e",
+      "Base": "#1e88e5"
+    },
+    "Colors/Light Blue": {
+      "100": "#f6fafe",
+      "200": "#f0f7fd",
+      "300": "#e8f3fc",
+      "400": "#e1effc",
+      "500": "#daebfb",
+      "600": "#afc0d0",
+      "700": "#8c9aa7",
+      "800": "#69747d",
+      "900": "#464d53",
+      "1000": "#2a2e32",
+      "Base": "#d2e7fa"
+    },
+    "Colors/Dark Blue": {
+      "100": "#cdd1d5",
+      "200": "#acb3b9",
+      "300": "#828d96",
+      "400": "#596774",
+      "500": "#2f4151",
+      "600": "#051626",
+      "700": "#04121f",
+      "800": "#030e17",
+      "900": "#02090f",
+      "1000": "#010509",
+      "Base": "#061b2e"
+    },
+    "Colors/Red": {
+      "100": "#fce9e5",
+      "200": "#f8c9c0",
+      "300": "#f3a698",
+      "400": "#ec8470",
+      "500": "#e76d58",
+      "600": "#c44537",
+      "700": "#a23425",
+      "800": "#7a2419",
+      "900": "#52160e",
+      "1000": "#2e0b07",
+      "Base": "#e05c4b"
+    },
+    "Colors/Amber": {
+      "100": "#fbefd6",
+      "200": "#f7dfaa",
+      "300": "#f3cd7a",
+      "400": "#efbc52",
+      "500": "#ebb244",
+      "600": "#c68b20",
+      "700": "#996a15",
+      "800": "#6e4b0d",
+      "900": "#473006",
+      "1000": "#291b03",
+      "Base": "#e8a838"
+    },
+    "Colors/Green": {
+      "100": "#d7f5e2",
+      "200": "#abe9c2",
+      "300": "#7cdd9f",
+      "400": "#50d17f",
+      "500": "#34ca6b",
+      "600": "#1b9f4c",
+      "700": "#15793a",
+      "800": "#0f5529",
+      "900": "#093218",
+      "1000": "#051b0d",
+      "Base": "#22c55e"
+    },
+    "Scale": {
+      "0": 0,
+      "25": 1,
+      "50": 2,
+      "100": 4,
+      "200": 8,
+      "300": 12,
+      "350": 14,
+      "400": 16,
+      "500": 20,
+      "600": 24,
+      "700": 28,
+      "800": 32,
+      "900": 36,
+      "1000": 40,
+      "1200": 44,
+      "1300": 48,
+      "1400": 64,
+      "1500": 96,
+      "1600": 120,
+      "1700": 240,
+      "1800": 400,
+      "1900": 440,
+      "2000": 480
+    },
     "Fonts": {
       "Plus Jakarta Sans/Family/Primary": "Plus Jakarta Sans",
-      "Plus Jakarta Sans/Weight": ["Light", "Regular", "Medium", "SemiBold", "Bold"],
+      "Plus Jakarta Sans/Weight": [
+        "Light",
+        "Regular",
+        "Medium",
+        "SemiBold",
+        "Bold"
+      ],
       "Figtree/Family/Secondary": "Figtree",
-      "Figtree/Weight": ["Light", "Regular", "Medium", "SemiBold", "Bold"]
+      "Figtree/Weight": [
+        "Light",
+        "Regular",
+        "Medium",
+        "SemiBold",
+        "Bold"
+      ]
     }
   },
-
   "Allias": {
     "_role": "Groups raw values into families with all variations recorded. Pure aliases to Qaza.",
     "familyMap": {
@@ -32,89 +138,363 @@
       "Colors/Success": "Colors/Green"
     },
     "_familyNote": "Each family aliases all 11 steps 1:1 (Primary/100 -> Blue/100 … Primary/1000 -> Blue/1000).",
-    "Border Width": { "none": "Scale/0 (0)", "sm": "Scale/25 (1)", "md": "Scale/50 (2)", "lg": "Scale/100 (4)" },
-    "Border Radius": { "100": "Scale/100 (4)", "200": "Scale/200 (8)", "300": "Scale/300 (12)", "400": "Scale/400 (16)", "500": "Scale/500 (20)", "600": "Scale/600 (24)" }
+    "Border Width": {
+      "none": "Scale/0 (0)",
+      "sm": "Scale/25 (1)",
+      "md": "Scale/50 (2)",
+      "lg": "Scale/100 (4)"
+    },
+    "Border Radius": {
+      "100": "Scale/100 (4)",
+      "200": "Scale/200 (8)",
+      "300": "Scale/300 (12)",
+      "400": "Scale/400 (16)",
+      "500": "Scale/500 (20)",
+      "600": "Scale/600 (24)"
+    }
   },
-
   "Mapped": {
     "_role": "Gives variables specific functions. References Allias, which references Qaza. Light/Dark modes.",
-    "Color/Surface/page": { "Light": "Light Mode/Base", "Dark": "Dark Mode/700" },
-    "Color/Surface/canvas": { "Light": "Light Mode/200", "Dark": "Dark Mode/800" },
-    "Color/Surface/card": { "Light": "Light Mode/100", "Dark": "Dark Mode/600" },
-    "Color/Surface/elevated": { "Light": "Light Mode/200", "Dark": "Dark Mode/500" },
-    "Color/Surface/inverse": { "Light": "Light Mode/1000", "Dark": "Dark Mode/100" },
-    "Color/Surface/overlay": { "Light": "Light Mode/1000", "Dark": "Dark Mode/1000" },
-    "Color/Border/subtle": { "Light": "Light Mode/300", "Dark": "Dark Mode/500" },
-    "Color/Border/default": { "Light": "Light Mode/500", "Dark": "Dark Mode/400" },
-    "Color/Border/strong": { "Light": "Light Mode/700", "Dark": "Dark Mode/300" },
-    "Color/Border/focus": { "Light": "Primary/Base", "Dark": "Primary/400" },
-    "Color/Text/heading": { "Light": "Light Mode/1000", "Dark": "Dark Mode/100" },
-    "Color/Text/body": { "Light": "Light Mode/900", "Dark": "Dark Mode/200" },
-    "Color/Text/muted": { "Light": "Light Mode/800", "Dark": "Dark Mode/300" },
-    "Color/Text/placeholder": { "Light": "Light Mode/600", "Dark": "Dark Mode/400" },
-    "Color/Text/inverse": { "Light": "Light Mode/100", "Dark": "Dark Mode/1000" },
-    "Color/Text/link": { "Light": "Primary/Base", "Dark": "Primary/400" },
-    "Color/Text/disabled": { "Light": "Light Mode/600", "Dark": "Dark Mode/400" },
-    "Color/Button/primary-bg": { "Light": "Light Mode/1000", "Dark": "Primary/400" },
-    "Color/Button/primary-text": { "Light": "Light Mode/100", "Dark": "Dark Mode/1000" },
-    "Color/Button/primary-hover": { "Light": "Light Mode/900", "Dark": "Primary/500" },
-    "Color/Button/secondary-bg": { "Light": "Light Mode/200", "Dark": "Dark Mode/500" },
-    "Color/Button/secondary-text": { "Light": "Light Mode/1000", "Dark": "Dark Mode/100" },
-    "Color/Button/secondary-hover": { "Light": "Light Mode/300", "Dark": "Dark Mode/400" },
-    "Color/Button/danger-bg": { "Light": "Error/Base", "Dark": "Error/500" },
-    "Color/Button/danger-text": { "Light": "Light Mode/100", "Dark": "Light Mode/100" },
-    "Color/Button/success-bg": { "Light": "Success/Base", "Dark": "Success/500" },
-    "Color/Button/disabled-bg": { "Light": "Light Mode/300", "Dark": "Dark Mode/500" },
-    "Color/Button/disabled-text": { "Light": "Light Mode/600", "Dark": "Dark Mode/400" },
-    "Color/Status/success": { "Light": "Success/Base", "Dark": "Success/400" },
-    "Color/Status/error": { "Light": "Error/Base", "Dark": "Error/400" },
-    "Color/Status/warning": { "Light": "Warning/Base", "Dark": "Warning/400" },
-    "Color/Status/info": { "Light": "Primary/Base", "Dark": "Primary/400" },
-    "Color/Status/success-tint": { "Light": "Success/100", "Dark": "Success/800" },
-    "Color/Status/error-tint": { "Light": "Error/100", "Dark": "Error/800" },
-    "Color/Status/warning-tint": { "Light": "Warning/100", "Dark": "Warning/800" },
-    "Color/Status/info-tint": { "Light": "Primary/100", "Dark": "Primary/800" }
+    "Color/Surface/page": {
+      "Light": "Light Mode/Base",
+      "Dark": "Dark Mode/700"
+    },
+    "Color/Surface/canvas": {
+      "Light": "Light Mode/200",
+      "Dark": "Dark Mode/800"
+    },
+    "Color/Surface/card": {
+      "Light": "Light Mode/100",
+      "Dark": "Dark Mode/600"
+    },
+    "Color/Surface/elevated": {
+      "Light": "Light Mode/200",
+      "Dark": "Dark Mode/500"
+    },
+    "Color/Surface/inverse": {
+      "Light": "Light Mode/1000",
+      "Dark": "Dark Mode/100"
+    },
+    "Color/Surface/overlay": {
+      "Light": "Light Mode/1000",
+      "Dark": "Dark Mode/1000"
+    },
+    "Color/Border/subtle": {
+      "Light": "Light Mode/300",
+      "Dark": "Dark Mode/500"
+    },
+    "Color/Border/default": {
+      "Light": "Light Mode/500",
+      "Dark": "Dark Mode/400"
+    },
+    "Color/Border/strong": {
+      "Light": "Light Mode/700",
+      "Dark": "Dark Mode/300"
+    },
+    "Color/Border/focus": {
+      "Light": "Primary/Base",
+      "Dark": "Primary/400"
+    },
+    "Color/Text/heading": {
+      "Light": "Light Mode/1000",
+      "Dark": "Dark Mode/100"
+    },
+    "Color/Text/body": {
+      "Light": "Light Mode/900",
+      "Dark": "Dark Mode/200"
+    },
+    "Color/Text/muted": {
+      "Light": "Light Mode/800",
+      "Dark": "Dark Mode/300"
+    },
+    "Color/Text/placeholder": {
+      "Light": "Light Mode/600",
+      "Dark": "Dark Mode/400"
+    },
+    "Color/Text/inverse": {
+      "Light": "Light Mode/100",
+      "Dark": "Dark Mode/1000"
+    },
+    "Color/Text/link": {
+      "Light": "Primary/Base",
+      "Dark": "Primary/400"
+    },
+    "Color/Text/disabled": {
+      "Light": "Light Mode/600",
+      "Dark": "Dark Mode/400"
+    },
+    "Color/Button/primary-bg": {
+      "Light": "Light Mode/1000",
+      "Dark": "Primary/400"
+    },
+    "Color/Button/primary-text": {
+      "Light": "Light Mode/100",
+      "Dark": "Dark Mode/1000"
+    },
+    "Color/Button/primary-hover": {
+      "Light": "Light Mode/900",
+      "Dark": "Primary/500"
+    },
+    "Color/Button/secondary-bg": {
+      "Light": "Light Mode/200",
+      "Dark": "Dark Mode/500"
+    },
+    "Color/Button/secondary-text": {
+      "Light": "Light Mode/1000",
+      "Dark": "Dark Mode/100"
+    },
+    "Color/Button/secondary-hover": {
+      "Light": "Light Mode/300",
+      "Dark": "Dark Mode/400"
+    },
+    "Color/Button/danger-bg": {
+      "Light": "Error/Base",
+      "Dark": "Error/500"
+    },
+    "Color/Button/danger-text": {
+      "Light": "Light Mode/100",
+      "Dark": "Light Mode/100"
+    },
+    "Color/Button/success-bg": {
+      "Light": "Success/Base",
+      "Dark": "Success/500"
+    },
+    "Color/Button/disabled-bg": {
+      "Light": "Light Mode/300",
+      "Dark": "Dark Mode/500"
+    },
+    "Color/Button/disabled-text": {
+      "Light": "Light Mode/600",
+      "Dark": "Dark Mode/400"
+    },
+    "Color/Status/success": {
+      "Light": "Success/Base",
+      "Dark": "Success/400"
+    },
+    "Color/Status/error": {
+      "Light": "Error/Base",
+      "Dark": "Error/400"
+    },
+    "Color/Status/warning": {
+      "Light": "Warning/Base",
+      "Dark": "Warning/400"
+    },
+    "Color/Status/info": {
+      "Light": "Primary/Base",
+      "Dark": "Primary/400"
+    },
+    "Color/Status/success-tint": {
+      "Light": "Success/100",
+      "Dark": "Success/800"
+    },
+    "Color/Status/error-tint": {
+      "Light": "Error/100",
+      "Dark": "Error/800"
+    },
+    "Color/Status/warning-tint": {
+      "Light": "Warning/100",
+      "Dark": "Warning/800"
+    },
+    "Color/Status/info-tint": {
+      "Light": "Primary/100",
+      "Dark": "Primary/800"
+    }
   },
-
   "Responsive": {
     "_role": "Device responsiveness only: Mobile / Tablet / Desktop.",
     "_format": "[Mobile, Tablet, Desktop]",
-    "Spacing/3xs": [2, 2, 2],
-    "Spacing/2xs": [4, 4, 4],
-    "Spacing/xs": [8, 8, 8],
-    "Spacing/sm": [12, 12, 12],
-    "Spacing/md": [16, 16, 16],
-    "Spacing/lg": [20, 24, 24],
-    "Spacing/xl": [24, 32, 32],
-    "Spacing/2xl": [32, 40, 48],
-    "Spacing/3xl": [48, 56, 64],
-    "Text/Headings/h1/text size": [28, 40, 56],
-    "Text/Headings/h1/Line height": [32, 48, 64],
-    "Text/Headings/h1/Paragraph spacing": [16, 24, 24],
-    "Text/Headings/h2/text size": [20, 24, 32],
-    "Text/Headings/h2/Line height": [28, 32, 40],
-    "Text/Headings/h2/Paragraph spacing": [12, 16, 20],
-    "Text/Headings/h3/text size": [16, 18, 20],
-    "Text/Headings/h3/Line height": [24, 24, 28],
-    "Text/Headings/h3/Paragraph spacing": [8, 12, 12],
-    "Text/Body/lg/text size": [14, 16, 16],
-    "Text/Body/lg/Line height": [20, 24, 24],
-    "Text/Body/lg/Paragraph spacing": [8, 8, 8],
-    "Text/Body/md/text size": [12, 14, 14],
-    "Text/Body/md/Line height": [16, 20, 20],
-    "Text/Body/md/Paragraph spacing": [8, 8, 8],
-    "Text/Body/sm/text size": [12, 12, 12],
-    "Text/Body/sm/Line height": [16, 16, 16],
-    "Text/Body/sm/Paragraph spacing": [8, 8, 8],
-    "Text/Body/caption/text size": [10, 10, 10],
-    "Text/Body/caption/Line height": [12, 12, 14],
-    "Text/Body/caption/Paragraph spacing": [4, 4, 4],
-    "Radius/sm": [4, 4, 4],
-    "Radius/md": [8, 8, 8],
-    "Radius/lg": [12, 12, 12],
-    "Radius/xl": [16, 16, 16],
-    "Radius/2xl": [20, 24, 24],
-    "Radius/3xl": [24, 28, 32],
-    "Radius/pill": [999, 999, 999]
+    "Spacing/3xs": [
+      2,
+      2,
+      2
+    ],
+    "Spacing/2xs": [
+      4,
+      4,
+      4
+    ],
+    "Spacing/xs": [
+      8,
+      8,
+      8
+    ],
+    "Spacing/sm": [
+      12,
+      12,
+      12
+    ],
+    "Spacing/md": [
+      16,
+      16,
+      16
+    ],
+    "Spacing/lg": [
+      20,
+      24,
+      24
+    ],
+    "Spacing/xl": [
+      24,
+      32,
+      32
+    ],
+    "Spacing/2xl": [
+      32,
+      40,
+      48
+    ],
+    "Spacing/3xl": [
+      48,
+      56,
+      64
+    ],
+    "Text/Headings/h1/text size": [
+      28,
+      40,
+      56
+    ],
+    "Text/Headings/h1/Line height": [
+      32,
+      48,
+      64
+    ],
+    "Text/Headings/h1/Paragraph spacing": [
+      16,
+      24,
+      24
+    ],
+    "Text/Headings/h2/text size": [
+      20,
+      24,
+      32
+    ],
+    "Text/Headings/h2/Line height": [
+      28,
+      32,
+      40
+    ],
+    "Text/Headings/h2/Paragraph spacing": [
+      12,
+      16,
+      20
+    ],
+    "Text/Headings/h3/text size": [
+      16,
+      18,
+      20
+    ],
+    "Text/Headings/h3/Line height": [
+      24,
+      24,
+      28
+    ],
+    "Text/Headings/h3/Paragraph spacing": [
+      8,
+      12,
+      12
+    ],
+    "Text/Body/lg/text size": [
+      14,
+      16,
+      16
+    ],
+    "Text/Body/lg/Line height": [
+      20,
+      24,
+      24
+    ],
+    "Text/Body/lg/Paragraph spacing": [
+      8,
+      8,
+      8
+    ],
+    "Text/Body/md/text size": [
+      12,
+      14,
+      14
+    ],
+    "Text/Body/md/Line height": [
+      16,
+      20,
+      20
+    ],
+    "Text/Body/md/Paragraph spacing": [
+      8,
+      8,
+      8
+    ],
+    "Text/Body/sm/text size": [
+      12,
+      12,
+      12
+    ],
+    "Text/Body/sm/Line height": [
+      16,
+      16,
+      16
+    ],
+    "Text/Body/sm/Paragraph spacing": [
+      8,
+      8,
+      8
+    ],
+    "Text/Body/caption/text size": [
+      10,
+      10,
+      10
+    ],
+    "Text/Body/caption/Line height": [
+      12,
+      12,
+      14
+    ],
+    "Text/Body/caption/Paragraph spacing": [
+      4,
+      4,
+      4
+    ],
+    "Radius/sm": [
+      4,
+      4,
+      4
+    ],
+    "Radius/md": [
+      8,
+      8,
+      8
+    ],
+    "Radius/lg": [
+      12,
+      12,
+      12
+    ],
+    "Radius/xl": [
+      16,
+      16,
+      16
+    ],
+    "Radius/2xl": [
+      20,
+      24,
+      24
+    ],
+    "Radius/3xl": [
+      24,
+      28,
+      32
+    ],
+    "Radius/pill": [
+      999,
+      999,
+      999
+    ]
+  },
+  "_shadowStyles": {
+    "_note": "Effect styles, corrected 2026-09-03 from #000000 (L-C1) and #0f172a (L-C2) to the palette navy. Alpha and geometry preserved.",
+    "Shadow/xs": "#061b2e @0.04",
+    "Shadow/sm": "#061b2e @0.06",
+    "Shadow/md": "#061b2e @0.04",
+    "Shadow/lg": "#061b2e @0.06",
+    "Shadow/xl": "#061b2e @0.20"
   }
 }

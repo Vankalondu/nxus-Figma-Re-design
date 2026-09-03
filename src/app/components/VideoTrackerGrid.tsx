@@ -10,17 +10,17 @@ const jersey = (id: string) => (hash(id) % 30) + 1;
 
 // tier → priority badge + list label
 const TIER_PRIO: Record<PipelineTier, { n: number; cls: string; label: string }> = {
-  'target-list': { n: 1, cls: 'bg-scout-red/15 text-scout-red',   label: 'Target' },
-  'short-list':  { n: 2, cls: 'bg-scout-amber/15 text-scout-amber', label: 'Short' },
+  'target-list': { n: 1, cls: 'bg-scout-red/15 text-status-error-fg',   label: 'Target' },
+  'short-list':  { n: 2, cls: 'bg-scout-amber/15 text-status-warning-fg', label: 'Short' },
   'long-list':   { n: 3, cls: 'bg-primary/15 text-primary',       label: 'Long' },
 };
 
 // coverage status → slot appearance
 const slotCls = (kind: 'filled' | 'progress' | 'missing' | 'na') =>
   kind === 'filled' ? 'bg-[#22d3ee]/15 text-[#145B99] border-[#22d3ee]/40'   // cyan = uploaded
-  : kind === 'progress' ? 'bg-scout-amber/15 text-scout-amber border-scout-amber/30'
+  : kind === 'progress' ? 'bg-scout-amber/15 text-status-warning-fg border-scout-amber/30'
   : kind === 'na' ? 'bg-accent text-muted-foreground border-border'
-  : 'bg-scout-red/15 text-scout-red border-scout-red/30';                     // red = missing
+  : 'bg-scout-red/15 text-status-error-fg border-scout-red/30';                     // red = missing
 
 export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload }: {
   mode: 'uploader' | 'manager';
@@ -108,7 +108,7 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
                   {canFm && (
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-1">
-                        <button onClick={() => setFullMatchAvailability(p.id, 'available')} className={`px-2 py-1 rounded-full font-body font-bold text-[11px] border ${fm === 'has-video' ? 'bg-scout-green/15 text-scout-green border-scout-green/30' : 'bg-card border-border text-muted-foreground hover:text-foreground'}`}>Avail</button>
+                        <button onClick={() => setFullMatchAvailability(p.id, 'available')} className={`px-2 py-1 rounded-full font-body font-bold text-[11px] border ${fm === 'has-video' ? 'bg-scout-green/15 text-status-success-fg border-scout-green/30' : 'bg-card border-border text-muted-foreground hover:text-foreground'}`}>Avail</button>
                         <button onClick={() => setFullMatchAvailability(p.id, 'not-available')} className={`px-2 py-1 rounded-full font-body font-bold text-[11px] border ${fm === 'not-available' ? 'bg-accent text-foreground border-border' : 'bg-card border-border text-muted-foreground hover:text-foreground'}`}>N/A</button>
                       </div>
                     </td>

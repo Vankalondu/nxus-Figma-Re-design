@@ -25,7 +25,7 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
     const cls = activeTab
       ? 'bg-card/20 text-primary-foreground'
       : red
-        ? 'bg-scout-red/15 text-scout-red'
+        ? 'bg-scout-red/15 text-status-error-fg'
         : 'bg-primary/15 text-foreground';
     return <span className={`ml-1.5 font-body text-micro font-black px-1.5 py-0.5 rounded-full tabular-nums ${cls}`}>{tab.count}</span>;
   };

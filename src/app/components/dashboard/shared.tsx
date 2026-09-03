@@ -23,10 +23,10 @@ export const fmtDate = (iso?: string) => {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 export const TASK_STATE_META: Record<'pending' | 'in-progress' | 'done' | 'overdue', { label: string; cls: string }> = {
-  'pending':     { label: 'Pending',     cls: 'bg-scout-amber/15 text-scout-amber' },
+  'pending':     { label: 'Pending',     cls: 'bg-scout-amber/15 text-status-warning-fg' },
   'in-progress': { label: 'In progress', cls: 'bg-primary/15 text-primary' },
-  'done':        { label: 'Done',        cls: 'bg-scout-green/15 text-scout-green' },
-  'overdue':     { label: 'Overdue',     cls: 'bg-scout-red/15 text-scout-red' },
+  'done':        { label: 'Done',        cls: 'bg-scout-green/15 text-status-success-fg' },
+  'overdue':     { label: 'Overdue',     cls: 'bg-scout-red/15 text-status-error-fg' },
 };
 
 // ─── Task data + helpers (Tasks tab) ────────────────────────────────────────
@@ -97,8 +97,8 @@ export const TASK_STATUS = [
 
 // Priority pill: high = red (needs attention), medium = amber, low = muted. Soft tints, no shout.
 const PRIORITY_PILL: Record<'High' | 'Medium' | 'Low', string> = {
-  High:   'bg-scout-red/15 text-scout-red',
-  Medium: 'bg-scout-amber/15 text-scout-amber',
+  High:   'bg-scout-red/15 text-status-error-fg',
+  Medium: 'bg-scout-amber/15 text-status-warning-fg',
   Low:    'bg-accent text-muted-foreground',
 };
 export const PriorityPill = ({ p }: { p: 'High' | 'Medium' | 'Low' }) => (

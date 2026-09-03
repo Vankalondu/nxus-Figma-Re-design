@@ -230,7 +230,7 @@ export default function UploaderDashboard() {
                             <span className="font-body font-bold text-[14px] text-foreground truncate">{item.videoName}</span>
                             <p className="font-body text-[12px] text-muted-foreground mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
                           </div>
-                          <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-scout-amber/15 text-scout-amber shrink-0">Pending</span>
+                          <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-scout-amber/15 text-status-warning-fg shrink-0">Pending</span>
                         </div>
                       ))}
                       {approved.map(item => (
@@ -239,7 +239,7 @@ export default function UploaderDashboard() {
                             <span className="font-body font-bold text-[14px] text-foreground truncate">{item.videoName}</span>
                             <p className="font-body text-[12px] text-muted-foreground mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
                           </div>
-                          <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-scout-green/15 text-scout-green shrink-0">Approved</span>
+                          <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-scout-green/15 text-status-success-fg shrink-0">Approved</span>
                         </div>
                       ))}
                     </div>

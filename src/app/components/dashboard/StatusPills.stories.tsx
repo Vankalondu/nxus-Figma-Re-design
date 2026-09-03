@@ -91,9 +91,9 @@ export const SemanticMeanings: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
       {[
-        ['bg-scout-green/15 text-scout-green', 'Green', 'success · complete · scouted · approved'],
-        ['bg-scout-amber/15 text-scout-amber', 'Amber', 'pending · in progress · warning · monitor'],
-        ['bg-scout-red/15 text-scout-red', 'Red', 'late · flagged · unscouted · destructive'],
+        ['bg-scout-green/15 text-status-success-fg', 'Green', 'success · complete · scouted · approved'],
+        ['bg-scout-amber/15 text-status-warning-fg', 'Amber', 'pending · in progress · warning · monitor'],
+        ['bg-scout-red/15 text-status-error-fg', 'Red', 'late · flagged · unscouted · destructive'],
         ['bg-primary/15 text-primary', 'Blue', 'assigned'],
       ].map(([cls, label, meaning]) => (
         <div key={label} className="flex items-center gap-4">

@@ -79,7 +79,7 @@ export function RecentlyAddedPlayers() {
                 <div className="flex items-center gap-4 mt-3">
                   <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 ${
-                      player.status === 'online' ? 'bg-scout-green/10 text-scout-green' : 'bg-muted text-muted-foreground'
+                      player.status === 'online' ? 'bg-scout-green/10 text-status-success-fg' : 'bg-muted text-muted-foreground'
                     } rounded text-xs font-medium`}>
                       {player.position}
                     </span>

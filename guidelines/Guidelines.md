@@ -572,22 +572,43 @@ Format: icon chip + short heading, then a big number with a short descriptor bes
 an actionable link. One source of truth so dashboards cannot visually drift.
 
 ### P-CO5 — Status pills
-Soft translucent tint, never a heavy solid fill.
+Soft translucent tint, never a heavy solid fill. **The tint and the text are not the
+same value** — the tint comes from the status colour, the text from a darker step.
 
 ```
-bg-scout-green/15 text-scout-green    success / done
-bg-scout-amber/15 text-scout-amber    pending / in progress
-bg-scout-red/15   text-scout-red      attention / overdue
-bg-primary/15     text-primary        assigned
+bg-scout-green/15 text-status-success-fg    success / done
+bg-scout-amber/15 text-status-warning-fg    pending / in progress
+bg-scout-red/15   text-status-error-fg      attention / overdue
+bg-primary/15     text-primary              assigned
 ```
 
 **Why the tint:** solid status fills compete with `bg-primary` structural anchors.
 Translucent tints keep dozens of pills per screen scannable without shouting.
+
+**Why the text is a different value — this is the part that matters.** Using the status
+colour for *both* the tint and the text is unreadable. Measured on a light card, the
+original pattern gave **1.92:1** for success, **1.80:1** for warning and **2.90:1** for
+error — all far below AA, roughly the contrast of light grey on white. The hues are simply
+too light to serve as text on their own tint.
+
+`--status-*-fg` resolves per theme: the **/800** step in light and the **/300** step in
+dark. Measured after the fix: 7.53 / 6.79 / 8.02 in light, 6.48 / 7.24 / 6.33 in dark.
+
+The darker steps come from the Figma colour families, which carry all eleven steps for
+Success, Warning and Error. The code previously held only `Base` for each, which is why the
+readable value was out of reach — the fix already existed in the design system.
+
+**Scope:** this applies to text sitting *on a tint*. A standalone `text-scout-green` — a
+status dot, an icon, a single glyph on a card — is a fill, not text on a tint, and keeps
+the base value.
+
 Reference: `TASK_STATE_META`, `shared.tsx:25`.
 
 ### P-CO6 — Priority pills
-High = `bg-scout-red/15 text-scout-red` · Medium = `bg-scout-amber/15 text-scout-amber` ·
-Low = muted. Reference: `PRIORITY_PILL`, `shared.tsx:86`.
+High = `bg-scout-red/15 text-status-error-fg` · Medium = `bg-scout-amber/15
+text-status-warning-fg` · Low = muted. Same tint-and-darker-text rule as **P-CO5** — these
+are status pills wearing a different label, and they had the same contrast fault.
+Reference: `PRIORITY_PILL`, `shared.tsx:86`.
 
 ### P-CO7 — Top navigation
 Identical on every page.

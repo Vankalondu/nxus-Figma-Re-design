@@ -128,6 +128,15 @@
   --scout-green: #22C55E;
   --scout-red: #E05C4B;
   --scout-amber: #E8A838;
+
+  /* Status pill TEXT. The tinted-pill pattern (P-CO5) uses bg-X/15 with text
+     in the same value, which measures 1.8-2.9:1 — below AA and effectively
+     unreadable. Text is taken from the /800 step in light and /300 in dark,
+     both of which clear 4.5:1 comfortably. Named in the target vocabulary
+     because they are new tokens with no legacy usage. */
+  --status-success-fg: #0f5529;  /* Green/800  7.53:1 on the tint */
+  --status-warning-fg: #6e4b0d;  /* Amber/800  6.79:1 */
+  --status-error-fg:   #7a2419;  /* Red/800    8.02:1 */
   --midtone: #b4d7f6;
   --canvas: #d2e7fa;
 
@@ -279,6 +288,11 @@
   --scout-green: #22C55E;
   --scout-red: #E05C4B;
   --scout-amber: #E8A838;
+
+  /* Dark: /300 steps — 6.33-7.24:1 on the same tint over the dark card. */
+  --status-success-fg: #7cdd9f;
+  --status-warning-fg: #f3cd7a;
+  --status-error-fg:   #f3a698;
   --midtone: #1971bf;
   --canvas: #061b2e;
 }
@@ -320,6 +334,9 @@
   --color-scout-green: var(--scout-green);
   --color-scout-amber: var(--scout-amber);
   --color-scout-red: var(--scout-red);
+  --color-status-success-fg: var(--status-success-fg);
+  --color-status-warning-fg: var(--status-warning-fg);
+  --color-status-error-fg: var(--status-error-fg);
 }
 
 /* ── Base layer ── */
