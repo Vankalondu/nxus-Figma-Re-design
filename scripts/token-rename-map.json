@@ -29,6 +29,34 @@
     "--sidebar-foreground":    { "light": "#061b2e", "dark": "#d2e7fa", "figma": null,                 "new": "--text-heading",  "status": "DUPLICATE of --foreground — retire" }
   },
 
+  "_textRoleModel": {
+    "_ruled": "2026-09-03. Two axes, deliberately separate: SIZE is the existing ramp (.text-h1…micro), COLOUR is these roles. They compose — `.text-h2 text-heading`, `.text-body-sm text-muted`.",
+    "_finding": "--muted-foreground is not muted. At #2f4151 it measures 10.03:1 on card — body-copy contrast. --foreground at 16.63:1 is heading. So the code has heading and body, and no true muted level. Renaming it to --text-body is therefore honest, costs nothing visually, and frees --text-muted for a level that genuinely reads as secondary.",
+    "_scale": "Dark Blue family, light mode; Light Blue family, dark mode.",
+    "--text-heading":     { "light": "#061b2e", "step": "Dark Blue/Base", "contrast": 16.63, "use": "headings, player names, key values" },
+    "--text-body":        { "light": "#2f4151", "step": "Dark Blue/500",  "contrast": 10.03, "use": "body copy, descriptions. Takes the current --muted-foreground value and its 1,098 usages — no visual change." },
+    "--text-muted":       { "light": "#596774", "step": "Dark Blue/400",  "contrast": 5.54,  "use": "NEW level. Secondary labels, metadata, timestamps." },
+    "--text-placeholder": { "light": "#828d96", "step": "Dark Blue/300",  "contrast": 3.23,  "use": "NEW. Placeholders only — AA-large, so never for essential text." },
+    "--text-disabled":    { "light": "#acb3b9", "step": "Dark Blue/200",  "contrast": 2.02,  "use": "NEW. Disabled controls only — below AA, which WCAG exempts for disabled state." },
+    "_derivation": {
+      "_rule": "L-TY1 already mandates font-heading for headings and font-body for body text, so the markup carries the signal. Role is derived from the class already present, not guessed.",
+      "font-heading OR .text-h1..h6": "--text-heading  (195 of 688 text-foreground usages)",
+      "font-body": "--text-body  (320)",
+      ".text-caption / .text-micro": "--text-muted  (1)",
+      "no signal": "182 usages — REVIEWED WITH VANESSA before assignment, not defaulted. Expect the computed-style snapshot to flag these as changes; that is intended, so re-baseline after the review rather than treating it as a regression."
+    }
+  },
+
+  "_surfaceRoleModel": {
+    "_ruled": "Map what is used, define the rest so Figma maps 1:1 and the roles are ready.",
+    "--surface-page":     { "status": "mapped from --background" },
+    "--surface-card":     { "status": "mapped from --card" },
+    "--surface-canvas":   { "status": "DEFINE — Figma has it, code does not use it yet" },
+    "--surface-elevated": { "status": "DEFINE — currently --popover" },
+    "--surface-inverse":  { "status": "DEFINE — unused today" },
+    "--surface-overlay":  { "status": "DEFINE and USE — modal scrims currently hardcode bg-midnight/60 (P-CO14). This role is already needed." }
+  },
+
   "border": {
     "--border":         { "light": "#b4d7f6",     "dark": "#145b99", "figma": "Color/Border/default", "new": "--border-default", "status": "exists; Figma repointed to this value" },
     "--ring":           { "light": "#1e88e5",     "dark": "#449ce9", "figma": "Color/Border/focus",   "new": "--border-focus",   "status": "exists in Figma" },
@@ -52,9 +80,9 @@
   },
 
   "invariant": {
-    "_note": "Theme-invariant primitives used directly, not semantic roles. --chalk is named in Law L-C6 (\"text on primary is always text-chalk\") and used 426 times, so renaming it means amending a Law. FLAGGED FOR DECISION — see _openDecisions.",
-    "--chalk":    { "light": "#d2e7fa", "dark": "#d2e7fa", "figma": "Colors/Light Blue/Base", "new": "--text-on-brand", "status": "DECISION NEEDED" },
-    "--midnight": { "light": "#061b2e", "dark": "#061b2e", "figma": "Colors/Dark Blue/Base",  "new": "--ink-midnight",  "status": "DECISION NEEDED" }
+    "_note": "Theme-invariant primitives used directly. RULED 2026-09-03: both are renamed to the Figma vocabulary and Law L-C6 is amended to name the new token. One vocabulary everywhere, no exceptions.",
+    "--chalk":    { "light": "#d2e7fa", "dark": "#d2e7fa", "figma": "Colors/Light Blue/Base", "new": "--text-on-brand", "status": "RENAME (426 uses). L-C6 amended: \"text on primary is always text-on-brand\"." },
+    "--midnight": { "light": "#061b2e", "dark": "#061b2e", "figma": "Colors/Dark Blue/Base",  "new": "--ink-midnight",  "status": "RENAME (35 uses)." }
   },
 
   "sidebarFamily": {
