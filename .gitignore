@@ -49,3 +49,6 @@ Thumbs.db
 
 # Storybook build output
 storybook-static/
+
+# Computed-style snapshots (token rename safety net)
+.token-snapshots/

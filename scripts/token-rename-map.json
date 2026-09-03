@@ -1,0 +1,84 @@
+{
+  "_comment": "Step 0 of Phase 3. The complete current -> Figma -> new mapping for every semantic CSS token. NOTHING is migrated until this is approved: the rename cannot be re-derived halfway through. Drives scripts/ the migration once signed off.",
+  "_vocabulary": "New CSS names follow Figma's Mapped groups: surface-*, text-*, border-*, status-*, plus brand-* which Figma lacks and gains. Utility names follow: --surface-card -> bg-surface-card.",
+  "_rule": "Tokens that share a value are NOT collapsed. --ring equals --primary today, but focus and brand are different roles and Figma already separates them (Border/focus vs Status/info). Same value, different name, deliberately.",
+
+  "surface": {
+    "--background":       { "light": "#d2e7fa", "dark": "#061b2e", "figma": "Color/Surface/page",     "new": "--surface-page",     "status": "exists in Figma" },
+    "--canvas":           { "light": "#d2e7fa", "dark": "#061b2e", "figma": "Color/Surface/page",     "new": "--surface-page",     "status": "DUPLICATE of --background — retire" },
+    "--card":             { "light": "#f4faff", "dark": "#0a2d4c", "figma": "Color/Surface/card",     "new": "--surface-card",     "status": "exists; light value adopts Figma #f6fafe" },
+    "--popover":          { "light": "#f4faff", "dark": "#0a2d4c", "figma": "Color/Surface/elevated", "new": "--surface-elevated", "status": "exists in Figma" },
+    "--secondary":        { "light": "#e8f3fc", "dark": "#0f4473", "figma": "Color/Surface/canvas",   "new": "--surface-canvas",   "status": "exists in Figma" },
+    "--muted":            { "light": "#e8f3fc", "dark": "#0f4473", "figma": "Color/Surface/canvas",   "new": "--surface-canvas",   "status": "DUPLICATE of --secondary — retire" },
+    "--accent":           { "light": "#d2e7fa", "dark": "#0f4473", "figma": null,                     "new": "--surface-accent",   "status": "ADD to Figma" },
+    "--ember-light":      { "light": "#d2e7fa", "dark": "#0f4473", "figma": null,                     "new": "--surface-accent",   "status": "DUPLICATE of --accent — retire" },
+    "--input-background": { "light": "#f0f7fd", "dark": "#0f4473", "figma": null,                     "new": "--surface-input",    "status": "ADD to Figma" },
+    "--sidebar":          { "light": "#f4faff", "dark": "#030e17", "figma": null,                     "new": "--surface-sidebar",  "status": "ADD to Figma" },
+    "--midtone":          { "light": "#b4d7f6", "dark": "#1971bf", "figma": null,                     "new": "--surface-midtone",  "status": "ADD to Figma" }
+  },
+
+  "text": {
+    "--foreground":            { "light": "#061b2e", "dark": "#d2e7fa", "figma": "Color/Text/heading", "new": "--text-heading",  "status": "exists; Figma repointed to this value" },
+    "--card-foreground":       { "light": "#061b2e", "dark": "#d2e7fa", "figma": "Color/Text/heading", "new": "--text-heading",  "status": "DUPLICATE of --foreground — retire" },
+    "--popover-foreground":    { "light": "#061b2e", "dark": "#d2e7fa", "figma": "Color/Text/heading", "new": "--text-heading",  "status": "DUPLICATE — retire" },
+    "--secondary-foreground":  { "light": "#061b2e", "dark": "#d2e7fa", "figma": "Color/Text/heading", "new": "--text-heading",  "status": "DUPLICATE — retire" },
+    "--accent-foreground":     { "light": "#061b2e", "dark": "#d2e7fa", "figma": "Color/Text/heading", "new": "--text-heading",  "status": "DUPLICATE — retire" },
+    "--muted-foreground":      { "light": "#304151", "dark": "#afc1d0", "figma": "Color/Text/muted",   "new": "--text-muted",    "status": "exists; both values adopt Figma (#2f4151 / #afc0d0)" },
+    "--primary-foreground":    { "light": "#f4faff", "dark": "#061b2e", "figma": "Color/Text/inverse", "new": "--text-inverse",  "status": "exists in Figma" },
+    "--destructive-foreground":{ "light": "#f4faff", "dark": "#f4faff", "figma": null,                 "new": "--text-on-status", "status": "ADD to Figma. NOT a duplicate of --text-inverse: it stays #f4faff in dark where --primary-foreground flips to #061b2e. Light text on a red fill, in both themes." },
+    "--sidebar-foreground":    { "light": "#061b2e", "dark": "#d2e7fa", "figma": null,                 "new": "--text-heading",  "status": "DUPLICATE of --foreground — retire" }
+  },
+
+  "border": {
+    "--border":         { "light": "#b4d7f6",     "dark": "#145b99", "figma": "Color/Border/default", "new": "--border-default", "status": "exists; Figma repointed to this value" },
+    "--ring":           { "light": "#1e88e5",     "dark": "#449ce9", "figma": "Color/Border/focus",   "new": "--border-focus",   "status": "exists in Figma" },
+    "--input":          { "light": "transparent", "dark": "#0f4473", "figma": null,                   "new": "--border-input",   "status": "ADD to Figma" },
+    "--sidebar-border": { "light": "#b4d7f6",     "dark": "#145b99", "figma": null,                   "new": "--border-default", "status": "DUPLICATE of --border — retire" },
+    "--switch-background": { "light": "#b4d7f6",  "dark": "#1971bf", "figma": null,                   "new": "--surface-switch", "status": "ADD to Figma. NOT a duplicate of --border: dark is #1971bf against the border's #145b99." }
+  },
+
+  "status": {
+    "--destructive": { "light": "#e05c4b", "dark": "#e05c4b", "figma": "Color/Status/error",   "new": "--status-error",   "status": "exists in Figma" },
+    "--scout-red":   { "light": "#e05c4b", "dark": "#e05c4b", "figma": "Color/Status/error",   "new": "--status-error",   "status": "DUPLICATE of --destructive — retire" },
+    "--scout-green": { "light": "#22c55e", "dark": "#22c55e", "figma": "Color/Status/success", "new": "--status-success", "status": "exists; Figma adopts #22C55E" },
+    "--scout-amber": { "light": "#e8a838", "dark": "#e8a838", "figma": "Color/Status/warning", "new": "--status-warning", "status": "exists in Figma" }
+  },
+
+  "brand": {
+    "_note": "Figma's Mapped has no brand group. Status/info aliases Primary/Base, but that is a usage, not the brand itself. Button/primary-bg resolves to Light Mode/1000 (#2a2e32, near-black), which contradicts P-CO1 — corrected to Primary/Base. A Color/Brand/* group is added to Figma.",
+    "--primary":      { "light": "#1e88e5", "dark": "#449ce9", "figma": null, "new": "--brand-primary",       "status": "ADD Color/Brand/primary to Figma" },
+    "--ember":        { "light": "#1e88e5", "dark": "#449ce9", "figma": null, "new": "--brand-primary",       "status": "DUPLICATE of --primary — retire" },
+    "--ember-hover":  { "light": "#1565c0", "dark": "#69b0ee", "figma": null, "new": "--brand-primary-hover", "status": "ADD; light value becomes Blue/600 #1971bf per ruling" }
+  },
+
+  "invariant": {
+    "_note": "Theme-invariant primitives used directly, not semantic roles. --chalk is named in Law L-C6 (\"text on primary is always text-chalk\") and used 426 times, so renaming it means amending a Law. FLAGGED FOR DECISION — see _openDecisions.",
+    "--chalk":    { "light": "#d2e7fa", "dark": "#d2e7fa", "figma": "Colors/Light Blue/Base", "new": "--text-on-brand", "status": "DECISION NEEDED" },
+    "--midnight": { "light": "#061b2e", "dark": "#061b2e", "figma": "Colors/Dark Blue/Base",  "new": "--ink-midnight",  "status": "DECISION NEEDED" }
+  },
+
+  "sidebarFamily": {
+    "_note": "No Figma equivalent. Several are duplicates of the general tokens and retire; the rest are added to Figma as Color/Sidebar/*.",
+    "--sidebar-primary":            { "new": "--brand-primary",   "status": "DUPLICATE — retire" },
+    "--sidebar-primary-foreground": { "new": "--text-inverse",    "status": "DUPLICATE — retire" },
+    "--sidebar-ring":               { "new": "--border-focus",    "status": "DUPLICATE — retire" },
+    "--sidebar-accent":             { "light": "#e9f3fd", "dark": "#0f4473", "new": "--surface-sidebar-accent", "status": "ADD to Figma; light adopts Figma #e8f3fc" },
+    "--sidebar-accent-foreground":  { "new": "--text-heading",    "status": "DUPLICATE — retire" },
+    "--sidebar-muted":              { "light": "#596774", "new": "--text-sidebar-muted", "status": "ADD to Figma" }
+  },
+
+  "_summary": {
+    "tokensMapped": 38,
+    "retiredAsDuplicates": 14,
+    "newInFigma": 11,
+    "decisionsNeeded": 2,
+    "note": "14 of 38 semantic tokens are exact duplicates of another token in BOTH themes. Retiring them is the single biggest simplification here — it removes over a third of the semantic surface before a single usage is renamed.",
+    "verified": "Every duplicate claim was checked against both themes, not assumed. Two failed that check and are kept distinct: --destructive-foreground (theme-invariant, unlike --primary-foreground) and --switch-background (dark #1971bf, not the border's #145b99)."
+  },
+
+  "_openDecisions": [
+    "--chalk (426 uses) is named explicitly in Law L-C6. Renaming it to --text-on-brand means amending that Law. Keep --chalk as an exception to the Figma vocabulary, or rename and amend L-C6?",
+    "--midnight (35 uses) is the same question at much smaller scale.",
+    "16 duplicate tokens are marked retire. Confirm none of them are meant to diverge later — e.g. --popover is identical to --card today, but a future elevated surface might want its own value."
+  ]
+}
