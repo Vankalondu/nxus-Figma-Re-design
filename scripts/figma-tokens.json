@@ -303,6 +303,7 @@
   "Responsive": {
     "_role": "Device responsiveness only: Mobile / Tablet / Desktop.",
     "_format": "[Mobile, Tablet, Desktop]",
+    "_updated": "2026-09-03 — text ramp adopted the code's values (code wins on responsiveness); h4/h5/h6/micro and the Spacing/Layout rhythm group added because the code had them and Figma did not.",
     "Spacing/3xs": [
       2,
       2,
@@ -348,15 +349,41 @@
       56,
       64
     ],
-    "Text/Headings/h1/text size": [
+    "_spacingNote": "UNRESOLVED: lg/xl/2xl/3xl step per breakpoint here, but the code's --space-* scale is fixed and L-S2 states atomic spacing does not step — only the Layout group does. Left as-is pending a ruling.",
+    "Spacing/Layout/page-padding": [
+      12,
+      16,
+      24
+    ],
+    "Spacing/Layout/section-gap": [
+      16,
       28,
+      40
+    ],
+    "Spacing/Layout/grid-gap": [
+      8,
+      12,
+      16
+    ],
+    "Spacing/Layout/card-padding": [
+      12,
+      16,
+      20
+    ],
+    "Spacing/Layout/stack-gap": [
+      8,
+      12,
+      12
+    ],
+    "Text/Headings/h1/text size": [
+      32,
       40,
-      56
+      48
     ],
     "Text/Headings/h1/Line height": [
-      32,
+      40,
       48,
-      64
+      56
     ],
     "Text/Headings/h1/Paragraph spacing": [
       16,
@@ -364,14 +391,14 @@
       24
     ],
     "Text/Headings/h2/text size": [
-      20,
-      24,
-      32
-    ],
-    "Text/Headings/h2/Line height": [
       28,
       32,
       40
+    ],
+    "Text/Headings/h2/Line height": [
+      32,
+      40,
+      48
     ],
     "Text/Headings/h2/Paragraph spacing": [
       12,
@@ -379,27 +406,57 @@
       20
     ],
     "Text/Headings/h3/text size": [
-      16,
-      18,
-      20
+      24,
+      28,
+      32
     ],
     "Text/Headings/h3/Line height": [
-      24,
-      24,
-      28
+      28,
+      32,
+      40
     ],
     "Text/Headings/h3/Paragraph spacing": [
       8,
       12,
       12
     ],
+    "Text/Headings/h4/text size": [
+      20,
+      24,
+      28
+    ],
+    "Text/Headings/h4/Line height": [
+      24,
+      28,
+      32
+    ],
+    "Text/Headings/h5/text size": [
+      20,
+      20,
+      24
+    ],
+    "Text/Headings/h5/Line height": [
+      24,
+      24,
+      28
+    ],
+    "Text/Headings/h6/text size": [
+      20,
+      20,
+      20
+    ],
+    "Text/Headings/h6/Line height": [
+      24,
+      24,
+      24
+    ],
     "Text/Body/lg/text size": [
-      14,
-      16,
-      16
+      20,
+      20,
+      20
     ],
     "Text/Body/lg/Line height": [
-      20,
+      24,
       24,
       24
     ],
@@ -409,12 +466,12 @@
       8
     ],
     "Text/Body/md/text size": [
-      12,
-      14,
-      14
+      16,
+      16,
+      16
     ],
     "Text/Body/md/Line height": [
-      16,
+      20,
       20,
       20
     ],
@@ -424,9 +481,9 @@
       8
     ],
     "Text/Body/sm/text size": [
-      12,
-      12,
-      12
+      14,
+      14,
+      14
     ],
     "Text/Body/sm/Line height": [
       16,
@@ -439,13 +496,13 @@
       8
     ],
     "Text/Body/caption/text size": [
-      10,
-      10,
-      10
+      12,
+      12,
+      12
     ],
     "Text/Body/caption/Line height": [
-      12,
-      12,
+      14,
+      14,
       14
     ],
     "Text/Body/caption/Paragraph spacing": [
@@ -453,6 +510,17 @@
       4,
       4
     ],
+    "Text/Body/micro/text size": [
+      10,
+      10,
+      10
+    ],
+    "Text/Body/micro/Line height": [
+      12,
+      12,
+      12
+    ],
+    "_paragraphNote": "Paragraph spacing has no CSS counterpart; left untouched.",
     "Radius/sm": [
       4,
       4,
@@ -487,7 +555,8 @@
       999,
       999,
       999
-    ]
+    ],
+    "_radiusNote": "UNRESOLVED: 2xl/3xl step per breakpoint but the code's radii are fixed, and Figma has no 40px step although R-R1 and P-CO3 require rounded-[40px] for KPI and dashboard cards. Left as-is pending a ruling."
   },
   "_shadowStyles": {
     "_note": "Effect styles, corrected 2026-09-03 from #000000 (L-C1) and #0f172a (L-C2) to the palette navy. Alpha and geometry preserved.",
