@@ -6,35 +6,19 @@
   /* ── Base ── */
   --font-size: 16px;
 
-  /* ── Card & Popover surfaces ── */
-
-  /* ── Brand tokens — Athletic Blue as primary ── */
-
-  /* ── Secondary & muted ── */
-
-  /* ── Accent ── */
-
-  /* ── Destructive ── */
-
-  /* ── Borders & inputs ── */
-
-  /* ── Ring — focus state ── */
-
   /* ── Font weights ── */
   --font-weight-medium: 500;
   --font-weight-normal: 400;
 
   /* ── Charts ── */
-  --chart-1: #1e88e5;
-  --chart-2: #061b2e;
-  --chart-3: #E8A838;
-  --chart-4: #22C55E;
-  --chart-5: #E05C4B;
+  --chart-1: var(--blue-500);
+  --chart-2: var(--blue-950);
+  --chart-3: var(--amber-500);
+  --chart-4: var(--green-500);
+  --chart-5: var(--red-500);
 
   /* ── Border radius ── */
   --radius: 0.75rem;
-
-  /* ── Sidebar ── */
 
   /* ── Spacing system — multiples of 4 ── */
   --space-1: 4px;
@@ -89,6 +73,50 @@
   --light-900: #464d53;
   --light-950: #2a2e32;
 
+  /* ── Qaza palette — Status families (Red / Amber / Green) ──
+     The same 11 steps as Blue, transcribed from Figma's Qaza collection where
+     they already existed: Colors/Red, Colors/Amber, Colors/Green. The step
+     names differ by one notch — Figma runs 100…Base…1000 with Base as the
+     tonal anchor, CSS runs 50…950 — so Figma/100 is --red-50 and Figma/Base is
+     --red-500. Verified against Blue, where all 11 already line up exactly.
+     Until these existed, the status roles were the only ones in the file
+     holding raw hex, with nothing for --status-*-fg or the tints to reference. */
+  --red-50: #fce9e5;
+  --red-100: #f8c9c0;
+  --red-200: #f3a698;
+  --red-300: #ec8470;
+  --red-400: #e76d58;
+  --red-500: #e05c4b;
+  --red-600: #c44537;
+  --red-700: #a23425;
+  --red-800: #7a2419;
+  --red-900: #52160e;
+  --red-950: #2e0b07;
+
+  --amber-50: #fbefd6;
+  --amber-100: #f7dfaa;
+  --amber-200: #f3cd7a;
+  --amber-300: #efbc52;
+  --amber-400: #ebb244;
+  --amber-500: #e8a838;
+  --amber-600: #c68b20;
+  --amber-700: #996a15;
+  --amber-800: #6e4b0d;
+  --amber-900: #473006;
+  --amber-950: #291b03;
+
+  --green-50: #d7f5e2;
+  --green-100: #abe9c2;
+  --green-200: #7cdd9f;
+  --green-300: #50d17f;
+  --green-400: #34ca6b;
+  --green-500: #22c55e;
+  --green-600: #1b9f4c;
+  --green-700: #15793a;
+  --green-800: #0f5529;
+  --green-900: #093218;
+  --green-950: #051b0d;
+
   /* ── Named semantic tokens ── */
 
   /* Status pill TEXT. The tinted-pill pattern (P-CO5) uses bg-X/15 with text
@@ -96,9 +124,9 @@
      unreadable. Text is taken from the /800 step in light and /300 in dark,
      both of which clear 4.5:1 comfortably. Named in the target vocabulary
      because they are new tokens with no legacy usage. */
-  --status-success-fg: #0f5529;  /* Green/800  7.53:1 on the tint */
-  --status-warning-fg: #6e4b0d;  /* Amber/800  6.79:1 */
-  --status-error-fg:   #7a2419;  /* Red/800    8.02:1 */
+  --status-success-fg: var(--green-800);  /* Green/800  7.53:1 on the tint */
+  --status-warning-fg: var(--amber-800);  /* Amber/800  6.79:1 */
+  --status-error-fg:   var(--red-800);  /* Red/800    8.02:1 */
 
   /* ── Elevation shadows (light mode: dark navy shadows) ── */
   --shadow-xs: 0 1px 2px rgba(6, 27, 46, 0.05);
@@ -171,9 +199,9 @@
   --border-focus: var(--blue-500);
   --border-input: transparent;
 
-  --status-error: #E05C4B;
-  --status-success: #22C55E;
-  --status-warning: #E8A838;
+  --status-error: var(--red-500);
+  --status-success: var(--green-500);
+  --status-warning: var(--amber-500);
 
   --brand-primary: var(--blue-500);
   --brand-primary-hover: var(--blue-600);
@@ -181,17 +209,17 @@
   --ink-midnight: var(--blue-950);
 
   /* ── Roles the code did not have. Values from Figma Mapped (step 3). ── */
-  --text-muted: #596774;        /* Dark Blue/400 — genuinely secondary, 5.54:1 */
-  --text-placeholder: #828d96;  /* Dark Blue/300 — AA-large only, placeholders */
-  --text-disabled: #acb3b9;     /* Dark Blue/200 — below AA; disabled is exempt */
-  --text-link: #1e88e5;
-  --surface-inverse: #061b2e;
-  --surface-overlay: #061b2e;   /* modal scrims apply the opacity (P-CO14) */
-  --border-subtle: #d2e7fa;
-  --border-strong: #8ec4f2;
-  --status-success-tint: #d7f5e2;
-  --status-warning-tint: #fbefd6;
-  --status-error-tint: #fce9e5;
+  --text-muted: var(--navy-300);        /* Dark Blue/400 — genuinely secondary, 5.54:1 */
+  --text-placeholder: var(--navy-200);  /* Dark Blue/300 — AA-large only, placeholders */
+  --text-disabled: var(--navy-100);     /* Dark Blue/200 — below AA; disabled is exempt */
+  --text-link: var(--blue-500);
+  --surface-inverse: var(--blue-950);
+  --surface-overlay: var(--blue-950);   /* modal scrims apply the opacity (P-CO14) */
+  --border-subtle: var(--blue-50);
+  --border-strong: var(--blue-200);
+  --status-success-tint: var(--green-50);
+  --status-warning-tint: var(--amber-50);
+  --status-error-tint: var(--red-50);
 }
 
 /* ── Tablet (768–1023): headings step up one notch; jumper gaps widen. ── */
@@ -229,34 +257,16 @@
 }
 
 .dark {
-  /* ── Base ── */
-
-  /* ── Card & Popover surfaces ── */
-
-  /* ── Brand tokens ── */
-
-  /* ── Secondary & muted ── */
-
-  /* ── Accent ── */
-
-  /* ── Destructive ── */
-
-  /* ── Borders & inputs ── */
-
-  /* ── Ring ── */
-
   /* ── Font weights ── */
   --font-weight-medium: 500;
   --font-weight-normal: 400;
 
   /* ── Charts ── */
-  --chart-1: #449ce9;
-  --chart-2: #d2e7fa;
-  --chart-3: #E8A838;
-  --chart-4: #22C55E;
-  --chart-5: #E05C4B;
-
-  /* ── Sidebar ── */
+  --chart-1: var(--blue-400);
+  --chart-2: var(--blue-50);
+  --chart-3: var(--amber-500);
+  --chart-4: var(--green-500);
+  --chart-5: var(--red-500);
 
   /* ── Elevation shadows (dark mode: deeper blacks) ── */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.20);
@@ -271,22 +281,22 @@
   /* ── Named semantic tokens — dark context ── */
 
   /* Dark: /300 steps — 6.33-7.24:1 on the same tint over the dark card. */
-  --status-success-fg: #7cdd9f;
-  --status-warning-fg: #f3cd7a;
-  --status-error-fg:   #f3a698;
+  --status-success-fg: var(--green-200);
+  --status-warning-fg: var(--amber-200);
+  --status-error-fg:   var(--red-200);
 
   /* ── Dark values for the new roles. ── */
-  --text-muted: #8c9aa7;
-  --text-placeholder: #69747d;
-  --text-disabled: #464d53;
-  --text-link: #449ce9;
-  --surface-inverse: #d2e7fa;
-  --surface-overlay: #061b2e;
-  --border-subtle: #0f4472;
-  --border-strong: #1971bf;
-  --status-success-tint: #0f5529;
-  --status-warning-tint: #6e4b0d;
-  --status-error-tint: #7a2419;
+  --text-muted: var(--light-700);
+  --text-placeholder: var(--light-800);
+  --text-disabled: var(--light-900);
+  --text-link: var(--blue-400);
+  --surface-inverse: var(--blue-50);
+  --surface-overlay: var(--blue-950);
+  --border-subtle: var(--blue-800);
+  --border-strong: var(--blue-600);
+  --status-success-tint: var(--green-800);
+  --status-warning-tint: var(--amber-800);
+  --status-error-tint: var(--red-800);
   --surface-page: var(--blue-950);
   --surface-card: var(--blue-900);
   --surface-elevated: var(--blue-900);
