@@ -1,6 +1,6 @@
 {
   "_comment": "Snapshot of every variable in QAZA_FE, extracted via the Figma MCP plugin bridge. The extract needs the MCP (an agent runs it); this file is the committed result so scripts/figma-css-diff.mjs can run standalone and the diff is reviewable in a PR. Refresh by re-running the extract and replacing this file.",
-  "extractedAt": "2026-09-03",
+  "extractedAt": "2026-09-04",
   "fileKey": "qefpAyr3MEEklQRV96YlSv",
   "scaleSteps": "Figma colour families run 100,200,300,400,500,Base,600,700,800,900,1000 — 11 steps with Base in the middle (the tonal anchor). CSS runs 50,100,...,900,950. So Figma/100 = CSS/-50, Figma/Base = CSS/-500, Figma/1000 = CSS/-950.",
   "Qaza": {
@@ -150,8 +150,24 @@
       "300": "Scale/300 (12)",
       "400": "Scale/400 (16)",
       "500": "Scale/500 (20)",
-      "600": "Scale/600 (24)"
-    }
+      "600": "Scale/600 (24)",
+      "700": "Scale/700 (28)",
+      "800": "Scale/800 (32)",
+      "900": "Scale/900 (36)",
+      "1000": "Scale/1000 (40)"
+    },
+    "Spacing": {
+      "3xs": "Scale/50 (2)",
+      "2xs": "Scale/100 (4)",
+      "xs": "Scale/200 (8)",
+      "sm": "Scale/300 (12)",
+      "md": "Scale/400 (16)",
+      "lg": "Scale/500 (20)",
+      "xl": "Scale/600 (24)",
+      "2xl": "Scale/800 (32)",
+      "3xl": "Scale/1300 (48)"
+    },
+    "_spacingNote": "Added 2026-09-04. Non-stepping named values belong in the alias layer — Qaza holds raw numbers, Allias groups and names them. This is the destination for the Responsive Spacing/Radius steps; the Responsive copies remain until components are rebound (deleting them now would break live bindings)."
   },
   "Mapped": {
     "_role": "Gives variables specific functions. References Allias, which references Qaza. Light/Dark modes.",
@@ -331,25 +347,25 @@
     ],
     "Spacing/lg": [
       20,
-      24,
-      24
+      20,
+      20
     ],
     "Spacing/xl": [
       24,
-      32,
-      32
+      24,
+      24
     ],
     "Spacing/2xl": [
       32,
-      40,
-      48
+      32,
+      32
     ],
     "Spacing/3xl": [
       48,
-      56,
-      64
+      48,
+      48
     ],
-    "_spacingNote": "UNRESOLVED: lg/xl/2xl/3xl step per breakpoint here, but the code's --space-* scale is fixed and L-S2 states atomic spacing does not step — only the Layout group does. Left as-is pending a ruling.",
+    "_spacingNote": "RESOLVED 2026-09-04: lg/xl/2xl/3xl are now fixed, matching --space-5/-6/-8/-12 and honouring L-S2 (only the Layout group steps).",
     "Spacing/Layout/page-padding": [
       12,
       16,
@@ -543,20 +559,30 @@
     ],
     "Radius/2xl": [
       20,
-      24,
-      24
+      20,
+      20
     ],
     "Radius/3xl": [
       24,
-      28,
-      32
+      24,
+      24
     ],
     "Radius/pill": [
       999,
       999,
       999
     ],
-    "_radiusNote": "UNRESOLVED: 2xl/3xl step per breakpoint but the code's radii are fixed, and Figma has no 40px step although R-R1 and P-CO3 require rounded-[40px] for KPI and dashboard cards. Left as-is pending a ruling."
+    "_radiusNote": "RESOLVED 2026-09-04: 2xl/3xl fixed; 4xl (32) and 5xl (40) added so R-R1 and P-CO3 finally have steps for rounded-[32px] and rounded-[40px].",
+    "Radius/4xl": [
+      32,
+      32,
+      32
+    ],
+    "Radius/5xl": [
+      40,
+      40,
+      40
+    ]
   },
   "_shadowStyles": {
     "_note": "Effect styles, corrected 2026-09-03 from #000000 (L-C1) and #0f172a (L-C2) to the palette navy. Alpha and geometry preserved.",
@@ -565,5 +591,6 @@
     "Shadow/md": "#061b2e @0.04",
     "Shadow/lg": "#061b2e @0.06",
     "Shadow/xl": "#061b2e @0.20"
-  }
+  },
+  "_openMigration": "Spacing/* and Radius/* still exist in BOTH Responsive (fixed) and Allias (aliased). Responsive should eventually hold only what varies — the Layout group and the text ramp. Retiring the duplicates needs a component rebinding pass across all 14 pages, so it is deliberately not done here."
 }
