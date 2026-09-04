@@ -171,7 +171,7 @@
      than from greys, and text swaps blue-950 <-> blue-50.
      The pre-Figma names (--card, --muted-foreground, --border, …) were retired
      in step 4.3; scripts/lint-tokens.mjs fails the build if one reappears. ── */
-  --surface-page: var(--blue-50);
+  --surface-page: var(--light-500);
   --surface-card: var(--light-50);
   --surface-elevated: var(--light-50);
   --surface-canvas: var(--light-200);
@@ -182,16 +182,16 @@
   --surface-switch: var(--blue-100);
   --surface-sidebar-accent: var(--light-200);
 
-  --text-heading: var(--blue-950);
+  --text-heading: var(--navy-500);
   /* Same value as heading, deliberately. A button label, a stat value and a
      filter chip need heading's weight of contrast but are not titles, and
      calling them "heading" is the naming fault this split exists to fix.
      Splitting the role now costs nothing visually and means a later change to
      title colour does not silently repaint every chip in the product. */
-  --text-strong: var(--blue-950);
+  --text-strong: var(--navy-500);
   --text-body: var(--navy-400);
   --text-inverse: var(--light-50);
-  --text-on-brand: var(--blue-50);
+  --text-on-brand: var(--light-500);
   --text-on-status: var(--light-50);
   --text-sidebar-muted: var(--navy-300);
 
@@ -206,15 +206,15 @@
   --brand-primary: var(--blue-500);
   --brand-primary-hover: var(--blue-600);
 
-  --ink-midnight: var(--blue-950);
+  --ink-midnight: var(--navy-500);
 
   /* ── Roles the code did not have. Values from Figma Mapped (step 3). ── */
   --text-muted: var(--navy-300);        /* Dark Blue/400 — genuinely secondary, 5.54:1 */
   --text-placeholder: var(--navy-200);  /* Dark Blue/300 — AA-large only, placeholders */
   --text-disabled: var(--navy-100);     /* Dark Blue/200 — below AA; disabled is exempt */
   --text-link: var(--blue-500);
-  --surface-inverse: var(--blue-950);
-  --surface-overlay: var(--blue-950);   /* modal scrims apply the opacity (P-CO14) */
+  --surface-inverse: var(--navy-500);
+  --surface-overlay: var(--navy-500);   /* modal scrims apply the opacity (P-CO14) */
   --border-subtle: var(--blue-50);
   --border-strong: var(--blue-200);
   --status-success-tint: var(--green-50);
@@ -290,8 +290,8 @@
   --text-placeholder: var(--light-800);
   --text-disabled: var(--light-900);
   --text-link: var(--blue-400);
-  --surface-inverse: var(--blue-50);
-  --surface-overlay: var(--blue-950);
+  --surface-inverse: var(--light-500);
+  --surface-overlay: var(--navy-500);
   --border-subtle: var(--blue-800);
   --border-strong: var(--blue-600);
   --status-success-tint: var(--green-800);
@@ -307,10 +307,10 @@
   --surface-midtone: var(--blue-600);
   --surface-switch: var(--blue-600);
   --surface-sidebar-accent: var(--blue-800);
-  --text-heading: var(--blue-50);
-  --text-strong: var(--blue-50);
+  --text-heading: var(--light-500);
+  --text-strong: var(--light-500);
   --text-body: var(--light-600);
-  --text-inverse: var(--blue-950);
+  --text-inverse: var(--navy-500);
   --text-sidebar-muted: var(--light-700);
   --border-default: var(--blue-700);
   --border-focus: var(--blue-400);

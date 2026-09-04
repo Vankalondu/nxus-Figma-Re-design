@@ -32,12 +32,12 @@ const FAMILY = {
   'Colors/Blue': 'blue',
   'Colors/Light Blue': 'light',
   'Colors/Dark Blue': 'navy',
-};
-// Figma families with no CSS scale — the code has a single token instead.
-const SINGLETON = {
-  'Colors/Red': ['--scout-red', '--destructive'],
-  'Colors/Amber': ['--scout-amber'],
-  'Colors/Green': ['--scout-green'],
+  // Red/Amber/Green were singletons here until the code carried only each
+  // family's Base value. All 11 steps now exist in globals.css, so they are
+  // full families and get compared step by step like the others.
+  'Colors/Red': 'red',
+  'Colors/Amber': 'amber',
+  'Colors/Green': 'green',
 };
 
 // --- parse the CSS :root block (light mode) ---
@@ -62,7 +62,15 @@ for (const m of rootBlock.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/gi)) {
 }
 
 const rows = { match: [], valueDrift: [], figmaOnly: [], cssOnly: [], note: [] };
-const norm = (v) => String(v).trim().toLowerCase();
+// `transparent` and a palette colour at zero alpha render identically. Figma
+// variables must carry a concrete RGBA, so Border/input light is stored as
+// #061b2e00 (navy at 0 — not #00000000, which would break L-C1) against the
+// CSS keyword. Same pixel, different spelling; not drift.
+const norm = (v) => {
+  const s = String(v).trim().toLowerCase();
+  if (s === 'transparent' || /^#[0-9a-f]{6}00$/.test(s)) return 'transparent';
+  return s;
+};
 
 // --- colour scales ---
 for (const [figFam, cssFam] of Object.entries(FAMILY)) {
@@ -75,18 +83,6 @@ for (const [figFam, cssFam] of Object.entries(FAMILY)) {
     if (cssVal === undefined) { rows.figmaOnly.push([figName, figVal, cssName, '—']); continue; }
     (norm(figVal) === norm(cssVal) ? rows.match : rows.valueDrift).push([figName, figVal, cssName, cssVal]);
   }
-}
-
-// --- status colours: Figma family Base vs the CSS singleton ---
-for (const [figFam, cssNames] of Object.entries(SINGLETON)) {
-  const figVal = SNAP.Qaza[figFam]['Base'];
-  for (const cssName of cssNames) {
-    const cssVal = cssVars[cssName];
-    if (cssVal === undefined) { rows.figmaOnly.push([`${figFam}/Base`, figVal, cssName, '—']); continue; }
-    (norm(figVal) === norm(cssVal) ? rows.match : rows.valueDrift).push([`${figFam}/Base`, figVal, cssName, cssVal]);
-  }
-  const steps = Object.keys(SNAP.Qaza[figFam]).filter(s => s !== 'Base').length;
-  rows.note.push(`${figFam} has ${steps} further steps (100…1000) with no CSS equivalent — the code carries only the Base value.`);
 }
 
 // --- responsive type ramp ---
@@ -123,12 +119,27 @@ const darkBlock = blockAfter(CSS, '\n.dark {');
 const darkVars = {};
 for (const m of darkBlock.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/gi)) darkVars[m[1]] = m[2].trim().toLowerCase();
 
+// Roles resolve through the alias scale now (--text-heading: var(--navy-500)),
+// so a literal string compare against Figma's resolved hex reports drift on
+// every row. Follow the chain to a value before comparing. Dark mode reads
+// .dark first and falls back to :root, matching the cascade.
+function deref(val, mode) {
+  const tbl = mode === 'dark' ? { ...cssVars, ...darkVars } : cssVars;
+  let v = val, guard = 0;
+  while (v && /^var\(/.test(v) && guard++ < 12) {
+    const inner = v.match(/var\(\s*(--[a-z0-9-]+)/);
+    if (!inner) break;
+    v = tbl[inner[1]];
+  }
+  return v;
+}
+
 const mapped = [];
 for (const [figName, cssName] of Object.entries(SNAP.Mapped._cssPair || {})) {
   const fig = SNAP.Mapped[figName];
   if (!fig) continue;
-  const cl = cssVars[cssName];
-  const cd = darkVars[cssName] ?? cl;
+  const cl = deref(cssVars[cssName], 'light');
+  const cd = deref(darkVars[cssName] ?? cssVars[cssName], 'dark');
   if (cl === undefined) { mapped.push([figName, fig.join(' / '), cssName, 'not in CSS', 'MISSING']); continue; }
   const same = norm(fig[0]) === norm(cl) && norm(fig[1]) === norm(cd);
   mapped.push([figName, fig.join(' / '), cssName, [cl, cd].join(' / '), same ? 'match' : 'DRIFT']);
@@ -156,11 +167,13 @@ section('MAPPED SEMANTIC LAYER — light / dark', mapped,
 
 console.log('\nNOTES');
 for (const n of rows.note) console.log('  · ' + n);
-console.log('  · Mapped (36 vars, Light/Dark) is a richer semantic layer than the CSS has:');
-console.log('    Surface/page|canvas|card|elevated|inverse|overlay, Border/subtle|default|strong|focus,');
-console.log('    Text/heading|body|muted|placeholder|inverse|link|disabled, Button/*, Status/* + tints.');
-console.log('    The CSS semantic set (--background, --card, --foreground, --muted-foreground, …) is');
-console.log('    smaller and named differently. This is not drift — it is a layer never adopted.');
+console.log('  · Mapped is 52 vars and the CSS now carries a counterpart for all 39 colour roles,');
+console.log('    resolving Qaza -> Allias -> Mapped on both sides. The layer that was "never');
+console.log('    adopted" in earlier runs of this script is adopted: --background/--card/');
+console.log('    --foreground and the rest were retired in step 4.3.');
+console.log('  · Still asymmetric, on purpose: Status/info + info-tint are Figma-only (nothing');
+console.log('    renders an info state) and --text-muted is code-only-and-unused. Both are OR-5.');
+console.log('    Button/* (11 vars) is a component layer the code expresses as utilities, not tokens.');
 
 console.log('\nSUMMARY  match ' + rows.match.length +
   '  ·  drift ' + rows.valueDrift.length +

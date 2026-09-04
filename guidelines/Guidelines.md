@@ -894,26 +894,43 @@ when next touched. See open ruling **OR-4**.
 
 Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
 
-**OR-4 · Figma has no counterpart for two things the code now has.** Step 4 finished on the
-code side; these are the Figma-side residual, and publishing variable edits is Vanessa's call:
+**OR-4 · RESOLVED 2026-09-04.** Figma and the code are level. As first written this ruling was
+wrong twice, recorded here rather than quietly edited:
 
-- **`Text/strong` is missing from Mapped.** It needs Light and Dark modes referencing
-  `Primary/950` and `Primary/50`, to match `var(--blue-950)` / `var(--blue-50)` in code.
-- **The Responsive collection still names the ramp `text-*`.** Code renamed it to `type-*`
-  (L-TY5). Until Figma follows, the two vocabularies disagree on the size scale.
+- It claimed the Responsive collection still named the ramp `text-*`. It never did — Figma
+  names it `Text/Headings/h1/text size` and `Text/Body/md/text size`. `.type-h1` maps onto
+  that cleanly and there was no mismatch to fix.
+- It counted one missing Mapped variable. There were **eight**: `Surface/midtone`,
+  `Surface/switch`, `Surface/sidebar-accent`, `Text/strong`, `Text/on-status`,
+  `Text/sidebar-muted`, `Border/input`, and `Ink/midnight`.
 
-**OR-5 · `--text-muted` is defined but used zero times.** It was added as "a real muted" once
-`--muted-foreground`'s value was renamed to `body`. The four-role model in L-C10 documents it
-as live, but nothing renders it. Either some of the 1,428 `text-body` usages are genuinely the
-muted tier — a design judgement, not a sweep — or the role is aspirational and R-TY3 should
-say so.
+Seven were added to Mapped. `Ink/midnight` went to **Allias** instead — it is theme-invariant,
+so it is a named alias for one raw value rather than a role with per-mode values, and Mapped
+stays at six groups. `Border/input` is the one Mapped variable holding a raw value rather than
+an Allias reference: its light mode is transparent, an alias cannot carry an alpha override,
+and `#00000000` would break L-C1 — so it is stored as `#061b2e00`, navy at zero alpha.
 
-**OR-6 · The status colours are the only roles still holding raw hex.** `--status-error`
-`#E05C4B`, `--status-success` `#22C55E`, `--status-warning` `#E8A838`. Every other role now
-resolves through an Allias-layer scale token; these cannot, because there are no `--red-*`,
-`--green-*` or `--amber-*` scales in `globals.css` — the regenerated 11-step Green exists in
-Figma only. The status families need their alias layer brought into code, which would also
-give `--status-*-fg` (currently literals from Figma's `/800` steps) something to reference.
+Reading Figma also corrected the **code**. Where a value exists in two families — `#d2e7fa` is
+both `Primary/100` and `Light Mode/Base`, `#061b2e` is both `Primary/1000` and `Dark Mode/Base`
+— the code had picked by alphabetical preference and Figma had picked by meaning. Figma governs
+naming, so 12 role pointers were realigned: page background comes from the Primary ramp, body
+text from the Dark Mode ramp, even where the hex is identical.
+
+`scripts/figma-css-diff.mjs` now reports **66 match · 0 drift · 0 figma-only · 0 ramp drift**.
+
+**OR-5 · Two roles exist on one side only, and nothing renders either.** `--text-muted` is
+defined, bridged and short-aliased in code but used **zero** times; `Status/info` and
+`Status/info-tint` are the mirror image, present in Figma with no code counterpart and no info
+state anywhere in the product. Either some of the 1,428 `text-body` usages are genuinely the
+muted tier — a design judgement, not a sweep — or these are aspirational and R-TY3 should say
+so. `Button/*` (11 Figma vars) is deliberately excluded: that is a component layer the code
+expresses as utilities rather than tokens.
+
+**OR-6 · RESOLVED 2026-09-04.** The status families were never missing — Qaza already held
+`Colors/Red`, `Colors/Amber` and `Colors/Green` at the full 11 steps, and Allias already grouped
+them as Error / Warning / Success. Only the code was short, carrying each family's Base value
+alone. All three scales are now in `globals.css`, and every colour role in the file resolves
+through the alias layer: **zero raw hex outside the scale definitions themselves.**
 
 *(OR-6 — bare `text-white` / `bg-white` classes — resolved 31 Aug 2026 by D-9.)*
 
@@ -973,7 +990,16 @@ forcing 258 button labels, chips and stat values into either `heading` (wrong na
 (visibly lighter). Same value means the correction shipped with zero rendered change. See
 L-C10.
 
-**D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
+**D-13 · Where a hex belongs to two families, Figma's choice wins.** `#d2e7fa` is both
+`Primary/100` and `Light Mode/Base`; `#061b2e` is both `Primary/1000` and `Dark Mode/Base`. The
+rendered colour is the same either way, so this is purely a naming question — and naming is
+Figma's to decide. Page surfaces take the Primary ramp, body text the Dark Mode ramp.
+
+**D-14 · `Ink/midnight` lives in Allias, not Mapped.** It is theme-invariant, which makes it a
+named alias for a raw value rather than a role with per-mode values. Mapped stays at six groups
+(Surface, Text, Border, Brand, Status, Button).
+
+**D-15 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was
 verified as 1,506 leaf elements with exactly two colour transitions and **zero** elements
 falling below 4.5:1.
