@@ -999,7 +999,7 @@ Figma's to decide. Page surfaces take the Primary ramp, body text the Dark Mode 
 named alias for a raw value rather than a role with per-mode values. Mapped stays at six groups
 (Surface, Text, Border, Brand, Status, Button).
 
-**D-15 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
+**D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was
 verified as 1,506 leaf elements with exactly two colour transitions and **zero** elements
 falling below 4.5:1.
