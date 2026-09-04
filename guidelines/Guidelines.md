@@ -894,6 +894,27 @@ when next touched. See open ruling **OR-4**.
 
 Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
 
+**OR-4 · Figma has no counterpart for two things the code now has.** Step 4 finished on the
+code side; these are the Figma-side residual, and publishing variable edits is Vanessa's call:
+
+- **`Text/strong` is missing from Mapped.** It needs Light and Dark modes referencing
+  `Primary/950` and `Primary/50`, to match `var(--blue-950)` / `var(--blue-50)` in code.
+- **The Responsive collection still names the ramp `text-*`.** Code renamed it to `type-*`
+  (L-TY5). Until Figma follows, the two vocabularies disagree on the size scale.
+
+**OR-5 · `--text-muted` is defined but used zero times.** It was added as "a real muted" once
+`--muted-foreground`'s value was renamed to `body`. The four-role model in L-C10 documents it
+as live, but nothing renders it. Either some of the 1,428 `text-body` usages are genuinely the
+muted tier — a design judgement, not a sweep — or the role is aspirational and R-TY3 should
+say so.
+
+**OR-6 · The status colours are the only roles still holding raw hex.** `--status-error`
+`#E05C4B`, `--status-success` `#22C55E`, `--status-warning` `#E8A838`. Every other role now
+resolves through an Allias-layer scale token; these cannot, because there are no `--red-*`,
+`--green-*` or `--amber-*` scales in `globals.css` — the regenerated 11-step Green exists in
+Figma only. The status families need their alias layer brought into code, which would also
+give `--status-*-fg` (currently literals from Figma's `/800` steps) something to reference.
+
 *(OR-6 — bare `text-white` / `bg-white` classes — resolved 31 Aug 2026 by D-9.)*
 
 **OR-4 · Dead code.** `VideoDepartmentDashboard.tsx`, `GlobalPulseDashboard.tsx` and
