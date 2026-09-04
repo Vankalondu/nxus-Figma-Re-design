@@ -172,7 +172,7 @@ console.log('    resolving Qaza -> Allias -> Mapped on both sides. The layer tha
 console.log('    adopted" in earlier runs of this script is adopted: --background/--card/');
 console.log('    --foreground and the rest were retired in step 4.3.');
 console.log('  · Still asymmetric, on purpose: Status/info + info-tint are Figma-only (nothing');
-console.log('    renders an info state) and --text-muted is code-only-and-unused. Both are OR-5.');
+console.log('    renders an info state) and --text-muted is code-only-and-unused. Both are OR-8.');
 console.log('    Button/* (11 vars) is a component layer the code expresses as utilities, not tokens.');
 console.log('  · Scope of the counts: "figma-only" is Qaza scale steps with no CSS token. The');
 console.log('    Mapped section only walks _cssPair, so a Figma variable left out of that map is');

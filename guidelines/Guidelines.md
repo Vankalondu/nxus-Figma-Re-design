@@ -894,7 +894,7 @@ when next touched. See open ruling **OR-4**.
 
 Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
 
-**OR-4 · RESOLVED 2026-09-04.** Figma and the code are level. As first written this ruling was
+**OR-7 · RESOLVED 2026-09-04.** Figma and the code are level. As first written this ruling was
 wrong twice, recorded here rather than quietly edited:
 
 - It claimed the Responsive collection still named the ramp `text-*`. It never did — Figma
@@ -918,7 +918,7 @@ text from the Dark Mode ramp, even where the hex is identical.
 
 `scripts/figma-css-diff.mjs` now reports **66 match · 0 drift · 0 figma-only · 0 ramp drift**.
 
-**OR-5 · Two roles exist on one side only, and nothing renders either.** `--text-muted` is
+**OR-8 · Two roles exist on one side only, and nothing renders either.** `--text-muted` is
 defined, bridged and short-aliased in code but used **zero** times; `Status/info` and
 `Status/info-tint` are the mirror image, present in Figma with no code counterpart and no info
 state anywhere in the product. Either some of the 1,428 `text-body` usages are genuinely the
@@ -926,7 +926,7 @@ muted tier — a design judgement, not a sweep — or these are aspirational and
 so. `Button/*` (11 Figma vars) is deliberately excluded: that is a component layer the code
 expresses as utilities rather than tokens.
 
-**OR-6 · RESOLVED 2026-09-04.** The status families were never missing — Qaza already held
+**OR-9 · RESOLVED 2026-09-04.** The status families were never missing — Qaza already held
 `Colors/Red`, `Colors/Amber` and `Colors/Green` at the full 11 steps, and Allias already grouped
 them as Error / Warning / Success. Only the code was short, carrying each family's Base value
 alone. All three scales are now in `globals.css`, and every colour role in the file resolves
