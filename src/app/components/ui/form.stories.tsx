@@ -19,7 +19,7 @@ const meta = {
           'accessibility plumbing that is easy to skip when hand-rolling a form.\n\n' +
           'Error text uses `text-status-error` (**R-TY3**). Under **L-C3** that red means a real ' +
           'problem, so do not borrow it for hints or character counts.\n\n' +
-          'Field styling follows **P-CO13**; labels are `.text-micro`, uppercase and tracked.',
+          'Field styling follows **P-CO13**; labels are `.type-micro`, uppercase and tracked.',
       },
     },
   },

@@ -293,7 +293,7 @@ Semibold (600). Hierarchy comes from **size**, not weight. `font-bold`, `font-ex
 competing hierarchies that disagree at different breakpoints.
 
 ### L-TY3 · Law — Use the ramp classes, not literal sizes
-Apply `.text-h1` … `.text-micro`. Do not hard-code `text-[28px]` or equivalent.
+Apply `.type-h1` … `.type-micro`. Do not hard-code `text-[28px]` or equivalent.
 
 **Why:** each ramp class reads a token that steps per breakpoint, so one class is responsive
 with no call-site variants. A literal size is frozen at one tier and breaks on the others.
@@ -311,17 +311,17 @@ every breakpoint. These values mirror the Figma `Responsive` collection 1:1.
 
 | Class | Mobile | Tablet ≥768 | Desktop ≥1024 | Line height (desktop) |
 |---|---|---|---|---|
-| `.text-h1` | 32 | 40 | 48 | 56 |
-| `.text-h2` | 28 | 32 | 40 | 48 |
-| `.text-h3` | 24 | 28 | 32 | 40 |
-| `.text-h4` | 20 | 24 | 28 | 32 |
-| `.text-h5` | 20 | 20 | 24 | 28 |
-| `.text-h6` | 20 | 20 | 20 | 24 |
-| `.text-body-lg` | 20 | 20 | 20 | 24 |
-| `.text-body` | 16 | 16 | 16 | 20 |
-| `.text-body-sm` | 14 | 14 | 14 | 16 |
-| `.text-caption` | 12 | 12 | 12 | 14 |
-| `.text-micro` | 10 | 10 | 10 | 12 |
+| `.type-h1` | 32 | 40 | 48 | 56 |
+| `.type-h2` | 28 | 32 | 40 | 48 |
+| `.type-h3` | 24 | 28 | 32 | 40 |
+| `.type-h4` | 20 | 24 | 28 | 32 |
+| `.type-h5` | 20 | 20 | 24 | 28 |
+| `.type-h6` | 20 | 20 | 20 | 24 |
+| `.type-body-lg` | 20 | 20 | 20 | 24 |
+| `.type-body` | 16 | 16 | 16 | 20 |
+| `.type-body-sm` | 14 | 14 | 14 | 16 |
+| `.type-caption` | 12 | 12 | 12 | 14 |
+| `.type-micro` | 10 | 10 | 10 | 12 |
 
 Base 16 × ratio 1.2, snapped (2px below 24, 4px at and above 24).
 
@@ -329,14 +329,14 @@ Base 16 × ratio 1.2, snapped (2px below 24, 4px at and above 24).
 | Element | Class | Weight | Font |
 |---|---|---|---|
 | KPI large number | `text-4xl`+ | 800 ExtraBold | Figtree |
-| Page hero title | `.text-h1` | 600 Semibold | Figtree |
-| Card / major section title | `.text-h2` | 600 Semibold | Figtree |
-| Section / widget title | `.text-h3` | 600 Semibold | Figtree |
-| Sub-heading | `.text-h4` | 600 Semibold | Figtree |
-| Page subtitle | `.text-body-lg` | 500 Medium | Plus Jakarta Sans |
-| Body / button text | `.text-body-sm` | 700 Bold (500 prose) | Plus Jakarta Sans |
-| Table data | `.text-caption` | 700 Bold | Plus Jakarta Sans |
-| Column / micro labels | `.text-micro` | 700 Bold, uppercase, tracked | Figtree |
+| Page hero title | `.type-h1` | 600 Semibold | Figtree |
+| Card / major section title | `.type-h2` | 600 Semibold | Figtree |
+| Section / widget title | `.type-h3` | 600 Semibold | Figtree |
+| Sub-heading | `.type-h4` | 600 Semibold | Figtree |
+| Page subtitle | `.type-body-lg` | 500 Medium | Plus Jakarta Sans |
+| Body / button text | `.type-body-sm` | 700 Bold (500 prose) | Plus Jakarta Sans |
+| Table data | `.type-caption` | 700 Bold | Plus Jakarta Sans |
+| Column / micro labels | `.type-micro` | 700 Bold, uppercase, tracked | Figtree |
 
 ### R-TY3 · Reference — Text colour
 | Context | Token |
@@ -524,24 +524,24 @@ Three variants. Anything else needs a reason in the PR.
 ```
 Primary    bg-primary border-2 border-primary text-primary-foreground
            hover:bg-primary/80 rounded-full px-6 py-3
-           font-body font-bold .text-body-sm transition-colors shadow-md
+           font-body font-bold .type-body-sm transition-colors shadow-md
 
 Secondary  bg-card text-muted-foreground border border-border
            hover:border-primary hover:text-foreground rounded-full px-6 py-2
-           font-body font-bold .text-body-sm transition-colors
+           font-body font-bold .type-body-sm transition-colors
 
 Destructive  border-2 border-destructive text-destructive
              hover:bg-destructive/10 rounded-full px-6 py-3
-             font-body font-bold .text-body-sm transition-colors
+             font-body font-bold .type-body-sm transition-colors
 ```
 
 ### P-CO2 — Tab pills
 ```
 Active    bg-primary text-primary-foreground border-primary shadow-sm
-          rounded-full px-6 py-2 font-body font-bold .text-body-sm
+          rounded-full px-6 py-2 font-body font-bold .type-body-sm
 Inactive  bg-card text-muted-foreground border-border
           hover:border-primary hover:text-foreground
-          rounded-full px-6 py-2 font-body font-bold .text-body-sm transition-colors
+          rounded-full px-6 py-2 font-body font-bold .type-body-sm transition-colors
 Container flex items-center gap-2
 ```
 
@@ -562,7 +562,7 @@ Container  bg-card rounded-[32px] border border-border p-6
            hover:-translate-y-1 hover:shadow-xl transition-all
            rendered as <button> — keyboard focusable
 Icon chip  circular, bg-primary/10 text-primary
-Heading    short, uppercase, .text-micro tracked, text-muted-foreground
+Heading    short, uppercase, .type-micro tracked, text-muted-foreground
 Value      font-heading font-extrabold text-4xl tabular-nums leading-none
 Descriptor beside the value, muted
 Action     named link with an ArrowUpRight
@@ -629,11 +629,11 @@ Inactive `text-muted-foreground hover:text-foreground hover:bg-accent transition
 Container   w-full max-w-none bg-card rounded-[32px]
             shadow-[var(--shadow-lg)] border border-border overflow-hidden
 Group header (row 1)   bg-primary text-primary-foreground
-            font-heading font-bold .text-micro uppercase tracking-widest px-4 py-3 text-center
+            font-heading font-bold .type-micro uppercase tracking-widest px-4 py-3 text-center
 Sub-header (row 2)     bg-card text-muted-foreground
             font-heading font-bold uppercase tracking-widest px-3 py-3
 Data rows   border-b border-border/40 hover:bg-accent transition-colors
-            py-3 px-2 font-body .text-caption font-bold
+            py-3 px-2 font-body .type-caption font-bold
 Position group rows    bg-primary text-primary-foreground — e.g. STRIKERS (9)
 Year separator rows    bg-card text-muted-foreground — year only, no prefix
 ```
@@ -652,7 +652,7 @@ flag circle (`w-5 h-5 rounded-full border border-border`).
 ### P-CO11 — Videos cluster
 Present on all table views across all tiers. Never removed.
 `F{n}` match footage and `H{n}` highlight badges: `bg-primary/20 text-foreground font-bold
-px-2 py-0.5 rounded .text-caption`.
+px-2 py-0.5 rounded .type-caption`.
 
 ### P-CO12 — Split button (action column)
 One pill divided by a 1px vertical rule. Left zone executes the current action on click;
@@ -669,11 +669,11 @@ select, outside click, or table scroll.
 ### P-CO13 — Form inputs
 ```
 bg-card border border-border rounded-xl px-4 py-2
-.text-body-sm font-bold text-foreground
+.type-body-sm font-bold text-foreground
 focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
 placeholder:text-muted-foreground
 ```
-Field label: `font-heading font-bold .text-micro uppercase tracking-widest
+Field label: `font-heading font-bold .type-micro uppercase tracking-widest
 text-muted-foreground mb-2`.
 
 ### P-CO14 — Modals
@@ -692,7 +692,7 @@ Grade  A+ bg-primary text-primary-foreground · A bg-primary/12 text-foreground
        B  bg-muted-foreground/10 text-muted-foreground · C bg-accent text-muted-foreground
 NXT    T bg-primary text-primary-foreground · M bg-scout-amber/15 text-scout-amber
        D bg-scout-red/10 text-scout-red
-Position  inline-block px-1.5 py-[2px] rounded font-body .text-micro font-bold
+Position  inline-block px-1.5 py-[2px] rounded font-body .type-micro font-bold
        ST bg-destructive/10 text-destructive · LW/RW/CDM/FB bg-primary/10 text-foreground
        CAM bg-scout-amber/10 text-scout-amber · CM bg-muted-foreground/10 text-muted-foreground
        CB bg-muted-foreground/20 text-muted-foreground

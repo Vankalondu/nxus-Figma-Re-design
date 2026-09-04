@@ -129,7 +129,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
             {/* Custom presets panel */}
             <div className="break-inside-avoid mb-4 inline-block w-full">
               <div className="bg-surface-accent rounded-[16px] p-4 flex flex-col gap-3">
-                <span className="font-heading font-bold text-micro uppercase tracking-widest text-text-body">Custom Presets</span>
+                <span className="font-heading font-bold type-micro uppercase tracking-widest text-text-body">Custom Presets</span>
 
                 {presets.length === 0 ? (
                   <p className="text-text-body text-[14px] font-body">None saved yet.</p>
@@ -185,7 +185,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                 <div key={group} className="break-inside-avoid mb-4 inline-block w-full">
                   <div className="flex flex-col gap-2">
                     <div className="bg-surface-accent/60 rounded-[10px] px-4 py-2">
-                      <span className="font-heading font-bold text-micro uppercase tracking-widest text-text-body">{group}</span>
+                      <span className="font-heading font-bold type-micro uppercase tracking-widest text-text-body">{group}</span>
                     </div>
                     <div className="flex flex-col gap-2">
                       {groupCols.map(col => {

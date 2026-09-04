@@ -470,17 +470,17 @@ body {
    Size + line-height only — pair with .font-heading/.font-body + a weight class.
    Each reads a token that steps per breakpoint (see :root + @media above), so a
    single class is responsive across mobile/tablet/desktop with no call-site variants. */
-.text-h1      { font-size: var(--fs-h1);      line-height: var(--lh-h1); }
-.text-h2      { font-size: var(--fs-h2);      line-height: var(--lh-h2); }
-.text-h3      { font-size: var(--fs-h3);      line-height: var(--lh-h3); }
-.text-h4      { font-size: var(--fs-h4);      line-height: var(--lh-h4); }
-.text-h5      { font-size: var(--fs-h5);      line-height: var(--lh-h5); }
-.text-h6      { font-size: var(--fs-h6);      line-height: var(--lh-h6); }
-.text-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); }
-.text-body    { font-size: var(--fs-body);    line-height: var(--lh-body); }
-.text-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body-sm); }
-.text-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); }
-.text-micro   { font-size: var(--fs-micro);   line-height: var(--lh-micro); }
+.type-h1      { font-size: var(--fs-h1);      line-height: var(--lh-h1); }
+.type-h2      { font-size: var(--fs-h2);      line-height: var(--lh-h2); }
+.type-h3      { font-size: var(--fs-h3);      line-height: var(--lh-h3); }
+.type-h4      { font-size: var(--fs-h4);      line-height: var(--lh-h4); }
+.type-h5      { font-size: var(--fs-h5);      line-height: var(--lh-h5); }
+.type-h6      { font-size: var(--fs-h6);      line-height: var(--lh-h6); }
+.type-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); }
+.type-body    { font-size: var(--fs-body);    line-height: var(--lh-body); }
+.type-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body-sm); }
+.type-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.type-micro   { font-size: var(--fs-micro);   line-height: var(--lh-micro); }
 
 /* ── Responsive data-table density (TABLE-LOCAL exception to the type floor) ──
    Add `rtable` to a <table>: cell padding tightens per tier so scouts keep a real

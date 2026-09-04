@@ -927,7 +927,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
         <div className="lg:col-span-3 portrait-tablet:col-span-full min-w-0 bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
           <div className="px-4 sm:px-6 py-4 border-b border-border-default flex items-center justify-between gap-2 shrink-0">
             <h3 className="font-heading font-bold text-[16px] text-text-heading">Target breakdown</h3>
-            <span className="font-heading font-bold text-micro bg-surface-accent text-text-body rounded-full px-2">Derivable</span>
+            <span className="font-heading font-bold type-micro bg-surface-accent text-text-body rounded-full px-2">Derivable</span>
           </div>
           <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between gap-8">
             <div>

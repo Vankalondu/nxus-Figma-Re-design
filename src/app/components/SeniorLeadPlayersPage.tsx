@@ -3183,10 +3183,10 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 onDrop={e => { e.preventDefault(); setDragTabId(null); }}
                 onDragEnd={() => setDragTabId(null)}
                 title="Drag to reorder"
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''} ${isActive ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''} ${isActive ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
                 {tab.label}
                 {count !== null && count > 0 && (
-                  <span className={`font-body text-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-surface-card/20 text-text-on-brand' : 'bg-brand-primary/15 text-text-heading'}`}>{count}</span>
+                  <span className={`font-body type-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-surface-card/20 text-text-on-brand' : 'bg-brand-primary/15 text-text-heading'}`}>{count}</span>
                 )}
               </button>
             );
@@ -3201,7 +3201,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {/* Tabs — mobile: active label + 'More ▾' dropdown */}
         <div className="md:hidden relative">
           <button onClick={() => setTabsMenuOpen(o => !o)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-text-inverse font-body font-bold text-body-sm">
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-text-inverse font-body font-bold type-body-sm">
             <span className="truncate max-w-[160px]">{TABS.find(t => t.id === activeTab)?.label ?? 'Select'}</span>
             <ChevronDown size={14} className={`shrink-0 transition-transform ${tabsMenuOpen ? 'rotate-180' : ''}`} />
           </button>
@@ -3213,9 +3213,9 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 return (
                   <div key={tab.id} className="flex items-center gap-1 pl-2 pr-1">
                     <button onClick={() => { setActiveTab(tab.id); setTabsMenuOpen(false); }}
-                      className={`flex-1 flex items-center justify-between gap-2 px-2 py-2 rounded-lg font-body font-bold text-body-sm ${isActive ? 'text-brand-primary bg-brand-primary/10' : 'text-text-body hover:bg-surface-accent'}`}>
+                      className={`flex-1 flex items-center justify-between gap-2 px-2 py-2 rounded-lg font-body font-bold type-body-sm ${isActive ? 'text-brand-primary bg-brand-primary/10' : 'text-text-body hover:bg-surface-accent'}`}>
                       {tab.label}
-                      {count !== null && count > 0 && <span className="font-body text-micro font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-text-heading">{count}</span>}
+                      {count !== null && count > 0 && <span className="font-body type-micro font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-text-heading">{count}</span>}
                     </button>
                     <button onClick={() => moveTab(tab.id, -1)} disabled={idx === 0} title="Move up"
                       className="w-6 h-6 rounded-md flex items-center justify-center text-text-body hover:bg-surface-accent disabled:opacity-30 shrink-0"><ChevronDown size={13} className="rotate-180" /></button>
@@ -3226,7 +3226,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
               })}
               {isCustomOrder && (
                 <button onClick={resetTabOrder}
-                  className="w-full flex items-center gap-2 px-4 py-2 mt-1 border-t border-border-default font-body font-bold text-body-sm text-text-body hover:bg-surface-accent">
+                  className="w-full flex items-center gap-2 px-4 py-2 mt-1 border-t border-border-default font-body font-bold type-body-sm text-text-body hover:bg-surface-accent">
                   <RotateCcw size={13} /> Reset order
                 </button>
               )}
@@ -3237,11 +3237,11 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {activeTab === 'signed-list' && (
           <>
             <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-heading shrink-0 transition-colors">
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-heading shrink-0 transition-colors">
               <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
             </button>
             <button onClick={() => setSignedAddOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border-default bg-surface-card text-brand-primary hover:border-brand-primary hover:bg-surface-accent shrink-0 transition-colors">
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-brand-primary hover:border-brand-primary hover:bg-surface-accent shrink-0 transition-colors">
               <Plus size={14} /> Add Signed Player
             </button>
           </>
@@ -3262,25 +3262,25 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {isListTab && (
           <>
             <button onClick={() => setShowFilters(s => !s)}
-              className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border shrink-0 transition-colors ${showFilters ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
+              className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border shrink-0 transition-colors ${showFilters ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
               <SlidersHorizontal size={14} /> Filters
             </button>
             {activeTab !== 'database' && (
               <button onClick={() => setMobileFiltersOpen(true)}
-                className="md:hidden flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border-default bg-surface-card text-text-body shrink-0">
+                className="md:hidden flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-text-body shrink-0">
                 <SlidersHorizontal size={14} /> Filters
               </button>
             )}
             <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-heading shrink-0 transition-colors">
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-heading shrink-0 transition-colors">
               <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
             </button>
           </>
         )}
         {isListTab && (
           <div className="flex flex-col gap-1 items-start shrink-0">
-            <span className="flex items-center gap-1 font-body text-caption font-bold text-text-body"><span className="w-2 h-2 rounded-full bg-[#3A8C6A] inline-block" />Scouted</span>
-            <span className="flex items-center gap-1 font-body text-caption font-bold text-text-body"><span className="w-2 h-2 rounded-full bg-[#E05C4B] inline-block" />Unscouted</span>
+            <span className="flex items-center gap-1 font-body type-caption font-bold text-text-body"><span className="w-2 h-2 rounded-full bg-[#3A8C6A] inline-block" />Scouted</span>
+            <span className="flex items-center gap-1 font-body type-caption font-bold text-text-body"><span className="w-2 h-2 rounded-full bg-[#E05C4B] inline-block" />Unscouted</span>
           </div>
         )}
       </div>
@@ -3334,7 +3334,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
               <div className="absolute inset-0 bg-ink-midnight/60 backdrop-blur-sm" onClick={() => setMobileFiltersOpen(false)} />
               <div className="relative z-10 bg-surface-page rounded-t-[24px] max-h-[80vh] overflow-y-auto p-4 pb-8 shadow-2xl">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-heading font-bold text-body-lg text-text-heading">Filters</span>
+                  <span className="font-heading font-bold type-body-lg text-text-heading">Filters</span>
                   <button onClick={() => setMobileFiltersOpen(false)} className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-heading"><X size={16} /></button>
                 </div>
                 <FilterBar {...filterBarProps} />

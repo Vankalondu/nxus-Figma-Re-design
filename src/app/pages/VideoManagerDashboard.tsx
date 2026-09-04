@@ -652,7 +652,7 @@ export default function VideoManagerDashboard() {
           {activePage === 'dashboard' && (
             <>
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold text-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold type-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0"><Video size={26} className="text-text-on-brand" /></span>
                   Marcus

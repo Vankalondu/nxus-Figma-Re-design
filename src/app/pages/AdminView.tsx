@@ -101,7 +101,7 @@ export function AdminView() {
     <div className="flex flex-col h-full" onClick={closeMenu}>
       {/* ── Page Header — Qaza signature pattern ── */}
       <div className="pt-6 mb-3 flex flex-col justify-center shrink-0">
-        <h1 className="font-heading font-semibold text-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
+        <h1 className="font-heading font-semibold type-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
           Admin
           <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
             <Settings size={28} className="text-text-on-brand" />

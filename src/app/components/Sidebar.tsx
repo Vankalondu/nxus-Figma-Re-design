@@ -141,7 +141,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
               })}
               {actions.length > 0 && (
                 <div className="mt-4 pt-4 border-t border-border-default flex flex-col gap-2">
-                  <span className="px-3 mb-1 font-heading font-bold text-micro uppercase tracking-widest text-text-body">Quick Actions</span>
+                  <span className="px-3 mb-1 font-heading font-bold type-micro uppercase tracking-widest text-text-body">Quick Actions</span>
                   {actions.map((a, i) => (
                     <button key={i} onClick={() => { a.onClick(); setMobileOpen(false); }}
                       className="w-full h-11 flex items-center rounded-[14px] px-3 gap-4 text-text-body hover:text-text-heading hover:bg-surface-accent transition-all">

@@ -7,9 +7,9 @@
  * fault, not a failing assertion. This script closes that gap.
  *
  * It walks every visible element on the main routes in BOTH themes and records
- * the computed color / backgroundColor / borderTopColor against a stable path
- * key. Capture before the rename, capture again after, diff. A missed or wrong
- * rename changes a rendered colour, so it shows up here.
+ * the computed color / backgroundColor / borderTopColor / fontSize / fontWeight
+ * against a stable path key. Capture before, capture again after, diff. A wrong
+ * or missed rename changes a rendered style, so it shows up here.
  *
  *   node scripts/snapshot-computed-styles.mjs before   # writes the baseline
  *   node scripts/snapshot-computed-styles.mjs after    # writes + diffs
@@ -17,7 +17,7 @@
  * Requires a preview server. Start one first:
  *   npx vite preview --port 4200
  *
- * Exits 1 if any element's rendered colour changed.
+ * Exits 1 if any element's rendered colour, size or weight changed.
  */
 import fs from 'fs';
 import path from 'path';
@@ -56,7 +56,10 @@ const COLLECT = () => {
     if (r.width === 0 || r.height === 0) continue;
     const cs = getComputedStyle(el);
     if (cs.visibility === 'hidden' || cs.display === 'none') continue;
-    out[pathOf(el)] = [cs.color, cs.backgroundColor, cs.borderTopColor].join('|');
+    // fontSize/fontWeight are here because the type ramp (.type-h1 … .type-micro)
+    // is a class vocabulary too: renaming it moves sizes, not colours, and a
+    // colour-only snapshot reported PASS on a change it structurally could not see.
+    out[pathOf(el)] = [cs.color, cs.backgroundColor, cs.borderTopColor, cs.fontSize, cs.fontWeight].join('|');
   }
   return out;
 };
@@ -109,16 +112,16 @@ for (const key of Object.keys(before)) {
   added += Object.keys(a).filter(e => !(e in b)).length;
 }
 
-console.log('\ncolour changed : ' + changed);
-console.log('elements gone  : ' + missing + '   (layout shift, not necessarily a colour fault)');
-console.log('elements added : ' + added);
+console.log('\nelements changed : ' + changed);
+console.log('elements gone    : ' + missing + '   (layout shift, not necessarily a style fault)');
+console.log('elements added   : ' + added);
 if (samples.length) {
   console.log('\nfirst differences:');
   for (const s of samples) console.log('  ' + s);
 }
 if (changed === 0) {
-  console.log('\nPASS — every rendered colour is identical to the baseline.');
+  console.log('\nPASS — every rendered colour, size and weight is identical to the baseline.');
   process.exit(0);
 }
-console.log('\nFAIL — ' + changed + ' element(s) render a different colour than before the rename.');
+console.log('\nFAIL — ' + changed + ' element(s) render a different colour, size or weight than the baseline.');
 process.exit(1);

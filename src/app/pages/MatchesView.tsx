@@ -523,7 +523,7 @@ export function MatchesView() {
             </nav>
           </div>
 
-          <h1 className="font-heading font-semibold text-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
+          <h1 className="font-heading font-semibold type-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
             {selectedComp.name}
             <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
               <Trophy size={20} className="text-text-on-brand" />
@@ -591,7 +591,7 @@ export function MatchesView() {
       {/* Page header + toolbar share one row on desktop */}
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 pt-6 mb-3">
         <div className="flex flex-col justify-center shrink-0">
-        <h1 className="font-heading font-semibold text-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
+        <h1 className="font-heading font-semibold type-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
           Competitions
           <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
             <Calendar size={28} className="text-text-on-brand" />

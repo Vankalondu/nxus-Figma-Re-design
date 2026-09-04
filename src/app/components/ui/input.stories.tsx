@@ -10,7 +10,7 @@ const meta = {
         component:
           'Text input. NXUS field styling is specified in **P-CO13**: `bg-surface-card`, `border-border-default`, ' +
           '`rounded-xl`, bold 14px text, and a `focus:ring-2 focus:ring-border-focus/20` focus state. ' +
-          'Labels sit above at `.text-micro`, uppercase and tracked.',
+          'Labels sit above at `.type-micro`, uppercase and tracked.',
       },
     },
   },

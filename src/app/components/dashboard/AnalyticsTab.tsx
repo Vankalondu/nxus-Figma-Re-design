@@ -179,7 +179,7 @@ export const AnalyticsTab = () => {
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h3 className="font-heading font-bold text-[16px] text-text-heading">Talent map</h3>
-                <span className="font-heading font-bold text-micro bg-surface-accent text-text-body rounded-full px-2">Derivable</span>
+                <span className="font-heading font-bold type-micro bg-surface-accent text-text-body rounded-full px-2">Derivable</span>
               </div>
               <p className="font-body text-[12px] text-text-body font-medium">Eyeball rating vs age — bubble = video coverage</p>
             </div>

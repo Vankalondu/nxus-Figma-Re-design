@@ -398,14 +398,14 @@ export default function CountryScoutDashboardPage() {
             {activePage==='dashboard' && (
               <div className="flex flex-col w-full">
                 <div className="pt-6 mb-3 flex flex-col justify-center shrink-0">
-                  <h1 className="font-heading font-semibold text-h3 tracking-tight text-text-heading flex items-center gap-4">
+                  <h1 className="font-heading font-semibold type-h3 tracking-tight text-text-heading flex items-center gap-4">
                     Welcome
                     <span className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
                       <Sun size={28} className="text-text-on-brand" />
                     </span>
                     Oluniyi
                   </h1>
-                  <p className="font-body text-text-body text-body mt-2 font-medium max-w-xl short:hidden">{funSubtitle}</p>
+                  <p className="font-body text-text-body type-body mt-2 font-medium max-w-xl short:hidden">{funSubtitle}</p>
                   <ResponsiveTabs className="mt-4" activeId={dashTab} onSelect={setDashTab}
                     tabs={['Overview','Active Players','Pending Reports','Analytics','Reports'].map(t=>({id:t,label:t}))} />
                 </div>
@@ -414,13 +414,13 @@ export default function CountryScoutDashboardPage() {
                   <div className="lg:col-span-2 portrait-tablet:col-span-full bg-surface-accent border border-border-default rounded-[40px] p-[var(--pad-card)] shadow-[0_4px_24px_rgba(6,27,46,0.12),0_1px_4px_rgba(6,27,46,0.10)] h-[550px] flex flex-col">
                     <div className="flex items-center gap-4 mb-6 shrink-0">
                       <div className="w-12 h-12 rounded-full bg-surface-card flex items-center justify-center text-text-heading"><Users size={20} /></div>
-                      <h2 className="font-heading font-bold text-h5 text-text-heading flex items-center">
+                      <h2 className="font-heading font-bold type-h5 text-text-heading flex items-center">
                         Scout Leaderboard
                         <span className="inline-flex items-center gap-2 px-3 py-1 bg-surface-card text-text-heading border border-border-default rounded-full text-[14px] font-bold shadow-sm ml-4">Ghana 🇬🇭</span>
                       </h2>
                     </div>
                     <div className="flex-1 flex flex-col min-h-0">
-                      <div className="grid grid-cols-12 px-2 py-4 font-heading font-bold text-micro uppercase tracking-widest text-text-body border-b border-border-default shrink-0">
+                      <div className="grid grid-cols-12 px-2 py-4 font-heading font-bold type-micro uppercase tracking-widest text-text-body border-b border-border-default shrink-0">
                         <div className="col-span-6">Scout Name</div><div className="col-span-3">Total Grade A</div><div className="col-span-3 text-right">Country</div>
                       </div>
                       <div className="flex-1 overflow-y-auto hide-scrollbar">
@@ -437,12 +437,12 @@ export default function CountryScoutDashboardPage() {
                   <div className="lg:col-span-1 flex flex-col gap-[var(--gap-grid)] h-[550px]">
                     <div className="bg-surface-card border border-border-default rounded-[40px] p-[var(--pad-card)] shadow-[var(--shadow-lg)] flex flex-col flex-1 relative overflow-hidden group cursor-pointer h-1/2">
                       <div className="w-12 h-12 rounded-full bg-surface-card/10 flex items-center justify-center text-text-heading mb-auto shrink-0 border border-text-on-brand/5"><TrendingUp size={18} strokeWidth={2.5} /></div>
-                      <div className="mt-8"><h4 className="font-heading font-bold text-body text-text-heading mb-1">Top Prospect</h4><p className="font-body text-caption text-text-body font-medium mb-3">Based on scout rating</p><div className="font-heading font-bold text-h5 tracking-tight text-text-heading leading-tight">Kofi Mensah</div></div>
+                      <div className="mt-8"><h4 className="font-heading font-bold type-body text-text-heading mb-1">Top Prospect</h4><p className="font-body type-caption text-text-body font-medium mb-3">Based on scout rating</p><div className="font-heading font-bold type-h5 tracking-tight text-text-heading leading-tight">Kofi Mensah</div></div>
                     </div>
                     <div className="bg-brand-primary rounded-[40px] p-[var(--pad-card)] shadow-sm flex flex-col flex-1 relative overflow-hidden group h-1/2">
                       <div className="w-12 h-12 rounded-full bg-surface-card/20 flex items-center justify-center text-text-on-brand mb-auto shrink-0"><Calendar size={18} strokeWidth={2.5} /></div>
                       <div className="mt-6 flex flex-col">
-                        <h4 className="font-heading font-bold text-body text-text-on-brand mb-1">Upcoming Matches</h4>
+                        <h4 className="font-heading font-bold type-body text-text-on-brand mb-1">Upcoming Matches</h4>
                         <div className="space-y-3 mb-6 flex-1">
                           {['Gor Mahia vs Kariobangi','Enyimba FC vs Kano Pillars'].map((m,i)=>(
                             <div key={i} className="flex justify-between items-center font-body text-[14px] font-bold text-text-on-brand bg-surface-card/20 px-3 py-2 rounded-[16px]">

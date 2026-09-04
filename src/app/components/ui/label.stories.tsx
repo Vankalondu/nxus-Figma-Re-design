@@ -10,7 +10,7 @@ const meta = {
       description: {
         component:
           'Radix label — clicking it focuses its control, which is why it is worth using over a ' +
-          'bare `<span>`. NXUS field labels are Figtree `.text-micro`, bold, uppercase and ' +
+          'bare `<span>`. NXUS field labels are Figtree `.type-micro`, bold, uppercase and ' +
           'tracked (**P-CO13**, **R-TY2**).',
       },
     },
