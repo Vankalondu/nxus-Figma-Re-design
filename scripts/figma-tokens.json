@@ -701,5 +701,6 @@
   "Shadow/lg": "#061b2e @0.06",
   "Shadow/xl": "#061b2e @0.20"
  },
- "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-5. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift."
+ "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-5. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
+ "_verified": "2026-09-04 — all 41 Mapped colour variables re-read from the live file and resolved through their alias chains; every one matches the value recorded here. This file is an extract, not a reconstruction. Re-verify after any Figma-side edit: the diff script trusts this snapshot and cannot detect its own staleness."
 }

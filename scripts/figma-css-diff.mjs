@@ -174,6 +174,11 @@ console.log('    --foreground and the rest were retired in step 4.3.');
 console.log('  · Still asymmetric, on purpose: Status/info + info-tint are Figma-only (nothing');
 console.log('    renders an info state) and --text-muted is code-only-and-unused. Both are OR-5.');
 console.log('    Button/* (11 vars) is a component layer the code expresses as utilities, not tokens.');
+console.log('  · Scope of the counts: "figma-only" is Qaza scale steps with no CSS token. The');
+console.log('    Mapped section only walks _cssPair, so a Figma variable left out of that map is');
+console.log('    invisible here — the deliberate exclusions above are the whole list.');
+console.log('  · This reads a committed snapshot, not the live file. See _verified in');
+console.log('    figma-tokens.json for when it was last confirmed against Figma.');
 
 console.log('\nSUMMARY  match ' + rows.match.length +
   '  ·  drift ' + rows.valueDrift.length +
