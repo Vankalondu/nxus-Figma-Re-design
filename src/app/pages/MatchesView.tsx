@@ -247,7 +247,7 @@ const SEASONS = ['All Seasons', '2025/2026', '2024/2025'];
 function ProgressPill({ progress }: { progress: number }) {
   const cls =
     progress === 100
-      ? 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20'
+      ? 'bg-status-success/10 text-status-success border-status-success/20'
       : progress === 0
         ? 'bg-surface-accent text-body border-default'
         : 'bg-brand-primary/10 text-brand-primary border-brand-primary/20';
@@ -367,7 +367,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
         <div className="flex-1 min-w-0 flex flex-col gap-1 items-end text-right">
           <span className="inline-flex items-center gap-2">
             <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Away</span>
-            <span className="w-2 h-2 rounded-full bg-[#E05C4B] shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-status-error shrink-0" />
           </span>
           <span className="font-heading font-semibold text-[16px] text-strong truncate w-full" title={match.away}>
             {match.away}
@@ -387,7 +387,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
           <Briefcase size={12} className="shrink-0" />
           {match.raised} Raised
         </span>
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20 font-body font-bold text-[12px]">
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-body font-bold text-[12px]">
           <Clock size={12} className="shrink-0" />
           {match.inBracket} In Age Bracket
         </span>

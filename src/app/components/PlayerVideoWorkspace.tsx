@@ -82,7 +82,7 @@ const HeaderIconButton = ({ title, onClick, children }: { title: string; onClick
 
 const KindBadge = ({ kind }: { kind: 'match' | 'highlight' }) => (
   <span className={`font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full shrink-0 ${
-    kind === 'match' ? 'bg-brand-primary text-on-brand' : 'bg-[#22C55E]/15 text-[#22C55E] border border-[#22C55E]/30'
+    kind === 'match' ? 'bg-brand-primary text-on-brand' : 'bg-status-success/15 text-status-success border border-status-success/30'
   }`}>
     {kind === 'match' ? 'FM' : 'PK'}
   </span>
@@ -96,13 +96,13 @@ const VideoCard = ({ video, playerName, onClick }: { video: PlayerVideo; playerN
       {/* Thumbnail — dark video surface */}
       <div className="relative aspect-video bg-[#02090F] rounded-[16px] overflow-hidden flex items-center justify-center px-4">
         <span className={`absolute top-2 left-2 font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full ${
-          isMatch ? 'bg-brand-primary text-on-brand' : 'bg-[#22C55E]/15 text-[#22C55E] border border-[#22C55E]/30'
+          isMatch ? 'bg-brand-primary text-on-brand' : 'bg-status-success/15 text-status-success border border-status-success/30'
         }`}>
           {isMatch ? 'FM' : 'PK'}
         </span>
         {video.hasReport && (
           <span title="Report filed"
-            className="absolute top-2 right-2 inline-flex items-center gap-0.5 bg-[#22C55E]/15 text-[#22C55E] border border-[#22C55E]/30 font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full">
+            className="absolute top-2 right-2 inline-flex items-center gap-0.5 bg-status-success/15 text-status-success border border-status-success/30 font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full">
             <Check size={10} />R
           </span>
         )}
@@ -148,7 +148,7 @@ const FilmThumb = ({ video, active, onClick }: { video: PlayerVideo; active: boo
         <KindBadge kind={video.kind} />
         {video.hasReport && (
           <span title="Report filed"
-            className="inline-flex items-center gap-0.5 bg-[#22C55E]/15 text-[#22C55E] border border-[#22C55E]/30 font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full shrink-0">
+            className="inline-flex items-center gap-0.5 bg-status-success/15 text-status-success border border-status-success/30 font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full shrink-0">
             <Check size={10} />R
           </span>
         )}
@@ -172,9 +172,9 @@ const TAG_EVENT_TYPES: { id: string; label: string; icon: React.ComponentType<{ 
   { id: 'goal', label: 'Goal', icon: Target, chipClass: 'bg-brand-primary/10 text-brand-primary' },
   { id: 'assist', label: 'Assist', icon: Zap, chipClass: 'bg-brand-primary/10 text-brand-primary' },
   { id: 'chance', label: 'Chance', icon: Sparkles, chipClass: 'bg-brand-primary/10 text-brand-primary' },
-  { id: 'save', label: 'Save', icon: Shield, chipClass: 'bg-[#22C55E]/10 text-[#22C55E]' },
+  { id: 'save', label: 'Save', icon: Shield, chipClass: 'bg-status-success/10 text-status-success' },
   { id: 'foul', label: 'Foul', icon: AlertTriangle, chipClass: 'bg-status-error/10 text-status-error' },
-  { id: 'yellow-card', label: 'Yellow Card', icon: Square, chipClass: 'bg-[#E8A838]/10 text-[#E8A838]' },
+  { id: 'yellow-card', label: 'Yellow Card', icon: Square, chipClass: 'bg-status-warning/10 text-status-warning' },
   { id: 'red-card', label: 'Red Card', icon: Square, chipClass: 'bg-status-error/10 text-status-error' },
   { id: 'substitution', label: 'Substitution', icon: ArrowRightLeft, chipClass: 'bg-surface-accent text-body' },
 ];
@@ -379,7 +379,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
           <span className="font-mono font-bold text-[12px] text-body shrink-0">{graded}/{total}</span>
         </div>
         {savedFlash && (
-          <span className="inline-flex items-center gap-2 self-start bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/30 font-body font-bold text-[12px] px-3 py-1 rounded-full">
+          <span className="inline-flex items-center gap-2 self-start bg-status-success/10 text-status-success border border-status-success/30 font-body font-bold text-[12px] px-3 py-1 rounded-full">
             <Check size={12} /> Report saved — filed to Reports · Submissions
           </span>
         )}
@@ -395,7 +395,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-body font-bold text-[12px] text-body truncate">{c.label}</span>
                   {c.required && (
-                    <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-[#E8A838]/10 text-[#E8A838] px-2 py-0.5 rounded-full shrink-0">Required</span>
+                    <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-status-warning/10 text-status-warning px-2 py-0.5 rounded-full shrink-0">Required</span>
                   )}
                 </div>
                 <div className="grid grid-cols-4 gap-1">

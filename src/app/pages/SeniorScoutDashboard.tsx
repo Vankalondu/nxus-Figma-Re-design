@@ -121,8 +121,8 @@ const FLAG_MAP: Record<string, string> = {
 
 // ─── Colour helpers ───────────────────────────────────────────────────────────
 const POS_COLORS: Record<string, string> = {
-  ST: 'bg-[#E05C4B]/10 text-[#E05C4B]', LW: 'bg-brand-primary/10 text-strong',
-  RW: 'bg-brand-primary/10 text-strong', CAM: 'bg-[#E8A838]/10 text-[#E8A838]',
+  ST: 'bg-status-error/10 text-status-error', LW: 'bg-brand-primary/10 text-strong',
+  RW: 'bg-brand-primary/10 text-strong', CAM: 'bg-status-warning/10 text-status-warning',
   CM: 'bg-text-body/10 text-body', CDM: 'bg-brand-primary/10 text-strong',
   FB: 'bg-brand-primary/10 text-strong', CB: 'bg-text-body/20 text-body',
 };
@@ -845,7 +845,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <p className="font-body text-[14px] font-bold text-body">{t.text}</p>
-                    {t.priority === 'High' && <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#E05C4B]/10 text-[#E05C4B]">HIGH</span>}
+                    {t.priority === 'High' && <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-status-error/10 text-status-error">HIGH</span>}
                   </div>
                   <p className="font-body text-[12px] text-body mt-0.5">{t.assignedBy} • Due {t.dueDate}</p>
                 </div>
@@ -890,7 +890,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                     <p className="font-body text-[12px] text-body">{scout.role} · {scout.count} reports</p>
                   </div>
                   {scout.unread > 0 && (
-                    <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-[#E05C4B]/10 text-[#E05C4B]">{scout.unread} unread</span>
+                    <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-status-error/10 text-status-error">{scout.unread} unread</span>
                   )}
                 </div>
               ))}
@@ -948,7 +948,7 @@ const PackagesTab = () => {
                   <div className="font-body text-[12px] text-body">{pkg.uploadDate}</div>
                 </div>
               </div>
-              {pkg.watched ? <CheckCircle size={14} className="text-[#3A8C6A]" /> : <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#E8A838]/15 text-[#E8A838]">NEW</span>}
+              {pkg.watched ? <CheckCircle size={14} className="text-[#3A8C6A]" /> : <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-status-warning/15 text-status-warning">NEW</span>}
             </div>
             <div className="flex items-center justify-between">
               <span className="font-body text-[12px] font-bold text-body">
@@ -1200,7 +1200,7 @@ export default function SeniorScoutDashboard() {
                 </div>
               </div>
               <div className="p-2">
-                <button onClick={() => setShowProfileMenu(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors">
+                <button onClick={() => setShowProfileMenu(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors">
                   <LogOut size={16} className="mr-3" />Log out
                 </button>
               </div>

@@ -189,7 +189,7 @@
     const showConstraints = activeQuestion.type === 'Text' || activeQuestion.type === 'Text Area';
 
     return (
-      <div className={`fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4`}
+      <div className={`fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4`}
   onClick={onClose}>
         <div className={`bg-surface-card rounded-[32px] shadow-[var(--shadow-2xl)] w-full max-w-5xl h-[85vh] border border-default
   flex flex-col overflow-hidden`} onClick={e => e.stopPropagation()}>
@@ -222,7 +222,7 @@
             </div>
             <div className={`flex items-center gap-2 shrink-0`}>
               <span className={`inline-flex items-center gap-1 font-body font-bold text-[12px] px-2 py-1 rounded-full
-  bg-[#22C55E]/10 text-[#22C55E]`}>
+  bg-status-success/10 text-status-success`}>
                 <Check size={11} /> Template ready
               </span>
               <span className={`font-body font-bold text-[12px] px-2 py-1 rounded-full bg-brand-primary/10 text-brand-primary`}>
@@ -307,8 +307,8 @@
                   <div className={`flex gap-2 flex-wrap`}>
                     <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-brand-primary/10
   text-brand-primary`}>SUPERVISOR</span>
-                    <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-[#E8A838]/10
-  text-[#E8A838]`}>DIRECTOR</span>
+                    <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-status-warning/10
+  text-status-warning`}>DIRECTOR</span>
                   </div>
                 </div>
 
@@ -357,7 +357,7 @@
                             <span className={`font-body font-bold text-[14px] truncate flex-1 ${isActive ? `text-brand-primary` :
   `text-strong`}`}>{q.text || 'Untitled question'}</span>
                             {q.linkStart && <span className={`shrink-0 font-body font-black text-[10px] px-2 py-0.5
-  rounded-full bg-[#22C55E]/10 text-[#22C55E]`}>Linked 1a</span>}
+  rounded-full bg-status-success/10 text-status-success`}>Linked 1a</span>}
                           </div>
                           <div className={`flex items-center gap-2 ml-[22px]`}>
                             <span className={`shrink-0 bg-surface-accent border border-default px-2 py-0.5 rounded-full font-body

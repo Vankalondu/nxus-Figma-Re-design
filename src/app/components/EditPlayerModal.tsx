@@ -41,7 +41,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
   };
 
   return (
-    <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
+    <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
       <div className="bg-surface-card w-full max-w-3xl rounded-[24px] shadow-[var(--shadow-2xl)] border border-default flex flex-col max-h-[90vh] overflow-hidden">
         {/* Header Tier */}
         <div className="px-8 py-6 border-b border-default flex items-center justify-between shrink-0">
@@ -60,7 +60,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
           <div className="flex justify-center">
             <div className="w-28 h-28 rounded-full bg-surface-accent border-4 border-default/50 flex items-center justify-center text-brand-primary font-heading font-black text-3xl relative group cursor-pointer overflow-hidden shadow-inner">
               {formData.initials}
-              <div className="absolute inset-0 bg-[#061B2E]/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="absolute inset-0 bg-ink-midnight/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                  <Camera size={24} className="text-on-brand mb-1" />
                  <span className="text-[10px] text-on-brand uppercase font-black tracking-widest">Update</span>
               </div>

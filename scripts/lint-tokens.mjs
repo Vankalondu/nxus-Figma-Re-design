@@ -91,7 +91,7 @@ const RULES = [
 // Bracketed hex: correct colours are often written as literals here
 // (text-[#1E88E5] IS --primary), so this is debt rather than breakage.
 const HEX_UTIL = new RegExp(`\\b(${UTIL})-\\[#[0-9A-Fa-f]{3,8}\\]`, 'g');
-const BASELINE = 662; // measured 2026-09-01 by this script. Only ever lower this.
+const BASELINE = 501; // re-measured 2026-09-04 after the invariant-role sweep. Only ever lower this.
 
 const files = [];
 (function walk(dir) {

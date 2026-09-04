@@ -446,7 +446,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
       {playing && (
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => { setPlaying(null); setRedoFor(null); }}>
           <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-default overflow-hidden" onClick={e => e.stopPropagation()}>
-            <div className="relative aspect-video bg-gradient-to-br from-[#061b2e] to-[#0a2d4c] flex items-center justify-center">
+            <div className="relative aspect-video bg-gradient-to-br from-ink-midnight to-[#0a2d4c] flex items-center justify-center">
               <span className="w-16 h-16 rounded-full bg-surface-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-brand-primary ml-1" /></span>
               <button onClick={() => { setPlaying(null); setRedoFor(null); }} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/20 text-on-brand flex items-center justify-center hover:bg-surface-card/40"><X size={18} /></button>
             </div>
@@ -526,7 +526,7 @@ const VmAnalyticsTab = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-[#E8A838]" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-heading">Team output</h3><p className="font-body text-[12px] text-body font-medium">Videos submitted this week</p></div></div>
+          <div className="px-5 py-4 border-b border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-status-warning" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-heading">Team output</h3><p className="font-body text-[12px] text-body font-medium">Videos submitted this week</p></div></div>
           <div className="p-5 flex flex-col sm:flex-row gap-8"><Board title="Editors · packages" rows={editors} max={maxEd} /><Board title="Uploaders · full matches" rows={uploaders} max={maxUp} /></div>
         </div>
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
@@ -639,7 +639,7 @@ export default function VideoManagerDashboard() {
                 <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
                 <div><div className="font-body font-bold text-[14px] text-body">Marcus</div><div className="font-body text-[12px] text-body font-medium">Video Manager</div></div>
               </div>
-              <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
+              <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
             </div>
           )}
         />

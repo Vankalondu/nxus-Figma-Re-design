@@ -88,9 +88,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const StatusBadge = ({ status }: { status: string }) => {
-  const cls = status === 'Completed' ? 'bg-[#22C55E]/10 text-[#22C55E]'
-    : status === 'Submitted' ? 'bg-[#22C55E]/10 text-[#22C55E]'
-    : 'bg-[#E8A838]/10 text-[#E8A838]';
+  const cls = status === 'Completed' ? 'bg-status-success/10 text-status-success'
+    : status === 'Submitted' ? 'bg-status-success/10 text-status-success'
+    : 'bg-status-warning/10 text-status-warning';
   return <span className={`inline-flex px-2 py-0.5 rounded-full font-body font-black text-[10px] ${cls}`}>{status}</span>;
 };
 
@@ -226,7 +226,7 @@ const NxtToggle = ({ value, onChange }: { value: string; onChange: (v: string) =
   <div className="flex gap-1">
     {['Target', 'Monitor', 'Discard'].map(opt => {
       const cls = value === opt
-        ? opt === 'Target' ? 'bg-brand-primary text-inverse border-brand-primary' : opt === 'Monitor' ? 'bg-[#E8A838]/15 text-[#E8A838] border-[#E8A838]' : 'bg-[#E05C4B]/10 text-[#E05C4B] border-[#E05C4B]'
+        ? opt === 'Target' ? 'bg-brand-primary text-inverse border-brand-primary' : opt === 'Monitor' ? 'bg-status-warning/15 text-status-warning border-status-warning' : 'bg-status-error/10 text-status-error border-status-error'
         : 'bg-surface-accent text-body border-default';
       return <button key={opt} onClick={() => onChange(opt)} className={`px-4 py-2 rounded-full font-body font-bold text-[12px] border transition-all ${cls}`}>{opt}</button>;
     })}
@@ -242,7 +242,7 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
   const toggleSection = (i: number) => { const s = new Set(openSections); s.has(i) ? s.delete(i) : s.add(i); setOpenSections(s); };
 
   return (
-    <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
       <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-4xl max-h-[90vh] border border-default flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="px-6 py-4 bg-brand-primary rounded-t-[24px] flex items-center justify-between shrink-0">
           <div>
@@ -378,8 +378,8 @@ const SubmissionsTab = ({ statusFilter, dateFilter, extraSubmissions = [] }: { s
                   <td className="px-4 py-3 font-body font-bold text-[12px] text-body">{s.playerName}</td>
                   <td className="px-4 py-3 text-center"><StatusBadge status={s.status} /></td>
                   <td className="px-4 py-3 font-mono font-bold text-[12px] text-body">{s.timestamp}</td>
-                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="flex-1 h-1.5 bg-border-default rounded-full overflow-hidden"><div className={`h-full rounded-full ${s.progress === 100 ? 'bg-[#22C55E]' : s.progress > 60 ? 'bg-[#22C55E]/70' : 'bg-[#E8A838]'}`} style={{ width: `${s.progress}%` }} /></div><span className="font-mono font-bold text-[10px] text-body w-8 text-right">{s.progress}%</span></div></td>
-                  <td className="px-4 py-3 text-center"><div className="flex items-center justify-center gap-1"><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-inverse transition-colors"><Eye size={10} /></button><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-[#E05C4B] hover:text-on-brand transition-colors"><Trash2 size={10} /></button></div></td>
+                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="flex-1 h-1.5 bg-border-default rounded-full overflow-hidden"><div className={`h-full rounded-full ${s.progress === 100 ? 'bg-status-success' : s.progress > 60 ? 'bg-status-success/70' : 'bg-status-warning'}`} style={{ width: `${s.progress}%` }} /></div><span className="font-mono font-bold text-[10px] text-body w-8 text-right">{s.progress}%</span></div></td>
+                  <td className="px-4 py-3 text-center"><div className="flex items-center justify-center gap-1"><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-inverse transition-colors"><Eye size={10} /></button><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-status-error hover:text-on-brand transition-colors"><Trash2 size={10} /></button></div></td>
                 </tr>
               ))}
             </tbody>
@@ -448,7 +448,7 @@ const AnalyticsTab = () => {
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2">
                   <span className="font-heading font-semibold text-[16px] text-strong leading-none">{kpi.value}</span>
-                  {kpi.trend && <span className="font-body font-bold text-[12px] text-[#22C55E]">{kpi.trend}</span>}
+                  {kpi.trend && <span className="font-body font-bold text-[12px] text-status-success">{kpi.trend}</span>}
                 </div>
                 <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mt-1">{kpi.label}</div>
               </div>
@@ -842,7 +842,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
 
     {/* New Form chooser */}
     {showNewForm && (
-      <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
+      <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
         <div className="bg-surface-card w-full max-w-lg rounded-[24px] shadow-[var(--shadow-2xl)] border border-default overflow-hidden">
           <div className="px-6 py-5 border-b border-default flex items-center justify-between">
             <h3 className="font-heading font-semibold text-[20px] text-heading">New Form</h3>
@@ -866,7 +866,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
 
     {/* Import a form */}
     {showImport && (
-      <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
+      <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
         <div className="bg-surface-card w-full max-w-md rounded-[24px] shadow-[var(--shadow-2xl)] border border-default overflow-hidden">
           <div className="px-6 py-5 border-b border-default flex items-center justify-between">
             <h3 className="font-heading font-semibold text-[20px] text-heading">Import a form</h3>
@@ -892,7 +892,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
 
     {/* ═══ Assignment Settings Modal ═══ */}
     {assignTemplate && (
-      <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setAssignTemplate(null)}>
+      <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setAssignTemplate(null)}>
         <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-md border border-default" onClick={e => e.stopPropagation()}>
           <div className="px-6 py-4 bg-brand-primary rounded-t-[24px] flex items-center justify-between">
             <div>

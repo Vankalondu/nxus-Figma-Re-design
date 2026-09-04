@@ -314,7 +314,7 @@ export default function PlayerProfile() {
             <div className="font-heading font-extrabold text-[36px] leading-none text-strong tracking-tight">14</div>
             <div className="pb-1.5">
               <div className={LABEL}>Goals</div>
-              <span className="inline-flex items-center gap-1 mt-1 bg-[#22C55E]/10 text-[#22C55E] text-[10px] font-black px-2 py-0.5 rounded-full">
+              <span className="inline-flex items-center gap-1 mt-1 bg-status-success/10 text-status-success text-[10px] font-black px-2 py-0.5 rounded-full">
                 <TrendingUp size={12} strokeWidth={3} /> +4 vs last
               </span>
             </div>
@@ -392,7 +392,7 @@ export default function PlayerProfile() {
                       ) : (
                         <div className="flex items-center gap-2">
                           <span className="font-body font-bold text-[14px] text-body truncate">{entry.o}</span>
-                          {entry.c && <span className="w-3.5 h-3.5 rounded-full bg-[#22C55E] text-on-brand flex items-center justify-center shrink-0"><Check size={9} strokeWidth={4} /></span>}
+                          {entry.c && <span className="w-3.5 h-3.5 rounded-full bg-status-success text-on-brand flex items-center justify-center shrink-0"><Check size={9} strokeWidth={4} /></span>}
                         </div>
                       )}
                     </div>
@@ -625,7 +625,7 @@ export default function PlayerProfile() {
       )}
 
       {showAddNote && (
-        <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
+        <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
           <div className="bg-surface-card w-full max-w-2xl rounded-[24px] shadow-[var(--shadow-2xl)] border border-default flex flex-col max-h-[90vh] overflow-hidden">
             <div className="px-8 py-6 border-b border-default flex items-center justify-between shrink-0">
               <h3 className="font-heading font-semibold text-[24px] text-heading leading-none">Add Note</h3>

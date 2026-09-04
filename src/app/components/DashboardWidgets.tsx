@@ -86,7 +86,7 @@ export const StatsCards = () => {
       </div>
 
       {/* Card 3: Image Card */}
-      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[#0a2d4c] to-[#061b2e]"
+      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[#0a2d4c] to-ink-midnight"
         onClick={() => navigate('/players?tab=combined-top-10')}
       >
         <img
@@ -94,7 +94,7 @@ export const StatsCards = () => {
           alt="Ready Reports"
           className="hidden sm:block absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061b2e]/85 via-[#061b2e]/60 to-transparent hidden sm:block"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-ink-midnight/85 via-ink-midnight/60 to-transparent hidden sm:block"></div>
 
         <div className="relative z-10 p-4 sm:p-6 h-full flex flex-col justify-between">
           <div>
@@ -138,8 +138,8 @@ export const StatsCards = () => {
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
           <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-strong leading-none">46<span className="text-base md:text-[32px] text-body">%</span></div>
           <div className="flex flex-col sm:pb-2">
-            <div className="bg-[#F6FAFE] text-[#E05C4B] text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
-              Down <span className="w-1.5 h-1.5 rounded-full border border-[#E05C4B] ml-1"></span>
+            <div className="bg-[#F6FAFE] text-status-error text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
+              Down <span className="w-1.5 h-1.5 rounded-full border border-status-error ml-1"></span>
             </div>
           </div>
         </div>
@@ -238,7 +238,7 @@ export const HeadScoutStatsCards = () => {
       </div>
 
       {/* Card 3: Image Card */}
-      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[#0a2d4c] to-[#061b2e]"
+      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[#0a2d4c] to-ink-midnight"
         onClick={() => navigate('/players?tab=combined-top-10')}
       >
         <img
@@ -246,7 +246,7 @@ export const HeadScoutStatsCards = () => {
           alt="Top Ten Pending Prospects List"
           className="hidden sm:block absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061b2e]/85 via-[#061b2e]/60 to-transparent hidden sm:block"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-ink-midnight/85 via-ink-midnight/60 to-transparent hidden sm:block"></div>
 
         <div className="relative z-10 p-4 sm:p-6 h-full flex flex-col justify-between">
           <div>
@@ -372,15 +372,15 @@ export const RegionalRankings = () => {
 
         <div className="flex-1 overflow-y-auto pr-2 space-y-4">
           <div>
-            <div className="text-[10px] font-bold text-body uppercase tracking-widest mb-2 flex items-center font-heading"><Crown size={12} className="mr-1 text-[#E8A838]" /> HEAD SCOUT</div>
+            <div className="text-[10px] font-bold text-body uppercase tracking-widest mb-2 flex items-center font-heading"><Crown size={12} className="mr-1 text-status-warning" /> HEAD SCOUT</div>
             <div className="flex items-center justify-between p-4 rounded-2xl border border-default hover:border-brand-primary/30 transition-colors bg-surface-card">
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-[#E8A838]/20 text-[#E8A838] flex items-center justify-center relative shrink-0">
+                <div className="w-10 h-10 rounded-full bg-status-warning/20 text-status-warning flex items-center justify-center relative shrink-0">
                   <Crown size={20} />
                 </div>
                 <div className="w-10 h-10 rounded-full bg-brand-primary text-on-brand flex items-center justify-center font-bold shadow-sm shrink-0">KA</div>
                 <div>
-                  <div className="font-bold text-strong text-[14px] flex items-center">Kwame Asante <span className="text-[#E8A838] ml-1 text-sm">🔥</span></div>
+                  <div className="font-bold text-strong text-[14px] flex items-center">Kwame Asante <span className="text-status-warning ml-1 text-sm">🔥</span></div>
                   <div className="text-[12px] text-body font-semibold flex items-center space-x-2 mt-0.5">
                     <span className="text-strong flex items-center"><Crown size={10} className="mr-0.5" /> 38 Grade A</span>
                     <span className="text-[#b4d7f6]">•</span>

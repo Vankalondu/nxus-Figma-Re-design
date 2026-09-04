@@ -363,7 +363,7 @@ export default function CountryScoutDashboardPage() {
                 </div>
                 {raiseNotifications.length>0 && (
                   <div className="px-5 py-3 border-t border-default">
-                    <button onClick={()=>{setRaiseNotifications([]);sessionStorage.removeItem('qazaRaiseNotifs');setShowNotifPanel(false);}} className="font-body text-[12px] font-bold text-[#E05C4B] hover:text-status-error/80 transition-colors">Clear all</button>
+                    <button onClick={()=>{setRaiseNotifications([]);sessionStorage.removeItem('qazaRaiseNotifs');setShowNotifPanel(false);}} className="font-body text-[12px] font-bold text-status-error hover:text-status-error/80 transition-colors">Clear all</button>
                   </div>
                 )}
               </div>
@@ -383,7 +383,7 @@ export default function CountryScoutDashboardPage() {
                   </div>
                 </div>
                 <div className="border-t border-default p-2 mt-2">
-                  <button onClick={handleLogout} className="w-full flex items-center px-4 py-3 font-body text-[14px] text-[#E05C4B] font-bold hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors">
+                  <button onClick={handleLogout} className="w-full flex items-center px-4 py-3 font-body text-[14px] text-status-error font-bold hover:bg-status-error/5 rounded-[16px] transition-colors">
                     <LogOut size={16} className="mr-3" /><span>Log out</span>
                   </button>
                 </div>
@@ -636,24 +636,24 @@ export default function CountryScoutDashboardPage() {
                         </div>
                       </div>
                       <div className="bg-surface-card border border-default rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-2 h-full bg-[#E05C4B]" />
+                        <div className="absolute top-0 left-0 w-2 h-full bg-status-error" />
                         <div className="flex items-center justify-between mb-8">
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-[16px] bg-[#E05C4B]/10 flex items-center justify-center text-[#E05C4B]"><TrendingUp size={24} strokeWidth={2.5} /></div>
-                            <div><h3 className="font-heading font-bold text-[24px] text-heading">Not Submitted</h3><p className="font-body font-bold text-[14px] text-[#E05C4B]">Action Required: Follow up</p></div>
+                            <div className="w-12 h-12 rounded-[16px] bg-status-error/10 flex items-center justify-center text-status-error"><TrendingUp size={24} strokeWidth={2.5} /></div>
+                            <div><h3 className="font-heading font-bold text-[24px] text-heading">Not Submitted</h3><p className="font-body font-bold text-[14px] text-status-error">Action Required: Follow up</p></div>
                           </div>
-                          <div className="font-heading font-black text-[44px] tracking-tight text-[#E05C4B]">4</div>
+                          <div className="font-heading font-black text-[44px] tracking-tight text-status-error">4</div>
                         </div>
                         <div className="flex-1 overflow-y-auto pr-4 space-y-4">
                           {[{name:'Fatou Mensah',role:'Country Scout',region:'Ghana',status:'7/10 Profiles'},{name:'Aliou Cisse',role:'Country Scout',region:'Senegal',status:'2/10 Profiles'},{name:'Kwame Asante',role:'Head Scout',region:'Ghana',status:'Reviewing'},{name:'Moussa Sow',role:'Head Scout',region:'Senegal',status:'Reviewing'}].map((scout,i)=>(
-                            <div key={i} className="bg-[#E05C4B]/5 border border-[#E05C4B]/10 rounded-[24px] p-5 flex items-center justify-between hover:bg-[#E05C4B]/10 transition-colors">
+                            <div key={i} className="bg-status-error/5 border border-status-error/10 rounded-[24px] p-5 flex items-center justify-between hover:bg-status-error/10 transition-colors">
                               <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
                                 <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-body">{scout.region} • {scout.role}</div></div>
                               </div>
                               <div className="flex flex-col items-end gap-2">
-                                <div className="font-body font-bold text-[14px] text-[#E05C4B]">{scout.status}</div>
-                                <button className="font-body text-[10px] font-black tracking-wider uppercase text-[#E05C4B] bg-[#E05C4B]/20 px-3 py-1 rounded-md hover:bg-[#E05C4B]/30 transition-colors">Nudge</button>
+                                <div className="font-body font-bold text-[14px] text-status-error">{scout.status}</div>
+                                <button className="font-body text-[10px] font-black tracking-wider uppercase text-status-error bg-status-error/20 px-3 py-1 rounded-md hover:bg-status-error/30 transition-colors">Nudge</button>
                               </div>
                             </div>
                           ))}
@@ -716,7 +716,7 @@ export default function CountryScoutDashboardPage() {
                               if (!posPlayers.length) return null;
                               return (
                                 <Fragment key={posGroup}>
-                                  <tr className="bg-brand-primary border-b border-[#061b2e] sticky top-[87px] z-[40] cursor-pointer hover:bg-[#0a2d4c] transition-colors" onClick={()=>togglePosition(posGroup)}>
+                                  <tr className="bg-brand-primary border-b border-ink-midnight sticky top-[87px] z-[40] cursor-pointer hover:bg-[#0a2d4c] transition-colors" onClick={()=>togglePosition(posGroup)}>
                                     <td colSpan={columns.length+1+extraCols.length} className="bg-brand-primary p-0">
                                       <div className="sticky left-0 z-[40] px-6 py-3 font-heading font-bold text-[10px] text-on-brand uppercase tracking-widest flex items-center gap-2 w-max bg-brand-primary">
                                         <ChevronDown size={16} className={`transition-transform ${collapsedPositions[posGroup]?'-rotate-90':''}`} />

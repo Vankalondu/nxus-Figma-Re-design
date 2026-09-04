@@ -1316,7 +1316,7 @@ export default function LeadScoutDashboard() {
                 </div>
               </div>
               <div className="p-2">
-                <button onClick={() => { setShowProfileMenu(false); sessionStorage.clear(); navigate('/login'); }} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[20px] transition-colors">
+                <button onClick={() => { setShowProfileMenu(false); sessionStorage.clear(); navigate('/login'); }} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[20px] transition-colors">
                   <LogOut size={16} className="mr-3" />Log out
                 </button>
               </div>

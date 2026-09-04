@@ -41,6 +41,34 @@ const THEMES = ['light', 'dark'];
 // Deliberately not class-based — classes are exactly what the rename changes.
 const COLLECT = () => {
   const out = {};
+  // Tailwind v4 emits oklab() for a THEME colour carrying an opacity modifier,
+  // but rgba() for an arbitrary value carrying the same modifier. So swapping
+  // bg-[#e05c4b]/10 for bg-status-error/10 changes the notation while rendering
+  // the identical pixel — and a string compare calls that a regression.
+  // Normalise to rgb() so the diff reports colour changes, not syntax changes.
+  const oklabToRgb = (L, A, B, alpha) => {
+    const l_ = L + 0.3963377774 * A + 0.2158037573 * B;
+    const m_ = L - 0.1055613458 * A - 0.0638541728 * B;
+    const s_ = L - 0.0894841775 * A - 1.2914855480 * B;
+    const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+    const lin = [
+      4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+      -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+      -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s,
+    ];
+    const ch = lin.map((v) => {
+      const c = v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055;
+      return Math.round(Math.max(0, Math.min(1, c)) * 255);
+    });
+    return alpha === undefined || alpha === 1
+      ? 'rgb(' + ch.join(', ') + ')'
+      : 'rgba(' + ch.join(', ') + ', ' + alpha + ')';
+  };
+  const norm = (v) => {
+    const m = /^oklab\(([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)(?:\s*\/\s*([\d.]+))?\)$/.exec(v || '');
+    if (!m) return v;
+    return oklabToRgb(+m[1], +m[2], +m[3], m[4] === undefined ? undefined : +m[4]);
+  };
   const pathOf = (el) => {
     const parts = [];
     while (el && el !== document.body) {
@@ -59,7 +87,7 @@ const COLLECT = () => {
     // fontSize/fontWeight are here because the type ramp (.type-h1 … .type-micro)
     // is a class vocabulary too: renaming it moves sizes, not colours, and a
     // colour-only snapshot reported PASS on a change it structurally could not see.
-    out[pathOf(el)] = [cs.color, cs.backgroundColor, cs.borderTopColor, cs.fontSize, cs.fontWeight].join('|');
+    out[pathOf(el)] = [norm(cs.color), norm(cs.backgroundColor), norm(cs.borderTopColor), cs.fontSize, cs.fontWeight].join('|');
   }
   return out;
 };

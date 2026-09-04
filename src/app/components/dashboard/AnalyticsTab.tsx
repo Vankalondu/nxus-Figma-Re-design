@@ -133,7 +133,7 @@ export const AnalyticsTab = () => {
         {/* Card 3 — Leaderboards */}
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
           <div className="px-5 py-4 border-b border-default flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-[#E8A838]" /></div>
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-status-warning" /></div>
             <div className="min-w-0">
               <h3 className="font-heading font-bold text-[16px] text-heading">Leaderboards</h3>
               <p className="font-body text-[12px] text-body font-medium">{board === 'scouts' ? 'Ranked by highest shortlist submissions' : "This cycle's standouts"}</p>

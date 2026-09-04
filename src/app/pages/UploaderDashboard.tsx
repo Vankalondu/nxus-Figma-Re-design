@@ -107,7 +107,7 @@ export default function UploaderDashboard() {
                 <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
                 <div><div className="font-body font-bold text-[14px] text-body">{myName}</div><div className="font-body text-[12px] text-body font-medium">{role}</div></div>
               </div>
-              <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
+              <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
             </div>
           )}
         />

@@ -206,7 +206,7 @@ function KitColorsModal({
 
   return (
     <div
-      className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4"
+      className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4"
       onClick={onCancel}
     >
       <div
@@ -429,7 +429,7 @@ function TeamCard({
           className={`inline-flex items-center px-3 py-1 rounded-full border font-heading font-bold text-[10px] uppercase tracking-widest shrink-0 ${
             side === 'home'
               ? 'bg-brand-primary/10 text-brand-primary border-brand-primary/20'
-              : 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20'
+              : 'bg-status-success/10 text-status-success border-status-success/20'
           }`}
         >
           {side === 'home' ? 'Home' : 'Away'}
@@ -529,11 +529,11 @@ const PHASES: { id: string; label: string }[] = [
 const EVENT_TYPES: { id: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; chipClass: string }[] = [
   { id: 'goal', label: 'Goal', icon: Target, chipClass: 'bg-brand-primary/10 text-brand-primary' },
   { id: 'assist', label: 'Assist', icon: Zap, chipClass: 'bg-brand-primary/10 text-brand-primary' },
-  { id: 'yellow-card', label: 'Yellow Card', icon: Square, chipClass: 'bg-[#E8A838]/10 text-[#E8A838]' },
+  { id: 'yellow-card', label: 'Yellow Card', icon: Square, chipClass: 'bg-status-warning/10 text-status-warning' },
   { id: 'red-card', label: 'Red Card', icon: Square, chipClass: 'bg-status-error/10 text-status-error' },
   { id: 'substitution', label: 'Substitution', icon: ArrowRightLeft, chipClass: 'bg-surface-accent text-body' },
   { id: 'chance', label: 'Chance', icon: Sparkles, chipClass: 'bg-brand-primary/10 text-brand-primary' },
-  { id: 'save', label: 'Save', icon: Shield, chipClass: 'bg-[#22C55E]/10 text-[#22C55E]' },
+  { id: 'save', label: 'Save', icon: Shield, chipClass: 'bg-status-success/10 text-status-success' },
   { id: 'foul', label: 'Foul', icon: AlertTriangle, chipClass: 'bg-status-error/10 text-status-error' },
 ];
 
@@ -871,7 +871,7 @@ function MatchEventsTab({
                     <span
                       className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                         stampedAt
-                          ? 'bg-[#22C55E]/10 text-[#22C55E]'
+                          ? 'bg-status-success/10 text-status-success'
                           : 'bg-surface-accent border border-default text-body'
                       }`}
                     >
@@ -1099,7 +1099,7 @@ function MatchEventsTab({
             <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
               Squad
             </span>
-            <span className="inline-flex items-center px-3 py-0.5 rounded-full bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20 font-heading font-bold text-[10px] uppercase tracking-widest">
+            <span className="inline-flex items-center px-3 py-0.5 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-heading font-bold text-[10px] uppercase tracking-widest">
               {railActive}/{railTeam.players.length} active
             </span>
           </div>
@@ -1126,7 +1126,7 @@ function MatchEventsTab({
                   </span>
                   <span className="py-2 border-t border-default/40 flex items-center">
                     <span
-                      className={`w-2 h-2 rounded-full shrink-0 ${active ? 'bg-[#22C55E]' : 'bg-text-body/30'}`}
+                      className={`w-2 h-2 rounded-full shrink-0 ${active ? 'bg-status-success' : 'bg-text-body/30'}`}
                       title={active ? 'Active (starter or sub)' : 'Inactive'}
                     />
                   </span>
@@ -1276,9 +1276,9 @@ export function MatchEntry({
           <span className="font-body font-medium text-[12px] text-body">
             Another scout is viewing this page:
           </span>
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#22C55E]/10 border border-[#22C55E]/20">
-            <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse shrink-0" />
-            <span className="font-body font-bold text-[12px] text-[#22C55E]">Vanessa Lighthouse</span>
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-status-success/10 border border-status-success/20">
+            <span className="w-2 h-2 rounded-full bg-status-success animate-pulse shrink-0" />
+            <span className="font-body font-bold text-[12px] text-status-success">Vanessa Lighthouse</span>
           </span>
         </div>
 
@@ -1361,7 +1361,7 @@ export function MatchEntry({
                 View Detailed Entry
               </button>
               {saved && (
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20 font-body font-bold text-[12px]">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-body font-bold text-[12px]">
                   <Check size={12} className="shrink-0" />
                   Submission saved
                 </span>

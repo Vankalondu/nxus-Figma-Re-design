@@ -54,8 +54,8 @@ interface Props { allPlayersData: any[]; loggedInRole: string; flagMap: Record<s
 
 // ─── Constants ───────────────────────────────────────────────────────────────────
 const POS_COLORS: Record<string, string> = {
-  ST: 'bg-[#E05C4B]/10 text-[#E05C4B]', LW: 'bg-brand-primary/10 text-strong',
-  RW: 'bg-brand-primary/10 text-strong', CAM: 'bg-[#E8A838]/10 text-[#E8A838]',
+  ST: 'bg-status-error/10 text-status-error', LW: 'bg-brand-primary/10 text-strong',
+  RW: 'bg-brand-primary/10 text-strong', CAM: 'bg-status-warning/10 text-status-warning',
   CM: 'bg-text-body/10 text-body', CDM: 'bg-brand-primary/10 text-strong',
   FB: 'bg-brand-primary/10 text-strong', CB: 'bg-text-body/20 text-body',
 };
@@ -239,7 +239,7 @@ const EditableColHeader = ({ label, onRename, onRemove }: {
             <Edit2 size={11} />Rename
           </button>
           <button onClick={() => { onRemove(); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-status-error hover:bg-status-error/10 flex items-center gap-2">
             <X size={11} />Remove column
           </button>
         </div>
@@ -303,7 +303,7 @@ const EditableColHeaderLight = ({ label, onRename, onRemove, onHide, onMove }: {
             </button>
           )}
           <button onClick={(e) => { e.stopPropagation(); onRemove(); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-status-error hover:bg-status-error/10 flex items-center gap-2">
             <Trash2 size={11} />Delete column
           </button>
         </div>
@@ -366,7 +366,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
         return (
           <button key={i} onClick={(e) => { e.stopPropagation(); setSelectedIdx(fullIdx); setOpenId(null); }}
             className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors
-              ${item.danger ? 'text-[#E05C4B] hover:bg-[#E05C4B]/15' : 'text-strong hover:bg-surface-card/10'}`}>
+              ${item.danger ? 'text-status-error hover:bg-status-error/15' : 'text-strong hover:bg-surface-card/10'}`}>
             {item.icon}{item.label}
           </button>
         );
@@ -380,7 +380,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
       <button onClick={(e) => { e.stopPropagation(); primaryItem.action(); }} title={primaryItem.label}
         className={`w-7 h-7 rounded-l-lg flex items-center justify-center transition-all border border-r-0 ${
           primaryItem.danger
-            ? 'bg-[#E05C4B]/10 text-[#E05C4B] hover:bg-[#E05C4B] hover:text-on-brand border-[#E05C4B]/20'
+            ? 'bg-status-error/10 text-status-error hover:bg-status-error hover:text-on-brand border-status-error/20'
             : 'bg-surface-accent text-strong hover:bg-brand-primary/80 hover:text-inverse border-default'
         }`}>
         {primaryItem.icon}
@@ -915,7 +915,7 @@ const PlayerTable = ({
                               </div>
                               <div className="flex items-center gap-2 mt-0.5">
                                 <span className="font-body text-[12px] text-body shrink-0">{player.age}</span>
-                                <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-[#E05C4B]'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
+                                <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                                 <FlagBadge code={natCode} label={player.nationality} />
                               </div>
                             </div>
@@ -932,7 +932,7 @@ const PlayerTable = ({
                               {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">F{player.matchVideos}</span>}
                               {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{player.highlightVideos}</span>}
                               {isRaised
-                                ? <span title="Direct — added directly to the Long List"><UserRoundCheck size={15} className="text-[#E8A838]" /></span>
+                                ? <span title="Direct — added directly to the Long List"><UserRoundCheck size={15} className="text-status-warning" /></span>
                                 : <span title="Ladder — reached via the scouting process"><StairsIcon className="w-[15px] h-[15px] text-[#7C5CFC]" /></span>}
                               <button onClick={() => onOpenVideos?.(player)} title="Watch videos"
                                 className="w-6 h-6 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors">
@@ -1205,7 +1205,7 @@ const TargetSuperTable = ({
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1 mt-0.5">
                                 <span className="font-body text-[12px] text-body">{player.age}</span>
-                                <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-[#E05C4B]'}`} />
+                                <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} />
                                 <FlagBadge code={natCode} label={player.nationality} />
                                 {isArchived && <span className="bg-text-body/15 text-body font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
@@ -1543,12 +1543,12 @@ const ShortListTable = ({
                                 const tCount = nxtVals.filter((sd:any) => sd?.nxt === 'T').length;
                                 const mCount = nxtVals.filter((sd:any) => sd?.nxt === 'M').length;
                                 if (tCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-brand-primary/10 text-body border border-brand-primary/20">Target</span>;
-                                if (mCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-[#E8A838]/15 text-[#E8A838] border border-[#E8A838]/30">Monitor</span>;
+                                if (mCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-status-warning/15 text-status-warning border border-status-warning/30">Monitor</span>;
                                 return null;
                               })()}
                             </div>
                             <div className="flex items-center gap-1 mt-0.5">
-                              <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-[#E05C4B]'}`} />
+                              <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} />
                               <FlagBadge code={natCode} label={player.nationality} />
                             </div>
                           </div>
@@ -1896,7 +1896,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
 
       {/* Add modal */}
       {showAdd && (
-        <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAdd(false)}>
+        <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAdd(false)}>
           <div className="bg-surface-card rounded-[32px] shadow-2xl w-full max-w-lg border border-default" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 bg-brand-primary rounded-t-[32px] flex items-center justify-between">
               <span className="font-heading font-semibold text-[16px] text-on-brand">Add Signed Player</span>
@@ -2268,7 +2268,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <button onClick={() => { setEditingId(pt.id); setEditName(pt.name); setEditColor(pt.color); }}
             className="w-5 h-5 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary/80 hover:text-on-brand transition-colors shrink-0"><Edit2 size={9} /></button>
           <button onClick={() => onDeleteProfile(pt.id)}
-            className="w-5 h-5 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-[#E05C4B] hover:text-on-brand transition-colors shrink-0"><Trash2 size={9} /></button>
+            className="w-5 h-5 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-status-error hover:text-on-brand transition-colors shrink-0"><Trash2 size={9} /></button>
         </>
       )}
     </div>
@@ -2288,7 +2288,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <h3 className="font-heading font-semibold text-[16px] text-heading shrink-0">Scope Settings</h3>
           <div className="flex-1" />
           <button onClick={handleSaveCard1}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard1 ? 'bg-[#22C55E] text-on-brand' : 'bg-brand-primary text-inverse hover:bg-brand-primary/80'}`}>
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard1 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-inverse hover:bg-brand-primary/80'}`}>
             {savedCard1 ? <><Check size={11} /> Saved</> : <><Save size={11} /> Update</>}
           </button>
           <button onClick={() => setShowAddModal(true)}
@@ -2384,7 +2384,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <h3 className="font-heading font-semibold text-[16px] text-heading">Profile Tags</h3>
           <div className="flex-1" />
           <button onClick={handleSaveCard2}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard2 ? 'bg-[#22C55E] text-on-brand' : 'bg-brand-primary text-inverse hover:bg-brand-primary/80'}`}>
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard2 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-inverse hover:bg-brand-primary/80'}`}>
             {savedCard2 ? <><Check size={11} /> Saved</> : <><Save size={11} /> Update</>}
           </button>
         </div>
@@ -2510,7 +2510,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
 
     {/* ═══ Add Scope Modal ═══ */}
     {showAddModal && (
-      <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddModal(false)}>
+      <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddModal(false)}>
         <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-md border border-default" onClick={e => e.stopPropagation()}>
           <div className="px-6 py-4 bg-brand-primary rounded-t-[24px] flex items-center justify-between">
             <span className="font-heading font-semibold text-[16px] text-on-brand">Add New Scope</span>
@@ -3280,7 +3280,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {isListTab && (
           <div className="flex flex-col gap-1 items-start shrink-0">
             <span className="flex items-center gap-1 font-body type-caption font-bold text-body"><span className="w-2 h-2 rounded-full bg-[#3A8C6A] inline-block" />Scouted</span>
-            <span className="flex items-center gap-1 font-body type-caption font-bold text-body"><span className="w-2 h-2 rounded-full bg-[#E05C4B] inline-block" />Unscouted</span>
+            <span className="flex items-center gap-1 font-body type-caption font-bold text-body"><span className="w-2 h-2 rounded-full bg-status-error inline-block" />Unscouted</span>
           </div>
         )}
       </div>
