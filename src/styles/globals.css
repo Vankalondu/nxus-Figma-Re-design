@@ -5,41 +5,20 @@
 :root {
   /* ── Base ── */
   --font-size: 16px;
-  --background: #d2e7fa;
-  --foreground: #061b2e;
 
   /* ── Card & Popover surfaces ── */
-  --card: #f6fafe;
-  --card-foreground: #061b2e;
-  --popover: #f6fafe;
-  --popover-foreground: #061b2e;
 
   /* ── Brand tokens — Athletic Blue as primary ── */
-  --primary: #1e88e5;
-  --primary-foreground: #f6fafe;
 
   /* ── Secondary & muted ── */
-  --secondary: #e8f3fc;
-  --secondary-foreground: #061b2e;
-  --muted: #e8f3fc;
-  --muted-foreground: #2f4151;
 
   /* ── Accent ── */
-  --accent: #d2e7fa;
-  --accent-foreground: #061b2e;
 
   /* ── Destructive ── */
-  --destructive: #E05C4B;
-  --destructive-foreground: #f6fafe;
 
   /* ── Borders & inputs ── */
-  --border: #b4d7f6;
-  --input: transparent;
-  --input-background: #f0f7fd;
-  --switch-background: #b4d7f6;
 
   /* ── Ring — focus state ── */
-  --ring: #1e88e5;
 
   /* ── Font weights ── */
   --font-weight-medium: 500;
@@ -56,15 +35,6 @@
   --radius: 0.75rem;
 
   /* ── Sidebar ── */
-  --sidebar: #f6fafe;
-  --sidebar-foreground: #061b2e;
-  --sidebar-primary: #1e88e5;
-  --sidebar-primary-foreground: #f6fafe;
-  --sidebar-accent: #e8f3fc;
-  --sidebar-accent-foreground: #061b2e;
-  --sidebar-border: #b4d7f6;
-  --sidebar-ring: #1e88e5;
-  --sidebar-muted: #596774;
 
   /* ── Spacing system — multiples of 4 ── */
   --space-1: 4px;
@@ -120,14 +90,6 @@
   --light-950: #2a2e32;
 
   /* ── Named semantic tokens ── */
-  --ember: #1e88e5;
-  --ember-light: #d2e7fa;
-  --ember-hover: #1971bf;
-  --midnight: #061b2e;
-  --chalk: #d2e7fa;
-  --scout-green: #22C55E;
-  --scout-red: #E05C4B;
-  --scout-amber: #E8A838;
 
   /* Status pill TEXT. The tinted-pill pattern (P-CO5) uses bg-X/15 with text
      in the same value, which measures 1.8-2.9:1 — below AA and effectively
@@ -137,8 +99,6 @@
   --status-success-fg: #0f5529;  /* Green/800  7.53:1 on the tint */
   --status-warning-fg: #6e4b0d;  /* Amber/800  6.79:1 */
   --status-error-fg:   #7a2419;  /* Red/800    8.02:1 */
-  --midtone: #b4d7f6;
-  --canvas: #d2e7fa;
 
   /* ── Elevation shadows (light mode: dark navy shadows) ── */
   --shadow-xs: 0 1px 2px rgba(6, 27, 46, 0.05);
@@ -174,45 +134,51 @@
   --pad-card: 12px;
   --gap-stack: 8px;
 
-  /* ── Figma vocabulary (Mapped). Aliases during the migration; step 4.3 makes
-     these the definitions and retires the old names. See
-     scripts/token-rename-map.json. ── */
-  --surface-page: var(--background);
-  --surface-card: var(--card);
-  --surface-elevated: var(--popover);
-  --surface-canvas: var(--secondary);
-  --surface-accent: var(--accent);
-  --surface-input: var(--input-background);
-  --surface-sidebar: var(--sidebar);
-  --surface-midtone: var(--midtone);
-  --surface-switch: var(--switch-background);
-  --surface-sidebar-accent: var(--sidebar-accent);
+  /* ── Figma vocabulary — the Mapped layer, and now the only one. ──
+     Each role resolves to an Allias-layer scale token rather than a raw hex,
+     which is the chain Figma is organised around: Qaza (raw) -> Allias
+     (families) -> Mapped (roles, per theme). Read the pairs below against
+     .dark and the mode model is visible in one place: light surfaces come from
+     the Light scale, dark surfaces from Blue's dark end (900/800/700) rather
+     than from greys, and text swaps blue-950 <-> blue-50.
+     The pre-Figma names (--card, --muted-foreground, --border, …) were retired
+     in step 4.3; scripts/lint-tokens.mjs fails the build if one reappears. ── */
+  --surface-page: var(--blue-50);
+  --surface-card: var(--light-50);
+  --surface-elevated: var(--light-50);
+  --surface-canvas: var(--light-200);
+  --surface-accent: var(--blue-50);
+  --surface-input: var(--light-100);
+  --surface-sidebar: var(--light-50);
+  --surface-midtone: var(--blue-100);
+  --surface-switch: var(--blue-100);
+  --surface-sidebar-accent: var(--light-200);
 
-  --text-heading: var(--foreground);
+  --text-heading: var(--blue-950);
   /* Same value as heading, deliberately. A button label, a stat value and a
      filter chip need heading's weight of contrast but are not titles, and
      calling them "heading" is the naming fault this split exists to fix.
      Splitting the role now costs nothing visually and means a later change to
      title colour does not silently repaint every chip in the product. */
-  --text-strong: var(--foreground);
-  --text-body: var(--muted-foreground);
-  --text-inverse: var(--primary-foreground);
-  --text-on-brand: var(--chalk);
-  --text-on-status: var(--destructive-foreground);
-  --text-sidebar-muted: var(--sidebar-muted);
+  --text-strong: var(--blue-950);
+  --text-body: var(--navy-400);
+  --text-inverse: var(--light-50);
+  --text-on-brand: var(--blue-50);
+  --text-on-status: var(--light-50);
+  --text-sidebar-muted: var(--navy-300);
 
-  --border-default: var(--border);
-  --border-focus: var(--ring);
-  --border-input: var(--input);
+  --border-default: var(--blue-100);
+  --border-focus: var(--blue-500);
+  --border-input: transparent;
 
-  --status-error: var(--destructive);
-  --status-success: var(--scout-green);
-  --status-warning: var(--scout-amber);
+  --status-error: #E05C4B;
+  --status-success: #22C55E;
+  --status-warning: #E8A838;
 
-  --brand-primary: var(--primary);
-  --brand-primary-hover: var(--ember-hover);
+  --brand-primary: var(--blue-500);
+  --brand-primary-hover: var(--blue-600);
 
-  --ink-midnight: var(--midnight);
+  --ink-midnight: var(--blue-950);
 
   /* ── Roles the code did not have. Values from Figma Mapped (step 3). ── */
   --text-muted: #596774;        /* Dark Blue/400 — genuinely secondary, 5.54:1 */
@@ -264,41 +230,20 @@
 
 .dark {
   /* ── Base ── */
-  --background: #061b2e;
-  --foreground: #d2e7fa;
 
   /* ── Card & Popover surfaces ── */
-  --card: #0a2d4c;
-  --card-foreground: #d2e7fa;
-  --popover: #0a2d4c;
-  --popover-foreground: #d2e7fa;
 
   /* ── Brand tokens ── */
-  --primary: #449ce9;
-  --primary-foreground: #061b2e;
 
   /* ── Secondary & muted ── */
-  --secondary: #0f4472;
-  --secondary-foreground: #d2e7fa;
-  --muted: #0f4472;
-  --muted-foreground: #afc0d0;
 
   /* ── Accent ── */
-  --accent: #0f4472;
-  --accent-foreground: #d2e7fa;
 
   /* ── Destructive ── */
-  --destructive: #E05C4B;
-  --destructive-foreground: #f6fafe;
 
   /* ── Borders & inputs ── */
-  --border: #145b99;
-  --input: #0f4472;
-  --input-background: #0f4472;
-  --switch-background: #1971bf;
 
   /* ── Ring ── */
-  --ring: #449ce9;
 
   /* ── Font weights ── */
   --font-weight-medium: 500;
@@ -312,15 +257,6 @@
   --chart-5: #E05C4B;
 
   /* ── Sidebar ── */
-  --sidebar: #030e17;
-  --sidebar-foreground: #d2e7fa;
-  --sidebar-primary: #449ce9;
-  --sidebar-primary-foreground: #061b2e;
-  --sidebar-accent: #0f4472;
-  --sidebar-accent-foreground: #d2e7fa;
-  --sidebar-border: #145b99;
-  --sidebar-ring: #449ce9;
-  --sidebar-muted: #8c9aa7;
 
   /* ── Elevation shadows (dark mode: deeper blacks) ── */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.20);
@@ -333,21 +269,11 @@
   --shadow-bottom-nav: 0 -4px 16px rgba(0, 0, 0, 0.25);
 
   /* ── Named semantic tokens — dark context ── */
-  --ember: #449ce9;
-  --ember-light: #0f4472;
-  --ember-hover: #69b0ee;
-  --midnight: #061b2e;
-  --chalk: #d2e7fa;
-  --scout-green: #22C55E;
-  --scout-red: #E05C4B;
-  --scout-amber: #E8A838;
 
   /* Dark: /300 steps — 6.33-7.24:1 on the same tint over the dark card. */
   --status-success-fg: #7cdd9f;
   --status-warning-fg: #f3cd7a;
   --status-error-fg:   #f3a698;
-  --midtone: #1971bf;
-  --canvas: #061b2e;
 
   /* ── Dark values for the new roles. ── */
   --text-muted: #8c9aa7;
@@ -361,45 +287,30 @@
   --status-success-tint: #0f5529;
   --status-warning-tint: #6e4b0d;
   --status-error-tint: #7a2419;
+  --surface-page: var(--blue-950);
+  --surface-card: var(--blue-900);
+  --surface-elevated: var(--blue-900);
+  --surface-canvas: var(--blue-800);
+  --surface-accent: var(--blue-800);
+  --surface-input: var(--blue-800);
+  --surface-sidebar: var(--navy-800);
+  --surface-midtone: var(--blue-600);
+  --surface-switch: var(--blue-600);
+  --surface-sidebar-accent: var(--blue-800);
+  --text-heading: var(--blue-50);
+  --text-strong: var(--blue-50);
+  --text-body: var(--light-600);
+  --text-inverse: var(--blue-950);
+  --text-sidebar-muted: var(--light-700);
+  --border-default: var(--blue-700);
+  --border-focus: var(--blue-400);
+  --border-input: var(--blue-800);
+  --brand-primary: var(--blue-400);
+  --brand-primary-hover: var(--blue-300);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-input-background: var(--input-background);
-  --color-ring: var(--ring);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--primary);
-  --color-sidebar-primary-foreground: var(--primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-muted: var(--sidebar-muted);
-  --color-midnight: var(--midnight);
-  --color-chalk: var(--chalk);
-  --color-canvas: var(--canvas);
   /* Semantic status/priority colors — enable text-scout-green, bg-scout-amber/15, etc. */
-  --color-scout-green: var(--scout-green);
-  --color-scout-amber: var(--scout-amber);
-  --color-scout-red: var(--scout-red);
   --color-status-success-fg: var(--status-success-fg);
   --color-status-warning-fg: var(--status-warning-fg);
   --color-status-error-fg: var(--status-error-fg);
@@ -432,6 +343,29 @@
   --color-border-input: var(--border-input);
   --color-border-subtle: var(--border-subtle);
   --color-border-strong: var(--border-strong);
+
+  /* Short aliases. Tailwind resolves text-* against ["--text-color","--color"]
+     and border-* against ["--border-color","--color"], so these namespaces are
+     scoped to one utility each: --text-color-body emits `text-body` and does
+     NOT also emit `bg-body`. That scoping is why the colour roles can drop the
+     stutter without polluting the generic colour namespace. */
+  --text-color-heading: var(--text-heading);
+  --text-color-strong: var(--text-strong);
+  --text-color-body: var(--text-body);
+  --text-color-muted: var(--text-muted);
+  --text-color-placeholder: var(--text-placeholder);
+  --text-color-disabled: var(--text-disabled);
+  --text-color-inverse: var(--text-inverse);
+  --text-color-on-brand: var(--text-on-brand);
+  --text-color-on-status: var(--text-on-status);
+  --text-color-link: var(--text-link);
+  --text-color-sidebar-muted: var(--text-sidebar-muted);
+
+  --border-color-default: var(--border-default);
+  --border-color-focus: var(--border-focus);
+  --border-color-input: var(--border-input);
+  --border-color-subtle: var(--border-subtle);
+  --border-color-strong: var(--border-strong);
   --color-status-error: var(--status-error);
   --color-status-success: var(--status-success);
   --color-status-warning: var(--status-warning);
@@ -445,13 +379,13 @@
 
 /* ── Base layer ── */
 * {
-  border-color: var(--border);
-  outline-color: var(--ring);
+  border-color: var(--border-default);
+  outline-color: var(--border-focus);
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--surface-page);
+  color: var(--text-strong);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: var(--font-size);
   -webkit-font-smoothing: antialiased;
@@ -508,7 +442,7 @@ body {
 }
 /* Clear full-width row divider between body rows (border-separate ignores <tr> borders,
    so the line must live on the cells — this keeps it continuous across frozen columns). */
-.rtable tbody > tr > td { border-bottom: 1px solid var(--border); }
+.rtable tbody > tr > td { border-bottom: 1px solid var(--border-default); }
 .rtable tbody > tr:last-child > td { border-bottom: none; }
 
 /* ── Scrollbar ── */
@@ -522,13 +456,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--border-default);
   border-radius: 4px;
-  border: 2px solid var(--background);
+  border: 2px solid var(--surface-page);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
+  background: var(--text-body);
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -542,7 +476,7 @@ body {
 
 /* ── Focus ring ── */
 :focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 2px solid var(--border-focus);
   outline-offset: 2px;
 }
 

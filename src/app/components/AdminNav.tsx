@@ -25,7 +25,7 @@ export function AdminNav() {
             className={`rounded-none border-b-2 ${
               index === 0 
                 ? 'bg-brand-primary hover:bg-brand-primary/80 border-brand-primary' 
-                : 'bg-transparent hover:bg-surface-accent border-transparent text-text-body'
+                : 'bg-transparent hover:bg-surface-accent border-transparent text-body'
             } rounded-t-lg`}
           >
             {tab}

@@ -32,7 +32,7 @@ function Calendar({
         table: "w-full border-collapse space-x-1",
         head_row: "flex",
         head_cell:
-          "text-text-body rounded-md w-8 font-normal text-[0.8rem]",
+          "text-body rounded-md w-8 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-surface-accent [&:has([aria-selected].day-range-end)]:rounded-r-md",
@@ -45,17 +45,17 @@ function Calendar({
           "size-8 p-0 font-normal aria-selected:opacity-100",
         ),
         day_range_start:
-          "day-range-start aria-selected:bg-brand-primary aria-selected:text-text-inverse",
+          "day-range-start aria-selected:bg-brand-primary aria-selected:text-inverse",
         day_range_end:
-          "day-range-end aria-selected:bg-brand-primary aria-selected:text-text-inverse",
+          "day-range-end aria-selected:bg-brand-primary aria-selected:text-inverse",
         day_selected:
-          "bg-brand-primary text-text-inverse hover:bg-brand-primary hover:text-text-inverse focus:bg-brand-primary focus:text-text-inverse",
-        day_today: "bg-surface-accent text-text-strong",
+          "bg-brand-primary text-inverse hover:bg-brand-primary hover:text-inverse focus:bg-brand-primary focus:text-inverse",
+        day_today: "bg-surface-accent text-strong",
         day_outside:
-          "day-outside text-text-body aria-selected:text-text-body",
-        day_disabled: "text-text-body opacity-50",
+          "day-outside text-body aria-selected:text-body",
+        day_disabled: "text-body opacity-50",
         day_range_middle:
-          "aria-selected:bg-surface-accent aria-selected:text-text-strong",
+          "aria-selected:bg-surface-accent aria-selected:text-strong",
         day_hidden: "invisible",
         ...classNames,
       }}

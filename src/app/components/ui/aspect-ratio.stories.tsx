@@ -24,8 +24,8 @@ export const Video: Story = {
   render: () => (
     <div className="w-[360px]">
       <AspectRatio ratio={16 / 9}>
-        <div className="w-full h-full rounded-[16px] bg-surface-accent border border-border-default flex items-center justify-center">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
+        <div className="w-full h-full rounded-[16px] bg-surface-accent border border-default flex items-center justify-center">
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
             16 : 9 — match footage
           </span>
         </div>
@@ -38,8 +38,8 @@ export const Square: Story = {
   render: () => (
     <div className="w-[200px]">
       <AspectRatio ratio={1}>
-        <div className="w-full h-full rounded-[16px] bg-surface-accent border border-border-default flex items-center justify-center">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">1 : 1</span>
+        <div className="w-full h-full rounded-[16px] bg-surface-accent border border-default flex items-center justify-center">
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">1 : 1</span>
         </div>
       </AspectRatio>
     </div>

@@ -14,7 +14,7 @@ const meta = {
         component:
           'Modal dialog. NXUS modal styling is specified in **P-CO14**: overlay ' +
           '`bg-ink-midnight/60` with a backdrop blur, card at `rounded-[32px]`, and a ' +
-          '**primary-filled header** with `text-text-on-brand` — one of the few places `bg-brand-primary` is ' +
+          '**primary-filled header** with `text-on-brand` — one of the few places `bg-brand-primary` is ' +
           'correct on a large surface, because a modal header is a structural anchor rather than ' +
           'a card (**L-C7**).\n\n' +
           'Elevation is `--shadow-2xl` (**R-E1**), the heaviest step, reserved for things that ' +
@@ -59,19 +59,19 @@ export const NxusModal: Story = {
       <DialogTrigger asChild>
         <Button>Open NXUS-styled modal</Button>
       </DialogTrigger>
-      <DialogContent className="p-0 overflow-hidden rounded-[32px] border border-border-default shadow-[var(--shadow-2xl)] sm:max-w-[520px]">
-        <div className="px-8 py-6 bg-brand-primary text-text-on-brand">
-          <DialogTitle className="font-heading font-semibold text-[20px] text-text-on-brand">Upload highlight</DialogTitle>
-          <DialogDescription className="font-body text-[14px] text-text-on-brand/80 mt-1">
+      <DialogContent className="p-0 overflow-hidden rounded-[32px] border border-default shadow-[var(--shadow-2xl)] sm:max-w-[520px]">
+        <div className="px-8 py-6 bg-brand-primary text-on-brand">
+          <DialogTitle className="font-heading font-semibold text-[20px] text-on-brand">Upload highlight</DialogTitle>
+          <DialogDescription className="font-body text-[14px] text-on-brand/80 mt-1">
             Paste a link, or choose a file from your device.
           </DialogDescription>
         </div>
         <div className="p-8 space-y-4">
           <input
-            className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all"
+            className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
             placeholder="https://…"
           />
-          <button className="w-full bg-brand-primary text-text-inverse rounded-full py-3 font-body font-bold text-[14px]">
+          <button className="w-full bg-brand-primary text-inverse rounded-full py-3 font-body font-bold text-[14px]">
             Upload
           </button>
         </div>

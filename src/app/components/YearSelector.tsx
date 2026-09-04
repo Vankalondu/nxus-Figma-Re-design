@@ -17,7 +17,7 @@ export function YearSelector() {
         ))}
       </div>
       <button className="p-2 bg-brand-primary rounded-full hover:bg-brand-primary/80">
-        <Settings className="w-5 h-5 text-text-on-brand" />
+        <Settings className="w-5 h-5 text-on-brand" />
       </button>
     </div>
   );

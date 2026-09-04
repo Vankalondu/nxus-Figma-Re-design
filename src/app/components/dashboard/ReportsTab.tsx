@@ -73,13 +73,13 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
         {summaryStats.map(stat => {
           const Icon = stat.icon;
           return (
-            <div key={stat.label} className="lg:col-span-1 min-w-0 bg-surface-card border border-border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-all">
+            <div key={stat.label} className="lg:col-span-1 min-w-0 bg-surface-card border border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-all">
               <div className="flex items-center justify-between gap-2">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body truncate">{stat.label}</span>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body truncate">{stat.label}</span>
                 <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
               </div>
-              <div className="font-heading font-extrabold text-[32px] text-text-strong leading-none">{stat.value}</div>
-              <span className="font-body text-[12px] text-text-body font-medium">{stat.sub}</span>
+              <div className="font-heading font-extrabold text-[32px] text-strong leading-none">{stat.value}</div>
+              <span className="font-body text-[12px] text-body font-medium">{stat.sub}</span>
             </div>
           );
         })}
@@ -90,9 +90,9 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
       <div className="flex items-center gap-2 flex-wrap">
         {/* Search — outlined like the filters, wider */}
         <div className="relative flex-1 min-w-[240px] max-w-md">
-          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or scout…"
-            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-text-body placeholder:text-text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
+            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
         </div>
 
         {/* Inline filters — always in view */}
@@ -104,14 +104,14 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
         {activeFilters > 0 && <button onClick={clearFilters} className="font-body text-[12px] font-bold text-brand-primary hover:underline px-1 shrink-0">Clear</button>}
 
         <button onClick={() => { setRefreshing(true); setTimeout(() => setRefreshing(false), 600); }}
-          className="ml-auto shrink-0 flex items-center gap-2 bg-transparent border border-brand-primary text-text-body px-4 py-2 rounded-full font-body font-bold text-[13px] hover:bg-brand-primary/10 transition-colors">
+          className="ml-auto shrink-0 flex items-center gap-2 bg-transparent border border-brand-primary text-body px-4 py-2 rounded-full font-body font-bold text-[13px] hover:bg-brand-primary/10 transition-colors">
           <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />Refresh
         </button>
       </div>
 
       {/* Report cards */}
       {shown.length === 0 && (
-        <div className="bg-surface-card border border-border-default rounded-[20px] p-10 text-center font-body text-[14px] text-text-body shadow-[var(--shadow-lg)]">
+        <div className="bg-surface-card border border-default rounded-[20px] p-10 text-center font-body text-[14px] text-body shadow-[var(--shadow-lg)]">
           No reports match your search or filters.
         </div>
       )}
@@ -120,15 +120,15 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
           const overall = Math.round((gradeToScore(r.plr) + gradeToScore(r.pog)) / 2);
           return (
           <div key={r.id}
-            className={`bg-surface-card rounded-[20px] border p-5 flex flex-col gap-3 hover:shadow-xl transition-all ${r.status === 'unseen' ? 'border-brand-primary ring-2 ring-brand-primary/40 shadow-md' : r.status === 'opened' ? 'border-border-default shadow-[var(--shadow-lg)] opacity-60' : 'border-border-default shadow-[var(--shadow-lg)]'}`}>
+            className={`bg-surface-card rounded-[20px] border p-5 flex flex-col gap-3 hover:shadow-xl transition-all ${r.status === 'unseen' ? 'border-brand-primary ring-2 ring-brand-primary/40 shadow-md' : r.status === 'opened' ? 'border-default shadow-[var(--shadow-lg)] opacity-60' : 'border-default shadow-[var(--shadow-lg)]'}`}>
             {/* Header */}
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-11 h-11 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[14px] shrink-0">{r.initials}</div>
                 <div className="min-w-0">
-                  <div className="font-heading font-bold text-[15px] text-text-strong truncate">{r.player}</div>
-                  <div className="flex items-center gap-1.5 font-body text-[12px] text-text-body">
-                    <span className="font-bold text-text-strong">{r.pos}</span>
+                  <div className="font-heading font-bold text-[15px] text-strong truncate">{r.player}</div>
+                  <div className="flex items-center gap-1.5 font-body text-[12px] text-body">
+                    <span className="font-bold text-strong">{r.pos}</span>
                     <span>·</span>
                     <User size={11} />{r.scout}
                     <span>·</span>
@@ -141,16 +141,16 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
             <div className="grid grid-cols-3 gap-2">
               {([['PLR', r.plr], ['POG', r.pog], ['NXT', r.nxt]] as const).map(([k, v]) => (
                 <div key={k} className="bg-surface-accent/50 rounded-[14px] py-2 text-center">
-                  <div className="font-heading font-bold text-[16px] text-text-strong leading-none">{v}</div>
-                  <div className="font-heading font-bold text-[9px] uppercase tracking-widest text-text-body mt-1">{k}</div>
+                  <div className="font-heading font-bold text-[16px] text-strong leading-none">{v}</div>
+                  <div className="font-heading font-bold text-[9px] uppercase tracking-widest text-body mt-1">{k}</div>
                 </div>
               ))}
             </div>
             {/* Overall score */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Overall</span>
-                <span className="font-heading font-black text-[13px] text-text-strong tabular-nums">{overall}</span>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Overall</span>
+                <span className="font-heading font-black text-[13px] text-strong tabular-nums">{overall}</span>
               </div>
               <div className="h-2 bg-surface-accent rounded-full overflow-hidden">
                 <div className="h-full bg-brand-primary rounded-full" style={{ width: `${overall}%` }} />
@@ -158,8 +158,8 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
             </div>
             {/* Footer */}
             <div className="flex items-center gap-2 pt-1">
-              <button onClick={() => openReport(r)} className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-text-inverse rounded-full py-2 transition-colors"><Eye size={14} />View</button>
-              <button className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-border-default text-text-body hover:bg-surface-accent hover:text-text-body hover:border-brand-primary rounded-full py-2 transition-colors"><Download size={14} />Export</button>
+              <button onClick={() => openReport(r)} className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-inverse rounded-full py-2 transition-colors"><Eye size={14} />View</button>
+              <button className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-default text-body hover:bg-surface-accent hover:text-body hover:border-brand-primary rounded-full py-2 transition-colors"><Download size={14} />Export</button>
             </div>
           </div>
           );
@@ -167,7 +167,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
       </div>
 
       {remaining > 0 && (
-        <button onClick={() => setVisibleCount(v => v + 9)} className="mx-auto flex items-center gap-2 bg-transparent border border-brand-primary text-text-body px-6 py-2 rounded-full font-body font-bold text-[13px] hover:bg-brand-primary/10 transition-colors">
+        <button onClick={() => setVisibleCount(v => v + 9)} className="mx-auto flex items-center gap-2 bg-transparent border border-brand-primary text-body px-6 py-2 rounded-full font-body font-bold text-[13px] hover:bg-brand-primary/10 transition-colors">
           Load more ({remaining} remaining)
         </button>
       )}

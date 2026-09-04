@@ -99,7 +99,7 @@ export const TASK_STATUS = [
 const PRIORITY_PILL: Record<'High' | 'Medium' | 'Low', string> = {
   High:   'bg-status-error/15 text-status-error-fg',
   Medium: 'bg-status-warning/15 text-status-warning-fg',
-  Low:    'bg-surface-accent text-text-body',
+  Low:    'bg-surface-accent text-body',
 };
 export const PriorityPill = ({ p }: { p: 'High' | 'Medium' | 'Low' }) => (
   <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black shrink-0 ${PRIORITY_PILL[p]}`}>{p}</span>
@@ -141,8 +141,8 @@ export const ChampionPodium = ({ scouts }: { scouts: { name: string; role: strin
           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full font-heading font-bold text-[8px] shadow-sm" style={{ backgroundColor: cfg.badgeBg, color: cfg.badgeText }}>{cfg.label}</span>
         </div>
         <div className="text-center min-w-0 w-full mt-1">
-          <p className="font-body text-[11px] text-text-body truncate leading-tight">{scout.name}</p>
-          <p className="font-body text-[13px] text-text-body leading-tight">{scout.count}</p>
+          <p className="font-body text-[11px] text-body truncate leading-tight">{scout.name}</p>
+          <p className="font-body text-[13px] text-body leading-tight">{scout.count}</p>
         </div>
       </div>
     );
@@ -151,7 +151,7 @@ export const ChampionPodium = ({ scouts }: { scouts: { name: string; role: strin
   return (
     <div className="h-full min-h-[135px] rounded-[20px] border-2 border-brand-primary/40 bg-transparent p-4 flex flex-col">
       <style>{CHAMP_KEYFRAMES}</style>
-      <h3 className="font-heading font-bold text-[14px] text-text-heading text-left shrink-0">Report Champion</h3>
+      <h3 className="font-heading font-bold text-[14px] text-heading text-left shrink-0">Report Champion</h3>
       <div className="flex-1 flex items-end justify-center gap-2 pt-2 pb-2">
         {second && <Person scout={second} rank={2} />}
         {first  && <Person scout={first}  rank={1} />}
@@ -182,17 +182,17 @@ export const InlineSel = ({ value, onChange, opts, allLabel }: { value: string; 
   return (
     <div className="relative shrink-0" ref={ref}>
       <button type="button" onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-brand-primary text-text-inverse border-transparent' : 'bg-surface-card/60 border-brand-primary/40 text-text-strong hover:bg-surface-card'}`}>
+        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-brand-primary text-inverse border-transparent' : 'bg-surface-card/60 border-brand-primary/40 text-strong hover:bg-surface-card'}`}>
         {label(value)}
-        <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''} ${active ? 'text-text-inverse' : 'text-text-body'}`} />
+        <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''} ${active ? 'text-inverse' : 'text-body'}`} />
       </button>
       {open && (
-        <div className="absolute z-40 mt-1 left-0 min-w-[150px] bg-surface-card border border-border-default rounded-[20px] shadow-2xl py-2 flex flex-col max-h-[280px] overflow-y-auto">
+        <div className="absolute z-40 mt-1 left-0 min-w-[150px] bg-surface-card border border-default rounded-[20px] shadow-2xl py-2 flex flex-col max-h-[280px] overflow-y-auto">
           {opts.map(o => {
             const sel = o === value;
             return (
               <button key={o} type="button" onClick={() => { onChange(o); setOpen(false); }}
-                className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-surface-accent text-text-strong' : 'text-text-strong hover:bg-surface-accent'}`}>
+                className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-surface-accent text-strong' : 'text-strong hover:bg-surface-accent'}`}>
                 {label(o)}
                 {sel && <Check size={13} className="text-brand-primary shrink-0" />}
               </button>

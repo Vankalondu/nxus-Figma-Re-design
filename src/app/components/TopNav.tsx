@@ -62,11 +62,11 @@ export function TopNav({
 
   return (
     <div className={(sticky ? 'sticky top-0 z-50 short:static short:top-auto short:z-auto bg-surface-page ' : '') + bandPadX + ' pt-4 pb-2 short:pt-1 short:pb-1 shrink-0'}>
-    <div className={'relative z-50 flex items-center justify-between gap-2 bg-surface-card border border-border-default p-2 ' + pl + ' rounded-[20px] shadow-[var(--shadow-xl)]'}>
+    <div className={'relative z-50 flex items-center justify-between gap-2 bg-surface-card border border-default p-2 ' + pl + ' rounded-[20px] shadow-[var(--shadow-xl)]'}>
       {/* Hamburger — mobile only; opens the Sidebar drawer via a decoupled event */}
       {responsive && (
         <button onClick={() => window.dispatchEvent(new CustomEvent('nxus:open-menu'))} aria-label="Open menu"
-          className="md:hidden w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-strong shrink-0">
+          className="md:hidden w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center text-strong shrink-0">
           <Menu size={18} />
         </button>
       )}
@@ -77,7 +77,7 @@ export function TopNav({
       {/* Search — icon that expands on mobile */}
       {responsive && (
         <button onClick={() => setSearchOpen(true)} aria-label="Search"
-          className="md:hidden w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body shrink-0">
+          className="md:hidden w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center text-body shrink-0">
           <Search size={18} />
         </button>
       )}
@@ -88,44 +88,44 @@ export function TopNav({
 
       <div className={'flex items-center shrink-0 ' + actionsGap}>
         <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme"
-          className="w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm shrink-0">
-          {theme === 'dark' ? <Sun size={16} className="text-text-strong" /> : <Moon size={16} className="text-text-strong" />}
+          className="w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm shrink-0">
+          {theme === 'dark' ? <Sun size={16} className="text-strong" /> : <Moon size={16} className="text-strong" />}
         </button>
         <div className="relative">
-          <button onClick={onNotifToggle} className="relative w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm">
-            <Bell size={16} className="text-text-strong" />
-            {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-primary rounded-full text-text-on-brand type-micro font-black flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
+          <button onClick={onNotifToggle} className="relative w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm">
+            <Bell size={16} className="text-strong" />
+            {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-primary rounded-full text-on-brand type-micro font-black flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
           </button>
           {notifOpen && notifPanel}
         </div>
 
         {onThisWeek && (
-          <button onClick={onThisWeek} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
+          <button onClick={onThisWeek} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
             <Calendar size={15} strokeWidth={2.5} /><span className={btnText}>This Week</span>
           </button>
         )}
 
         {onAddReport && (
-          <button onClick={onAddReport} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
+          <button onClick={onAddReport} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
             <FileText size={15} strokeWidth={2.5} /><span className={btnText}>Add Report</span>
           </button>
         )}
 
         {onUploadVideo && (
           <button onClick={onUploadVideo}
-            className={(uploadVideoVariant === 'secondary' ? secondaryCls : 'flex') + ' items-center gap-2 ' + btnPad + ' py-3 rounded-full font-body type-body-sm font-bold transition-colors ' + (uploadVideoVariant === 'secondary' ? 'bg-transparent border-2 border-brand-primary text-text-strong hover:bg-brand-primary/10' : 'bg-brand-primary border-2 border-brand-primary text-text-on-brand hover:bg-brand-primary/80 shadow-md')}>
+            className={(uploadVideoVariant === 'secondary' ? secondaryCls : 'flex') + ' items-center gap-2 ' + btnPad + ' py-3 rounded-full font-body type-body-sm font-bold transition-colors ' + (uploadVideoVariant === 'secondary' ? 'bg-transparent border-2 border-brand-primary text-strong hover:bg-brand-primary/10' : 'bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 shadow-md')}>
             <UploadCloud size={15} strokeWidth={2.5} /><span className={btnText}>Upload Video</span>
           </button>
         )}
 
         {onAddPlayer && (
-          <button onClick={onAddPlayer} className={'flex items-center gap-2 ' + btnPad + ' py-3 bg-brand-primary border-2 border-brand-primary text-text-on-brand hover:bg-brand-primary/80 rounded-full font-body type-body-sm font-bold transition-colors shadow-md'}>
+          <button onClick={onAddPlayer} className={'flex items-center gap-2 ' + btnPad + ' py-3 bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full font-body type-body-sm font-bold transition-colors shadow-md'}>
             <Plus size={15} strokeWidth={3} /><span className={btnText}>Add Player</span>
           </button>
         )}
 
         <div className="relative">
-          <button onClick={onProfileToggle} className="w-11 h-11 rounded-full overflow-hidden border-2 border-border-default cursor-pointer hover:ring-2 hover:ring-brand-primary transition-all shrink-0">
+          <button onClick={onProfileToggle} className="w-11 h-11 rounded-full overflow-hidden border-2 border-default cursor-pointer hover:ring-2 hover:ring-brand-primary transition-all shrink-0">
             <img src={avatarImg} alt="User" className="w-full h-full object-cover" />
           </button>
           {profileOpen && profileMenu}
@@ -136,7 +136,7 @@ export function TopNav({
       {responsive && searchOpen && (
         <div className="md:hidden absolute inset-0 z-20 flex items-center gap-3 bg-surface-card rounded-[20px] px-4">
           <PlayerSearch className="flex-1 min-w-0" autoFocus />
-          <button onClick={() => setSearchOpen(false)} aria-label="Close search" className="shrink-0 text-text-body hover:text-text-strong"><X size={18} /></button>
+          <button onClick={() => setSearchOpen(false)} aria-label="Close search" className="shrink-0 text-body hover:text-strong"><X size={18} /></button>
         </div>
       )}
     </div>

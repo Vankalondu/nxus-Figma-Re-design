@@ -63,7 +63,7 @@ export function MissingFootageMatches() {
             <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Matches with Missing Talent Footage
             </h3>
-            <p className="text-xs text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Raised players without match video
             </p>
           </div>
@@ -84,7 +84,7 @@ export function MissingFootageMatches() {
                   <div className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {match.homeTeam} <span className="text-[#94a3b8] font-normal">vs</span> {match.awayTeam}
                   </div>
-                  <div className="text-xs text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <div className="text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {match.competition}
                   </div>
                 </div>

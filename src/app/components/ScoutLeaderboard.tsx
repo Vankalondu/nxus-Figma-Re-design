@@ -44,7 +44,7 @@ export function ScoutLeaderboard() {
       trend: 'up',
       badge: null,
       initialsColor: 'bg-gradient-to-br from-[var(--blue-300)] to-[var(--blue-600)]',
-      borderColor: 'border-border-default',
+      borderColor: 'border-default',
     },
     {
       rank: 5,
@@ -55,7 +55,7 @@ export function ScoutLeaderboard() {
       trend: 'up',
       badge: null,
       initialsColor: 'bg-gradient-to-br from-[var(--light-700)] to-[var(--navy-300)]',
-      borderColor: 'border-border-default',
+      borderColor: 'border-default',
     },
     {
       rank: 6,
@@ -66,7 +66,7 @@ export function ScoutLeaderboard() {
       trend: 'up',
       badge: null,
       initialsColor: 'bg-gradient-to-br from-status-success/70 to-status-success',
-      borderColor: 'border-border-default',
+      borderColor: 'border-default',
     },
   ];
 
@@ -84,15 +84,15 @@ export function ScoutLeaderboard() {
   };
 
   return (
-    <div className="bg-[#0F1419] border border-border-default rounded-xl p-6">
+    <div className="bg-[#0F1419] border border-default rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-status-warning/10 rounded-lg">
             <Trophy className="w-6 h-6 text-status-warning" />
           </div>
           <div>
-            <h2 className="text-text-on-brand text-xl font-semibold">Scout Leaderboard</h2>
-            <p className="text-text-body text-sm">This week's top performers 🚀</p>
+            <h2 className="text-on-brand text-xl font-semibold">Scout Leaderboard</h2>
+            <p className="text-body text-sm">This week's top performers 🚀</p>
           </div>
         </div>
       </div>
@@ -109,25 +109,25 @@ export function ScoutLeaderboard() {
                 {scout.rank <= 3 ? (
                   <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
                     scout.rank === 1 ? 'bg-status-warning/20 text-status-warning-fg' :
-                    scout.rank === 2 ? 'bg-text-body/20 text-text-body' :
+                    scout.rank === 2 ? 'bg-text-body/20 text-body' :
                     'bg-brand-primary/20 text-brand-primary'
                   } font-bold`}>
                     {scout.rank}
                   </div>
                 ) : (
-                  <span className="text-text-body font-semibold">{scout.rank}</span>
+                  <span className="text-body font-semibold">{scout.rank}</span>
                 )}
               </div>
 
               {/* Avatar */}
-              <div className={`w-12 h-12 ${scout.initialsColor} rounded-lg flex items-center justify-center text-text-on-brand font-bold shadow-lg`}>
+              <div className={`w-12 h-12 ${scout.initialsColor} rounded-lg flex items-center justify-center text-on-brand font-bold shadow-lg`}>
                 {scout.initials}
               </div>
 
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-text-on-brand font-medium truncate">{scout.name}</h3>
+                  <h3 className="text-on-brand font-medium truncate">{scout.name}</h3>
                   {scout.badge && (
                     <div className="flex items-center">
                       {getBadgeIcon(scout.badge)}
@@ -144,8 +144,8 @@ export function ScoutLeaderboard() {
 
               {/* Score */}
               <div className="text-right">
-                <div className="text-text-on-brand text-2xl font-bold">{scout.score}</div>
-                <div className="text-text-body text-xs">points</div>
+                <div className="text-on-brand text-2xl font-bold">{scout.score}</div>
+                <div className="text-body text-xs">points</div>
               </div>
             </div>
           </div>

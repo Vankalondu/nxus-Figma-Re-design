@@ -34,7 +34,7 @@ export const Default: Story = {
         ].map(([id, label]) => (
           <div key={id} className="flex items-center gap-3">
             <RadioGroupItem value={id} id={id} />
-            <Label htmlFor={id} className="font-body font-bold text-[12px] text-text-body cursor-pointer">
+            <Label htmlFor={id} className="font-body font-bold text-[12px] text-body cursor-pointer">
               {label}
             </Label>
           </div>

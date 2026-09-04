@@ -5,19 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority@0.7.1";
 import { cn } from "./utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-border-focus focus-visible:ring-border-focus/50 focus-visible:ring-[3px] aria-invalid:ring-status-error/20 dark:aria-invalid:ring-status-error/40 aria-invalid:border-status-error",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-focus focus-visible:ring-border-focus/50 focus-visible:ring-[3px] aria-invalid:ring-status-error/20 dark:aria-invalid:ring-status-error/40 aria-invalid:border-status-error",
   {
     variants: {
       variant: {
-        default: "bg-brand-primary text-text-inverse hover:bg-brand-primary/90",
+        default: "bg-brand-primary text-inverse hover:bg-brand-primary/90",
         destructive:
-          "bg-status-error text-text-on-brand hover:bg-status-error/90 focus-visible:ring-status-error/20 dark:focus-visible:ring-status-error/40 dark:bg-status-error/60",
+          "bg-status-error text-on-brand hover:bg-status-error/90 focus-visible:ring-status-error/20 dark:focus-visible:ring-status-error/40 dark:bg-status-error/60",
         outline:
-          "border bg-surface-page text-text-strong hover:bg-surface-accent hover:text-text-strong dark:bg-border-input/30 dark:border-border-input dark:hover:bg-border-input/50",
+          "border bg-surface-page text-strong hover:bg-surface-accent hover:text-strong dark:bg-border-input/30 dark:border-input dark:hover:bg-border-input/50",
         secondary:
-          "bg-surface-canvas text-text-strong hover:bg-surface-canvas/80",
+          "bg-surface-canvas text-strong hover:bg-surface-canvas/80",
         ghost:
-          "hover:bg-surface-accent hover:text-text-strong dark:hover:bg-surface-accent/50",
+          "hover:bg-surface-accent hover:text-strong dark:hover:bg-surface-accent/50",
         link: "text-brand-primary underline-offset-4 hover:underline",
       },
       size: {

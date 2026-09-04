@@ -32,7 +32,7 @@ export function GlobalPulseDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Total Active Players
             </p>
             <div className="p-2 rounded-xl bg-[#E8F5E9] shrink-0 ml-3">
@@ -55,7 +55,7 @@ export function GlobalPulseDashboard() {
 
         <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Organization Velocity
             </p>
             <div className="p-2 rounded-xl bg-[#E3F2FD] shrink-0 ml-3">
@@ -78,7 +78,7 @@ export function GlobalPulseDashboard() {
 
         <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Video Packages Ready
             </p>
             <div className="p-2 rounded-xl bg-[#FFF9C4] shrink-0 ml-3">
@@ -101,7 +101,7 @@ export function GlobalPulseDashboard() {
 
         <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Grade A Conversion
             </p>
             <div className="p-2 rounded-xl bg-[#FCE4EC] shrink-0 ml-3">
@@ -131,7 +131,7 @@ export function GlobalPulseDashboard() {
             <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Department Throughput Trends
             </h3>
-            <p className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Weekly player processing across all departments
             </p>
           </div>
@@ -192,7 +192,7 @@ export function GlobalPulseDashboard() {
             <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Department Efficiency
             </h3>
-            <p className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Current week completion rates
             </p>
           </div>
@@ -226,7 +226,7 @@ export function GlobalPulseDashboard() {
               <div key={dept.name} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: dept.color }} />
-                  <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {dept.name}
                   </span>
                 </div>
@@ -245,7 +245,7 @@ export function GlobalPulseDashboard() {
           <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Task Completion Overview
           </h3>
-          <p className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Completed vs pending tasks by department
           </p>
         </div>
@@ -292,7 +292,7 @@ export function GlobalPulseDashboard() {
           </div>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Discover Rate
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -300,7 +300,7 @@ export function GlobalPulseDashboard() {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Active Territories
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -308,7 +308,7 @@ export function GlobalPulseDashboard() {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Players Raised
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -334,7 +334,7 @@ export function GlobalPulseDashboard() {
           </div>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Packages Ready
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -342,7 +342,7 @@ export function GlobalPulseDashboard() {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Editor Capacity
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -350,7 +350,7 @@ export function GlobalPulseDashboard() {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Avg. Turnaround
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -376,7 +376,7 @@ export function GlobalPulseDashboard() {
           </div>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Entries Completed
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -384,7 +384,7 @@ export function GlobalPulseDashboard() {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Field Completeness
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -392,7 +392,7 @@ export function GlobalPulseDashboard() {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Quality Score
               </span>
               <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

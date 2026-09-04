@@ -30,6 +30,22 @@ const TW_PALETTES = [
 ].join('|');
 const UTIL = 'text|bg|border|from|via|to|ring|divide|placeholder|outline|shadow|caret|accent|fill|stroke|decoration';
 
+// Retired in the Figma-vocabulary migration (steps 4.2-4.3). Deliberately does
+// NOT list `input`, `muted` or `sidebar-muted`: those read as legacy but
+// `border-input`, `text-muted` and `text-sidebar-muted` are all live role
+// utilities now, and flagging them would fail the build on correct code.
+// The trailing lookahead in the rule is what keeps `text-sidebar-muted` from
+// matching the `sidebar` entry.
+const LEGACY_NAMES = [
+  'background', 'foreground', 'card', 'card-foreground', 'popover', 'popover-foreground',
+  'primary', 'primary-foreground', 'secondary', 'secondary-foreground', 'muted-foreground',
+  'accent', 'accent-foreground', 'destructive', 'destructive-foreground', 'border', 'ring',
+  'input-background', 'switch-background', 'chalk', 'midnight', 'canvas', 'midtone',
+  'ember', 'ember-hover', 'ember-light', 'scout-green', 'scout-red', 'scout-amber',
+  'sidebar', 'sidebar-foreground', 'sidebar-primary', 'sidebar-accent',
+  'sidebar-accent-foreground', 'sidebar-border', 'sidebar-ring',
+].sort((a, b) => b.length - a.length).join('|');
+
 const RULES = [
   {
     id: 'L-C1',
@@ -50,6 +66,25 @@ const RULES = [
     id: 'L-C2',
     what: 'Tailwind palette class (not the NXUS palette)',
     re: new RegExp(`\\b(${UTIL})-(${TW_PALETTES})-[0-9]{2,3}(/[0-9]+)?\\b`, 'g'),
+  },
+  {
+    // The pre-Figma vocabulary. These tokens no longer exist, so a utility
+    // using one silently renders unstyled rather than failing the build --
+    // which is exactly how the old names would creep back in. Named here so
+    // the error says what to use instead.
+    id: 'L-C10',
+    what: 'retired token name — see the map in this rule',
+    re: new RegExp(`\\b(${UTIL})-(${LEGACY_NAMES})(?![-a-zA-Z0-9])`, 'g'),
+  },
+  {
+    id: 'L-TY5',
+    what: 'retired type-ramp name — size classes are type-*, not text-*',
+    re: /(?<![-a-zA-Z0-9])text-(h[1-6]|body-lg|body-sm|caption|micro)(?![-a-zA-Z0-9])/g,
+  },
+  {
+    id: 'L-C10',
+    what: 'stuttered role name — text-text-* / border-border-* shortened at 4.3',
+    re: /\b(text-text|border-border)-[a-z-]+/g,
   },
 ];
 
@@ -97,7 +132,7 @@ if (errors.length) {
   if (errors.length > 40) console.log(`  … and ${errors.length - 40} more`);
   console.log('');
 } else {
-  console.log('PASS  L-C1 (no white/black) · L-C2 (no Tailwind palettes)');
+  console.log('PASS  L-C1 (no white/black) · L-C2 (no Tailwind palettes) · L-C10 + L-TY5 (no retired names)');
 }
 
 const delta = hexCount - BASELINE;

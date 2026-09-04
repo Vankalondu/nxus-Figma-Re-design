@@ -44,7 +44,7 @@ export const TableRows: Story = {
 export const KpiCardLoading: Story = {
   parameters: { docs: { description: { story: 'A KPI card at its real dimensions (**P-CO4**) — `rounded-[32px]`, `min-h-[190px]`.' } } },
   render: () => (
-    <div className="bg-surface-card rounded-[32px] border border-border-default shadow-[var(--shadow-lg)] p-6 min-h-[190px] w-[280px] flex flex-col justify-between gap-3">
+    <div className="bg-surface-card rounded-[32px] border border-default shadow-[var(--shadow-lg)] p-6 min-h-[190px] w-[280px] flex flex-col justify-between gap-3">
       <div className="flex items-center gap-3">
         <Skeleton className="w-10 h-10 rounded-full" />
         <Skeleton className="h-2 w-24 rounded-full" />

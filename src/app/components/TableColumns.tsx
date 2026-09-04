@@ -143,7 +143,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
       <>
         {contextMenu && (
           <div 
-            className="fixed z-50 bg-surface-card border border-border-default shadow-lg rounded-xl overflow-hidden min-w-[200px] text-sm py-1"
+            className="fixed z-50 bg-surface-card border border-default shadow-lg rounded-xl overflow-hidden min-w-[200px] text-sm py-1"
             style={{ top: contextMenu.y, left: contextMenu.x }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -168,7 +168,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
         )}
         
         {deletedColumnCache && (
-          <div className="fixed bottom-6 right-6 z-50 bg-surface-card border border-border-default shadow-lg rounded-xl p-4 flex items-center space-x-4 animate-in slide-in-from-bottom-5">
+          <div className="fixed bottom-6 right-6 z-50 bg-surface-card border border-default shadow-lg rounded-xl p-4 flex items-center space-x-4 animate-in slide-in-from-bottom-5">
             <div>
               <p className="text-sm font-semibold text-[#1a1c1d]">Column deleted</p>
               <p className="text-xs text-[#838d97]">You can restore it for a short time</p>

@@ -9,7 +9,7 @@ const meta = {
       description: {
         component:
           'Surface container. NXUS card styling is specified in **P-CO3**: `bg-surface-card`, ' +
-          '`rounded-[40px]`, `border-border-default`, `shadow-[var(--shadow-lg)]`, lifting on hover.\n\n' +
+          '`rounded-[40px]`, `border-default`, `shadow-[var(--shadow-lg)]`, lifting on hover.\n\n' +
           'Radius carries meaning here (**R-R1**) — 40px for dashboard and KPI cards, 32px for ' +
           'tables and modals, 20px for forms. A card at the wrong radius reads as belonging to a ' +
           'different layer of the interface.\n\n' +
@@ -30,7 +30,7 @@ export const Default: Story = {
         <CardDescription>Fixtures for players in your scope</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="font-body text-[12px] text-text-body">Three fixtures this week.</p>
+        <p className="font-body text-[12px] text-body">Three fixtures this week.</p>
       </CardContent>
       <CardFooter>
         <span className="font-body font-bold text-[12px] text-brand-primary">View all</span>
@@ -43,9 +43,9 @@ export const NxusCard: Story = {
   name: 'NXUS card (P-CO3)',
   parameters: { docs: { description: { story: 'The specified styling, including the hover lift.' } } },
   render: () => (
-    <div className="bg-surface-card rounded-[40px] border border-border-default shadow-[var(--shadow-lg)] hover:-translate-y-1 hover:shadow-xl transition-all p-8 w-[380px]">
-      <h3 className="font-heading font-semibold text-[20px] text-text-heading mb-2">Scout Leaderboard</h3>
-      <p className="font-body text-[14px] text-text-body">Reports filed this cycle, by scout.</p>
+    <div className="bg-surface-card rounded-[40px] border border-default shadow-[var(--shadow-lg)] hover:-translate-y-1 hover:shadow-xl transition-all p-8 w-[380px]">
+      <h3 className="font-heading font-semibold text-[20px] text-heading mb-2">Scout Leaderboard</h3>
+      <p className="font-body text-[14px] text-body">Reports filed this cycle, by scout.</p>
     </div>
   ),
 }
@@ -56,17 +56,17 @@ export const AccentCard: Story = {
     docs: {
       description: {
         story:
-          'The one primary-background card permitted per view. All text is `text-text-on-brand` ' +
+          'The one primary-background card permitted per view. All text is `text-on-brand` ' +
           '(**L-C6**) and internal borders are `border-text-on-brand/10`.',
       },
     },
   },
   render: () => (
     <div className="bg-brand-primary rounded-[40px] p-8 w-[380px]">
-      <h3 className="font-heading font-semibold text-[20px] text-text-on-brand mb-2">Latest Packages</h3>
-      <p className="font-body text-[14px] text-text-on-brand/80">Four packages uploaded since Monday.</p>
+      <h3 className="font-heading font-semibold text-[20px] text-on-brand mb-2">Latest Packages</h3>
+      <p className="font-body text-[14px] text-on-brand/80">Four packages uploaded since Monday.</p>
       <div className="mt-4 pt-4 border-t border-text-on-brand/10">
-        <span className="font-body font-bold text-[12px] text-text-on-brand">Open Packages</span>
+        <span className="font-body font-bold text-[12px] text-on-brand">Open Packages</span>
       </div>
     </div>
   ),

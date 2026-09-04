@@ -180,7 +180,7 @@ export function ProvisionalPoolList() {
                   Grade {player.grade}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-xs text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="flex items-center gap-2 text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <span>{player.position}</span>
                 <span>•</span>
                 <span>{player.age} yrs</span>

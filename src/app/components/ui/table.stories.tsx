@@ -69,27 +69,27 @@ export const NxusTable: Story = {
     },
   },
   render: () => (
-    <div className="w-full max-w-none bg-surface-card rounded-[32px] shadow-[var(--shadow-lg)] border border-border-default overflow-hidden">
-      <div className="bg-brand-primary text-text-inverse font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-3 text-center">
+    <div className="w-full max-w-none bg-surface-card rounded-[32px] shadow-[var(--shadow-lg)] border border-default overflow-hidden">
+      <div className="bg-brand-primary text-inverse font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-3 text-center">
         Bio Data
       </div>
-      <div className="bg-brand-primary text-text-inverse font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-2">
+      <div className="bg-brand-primary text-inverse font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-2">
         Strikers (2)
       </div>
       {[
         ['KM', 'Kofi Mensah', 'Accra Lions', 19, true, 'bg-surface-card'],
         ['AO', 'Amara Obi', 'Lagos City', 20, false, 'bg-surface-accent/30'],
       ].map(([ini, name, team, age, scouted, bg]) => (
-        <div key={name as string} className={`${bg} flex items-center gap-3 border-b border-border-default/40 hover:bg-surface-accent transition-colors py-3 px-4`}>
-          <div className="w-8 h-8 rounded-full bg-brand-primary text-text-on-brand font-body font-black text-[11px] flex items-center justify-center shrink-0">
+        <div key={name as string} className={`${bg} flex items-center gap-3 border-b border-default/40 hover:bg-surface-accent transition-colors py-3 px-4`}>
+          <div className="w-8 h-8 rounded-full bg-brand-primary text-on-brand font-body font-black text-[11px] flex items-center justify-center shrink-0">
             {ini}
           </div>
-          <span className="font-body font-bold text-[13px] text-text-body hover:underline cursor-pointer">{name}</span>
+          <span className="font-body font-bold text-[13px] text-body hover:underline cursor-pointer">{name}</span>
           <span className="w-2 h-2 rounded-full shrink-0" style={{ background: scouted ? 'var(--status-success)' : 'var(--status-error)' }} />
-          <span className="font-body text-[12px] text-text-body">{team}</span>
-          <span className="font-body text-[12px] text-text-body tabular-nums ml-auto">{age}</span>
-          <span className="bg-brand-primary/20 text-text-strong font-bold px-2 py-0.5 rounded text-[12px]">F3</span>
-          <span className="bg-brand-primary/20 text-text-strong font-bold px-2 py-0.5 rounded text-[12px]">H5</span>
+          <span className="font-body text-[12px] text-body">{team}</span>
+          <span className="font-body text-[12px] text-body tabular-nums ml-auto">{age}</span>
+          <span className="bg-brand-primary/20 text-strong font-bold px-2 py-0.5 rounded text-[12px]">F3</span>
+          <span className="bg-brand-primary/20 text-strong font-bold px-2 py-0.5 rounded text-[12px]">H5</span>
         </div>
       ))}
     </div>

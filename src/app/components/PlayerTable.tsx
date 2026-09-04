@@ -40,13 +40,13 @@ export function PlayerTable() {
         />
       </div>
       
-      <div className="text-sm text-text-body">
+      <div className="text-sm text-body">
         Selected Years: <span className="font-medium">None</span>
       </div>
 
       <div className="border rounded-lg overflow-hidden">
         <table className="w-full">
-          <thead className="bg-brand-primary text-text-on-brand">
+          <thead className="bg-brand-primary text-on-brand">
             <tr>
               <th className="px-4 py-3 text-left uppercase text-xs">Actions</th>
               <th className="px-4 py-3 text-left uppercase text-xs">Name</th>
@@ -60,18 +60,18 @@ export function PlayerTable() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-ink-midnight text-text-on-brand">
+            <tr className="bg-ink-midnight text-on-brand">
               <td colSpan={9} className="px-4 py-2 font-medium">Strikers</td>
             </tr>
             <tr className="bg-surface-accent">
-              <td colSpan={9} className="px-4 py-2 text-sm text-text-body">2003</td>
+              <td colSpan={9} className="px-4 py-2 text-sm text-body">2003</td>
             </tr>
             {players.map((player) => (
               <tr key={player.id} className="border-b hover:bg-surface-accent">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <Checkbox />
-                    <button className="p-2 bg-status-error text-text-on-brand rounded hover:bg-status-error/80">
+                    <button className="p-2 bg-status-error text-on-brand rounded hover:bg-status-error/80">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

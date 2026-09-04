@@ -55,7 +55,7 @@ export const InTopNavContext: Story = {
     },
   },
   render: (args) => (
-    <div className="flex items-center justify-between bg-surface-card/90 backdrop-blur-xl border border-border-default p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]">
+    <div className="flex items-center justify-between bg-surface-card/90 backdrop-blur-xl border border-default p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]">
       <div className="w-[380px]">
         <PlayerSearch {...args} />
       </div>

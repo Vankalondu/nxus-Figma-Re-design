@@ -249,7 +249,7 @@ function ProgressPill({ progress }: { progress: number }) {
     progress === 100
       ? 'bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/20'
       : progress === 0
-        ? 'bg-surface-accent text-text-body border-border-default'
+        ? 'bg-surface-accent text-body border-default'
         : 'bg-brand-primary/10 text-brand-primary border-brand-primary/20';
   return (
     <span
@@ -266,30 +266,30 @@ function CompetitionCard({ comp, onOpen }: { comp: Competition; onOpen: (c: Comp
   return (
     <button
       onClick={() => onOpen(comp)}
-      className={`bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 text-left transition-all hover:border-brand-primary hover:shadow-[var(--shadow-xl)] hover:-translate-y-1 cursor-pointer ${comp.archived ? 'opacity-60' : ''}`}
+      className={`bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 text-left transition-all hover:border-brand-primary hover:shadow-[var(--shadow-xl)] hover:-translate-y-1 cursor-pointer ${comp.archived ? 'opacity-60' : ''}`}
     >
       <div className="flex items-start justify-between gap-3">
-        <h4 className="font-heading font-semibold text-[16px] text-text-heading leading-snug line-clamp-2">
+        <h4 className="font-heading font-semibold text-[16px] text-heading leading-snug line-clamp-2">
           {comp.name}
         </h4>
         <span className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center shrink-0">
-          <Trophy size={14} className="text-text-body" />
+          <Trophy size={14} className="text-body" />
         </span>
       </div>
 
       {comp.category && (
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
+        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
           {comp.category}
         </span>
       )}
 
       <div className="flex items-center gap-2 flex-wrap mt-auto">
-        <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-border-default font-body font-bold text-[12px] text-text-body">
+        <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
           {comp.season}
         </span>
         <ProgressPill progress={comp.progress} />
         {comp.archived && (
-          <span className="inline-flex items-center px-3 py-1 rounded-full bg-text-body/10 border border-border-default font-body font-bold text-[12px] text-text-body">
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-text-body/10 border border-default font-body font-bold text-[12px] text-body">
             Archived
           </span>
         )}
@@ -327,23 +327,23 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
   }, [highlight]);
   return (
     <div ref={ref} id={`match-card-${match.id}`}
-      className={`bg-surface-card rounded-[20px] border shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 transition-all hover:shadow-[var(--shadow-xl)] ${highlight ? 'border-brand-primary ring-2 ring-brand-primary ring-offset-2 ring-offset-background' : 'border-border-default'}`}>
+      className={`bg-surface-card rounded-[20px] border shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 transition-all hover:shadow-[var(--shadow-xl)] ${highlight ? 'border-brand-primary ring-2 ring-brand-primary ring-offset-2 ring-offset-background' : 'border-default'}`}>
       {/* Top row: date + visible icon actions */}
       <div className="flex items-center justify-between gap-3">
-        <span className="inline-flex items-center gap-2 font-body font-bold text-[12px] text-text-body min-w-0">
+        <span className="inline-flex items-center gap-2 font-body font-bold text-[12px] text-body min-w-0">
           <Calendar size={12} className="shrink-0" />
           <span className="truncate">{match.date}</span>
         </span>
         <div className="flex items-center gap-2 shrink-0">
           <button
             title="Edit Date/Venue"
-            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-text-body hover:text-brand-primary transition-colors"
+            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-body hover:text-brand-primary transition-colors"
           >
             <Pencil size={13} />
           </button>
           <button
             title="Move Match"
-            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-text-body hover:text-brand-primary transition-colors"
+            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-body hover:text-brand-primary transition-colors"
           >
             <ArrowLeftRight size={13} />
           </button>
@@ -355,21 +355,21 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
         <div className="flex-1 min-w-0 flex flex-col gap-1">
           <span className="inline-flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Home</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Home</span>
           </span>
-          <span className="font-heading font-semibold text-[16px] text-text-strong truncate" title={match.home}>
+          <span className="font-heading font-semibold text-[16px] text-strong truncate" title={match.home}>
             {match.home}
           </span>
         </div>
-        <span className="shrink-0 w-8 h-8 rounded-full bg-surface-accent border border-border-default flex items-center justify-center font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
+        <span className="shrink-0 w-8 h-8 rounded-full bg-surface-accent border border-default flex items-center justify-center font-heading font-bold text-[10px] uppercase tracking-widest text-body">
           VS
         </span>
         <div className="flex-1 min-w-0 flex flex-col gap-1 items-end text-right">
           <span className="inline-flex items-center gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Away</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Away</span>
             <span className="w-2 h-2 rounded-full bg-[#E05C4B] shrink-0" />
           </span>
-          <span className="font-heading font-semibold text-[16px] text-text-strong truncate w-full" title={match.away}>
+          <span className="font-heading font-semibold text-[16px] text-strong truncate w-full" title={match.away}>
             {match.away}
           </span>
         </div>
@@ -377,8 +377,8 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
 
       {/* Venue */}
       <div className="flex items-center gap-2">
-        <MapPin size={12} className="text-text-body shrink-0" />
-        <span className="font-body font-medium text-[12px] text-text-body truncate">{match.venue}</span>
+        <MapPin size={12} className="text-body shrink-0" />
+        <span className="font-body font-medium text-[12px] text-body truncate">{match.venue}</span>
       </div>
 
       {/* Status chips */}
@@ -397,13 +397,13 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       <div className="flex items-center gap-2 mt-auto">
         <button
           onClick={() => onEntry(match)}
-          className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-primary text-text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
+          className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
         >
           <ClipboardList size={14} className="shrink-0" />
           Match Entry
         </button>
         <button
-          className={`flex-1 inline-flex items-center justify-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm ${match.hasVideo ? '' : 'opacity-60'}`}
+          className={`flex-1 inline-flex items-center justify-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm ${match.hasVideo ? '' : 'opacity-60'}`}
         >
           <Video size={14} className="shrink-0" />
           Watch Video
@@ -411,9 +411,9 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       </div>
 
       {/* Footer */}
-      <div className="flex items-center gap-2 pt-2 border-t border-border-default/40">
-        <Info size={12} className="text-text-body/60 shrink-0" />
-        <span className="font-body font-medium text-[12px] text-text-body truncate">
+      <div className="flex items-center gap-2 pt-2 border-t border-default/40">
+        <Info size={12} className="text-body/60 shrink-0" />
+        <span className="font-body font-medium text-[12px] text-body truncate">
           Last updated by {match.lastUpdatedBy}
         </span>
       </div>
@@ -509,7 +509,7 @@ export function MatchesView() {
           <div className="flex items-center gap-3">
             <button
               onClick={backToList}
-              className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:border-brand-primary hover:text-text-strong transition-colors shadow-sm"
+              className="w-8 h-8 rounded-full bg-surface-card border border-default flex items-center justify-center text-body hover:border-brand-primary hover:text-strong transition-colors shadow-sm"
               title="Back to competitions"
             >
               <ArrowLeft size={14} />
@@ -518,19 +518,19 @@ export function MatchesView() {
               <button onClick={backToList} className="text-brand-primary hover:underline">
                 Competitions
               </button>
-              <ChevronRight size={14} className="text-text-body shrink-0" />
-              <span className="text-text-body truncate">{selectedComp.name}</span>
+              <ChevronRight size={14} className="text-body shrink-0" />
+              <span className="text-body truncate">{selectedComp.name}</span>
             </nav>
           </div>
 
-          <h1 className="font-heading font-semibold type-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
+          <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
             {selectedComp.name}
             <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
-              <Trophy size={20} className="text-text-on-brand" />
+              <Trophy size={20} className="text-on-brand" />
             </span>
           </h1>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-border-default font-body font-bold text-[12px] text-text-body">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
               {selectedComp.season}
             </span>
             <ProgressPill progress={selectedComp.progress} />
@@ -547,8 +547,8 @@ export function MatchesView() {
                   onClick={() => setSelectedRound(round.id)}
                   className={`px-4 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
                     currentRound?.id === round.id
-                      ? 'bg-brand-primary text-text-on-brand shadow-sm'
-                      : 'bg-surface-accent text-text-strong border border-border-default hover:border-brand-primary'
+                      ? 'bg-brand-primary text-on-brand shadow-sm'
+                      : 'bg-surface-accent text-strong border border-default hover:border-brand-primary'
                   }`}
                 >
                   {round.name}
@@ -566,17 +566,17 @@ export function MatchesView() {
             ) : (
               <div className="flex flex-col items-center justify-center gap-4 py-16">
                 <span className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
-                  <CalendarX size={20} className="text-text-body" />
+                  <CalendarX size={20} className="text-body" />
                 </span>
-                <p className="font-body font-medium text-[14px] text-text-body">
+                <p className="font-body font-medium text-[14px] text-body">
                   No matches scheduled for this round yet.
                 </p>
               </div>
             )}
           </>
         ) : (
-          <div className="bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] p-8 flex items-center justify-center">
-            <p className="font-body font-medium text-[14px] text-text-body">
+          <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-8 flex items-center justify-center">
+            <p className="font-body font-medium text-[14px] text-body">
               No rounds have been created for this competition yet.
             </p>
           </div>
@@ -591,13 +591,13 @@ export function MatchesView() {
       {/* Page header + toolbar share one row on desktop */}
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 pt-6 mb-3">
         <div className="flex flex-col justify-center shrink-0">
-        <h1 className="font-heading font-semibold type-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
+        <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
           Competitions
           <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
-            <Calendar size={28} className="text-text-on-brand" />
+            <Calendar size={28} className="text-on-brand" />
           </span>
         </h1>
-        <p className="font-body font-medium text-[15px] text-text-body mt-2 short:hidden">
+        <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">
           Track upload progress across your competitions.
         </p>
         </div>
@@ -605,28 +605,28 @@ export function MatchesView() {
         {/* Toolbar */}
         <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap lg:justify-end">
         <div className="relative w-full sm:w-64 shrink-0">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-body" size={16} />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-body" size={16} />
           <input
             type="text"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search competitions…"
-            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all font-body font-bold shadow-sm placeholder:text-text-body text-text-body"
+            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body"
           />
         </div>
 
-        <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-default rounded-full hover:border-brand-primary transition-colors cursor-pointer shadow-sm">
-          <span className="font-body font-bold text-[14px] text-text-body">Season:</span>
+        <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors cursor-pointer shadow-sm">
+          <span className="font-body font-bold text-[14px] text-body">Season:</span>
           <select
             value={season}
             onChange={e => setSeason(e.target.value)}
-            className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5"
+            className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5"
           >
             {SEASONS.map(s => (
               <option key={s}>{s}</option>
             ))}
           </select>
-          <ChevronDown size={14} className="absolute right-4 text-text-body pointer-events-none" />
+          <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
         </div>
       </div>
       </div>
@@ -635,9 +635,9 @@ export function MatchesView() {
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-4 py-16">
           <span className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
-            <SearchX size={20} className="text-text-body" />
+            <SearchX size={20} className="text-body" />
           </span>
-          <p className="font-body font-medium text-[14px] text-text-body">
+          <p className="font-body font-medium text-[14px] text-body">
             No competitions match your search.
           </p>
         </div>
@@ -654,7 +654,7 @@ export function MatchesView() {
           {archived.length > 0 && (
             <>
               <div className="flex items-center gap-3 pt-4">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body shrink-0">
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body shrink-0">
                   Archived
                 </span>
                 <div className="flex-1 h-px bg-border-default" />

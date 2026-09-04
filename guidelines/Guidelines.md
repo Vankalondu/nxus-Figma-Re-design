@@ -62,7 +62,7 @@ brand adjustment takes effect. A literal value is invisible to that mechanism an
 stops tracking the system — and it is the one defect that cannot be caught by looking at a
 screenshot.
 
-**Do:** `bg-surface-card`, `text-text-body`, `shadow-[var(--shadow-lg)]`
+**Do:** `bg-surface-card`, `text-body`, `shadow-[var(--shadow-lg)]`
 **Don't:** `bg-[#F4FAFF]`, `style={{ color: '#304151' }}`, Tailwind's own `shadow-lg`
 **Exceptions:** none in application code. See §11.3 for the quarantined `src/app/imports/`,
 and L-G2 for colour that is data rather than styling.
@@ -89,7 +89,7 @@ panel — is styling and binds tokens normally.
 `#FFFFFF` and `#000000` never appear — in any mode, in any property, at **any opacity**,
 including SVG fills and gradient stops. Where you need a light or dark value, use the
 palette's own: **`--chalk`**, the light version of the primary blue, and **`--midnight`**, its
-dark counterpart. Both are theme-invariant and both have Tailwind bridges, so `text-text-on-brand`,
+dark counterpart. Both are theme-invariant and both have Tailwind bridges, so `text-on-brand`,
 `border-text-on-brand/15` and `bg-ink-midnight/60` all resolve.
 
 **Why:** every neutral in this system is blue-cast. A pure-white surface reads as a hole
@@ -98,7 +98,7 @@ translucent white scrim has the same problem in miniature, because it drifts the
 beneath it toward a grey the palette never contains. A chalk scrim lightens *along the
 palette* instead.
 
-**Do:** `text-text-on-brand` on primary · `border-text-on-brand/15` inside an accent card · `bg-ink-midnight/60`
+**Do:** `text-on-brand` on primary · `border-text-on-brand/15` inside an accent card · `bg-ink-midnight/60`
 for a modal overlay · `bg-surface-card` for the brightest ordinary surface
 **Don't:** `text-white`, `bg-white/10`, `bg-black/60`, `color: '#fff'` in an inline style
 **Exception:** an attribute selector that *matches* a third-party library's own hardcoded
@@ -146,8 +146,8 @@ button, table header, filter bar, modal header, card surface or logo background.
 **Why:** it is the canvas. Anything painted with the canvas colour stops reading as a raised
 element and the surface hierarchy collapses. Historically the most common palette violation.
 
-### L-C6 · Law — Text on primary is always `text-text-on-brand`
-Never `text-text-heading` or `text-text-strong` on a `bg-brand-primary` surface, in either theme.
+### L-C6 · Law — Text on primary is always `text-on-brand`
+Never `text-heading` or `text-strong` on a `bg-brand-primary` surface, in either theme.
 
 **Why:** `--foreground` flips between themes; `bg-brand-primary` does not flip enough to stay
 legible against it. `--chalk` is theme-invariant by design.
@@ -172,7 +172,7 @@ intentional, and L-C7 still binds.
 
 ### P-C2 · Pattern — The accent card
 In a dashboard's below-KPI section, the right-hand sidebar column carries the one primary
-card permitted by L-C7. It uses `text-text-on-brand` for all text, `border-text-on-brand/15` for internal
+card permitted by L-C7. It uses `text-on-brand` for all text, `border-text-on-brand/15` for internal
 borders and `bg-text-on-brand/10` for internal fills. All other cards use `bg-surface-card`.
 
 (Earlier revisions said `border-white/10`. Superseded by L-C1 on 31 Aug 2026 — translucent
@@ -261,7 +261,7 @@ screen or section? If no, it is `strong`, however bold it looks.
 If an element styles no text of its own, its colour utility is setting the inherited default
 for everything beneath it. Do not re-role it as though it were copy.
 
-**Why:** the app shell is `flex min-h-screen bg-surface-page font-body text-text-strong`. Its
+**Why:** the app shell is `flex min-h-screen bg-surface-page font-body text-strong`. Its
 `font-body` means "descendants default to the body face", not "this div is body copy".
 Retinting it once moved **6,422 descendants** and pushed **241 of them below 4.5:1**, because
 chips and badges that never set their own colour inherited a value meant for prose. One line
@@ -279,7 +279,7 @@ No element may be styled for one theme only. Every surface, border and text colo
 through a token that has a value in both.
 
 ### L-C9 · Law — Some things never flip
-- Text on `bg-brand-primary` is always `text-text-on-brand` (see L-C6)
+- Text on `bg-brand-primary` is always `text-on-brand` (see L-C6)
 - Status colours are theme-invariant: `--scout-green`, `--scout-red`, `--scout-amber`
 - Table group headers stay primary-on-chalk in both themes — they are structural anchors
 - Image overlays use fixed dark gradients regardless of theme
@@ -366,8 +366,8 @@ Base 16 × ratio 1.2, snapped (2px below 24, 4px at and above 24).
 | Column / micro labels | `.type-micro` | 700 Bold, uppercase, tracked | Figtree |
 
 ### L-TY5 · Law — Size is `type-*`, colour is `text-*`
-The responsive ramp is `.type-h1` … `.type-micro`. Text colour is `text-text-heading`,
-`text-text-strong`, `text-text-body`, `text-text-muted`. The two vocabularies never share a
+The responsive ramp is `.type-h1` … `.type-micro`. Text colour is `text-heading`,
+`text-strong`, `text-body`, `text-muted`. The two vocabularies never share a
 prefix.
 
 **Why:** they used to. `.text-body` was the ramp's font-size class, and `text-body` was also
@@ -381,11 +381,11 @@ no future role named `caption`, `micro` or `h3` can collide either.
 ### R-TY3 · Reference — Text colour
 | Context | Token |
 |---|---|
-| Page and section titles | `text-text-heading` |
-| Names, values, chips, button labels — emphatic but not a title | `text-text-strong` |
-| Body copy, secondary labels, metadata | `text-text-body` |
-| Genuinely de-emphasised, still AA | `text-text-muted` |
-| On primary surfaces | `text-text-on-brand` / `text-text-inverse` |
+| Page and section titles | `text-heading` |
+| Names, values, chips, button labels — emphatic but not a title | `text-strong` |
+| Body copy, secondary labels, metadata | `text-body` |
+| Genuinely de-emphasised, still AA | `text-muted` |
+| On primary surfaces | `text-on-brand` / `text-inverse` |
 | Interactive / link | `text-brand-primary` |
 | Destructive | `text-status-error` |
 | Warning | `text-status-warning` |
@@ -525,10 +525,10 @@ No other icon library, no inline custom SVG where a Lucide icon exists.
 
 | Container | Spec |
 |---|---|
-| Large (page title) | `w-14 h-14 rounded-full bg-brand-primary`, icon `text-text-on-brand` |
-| Medium (card header) | `w-12 h-12 rounded-[16px] bg-brand-primary`, icon `text-text-on-brand` |
-| Standard (KPI) | `w-10 h-10 rounded-full bg-surface-accent`, icon `text-text-body` |
-| Small (sidebar) | `w-9 h-9 rounded-xl bg-surface-accent`, icon `text-text-strong` |
+| Large (page title) | `w-14 h-14 rounded-full bg-brand-primary`, icon `text-on-brand` |
+| Medium (card header) | `w-12 h-12 rounded-[16px] bg-brand-primary`, icon `text-on-brand` |
+| Standard (KPI) | `w-10 h-10 rounded-full bg-surface-accent`, icon `text-body` |
+| Small (sidebar) | `w-9 h-9 rounded-xl bg-surface-accent`, icon `text-strong` |
 
 ---
 
@@ -564,12 +564,12 @@ still binds tokens (L-G1).
 Three variants. Anything else needs a reason in the PR.
 
 ```
-Primary    bg-brand-primary border-2 border-brand-primary text-text-inverse
+Primary    bg-brand-primary border-2 border-brand-primary text-inverse
            hover:bg-brand-primary/80 rounded-full px-6 py-3
            font-body font-bold .type-body-sm transition-colors shadow-md
 
-Secondary  bg-surface-card text-text-body border border-border-default
-           hover:border-brand-primary hover:text-text-strong rounded-full px-6 py-2
+Secondary  bg-surface-card text-body border border-default
+           hover:border-brand-primary hover:text-strong rounded-full px-6 py-2
            font-body font-bold .type-body-sm transition-colors
 
 Destructive  border-2 border-status-error text-status-error
@@ -579,19 +579,19 @@ Destructive  border-2 border-status-error text-status-error
 
 ### P-CO2 — Tab pills
 ```
-Active    bg-brand-primary text-text-inverse border-brand-primary shadow-sm
+Active    bg-brand-primary text-inverse border-brand-primary shadow-sm
           rounded-full px-6 py-2 font-body font-bold .type-body-sm
-Inactive  bg-surface-card text-text-body border-border-default
-          hover:border-brand-primary hover:text-text-strong
+Inactive  bg-surface-card text-body border-default
+          hover:border-brand-primary hover:text-strong
           rounded-full px-6 py-2 font-body font-bold .type-body-sm transition-colors
 Container flex items-center gap-2
 ```
 
 ### P-CO3 — Cards
 ```
-Standard  bg-surface-card rounded-[40px] border border-border-default shadow-[var(--shadow-lg)]
+Standard  bg-surface-card rounded-[40px] border border-default shadow-[var(--shadow-lg)]
           hover:-translate-y-1 hover:shadow-xl transition-all
-Accent    bg-brand-primary rounded-[40px]; text text-text-on-brand;
+Accent    bg-brand-primary rounded-[40px]; text text-on-brand;
           internal borders border-text-on-brand/15; internal fills bg-text-on-brand/10
 ```
 
@@ -599,12 +599,12 @@ Accent    bg-brand-primary rounded-[40px]; text text-text-on-brand;
 Canonical implementation: `src/app/components/dashboard/KpiCard.tsx`.
 
 ```
-Container  bg-surface-card rounded-[32px] border border-border-default p-6
+Container  bg-surface-card rounded-[32px] border border-default p-6
            shadow-[var(--shadow-lg)] min-h-[190px]
            hover:-translate-y-1 hover:shadow-xl transition-all
            rendered as <button> — keyboard focusable
 Icon chip  circular, bg-brand-primary/10 text-brand-primary
-Heading    short, uppercase, .type-micro tracked, text-text-body
+Heading    short, uppercase, .type-micro tracked, text-body
 Value      font-heading font-extrabold text-4xl tabular-nums leading-none
 Descriptor beside the value, muted
 Action     named link with an ArrowUpRight
@@ -656,7 +656,7 @@ Reference: `PRIORITY_PILL`, `shared.tsx:86`.
 Identical on every page.
 ```
 sticky top-6 z-50 flex items-center justify-between
-bg-surface-card/90 backdrop-blur-xl border border-border-default
+bg-surface-card/90 backdrop-blur-xl border border-default
 p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]
 ```
 Left to right: player search · role pill · notification bell with unread count · This Week ·
@@ -664,20 +664,20 @@ Add Report · Add Player · theme toggle · avatar (`w-12 h-12 rounded-full`).
 
 ### P-CO8 — Sidebar
 Surface `bg-surface-sidebar`. Active item `bg-brand-primary/10 text-brand-primary border-l-[3px] border-brand-primary`.
-Inactive `text-text-body hover:text-text-strong hover:bg-surface-accent transition-colors`.
+Inactive `text-body hover:text-strong hover:bg-surface-accent transition-colors`.
 
 ### P-CO9 — Data tables
 ```
 Container   w-full max-w-none bg-surface-card rounded-[32px]
-            shadow-[var(--shadow-lg)] border border-border-default overflow-hidden
-Group header (row 1)   bg-brand-primary text-text-inverse
+            shadow-[var(--shadow-lg)] border border-default overflow-hidden
+Group header (row 1)   bg-brand-primary text-inverse
             font-heading font-bold .type-micro uppercase tracking-widest px-4 py-3 text-center
-Sub-header (row 2)     bg-surface-card text-text-body
+Sub-header (row 2)     bg-surface-card text-body
             font-heading font-bold uppercase tracking-widest px-3 py-3
-Data rows   border-b border-border-default/40 hover:bg-surface-accent transition-colors
+Data rows   border-b border-default/40 hover:bg-surface-accent transition-colors
             py-3 px-2 font-body .type-caption font-bold
-Position group rows    bg-brand-primary text-text-inverse — e.g. STRIKERS (9)
-Year separator rows    bg-surface-card text-text-body — year only, no prefix
+Position group rows    bg-brand-primary text-inverse — e.g. STRIKERS (9)
+Year separator rows    bg-surface-card text-body — year only, no prefix
 ```
 Rows alternate `bg-surface-card` / `bg-surface-accent` at 30%, resetting at every position group header — the
 first player row after a header always starts on `bg-surface-card`. Table pages use `w-full
@@ -687,13 +687,13 @@ An `rtable` class provides responsive cell density so small screens keep a real 
 
 ### P-CO10 — Identity cluster
 The sticky left column of every player table: initials circle (`w-8 h-8 rounded-full
-bg-brand-primary text-text-on-brand`) · player name (bold, hover underline, navigates to profile) · age
+bg-brand-primary text-on-brand`) · player name (bold, hover underline, navigates to profile) · age
 (muted) · scout dot (`w-2 h-2 rounded-full`, `--scout-green` scouted / `--scout-red` not) ·
-flag circle (`w-5 h-5 rounded-full border border-border-default`).
+flag circle (`w-5 h-5 rounded-full border border-default`).
 
 ### P-CO11 — Videos cluster
 Present on all table views across all tiers. Never removed.
-`F{n}` match footage and `H{n}` highlight badges: `bg-brand-primary/20 text-text-strong font-bold
+`F{n}` match footage and `H{n}` highlight badges: `bg-brand-primary/20 text-strong font-bold
 px-2 py-0.5 rounded .type-caption`.
 
 ### P-CO12 — Split button (action column)
@@ -704,47 +704,47 @@ right zone opens the dropdown.
 execute. The user clicks the primary side to execute. This gives control over which action
 sits on the surface.
 
-Portal: `bg-surface-card rounded-[12px] border border-border-default shadow-[var(--shadow-2xl)]`, rendered
+Portal: `bg-surface-card rounded-[12px] border border-default shadow-[var(--shadow-2xl)]`, rendered
 via `createPortal` to `document.body`, positioned with `getBoundingClientRect()`, closing on
 select, outside click, or table scroll.
 
 ### P-CO13 — Form inputs
 ```
-bg-surface-card border border-border-default rounded-xl px-4 py-2
-.type-body-sm font-bold text-text-strong
-focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
-placeholder:text-text-body
+bg-surface-card border border-default rounded-xl px-4 py-2
+.type-body-sm font-bold text-strong
+focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
+placeholder:text-body
 ```
 Field label: `font-heading font-bold .type-micro uppercase tracking-widest
-text-text-body mb-2`.
+text-body mb-2`.
 
 ### P-CO14 — Modals
 ```
 Overlay  fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm z-[200]
-Card     bg-surface-card rounded-[32px] shadow-[var(--shadow-2xl)] border border-border-default
-Header   px-8 py-6 bg-brand-primary rounded-t-[32px] text-text-on-brand
+Card     bg-surface-card rounded-[32px] shadow-[var(--shadow-2xl)] border border-default
+Header   px-8 py-6 bg-brand-primary rounded-t-[32px] text-on-brand
 Body     p-8 space-y-4
-Actions  w-full bg-brand-primary text-text-inverse rounded-full py-3
-Close    w-8 h-8 rounded-full bg-surface-card/10 text-text-on-brand/60 hover:text-text-on-brand
+Actions  w-full bg-brand-primary text-inverse rounded-full py-3
+Close    w-8 h-8 rounded-full bg-surface-card/10 text-on-brand/60 hover:text-on-brand
 ```
 
 ### P-CO15 — Grade, NXT and position pills
 ```
-Grade  A+ bg-brand-primary text-text-inverse · A bg-brand-primary/12 text-text-strong
-       B  bg-text-body/10 text-text-body · C bg-surface-accent text-text-body
-NXT    T bg-brand-primary text-text-inverse · M bg-status-warning/15 text-status-warning
+Grade  A+ bg-brand-primary text-inverse · A bg-brand-primary/12 text-strong
+       B  bg-text-body/10 text-body · C bg-surface-accent text-body
+NXT    T bg-brand-primary text-inverse · M bg-status-warning/15 text-status-warning
        D bg-status-error/10 text-status-error
 Position  inline-block px-1.5 py-[2px] rounded font-body .type-micro font-bold
-       ST bg-status-error/10 text-status-error · LW/RW/CDM/FB bg-brand-primary/10 text-text-strong
-       CAM bg-status-warning/10 text-status-warning · CM bg-text-body/10 text-text-body
-       CB bg-text-body/20 text-text-body
+       ST bg-status-error/10 text-status-error · LW/RW/CDM/FB bg-brand-primary/10 text-strong
+       CAM bg-status-warning/10 text-status-warning · CM bg-text-body/10 text-body
+       CB bg-text-body/20 text-body
 ```
 
 ### P-CO16 — Date picker
-Replaces browser-default date inputs. Popup `bg-surface-card border border-border-default/50 rounded-xl
+Replaces browser-default date inputs. Popup `bg-surface-card border border-default/50 rounded-xl
 shadow-[var(--shadow-2xl)] w-[260px]`. Month and year as separate dropdown buttons; month
 opens a 3-column grid, year a scrollable ±10-year list, chevrons step one month. 7-column
-day grid; selected `bg-brand-primary text-text-inverse rounded-full shadow-sm`; today
+day grid; selected `bg-brand-primary text-inverse rounded-full shadow-sm`; today
 `bg-brand-primary/10 text-brand-primary`; footer "Clear" and "Today" as primary text links.
 
 ### P-CO17 — Editable columns
@@ -782,7 +782,7 @@ word and the rest of the title. Every page has a subtitle directly below.
    Left  (col-span-2): main content card, bg-surface-card
    Right (col-span-1): stacked sidebar cards
        top    neutral (bg-surface-card)
-       bottom accent  (bg-brand-primary, text-text-on-brand) — the one primary card, per L-C7
+       bottom accent  (bg-brand-primary, text-on-brand) — the one primary card, per L-C7
 ```
 
 ---
@@ -863,7 +863,7 @@ when next touched. See open ruling **OR-4**.
 - [ ] No white or black at any opacity; light and dark from chalk and midnight — **L-C1**, **L-C2**
 - [ ] Status colour reports a state; consumed via `scout-*` classes — **L-C3**, **L-C4**
 - [ ] `#061B2E` used only as dark-mode background — **L-C5**
-- [ ] Text on primary is `text-text-on-brand` — **L-C6**
+- [ ] Text on primary is `text-on-brand` — **L-C6**
 - [ ] At most one primary-background card in the view — **L-C7**
 - [ ] Renders correctly in both themes — **L-C8**, **L-C9**
 - [ ] Two fonts only; titles at one weight — **L-TY1**, **L-TY2**
@@ -890,7 +890,7 @@ when next touched. See open ruling **OR-4**.
 | `#22d3ee` | video tracker, `VideoTrackerGrid.tsx` | Cyan marks *uploaded / playable*, a deliberate fourth state beside amber and red. The palette has no cyan. |
 | `#ccff00` `#b3e600` `#1a1c1d` | `TableColumns.tsx` | A dark-plus-lime block matching nothing else in NXUS. Likely leftover styling from another source — worth a look before mapping or deleting. |
 | `#3fb4c0` | `shared.tsx` | A lone teal. No in-scale equivalent. |
-| `#7baac7` | grade-B badge background, pipeline chip, 2 scrollbar hovers | The badge is a *background* carrying `text-text-on-brand` (since D-9). Chalk on `#7baac7` is about 1.6:1 — swapping the background to a dark token would fix contrast but change the grade scale, so this needs a decision rather than a guess. |
+| `#7baac7` | grade-B badge background, pipeline chip, 2 scrollbar hovers | The badge is a *background* carrying `text-on-brand` (since D-9). Chalk on `#7baac7` is about 1.6:1 — swapping the background to a dark token would fix contrast but change the grade scale, so this needs a decision rather than a guess. |
 
 Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
 
@@ -919,7 +919,7 @@ notification bell.
 **D-9 · Light and dark are palette-derived (31 Aug 2026).** The ruling: *"do not use white
 (#FFFFFF), but use variations derived from the colours in our palette."* L-C1 now covers
 translucent white and black as well as opaque, and names `--chalk` and `--midnight` as the
-replacements. 283 sites swept across 44 files — `text-white` → `text-text-on-brand`,
+replacements. 283 sites swept across 44 files — `text-white` → `text-on-brand`,
 `border-white/15` → `border-text-on-brand/15`, `bg-black/60` → `bg-ink-midnight/60`. This also removed a
 real contradiction: the accent-surface-card spec prescribed `border-white/10` while L-C1 forbade pure
 white.
@@ -944,7 +944,7 @@ gradient overlay and a primary CTA.
 
 **D-10 · The type ramp is `type-*`, not `text-*`.** Renamed so the size vocabulary and the
 colour vocabulary stop sharing a prefix. Chosen over leaving the colour roles stuttering as
-`text-text-body`: 43 ramp usages against ~1,989 colour usages, and the collision would
+`text-body`: 43 ramp usages against ~1,989 colour usages, and the collision would
 otherwise have recurred for any future role named `caption`, `micro` or `h3`. See L-TY5.
 
 **D-11 · `--text-strong` exists and shares `--text-heading`'s value.** Added rather than

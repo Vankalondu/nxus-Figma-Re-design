@@ -150,7 +150,7 @@ export function ScoutQualityLeaderboard() {
                 <Crown size={18} strokeWidth={2.5} />
               </div>
             ) : (
-              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] text-text-body font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] text-body font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 {scout.rank}
               </div>
             )}
@@ -158,7 +158,7 @@ export function ScoutQualityLeaderboard() {
 
           {/* Avatar & Info */}
           <div className="flex items-center gap-4 flex-1 min-w-0">
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-text-on-brand shrink-0 shadow-sm ${
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-on-brand shrink-0 shadow-sm ${
               isHeadScout 
                 ? 'bg-gradient-to-br from-[#0D47A1] to-[#1565C0]' 
                 : 'bg-gradient-to-br from-[#1E88E5] to-[#1976D2]'
@@ -280,7 +280,7 @@ export function ScoutQualityLeaderboard() {
                     {totalGradeA}
                   </div>
                 </div>
-                <div className="text-xs text-text-body flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="text-xs text-body flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   <Crown className="w-3 h-3 text-[#94a3b8] shrink-0" />
                   <span className="truncate">{country.headScout.name}</span>
                 </div>
@@ -312,7 +312,7 @@ export function ScoutQualityLeaderboard() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Trophy className="w-4 h-4 text-[#F9A825]" />
-              <h3 className="text-xs uppercase tracking-wider text-text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <h3 className="text-xs uppercase tracking-wider text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Head Scout
               </h3>
             </div>
@@ -324,7 +324,7 @@ export function ScoutQualityLeaderboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#1E88E5]" />
-                <h3 className="text-xs uppercase tracking-wider text-text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <h3 className="text-xs uppercase tracking-wider text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Country Scouts
                 </h3>
               </div>

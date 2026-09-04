@@ -42,14 +42,14 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
 
   return (
     <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
-      <div className="bg-surface-card w-full max-w-3xl rounded-[24px] shadow-[var(--shadow-2xl)] border border-border-default flex flex-col max-h-[90vh] overflow-hidden">
+      <div className="bg-surface-card w-full max-w-3xl rounded-[24px] shadow-[var(--shadow-2xl)] border border-default flex flex-col max-h-[90vh] overflow-hidden">
         {/* Header Tier */}
-        <div className="px-8 py-6 border-b border-border-default flex items-center justify-between shrink-0">
+        <div className="px-8 py-6 border-b border-default flex items-center justify-between shrink-0">
           <div>
-            <h2 className="font-heading font-semibold text-[24px] text-text-heading leading-none">Edit player</h2>
-            <p className="font-body font-medium text-[14px] text-text-body mt-2">(Required fields marked with *)</p>
+            <h2 className="font-heading font-semibold text-[24px] text-heading leading-none">Edit player</h2>
+            <p className="font-body font-medium text-[14px] text-body mt-2">(Required fields marked with *)</p>
           </div>
-          <button onClick={onClose} className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-strong transition-colors">
+          <button onClick={onClose} className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-strong transition-colors">
             <X size={20} />
           </button>
         </div>
@@ -58,11 +58,11 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
         <div className="flex-1 overflow-y-auto p-8 space-y-10 no-scrollbar">
           {/* Central Avatar Selector */}
           <div className="flex justify-center">
-            <div className="w-28 h-28 rounded-full bg-surface-accent border-4 border-border-default/50 flex items-center justify-center text-brand-primary font-heading font-black text-3xl relative group cursor-pointer overflow-hidden shadow-inner">
+            <div className="w-28 h-28 rounded-full bg-surface-accent border-4 border-default/50 flex items-center justify-center text-brand-primary font-heading font-black text-3xl relative group cursor-pointer overflow-hidden shadow-inner">
               {formData.initials}
               <div className="absolute inset-0 bg-[#061B2E]/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                 <Camera size={24} className="text-text-on-brand mb-1" />
-                 <span className="text-[10px] text-text-on-brand uppercase font-black tracking-widest">Update</span>
+                 <Camera size={24} className="text-on-brand mb-1" />
+                 <span className="text-[10px] text-on-brand uppercase font-black tracking-widest">Update</span>
               </div>
             </div>
           </div>
@@ -70,47 +70,47 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
           <div className="space-y-8">
             {/* Primary Identity Fields */}
             <div className="space-y-2">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Name:*</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Name:*</label>
               <input 
                 type="text" 
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
-                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all placeholder:text-text-body/40 shadow-sm"
+                className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-body/40 shadow-sm"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">DOB:</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">DOB:</label>
               <div className="relative group">
                 <input 
                   type="text" 
                   value={formData.dob}
                   readOnly
-                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                  className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                 />
-                <Calendar size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-body group-hover:text-brand-primary transition-colors" />
+                <Calendar size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body group-hover:text-brand-primary transition-colors" />
               </div>
             </div>
 
             {/* Nationality Chip Collector Row */}
             <div className="space-y-4">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Nationality:</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Nationality:</label>
               <div className="relative group">
                 <select 
                   onChange={(e) => handleAddNationality(e.target.value)}
-                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                  className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                   value=""
                 >
                   <option value="" disabled>Select Country</option>
                   {countries.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
-                <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
+                <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
               </div>
               <div className="flex flex-wrap gap-2 pt-1">
                 {formData.nationality.map(country => (
-                  <div key={country} className="flex items-center gap-2 bg-brand-primary/5 border border-brand-primary/20 px-4 py-2 rounded-full font-body font-bold text-[14px] text-text-body shadow-sm animate-fade-in">
+                  <div key={country} className="flex items-center gap-2 bg-brand-primary/5 border border-brand-primary/20 px-4 py-2 rounded-full font-body font-bold text-[14px] text-body shadow-sm animate-fade-in">
                     {country}
-                    <button onClick={() => handleRemoveNationality(country)} className="text-text-body hover:text-status-error transition-colors">
+                    <button onClick={() => handleRemoveNationality(country)} className="text-body hover:text-status-error transition-colors">
                       <X size={14} />
                     </button>
                   </div>
@@ -120,7 +120,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
 
             {/* 3-Column Position Matrix Track */}
             <div className="space-y-4">
-              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body border-b border-border-default pb-2">Positional Depth</div>
+              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-body border-b border-default pb-2">Positional Depth</div>
               <div className="grid grid-cols-3 gap-6">
                 {[
                   { label: 'Primary:', key: 'primaryPos' },
@@ -128,17 +128,17 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                   { label: 'Tertiary:', key: 'tertiaryPos' }
                 ].map(pos => (
                   <div key={pos.key} className="space-y-2">
-                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">{pos.label}</label>
+                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{pos.label}</label>
                     <div className="relative group">
                       <select 
                         value={formData[pos.key as keyof typeof formData] as string}
                         onChange={(e) => setFormData({...formData, [pos.key]: e.target.value})}
-                        className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 text-[14px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                        className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                       >
                         <option value="">None</option>
                         {positions.map(p => <option key={p} value={p}>{p}</option>)}
                       </select>
-                      <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
+                      <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
                     </div>
                   </div>
                 ))}
@@ -146,40 +146,40 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
             </div>
 
             {/* Physical & Mechanical Metrics */}
-            <div className="space-y-8 pt-4 border-t border-border-default">
+            <div className="space-y-8 pt-4 border-t border-default">
               <div className="space-y-2">
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Preferred foot</label>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Preferred foot</label>
                 <div className="relative group">
                   <select 
                     value={formData.preferredFoot}
                     onChange={(e) => setFormData({...formData, preferredFoot: e.target.value})}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                    className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                   >
                     <option value="Left">Left</option>
                     <option value="Right">Right</option>
                     <option value="Ambidextrous">Ambidextrous</option>
                   </select>
-                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
+                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Height (cm):</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Height (cm):</label>
                   <input 
                     type="number" 
                     value={formData.height}
                     onChange={e => setFormData({...formData, height: parseInt(e.target.value) || 0})}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shadow-sm"
+                    className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Weight (kg):</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Weight (kg):</label>
                   <input 
                     type="number" 
                     value={formData.weight}
                     onChange={e => setFormData({...formData, weight: parseInt(e.target.value) || 0})}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shadow-sm"
+                    className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shadow-sm"
                   />
                 </div>
               </div>
@@ -188,13 +188,13 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
         </div>
 
         {/* Sticky Action Baseline */}
-        <div className="px-8 py-6 border-t border-border-default flex justify-end shrink-0 bg-surface-card shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        <div className="px-8 py-6 border-t border-default flex justify-end shrink-0 bg-surface-card shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
           <button 
             onClick={() => {
               onUpdate(formData);
               onClose();
             }}
-            className="bg-brand-primary text-text-inverse hover:bg-[#0a2d4c] px-12 py-4 rounded-xl font-heading font-black text-sm transition-all shadow-lg shadow-brand-primary/20 uppercase tracking-widest flex items-center gap-2"
+            className="bg-brand-primary text-inverse hover:bg-[#0a2d4c] px-12 py-4 rounded-xl font-heading font-black text-sm transition-all shadow-lg shadow-brand-primary/20 uppercase tracking-widest flex items-center gap-2"
           >
             Update
           </button>

@@ -45,10 +45,10 @@ export function RecentlyAddedPlayers() {
   ];
 
   return (
-    <div className="bg-[#0F1419] border border-border-default rounded-xl p-6">
+    <div className="bg-[#0F1419] border border-default rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-text-on-brand text-xl font-semibold">Recently Added Players</h2>
-        <button className="flex items-center gap-2 text-text-body hover:text-text-on-brand transition-colors">
+        <h2 className="text-on-brand text-xl font-semibold">Recently Added Players</h2>
+        <button className="flex items-center gap-2 text-body hover:text-on-brand transition-colors">
           <span className="text-sm">View All</span>
           <ArrowRight className="w-4 h-4" />
         </button>
@@ -58,11 +58,11 @@ export function RecentlyAddedPlayers() {
         {players.map((player) => (
           <div
             key={player.name}
-            className="bg-[#0a2d4c] border border-border-default rounded-lg p-4 hover:border-[#1971bf] transition-colors"
+            className="bg-[#0a2d4c] border border-default rounded-lg p-4 hover:border-[#1971bf] transition-colors"
           >
             <div className="flex items-start gap-3">
               <div className="relative">
-                <div className={`w-12 h-12 ${player.initialsColor} rounded-lg flex items-center justify-center text-text-on-brand font-semibold`}>
+                <div className={`w-12 h-12 ${player.initialsColor} rounded-lg flex items-center justify-center text-on-brand font-semibold`}>
                   {player.initials}
                 </div>
                 <div
@@ -73,19 +73,19 @@ export function RecentlyAddedPlayers() {
               </div>
               
               <div className="flex-1 min-w-0">
-                <h3 className="text-text-on-brand font-medium truncate">{player.name}</h3>
-                <p className="text-text-body text-sm truncate">{player.team}</p>
+                <h3 className="text-on-brand font-medium truncate">{player.name}</h3>
+                <p className="text-body text-sm truncate">{player.team}</p>
                 
                 <div className="flex items-center gap-4 mt-3">
                   <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 ${
-                      player.status === 'online' ? 'bg-status-success/10 text-status-success-fg' : 'bg-surface-canvas text-text-body'
+                      player.status === 'online' ? 'bg-status-success/10 text-status-success-fg' : 'bg-surface-canvas text-body'
                     } rounded text-xs font-medium`}>
                       {player.position}
                     </span>
                   </div>
-                  <span className="text-text-body text-sm">Age {player.age}</span>
-                  <span className="text-text-body text-sm">{player.country}</span>
+                  <span className="text-body text-sm">Age {player.age}</span>
+                  <span className="text-body text-sm">{player.country}</span>
                 </div>
               </div>
             </div>

@@ -31,7 +31,7 @@ export function OperationsDashboard() {
           <h1 className="text-[#0a0e1a] text-3xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Dashboard
           </h1>
-          <p className="text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Welcome back, <span className="font-semibold text-[#0a0e1a]">Operations Officer</span>. Your weekly pipeline overview.
           </p>
         </div>
@@ -44,8 +44,8 @@ export function OperationsDashboard() {
               onClick={() => setActiveTab(tab.id)}
               className={`px-6 py-3 rounded-xl text-sm font-bold tracking-wide transition-all ${
                 activeTab === tab.id
-                  ? 'bg-[#1E88E5] text-text-on-brand shadow-sm'
-                  : 'text-text-body hover:text-[#0a0e1a] hover:bg-[#f8fafc]'
+                  ? 'bg-[#1E88E5] text-on-brand shadow-sm'
+                  : 'text-body hover:text-[#0a0e1a] hover:bg-[#f8fafc]'
               }`}
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             >
@@ -76,7 +76,7 @@ export function OperationsDashboard() {
                 <h3 className="text-[#0a0e1a] text-xl font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
                   Country & Regional Performance
                 </h3>
-                <p className="text-text-body text-sm mt-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-body text-sm mt-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Track scout performance and Grade A player submissions by region
                 </p>
               </div>
@@ -95,7 +95,7 @@ export function OperationsDashboard() {
             <h3 className="text-[#0a0e1a] text-xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
               Final Reviews
             </h3>
-            <p className="text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Senior scout review queue and grade conversion tracking.
             </p>
           </div>

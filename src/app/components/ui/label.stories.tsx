@@ -29,7 +29,7 @@ export const NxusStyling: Story = {
     <div className="w-[320px]">
       <Label
         htmlFor="player"
-        className="block font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mb-2"
+        className="block font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-2"
       >
         Player name
       </Label>

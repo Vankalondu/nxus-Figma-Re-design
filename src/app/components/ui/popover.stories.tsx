@@ -29,12 +29,12 @@ export const Default: Story = {
         <Button variant="outline">Redo</Button>
       </PopoverTrigger>
       <PopoverContent className="w-[300px]">
-        <p className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mb-3">
+        <p className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-3">
           Reason for redo
         </p>
         <div className="flex flex-wrap gap-2 mb-3">
           {['Wrong player', 'Poor quality', 'Too short'].map((c) => (
-            <span key={c} className="px-3 py-1 rounded-full bg-surface-accent text-text-body font-body font-bold text-[10px] cursor-pointer hover:text-text-body">
+            <span key={c} className="px-3 py-1 rounded-full bg-surface-accent text-body font-body font-bold text-[10px] cursor-pointer hover:text-body">
               {c}
             </span>
           ))}
@@ -42,7 +42,7 @@ export const Default: Story = {
         <textarea
           rows={2}
           placeholder="Add a note…"
-          className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 text-[12px] text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20"
+          className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[12px] text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20"
         />
       </PopoverContent>
     </Popover>

@@ -80,8 +80,8 @@ const SCOUT_PERF = [
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface-card border border-border-default rounded-xl shadow-[var(--shadow-md)] px-3 py-2">
-      <p className="font-heading font-bold text-[12px] text-text-strong">{label}</p>
+    <div className="bg-surface-card border border-default rounded-xl shadow-[var(--shadow-md)] px-3 py-2">
+      <p className="font-heading font-bold text-[12px] text-strong">{label}</p>
       <p className="font-body text-[12px] text-brand-primary font-bold">{payload[0].value} submissions</p>
     </div>
   );
@@ -95,12 +95,12 @@ const StatusBadge = ({ status }: { status: string }) => {
 };
 
 const MiniDropdown = ({ value, options, onChange, width = 'w-auto' }: { value: string; options: string[]; onChange: (v: string) => void; width?: string }) => (
-  <div className={`relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer ${width}`}>
+  <div className={`relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer ${width}`}>
     <select value={value} onChange={e => onChange(e.target.value)}
-      className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5 w-full">
-      {options.map(o => <option key={o} value={o} className="bg-surface-card text-text-strong">{o}</option>)}
+      className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5 w-full">
+      {options.map(o => <option key={o} value={o} className="bg-surface-card text-strong">{o}</option>)}
     </select>
-    <ChevronDown size={14} className="absolute right-4 text-text-body pointer-events-none" />
+    <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
   </div>
 );
 
@@ -114,10 +114,10 @@ const TemplateCard = ({ tpl, onAction }: {
   const updated = uy ? `${parseInt(um, 10)}/${parseInt(ud, 10)}/${uy}` : '—';
   const stats: [string, string | number][] = [['Questions', tpl.questions], ['Submissions', tpl.submissions], ['Updated', updated]];
   return (
-    <div className={`bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col transition-all hover:shadow-[var(--shadow-xl)] ${tpl.archived ? 'opacity-50' : ''}`}>
+    <div className={`bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col transition-all hover:shadow-[var(--shadow-xl)] ${tpl.archived ? 'opacity-50' : ''}`}>
       {tpl.archived && (
         <div className="bg-text-body/80 py-2 px-4 text-center">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-on-brand">Archived – Not Visible to Scouts</span>
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand">Archived – Not Visible to Scouts</span>
         </div>
       )}
       <div className="p-5 flex flex-col gap-4 flex-1">
@@ -125,16 +125,16 @@ const TemplateCard = ({ tpl, onAction }: {
         <div className="flex items-start justify-between gap-3">
           <div className="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0"><FileText size={18} /></div>
           <div className="flex items-center gap-2">
-            <button title="View Submissions" onClick={() => onAction('view-submissions', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-brand-primary transition-colors"><Eye size={14} /></button>
-            <button title="Assign" onClick={() => onAction('assign', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-brand-primary transition-colors"><Users size={14} /></button>
-            <button title={tpl.archived ? 'Restore' : 'Archive'} onClick={() => onAction(tpl.archived ? 'restore' : 'archive', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-brand-primary transition-colors"><Archive size={14} /></button>
-            <button title="Delete" onClick={() => onAction('delete', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-status-error transition-colors"><Trash2 size={14} /></button>
+            <button title="View Submissions" onClick={() => onAction('view-submissions', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors"><Eye size={14} /></button>
+            <button title="Assign" onClick={() => onAction('assign', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors"><Users size={14} /></button>
+            <button title={tpl.archived ? 'Restore' : 'Archive'} onClick={() => onAction(tpl.archived ? 'restore' : 'archive', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors"><Archive size={14} /></button>
+            <button title="Delete" onClick={() => onAction('delete', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-status-error transition-colors"><Trash2 size={14} /></button>
           </div>
         </div>
         {/* Title + source line */}
         <div>
-          <h4 className="font-heading font-semibold text-[20px] text-text-heading leading-snug line-clamp-2">{tpl.title}</h4>
-          <p className="font-body text-[12px] text-text-body flex items-center gap-2 mt-1">
+          <h4 className="font-heading font-semibold text-[20px] text-heading leading-snug line-clamp-2">{tpl.title}</h4>
+          <p className="font-body text-[12px] text-body flex items-center gap-2 mt-1">
             {imported ? (<><Download size={11} /> Imported from {tpl.importSource || 'legacy archive'}</>) : (<><UserCircle size={11} /> Created by {tpl.author}</>)}
           </p>
         </div>
@@ -142,15 +142,15 @@ const TemplateCard = ({ tpl, onAction }: {
         <div className="mt-auto grid grid-cols-3 bg-surface-accent/40 rounded-[14px] divide-x divide-border-default/60">
           {stats.map(([label, val]) => (
             <div key={label} className="py-3 text-center">
-              <div className="font-heading font-semibold text-[16px] text-text-strong leading-none">{val}</div>
-              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mt-2">{label}</div>
+              <div className="font-heading font-semibold text-[16px] text-strong leading-none">{val}</div>
+              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mt-2">{label}</div>
             </div>
           ))}
         </div>
       </div>
       {/* Footer: full-width Edit Form */}
-      <div className="border-t border-border-default px-4 py-3">
-        <button onClick={() => onAction('edit', tpl)} className="w-full flex items-center justify-center gap-2 bg-brand-primary text-text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-[var(--shadow-sm)]">
+      <div className="border-t border-default px-4 py-3">
+        <button onClick={() => onAction('edit', tpl)} className="w-full flex items-center justify-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-[var(--shadow-sm)]">
           <Edit2 size={14} /> Edit Form
         </button>
       </div>
@@ -216,7 +216,7 @@ const RatingToggle = ({ value, onChange }: { value: number; onChange: (v: number
     {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (
       <button key={n} onClick={() => onChange(n)}
         className={`w-8 h-8 rounded-lg font-heading font-bold text-[12px] border transition-all ${
-          value === n ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-accent text-text-strong border-border-default hover:border-brand-primary'
+          value === n ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm' : 'bg-surface-accent text-strong border-default hover:border-brand-primary'
         }`}>{n}</button>
     ))}
   </div>
@@ -226,8 +226,8 @@ const NxtToggle = ({ value, onChange }: { value: string; onChange: (v: string) =
   <div className="flex gap-1">
     {['Target', 'Monitor', 'Discard'].map(opt => {
       const cls = value === opt
-        ? opt === 'Target' ? 'bg-brand-primary text-text-inverse border-brand-primary' : opt === 'Monitor' ? 'bg-[#E8A838]/15 text-[#E8A838] border-[#E8A838]' : 'bg-[#E05C4B]/10 text-[#E05C4B] border-[#E05C4B]'
-        : 'bg-surface-accent text-text-body border-border-default';
+        ? opt === 'Target' ? 'bg-brand-primary text-inverse border-brand-primary' : opt === 'Monitor' ? 'bg-[#E8A838]/15 text-[#E8A838] border-[#E8A838]' : 'bg-[#E05C4B]/10 text-[#E05C4B] border-[#E05C4B]'
+        : 'bg-surface-accent text-body border-default';
       return <button key={opt} onClick={() => onChange(opt)} className={`px-4 py-2 rounded-full font-body font-bold text-[12px] border transition-all ${cls}`}>{opt}</button>;
     })}
   </div>
@@ -243,41 +243,41 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
 
   return (
     <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
-      <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-4xl max-h-[90vh] border border-border-default flex flex-col" onClick={e => e.stopPropagation()}>
+      <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-4xl max-h-[90vh] border border-default flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="px-6 py-4 bg-brand-primary rounded-t-[24px] flex items-center justify-between shrink-0">
           <div>
-            <span className="font-heading font-semibold text-[16px] text-text-on-brand block">{template.title}</span>
-            <span className="font-body text-[12px] text-text-on-brand/60">{template.questions} questions · {template.estTime} est.</span>
+            <span className="font-heading font-semibold text-[16px] text-on-brand block">{template.title}</span>
+            <span className="font-body text-[12px] text-on-brand/60">{template.questions} questions · {template.estTime} est.</span>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-text-on-brand/60 hover:text-text-on-brand"><X size={16} /></button>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={16} /></button>
         </div>
         <div className="flex flex-1 overflow-hidden">
           <div className="flex-1 overflow-y-auto p-6 space-y-3">
             {sections.map((sec, si) => (
-              <div key={si} className="border border-border-default rounded-xl overflow-hidden">
+              <div key={si} className="border border-default rounded-xl overflow-hidden">
                 <button onClick={() => toggleSection(si)} className="flex items-center justify-between w-full px-4 py-3 bg-surface-accent hover:bg-surface-accent/80 transition-colors">
-                  <span className="font-heading font-bold text-[14px] text-text-strong">{sec.title}</span>
-                  {openSections.has(si) ? <ChevronDown size={14} className="text-text-body" /> : <ChevronRight size={14} className="text-text-body" />}
+                  <span className="font-heading font-bold text-[14px] text-strong">{sec.title}</span>
+                  {openSections.has(si) ? <ChevronDown size={14} className="text-body" /> : <ChevronRight size={14} className="text-body" />}
                 </button>
                 {openSections.has(si) && (
                   <div className="p-4 space-y-4">
                     <div className={`grid gap-4 ${sec.fields.some(f => f.cols === 3) ? 'grid-cols-3' : sec.fields.some(f => f.cols === 2) ? 'grid-cols-2' : 'grid-cols-1'}`}>
                       {sec.fields.map(f => (
                         <div key={f.label} className={f.type === 'text' || f.type === 'rating' || f.type === 'toggle3' ? 'col-span-full' : ''}>
-                          <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mb-2 block">{f.label}</label>
+                          <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-2 block">{f.label}</label>
                           {f.type === 'rating' && <RatingToggle value={ratings[f.label] || 0} onChange={v => setRatings(p => ({ ...p, [f.label]: v }))} />}
                           {f.type === 'toggle3' && <NxtToggle value={nxtVal} onChange={setNxtVal} />}
                           {f.type === 'dropdown' && (
                             <div className="relative">
-                              <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all appearance-none cursor-pointer">
+                              <select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all appearance-none cursor-pointer">
                                 <option value="">Select…</option>
                                 {f.options?.map(o => <option key={o} value={o}>{o}</option>)}
                               </select>
-                              <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
+                              <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
                             </div>
                           )}
-                          {f.type === 'input' && <input className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus placeholder:text-text-body transition-all" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
-                          {f.type === 'text' && <textarea rows={3} className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus placeholder:text-text-body transition-all resize-none" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
+                          {f.type === 'input' && <input className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus placeholder:text-body transition-all" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
+                          {f.type === 'text' && <textarea rows={3} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus placeholder:text-body transition-all resize-none" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
                         </div>
                       ))}
                     </div>
@@ -286,16 +286,16 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
               </div>
             ))}
           </div>
-          <div className="w-[240px] border-l border-border-default p-5 flex flex-col gap-4 bg-surface-accent/30 shrink-0">
-            <h4 className="font-heading font-semibold text-[14px] text-text-heading">Scout Information</h4>
+          <div className="w-[240px] border-l border-default p-5 flex flex-col gap-4 bg-surface-accent/30 shrink-0">
+            <h4 className="font-heading font-semibold text-[14px] text-heading">Scout Information</h4>
             <div className="flex flex-col gap-3">
               {[{ label: 'Scout', value: 'Mbugua' }, { label: 'Role', value: 'Senior Scout' }, { label: 'Region', value: 'West Africa' }, { label: 'Scope', value: 'U19 Cycle 2026' }, { label: 'Player', value: '—' }, { label: 'Date', value: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }].map(f => (
-                <div key={f.label}><span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block">{f.label}</span><span className="font-body font-bold text-[14px] text-text-body">{f.value}</span></div>
+                <div key={f.label}><span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block">{f.label}</span><span className="font-body font-bold text-[14px] text-body">{f.value}</span></div>
               ))}
             </div>
             <div className="flex-1" />
-            <button className="w-full bg-brand-primary text-text-inverse rounded-full py-2 font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-md flex items-center justify-center gap-2"><Send size={12} /> Submit Report</button>
-            <button className="w-full bg-surface-card border border-border-default text-text-body rounded-full py-2 font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-body transition-all">Save as Draft</button>
+            <button className="w-full bg-brand-primary text-inverse rounded-full py-2 font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-md flex items-center justify-center gap-2"><Send size={12} /> Submit Report</button>
+            <button className="w-full bg-surface-card border border-default text-body rounded-full py-2 font-body font-bold text-[12px] hover:border-brand-primary hover:text-body transition-all">Save as Draft</button>
           </div>
         </div>
       </div>
@@ -316,12 +316,12 @@ const Pagination = ({ page, totalPages, onPage }: { page: number; totalPages: nu
   const pill = 'min-w-9 h-9 px-3 rounded-full font-body font-bold text-[14px] flex items-center justify-center transition-colors';
   return (
     <div className="flex items-center justify-center gap-2 pt-4 shrink-0">
-      <button onClick={() => onPage(Math.max(1, page - 1))} disabled={page === 1} className={pill + ' bg-surface-card border border-border-default text-text-body hover:text-text-strong disabled:opacity-40 disabled:cursor-not-allowed'}>Prev</button>
+      <button onClick={() => onPage(Math.max(1, page - 1))} disabled={page === 1} className={pill + ' bg-surface-card border border-default text-body hover:text-strong disabled:opacity-40 disabled:cursor-not-allowed'}>Prev</button>
       {nums.map((n, i) => typeof n === 'string'
-        ? <span key={n + i} className="px-1 text-text-body">…</span>
-        : <button key={n} onClick={() => onPage(n)} className={pill + (n === page ? ' bg-brand-primary text-text-on-brand' : ' bg-surface-card border border-border-default text-text-strong hover:border-brand-primary')}>{n}</button>
+        ? <span key={n + i} className="px-1 text-body">…</span>
+        : <button key={n} onClick={() => onPage(n)} className={pill + (n === page ? ' bg-brand-primary text-on-brand' : ' bg-surface-card border border-default text-strong hover:border-brand-primary')}>{n}</button>
       )}
-      <button onClick={() => onPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className={pill + ' bg-surface-card border border-border-default text-brand-primary hover:bg-surface-accent disabled:opacity-40 disabled:cursor-not-allowed'}>Next</button>
+      <button onClick={() => onPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className={pill + ' bg-surface-card border border-default text-brand-primary hover:bg-surface-accent disabled:opacity-40 disabled:cursor-not-allowed'}>Next</button>
     </div>
   );
 };
@@ -356,30 +356,30 @@ const SubmissionsTab = ({ statusFilter, dateFilter, extraSubmissions = [] }: { s
 
   return (
     <div ref={wrapRef} style={{ height: avail || undefined }} className="flex flex-col min-h-[360px]">
-      <div className="bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] overflow-hidden flex-1 min-h-0 flex flex-col">
+      <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden flex-1 min-h-0 flex flex-col">
         <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar">
           <table className="w-full border-separate border-spacing-0">
             <thead className="sticky top-0 z-10">
               <tr className="bg-brand-primary">
-                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-inverse/60 text-left">Form & Type</th>
-                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-inverse/60 text-left">Scout</th>
-                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-inverse/60 text-left">Player</th>
-                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-inverse/60 text-center">Status</th>
-                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-inverse/60 text-left">Timestamp</th>
-                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-inverse/60 text-center w-[120px]">Progress</th>
-                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-inverse/60 text-center w-[80px]">Actions</th>
+                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-inverse/60 text-left">Form & Type</th>
+                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-inverse/60 text-left">Scout</th>
+                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-inverse/60 text-left">Player</th>
+                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-inverse/60 text-center">Status</th>
+                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-inverse/60 text-left">Timestamp</th>
+                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-inverse/60 text-center w-[120px]">Progress</th>
+                <th className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-inverse/60 text-center w-[80px]">Actions</th>
               </tr>
             </thead>
             <tbody>
               {pageItems.map((s, i) => (
-                <tr key={s.id} className={`border-b border-border-default/40 hover:bg-surface-accent transition-colors ${i % 2 === 0 ? 'bg-surface-card' : 'bg-surface-accent/30'}`}>
-                  <td className="px-4 py-3"><span className="font-body font-bold text-[14px] text-text-body block">{s.formName}</span><span className="font-body text-[10px] text-text-body">{s.formType}</span></td>
-                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="w-7 h-7 rounded-full bg-brand-primary text-text-on-brand flex items-center justify-center font-body font-black text-[10px] shrink-0">{s.scoutInitials}</div><span className="font-body font-bold text-[12px] text-text-body">{s.scoutName}</span></div></td>
-                  <td className="px-4 py-3 font-body font-bold text-[12px] text-text-body">{s.playerName}</td>
+                <tr key={s.id} className={`border-b border-default/40 hover:bg-surface-accent transition-colors ${i % 2 === 0 ? 'bg-surface-card' : 'bg-surface-accent/30'}`}>
+                  <td className="px-4 py-3"><span className="font-body font-bold text-[14px] text-body block">{s.formName}</span><span className="font-body text-[10px] text-body">{s.formType}</span></td>
+                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="w-7 h-7 rounded-full bg-brand-primary text-on-brand flex items-center justify-center font-body font-black text-[10px] shrink-0">{s.scoutInitials}</div><span className="font-body font-bold text-[12px] text-body">{s.scoutName}</span></div></td>
+                  <td className="px-4 py-3 font-body font-bold text-[12px] text-body">{s.playerName}</td>
                   <td className="px-4 py-3 text-center"><StatusBadge status={s.status} /></td>
-                  <td className="px-4 py-3 font-mono font-bold text-[12px] text-text-body">{s.timestamp}</td>
-                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="flex-1 h-1.5 bg-border-default rounded-full overflow-hidden"><div className={`h-full rounded-full ${s.progress === 100 ? 'bg-[#22C55E]' : s.progress > 60 ? 'bg-[#22C55E]/70' : 'bg-[#E8A838]'}`} style={{ width: `${s.progress}%` }} /></div><span className="font-mono font-bold text-[10px] text-text-body w-8 text-right">{s.progress}%</span></div></td>
-                  <td className="px-4 py-3 text-center"><div className="flex items-center justify-center gap-1"><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-text-body hover:bg-brand-primary hover:text-text-inverse transition-colors"><Eye size={10} /></button><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-text-body hover:bg-[#E05C4B] hover:text-text-on-brand transition-colors"><Trash2 size={10} /></button></div></td>
+                  <td className="px-4 py-3 font-mono font-bold text-[12px] text-body">{s.timestamp}</td>
+                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="flex-1 h-1.5 bg-border-default rounded-full overflow-hidden"><div className={`h-full rounded-full ${s.progress === 100 ? 'bg-[#22C55E]' : s.progress > 60 ? 'bg-[#22C55E]/70' : 'bg-[#E8A838]'}`} style={{ width: `${s.progress}%` }} /></div><span className="font-mono font-bold text-[10px] text-body w-8 text-right">{s.progress}%</span></div></td>
+                  <td className="px-4 py-3 text-center"><div className="flex items-center justify-center gap-1"><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-inverse transition-colors"><Eye size={10} /></button><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-[#E05C4B] hover:text-on-brand transition-colors"><Trash2 size={10} /></button></div></td>
                 </tr>
               ))}
             </tbody>
@@ -428,8 +428,8 @@ const AnalyticsTab = () => {
   const PieTooltip = ({ active, payload }: any) => {
     if (!active || !payload?.length) return null;
     return (
-      <div className="bg-surface-card border border-border-default rounded-xl shadow-[var(--shadow-md)] px-3 py-2">
-        <p className="font-heading font-bold text-[12px] text-text-strong">{payload[0].name}</p>
+      <div className="bg-surface-card border border-default rounded-xl shadow-[var(--shadow-md)] px-3 py-2">
+        <p className="font-heading font-bold text-[12px] text-strong">{payload[0].name}</p>
         <p className="font-body text-[12px] text-brand-primary font-bold">{payload[0].value} reports</p>
       </div>
     );
@@ -438,19 +438,19 @@ const AnalyticsTab = () => {
   return (
     <div ref={wrapRef} style={{ height: isDesktop ? avail || undefined : undefined }} className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-4 w-full items-stretch lg:min-h-[460px]">
       {/* ── Left: KPI grid (4 x 2, airy) ── */}
-      <div className="bg-surface-card rounded-[28px] border border-border-default shadow-[var(--shadow-lg)] p-5 flex flex-col min-h-0">
-        <h4 className="font-heading font-semibold text-[14px] text-text-heading shrink-0">Overview</h4>
-        <p className="font-body font-medium text-[12px] text-text-body mb-2 shrink-0">Key report metrics</p>
+      <div className="bg-surface-card rounded-[28px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col min-h-0">
+        <h4 className="font-heading font-semibold text-[14px] text-heading shrink-0">Overview</h4>
+        <p className="font-body font-medium text-[12px] text-body mb-2 shrink-0">Key report metrics</p>
         <div className="grid grid-cols-2 gap-3 md:flex md:flex-col md:gap-0 md:flex-1 md:min-h-0 md:overflow-y-auto md:no-scrollbar">
           {kpis.map(kpi => (
-            <div key={kpi.label} className="flex items-center gap-3 py-3 border-b border-border-default/50 last:border-0">
-              <div className="w-8 h-8 rounded-[10px] bg-surface-accent flex items-center justify-center shrink-0"><kpi.icon size={15} className="text-text-body" /></div>
+            <div key={kpi.label} className="flex items-center gap-3 py-3 border-b border-default/50 last:border-0">
+              <div className="w-8 h-8 rounded-[10px] bg-surface-accent flex items-center justify-center shrink-0"><kpi.icon size={15} className="text-body" /></div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-heading font-semibold text-[16px] text-text-strong leading-none">{kpi.value}</span>
+                  <span className="font-heading font-semibold text-[16px] text-strong leading-none">{kpi.value}</span>
                   {kpi.trend && <span className="font-body font-bold text-[12px] text-[#22C55E]">{kpi.trend}</span>}
                 </div>
-                <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mt-1">{kpi.label}</div>
+                <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mt-1">{kpi.label}</div>
               </div>
             </div>
           ))}
@@ -460,10 +460,10 @@ const AnalyticsTab = () => {
       {/* ── Right: charts ── */}
       <div className="flex flex-col gap-4 min-h-0">
         {/* Hero: donut + legend */}
-        <div className="bg-surface-card rounded-[28px] border border-border-default shadow-[var(--shadow-lg)] p-6 flex flex-col flex-1 min-h-0">
+        <div className="bg-surface-card rounded-[28px] border border-default shadow-[var(--shadow-lg)] p-6 flex flex-col flex-1 min-h-0">
           <div className="shrink-0">
-            <h4 className="font-heading font-semibold text-[16px] text-text-heading">Report Status Distribution</h4>
-            <p className="font-body font-medium text-[12px] text-text-body mt-0.5">Breakdown of all submitted reports</p>
+            <h4 className="font-heading font-semibold text-[16px] text-heading">Report Status Distribution</h4>
+            <p className="font-body font-medium text-[12px] text-body mt-0.5">Breakdown of all submitted reports</p>
           </div>
           <div className="flex-1 min-h-0 flex flex-col items-center sm:flex-row sm:items-center gap-6 mt-2">
             <div className="w-40 h-40 shrink-0 min-h-0 min-w-0 sm:w-[42%] lg:h-full">
@@ -485,8 +485,8 @@ const AnalyticsTab = () => {
                 return (
                   <div key={s.name}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="flex items-center gap-2 font-body font-bold text-[14px] text-text-body"><span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: s.color }} />{s.name}</span>
-                      <span className="font-mono font-bold text-[12px] text-text-body">{s.value} · {pct}%</span>
+                      <span className="flex items-center gap-2 font-body font-bold text-[14px] text-body"><span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: s.color }} />{s.name}</span>
+                      <span className="font-mono font-bold text-[12px] text-body">{s.value} · {pct}%</span>
                     </div>
                     <div className="h-2 bg-border-default rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: pct + '%', background: s.color }} /></div>
                   </div>
@@ -498,9 +498,9 @@ const AnalyticsTab = () => {
 
         {/* Timeline + Scout performance */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0">
-          <div className="bg-surface-card rounded-[28px] border border-border-default shadow-[var(--shadow-lg)] p-5 flex flex-col min-h-0">
-            <h4 className="font-heading font-semibold text-[14px] text-text-heading shrink-0">Submissions Over Time</h4>
-            <p className="font-body font-medium text-[12px] text-text-body mb-2 shrink-0">Monthly submission volume</p>
+          <div className="bg-surface-card rounded-[28px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col min-h-0">
+            <h4 className="font-heading font-semibold text-[14px] text-heading shrink-0">Submissions Over Time</h4>
+            <p className="font-body font-medium text-[12px] text-body mb-2 shrink-0">Monthly submission volume</p>
             <div className="h-[200px] sm:h-[280px] lg:h-auto lg:flex-1 lg:min-h-0">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={TREND_DATA}>
@@ -519,9 +519,9 @@ const AnalyticsTab = () => {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className="bg-surface-card rounded-[28px] border border-border-default shadow-[var(--shadow-lg)] p-5 flex flex-col min-h-0">
-            <h4 className="font-heading font-semibold text-[14px] text-text-heading shrink-0">Scout Performance</h4>
-            <p className="font-body font-medium text-[12px] text-text-body mb-2 shrink-0">Reports filed per scout</p>
+          <div className="bg-surface-card rounded-[28px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col min-h-0">
+            <h4 className="font-heading font-semibold text-[14px] text-heading shrink-0">Scout Performance</h4>
+            <p className="font-body font-medium text-[12px] text-body mb-2 shrink-0">Reports filed per scout</p>
             <div className="h-[200px] sm:h-[280px] lg:h-auto lg:flex-1 lg:min-h-0">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={SCOUT_PERF} layout="vertical" margin={{ left: -20 }}>
@@ -582,11 +582,11 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
   return (
     <div className={`grid grid-cols-1 ${cols.length === 3 ? 'lg:grid-cols-3' : cols.length === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-4 w-full auto-rows-min items-start`}>
       {cols.map(tier => (
-        <div key={tier} className="bg-surface-card rounded-[24px] border border-border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-4">
+        <div key={tier} className="bg-surface-card rounded-[24px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-4">
           {/* Header Line */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h3 className="font-heading font-semibold text-[20px] text-text-heading">{tier}</h3>
+              <h3 className="font-heading font-semibold text-[20px] text-heading">{tier}</h3>
               <span className="bg-brand-primary/10 text-brand-primary font-heading font-bold text-[12px] px-2 py-0.5 rounded-full">{assignments[tier].length}</span>
             </div>
             <button onClick={() => handleRemoveAll(tier)} className="font-body font-bold text-[12px] text-brand-primary hover:underline transition-colors">Remove all</button>
@@ -597,12 +597,12 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
             <select
               value=""
               onChange={(e) => handleAdd(tier, e.target.value)}
-              className="w-full bg-surface-card border border-border-default rounded-full px-4 py-2 text-[14px] font-body font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all appearance-none cursor-pointer shadow-sm"
+              className="w-full bg-surface-card border border-default rounded-full px-4 py-2 text-[14px] font-body font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all appearance-none cursor-pointer shadow-sm"
             >
               <option value="" disabled>— Add scout to {tier} —</option>
               {ALL_SCOUTS_DIRECTORY.map(s => <option key={s.id} value={s.id}>{s.name} ({s.role})</option>)}
             </select>
-            <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
+            <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           </div>
 
           {/* Scout rows */}
@@ -610,22 +610,22 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
              {assignments[tier].filter(s => s.name.toLowerCase().includes(search.toLowerCase()) || s.role.toLowerCase().includes(search.toLowerCase())).map(scout => {
                const initials = scout.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
                return (
-               <div key={scout.id} className="flex items-center justify-between py-2 border-b border-border-default/40 last:border-0">
+               <div key={scout.id} className="flex items-center justify-between py-2 border-b border-default/40 last:border-0">
                   <div className="flex items-center gap-2 min-w-0">
                     <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-bold text-[12px] shrink-0">{initials}</div>
                     <div className="min-w-0">
-                      <div className="font-body text-[14px] font-bold text-text-body truncate">{scout.name}</div>
-                      <div className="font-body text-[12px] text-text-body font-medium">{scout.role}</div>
+                      <div className="font-body text-[14px] font-bold text-body truncate">{scout.name}</div>
+                      <div className="font-body text-[12px] text-body font-medium">{scout.role}</div>
                     </div>
                   </div>
-                  <button onClick={() => handleRemove(tier, scout.id)} className="shrink-0 text-text-body/60 hover:text-status-error transition-colors p-2 rounded-full hover:bg-status-error/10">
+                  <button onClick={() => handleRemove(tier, scout.id)} className="shrink-0 text-body/60 hover:text-status-error transition-colors p-2 rounded-full hover:bg-status-error/10">
                     <X size={16} />
                   </button>
                </div>
              ); })}
              {assignments[tier].length === 0 && (
                <div className="py-4 text-center">
-                 <span className="font-body text-[14px] text-text-body">No scouts assigned yet.</span>
+                 <span className="font-body text-[14px] text-body">No scouts assigned yet.</span>
                </div>
              )}
           </div>
@@ -640,7 +640,7 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
 
 const FilterToggleBtn = ({ open, onClick }: { open: boolean; onClick: () => void }) => (
   <button onClick={onClick}
-    className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[14px] border shrink-0 transition-colors ${open ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-strong'}`}>
+    className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[14px] border shrink-0 transition-colors ${open ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
     <SlidersHorizontal size={14} /> Filters
   </button>
 );
@@ -724,7 +724,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
     <>
     <div className="flex flex-col gap-4">
       {/* ── Secondary sub-tabs (underline, subordinate to the page pills) ── */}
-      <div className="flex items-center gap-6 border-b border-border-default overflow-x-auto hide-scrollbar">
+      <div className="flex items-center gap-6 border-b border-default overflow-x-auto hide-scrollbar">
         {([
           { id: 'forms' as const, label: 'Forms', icon: FileText },
           { id: 'submissions' as const, label: 'Submissions', icon: ClipboardList },
@@ -733,7 +733,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
         ]).map(tab => (
           <button key={tab.id} onClick={() => setSubTab(tab.id)}
             className={`flex items-center gap-2 pb-2 -mb-px border-b-2 font-body font-bold text-[14px] whitespace-nowrap shrink-0 transition-colors ${
-              subTab === tab.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-text-body hover:text-text-strong'
+              subTab === tab.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-body hover:text-strong'
             }`}>
             <tab.icon size={14} />{tab.label}
           </button>
@@ -745,14 +745,14 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3 flex-wrap">
             <div className="relative w-full sm:flex-1 sm:max-w-sm">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-body" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-body" size={16} />
               <input value={formSearch} onChange={e => setFormSearch(e.target.value)} placeholder="Search templates…"
-                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all font-body font-bold shadow-sm placeholder:text-text-body text-text-body" />
+                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body" />
             </div>
             <FilterToggleBtn open={rhFiltersOpen} onClick={() => setRhFiltersOpen(o => !o)} />
             <div className="flex items-center gap-2 flex-wrap sm:ml-auto shrink-0">
-              <button className="flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] shadow-sm whitespace-nowrap transition-colors">Manage Forms</button>
-              <button onClick={() => setShowNewForm(true)} className="flex items-center gap-2 bg-brand-primary text-text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] shadow-sm whitespace-nowrap transition-colors"><Plus size={15} strokeWidth={3} /> Add New Template</button>
+              <button className="flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] shadow-sm whitespace-nowrap transition-colors">Manage Forms</button>
+              <button onClick={() => setShowNewForm(true)} className="flex items-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] shadow-sm whitespace-nowrap transition-colors"><Plus size={15} strokeWidth={3} /> Add New Template</button>
             </div>
           </div>
           {rhFiltersOpen && (
@@ -768,19 +768,19 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3 flex-wrap">
             <div className="relative w-full sm:flex-1 sm:max-w-sm">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-body" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-body" size={16} />
               <input value={subSearch} onChange={e => setSubSearch(e.target.value)} placeholder="Search submissions…"
-                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all font-body font-bold shadow-sm placeholder:text-text-body text-text-body" />
+                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body" />
             </div>
             <FilterToggleBtn open={rhFiltersOpen} onClick={() => setRhFiltersOpen(o => !o)} />
-            <button className="flex items-center gap-2 px-4 py-2 sm:ml-auto shrink-0 bg-surface-card text-text-body border border-border-default hover:border-brand-primary rounded-full font-body font-bold text-[14px] transition-colors shadow-sm"><Download size={14} /> Export CSV</button>
+            <button className="flex items-center gap-2 px-4 py-2 sm:ml-auto shrink-0 bg-surface-card text-body border border-default hover:border-brand-primary rounded-full font-body font-bold text-[14px] transition-colors shadow-sm"><Download size={14} /> Export CSV</button>
           </div>
           {rhFiltersOpen && (
             <div className="flex items-center gap-3 flex-wrap">
               <MiniDropdown value={subStatusFilter} options={['All', 'Draft', 'Submitted', 'Completed']} onChange={setSubStatusFilter} />
-              <div className="flex items-center gap-2 bg-surface-card border border-border-default rounded-full px-4 py-2 shadow-sm">
-                <Calendar size={14} className="text-text-body" />
-                <input type="date" value={subDateFilter} onChange={e => setSubDateFilter(e.target.value)} className="bg-transparent font-body text-[14px] font-bold text-text-body focus:outline-none" />
+              <div className="flex items-center gap-2 bg-surface-card border border-default rounded-full px-4 py-2 shadow-sm">
+                <Calendar size={14} className="text-body" />
+                <input type="date" value={subDateFilter} onChange={e => setSubDateFilter(e.target.value)} className="bg-transparent font-body text-[14px] font-bold text-body focus:outline-none" />
               </div>
             </div>
           )}
@@ -790,9 +790,9 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3 flex-wrap">
             <div className="relative w-full sm:flex-1 sm:max-w-sm">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-body" size={16} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-body" size={16} />
               <input value={rgSearch} onChange={e => setRgSearch(e.target.value)} placeholder="Search scouts…"
-                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all font-body font-bold shadow-sm placeholder:text-text-body text-text-body" />
+                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body" />
             </div>
             <FilterToggleBtn open={rhFiltersOpen} onClick={() => setRhFiltersOpen(o => !o)} />
           </div>
@@ -819,7 +819,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
               {statusFilter === 'All' && activeTemplates.length > 0 && (
                 <div className="flex items-center gap-4 my-1">
                   <div className="flex-1 h-px bg-border-default" />
-                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Archived Templates</span>
+                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Archived Templates</span>
                   <div className="flex-1 h-px bg-border-default" />
                 </div>
               )}
@@ -843,21 +843,21 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
     {/* New Form chooser */}
     {showNewForm && (
       <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
-        <div className="bg-surface-card w-full max-w-lg rounded-[24px] shadow-[var(--shadow-2xl)] border border-border-default overflow-hidden">
-          <div className="px-6 py-5 border-b border-border-default flex items-center justify-between">
-            <h3 className="font-heading font-semibold text-[20px] text-text-heading">New Form</h3>
-            <button onClick={() => setShowNewForm(false)} className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-strong transition-colors"><X size={18} /></button>
+        <div className="bg-surface-card w-full max-w-lg rounded-[24px] shadow-[var(--shadow-2xl)] border border-default overflow-hidden">
+          <div className="px-6 py-5 border-b border-default flex items-center justify-between">
+            <h3 className="font-heading font-semibold text-[20px] text-heading">New Form</h3>
+            <button onClick={() => setShowNewForm(false)} className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-strong transition-colors"><X size={18} /></button>
           </div>
           <div className="p-6 grid grid-cols-2 gap-4">
-            <button onClick={createBlankForm} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
+            <button onClick={createBlankForm} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
               <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Edit2 size={18} className="text-brand-primary" /></div>
-              <span className="font-heading font-semibold text-[14px] text-text-strong">Create with a scout</span>
-              <span className="font-body font-medium text-[12px] text-text-body">Build a new form from scratch in the editor.</span>
+              <span className="font-heading font-semibold text-[14px] text-strong">Create with a scout</span>
+              <span className="font-body font-medium text-[12px] text-body">Build a new form from scratch in the editor.</span>
             </button>
-            <button onClick={() => { setShowNewForm(false); setShowImport(true); }} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
+            <button onClick={() => { setShowNewForm(false); setShowImport(true); }} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
               <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Download size={18} className="text-brand-primary" /></div>
-              <span className="font-heading font-semibold text-[14px] text-text-strong">Import a form</span>
-              <span className="font-body font-medium text-[12px] text-text-body">Bring in an existing form from a file or another source.</span>
+              <span className="font-heading font-semibold text-[14px] text-strong">Import a form</span>
+              <span className="font-body font-medium text-[12px] text-body">Bring in an existing form from a file or another source.</span>
             </button>
           </div>
         </div>
@@ -867,24 +867,24 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
     {/* Import a form */}
     {showImport && (
       <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
-        <div className="bg-surface-card w-full max-w-md rounded-[24px] shadow-[var(--shadow-2xl)] border border-border-default overflow-hidden">
-          <div className="px-6 py-5 border-b border-border-default flex items-center justify-between">
-            <h3 className="font-heading font-semibold text-[20px] text-text-heading">Import a form</h3>
-            <button onClick={() => setShowImport(false)} className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-strong transition-colors"><X size={18} /></button>
+        <div className="bg-surface-card w-full max-w-md rounded-[24px] shadow-[var(--shadow-2xl)] border border-default overflow-hidden">
+          <div className="px-6 py-5 border-b border-default flex items-center justify-between">
+            <h3 className="font-heading font-semibold text-[20px] text-heading">Import a form</h3>
+            <button onClick={() => setShowImport(false)} className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-strong transition-colors"><X size={18} /></button>
           </div>
           <div className="p-6 space-y-4">
             <div>
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Form name</label>
-              <input value={importName} onChange={e => setImportName(e.target.value)} placeholder="e.g. FIFA Talent Report" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[14px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus" />
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Form name</label>
+              <input value={importName} onChange={e => setImportName(e.target.value)} placeholder="e.g. FIFA Talent Report" className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus" />
             </div>
-            <div className="border-2 border-dashed border-border-default rounded-xl px-4 py-8 text-center">
-              <Download size={22} className="text-text-body mx-auto mb-2" />
-              <p className="font-body font-medium text-[12px] text-text-body">Drop a file here or paste a form link (coming soon)</p>
+            <div className="border-2 border-dashed border-default rounded-xl px-4 py-8 text-center">
+              <Download size={22} className="text-body mx-auto mb-2" />
+              <p className="font-body font-medium text-[12px] text-body">Drop a file here or paste a form link (coming soon)</p>
             </div>
           </div>
-          <div className="px-6 py-4 border-t border-border-default flex justify-end gap-2">
-            <button onClick={() => setShowImport(false)} className="px-5 py-2 rounded-full border border-border-default bg-surface-card text-text-body font-body font-bold text-[14px] hover:border-brand-primary hover:text-text-body transition-all">Cancel</button>
-            <button onClick={importForm} className="px-6 py-2 rounded-full bg-brand-primary text-text-inverse font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-[var(--shadow-md)]">Import</button>
+          <div className="px-6 py-4 border-t border-default flex justify-end gap-2">
+            <button onClick={() => setShowImport(false)} className="px-5 py-2 rounded-full border border-default bg-surface-card text-body font-body font-bold text-[14px] hover:border-brand-primary hover:text-body transition-all">Cancel</button>
+            <button onClick={importForm} className="px-6 py-2 rounded-full bg-brand-primary text-inverse font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-[var(--shadow-md)]">Import</button>
           </div>
         </div>
       </div>
@@ -893,13 +893,13 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
     {/* ═══ Assignment Settings Modal ═══ */}
     {assignTemplate && (
       <div className="fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setAssignTemplate(null)}>
-        <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-md border border-border-default" onClick={e => e.stopPropagation()}>
+        <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-md border border-default" onClick={e => e.stopPropagation()}>
           <div className="px-6 py-4 bg-brand-primary rounded-t-[24px] flex items-center justify-between">
             <div>
-              <span className="font-heading font-semibold text-[16px] text-text-on-brand block">Assignment Settings</span>
-              <span className="font-body text-[12px] text-text-on-brand/60">{assignTemplate.title}</span>
+              <span className="font-heading font-semibold text-[16px] text-on-brand block">Assignment Settings</span>
+              <span className="font-body text-[12px] text-on-brand/60">{assignTemplate.title}</span>
             </div>
-            <button onClick={() => setAssignTemplate(null)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-text-on-brand/60 hover:text-text-on-brand"><X size={16} /></button>
+            <button onClick={() => setAssignTemplate(null)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={16} /></button>
           </div>
           <div className="p-6 flex flex-col gap-6">
             {[
@@ -908,21 +908,21 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
               { label: 'Assign by User', placeholder: 'Search users…', options: ['Mbugua', 'Tom Okeke', 'Nene Balde', 'Dr. Kwame Asante', 'Scott'] },
             ].map(row => (
               <div key={row.label} className="flex flex-col gap-2">
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">{row.label}</label>
-                <div className="flex flex-wrap gap-2 min-h-[44px] items-center bg-surface-card border border-border-default rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-border-focus/20 focus-within:border-border-focus transition-all">
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{row.label}</label>
+                <div className="flex flex-wrap gap-2 min-h-[44px] items-center bg-surface-card border border-default rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-border-focus/20 focus-within:border-focus transition-all">
                   {row.options.slice(0, 2).map(o => (
                     <span key={o} className="inline-flex items-center gap-2 bg-brand-primary/10 text-brand-primary rounded-full px-3 py-1 font-body font-bold text-[12px]">
                       {o} <button className="hover:text-status-error transition-colors"><X size={12} /></button>
                     </span>
                   ))}
-                  <input placeholder={row.placeholder} className="flex-1 min-w-[120px] bg-transparent font-body text-[14px] font-bold text-text-body outline-none placeholder:text-text-body" />
+                  <input placeholder={row.placeholder} className="flex-1 min-w-[120px] bg-transparent font-body text-[14px] font-bold text-body outline-none placeholder:text-body" />
                 </div>
               </div>
             ))}
           </div>
-          <div className="px-6 py-4 border-t border-border-default flex justify-end gap-2">
-            <button onClick={() => setAssignTemplate(null)} className="px-5 py-2 rounded-full border border-border-default bg-surface-card text-text-body font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-body transition-all">Cancel</button>
-            <button onClick={() => setAssignTemplate(null)} className="px-5 py-2 rounded-full bg-text-body/80 text-text-on-brand font-body font-bold text-[12px] hover:bg-text-body transition-colors">Save Assignment</button>
+          <div className="px-6 py-4 border-t border-default flex justify-end gap-2">
+            <button onClick={() => setAssignTemplate(null)} className="px-5 py-2 rounded-full border border-default bg-surface-card text-body font-body font-bold text-[12px] hover:border-brand-primary hover:text-body transition-all">Cancel</button>
+            <button onClick={() => setAssignTemplate(null)} className="px-5 py-2 rounded-full bg-text-body/80 text-on-brand font-body font-bold text-[12px] hover:bg-text-body transition-colors">Save Assignment</button>
           </div>
         </div>
       </div>

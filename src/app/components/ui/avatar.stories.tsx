@@ -23,7 +23,7 @@ export const Fallback: Story = {
   parameters: { docs: { description: { story: 'The usual case in NXUS: initials on primary.' } } },
   render: () => (
     <Avatar>
-      <AvatarFallback className="bg-brand-primary text-text-on-brand font-body font-black text-[11px]">KM</AvatarFallback>
+      <AvatarFallback className="bg-brand-primary text-on-brand font-body font-black text-[11px]">KM</AvatarFallback>
     </Avatar>
   ),
 }
@@ -32,7 +32,7 @@ export const WithImage: Story = {
   render: () => (
     <Avatar>
       <AvatarImage src="https://i.pravatar.cc/80?img=12" alt="" />
-      <AvatarFallback className="bg-brand-primary text-text-on-brand font-body font-black text-[11px]">VL</AvatarFallback>
+      <AvatarFallback className="bg-brand-primary text-on-brand font-body font-black text-[11px]">VL</AvatarFallback>
     </Avatar>
   ),
 }
@@ -46,7 +46,7 @@ export const TableSize: Story = {
       {['KM', 'NO', 'DM', 'SK'].map((i) => (
         <div
           key={i}
-          className="w-8 h-8 rounded-full bg-brand-primary text-text-on-brand font-body font-black text-[11px] flex items-center justify-center"
+          className="w-8 h-8 rounded-full bg-brand-primary text-on-brand font-body font-black text-[11px] flex items-center justify-center"
         >
           {i}
         </div>

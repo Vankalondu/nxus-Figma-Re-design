@@ -2,7 +2,7 @@ import { Search, Bell, Calendar, Plus } from 'lucide-react';
 
 export function DashboardHeader() {
   return (
-    <header className="bg-surface-card/60 border-b border-border-default px-8 py-4 backdrop-blur-sm">
+    <header className="bg-surface-card/60 border-b border-default px-8 py-4 backdrop-blur-sm">
       <div className="flex items-center justify-between">
         {/* Search */}
         <div className="flex-1 max-w-md">
@@ -11,7 +11,7 @@ export function DashboardHeader() {
             <input
               type="text"
               placeholder="Search players, teams, matches..."
-              className="w-full bg-surface-card border border-border-default rounded-lg pl-10 pr-4 py-2 text-[#333640] placeholder-[#9ca3af] focus:outline-none focus:border-[#1E88E5]"
+              className="w-full bg-surface-card border border-default rounded-lg pl-10 pr-4 py-2 text-[#333640] placeholder-[#9ca3af] focus:outline-none focus:border-[#1E88E5]"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             />
           </div>
@@ -19,13 +19,13 @@ export function DashboardHeader() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 px-4 py-2 bg-surface-card text-[#333640] rounded-lg hover:bg-[#f0f4f8] transition-colors border border-border-default"
+          <button className="flex items-center gap-2 px-4 py-2 bg-surface-card text-[#333640] rounded-lg hover:bg-[#f0f4f8] transition-colors border border-default"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <Calendar className="w-4 h-4" />
             <span>This Week</span>
           </button>
           
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#1E88E5] text-text-on-brand rounded-lg hover:bg-[#1976D2] transition-colors"
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#1E88E5] text-on-brand rounded-lg hover:bg-[#1976D2] transition-colors"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <Plus className="w-4 h-4" />
             <span>Add Player</span>

@@ -33,7 +33,7 @@ export const StaleCopy: Story = {
     docs: { description: { story: 'Rendered only so the duplicate is visible and identifiable.' } },
   },
   render: () => (
-    <div className="relative h-[520px] overflow-hidden rounded-[20px] border border-dashed border-border-default">
+    <div className="relative h-[520px] overflow-hidden rounded-[20px] border border-dashed border-default">
       <Sidebar />
     </div>
   ),

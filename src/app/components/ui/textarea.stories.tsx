@@ -31,7 +31,7 @@ export const Default: Story = {
 export const WithLabel: Story = {
   render: (a) => (
     <div className="w-[420px]">
-      <label className="block font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mb-2">
+      <label className="block font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-2">
         Report summary
       </label>
       <Textarea {...a} />

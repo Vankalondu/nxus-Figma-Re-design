@@ -28,12 +28,12 @@ export default function LoginDepartment() {
         {/* Left Side: Light Blue Rounded Section (Logo and Mascot only) */}
         <div className="w-full md:w-1/2 bg-surface-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center p-10 relative overflow-hidden border border-text-on-brand/50">
           <div className="absolute top-10 flex items-center space-x-3 bg-surface-card/80 backdrop-blur-md p-4 rounded-3xl shadow-sm border border-text-on-brand/60">
-            <div className="w-12 h-12 rounded-[16px] bg-brand-primary text-text-on-brand flex items-center justify-center font-heading font-black text-2xl shadow-md">
+            <div className="w-12 h-12 rounded-[16px] bg-brand-primary text-on-brand flex items-center justify-center font-heading font-black text-2xl shadow-md">
               Q
             </div>
             <div className="flex flex-col pr-2 text-left">
-              <span className="font-heading font-extrabold text-[20px] leading-tight text-text-strong tracking-tight">NXUS</span>
-              <span className="font-heading font-bold text-[12px] tracking-[0.2em] text-text-strong">SPORTS</span>
+              <span className="font-heading font-extrabold text-[20px] leading-tight text-strong tracking-tight">NXUS</span>
+              <span className="font-heading font-bold text-[12px] tracking-[0.2em] text-strong">SPORTS</span>
             </div>
           </div>
 
@@ -49,10 +49,10 @@ export default function LoginDepartment() {
         {/* Right Side: Form / Select Mode (White Section) */}
         <div className="w-full md:w-1/2 bg-surface-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-center p-10 relative border border-text-on-brand/50">
           <div className="max-w-md mx-auto w-full relative z-10">
-            <h1 className="font-heading font-extrabold text-[32px] text-text-heading mb-4 tracking-tight leading-tight">
+            <h1 className="font-heading font-extrabold text-[32px] text-heading mb-4 tracking-tight leading-tight">
               Select your Primary Mode
             </h1>
-            <p className="text-text-body text-[16px] mb-12 leading-relaxed font-medium">
+            <p className="text-body text-[16px] mb-12 leading-relaxed font-medium">
               This choice is for your first-time setup only. You can switch modes later in your dashboard.
             </p>
 
@@ -68,22 +68,22 @@ export default function LoginDepartment() {
                   className={`w-full flex items-center p-5 rounded-[24px] border-2 transition-all duration-300 text-left group ${
                     selectedDepartment === mode.id
                       ? 'border-brand-primary bg-surface-card shadow-[0_8px_20px_rgba(30,136,229,0.08)] transform scale-[1.02]'
-                      : 'border-border-default hover:border-text-on-brand hover:shadow-[0_8px_20px_rgba(6,27,46,0.08)] bg-surface-card'
+                      : 'border-default hover:border-text-on-brand hover:shadow-[0_8px_20px_rgba(6,27,46,0.08)] bg-surface-card'
                   }`}
                 >
                   <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center mr-5 transition-colors duration-300 ${
-                    selectedDepartment === mode.id ? 'bg-brand-primary text-text-inverse shadow-md' : 'bg-surface-accent text-text-body group-hover:text-text-strong group-hover:bg-surface-accent'
+                    selectedDepartment === mode.id ? 'bg-brand-primary text-inverse shadow-md' : 'bg-surface-accent text-body group-hover:text-strong group-hover:bg-surface-accent'
                   }`}>
                     <mode.icon size={24} />
                   </div>
                   <div className="flex-1">
-                    <h3 className={`font-semibold text-[16px] mb-1 transition-colors ${selectedDepartment === mode.id ? 'text-text-heading' : 'text-text-heading'}`}>
+                    <h3 className={`font-semibold text-[16px] mb-1 transition-colors ${selectedDepartment === mode.id ? 'text-heading' : 'text-heading'}`}>
                       {mode.name}
                     </h3>
-                    <p className="text-[14px] text-text-body font-medium">{mode.desc}</p>
+                    <p className="text-[14px] text-body font-medium">{mode.desc}</p>
                   </div>
                   <div className={`w-6 h-6 rounded-full border-[2px] flex items-center justify-center transition-all duration-300 ${
-                    selectedDepartment === mode.id ? 'border-brand-primary bg-brand-primary' : 'border-border-default bg-surface-card'
+                    selectedDepartment === mode.id ? 'border-brand-primary bg-brand-primary' : 'border-default bg-surface-card'
                   }`}>
                     {selectedDepartment === mode.id && <div className="w-2.5 h-2.5 bg-surface-card rounded-full" />}
                   </div>
@@ -96,15 +96,15 @@ export default function LoginDepartment() {
               disabled={!selectedDepartment}
               className={`w-full py-4 rounded-[20px] font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] ${
                 selectedDepartment 
-                  ? 'bg-brand-primary hover:bg-brand-primary/80 text-text-inverse hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1' 
-                  : 'bg-surface-accent text-text-body cursor-not-allowed'
+                  ? 'bg-brand-primary hover:bg-brand-primary/80 text-inverse hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1' 
+                  : 'bg-surface-accent text-body cursor-not-allowed'
               }`}
             >
               Continue to Dashboard
             </button>
 
-            <div className="mt-10 pt-8 border-t border-border-default text-center">
-              <div className="flex items-center justify-center space-x-2 text-[14px] text-text-body font-medium">
+            <div className="mt-10 pt-8 border-t border-default text-center">
+              <div className="flex items-center justify-center space-x-2 text-[14px] text-body font-medium">
                 <ShieldCheck size={16} className="text-status-success" />
                 <span>Secure access to NXUS Sports System</span>
               </div>

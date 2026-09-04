@@ -43,7 +43,7 @@ export const Default: Story = {
             rules={{ required: 'A player name is required' }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
+                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
                   Player name
                 </FormLabel>
                 <FormControl>
@@ -59,7 +59,7 @@ export const Default: Story = {
             name="team"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
+                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
                   Team
                 </FormLabel>
                 <FormControl>
@@ -91,7 +91,7 @@ export const WithValidationError: Story = {
             rules={{ required: 'A player name is required' }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
+                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
                   Player name
                 </FormLabel>
                 <FormControl>

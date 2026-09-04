@@ -31,18 +31,18 @@ export const PlayerPeek: Story = {
       </HoverCardTrigger>
       <HoverCardContent className="w-[280px]">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 rounded-full bg-brand-primary text-text-on-brand font-body font-black text-[12px] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-brand-primary text-on-brand font-body font-black text-[12px] flex items-center justify-center">
             KM
           </div>
           <div>
-            <p className="font-body font-bold text-[13px] text-text-body">Kofi Mensah</p>
-            <p className="font-body text-[11px] text-text-body">Accra Lions · ST · 19</p>
+            <p className="font-body font-bold text-[13px] text-body">Kofi Mensah</p>
+            <p className="font-body text-[11px] text-body">Accra Lions · ST · 19</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded-full bg-brand-primary/12 text-text-body font-body font-black text-[10px]">A</span>
-          <span className="bg-brand-primary/20 text-text-strong font-bold px-2 py-0.5 rounded text-[11px]">F3</span>
-          <span className="bg-brand-primary/20 text-text-strong font-bold px-2 py-0.5 rounded text-[11px]">H5</span>
+          <span className="px-2 py-0.5 rounded-full bg-brand-primary/12 text-body font-body font-black text-[10px]">A</span>
+          <span className="bg-brand-primary/20 text-strong font-bold px-2 py-0.5 rounded text-[11px]">F3</span>
+          <span className="bg-brand-primary/20 text-strong font-bold px-2 py-0.5 rounded text-[11px]">H5</span>
         </div>
       </HoverCardContent>
     </HoverCard>
