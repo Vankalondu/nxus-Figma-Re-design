@@ -116,6 +116,24 @@ for (const [figName, cssName] of RAMP) {
   ramp.push([figName, fig.join('/'), cssName, [mob, tab, des].join('/'), same ? 'match' : 'DRIFT']);
 }
 
+// --- Mapped semantic layer vs the CSS semantic tokens ---
+// Step 3 repointed Mapped to resolve to what the code renders. This keeps that
+// honest: if either side moves, the pair stops matching here.
+const darkBlock = blockAfter(CSS, '\n.dark {');
+const darkVars = {};
+for (const m of darkBlock.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/gi)) darkVars[m[1]] = m[2].trim().toLowerCase();
+
+const mapped = [];
+for (const [figName, cssName] of Object.entries(SNAP.Mapped._cssPair || {})) {
+  const fig = SNAP.Mapped[figName];
+  if (!fig) continue;
+  const cl = cssVars[cssName];
+  const cd = darkVars[cssName] ?? cl;
+  if (cl === undefined) { mapped.push([figName, fig.join(' / '), cssName, 'not in CSS', 'MISSING']); continue; }
+  const same = norm(fig[0]) === norm(cl) && norm(fig[1]) === norm(cd);
+  mapped.push([figName, fig.join(' / '), cssName, [cl, cd].join(' / '), same ? 'match' : 'DRIFT']);
+}
+
 // --- report ---
 const pad = (s, n) => String(s).padEnd(n);
 const section = (title, list, cols) => {
@@ -133,6 +151,8 @@ section('MATCH — same value, Figma naming maps cleanly', rows.match, C);
 section('VALUE DRIFT — code wins by default', rows.valueDrift, C);
 section('FIGMA ONLY — exists in Figma, absent from the CSS', rows.figmaOnly, C);
 section('RESPONSIVE TYPE RAMP', ramp, [['FIGMA', 30], ['M/T/D', 12], ['CSS', 18], ['M/T/D', 12], ['', 8]]);
+section('MAPPED SEMANTIC LAYER — light / dark', mapped,
+  [['FIGMA', 28], ['RESOLVES TO', 22], ['CSS', 22], ['VALUE', 22], ['', 8]]);
 
 console.log('\nNOTES');
 for (const n of rows.note) console.log('  · ' + n);

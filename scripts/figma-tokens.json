@@ -171,150 +171,210 @@
   },
   "Mapped": {
     "_role": "Gives variables specific functions. References Allias, which references Qaza. Light/Dark modes.",
-    "Color/Surface/page": {
-      "Light": "Light Mode/Base",
-      "Dark": "Dark Mode/700"
+    "_updated": "2026-09-04 — all 36 repointed so each resolves to the value the code renders, and 9 added for concepts the code had and Figma lacked (Brand, Surface/accent|input|sidebar, Status/*-fg, Text/on-brand).",
+    "_format": "[Light, Dark] resolved hex",
+    "_cssPair": {
+      "Color/Surface/page": "--background",
+      "Color/Surface/card": "--card",
+      "Color/Surface/elevated": "--popover",
+      "Color/Surface/canvas": "--secondary",
+      "Color/Surface/accent": "--accent",
+      "Color/Surface/input": "--input-background",
+      "Color/Surface/sidebar": "--sidebar",
+      "Color/Text/heading": "--foreground",
+      "Color/Text/body": "--muted-foreground",
+      "Color/Text/inverse": "--primary-foreground",
+      "Color/Text/on-brand": "--chalk",
+      "Color/Border/default": "--border",
+      "Color/Border/focus": "--ring",
+      "Color/Brand/primary": "--primary",
+      "Color/Status/success": "--scout-green",
+      "Color/Status/warning": "--scout-amber",
+      "Color/Status/error": "--destructive",
+      "Color/Status/success-fg": "--status-success-fg",
+      "Color/Status/warning-fg": "--status-warning-fg",
+      "Color/Status/error-fg": "--status-error-fg"
     },
-    "Color/Surface/canvas": {
-      "Light": "Light Mode/200",
-      "Dark": "Dark Mode/800"
-    },
-    "Color/Surface/card": {
-      "Light": "Light Mode/100",
-      "Dark": "Dark Mode/600"
-    },
-    "Color/Surface/elevated": {
-      "Light": "Light Mode/200",
-      "Dark": "Dark Mode/500"
-    },
-    "Color/Surface/inverse": {
-      "Light": "Light Mode/1000",
-      "Dark": "Dark Mode/100"
-    },
-    "Color/Surface/overlay": {
-      "Light": "Light Mode/1000",
-      "Dark": "Dark Mode/1000"
-    },
-    "Color/Border/subtle": {
-      "Light": "Light Mode/300",
-      "Dark": "Dark Mode/500"
-    },
-    "Color/Border/default": {
-      "Light": "Light Mode/500",
-      "Dark": "Dark Mode/400"
-    },
-    "Color/Border/strong": {
-      "Light": "Light Mode/700",
-      "Dark": "Dark Mode/300"
-    },
-    "Color/Border/focus": {
-      "Light": "Primary/Base",
-      "Dark": "Primary/400"
-    },
-    "Color/Text/heading": {
-      "Light": "Light Mode/1000",
-      "Dark": "Dark Mode/100"
-    },
-    "Color/Text/body": {
-      "Light": "Light Mode/900",
-      "Dark": "Dark Mode/200"
-    },
-    "Color/Text/muted": {
-      "Light": "Light Mode/800",
-      "Dark": "Dark Mode/300"
-    },
-    "Color/Text/placeholder": {
-      "Light": "Light Mode/600",
-      "Dark": "Dark Mode/400"
-    },
-    "Color/Text/inverse": {
-      "Light": "Light Mode/100",
-      "Dark": "Dark Mode/1000"
-    },
-    "Color/Text/link": {
-      "Light": "Primary/Base",
-      "Dark": "Primary/400"
-    },
-    "Color/Text/disabled": {
-      "Light": "Light Mode/600",
-      "Dark": "Dark Mode/400"
-    },
-    "Color/Button/primary-bg": {
-      "Light": "Light Mode/1000",
-      "Dark": "Primary/400"
-    },
-    "Color/Button/primary-text": {
-      "Light": "Light Mode/100",
-      "Dark": "Dark Mode/1000"
-    },
-    "Color/Button/primary-hover": {
-      "Light": "Light Mode/900",
-      "Dark": "Primary/500"
-    },
-    "Color/Button/secondary-bg": {
-      "Light": "Light Mode/200",
-      "Dark": "Dark Mode/500"
-    },
-    "Color/Button/secondary-text": {
-      "Light": "Light Mode/1000",
-      "Dark": "Dark Mode/100"
-    },
-    "Color/Button/secondary-hover": {
-      "Light": "Light Mode/300",
-      "Dark": "Dark Mode/400"
-    },
-    "Color/Button/danger-bg": {
-      "Light": "Error/Base",
-      "Dark": "Error/500"
-    },
-    "Color/Button/danger-text": {
-      "Light": "Light Mode/100",
-      "Dark": "Light Mode/100"
-    },
-    "Color/Button/success-bg": {
-      "Light": "Success/Base",
-      "Dark": "Success/500"
-    },
-    "Color/Button/disabled-bg": {
-      "Light": "Light Mode/300",
-      "Dark": "Dark Mode/500"
-    },
-    "Color/Button/disabled-text": {
-      "Light": "Light Mode/600",
-      "Dark": "Dark Mode/400"
-    },
-    "Color/Status/success": {
-      "Light": "Success/Base",
-      "Dark": "Success/400"
-    },
-    "Color/Status/error": {
-      "Light": "Error/Base",
-      "Dark": "Error/400"
-    },
-    "Color/Status/warning": {
-      "Light": "Warning/Base",
-      "Dark": "Warning/400"
-    },
-    "Color/Status/info": {
-      "Light": "Primary/Base",
-      "Dark": "Primary/400"
-    },
-    "Color/Status/success-tint": {
-      "Light": "Success/100",
-      "Dark": "Success/800"
-    },
-    "Color/Status/error-tint": {
-      "Light": "Error/100",
-      "Dark": "Error/800"
-    },
-    "Color/Status/warning-tint": {
-      "Light": "Warning/100",
-      "Dark": "Warning/800"
-    },
-    "Color/Status/info-tint": {
-      "Light": "Primary/100",
-      "Dark": "Primary/800"
-    }
+    "Color/Surface/page": [
+      "#d2e7fa",
+      "#061b2e"
+    ],
+    "Color/Surface/card": [
+      "#f6fafe",
+      "#0a2d4c"
+    ],
+    "Color/Surface/elevated": [
+      "#f6fafe",
+      "#0a2d4c"
+    ],
+    "Color/Surface/canvas": [
+      "#e8f3fc",
+      "#0f4472"
+    ],
+    "Color/Surface/accent": [
+      "#d2e7fa",
+      "#0f4472"
+    ],
+    "Color/Surface/input": [
+      "#f0f7fd",
+      "#0f4472"
+    ],
+    "Color/Surface/sidebar": [
+      "#f6fafe",
+      "#030e17"
+    ],
+    "Color/Surface/inverse": [
+      "#061b2e",
+      "#d2e7fa"
+    ],
+    "Color/Surface/overlay": [
+      "#061b2e",
+      "#061b2e"
+    ],
+    "Color/Text/heading": [
+      "#061b2e",
+      "#d2e7fa"
+    ],
+    "Color/Text/body": [
+      "#2f4151",
+      "#afc0d0"
+    ],
+    "Color/Text/muted": [
+      "#596774",
+      "#8c9aa7"
+    ],
+    "Color/Text/placeholder": [
+      "#828d96",
+      "#69747d"
+    ],
+    "Color/Text/disabled": [
+      "#acb3b9",
+      "#464d53"
+    ],
+    "Color/Text/inverse": [
+      "#f6fafe",
+      "#061b2e"
+    ],
+    "Color/Text/link": [
+      "#1e88e5",
+      "#449ce9"
+    ],
+    "Color/Text/on-brand": [
+      "#d2e7fa",
+      "#d2e7fa"
+    ],
+    "Color/Border/default": [
+      "#b4d7f6",
+      "#145b99"
+    ],
+    "Color/Border/focus": [
+      "#1e88e5",
+      "#449ce9"
+    ],
+    "Color/Border/subtle": [
+      "#d2e7fa",
+      "#0f4472"
+    ],
+    "Color/Border/strong": [
+      "#8ec4f2",
+      "#1971bf"
+    ],
+    "Color/Brand/primary": [
+      "#1e88e5",
+      "#449ce9"
+    ],
+    "Color/Brand/primary-hover": [
+      "#1971bf",
+      "#69b0ee"
+    ],
+    "Color/Status/success": [
+      "#22c55e",
+      "#22c55e"
+    ],
+    "Color/Status/warning": [
+      "#e8a838",
+      "#e8a838"
+    ],
+    "Color/Status/error": [
+      "#e05c4b",
+      "#e05c4b"
+    ],
+    "Color/Status/info": [
+      "#1e88e5",
+      "#449ce9"
+    ],
+    "Color/Status/success-fg": [
+      "#0f5529",
+      "#7cdd9f"
+    ],
+    "Color/Status/warning-fg": [
+      "#6e4b0d",
+      "#f3cd7a"
+    ],
+    "Color/Status/error-fg": [
+      "#7a2419",
+      "#f3a698"
+    ],
+    "Color/Status/success-tint": [
+      "#d7f5e2",
+      "#0f5529"
+    ],
+    "Color/Status/warning-tint": [
+      "#fbefd6",
+      "#6e4b0d"
+    ],
+    "Color/Status/error-tint": [
+      "#fce9e5",
+      "#7a2419"
+    ],
+    "Color/Status/info-tint": [
+      "#d2e7fa",
+      "#0f4472"
+    ],
+    "Color/Button/primary-bg": [
+      "#1e88e5",
+      "#449ce9"
+    ],
+    "Color/Button/primary-text": [
+      "#d2e7fa",
+      "#d2e7fa"
+    ],
+    "Color/Button/primary-hover": [
+      "#1971bf",
+      "#69b0ee"
+    ],
+    "Color/Button/secondary-bg": [
+      "#f6fafe",
+      "#0a2d4c"
+    ],
+    "Color/Button/secondary-text": [
+      "#2f4151",
+      "#afc0d0"
+    ],
+    "Color/Button/secondary-hover": [
+      "#e8f3fc",
+      "#0f4472"
+    ],
+    "Color/Button/danger-bg": [
+      "#e05c4b",
+      "#e05c4b"
+    ],
+    "Color/Button/danger-text": [
+      "#d2e7fa",
+      "#d2e7fa"
+    ],
+    "Color/Button/success-bg": [
+      "#22c55e",
+      "#22c55e"
+    ],
+    "Color/Button/disabled-bg": [
+      "#e8f3fc",
+      "#0f4472"
+    ],
+    "Color/Button/disabled-text": [
+      "#acb3b9",
+      "#464d53"
+    ]
   },
   "Responsive": {
     "_role": "Device responsiveness only: Mobile / Tablet / Desktop.",
