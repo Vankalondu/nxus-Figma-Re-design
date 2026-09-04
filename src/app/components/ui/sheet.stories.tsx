@@ -40,7 +40,7 @@ export const Default: Story = {
               className={
                 i === 0
                   ? 'bg-brand-primary/10 text-brand-primary border-l-[3px] border-brand-primary px-3 py-2 font-body font-bold text-[12px]'
-                  : 'text-text-body hover:text-text-heading hover:bg-surface-accent transition-colors px-3 py-2 font-body font-bold text-[12px]'
+                  : 'text-text-body hover:text-text-body hover:bg-surface-accent transition-colors px-3 py-2 font-body font-bold text-[12px]'
               }
             >
               {item}

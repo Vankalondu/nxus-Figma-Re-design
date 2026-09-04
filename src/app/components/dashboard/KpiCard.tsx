@@ -37,8 +37,8 @@ export const KpiCard = ({ icon: Icon, heading, value, descriptor, action, onClic
           descriptor breaks mid-word. A real basis makes the browser wrap the
           link down instead. */}
       <div className="flex items-end gap-x-2 gap-y-0.5 flex-wrap flex-[1_1_7rem] min-w-0">
-        <span className="font-heading font-extrabold text-4xl tabular-nums text-text-heading leading-none shrink-0">{value}</span>
-        <span className="font-heading font-bold text-sm text-text-heading leading-tight self-end pb-0.5 min-w-0 break-words">{descriptor}</span>
+        <span className="font-heading font-extrabold text-4xl tabular-nums text-text-strong leading-none shrink-0">{value}</span>
+        <span className="font-heading font-bold text-sm text-text-strong leading-tight self-end pb-0.5 min-w-0 break-words">{descriptor}</span>
       </div>
       <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-brand-primary group-hover:underline shrink-0 whitespace-nowrap self-end pb-0.5">
         {action}<ArrowUpRight size={13} className="shrink-0" />

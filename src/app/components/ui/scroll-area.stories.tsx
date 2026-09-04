@@ -26,7 +26,7 @@ export const Vertical: Story = {
     <ScrollArea className="h-[180px] w-[320px] rounded-[20px] border border-border-default p-4">
       <div className="flex flex-col gap-3">
         {Array.from({ length: 14 }, (_, i) => (
-          <span key={i} className="font-body text-[12px] text-text-heading">
+          <span key={i} className="font-body text-[12px] text-text-body">
             Player {i + 1} — report filed
           </span>
         ))}

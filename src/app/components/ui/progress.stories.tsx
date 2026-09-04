@@ -35,7 +35,7 @@ export const WithReadout: Story = {
         <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
           Short List coverage
         </span>
-        <span className="font-body font-bold text-[12px] text-text-heading tabular-nums">{a.value}%</span>
+        <span className="font-body font-bold text-[12px] text-text-body tabular-nums">{a.value}%</span>
       </div>
       <Progress {...a} />
       <p className="font-body text-[12px] text-text-body mt-2">

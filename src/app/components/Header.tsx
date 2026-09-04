@@ -9,11 +9,11 @@ export function Header() {
           <div className="text-2xl">NXUS</div>
           <nav className="flex gap-6">
             <a href="#" className="text-brand-primary">Review</a>
-            <a href="#" className="text-text-body hover:text-text-heading">Raise</a>
-            <a href="#" className="text-text-body hover:text-text-heading">Insights</a>
-            <a href="#" className="text-text-body hover:text-text-heading">Matches</a>
-            <a href="#" className="text-text-body hover:text-text-heading">Videos</a>
-            <a href="#" className="text-text-body hover:text-text-heading">Admin</a>
+            <a href="#" className="text-text-body hover:text-text-strong">Raise</a>
+            <a href="#" className="text-text-body hover:text-text-strong">Insights</a>
+            <a href="#" className="text-text-body hover:text-text-strong">Matches</a>
+            <a href="#" className="text-text-body hover:text-text-strong">Videos</a>
+            <a href="#" className="text-text-body hover:text-text-strong">Admin</a>
           </nav>
         </div>
         <div className="flex items-center gap-4">

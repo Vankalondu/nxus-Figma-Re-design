@@ -357,7 +357,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
             <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
             <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Home</span>
           </span>
-          <span className="font-heading font-semibold text-[16px] text-text-heading truncate" title={match.home}>
+          <span className="font-heading font-semibold text-[16px] text-text-strong truncate" title={match.home}>
             {match.home}
           </span>
         </div>
@@ -369,7 +369,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
             <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Away</span>
             <span className="w-2 h-2 rounded-full bg-[#E05C4B] shrink-0" />
           </span>
-          <span className="font-heading font-semibold text-[16px] text-text-heading truncate w-full" title={match.away}>
+          <span className="font-heading font-semibold text-[16px] text-text-strong truncate w-full" title={match.away}>
             {match.away}
           </span>
         </div>
@@ -403,7 +403,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
           Match Entry
         </button>
         <button
-          className={`flex-1 inline-flex items-center justify-center gap-2 bg-surface-card text-text-heading border border-border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm ${match.hasVideo ? '' : 'opacity-60'}`}
+          className={`flex-1 inline-flex items-center justify-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm ${match.hasVideo ? '' : 'opacity-60'}`}
         >
           <Video size={14} className="shrink-0" />
           Watch Video
@@ -509,7 +509,7 @@ export function MatchesView() {
           <div className="flex items-center gap-3">
             <button
               onClick={backToList}
-              className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:border-brand-primary hover:text-text-heading transition-colors shadow-sm"
+              className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:border-brand-primary hover:text-text-strong transition-colors shadow-sm"
               title="Back to competitions"
             >
               <ArrowLeft size={14} />
@@ -548,7 +548,7 @@ export function MatchesView() {
                   className={`px-4 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
                     currentRound?.id === round.id
                       ? 'bg-brand-primary text-text-on-brand shadow-sm'
-                      : 'bg-surface-accent text-text-heading border border-border-default hover:border-brand-primary'
+                      : 'bg-surface-accent text-text-strong border border-border-default hover:border-brand-primary'
                   }`}
                 >
                   {round.name}
@@ -611,7 +611,7 @@ export function MatchesView() {
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search competitions…"
-            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all font-body font-bold shadow-sm placeholder:text-text-body text-text-heading"
+            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all font-body font-bold shadow-sm placeholder:text-text-body text-text-body"
           />
         </div>
 
@@ -620,7 +620,7 @@ export function MatchesView() {
           <select
             value={season}
             onChange={e => setSeason(e.target.value)}
-            className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-heading focus:outline-none cursor-pointer pr-5"
+            className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5"
           >
             {SEASONS.map(s => (
               <option key={s}>{s}</option>

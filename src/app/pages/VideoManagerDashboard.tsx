@@ -124,7 +124,7 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
         {/* Raised requests */}
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
           <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><AlertTriangle size={16} className="text-text-heading" /></div>
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><AlertTriangle size={16} className="text-text-strong" /></div>
             <div className="min-w-0 flex-1">
               <h3 className="font-heading font-bold text-[16px] text-text-heading">Raised requests</h3>
               <p className="font-body text-[12px] text-text-body font-medium">Video the scouts are waiting on — oldest first</p>
@@ -137,12 +137,12 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
                 <div className="w-9 h-9 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[12px] shrink-0">{(r.playerName || r.videoName).split(' ').map(w => w[0]).join('').slice(0, 2)}</div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-body font-bold text-[14px] text-text-heading truncate">{r.playerName || r.videoName}</span>
-                    <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${r.type === 'package' ? 'bg-brand-primary/15 text-text-heading' : 'bg-surface-accent text-text-body'}`}>{r.type === 'package' ? 'Package' : 'Full match'}</span>
+                    <span className="font-body font-bold text-[14px] text-text-body truncate">{r.playerName || r.videoName}</span>
+                    <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${r.type === 'package' ? 'bg-brand-primary/15 text-text-strong' : 'bg-surface-accent text-text-body'}`}>{r.type === 'package' ? 'Package' : 'Full match'}</span>
                   </div>
                   <p className="font-body text-[12px] text-text-body mt-0.5">{r.uploader} · {r.dateLabel}</p>
                 </div>
-                <button onClick={() => onNavigate('approval')} className="shrink-0 inline-flex items-center gap-1 bg-transparent border border-brand-primary text-text-heading px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-brand-primary/10 transition-colors">Review</button>
+                <button onClick={() => onNavigate('approval')} className="shrink-0 inline-flex items-center gap-1 bg-transparent border border-brand-primary text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-brand-primary/10 transition-colors">Review</button>
               </div>
             ))}
           </div>
@@ -151,14 +151,14 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
         <div className="lg:col-span-1 flex flex-col gap-6">
           <div className={`${CARD} flex flex-col`}>
             <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-text-heading" /></div>
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-text-strong" /></div>
               <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Upcoming matches</h3><p className="font-body text-[12px] text-text-body font-medium">Capture opportunities</p></div>
             </div>
             <div className="divide-y divide-border-default">
               {UPCOMING_MATCHES.map(m => (
                 <button key={m.id} onClick={() => onOpenMatch(m.home, m.away)} className="w-full text-left px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors">
                   <div className="min-w-0 flex-1">
-                    <div className="font-body font-bold text-[14px] text-text-heading truncate">{m.home} <span className="text-text-body font-medium">vs</span> {m.away}</div>
+                    <div className="font-body font-bold text-[14px] text-text-body truncate">{m.home} <span className="text-text-body font-medium">vs</span> {m.away}</div>
                     <p className="font-body text-[12px] text-text-body mt-0.5">{m.date}{m.note ? ` · ${m.note}` : ''}</p>
                   </div>
                   <ArrowRight size={14} className="text-text-body shrink-0" />
@@ -168,18 +168,18 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
           </div>
           <div className={`${CARD} flex flex-col`}>
             <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Users size={16} className="text-text-heading" /></div>
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Users size={16} className="text-text-strong" /></div>
               <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Team activity</h3><p className="font-body text-[12px] text-text-body font-medium">Editors &amp; uploaders this week</p></div>
             </div>
             <div className="divide-y divide-border-default">
               {TEAM.map(t => (
                 <div key={t.name} className="px-5 py-3 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-surface-accent text-text-heading flex items-center justify-center font-heading font-black text-[12px] shrink-0">{t.name.split(' ').map(w => w[0]).join('')}</div>
+                  <div className="w-9 h-9 rounded-xl bg-surface-accent text-text-strong flex items-center justify-center font-heading font-black text-[12px] shrink-0">{t.name.split(' ').map(w => w[0]).join('')}</div>
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2"><span className="font-body font-bold text-[14px] text-text-heading truncate">{t.name}</span><span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-text-heading">{t.role}</span></div>
+                    <div className="flex items-center gap-2"><span className="font-body font-bold text-[14px] text-text-body truncate">{t.name}</span><span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-text-body">{t.role}</span></div>
                     <p className="font-body text-[12px] text-text-body mt-0.5 truncate">{t.current}</p>
                   </div>
-                  <span className="font-heading font-black text-[14px] text-text-heading tabular-nums shrink-0">{t.submitted}</span>
+                  <span className="font-heading font-black text-[14px] text-text-strong tabular-nums shrink-0">{t.submitted}</span>
                 </div>
               ))}
             </div>
@@ -198,7 +198,7 @@ const KpiTile = ({ icon: Icon, label, value, sub, onClick }: { icon: any; label:
       <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body truncate">{label}</span>
       <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
     </div>
-    <div className="font-heading font-extrabold text-[32px] text-text-heading leading-none">{value}</div>
+    <div className="font-heading font-extrabold text-[32px] text-text-strong leading-none">{value}</div>
     <span className="font-body text-[12px] text-text-body font-medium">{sub}</span>
   </button>
 );
@@ -260,18 +260,18 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
         <div className="px-4 sm:px-5 py-4 border-b border-border-default flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-1 p-1 bg-surface-card border border-border-default rounded-full shrink-0">
             {TIERS.map(t => (
-              <button key={t.id} onClick={() => setTier(t.id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === t.id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>{t.label}</button>
+              <button key={t.id} onClick={() => setTier(t.id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === t.id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>{t.label}</button>
             ))}
           </div>
           <div className="relative flex-1 min-w-[160px]">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or team…"
-              className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
+              className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-text-body placeholder:text-text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
           </div>
           {/* status dropdown filter */}
           <div className="relative shrink-0">
             <select value={filter} onChange={e => setFilter(e.target.value as StatusFilter)}
-              className="appearance-none bg-surface-card border border-border-default rounded-full pl-4 pr-9 py-2 font-body font-bold text-[12px] text-text-heading cursor-pointer outline-none focus:border-brand-primary hover:border-brand-primary transition-colors">
+              className="appearance-none bg-surface-card border border-border-default rounded-full pl-4 pr-9 py-2 font-body font-bold text-[12px] text-text-body cursor-pointer outline-none focus:border-brand-primary hover:border-brand-primary transition-colors">
               {chips.map(c => (
                 <option key={c.id} value={c.id}>{c.label}{c.n != null ? ` (${c.n})` : ''}</option>
               ))}
@@ -296,20 +296,20 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2 min-w-0">
                       <Flag nat={p.nationality} country={p.country} />
-                      <span className="font-body font-bold text-[14px] text-text-heading truncate">{p.name}</span>
+                      <span className="font-body font-bold text-[14px] text-text-body truncate">{p.name}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 font-body font-bold text-[13px] text-text-heading">{p.posAcronym}</td>
+                  <td className="px-4 py-3 font-body font-bold text-[13px] text-text-body">{p.posAcronym}</td>
                   <td className="px-4 py-3 font-body text-[13px] text-text-body truncate max-w-[140px]">{p.team}</td>
                   <td className="px-4 py-3"><StatusPill s={status} /></td>
                   <td className="px-4 py-3 text-right whitespace-nowrap">
                     <div className="inline-flex items-center gap-1.5">
                       {status === 'unassigned' && (
-                        <button onClick={() => doAssign(p)} className="inline-flex items-center gap-1 bg-transparent border border-brand-primary text-text-heading px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-brand-primary/10 transition-colors"><Upload size={12} /> Assign</button>
+                        <button onClick={() => doAssign(p)} className="inline-flex items-center gap-1 bg-transparent border border-brand-primary text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-brand-primary/10 transition-colors"><Upload size={12} /> Assign</button>
                       )}
-                      <button onClick={() => onView(p)} className="inline-flex items-center gap-1 bg-transparent border border-border-default text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-heading transition-colors"><Play size={12} /> View</button>
+                      <button onClick={() => onView(p)} className="inline-flex items-center gap-1 bg-transparent border border-border-default text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-body transition-colors"><Play size={12} /> View</button>
                       <button onClick={() => doNudge(p)} disabled={status !== 'assigned' && status !== 'in-progress'}
-                        className="inline-flex items-center gap-1 bg-transparent border border-border-default text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-heading transition-colors disabled:opacity-40 disabled:cursor-not-allowed"><Send size={12} /> Nudge</button>
+                        className="inline-flex items-center gap-1 bg-transparent border border-border-default text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-body transition-colors disabled:opacity-40 disabled:cursor-not-allowed"><Send size={12} /> Nudge</button>
                     </div>
                   </td>
                 </tr>
@@ -319,12 +319,12 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
         </div>
         {pageCount > 1 && (
           <div className="border-t border-border-default flex items-center justify-center gap-1 px-4 py-3">
-            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="w-8 h-8 rounded-full border border-border-default flex items-center justify-center text-text-body hover:text-text-heading disabled:opacity-30 disabled:cursor-not-allowed"><ChevronLeft size={15} /></button>
+            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="w-8 h-8 rounded-full border border-border-default flex items-center justify-center text-text-body hover:text-text-strong disabled:opacity-30 disabled:cursor-not-allowed"><ChevronLeft size={15} /></button>
             {Array.from({ length: pageCount }).slice(0, 6).map((_, i) => (
               <button key={i} onClick={() => setPage(i)} className={`w-8 h-8 rounded-full font-body font-bold text-[12px] transition-colors ${page === i ? 'bg-brand-primary text-text-inverse' : 'text-text-body hover:bg-surface-accent'}`}>{i + 1}</button>
             ))}
             {pageCount > 6 && <span className="px-1 text-text-body">…</span>}
-            <button onClick={() => setPage(p => Math.min(pageCount - 1, p + 1))} disabled={page >= pageCount - 1} className="ml-1 inline-flex items-center gap-1 px-3 h-8 rounded-full border border-border-default font-body font-bold text-[12px] text-text-body hover:text-text-heading disabled:opacity-30 disabled:cursor-not-allowed">Next <ChevronRight size={13} /></button>
+            <button onClick={() => setPage(p => Math.min(pageCount - 1, p + 1))} disabled={page >= pageCount - 1} className="ml-1 inline-flex items-center gap-1 px-3 h-8 rounded-full border border-border-default font-body font-bold text-[12px] text-text-body hover:text-text-body disabled:opacity-30 disabled:cursor-not-allowed">Next <ChevronRight size={13} /></button>
           </div>
         )}
       </div>
@@ -338,16 +338,16 @@ const RedoPanel = ({ onConfirm, onCancel }: { onConfirm: (reason: string) => voi
   const [reason, setReason] = useState('');
   return (
     <div className="bg-surface-card border border-border-default rounded-[16px] shadow-2xl p-3 w-72" onClick={e => e.stopPropagation()}>
-      <div className="font-heading font-bold text-[12px] text-text-heading mb-2">Send back for redo</div>
+      <div className="font-heading font-bold text-[12px] text-text-strong mb-2">Send back for redo</div>
       <div className="flex flex-wrap gap-1.5 mb-2">
         {REDO_CHIPS.map(c => (
-          <button key={c} onClick={() => setReason(r => r ? r : c)} className="px-2.5 py-1 rounded-full bg-surface-accent text-text-body hover:text-text-heading font-body font-bold text-[11px]">{c}</button>
+          <button key={c} onClick={() => setReason(r => r ? r : c)} className="px-2.5 py-1 rounded-full bg-surface-accent text-text-body hover:text-text-body font-body font-bold text-[11px]">{c}</button>
         ))}
       </div>
       <textarea autoFocus value={reason} onChange={e => setReason(e.target.value)} rows={2} placeholder="Reason (required)…"
-        className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[13px] text-text-heading focus:outline-none focus:border-border-focus resize-none" />
+        className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[13px] text-text-body focus:outline-none focus:border-border-focus resize-none" />
       <div className="flex justify-end gap-2 mt-2">
-        <button onClick={onCancel} className="font-body font-bold text-[12px] text-text-body hover:text-text-heading px-2">Cancel</button>
+        <button onClick={onCancel} className="font-body font-bold text-[12px] text-text-body hover:text-text-body px-2">Cancel</button>
         <button onClick={() => reason.trim() && onConfirm(reason.trim())} disabled={!reason.trim()}
           className="inline-flex items-center gap-1 bg-status-error/15 text-status-error-fg border border-status-error/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full disabled:opacity-40"><RotateCcw size={12} /> Send back</button>
       </div>
@@ -373,14 +373,14 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
     <div className="flex flex-col gap-6 pb-8">
       <div className={CARD}>
         <div className="px-5 py-4 border-b border-border-default flex items-center gap-3 flex-wrap">
-          <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><ClipboardCheck size={18} className="text-text-heading" /></div>
+          <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><ClipboardCheck size={18} className="text-text-strong" /></div>
           <div className="min-w-0 flex-1">
             <h3 className="font-heading font-bold text-[16px] text-text-heading">Approval queue</h3>
             <p className="font-body text-[12px] text-text-body font-medium">Review before it enters the system · oldest first</p>
           </div>
           <div className="flex items-center gap-1 p-1 bg-surface-card border border-border-default rounded-full shrink-0">
             {([['all', 'All'], ['package', 'Packages'], ['full-match', 'Full Matches']] as const).map(([id, l]) => (
-              <button key={id} onClick={() => setTypeFilter(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${typeFilter === id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>{l}<span className="ml-1 tabular-nums opacity-80">{counts[id]}</span></button>
+              <button key={id} onClick={() => setTypeFilter(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${typeFilter === id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>{l}<span className="ml-1 tabular-nums opacity-80">{counts[id]}</span></button>
             ))}
           </div>
         </div>
@@ -395,8 +395,8 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
               </button>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-body font-bold text-[14px] text-text-heading truncate">{item.videoName}</span>
-                  <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${item.type === 'package' ? 'bg-brand-primary/15 text-text-heading' : 'bg-surface-accent text-text-body'}`}>{item.type === 'package' ? 'Package' : 'Full match'}</span>
+                  <span className="font-body font-bold text-[14px] text-text-body truncate">{item.videoName}</span>
+                  <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${item.type === 'package' ? 'bg-brand-primary/15 text-text-strong' : 'bg-surface-accent text-text-body'}`}>{item.type === 'package' ? 'Package' : 'Full match'}</span>
                 </div>
                 <div className="flex items-center gap-2 font-body text-[12px] text-text-body mt-0.5 flex-wrap">
                   <span className="inline-flex items-center gap-1"><Users size={11} /> {item.uploader} · {item.uploaderRole}</span>
@@ -432,7 +432,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
                 <div key={r.id} className="px-5 py-3 flex items-center gap-3">
                   <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${r.outcome === 'approved' ? 'bg-status-success/15 text-status-success-fg' : 'bg-status-error/15 text-status-error-fg'}`}>{r.outcome === 'approved' ? <Check size={13} /> : <RotateCcw size={12} />}</span>
                   <div className="min-w-0 flex-1">
-                    <span className="font-body font-bold text-[13px] text-text-heading">{r.videoName}</span>
+                    <span className="font-body font-bold text-[13px] text-text-body">{r.videoName}</span>
                     <p className="font-body text-[12px] text-text-body">{r.outcome === 'approved' ? 'Approved' : `Sent back — ${r.reason}`} · {r.uploader}</p>
                   </div>
                 </div>
@@ -453,7 +453,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
             <div className="p-6">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-heading font-bold text-[18px] text-text-heading">{playing.videoName}</h3>
-                <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${playing.type === 'package' ? 'bg-brand-primary/15 text-text-heading' : 'bg-surface-accent text-text-body'}`}>{playing.type === 'package' ? 'Package' : 'Full match'}</span>
+                <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${playing.type === 'package' ? 'bg-brand-primary/15 text-text-strong' : 'bg-surface-accent text-text-body'}`}>{playing.type === 'package' ? 'Package' : 'Full match'}</span>
               </div>
               <p className="font-body text-[13px] text-text-body">{playing.uploader} · {playing.uploaderRole} · {playing.dateLabel} · {playing.playerId ? playing.playerName : 'No player linked'}</p>
               <div className="flex items-center gap-2 mt-5 relative">
@@ -492,8 +492,8 @@ const VmAnalyticsTab = () => {
         {rows.map((r, i) => (
           <div key={r.name} className="flex items-center gap-3">
             <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-text-inverse' : 'bg-surface-accent text-text-body'}`}>{i + 1}</span>
-            <div className="flex-1 min-w-0"><div className="font-body font-bold text-[13px] text-text-heading truncate">{r.name}</div><div className="h-2 bg-surface-accent rounded-full overflow-hidden mt-1"><div className="h-full bg-brand-primary rounded-full" style={{ width: `${(r.submitted / max) * 100}%` }} /></div></div>
-            <span className="font-heading font-black text-[14px] text-text-heading tabular-nums shrink-0">{r.submitted}</span>
+            <div className="flex-1 min-w-0"><div className="font-body font-bold text-[13px] text-text-body truncate">{r.name}</div><div className="h-2 bg-surface-accent rounded-full overflow-hidden mt-1"><div className="h-full bg-brand-primary rounded-full" style={{ width: `${(r.submitted / max) * 100}%` }} /></div></div>
+            <span className="font-heading font-black text-[14px] text-text-strong tabular-nums shrink-0">{r.submitted}</span>
           </div>
         ))}
       </div>
@@ -504,7 +504,7 @@ const VmAnalyticsTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
           <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-text-heading" /></div>
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-text-strong" /></div>
             <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Coverage over time</h3><p className="font-body text-[12px] text-text-body font-medium">% of pipeline players with video, monthly</p></div>
           </div>
           <div className="px-5 py-4 flex-1 flex flex-col">
@@ -513,14 +513,14 @@ const VmAnalyticsTab = () => {
               {months.map((m, i) => (<text key={m} x={X(i)} y={pB + 20} textAnchor="middle" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>))}
               {series.map(s => (<g key={s.label}><path d={path(s.data)} fill="none" stroke={s.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />{s.data.map((v, i) => <circle key={i} cx={X(i)} cy={Y(v)} r={3} fill={s.color} />)}</g>))}
             </svg>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">{series.map(s => (<div key={s.label} className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} /><span className="font-heading font-bold text-[12px] text-text-heading">{s.label}</span></div>))}</div>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">{series.map(s => (<div key={s.label} className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} /><span className="font-heading font-bold text-[12px] text-text-strong">{s.label}</span></div>))}</div>
           </div>
         </div>
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Clock size={16} className="text-text-heading" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Request turnaround</h3><p className="font-body text-[12px] text-text-body font-medium">Raised → fulfilled</p></div></div>
+          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Clock size={16} className="text-text-strong" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Request turnaround</h3><p className="font-body text-[12px] text-text-body font-medium">Raised → fulfilled</p></div></div>
           <div className="p-5 flex-1 flex flex-col justify-center gap-5">
-            <div><div className="font-heading font-extrabold text-[40px] text-text-heading leading-none">2.8<span className="text-[18px] text-text-body"> days</span></div><span className="font-body text-[12px] text-text-body font-medium">median this month</span></div>
-            <div className="flex items-center justify-between rounded-[16px] border border-border-default p-4"><span className="font-body text-[13px] font-bold text-text-heading">Open &gt; 7 days</span><span className="font-heading font-black text-[20px] text-text-heading tabular-nums">2</span></div>
+            <div><div className="font-heading font-extrabold text-[40px] text-text-strong leading-none">2.8<span className="text-[18px] text-text-body"> days</span></div><span className="font-body text-[12px] text-text-body font-medium">median this month</span></div>
+            <div className="flex items-center justify-between rounded-[16px] border border-border-default p-4"><span className="font-body text-[13px] font-bold text-text-body">Open &gt; 7 days</span><span className="font-heading font-black text-[20px] text-text-strong tabular-nums">2</span></div>
           </div>
         </div>
       </div>
@@ -530,8 +530,8 @@ const VmAnalyticsTab = () => {
           <div className="p-5 flex flex-col sm:flex-row gap-8"><Board title="Editors · packages" rows={editors} max={maxEd} /><Board title="Uploaders · full matches" rows={uploaders} max={maxUp} /></div>
         </div>
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-text-heading" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Demand profile</h3><p className="font-body text-[12px] text-text-body font-medium">What scouts are asking for</p></div></div>
-          <div className="p-5 flex flex-col justify-center gap-5 flex-1">{demand.map(d => (<div key={d.label}><div className="flex items-center justify-between mb-1"><span className="font-body text-[13px] font-bold text-text-heading">{d.label}</span><span className="font-heading font-black text-[14px] text-text-heading tabular-nums">{d.v}</span></div><div className="h-3 bg-surface-accent rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(d.v / maxDemand) * 100}%`, backgroundColor: d.color }} /></div></div>))}</div>
+          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-text-strong" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Demand profile</h3><p className="font-body text-[12px] text-text-body font-medium">What scouts are asking for</p></div></div>
+          <div className="p-5 flex flex-col justify-center gap-5 flex-1">{demand.map(d => (<div key={d.label}><div className="flex items-center justify-between mb-1"><span className="font-body text-[13px] font-bold text-text-body">{d.label}</span><span className="font-heading font-black text-[14px] text-text-strong tabular-nums">{d.v}</span></div><div className="h-3 bg-surface-accent rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(d.v / maxDemand) * 100}%`, backgroundColor: d.color }} /></div></div>))}</div>
         </div>
       </div>
     </div>
@@ -593,7 +593,7 @@ export default function VideoManagerDashboard() {
   const avatar = 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&h=100&fit=crop&crop=faces&q=80';
 
   return (
-    <div className="flex min-h-screen bg-surface-page font-body text-text-heading">
+    <div className="flex min-h-screen bg-surface-page font-body text-text-strong">
       <Sidebar actions={[]} />
       <main className="flex-1 flex flex-col min-w-0">
         <TopNav
@@ -601,7 +601,7 @@ export default function VideoManagerDashboard() {
           rolePill={(
             <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-[32px]">
               <span className="w-2 h-2 rounded-full shrink-0 bg-brand-primary" />
-              <span className="hidden md:inline font-body text-[14px] font-bold text-text-heading whitespace-nowrap">Video Manager Dashboard</span>
+              <span className="hidden md:inline font-body text-[14px] font-bold text-text-body whitespace-nowrap">Video Manager Dashboard</span>
             </div>
           )}
           unreadCount={pendingApprovals}
@@ -619,7 +619,7 @@ export default function VideoManagerDashboard() {
                   <button key={a.id} onClick={() => { setActiveTab('approval'); setShowNotif(false); }} className="w-full text-left px-5 py-3 flex items-start gap-3 hover:bg-surface-accent transition-colors">
                     <span className="w-8 h-8 rounded-full bg-status-error/15 text-status-error-fg flex items-center justify-center shrink-0 mt-0.5"><ClipboardCheck size={13} /></span>
                     <div className="flex-1 min-w-0">
-                      <p className="font-body text-[13px] font-bold text-text-heading leading-snug">{a.uploader} uploaded “{a.videoName}” — needs approval</p>
+                      <p className="font-body text-[13px] font-bold text-text-body leading-snug">{a.uploader} uploaded “{a.videoName}” — needs approval</p>
                       <p className="font-body text-[12px] text-text-body mt-0.5">{a.dateLabel}</p>
                     </div>
                   </button>
@@ -637,7 +637,7 @@ export default function VideoManagerDashboard() {
             <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-border-default z-50 overflow-hidden">
               <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
                 <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div><div className="font-body font-bold text-[14px] text-text-heading">Marcus</div><div className="font-body text-[12px] text-text-body font-medium">Video Manager</div></div>
+                <div><div className="font-body font-bold text-[14px] text-text-body">Marcus</div><div className="font-body text-[12px] text-text-body font-medium">Video Manager</div></div>
               </div>
               <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
             </div>
@@ -685,11 +685,11 @@ export default function VideoManagerDashboard() {
             <div className="p-8 space-y-4">
               <div>
                 <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Player name</label>
-                <input autoFocus type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                <input autoFocus type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Team</label><input type="text" placeholder="Club" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label><input type="text" placeholder="e.g. ST" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Team</label><input type="text" placeholder="Club" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label><input type="text" placeholder="e.g. ST" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
               </div>
               <div className="flex gap-3 pt-2">
                 <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-transparent border-2 border-border-default text-text-body rounded-full font-body font-bold text-[14px] hover:border-text-body transition-colors">Cancel</button>

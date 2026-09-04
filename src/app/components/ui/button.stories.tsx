@@ -60,7 +60,7 @@ export const NxusShapes: Story = {
       <button className="bg-brand-primary border-2 border-brand-primary text-text-inverse hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors shadow-md">
         Primary
       </button>
-      <button className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors">
+      <button className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors">
         Secondary
       </button>
       <button className="border-2 border-status-error text-status-error hover:bg-status-error/10 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors">

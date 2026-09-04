@@ -81,7 +81,7 @@ export function TerritoriesTable() {
               <tr key={territory.id} className="border-b hover:bg-surface-accent">
                 <td className="px-4 py-3 text-text-body">{territory.id}.</td>
                 <td className="px-4 py-3">{territory.name}</td>
-                <td className="px-4 py-3 text-text-heading">
+                <td className="px-4 py-3 text-text-strong">
                   {territory.countries.join(', ')}
                 </td>
                 <td className="px-4 py-3">

@@ -189,6 +189,12 @@
   --surface-sidebar-accent: var(--sidebar-accent);
 
   --text-heading: var(--foreground);
+  /* Same value as heading, deliberately. A button label, a stat value and a
+     filter chip need heading's weight of contrast but are not titles, and
+     calling them "heading" is the naming fault this split exists to fix.
+     Splitting the role now costs nothing visually and means a later change to
+     title colour does not silently repaint every chip in the product. */
+  --text-strong: var(--foreground);
   --text-body: var(--muted-foreground);
   --text-inverse: var(--primary-foreground);
   --text-on-brand: var(--chalk);
@@ -411,6 +417,7 @@
   --color-surface-inverse: var(--surface-inverse);
   --color-surface-overlay: var(--surface-overlay);
   --color-text-heading: var(--text-heading);
+  --color-text-strong: var(--text-strong);
   --color-text-body: var(--text-body);
   --color-text-muted: var(--text-muted);
   --color-text-placeholder: var(--text-placeholder);

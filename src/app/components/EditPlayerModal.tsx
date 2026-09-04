@@ -49,7 +49,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
             <h2 className="font-heading font-semibold text-[24px] text-text-heading leading-none">Edit player</h2>
             <p className="font-body font-medium text-[14px] text-text-body mt-2">(Required fields marked with *)</p>
           </div>
-          <button onClick={onClose} className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-heading transition-colors">
+          <button onClick={onClose} className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-strong transition-colors">
             <X size={20} />
           </button>
         </div>
@@ -75,7 +75,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                 type="text" 
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
-                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all placeholder:text-text-body/40 shadow-sm"
+                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all placeholder:text-text-body/40 shadow-sm"
               />
             </div>
 
@@ -86,7 +86,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                   type="text" 
                   value={formData.dob}
                   readOnly
-                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-heading focus:outline-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                 />
                 <Calendar size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-body group-hover:text-brand-primary transition-colors" />
               </div>
@@ -98,7 +98,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
               <div className="relative group">
                 <select 
                   onChange={(e) => handleAddNationality(e.target.value)}
-                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                   value=""
                 >
                   <option value="" disabled>Select Country</option>
@@ -108,7 +108,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
               </div>
               <div className="flex flex-wrap gap-2 pt-1">
                 {formData.nationality.map(country => (
-                  <div key={country} className="flex items-center gap-2 bg-brand-primary/5 border border-brand-primary/20 px-4 py-2 rounded-full font-body font-bold text-[14px] text-text-heading shadow-sm animate-fade-in">
+                  <div key={country} className="flex items-center gap-2 bg-brand-primary/5 border border-brand-primary/20 px-4 py-2 rounded-full font-body font-bold text-[14px] text-text-body shadow-sm animate-fade-in">
                     {country}
                     <button onClick={() => handleRemoveNationality(country)} className="text-text-body hover:text-status-error transition-colors">
                       <X size={14} />
@@ -133,7 +133,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                       <select 
                         value={formData[pos.key as keyof typeof formData] as string}
                         onChange={(e) => setFormData({...formData, [pos.key]: e.target.value})}
-                        className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                        className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 text-[14px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                       >
                         <option value="">None</option>
                         {positions.map(p => <option key={p} value={p}>{p}</option>)}
@@ -153,7 +153,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                   <select 
                     value={formData.preferredFoot}
                     onChange={(e) => setFormData({...formData, preferredFoot: e.target.value})}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
+                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus appearance-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                   >
                     <option value="Left">Left</option>
                     <option value="Right">Right</option>
@@ -170,7 +170,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                     type="number" 
                     value={formData.height}
                     onChange={e => setFormData({...formData, height: parseInt(e.target.value) || 0})}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shadow-sm"
+                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -179,7 +179,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                     type="number" 
                     value={formData.weight}
                     onChange={e => setFormData({...formData, weight: parseInt(e.target.value) || 0})}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shadow-sm"
+                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[15px] font-bold text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shadow-sm"
                   />
                 </div>
               </div>

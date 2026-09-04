@@ -141,8 +141,8 @@ export const ChampionPodium = ({ scouts }: { scouts: { name: string; role: strin
           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full font-heading font-bold text-[8px] shadow-sm" style={{ backgroundColor: cfg.badgeBg, color: cfg.badgeText }}>{cfg.label}</span>
         </div>
         <div className="text-center min-w-0 w-full mt-1">
-          <p className="font-body text-[11px] text-text-heading truncate leading-tight">{scout.name}</p>
-          <p className="font-body text-[13px] text-text-heading leading-tight">{scout.count}</p>
+          <p className="font-body text-[11px] text-text-body truncate leading-tight">{scout.name}</p>
+          <p className="font-body text-[13px] text-text-body leading-tight">{scout.count}</p>
         </div>
       </div>
     );
@@ -182,7 +182,7 @@ export const InlineSel = ({ value, onChange, opts, allLabel }: { value: string; 
   return (
     <div className="relative shrink-0" ref={ref}>
       <button type="button" onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-brand-primary text-text-inverse border-transparent' : 'bg-surface-card/60 border-brand-primary/40 text-text-heading hover:bg-surface-card'}`}>
+        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-brand-primary text-text-inverse border-transparent' : 'bg-surface-card/60 border-brand-primary/40 text-text-strong hover:bg-surface-card'}`}>
         {label(value)}
         <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''} ${active ? 'text-text-inverse' : 'text-text-body'}`} />
       </button>
@@ -192,7 +192,7 @@ export const InlineSel = ({ value, onChange, opts, allLabel }: { value: string; 
             const sel = o === value;
             return (
               <button key={o} type="button" onClick={() => { onChange(o); setOpen(false); }}
-                className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-surface-accent text-text-heading' : 'text-text-heading hover:bg-surface-accent'}`}>
+                className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-surface-accent text-text-strong' : 'text-text-strong hover:bg-surface-accent'}`}>
                 {label(o)}
                 {sel && <Check size={13} className="text-brand-primary shrink-0" />}
               </button>

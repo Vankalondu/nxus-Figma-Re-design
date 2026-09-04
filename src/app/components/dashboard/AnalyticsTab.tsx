@@ -144,7 +144,7 @@ export const AnalyticsTab = () => {
             <div className="flex items-center bg-surface-card border border-border-default rounded-full p-1 gap-1 mb-3">
               {([['scouts','Scouts'],['players','Top players']] as const).map(([key,label]) => (
                 <button key={key} type="button" onClick={() => setBoard(key)}
-                  className={`flex-1 px-3 py-1.5 rounded-full font-body font-bold text-[12px] ${board === key ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>
+                  className={`flex-1 px-3 py-1.5 rounded-full font-body font-bold text-[12px] ${board === key ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>
                   {label}
                 </button>
               ))}
@@ -155,10 +155,10 @@ export const AnalyticsTab = () => {
                 <div key={p.n} className="flex items-center gap-3 py-2 border-b border-border-default last:border-0">
                   <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-text-inverse' : 'bg-surface-accent text-text-body'}`}>{i+1}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="font-body font-bold text-[14px] text-text-heading truncate">{p.n}</div>
+                    <div className="font-body font-bold text-[14px] text-text-body truncate">{p.n}</div>
                     {board === 'scouts' && <div className="font-body text-[11px] text-text-body truncate">{(p as any).role}</div>}
                   </div>
-                  <span className="font-heading font-black text-[14px] text-text-heading tabular-nums">{p.c}</span>
+                  <span className="font-heading font-black text-[14px] text-text-strong tabular-nums">{p.c}</span>
                   {board === 'scouts' && (p as any).removable && (
                     <button type="button" onClick={() => setRemovedScouts(prev => [...prev, p.n])}
                       title="Remove senior scout from list" aria-label={`Remove ${p.n}`}
@@ -175,7 +175,7 @@ export const AnalyticsTab = () => {
         {/* Card 4 — Talent map (scatter) — kept as-is */}
         <div className={`lg:col-span-2 ${CARD}`}>
           <div className="px-4 sm:px-6 py-4 border-b border-border-default flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-text-heading" /></div>
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-text-strong" /></div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h3 className="font-heading font-bold text-[16px] text-text-heading">Talent map</h3>
@@ -224,7 +224,7 @@ export const AnalyticsTab = () => {
         {/* Card 1 — Conversion trend */}
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
           <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-text-heading" /></div>
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-text-strong" /></div>
             <div className="min-w-0 flex-1">
               <h3 className="font-heading font-bold text-[16px] text-text-heading">Conversion trend</h3>
               <p className="font-body text-[12px] text-text-body font-medium">Active pipeline, monthly</p>
@@ -232,7 +232,7 @@ export const AnalyticsTab = () => {
             {/* Country pill dropdown — drives the chart + stat data */}
             <div className="relative shrink-0">
               <button type="button" onClick={() => setCountryOpen(o => !o)}
-                className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-heading hover:border-brand-primary">
+                className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-body hover:border-brand-primary">
                 <Search size={14} />
                 <span className="whitespace-nowrap">{country}</span>
                 <ChevronDown size={12} />
@@ -241,7 +241,7 @@ export const AnalyticsTab = () => {
                 <div className="absolute right-0 mt-2 z-20 min-w-[160px] bg-surface-card border border-border-default rounded-[12px] shadow-[var(--shadow-lg)] overflow-hidden py-1">
                   {COUNTRIES.map(c => (
                     <button key={c} type="button" onClick={() => { setCountry(c); setCountryOpen(false); }}
-                      className={`w-full text-left px-3 py-2 font-body font-bold text-[12px] hover:bg-surface-accent ${c === country ? 'text-brand-primary' : 'text-text-heading'}`}>
+                      className={`w-full text-left px-3 py-2 font-body font-bold text-[12px] hover:bg-surface-accent ${c === country ? 'text-brand-primary' : 'text-text-strong'}`}>
                       {c}
                     </button>
                   ))}
@@ -255,7 +255,7 @@ export const AnalyticsTab = () => {
             {convStats.map(([label,val]) => (
               <div key={label} className="flex flex-col gap-1">
                 <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-text-body">{label}</span>
-                <span className="font-heading font-black text-[16px] text-text-heading">{val}</span>
+                <span className="font-heading font-black text-[16px] text-text-strong">{val}</span>
               </div>
             ))}
           </div>
@@ -301,7 +301,7 @@ export const AnalyticsTab = () => {
               {cvSeries.map(s => (
                 <div key={s.label} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background:s.color }} />
-                  <span className="font-heading font-bold text-[12px] text-text-heading">{s.label}</span>
+                  <span className="font-heading font-bold text-[12px] text-text-strong">{s.label}</span>
                 </div>
               ))}
             </div>
@@ -312,7 +312,7 @@ export const AnalyticsTab = () => {
         {/* Card 2 — Archived by stage */}
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
           <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-text-heading" /></div>
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-text-strong" /></div>
             <div className="min-w-0">
               <h3 className="font-heading font-bold text-[16px] text-text-heading">Archived by stage</h3>
               <p className="font-body text-[12px] text-text-body font-medium">Archived from the pipeline, monthly</p>
@@ -324,7 +324,7 @@ export const AnalyticsTab = () => {
             {[['LONG','98'],['SHORT','402'],['TARGET','17']].map(([label,val]) => (
               <div key={label} className="flex flex-col gap-1">
                 <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-text-body">{label}</span>
-                <span className="font-heading font-black text-[16px] text-text-heading">{val}</span>
+                <span className="font-heading font-black text-[16px] text-text-strong">{val}</span>
               </div>
             ))}
           </div>
@@ -364,7 +364,7 @@ export const AnalyticsTab = () => {
               {[['Long','#69b0ee'],['Short','#E8A838'],['Target','#145b99']].map(([label,color]) => (
                 <div key={label} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background:color }} />
-                  <span className="font-heading font-bold text-[12px] text-text-heading">{label}</span>
+                  <span className="font-heading font-bold text-[12px] text-text-strong">{label}</span>
                 </div>
               ))}
             </div>

@@ -54,10 +54,10 @@ interface Props { allPlayersData: any[]; loggedInRole: string; flagMap: Record<s
 
 // ─── Constants ───────────────────────────────────────────────────────────────────
 const POS_COLORS: Record<string, string> = {
-  ST: 'bg-[#E05C4B]/10 text-[#E05C4B]', LW: 'bg-brand-primary/10 text-text-heading',
-  RW: 'bg-brand-primary/10 text-text-heading', CAM: 'bg-[#E8A838]/10 text-[#E8A838]',
-  CM: 'bg-text-body/10 text-text-body', CDM: 'bg-brand-primary/10 text-text-heading',
-  FB: 'bg-brand-primary/10 text-text-heading', CB: 'bg-text-body/20 text-text-body',
+  ST: 'bg-[#E05C4B]/10 text-[#E05C4B]', LW: 'bg-brand-primary/10 text-text-strong',
+  RW: 'bg-brand-primary/10 text-text-strong', CAM: 'bg-[#E8A838]/10 text-[#E8A838]',
+  CM: 'bg-text-body/10 text-text-body', CDM: 'bg-brand-primary/10 text-text-strong',
+  FB: 'bg-brand-primary/10 text-text-strong', CB: 'bg-text-body/20 text-text-body',
 };
 const POS_ORDER = ['Strikers', 'Wingers', 'Midfielders', 'Full Backs', 'Centre Backs'];
 const TABS: { id: SeniorTab; label: string }[] = [
@@ -188,13 +188,13 @@ const TCell = ({ value, onChange, type = 'text', opts, placeholder = '' }:
   { value: string; onChange: (v: string) => void; type?: string; opts?: string[]; placeholder?: string }) => {
   if (opts) return (
     <select value={value} onChange={e => onChange(e.target.value)}
-      className="w-full bg-transparent font-body text-[12px] font-bold text-text-heading focus:outline-none cursor-pointer text-center appearance-none">
+      className="w-full bg-transparent font-body text-[12px] font-bold text-text-body focus:outline-none cursor-pointer text-center appearance-none">
       {opts.map(o => <option key={o} value={o}>{o}</option>)}
     </select>
   );
   return (
     <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-      className="w-full bg-transparent font-body text-[12px] font-bold text-text-heading focus:outline-none placeholder:text-text-body min-w-0 text-center" />
+      className="w-full bg-transparent font-body text-[12px] font-bold text-text-body focus:outline-none placeholder:text-text-body min-w-0 text-center" />
   );
 };
 
@@ -235,7 +235,7 @@ const EditableColHeader = ({ label, onRename, onRemove }: {
       {open && (
         <div className="absolute top-full left-0 mt-1 z-[500] bg-surface-card border border-border-default rounded-[10px] shadow-2xl min-w-[140px] overflow-hidden">
           <button onClick={() => { setEditing(true); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-heading hover:bg-surface-card/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-body hover:bg-surface-card/10 flex items-center gap-2">
             <Edit2 size={11} />Rename
           </button>
           <button onClick={() => { onRemove(); setOpen(false); }}
@@ -276,29 +276,29 @@ const EditableColHeaderLight = ({ label, onRename, onRemove, onHide, onMove }: {
           onChange={e => setDraft(e.target.value)}
           onBlur={() => { onRename(draft); setEditing(false); }}
           onKeyDown={e => { if (e.key === 'Enter') { onRename(draft); setEditing(false); }}}
-          className="bg-transparent border-b border-brand-primary/50 text-text-heading font-heading font-bold text-[12px] uppercase tracking-widest w-[60px] focus:outline-none" />
+          className="bg-transparent border-b border-brand-primary/50 text-text-strong font-heading font-bold text-[12px] uppercase tracking-widest w-[60px] focus:outline-none" />
       ) : (
         <span>{label}</span>
       )}
       <button onClick={(e) => { e.stopPropagation(); setOpen(o => !o); }}
-        className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-text-body hover:text-text-heading">
+        className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-text-body hover:text-text-strong">
         <ChevronDown size={8} />
       </button>
       {open && (
         <div className="absolute top-full left-0 mt-1 z-[500] bg-surface-card border border-border-default rounded-[10px] shadow-2xl min-w-[140px] overflow-hidden">
           <button onClick={(e) => { e.stopPropagation(); setEditing(true); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-heading hover:bg-surface-card/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-body hover:bg-surface-card/10 flex items-center gap-2">
             <Edit2 size={11} />Rename
           </button>
           {onHide && (
             <button onClick={(e) => { e.stopPropagation(); onHide(); setOpen(false); }}
-              className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-heading hover:bg-surface-card/10 flex items-center gap-2">
+              className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-body hover:bg-surface-card/10 flex items-center gap-2">
               <EyeOff size={11} />Hide column
             </button>
           )}
           {onMove && (
             <button onClick={(e) => { e.stopPropagation(); onMove(); setOpen(false); }}
-              className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-heading hover:bg-surface-card/10 flex items-center gap-2">
+              className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-text-body hover:bg-surface-card/10 flex items-center gap-2">
               <GripHorizontal size={11} />Reorder
             </button>
           )}
@@ -366,7 +366,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
         return (
           <button key={i} onClick={(e) => { e.stopPropagation(); setSelectedIdx(fullIdx); setOpenId(null); }}
             className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors
-              ${item.danger ? 'text-[#E05C4B] hover:bg-[#E05C4B]/15' : 'text-text-heading hover:bg-surface-card/10'}`}>
+              ${item.danger ? 'text-[#E05C4B] hover:bg-[#E05C4B]/15' : 'text-text-strong hover:bg-surface-card/10'}`}>
             {item.icon}{item.label}
           </button>
         );
@@ -381,14 +381,14 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
         className={`w-7 h-7 rounded-l-lg flex items-center justify-center transition-all border border-r-0 ${
           primaryItem.danger
             ? 'bg-[#E05C4B]/10 text-[#E05C4B] hover:bg-[#E05C4B] hover:text-text-on-brand border-[#E05C4B]/20'
-            : 'bg-surface-accent text-text-heading hover:bg-brand-primary/80 hover:text-text-inverse border-border-default'
+            : 'bg-surface-accent text-text-strong hover:bg-brand-primary/80 hover:text-text-inverse border-border-default'
         }`}>
         {primaryItem.icon}
       </button>
       {restItems.length > 0 && (
         <>
           <button ref={chevronRef} onClick={handleChevron}
-            className="w-5 h-7 rounded-r-lg bg-surface-accent border border-border-default text-text-heading hover:bg-brand-primary/80 hover:text-text-inverse flex items-center justify-center transition-all">
+            className="w-5 h-7 rounded-r-lg bg-surface-accent border border-border-default text-text-strong hover:bg-brand-primary/80 hover:text-text-inverse flex items-center justify-center transition-all">
             <ChevronDown size={10} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </button>
           {portal}
@@ -410,7 +410,7 @@ const ActionButtons = ({ items }: { items: ActionItem[] }) => {
             className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
               item.label === 'Restore'
                 ? 'text-status-success hover:bg-status-success hover:text-text-on-brand'
-                : 'text-text-heading hover:bg-brand-primary hover:text-text-inverse'
+                : 'text-text-strong hover:bg-brand-primary hover:text-text-inverse'
             }`}>
             {item.icon}
           </button>
@@ -469,7 +469,7 @@ const CellSelect = ({ value, options, onChange, placeholder = '–', renderValue
         const selected = opt === value;
         return (
           <button key={opt || '__blank'} type="button" onClick={(e) => { e.stopPropagation(); onChange(opt); setOpen(false); }}
-            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors ${selected ? 'bg-surface-accent text-brand-primary' : 'text-text-heading hover:bg-surface-accent'}`}>
+            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors ${selected ? 'bg-surface-accent text-brand-primary' : 'text-text-strong hover:bg-surface-accent'}`}>
             {renderValue ? renderValue(opt) : <span>{opt || placeholder}</span>}
           </button>
         );
@@ -479,7 +479,7 @@ const CellSelect = ({ value, options, onChange, placeholder = '–', renderValue
     <>
       <button ref={btnRef} type="button" onClick={toggle}
         className={`inline-flex items-center justify-center gap-1 cursor-pointer focus:outline-none ${triggerClass}`}>
-        {renderValue ? renderValue(value) : <span className="font-body text-[12px] font-bold text-text-heading">{value || placeholder}</span>}
+        {renderValue ? renderValue(value) : <span className="font-body text-[12px] font-bold text-text-body">{value || placeholder}</span>}
         <ChevronDown size={10} className={`text-text-body pointer-events-none transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {menu}
@@ -525,7 +525,7 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
                     {t.done && <Check size={9} className="text-text-on-brand" />}
                   </button>
                   <div className="flex-1 min-w-0">
-                    <p className={`font-body text-[12px] font-bold ${t.done ? 'line-through text-text-body' : 'text-text-heading'}`}>{t.text}</p>
+                    <p className={`font-body text-[12px] font-bold ${t.done ? 'line-through text-text-body' : 'text-text-strong'}`}>{t.text}</p>
                     <p className="font-body text-[10px] text-text-body">Due {t.dueDate}</p>
                   </div>
                 </div>
@@ -533,9 +533,9 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
             </div>
             <div className="flex gap-2">
               <input value={newTask} onChange={e => setNewTask(e.target.value)} placeholder="New task..."
-                className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[12px] font-bold text-text-heading focus:outline-none focus:border-border-focus" />
+                className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[12px] font-bold text-text-body focus:outline-none focus:border-border-focus" />
               <input type="date" value={newDue} onChange={e => setNewDue(e.target.value)}
-                className="w-28 bg-surface-card border border-border-default rounded-xl px-2 py-2 font-body text-[12px] font-bold text-text-heading focus:outline-none" />
+                className="w-28 bg-surface-card border border-border-default rounded-xl px-2 py-2 font-body text-[12px] font-bold text-text-body focus:outline-none" />
               <button onClick={() => { if (newTask.trim()) { setTasks(p => [...p, { id: `t${Date.now()}`, text: newTask, dueDate: newDue || 'TBD', done: false }]); setNewTask(''); setNewDue(''); }}}
                 className="w-8 h-8 bg-brand-primary text-text-inverse rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
             </div>
@@ -550,7 +550,7 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
               {notes.map(n => (
                 <div key={n.id} className="px-3 py-2 bg-surface-card border border-border-default rounded-xl">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-heading font-black text-[12px] text-text-heading">{n.author}</span>
+                    <span className="font-heading font-black text-[12px] text-text-strong">{n.author}</span>
                     <span className="font-body text-[10px] text-text-body">{n.date}</span>
                   </div>
                   <p className="font-body text-[12px] text-text-body">{n.text}</p>
@@ -559,7 +559,7 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
             </div>
             <div className="flex gap-2">
               <input value={newNote} onChange={e => setNewNote(e.target.value)} placeholder="Add a note..."
-                className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[12px] font-bold text-text-heading focus:outline-none focus:border-border-focus" />
+                className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[12px] font-bold text-text-body focus:outline-none focus:border-border-focus" />
               <button onClick={() => { if (newNote.trim()) { setNotes(p => [...p, { id: `n${Date.now()}`, author: 'You', text: newNote, date: 'Now' }]); setNewNote(''); }}}
                 className="w-8 h-8 bg-brand-primary text-text-inverse rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
             </div>
@@ -621,8 +621,8 @@ const FilterBar = ({
   const Sel = ({ value, onChange, opts }: { value: string; onChange: (v: string) => void; opts: string[] }) => (
     <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
       <select value={value} onChange={e => onChange(e.target.value)}
-        className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-heading focus:outline-none cursor-pointer pr-5">
-        {opts.map(o => <option key={o} value={o} className="bg-surface-card text-text-heading">{o}</option>)}
+        className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5">
+        {opts.map(o => <option key={o} value={o} className="bg-surface-card text-text-strong">{o}</option>)}
       </select>
       <ChevronDown size={14} className="absolute right-4 text-text-body pointer-events-none" />
     </div>
@@ -631,7 +631,7 @@ const FilterBar = ({
   // ── NumIn: sized to match ──
   const NumIn = ({ value, onChange, ph }: { value: string; onChange: (v: string) => void; ph: string }) => (
     <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={ph}
-      className="w-14 bg-surface-card border border-border-default rounded-full px-3 py-2 text-text-heading font-body text-[14px] font-bold focus:outline-none placeholder:text-text-body" />
+      className="w-14 bg-surface-card border border-border-default rounded-full px-3 py-2 text-text-body font-body text-[14px] font-bold focus:outline-none placeholder:text-text-body" />
   );
 
   return (
@@ -681,7 +681,7 @@ const FilterBar = ({
       <div className="ml-auto flex items-center shrink-0">
         <div className="flex items-center bg-surface-card/5 border border-text-on-brand/10 rounded-full p-1">
           <button onClick={() => setArchiveView('active')}
-            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'active' ? 'bg-surface-card text-text-heading shadow-sm' : 'text-text-on-brand/40 hover:text-text-on-brand'}`}>
+            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'active' ? 'bg-surface-card text-text-strong shadow-sm' : 'text-text-on-brand/40 hover:text-text-on-brand'}`}>
             Active
           </button>
           <button onClick={() => setArchiveView('audit')}
@@ -781,7 +781,7 @@ const PlayerTable = ({
   if (displayPlayers.length === 0) return (
     <div className="bg-surface-card rounded-[20px] border border-border-default flex flex-col items-center justify-center py-16">
       <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Archive size={16} className="text-text-body" /></div>
-      <div className="font-heading font-semibold text-[16px] text-text-heading mt-4">{archiveView === 'audit' ? 'No archived players' : 'No players here yet'}</div>
+      <div className="font-heading font-semibold text-[16px] text-text-strong mt-4">{archiveView === 'audit' ? 'No archived players' : 'No players here yet'}</div>
       <p className="font-body text-[12px] text-text-body font-medium">{currentTab === 'database' ? 'All players matching Scope Settings appear here.' : 'Move players forward from the previous list.'}</p>
     </div>
   );
@@ -907,7 +907,7 @@ const PlayerTable = ({
                         {/* Identity — vertical divider after (Player ID group end) */}
                         <td className={`sticky z-20 bg-surface-card group-hover:bg-surface-accent pl-3 pr-2 py-2 border-r-2 border-border-default ${idLeftCls}`}>
                           <div className="flex items-center gap-2 min-w-[190px]">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-heading flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{player.initials}</div>
+                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
                               <div className="flex items-center gap-1">
                                 <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
@@ -929,8 +929,8 @@ const PlayerTable = ({
                         {currentTab === 'long-list' ? (
                           <td className="px-2 py-3 w-[120px] border-r-2 border-border-default">
                             <div className="flex items-center justify-center gap-1">
-                              {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-heading font-body font-bold px-1.5 py-0.5 rounded text-[11px]">F{player.matchVideos}</span>}
-                              {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-heading font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{player.highlightVideos}</span>}
+                              {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">F{player.matchVideos}</span>}
+                              {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{player.highlightVideos}</span>}
                               {isRaised
                                 ? <span title="Direct — added directly to the Long List"><UserRoundCheck size={15} className="text-[#E8A838]" /></span>
                                 : <span title="Ladder — reached via the scouting process"><StairsIcon className="w-[15px] h-[15px] text-[#7C5CFC]" /></span>}
@@ -943,10 +943,10 @@ const PlayerTable = ({
                         ) : (
                           <>
                             <td className="px-2 py-3 text-center w-[52px]">
-                              <span className="bg-brand-primary/20 text-text-heading font-body font-bold px-2 py-0.5 rounded text-[12px] cursor-pointer hover:opacity-80">F{player.matchVideos}</span>
+                              <span className="bg-brand-primary/20 text-text-body font-body font-bold px-2 py-0.5 rounded text-[12px] cursor-pointer hover:opacity-80">F{player.matchVideos}</span>
                             </td>
                             <td className="px-2 py-3 text-center w-[52px]">
-                              <span className="bg-brand-primary/10 text-text-heading font-body font-bold px-2 py-0.5 rounded text-[12px] cursor-pointer hover:opacity-80">H{player.highlightVideos}</span>
+                              <span className="bg-brand-primary/10 text-text-body font-body font-bold px-2 py-0.5 rounded text-[12px] cursor-pointer hover:opacity-80">H{player.highlightVideos}</span>
                             </td>
                             <td className="px-2 py-3 text-center w-[80px] border-r-2 border-border-default">
                               <span className="font-body text-[12px] font-medium text-text-body">{player.submissionDate}</span>
@@ -955,7 +955,7 @@ const PlayerTable = ({
                         )}
                         {/* Bio Data */}
                         <td className="px-2 py-3 text-center w-[52px]">
-                          <span className={`font-body text-[12px] font-bold ${player.foot === 'Both' ? 'text-text-heading' : 'text-text-body'}`}>
+                          <span className={`font-body text-[12px] font-bold ${player.foot === 'Both' ? 'text-text-strong' : 'text-text-body'}`}>
                             {player.foot === 'Both' ? 'B' : player.foot[0]}
                           </span>
                         </td>
@@ -972,12 +972,12 @@ const PlayerTable = ({
                         {/* Game Stats — alternating shaded */}
                         {(currentTab !== 'database' || visibleStats.has('app')) && (
                           <td className="px-2 py-3 text-center w-[60px] bg-surface-accent/30 group-hover:bg-surface-accent">
-                            <span className="font-mono font-bold text-[14px] text-text-heading">{player.app}</span>
+                            <span className="font-mono font-bold text-[14px] text-text-strong">{player.app}</span>
                           </td>
                         )}
                         {(currentTab !== 'database' || visibleStats.has('gls')) && (
                           <td className="px-2 py-3 text-center w-[60px]">
-                            <span className={`font-mono font-bold text-[14px] ${player.goals >= 8 ? 'text-text-heading' : 'text-text-heading'}`}>{player.goals}</span>
+                            <span className={`font-mono font-bold text-[14px] ${player.goals >= 8 ? 'text-text-strong' : 'text-text-strong'}`}>{player.goals}</span>
                           </td>
                         )}
                         {(currentTab !== 'database' || visibleStats.has('pen')) && (
@@ -988,13 +988,13 @@ const PlayerTable = ({
                         {/* Ast — vertical divider after (Game Stats group end) */}
                         {(currentTab !== 'database' || visibleStats.has('ast')) && (
                           <td className="px-2 py-3 text-center w-[60px] border-r-2 border-border-default">
-                            <span className="font-mono text-[14px] text-text-heading">{player.ass}</span>
+                            <span className="font-mono text-[14px] text-text-strong">{player.ass}</span>
                           </td>
                         )}
 
                         {extraCols.map(c => (
                           <td key={c.id} className="px-2 py-3 text-center w-[64px]">
-                            <span className={`text-[12px] font-medium text-text-heading whitespace-nowrap ${c.mono ? 'font-mono' : 'font-body'}`}>{c.value(player, 0)}</span>
+                            <span className={`text-[12px] font-medium text-text-body whitespace-nowrap ${c.mono ? 'font-mono' : 'font-body'}`}>{c.value(player, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1082,13 +1082,13 @@ const TargetSuperTable = ({
     <th className={`px-2 py-2 font-heading font-bold text-[12px] text-text-on-brand uppercase tracking-widest text-center whitespace-nowrap ${cls}`}>{label}</th>
   );
   const GrpHd = ({ label, span, amber = false }: { label: string; span: number; amber?: boolean }) => (
-    <th colSpan={span} className={`px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-center border-b border-text-on-brand/10 ${amber ? 'text-text-heading' : 'text-text-on-brand/50'}`}>{label}</th>
+    <th colSpan={span} className={`px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-center border-b border-text-on-brand/10 ${amber ? 'text-text-strong' : 'text-text-on-brand/50'}`}>{label}</th>
   );
 
   if (displayPlayers.length === 0) return (
     <div className="bg-surface-card rounded-[20px] border border-border-default flex flex-col items-center justify-center py-16 w-full">
       <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Archive size={16} className="text-text-body" /></div>
-      <div className="font-heading font-semibold text-[16px] text-text-heading mt-4">No target players yet</div>
+      <div className="font-heading font-semibold text-[16px] text-text-strong mt-4">No target players yet</div>
       <p className="font-body text-[12px] font-medium text-text-body">Send players forward from the Short List to begin tracking.</p>
     </div>
   );
@@ -1188,7 +1188,7 @@ const TargetSuperTable = ({
                           onChange={upd(player.id, field)}
                           renderValue={tint
                             ? (v => v ? <span style={tintStyle(profileColor(v))} className="inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v}</span> : <span className="font-body text-[12px] font-bold text-text-body">–</span>)
-                            : (v => <span className="font-body text-[12px] font-bold text-text-heading">{v || '–'}</span>)} />
+                            : (v => <span className="font-body text-[12px] font-bold text-text-body">{v || '–'}</span>)} />
                       </td>
                     );
                     return (
@@ -1200,7 +1200,7 @@ const TargetSuperTable = ({
                         {/* Player */}
                         <td className="sticky left-[76px] z-20 bg-surface-card group-hover:bg-surface-accent pl-2 pr-1 py-2 border-r-2 border-border-default">
                           <div className="flex items-center gap-2 min-w-[160px]">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-heading flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{player.initials}</div>
+                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1 mt-0.5">
@@ -1219,9 +1219,9 @@ const TargetSuperTable = ({
                         <td className="px-2 py-2 border-b border-border-default border-l border-border-default text-center w-[120px]">
                           {openNotesId === player.id && <NotesTasksPopup playerId={player.id} playerName={player.name} onClose={() => setOpenNotesId(null)} />}
                           <div className="flex items-center justify-center gap-1">
-                            <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-text-inverse text-text-heading flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
-                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-heading font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
-                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-heading font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
+                            <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-text-inverse text-text-strong flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
+                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
+                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
                             <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
                           </div>
                         </td>
@@ -1234,31 +1234,31 @@ const TargetSuperTable = ({
                         {/* Video links — underlined Link text */}
                         <td className="px-1 py-2 border-b border-border-default border-l border-border-default text-center w-[56px]">
                           {td.h1
-                            ? <a href={td.h1} className="font-body text-[12px] font-bold text-text-heading underline">Link</a>
+                            ? <a href={td.h1} className="font-body text-[12px] font-bold text-text-body underline">Link</a>
                             : <TCell value={(td as any).h1} onChange={upd(player.id, 'h1')} placeholder="url" />}
                         </td>
                         <td className="px-1 py-2 border-b border-border-default text-center w-[56px]">
                           {td.h2 
-                            ? <a href={td.h2} className="font-body text-[12px] font-bold text-text-heading underline">Link</a>
+                            ? <a href={td.h2} className="font-body text-[12px] font-bold text-text-body underline">Link</a>
                             : <TCell value={(td as any).h2} onChange={upd(player.id, 'h2')} placeholder="url" />}
                         </td>
                         <td className="px-1 py-2 border-b border-border-default text-center w-[56px]">
                           {td.fm1 
-                            ? <a href={td.fm1} className="font-body text-[12px] font-bold text-text-heading underline">Link</a>
+                            ? <a href={td.fm1} className="font-body text-[12px] font-bold text-text-body underline">Link</a>
                             : <TCell value={(td as any).fm1} onChange={upd(player.id, 'fm1')} placeholder="url" />}
                         </td>
                         <td className="px-1 py-2 border-b border-border-default text-center w-[56px]">
                           {td.fm2 
-                            ? <a href={td.fm2} className="font-body text-[12px] font-bold text-text-heading underline">Link</a>
+                            ? <a href={td.fm2} className="font-body text-[12px] font-bold text-text-body underline">Link</a>
                             : <TCell value={(td as any).fm2} onChange={upd(player.id, 'fm2')} placeholder="url" />}
                         </td>
                         <EC field="season" ph="24/25" /><EC field="comp" ph="Comp" />
-                        <td className="px-1 py-2 border-b border-border-default text-center"><span className="font-mono font-bold text-[14px] text-text-heading">{player.goals}</span></td>
-                        <td className="px-1 py-2 border-b border-border-default text-center"><span className="font-mono text-[14px] text-text-heading">{player.ass}</span></td>
+                        <td className="px-1 py-2 border-b border-border-default text-center"><span className="font-mono font-bold text-[14px] text-text-strong">{player.goals}</span></td>
+                        <td className="px-1 py-2 border-b border-border-default text-center"><span className="font-mono text-[14px] text-text-strong">{player.ass}</span></td>
                         <EC field="cost" ph="€0" /><EC field="fee" ph="€0" /><EC field="pct" ph="%" />
                         {extraCols.map(c => (
                           <td key={c.id} className="px-2 py-2 border-b border-border-default text-center w-[64px] border-l border-border-default">
-                            <span className={`font-body text-[12px] font-medium text-text-heading whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(player, 0)}</span>
+                            <span className={`font-body text-[12px] font-medium text-text-body whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(player, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1426,21 +1426,21 @@ const ShortListTable = ({
     opts ? (
       <div className="relative inline-flex items-center w-full">
         <select value={val} onChange={e=>onChange(e.target.value)}
-          className={`w-full bg-transparent font-body text-[12px] font-bold text-text-heading focus:outline-none appearance-none text-center cursor-pointer ${chevron ? 'pr-4' : ''}`}>
+          className={`w-full bg-transparent font-body text-[12px] font-bold text-text-body focus:outline-none appearance-none text-center cursor-pointer ${chevron ? 'pr-4' : ''}`}>
           {opts.map(o=><option key={o} value={o}>{o||'–'}</option>)}
         </select>
         {chevron && <ChevronDown size={10} className="absolute right-0 text-text-body pointer-events-none" />}
       </div>
     ) : (
       <input value={val} onChange={e=>onChange(e.target.value)} placeholder={ph}
-        className="w-full bg-transparent font-body text-[12px] font-bold text-text-heading focus:outline-none placeholder:text-text-body text-center" />
+        className="w-full bg-transparent font-body text-[12px] font-bold text-text-body focus:outline-none placeholder:text-text-body text-center" />
     )
   );
 
   if (displayPlayers.length === 0) return (
     <div className="bg-surface-card rounded-[20px] border border-border-default flex flex-col items-center justify-center py-16">
       <Archive size={16} className="text-text-body mb-3" />
-      <div className="font-heading font-semibold text-[16px] text-text-heading mt-2">No short-listed players yet</div>
+      <div className="font-heading font-semibold text-[16px] text-text-strong mt-2">No short-listed players yet</div>
       <p className="font-body text-[12px] text-text-body font-medium">Send players forward from the Long List.</p>
     </div>
   );
@@ -1533,7 +1533,7 @@ const ShortListTable = ({
                         {/* Player name + monitor pill */}
                         <td className="sticky left-[164px] z-20 bg-surface-card group-hover:bg-inherit px-2 py-2 border-r-2 border-border-default w-[190px]">
                           <div className="flex items-center gap-2 min-w-0">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-heading flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{player.initials}</div>
+                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{player.initials}</div>
                             <div className="flex flex-col min-w-0">
                             <div className="flex items-center gap-1">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
@@ -1542,7 +1542,7 @@ const ShortListTable = ({
                                 const nxtVals = Object.values(scoutData.get(player.id) || {});
                                 const tCount = nxtVals.filter((sd:any) => sd?.nxt === 'T').length;
                                 const mCount = nxtVals.filter((sd:any) => sd?.nxt === 'M').length;
-                                if (tCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-brand-primary/10 text-text-heading border border-brand-primary/20">Target</span>;
+                                if (tCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-brand-primary/10 text-text-body border border-brand-primary/20">Target</span>;
                                 if (mCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-[#E8A838]/15 text-[#E8A838] border border-[#E8A838]/30">Monitor</span>;
                                 return null;
                               })()}
@@ -1581,15 +1581,15 @@ const ShortListTable = ({
                         <td className="px-1 py-2 w-[64px] border-r-2 border-border-default">
                           <CellSelect value={pathwayMap.get(player.id) || ''} options={PATHWAY_OPTS} menuWidth={120}
                             onChange={v => setPathwayMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-heading">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-body">{v || '–'}</span>} />
                         </td>
                         {/* Status — N&T, F/H video counts, video popup */}
                         <td className="px-2 py-2 border-r-2 border-border-default w-[130px]">
                           {openNotesId === player.id && <NotesTasksPopup playerId={player.id} playerName={player.name} onClose={() => setOpenNotesId(null)} />}
                           <div className="flex items-center justify-center gap-1">
-                            <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-text-inverse text-text-heading flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
-                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-heading font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
-                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-heading font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
+                            <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-text-inverse text-text-strong flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
+                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
+                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
                             <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
                           </div>
                         </td>
@@ -1599,7 +1599,7 @@ const ShortListTable = ({
                           const gcell = (val: string, field: 'plg'|'pog'|'nxt', opts: string[]) => (
                             <CellSelect value={val} options={opts} menuWidth={72}
                               onChange={v=>updSD(player.id,s.key,field,v)}
-                              renderValue={x => <span className="font-body text-[12px] font-bold text-text-heading">{x || '–'}</span>} />
+                              renderValue={x => <span className="font-body text-[12px] font-bold text-text-body">{x || '–'}</span>} />
                           );
                           return (
                             <React.Fragment key={s.key}>
@@ -1615,7 +1615,7 @@ const ShortListTable = ({
                           ['hl1','HL1','border-l border-border-default'],['hl2','HL2','']].map(([field, label, cls]) => (
                           <td key={field} className={`px-1 py-2 text-center w-[32px] ${cls}`}>
                             {(vf as any)[field]
-                              ? <a href={(vf as any)[field]} className="font-body text-[12px] font-bold text-text-heading underline">Link</a>
+                              ? <a href={(vf as any)[field]} className="font-body text-[12px] font-bold text-text-body underline">Link</a>
                               : <CI val="" onChange={v=>updVF(player.id, field, v)} ph="url" />}
                           </td>
                         ))}
@@ -1657,14 +1657,14 @@ const InlineSelect = ({ value, opts, onChange, colorMap }: {
     <select ref={ref} value={value} autoFocus
       onChange={e => { onChange(e.target.value); setEditing(false); }}
       onBlur={() => setEditing(false)}
-      className="bg-surface-card border border-border-default rounded-lg px-2 py-0.5 font-body text-[12px] font-bold text-text-heading focus:outline-none cursor-pointer">
+      className="bg-surface-card border border-border-default rounded-lg px-2 py-0.5 font-body text-[12px] font-bold text-text-body focus:outline-none cursor-pointer">
       {opts.map(o => <option key={o} value={o}>{o}</option>)}
     </select>
   );
   return (
     <span onClick={() => setEditing(true)} title="Click to edit"
       style={color ? { backgroundColor: color, color: 'var(--text-on-brand)' } : undefined}
-      className={`inline-block font-body text-[12px] font-bold cursor-pointer hover:opacity-80 rounded px-2 py-0.5 ${!color ? 'text-text-heading' : ''}`}>
+      className={`inline-block font-body text-[12px] font-bold cursor-pointer hover:opacity-80 rounded px-2 py-0.5 ${!color ? 'text-text-strong' : ''}`}>
       {value || '—'}
     </span>
   );
@@ -1814,7 +1814,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         {/* Name with initials avatar */}
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-heading flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">
+                            <div className="w-8 h-8 rounded-xl bg-surface-card text-text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">
                               {p.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
                             </div>
                             <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout'}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team, matchVideos: p.matchVideos, highlightVideos: p.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: 'Signed List', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })}
@@ -1829,27 +1829,27 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         {/* Team (Club) */}
                         <td className="px-3 py-2 border-r border-border-default/10">
                           <CellSelect value={p.club} options={['AC Horsens','VPN']} menuWidth={140} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, club: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-heading">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-body">{v || '–'}</span>} />
                         </td>
                         {/* Identified/Source */}
                         <td className="px-3 py-2 border-r border-border-default/10">
                           <CellSelect value={p.identified} options={['Scouted','Social','Agent']} menuWidth={120} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, identified: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-heading">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-body">{v || '–'}</span>} />
                         </td>
                         {/* Scout */}
                         <td className="px-3 py-2 border-r border-border-default/10">
                           <CellSelect value={p.scout} options={['Tom','Mbugua','Brice','Nene','Scott','Sekou','Sall','Buba']} menuWidth={120} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, scout: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-heading">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-body">{v || '–'}</span>} />
                         </td>
                         {/* Move */}
                         <td className="px-3 py-2 border-r border-border-default/30">
                           <CellSelect value={p.move} options={['Signed','Loan','Trial','Trial/Signed','Loan/Signed']} menuWidth={140} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, move: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-heading">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body text-[12px] font-bold text-text-body">{v || '–'}</span>} />
                         </td>
                         {/* Year */}
                         <td className="px-3 py-2 text-center border-r border-border-default/10">
                           <input type="number" value={p.year} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, year: Number(e.target.value)} : x))}
-                            className="bg-transparent font-mono font-bold text-[12px] text-text-heading focus:outline-none w-[32px] text-center" />
+                            className="bg-transparent font-mono font-bold text-[12px] text-text-strong focus:outline-none w-[32px] text-center" />
                         </td>
                         {/* Fee */}
                         <td className="px-3 py-2 text-right border-r border-border-default/10">
@@ -1859,12 +1859,12 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         {/* Current Val */}
                         <td className="px-3 py-2 text-right border-r border-border-default/10">
                           <input value={p.currentValue} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, currentValue: e.target.value} : x))}
-                            className="bg-transparent font-mono text-[12px] text-text-heading focus:outline-none w-[80px] text-right" />
+                            className="bg-transparent font-mono text-[12px] text-text-body focus:outline-none w-[80px] text-right" />
                         </td>
                         {/* Potential Val */}
                         <td className="px-3 py-2 text-right border-r border-border-default/30">
                           <input value={p.potentialValue} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, potentialValue: e.target.value} : x))}
-                            className="bg-transparent font-mono font-bold text-[12px] text-text-heading focus:outline-none w-[80px] text-right" />
+                            className="bg-transparent font-mono font-bold text-[12px] text-text-strong focus:outline-none w-[80px] text-right" />
                         </td>
                         {/* Scout Success — soft pill */}
                         <td className="px-2 py-2 text-center border-r border-border-default/10">
@@ -1881,7 +1881,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         </td>
                         {extraCols.map(c => (
                           <td key={c.id} className="px-3 py-2 text-center border-l border-border-default/10">
-                            <span className={`font-body text-[12px] font-medium text-text-heading whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(p, 0)}</span>
+                            <span className={`font-body text-[12px] font-medium text-text-body whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(p, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1915,20 +1915,20 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                   <div key={field.key}>
                     <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">{field.label}</label>
                     <input type={field.type} value={(newPlayer as any)[field.key] || ''} onChange={e => setNewPlayer(prev => ({ ...prev, [field.key]: field.type === 'number' ? Number(e.target.value) : e.target.value }))}
-                      className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                      className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                   </div>
                 ))}
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label>
                   <select value={newPlayer.pos || 'ST'} onChange={e => setNewPlayer(prev => ({ ...prev, pos: e.target.value }))}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                     {['ST','LW','RW','CM','CDM','CAM','FB','CB','DM','LB','RB'].map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Move Type</label>
                   <select value={newPlayer.move || 'Signed'} onChange={e => setNewPlayer(prev => ({ ...prev, move: e.target.value }))}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                     {['Signed','Loan','Trial/Signed','Loan/Signed'].map(m => <option key={m}>{m}</option>)}
                   </select>
                 </div>
@@ -1936,7 +1936,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
               <div>
                 <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Note</label>
                 <input type="text" value={newPlayer.note || ''} onChange={e => setNewPlayer(prev => ({ ...prev, note: e.target.value }))} placeholder="Optional note..."
-                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
               </div>
               <button onClick={handleAdd} disabled={!newPlayer.name}
                 className="w-full bg-brand-primary border-2 border-brand-primary text-text-on-brand rounded-full py-3 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
@@ -2014,11 +2014,11 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
           }
           setOpen(!open);
         }} type="button"
-        className="w-full flex items-center gap-2 bg-surface-card border border-border-default rounded-xl px-3 py-2 text-left font-body text-[14px] font-bold text-text-heading hover:border-brand-primary focus:outline-none focus:border-border-focus transition-all">
+        className="w-full flex items-center gap-2 bg-surface-card border border-border-default rounded-xl px-3 py-2 text-left font-body text-[14px] font-bold text-text-body hover:border-brand-primary focus:outline-none focus:border-border-focus transition-all">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-body shrink-0">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
         </svg>
-        <span className={value ? 'text-text-heading' : 'text-text-body'}>{fmtDisplay || 'Select date'}</span>
+        <span className={value ? 'text-text-strong' : 'text-text-body'}>{fmtDisplay || 'Select date'}</span>
       </button>
       {open && (
         <div className="absolute mt-1 bg-surface-card border border-border-default/50 rounded-xl shadow-[var(--shadow-2xl)] p-3 z-50 w-[260px] animate-fade-in">
@@ -2030,13 +2030,13 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
             <div className="flex items-center gap-1 relative">
               {/* Month dropdown trigger */}
               <button onClick={() => { setShowMonthGrid(!showMonthGrid); setShowYearList(false); }}
-                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-text-heading hover:text-brand-primary transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
+                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-text-strong hover:text-brand-primary transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
                 {MONTH_NAMES[viewMonth]}
                 <ChevronDown size={9} className="text-text-body" />
               </button>
               {/* Year dropdown trigger */}
               <button onClick={() => { setShowYearList(!showYearList); setShowMonthGrid(false); }}
-                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-text-heading hover:text-brand-primary transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
+                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-text-strong hover:text-brand-primary transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
                 {viewYear}
                 <ChevronDown size={9} className="text-text-body" />
               </button>
@@ -2048,7 +2048,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
                     {MONTH_SHORT.map((m, i) => (
                       <button key={m} onClick={() => { setViewMonth(i); setShowMonthGrid(false); }}
                         className={`py-2 rounded-lg font-body font-bold text-[12px] text-center transition-all ${
-                          i === viewMonth ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-heading hover:bg-surface-accent'
+                          i === viewMonth ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-strong hover:bg-surface-accent'
                         }`}>{m}</button>
                     ))}
                   </div>
@@ -2061,7 +2061,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
                   {Array.from({ length: 21 }, (_, i) => viewYear - 10 + i).map(y => (
                     <button key={y} onClick={() => { setViewYear(y); setShowYearList(false); }}
                       className={`w-full py-2 rounded-lg font-heading font-bold text-[12px] text-center transition-all ${
-                        y === viewYear ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-heading hover:bg-surface-accent'
+                        y === viewYear ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-strong hover:bg-surface-accent'
                       }`}>{y}</button>
                   ))}
                 </div>
@@ -2085,7 +2085,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
                 className={`w-full aspect-square flex items-center justify-center font-body font-bold text-[12px] rounded-full transition-all ${
                   isSelected(d) ? 'bg-brand-primary text-text-inverse shadow-sm'
                     : isToday(d) ? 'bg-brand-primary/10 text-brand-primary font-black'
-                    : 'text-text-heading hover:bg-surface-accent'
+                    : 'text-text-strong hover:bg-surface-accent'
                 }`}>
                 {d}
               </button>
@@ -2112,7 +2112,7 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
     <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">{label}</span>
     <div className="flex flex-wrap gap-2">
       {items.map((c, i) => (
-        <span key={i} className="inline-flex items-center gap-1 bg-surface-accent border border-border-default rounded-full px-2 py-1 font-body font-black text-[12px] text-text-heading">
+        <span key={i} className="inline-flex items-center gap-1 bg-surface-accent border border-border-default rounded-full px-2 py-1 font-body font-black text-[12px] text-text-body">
           {c}
           <button onClick={() => onRemove(i)} className="text-text-body hover:text-status-error transition-colors leading-none"><X size={9} /></button>
         </span>
@@ -2121,7 +2121,7 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
     <div className="flex items-center border border-dashed border-border-default rounded-full overflow-hidden">
       <input value={newVal} onChange={e => setNewVal(e.target.value)} placeholder="Add…"
         onKeyDown={e => e.key === 'Enter' && onAdd()}
-        className="font-body text-[12px] font-semibold text-text-heading border-none outline-none px-2 py-1 flex-1 min-w-0 bg-transparent placeholder:text-text-body" />
+        className="font-body text-[12px] font-semibold text-text-body border-none outline-none px-2 py-1 flex-1 min-w-0 bg-transparent placeholder:text-text-body" />
       <button onClick={onAdd}
         className="bg-surface-accent border-l border-border-default text-brand-primary font-black text-[14px] px-2 py-1 hover:bg-brand-primary hover:text-text-inverse transition-colors shrink-0">+</button>
     </div>
@@ -2238,7 +2238,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
       {editingId === pt.id ? (
         <>
           <input value={editName} onChange={e => setEditName(e.target.value)}
-            className="flex-1 min-w-0 bg-surface-card border border-border-default rounded-lg px-2 py-1 font-body text-[12px] font-bold text-text-heading focus:outline-none focus:border-border-focus" />
+            className="flex-1 min-w-0 bg-surface-card border border-border-default rounded-lg px-2 py-1 font-body text-[12px] font-bold text-text-body focus:outline-none focus:border-border-focus" />
           <div className="flex gap-0.5 shrink-0">{COLOR_SWATCHES.map(c => (
             <button key={c} onClick={() => setEditColor(c)}
               className={`w-3.5 h-3.5 rounded-full hover:scale-110 transition-transform ${editColor === c ? 'ring-2 ring-text-heading ring-offset-1' : ''}`}
@@ -2246,11 +2246,11 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           ))}</div>
           <button onClick={() => { onEditProfile(pt.id, editName, editColor); setEditingId(null); }}
             className="px-2 py-0.5 bg-brand-primary text-text-on-brand rounded-lg font-body text-[10px] font-black">Ok</button>
-          <button onClick={() => setEditingId(null)} className="text-text-body hover:text-text-heading"><X size={11} /></button>
+          <button onClick={() => setEditingId(null)} className="text-text-body hover:text-text-strong"><X size={11} /></button>
         </>
       ) : (
         <>
-          <span className="flex-1 font-body font-bold text-[12px] text-text-heading truncate">{pt.name}</span>
+          <span className="flex-1 font-body font-bold text-[12px] text-text-body truncate">{pt.name}</span>
           <div className="relative shrink-0">
             <button onClick={() => setActiveSwatchId(activeSwatchId === pt.id ? null : pt.id)}
               className="w-5 h-5 rounded-full border-2 border-surface-card shadow-[0_0_0_1px_var(--border-default)] hover:scale-110 transition-transform"
@@ -2292,7 +2292,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             {savedCard1 ? <><Check size={11} /> Saved</> : <><Save size={11} /> Update</>}
           </button>
           <button onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1 px-3 py-2 rounded-full border border-border-default bg-surface-card font-body font-bold text-[12px] text-text-heading hover:border-brand-primary hover:text-brand-primary transition-all">
+            className="flex items-center gap-1 px-3 py-2 rounded-full border border-border-default bg-surface-card font-body font-bold text-[12px] text-text-body hover:border-brand-primary hover:text-brand-primary transition-all">
             <Plus size={11} /> Add Scope
           </button>
         </div>
@@ -2301,7 +2301,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
         <div className="px-5 py-2 border-b border-border-default/40">
           <div className="relative inline-block">
             <select value={activeScope} onChange={e => { setActiveScope(e.target.value); setScopeName(e.target.value); }}
-              className="appearance-none bg-surface-accent border border-border-default rounded-full pl-4 pr-8 py-2 font-heading font-bold text-[12px] text-text-heading cursor-pointer focus:outline-none hover:border-brand-primary transition-all">
+              className="appearance-none bg-surface-accent border border-border-default rounded-full pl-4 pr-8 py-2 font-heading font-bold text-[12px] text-text-strong cursor-pointer focus:outline-none hover:border-brand-primary transition-all">
               {AVAILABLE_SCOPES.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
             <ChevronDown size={10} className="absolute right-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
@@ -2314,7 +2314,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <div className="flex flex-col gap-1">
             <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Scope Name</label>
             <input type="text" value={scopeName} onChange={e => setScopeName(e.target.value)}
-              className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:border-border-focus transition-all" />
+              className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:border-border-focus transition-all" />
           </div>
           {/* Dates inline */}
           <div className="grid grid-cols-2 gap-3">
@@ -2330,7 +2330,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mt-1">Description</label>
           <textarea value={description} onChange={e => setDescription(e.target.value)}
             placeholder="Enter start and end dates, then use the Scope Requirements builder below to set target positions per year…"
-            className="w-full min-h-[120px] flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-mono text-[12px] font-bold text-text-heading focus:outline-none focus:border-border-focus transition-all resize-none leading-relaxed" />
+            className="w-full min-h-[120px] flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-mono text-[12px] font-bold text-text-strong focus:outline-none focus:border-border-focus transition-all resize-none leading-relaxed" />
         </div>
       </div>
 
@@ -2343,7 +2343,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <button key={y} onClick={() => handleYearClick(y)}
                 className={`px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all ${
                   activeYearBadge === y ? 'bg-brand-primary text-text-inverse shadow-sm'
-                    : 'text-text-body hover:text-text-heading'
+                    : 'text-text-body hover:text-text-strong'
                 }`}>{y}</button>
             ))}
           </div>
@@ -2359,7 +2359,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                     <button key={pos} onClick={() => injectPosition(activeYearBadge, pos)}
                       className={`px-5 py-3 rounded-full font-heading font-bold text-[14px] border transition-all ${
                         active ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm'
-                          : 'bg-surface-accent text-text-heading border-border-default hover:bg-brand-primary/10 hover:border-brand-primary hover:text-brand-primary'
+                          : 'bg-surface-accent text-text-strong border-border-default hover:bg-brand-primary/10 hover:border-brand-primary hover:text-brand-primary'
                       }`}>{pos}</button>
                   );
                 })}
@@ -2367,7 +2367,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             </>
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center gap-2">
-              <p className="font-heading font-semibold text-[16px] text-text-heading">Select a year to begin</p>
+              <p className="font-heading font-semibold text-[16px] text-text-strong">Select a year to begin</p>
               <p className="font-body text-[14px] font-medium text-text-body max-w-[360px]">Choose a year tab above to set the target positions your scouts should prioritise for that intake.</p>
             </div>
           )}
@@ -2393,7 +2393,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <div className="flex items-center gap-2 px-3 py-3 mt-1 border border-dashed border-border-default rounded-xl">
             <input value={newProfileName} onChange={e => setNewProfileName(e.target.value)}
               placeholder="New profile…"
-              className="flex-1 min-w-0 bg-transparent font-body text-[12px] font-bold text-text-heading outline-none placeholder:text-text-body" />
+              className="flex-1 min-w-0 bg-transparent font-body text-[12px] font-bold text-text-body outline-none placeholder:text-text-body" />
             <div className="flex gap-1 shrink-0">{COLOR_SWATCHES.map(c => (
               <button key={c} onClick={() => setNewProfileColor(c)}
                 className={`w-4 h-4 rounded-full hover:scale-110 transition-transform ${newProfileColor === c ? 'ring-2 ring-text-heading ring-offset-1' : ''}`}
@@ -2415,7 +2415,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <div className="flex-1" />
           <div className="relative inline-block">
             <button onClick={() => setClassDropOpen(!classDropOpen)}
-              className="flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-heading font-bold text-[12px] text-text-heading hover:border-brand-primary transition-all">
+              className="flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-heading font-bold text-[12px] text-text-strong hover:border-brand-primary transition-all">
               Manage: {{ tags: 'Grade Scale', grades: 'Grade Scale', nxt: 'NXT Values', pathways: 'Pathways' }[classView]}
               <ChevronDown size={10} className={`text-text-body transition-transform ${classDropOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -2427,7 +2427,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                   { id: 'pathways' as const, label: 'Pathways' },
                 ]).map(opt => (
                   <button key={opt.id} onClick={() => { setClassView(opt.id); setClassDropOpen(false); }}
-                    className={`flex items-center gap-2 w-full px-4 py-2 font-body font-bold text-[12px] transition-colors text-left ${classView === opt.id ? 'bg-brand-primary/10 text-brand-primary' : 'text-text-heading hover:bg-surface-accent'}`}>
+                    className={`flex items-center gap-2 w-full px-4 py-2 font-body font-bold text-[12px] transition-colors text-left ${classView === opt.id ? 'bg-brand-primary/10 text-brand-primary' : 'text-text-strong hover:bg-surface-accent'}`}>
                     {classView === opt.id && <Check size={11} className="text-brand-primary" />}
                     {opt.label}
                   </button>
@@ -2445,7 +2445,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2">
                 {customGrades.map((g, i) => (
-                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-text-heading">
+                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-text-body">
                     {g}
                     <button onClick={() => setCustomGrades(p => p.filter((_, j) => j !== i))} className="text-text-body hover:text-status-error transition-colors"><X size={11} /></button>
                   </span>
@@ -2454,7 +2454,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newGrade} onChange={e => setNewGrade(e.target.value)} placeholder="Add grade…"
                   onKeyDown={e => e.key === 'Enter' && newGrade.trim() && (setCustomGrades(p => [...p, newGrade.trim()]), setNewGrade(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-text-heading border-none outline-none px-4 py-2 bg-transparent placeholder:text-text-body" />
+                  className="flex-1 font-body text-[14px] font-bold text-text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-text-body" />
                 <button onClick={() => { if (newGrade.trim()) { setCustomGrades(p => [...p, newGrade.trim()]); setNewGrade(''); }}}
                   className="bg-surface-accent border-l border-border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-text-inverse transition-colors">+</button>
               </div>
@@ -2466,7 +2466,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2">
                 {customNxt.map((n, i) => (
-                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-text-heading">
+                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-text-body">
                     {n}
                     <button onClick={() => setCustomNxt(p => p.filter((_, j) => j !== i))} className="text-text-body hover:text-status-error transition-colors"><X size={11} /></button>
                   </span>
@@ -2475,7 +2475,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newNxtVal} onChange={e => setNewNxtVal(e.target.value)} placeholder="Add value…"
                   onKeyDown={e => e.key === 'Enter' && newNxtVal.trim() && (setCustomNxt(p => [...p, newNxtVal.trim()]), setNewNxtVal(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-text-heading border-none outline-none px-4 py-2 bg-transparent placeholder:text-text-body" />
+                  className="flex-1 font-body text-[14px] font-bold text-text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-text-body" />
                 <button onClick={() => { if (newNxtVal.trim()) { setCustomNxt(p => [...p, newNxtVal.trim()]); setNewNxtVal(''); }}}
                   className="bg-surface-accent border-l border-border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-text-inverse transition-colors">+</button>
               </div>
@@ -2487,7 +2487,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2">
                 {customPathways.map((p, i) => (
-                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-text-heading">
+                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-text-body">
                     {p}
                     <button onClick={() => setCustomPathways(prev => prev.filter((_, j) => j !== i))} className="text-text-body hover:text-status-error transition-colors"><X size={11} /></button>
                   </span>
@@ -2496,7 +2496,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newPathway} onChange={e => setNewPathway(e.target.value)} placeholder="Add pathway…"
                   onKeyDown={e => e.key === 'Enter' && newPathway.trim() && (setCustomPathways(p => [...p, newPathway.trim()]), setNewPathway(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-text-heading border-none outline-none px-4 py-2 bg-transparent placeholder:text-text-body" />
+                  className="flex-1 font-body text-[14px] font-bold text-text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-text-body" />
                 <button onClick={() => { if (newPathway.trim()) { setCustomPathways(p => [...p, newPathway.trim()]); setNewPathway(''); }}}
                   className="bg-surface-accent border-l border-border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-text-inverse transition-colors">+</button>
               </div>
@@ -2521,7 +2521,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Scope Name</label>
               <input type="text" value={newScope.name} onChange={e => setNewScope(p => ({ ...p, name: e.target.value }))}
                 placeholder="e.g. East Africa U17 Cycle 2026"
-                className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:border-border-focus" />
+                className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:border-border-focus" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="relative">
@@ -2535,7 +2535,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Description</label>
               <textarea value={newScope.desc} onChange={e => setNewScope(p => ({ ...p, desc: e.target.value }))}
                 placeholder="Scope description…" rows={3}
-                className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:border-border-focus resize-none" />
+                className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:border-border-focus resize-none" />
             </div>
             <button onClick={() => { setShowAddModal(false); setNewScope({ name: '', start: '', end: '', desc: '' }); }}
               disabled={!newScope.name.trim()}
@@ -2698,7 +2698,7 @@ const DatabaseToolbar = ({
   const toggleStat = (key: string) =>
     setVisibleStats(prev => { const n = new Set(prev); if (n.has(key)) n.delete(key); else n.add(key); return n; });
   const dobTooltip = `Players born between 01/01/${scopeYearMin} to 31/12/${scopeYearMax}`;
-  const trigger = "flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-heading hover:border-brand-primary transition-colors";
+  const trigger = "flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-body hover:border-brand-primary transition-colors";
   const label = "font-heading font-bold text-[9px] uppercase tracking-wider text-text-body px-1";
   return (
     <div className="flex items-end gap-4 flex-wrap w-full">
@@ -2706,7 +2706,7 @@ const DatabaseToolbar = ({
       <div className="flex flex-col gap-0.5 shrink-0">
         <span className={label}>DOB range</span>
         <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-border-default">
-          <span className="font-body font-bold text-[12px] text-text-heading">01/01/{scopeYearMin} – 31/12/{scopeYearMax}</span>
+          <span className="font-body font-bold text-[12px] text-text-body">01/01/{scopeYearMin} – 31/12/{scopeYearMax}</span>
           <span title={dobTooltip} className="flex items-center text-brand-primary cursor-help"><Info size={13} /></span>
         </div>
       </div>
@@ -2724,7 +2724,7 @@ const DatabaseToolbar = ({
                 const text = opt === 'All' ? 'All' : `${opt} — ${POSITION_LIST.find(p => p.pos === opt)?.name ?? ''}`;
                 return (
                   <button key={opt} onClick={() => { setFilterPos(opt); setPosOpen(false); }}
-                    className={`w-full text-left px-4 py-1.5 font-body font-bold text-[12px] transition-colors ${filterPos === opt ? 'bg-surface-accent text-text-heading' : 'text-text-heading hover:bg-surface-accent'}`}>{text}</button>
+                    className={`w-full text-left px-4 py-1.5 font-body font-bold text-[12px] transition-colors ${filterPos === opt ? 'bg-surface-accent text-text-strong' : 'text-text-strong hover:bg-surface-accent'}`}>{text}</button>
                 );
               })}
             </div>
@@ -2744,7 +2744,7 @@ const DatabaseToolbar = ({
               {DB_STAT_OPTIONS.map(s => (
                 <label key={s.key} className="flex items-center gap-2 py-1.5 cursor-pointer">
                   <input type="checkbox" checked={visibleStats.has(s.key)} onChange={() => toggleStat(s.key)} />
-                  <span className="font-body font-bold text-[12px] text-text-heading">{s.label}</span>
+                  <span className="font-body font-bold text-[12px] text-text-body">{s.label}</span>
                 </label>
               ))}
             </div>
@@ -2756,7 +2756,7 @@ const DatabaseToolbar = ({
       <div className="relative shrink-0">
         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
         <input value={dbSearch} onChange={e => setDbSearch(e.target.value)} placeholder="Look for a player"
-          className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-medium text-[13px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
+          className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-medium text-[13px] text-text-body placeholder:text-text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
       </div>
     </div>
   );
@@ -2773,7 +2773,7 @@ const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey }: {
       <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-text-body px-1">{label}</span>
       <div className="relative">
         <button onClick={() => setOpenKey(open ? null : label)}
-          className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-heading hover:border-brand-primary transition-colors whitespace-nowrap">
+          className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-body hover:border-brand-primary transition-colors whitespace-nowrap">
           <span>{value === 'All' ? 'All' : value}</span>
           <ChevronDown size={12} className={`text-text-body transition-transform ${open ? 'rotate-180' : ''}`} />
         </button>
@@ -2781,7 +2781,7 @@ const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey }: {
           <div className="absolute left-0 top-full mt-1 z-50 bg-surface-card border border-border-default rounded-[16px] shadow-2xl py-2 min-w-[150px] max-h-[280px] overflow-y-auto">
             {['All', ...options].map(opt => (
               <button key={opt} onClick={() => { setValue(opt); setOpenKey(null); }}
-                className={`w-full text-left px-4 py-1.5 font-body font-bold text-[12px] transition-colors ${value === opt ? 'bg-surface-accent text-text-heading' : 'text-text-heading hover:bg-surface-accent'}`}>{opt}</button>
+                className={`w-full text-left px-4 py-1.5 font-body font-bold text-[12px] transition-colors ${value === opt ? 'bg-surface-accent text-text-strong' : 'text-text-strong hover:bg-surface-accent'}`}>{opt}</button>
             ))}
           </div>
         )}
@@ -2806,7 +2806,7 @@ const LongListToolbar = ({ methodFilter, setMethodFilter, filters, search, setSe
   }, []);
   const segBtn = (val: 'all'|'ladder'|'direct'|'archive', text: string) => (
     <button onClick={() => setMethodFilter(val)}
-      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${methodFilter === val ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>
+      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${methodFilter === val ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>
       {text}
     </button>
   );
@@ -2829,7 +2829,7 @@ const LongListToolbar = ({ methodFilter, setMethodFilter, filters, search, setSe
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Look for a player"
-            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-medium text-[13px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
+            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-medium text-[13px] text-text-body placeholder:text-text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
         </div>
       </div>
     </div>
@@ -2864,7 +2864,7 @@ const ListFilterToolbar = ({
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
   }, []);
-  const num = "w-16 px-2 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary transition-colors";
+  const num = "w-16 px-2 py-2 rounded-full bg-surface-card border border-border-default font-body font-bold text-[12px] text-text-body placeholder:text-text-body outline-none focus:border-brand-primary transition-colors";
   const RangePair = ({ label, minV, setMin, maxV, setMax }: { label: string; minV: string; setMin: (v: string) => void; maxV: string; setMax: (v: string) => void }) => (
     <div className="flex flex-col gap-0.5 shrink-0">
       <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-text-body px-1">{label}</span>
@@ -2877,7 +2877,7 @@ const ListFilterToolbar = ({
   );
   const segBtn = (val: ArchiveView, text: string) => (
     <button onClick={() => setArchiveView(val)}
-      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${archiveView === val ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>
+      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${archiveView === val ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>
       {text}
     </button>
   );
@@ -2898,7 +2898,7 @@ const ListFilterToolbar = ({
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Look for a player"
-            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-medium text-[13px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
+            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-border-default font-body font-medium text-[13px] text-text-body placeholder:text-text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
         </div>
       </div>
     </div>
@@ -3183,17 +3183,17 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 onDrop={e => { e.preventDefault(); setDragTabId(null); }}
                 onDragEnd={() => setDragTabId(null)}
                 title="Drag to reorder"
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''} ${isActive ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''} ${isActive ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-strong'}`}>
                 {tab.label}
                 {count !== null && count > 0 && (
-                  <span className={`font-body type-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-surface-card/20 text-text-on-brand' : 'bg-brand-primary/15 text-text-heading'}`}>{count}</span>
+                  <span className={`font-body type-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-surface-card/20 text-text-on-brand' : 'bg-brand-primary/15 text-text-strong'}`}>{count}</span>
                 )}
               </button>
             );
           })}
           {isCustomOrder && (
             <button onClick={resetTabOrder} title="Reset tab order"
-              className="flex items-center justify-center w-8 h-8 rounded-full text-text-body hover:text-text-heading hover:bg-surface-accent transition-colors shrink-0">
+              className="flex items-center justify-center w-8 h-8 rounded-full text-text-body hover:text-text-strong hover:bg-surface-accent transition-colors shrink-0">
               <RotateCcw size={14} />
             </button>
           )}
@@ -3215,7 +3215,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                     <button onClick={() => { setActiveTab(tab.id); setTabsMenuOpen(false); }}
                       className={`flex-1 flex items-center justify-between gap-2 px-2 py-2 rounded-lg font-body font-bold type-body-sm ${isActive ? 'text-brand-primary bg-brand-primary/10' : 'text-text-body hover:bg-surface-accent'}`}>
                       {tab.label}
-                      {count !== null && count > 0 && <span className="font-body type-micro font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-text-heading">{count}</span>}
+                      {count !== null && count > 0 && <span className="font-body type-micro font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-text-body">{count}</span>}
                     </button>
                     <button onClick={() => moveTab(tab.id, -1)} disabled={idx === 0} title="Move up"
                       className="w-6 h-6 rounded-md flex items-center justify-center text-text-body hover:bg-surface-accent disabled:opacity-30 shrink-0"><ChevronDown size={13} className="rotate-180" /></button>
@@ -3237,7 +3237,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {activeTab === 'signed-list' && (
           <>
             <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-heading shrink-0 transition-colors">
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-body shrink-0 transition-colors">
               <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
             </button>
             <button onClick={() => setSignedAddOpen(true)}
@@ -3249,11 +3249,11 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {isListTab && (
           <div className="flex items-center bg-surface-accent rounded-full p-1 gap-1 shrink-0">
             <button onClick={() => setViewMode('table')} title="Table View"
-              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'table' ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>
+              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'table' ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>
               <List size={14} />
             </button>
             <button onClick={() => setViewMode('card')} title="Card View"
-              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'card' ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>
+              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'card' ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>
               <LayoutGrid size={14} />
             </button>
           </div>
@@ -3262,7 +3262,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {isListTab && (
           <>
             <button onClick={() => setShowFilters(s => !s)}
-              className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border shrink-0 transition-colors ${showFilters ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
+              className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border shrink-0 transition-colors ${showFilters ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-strong'}`}>
               <SlidersHorizontal size={14} /> Filters
             </button>
             {activeTab !== 'database' && (
@@ -3272,7 +3272,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
               </button>
             )}
             <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-heading shrink-0 transition-colors">
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-body shrink-0 transition-colors">
               <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
             </button>
           </>
@@ -3334,8 +3334,8 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
               <div className="absolute inset-0 bg-ink-midnight/60 backdrop-blur-sm" onClick={() => setMobileFiltersOpen(false)} />
               <div className="relative z-10 bg-surface-page rounded-t-[24px] max-h-[80vh] overflow-y-auto p-4 pb-8 shadow-2xl">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-heading font-bold type-body-lg text-text-heading">Filters</span>
-                  <button onClick={() => setMobileFiltersOpen(false)} className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-heading"><X size={16} /></button>
+                  <span className="font-heading font-bold type-body-lg text-text-body">Filters</span>
+                  <button onClick={() => setMobileFiltersOpen(false)} className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-strong"><X size={16} /></button>
                 </div>
                 <FilterBar {...filterBarProps} />
               </div>

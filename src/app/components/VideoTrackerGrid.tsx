@@ -62,13 +62,13 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex items-center gap-1 p-1 bg-surface-card border border-border-default rounded-full shrink-0">
           {([['all', 'All'], ['target-list', 'Target'], ['short-list', 'Short'], ['long-list', 'Long']] as const).map(([id, l]) => (
-            <button key={id} onClick={() => setTier(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>{l}</button>
+            <button key={id} onClick={() => setTier(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-strong'}`}>{l}</button>
           ))}
         </div>
-        <button onClick={() => setOnlyMissing(m => !m)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-body font-bold text-[12px] border transition-colors ${onlyMissing ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card border-border-default text-text-body hover:text-text-heading'}`}>Needs video only</button>
+        <button onClick={() => setOnlyMissing(m => !m)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-body font-bold text-[12px] border transition-colors ${onlyMissing ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card border-border-default text-text-body hover:text-text-strong'}`}>Needs video only</button>
         <div className="relative flex-1 min-w-[180px] max-w-xs ml-auto">
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or team…"
-            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full px-4 py-2 font-body font-medium text-[13px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
+            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full px-4 py-2 font-body font-medium text-[13px] text-text-body placeholder:text-text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
         </div>
       </div>
 
@@ -92,14 +92,14 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
                 <tr key={p.id} className="border-t border-border-default hover:bg-surface-accent/50 transition-colors">
                   <td className="px-3 py-2.5"><span className={`w-6 h-6 rounded-full inline-flex items-center justify-center font-heading font-black text-[11px] ${prio.cls}`}>{prio.n}</span></td>
                   <td className="px-3 py-2.5"><span className={`inline-flex items-center px-2 py-0.5 rounded-full font-body font-black text-[10px] ${prio.cls}`}>{prio.label}</span></td>
-                  <td className="px-3 py-2.5 font-body font-bold text-[13px] text-text-heading whitespace-nowrap">{p.name}</td>
-                  <td className="px-3 py-2.5 font-body font-bold text-[12px] text-text-heading">{p.posAcronym}</td>
+                  <td className="px-3 py-2.5 font-body font-bold text-[13px] text-text-body whitespace-nowrap">{p.name}</td>
+                  <td className="px-3 py-2.5 font-body font-bold text-[12px] text-text-body">{p.posAcronym}</td>
                   <td className="px-3 py-2.5 font-body text-[12px] text-text-body tabular-nums">{p.yob}</td>
                   <td className="px-3 py-2.5 font-body text-[12px] text-text-body tabular-nums">{p.age}</td>
                   <td className="px-3 py-2.5 font-body text-[12px] text-text-body tabular-nums whitespace-nowrap">{p.dob}</td>
                   <td className="px-3 py-2.5 font-body text-[12px] text-text-body truncate max-w-[120px]">{p.team}</td>
                   <td className="px-3 py-2.5">{code && <img src={`https://flagcdn.com/w40/${code}.png`} alt={p.country} className="w-4 h-3 rounded-[2px] object-cover" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />}</td>
-                  <td className="px-3 py-2.5 font-mono font-bold text-[12px] text-text-heading tabular-nums">{jersey(p.id)}</td>
+                  <td className="px-3 py-2.5 font-mono font-bold text-[12px] text-text-strong tabular-nums">{jersey(p.id)}</td>
                   <td className="px-3 py-2.5"><Slot label={ps.label} kind={ps.kind} onClick={ps.kind === 'filled' ? () => setPlaying({ name: p.name, label: 'Package' }) : canPkg && pkg !== 'has-video' ? () => onUpload?.(p.name) : undefined} /></td>
                   {slots.slice(0, 3).map((s, i) => (
                     <td key={i} className="px-3 py-2.5"><Slot label={s.label} kind={s.kind} onClick={s.kind === 'filled' ? () => setPlaying({ name: p.name, label: s.label }) : canFm && s.kind === 'missing' ? () => onUpload?.(p.name) : undefined} /></td>
@@ -108,8 +108,8 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
                   {canFm && (
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-1">
-                        <button onClick={() => setFullMatchAvailability(p.id, 'available')} className={`px-2 py-1 rounded-full font-body font-bold text-[11px] border ${fm === 'has-video' ? 'bg-status-success/15 text-status-success-fg border-status-success/30' : 'bg-surface-card border-border-default text-text-body hover:text-text-heading'}`}>Avail</button>
-                        <button onClick={() => setFullMatchAvailability(p.id, 'not-available')} className={`px-2 py-1 rounded-full font-body font-bold text-[11px] border ${fm === 'not-available' ? 'bg-surface-accent text-text-heading border-border-default' : 'bg-surface-card border-border-default text-text-body hover:text-text-heading'}`}>N/A</button>
+                        <button onClick={() => setFullMatchAvailability(p.id, 'available')} className={`px-2 py-1 rounded-full font-body font-bold text-[11px] border ${fm === 'has-video' ? 'bg-status-success/15 text-status-success-fg border-status-success/30' : 'bg-surface-card border-border-default text-text-body hover:text-text-strong'}`}>Avail</button>
+                        <button onClick={() => setFullMatchAvailability(p.id, 'not-available')} className={`px-2 py-1 rounded-full font-body font-bold text-[11px] border ${fm === 'not-available' ? 'bg-surface-accent text-text-strong border-border-default' : 'bg-surface-card border-border-default text-text-body hover:text-text-strong'}`}>N/A</button>
                       </div>
                     </td>
                   )}

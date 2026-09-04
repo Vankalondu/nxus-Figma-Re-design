@@ -26,7 +26,7 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
       ? 'bg-surface-card/20 text-text-inverse'
       : red
         ? 'bg-status-error/15 text-status-error-fg'
-        : 'bg-brand-primary/15 text-text-heading';
+        : 'bg-brand-primary/15 text-text-strong';
     return <span className={`ml-1.5 font-body type-micro font-black px-1.5 py-0.5 rounded-full tabular-nums ${cls}`}>{tab.count}</span>;
   };
 
@@ -36,7 +36,7 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
       <div className="hidden md:flex items-center gap-2 overflow-x-auto hide-scrollbar flex-nowrap pb-1">
         {tabs.map(tab => (
           <button key={tab.id} onClick={() => onSelect(tab.id)}
-            className={`shrink-0 inline-flex items-center px-6 py-2 rounded-full font-body font-bold type-body-sm transition-colors border ${activeId === tab.id ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
+            className={`shrink-0 inline-flex items-center px-6 py-2 rounded-full font-body font-bold type-body-sm transition-colors border ${activeId === tab.id ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-strong'}`}>
             {tab.label}{badge(tab, activeId === tab.id)}
           </button>
         ))}

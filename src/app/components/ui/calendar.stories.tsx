@@ -41,7 +41,7 @@ export const DeadlinePicker: Story = {
           Deadline
         </span>
         <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-xl border border-border-default" />
-        <span className="font-body font-bold text-[12px] text-text-heading">
+        <span className="font-body font-bold text-[12px] text-text-body">
           {date ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}
         </span>
       </div>

@@ -34,7 +34,7 @@ export const WithLabel: Story = {
     const [on, setOn] = useState(true)
     return (
       <label className="flex items-center justify-between gap-6 w-[300px] cursor-pointer">
-        <span className="font-body font-bold text-[12px] text-text-heading">
+        <span className="font-body font-bold text-[12px] text-text-body">
           Email me when a player is raised
         </span>
         <Switch checked={on} onCheckedChange={setOn} />

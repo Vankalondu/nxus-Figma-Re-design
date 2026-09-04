@@ -96,13 +96,13 @@ const INITIAL_NOTIFS: AppNotif[] = [
 const GradeColorPanel = ({ colors, onUpdate, onClose }: { colors: GradeColorMap; onUpdate: (g: string, c: string) => void; onClose: () => void }) => (
   <div className="absolute right-0 top-12 z-50 bg-surface-card rounded-[20px] shadow-2xl border border-border-default p-6 w-64" onClick={e => e.stopPropagation()}>
     <div className="flex items-center justify-between mb-4">
-      <span className="font-heading font-black text-[14px] text-text-heading">Grade Colours</span>
-      <button onClick={onClose} className="text-text-body hover:text-text-heading"><X size={14} /></button>
+      <span className="font-heading font-black text-[14px] text-text-strong">Grade Colours</span>
+      <button onClick={onClose} className="text-text-body hover:text-text-strong"><X size={14} /></button>
     </div>
     <div className="space-y-3">
       {Object.entries(colors).map(([grade, color]) => (
         <div key={grade} className="flex items-center justify-between">
-          <span className="font-body font-bold text-[14px] text-text-heading w-8">{grade}</span>
+          <span className="font-body font-bold text-[14px] text-text-body w-8">{grade}</span>
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full border border-border-default" style={{ backgroundColor: color }} />
             <input type="color" value={color} onChange={e => onUpdate(grade, e.target.value)}
@@ -137,13 +137,13 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
           <div>
             <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Player Name</label>
             <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Kofi Mensah"
-              className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+              className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label>
               <select value={position} onChange={e => setPosition(e.target.value)}
-                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                 {POSITIONS.map(p => <option key={p}>{p}</option>)}
               </select>
             </div>
@@ -161,12 +161,12 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
             <div>
               <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Birth Year</label>
               <input type="number" value={birthYear} onChange={e => setBirthYear(Number(e.target.value))} min={2000} max={2015}
-                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
             </div>
             <div>
               <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Year Signed</label>
               <input type="number" value={yearSigned} onChange={e => setYearSigned(Number(e.target.value))} min={2020} max={2035}
-                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
             </div>
           </div>
           <button onClick={() => { if (name.trim()) { onAdd({ name, position, birthYear, yearSigned, grade }); onClose(); } }} disabled={!name.trim()}
@@ -283,14 +283,14 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
   }) => (
     <button onClick={onClick}
       className={`w-full px-4 py-3 rounded-[20px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
-        selected ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-border-default hover:border-brand-primary/50'
+        selected ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-border-default hover:border-brand-primary/50'
       }`}>
-      {icon && <span className={selected ? 'text-text-on-brand' : 'text-text-heading'}>{icon}</span>}
+      {icon && <span className={selected ? 'text-text-on-brand' : 'text-text-strong'}>{icon}</span>}
       {label}
     </button>
   );
 
-  const inputCls = 'w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:border-border-focus transition-all';
+  const inputCls = 'w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:border-border-focus transition-all';
   const labelCls = 'font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2';
 
   // ── Step titles ──
@@ -340,14 +340,14 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                   <input type="text" value={playerSearch}
                     onChange={e => { setPlayerSearch(e.target.value); setSelectedPlayer(''); setShowNewPlayer(false); }}
                     placeholder="Type player name..."
-                    className="w-full bg-surface-card border border-border-default rounded-xl pl-9 pr-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                    className="w-full bg-surface-card border border-border-default rounded-xl pl-9 pr-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 </div>
                 {/* Search results */}
                 {searchResults.length > 0 && !selectedPlayer && (
                   <div className="mt-2 bg-surface-card border border-border-default rounded-xl overflow-hidden shadow-lg">
                     {searchResults.map(p => (
                       <button key={p} onClick={() => { setSelectedPlayer(p); setPlayerSearch(p); setShowNewPlayer(false); }}
-                        className="w-full text-left px-4 py-3 font-body text-[14px] font-bold border-b border-border-default last:border-0 transition-colors text-text-heading hover:bg-surface-accent">
+                        className="w-full text-left px-4 py-3 font-body text-[14px] font-bold border-b border-border-default last:border-0 transition-colors text-text-body hover:bg-surface-accent">
                         {p}
                       </button>
                     ))}
@@ -356,8 +356,8 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 {/* Selected confirmation */}
                 {selectedPlayer && (
                   <div className="mt-2 flex items-center gap-2 px-4 py-2 bg-brand-primary/5 border border-brand-primary/20 rounded-xl">
-                    <Check size={14} className="text-text-heading shrink-0" />
-                    <span className="font-body font-bold text-[14px] text-text-heading">{selectedPlayer}</span>
+                    <Check size={14} className="text-text-strong shrink-0" />
+                    <span className="font-body font-bold text-[14px] text-text-body">{selectedPlayer}</span>
                   </div>
                 )}
                 {/* Not found */}
@@ -373,7 +373,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 {/* New player form */}
                 {showNewPlayer && (
                   <div className="mt-3 p-4 bg-surface-card rounded-xl border border-border-default space-y-3">
-                    <p className="font-heading font-black text-[14px] text-text-heading">New Player Details</p>
+                    <p className="font-heading font-black text-[14px] text-text-strong">New Player Details</p>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label className={labelCls}>Position</label>
@@ -396,7 +396,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className={labelCls}>Scout</label>
-                  <div className="bg-surface-accent border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading">{scoutName}</div>
+                  <div className="bg-surface-accent border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body">{scoutName}</div>
                 </div>
                 <div>
                   <label className={labelCls}>Scouting Date</label>
@@ -411,11 +411,11 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
           {step === 2 && (
             <>
               <h3 className="font-heading font-semibold text-[16px] text-text-heading">Report Type</h3>
-              <p className="font-body text-[14px] text-text-body font-medium">For: <span className="text-text-heading font-bold">{selectedPlayer}</span> · {scoutingDate}</p>
+              <p className="font-body text-[14px] text-text-body font-medium">For: <span className="text-text-strong font-bold">{selectedPlayer}</span> · {scoutingDate}</p>
               <div className="space-y-3 pt-1">
                 <button onClick={() => setReportLength('full')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'full' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-border-default hover:border-brand-primary/50'
+                    reportLength === 'full' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Full Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-text-on-brand/60' : 'text-text-body'}`}>
@@ -424,7 +424,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 </button>
                 <button onClick={() => setReportLength('short')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'short' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-border-default hover:border-brand-primary/50'
+                    reportLength === 'short' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Short Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-text-on-brand/60' : 'text-text-body'}`}>
@@ -467,7 +467,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 ))}
                 <button onClick={() => { setAddingManually(true); setSelectedSource(''); }}
                   className={`w-full px-4 py-3 rounded-[20px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-2 ${
-                    addingManually ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-dashed border-border-default hover:border-brand-primary/50'
+                    addingManually ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-dashed border-border-default hover:border-brand-primary/50'
                   }`}>
                   <Plus size={14} /> Not on platform — add manually
                 </button>
@@ -511,13 +511,13 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
             <>
               <h3 className="font-heading font-semibold text-[16px] text-text-heading">Quick Entry</h3>
               <p className="font-body text-[12px] text-text-body font-medium">
-                {selectedPlayer} · {sourceLabel}: <span className="text-text-heading font-bold">{selectedSourceLabel}</span>
+                {selectedPlayer} · {sourceLabel}: <span className="text-text-strong font-bold">{selectedSourceLabel}</span>
               </p>
               <div>
                 <label className={labelCls}>Performance Note</label>
                 <textarea value={perfNote} onChange={e => setPerfNote(e.target.value)} rows={4}
                   placeholder="Quick observation — key moments, standout qualities, concerns..."
-                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
+                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
               </div>
               <div className="grid grid-cols-3 gap-4">
                 {([['PLR', plr, setPlr, GRADES],['POG', pog, setPog, GRADES],['NXT', nxt, setNxt, NXT_VALS]] as [string,string,(v:string)=>void,string[]][]).map(([label, val, set, opts]) => (
@@ -537,7 +537,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
             <>
               <h3 className="font-heading font-semibold text-[16px] text-text-heading">Fill Report</h3>
               <p className="font-body text-[12px] text-text-body font-medium">
-                {selectedPlayer} · {sourceLabel}: <span className="text-text-heading font-bold">{selectedSourceLabel}</span>
+                {selectedPlayer} · {sourceLabel}: <span className="text-text-strong font-bold">{selectedSourceLabel}</span>
               </p>
               {/* Template selection */}
               {!selectedTemplate ? (
@@ -546,7 +546,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                   <div className="grid grid-cols-2 gap-2">
                     {TEMPLATES.map(t => (
                       <button key={t} onClick={() => setSelectedTemplate(t)}
-                        className="px-4 py-3 rounded-[14px] text-left font-body font-bold text-[12px] transition-all border bg-surface-card text-text-heading border-border-default hover:border-brand-primary hover:bg-surface-accent">
+                        className="px-4 py-3 rounded-[14px] text-left font-body font-bold text-[12px] transition-all border bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:bg-surface-accent">
                         {t}
                       </button>
                     ))}
@@ -556,14 +556,14 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 <>
                   <div className="flex items-center gap-2">
                     <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-text-body">Template</span>
-                    <span className="font-body font-bold text-[14px] text-text-heading">{selectedTemplate}</span>
-                    <button onClick={() => setSelectedTemplate('')} className="ml-auto text-[12px] font-bold text-text-body underline hover:text-text-heading">Change</button>
+                    <span className="font-body font-bold text-[14px] text-text-body">{selectedTemplate}</span>
+                    <button onClick={() => setSelectedTemplate('')} className="ml-auto text-[12px] font-bold text-text-body underline hover:text-text-strong">Change</button>
                   </div>
                   <div>
                     <label className={labelCls}>Performance Notes</label>
                     <textarea value={fullNotes} onChange={e => setFullNotes(e.target.value)} rows={6}
                       placeholder="Describe the player's performance, key moments, strengths and areas to develop..."
-                      className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
+                      className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     {([['PLR', plr, setPlr, GRADES],['POG', pog, setPog, GRADES],['NXT', nxt, setNxt, NXT_VALS]] as [string,string,(v:string)=>void,string[]][]).map(([label, val, set, opts]) => (
@@ -596,7 +596,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 ].map(([label, val]) => (
                   <div key={label} className="flex items-center justify-between px-5 py-3 border-b border-border-default last:border-0">
                     <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-text-body">{label}</span>
-                    <span className="font-body font-bold text-[14px] text-text-heading text-right max-w-[55%]">{val || '—'}</span>
+                    <span className="font-body font-bold text-[14px] text-text-body text-right max-w-[55%]">{val || '—'}</span>
                   </div>
                 ))}
               </div>
@@ -604,7 +604,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">
                   {reportLength === 'full' && selectedTemplate ? selectedTemplate + ' — ' : ''}Notes
                 </span>
-                <p className="font-body text-[14px] font-medium text-text-heading leading-relaxed whitespace-pre-wrap">
+                <p className="font-body text-[14px] font-medium text-text-body leading-relaxed whitespace-pre-wrap">
                   {reportLength === 'short' ? perfNote : fullNotes}
                 </p>
               </div>
@@ -735,7 +735,7 @@ const PipelineTab = () => {
               ))}
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2 text-center">
-              <span className="font-heading font-black text-[30px] leading-none text-text-heading tabular-nums">{hoveredStage !== null ? funnelStages[hoveredStage].count : funnelStages[0].count}</span>
+              <span className="font-heading font-black text-[30px] leading-none text-text-strong tabular-nums">{hoveredStage !== null ? funnelStages[hoveredStage].count : funnelStages[0].count}</span>
               <span className="font-body text-[11px] text-text-body font-medium mt-1">{hoveredStage !== null ? funnelStages[hoveredStage].label : 'in pipeline'}</span>
             </div>
           </div>
@@ -748,8 +748,8 @@ const PipelineTab = () => {
                 onMouseEnter={() => setHoveredStage(i)} onMouseLeave={() => setHoveredStage(null)}
                 className={`flex items-center gap-2.5 group text-left rounded-lg px-2 py-1.5 -mx-2 transition-colors ${hoveredStage === i ? 'bg-surface-accent' : 'hover:bg-surface-accent'}`}>
                 <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: s.color }} />
-                <span className="font-body font-bold text-[13px] text-text-heading flex-1 min-w-0 truncate group-hover:text-brand-primary">{s.label}</span>
-                <span className="font-mono font-black text-[13px] text-text-heading tabular-nums shrink-0">{s.count}</span>
+                <span className="font-body font-bold text-[13px] text-text-body flex-1 min-w-0 truncate group-hover:text-brand-primary">{s.label}</span>
+                <span className="font-mono font-black text-[13px] text-text-strong tabular-nums shrink-0">{s.count}</span>
               </button>
             ))}
           </div>
@@ -766,7 +766,7 @@ const PipelineTab = () => {
             </p>
           </div>
           <button onClick={() => setShowAddSigned(true)}
-            className="flex items-center gap-2 bg-transparent border-2 border-brand-primary text-text-heading hover:bg-brand-primary/10 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors">
+            className="flex items-center gap-2 bg-transparent border-2 border-brand-primary text-text-body hover:bg-brand-primary/10 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors">
             <Plus size={13} />Sign Player
           </button>
         </div>
@@ -788,7 +788,7 @@ const PipelineTab = () => {
               {LEAD_POSITIONS.filter(pos => signedPlayers.some(p => p.pos === pos)).map((pos, rowIdx) => (
                 <tr key={pos} className={rowIdx % 2 === 0 ? 'bg-surface-card' : 'bg-surface-accent'}>
                   <td className={`sticky left-0 z-10 px-3 py-3 border-r border-border-default border-b border-border-default ${rowIdx % 2 === 0 ? 'bg-surface-card' : 'bg-surface-accent'}`}>
-                    <span className="font-heading font-black text-[14px] text-text-heading">{pos}</span>
+                    <span className="font-heading font-black text-[14px] text-text-strong">{pos}</span>
                   </td>
                   {SIGNED_YEARS.map(year => {
                     const cell = getSignedAt(pos, year);
@@ -798,7 +798,7 @@ const PipelineTab = () => {
                           <div className="flex flex-col gap-2">
                             {cell.map(player => (
                               <div key={player.id} className="flex items-center gap-2">
-                                <span title={player.name} className="font-body font-bold text-[14px] text-text-heading truncate flex-1 min-w-0">{player.name}</span>
+                                <span title={player.name} className="font-body font-bold text-[14px] text-text-body truncate flex-1 min-w-0">{player.name}</span>
                                 <span className="font-mono text-[10px] font-bold text-text-body shrink-0">{player.birthYear}</span>
                                 {/* ring-text-heading/20 delineates the badge whatever the row is
                                     doing. Grade fills are fixed values while row surfaces flip,
@@ -839,14 +839,14 @@ const PipelineTab = () => {
                 <div key={f.key}>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">{f.label}</label>
                   <input type={f.type} value={(newSigned as any)[f.key] || ''} onChange={e => setNewSigned(p => ({ ...p, [f.key]: f.type === 'number' ? Number(e.target.value) : e.target.value }))}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 </div>
               ))}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label>
                   <select value={newSigned.pos || 'ST'} onChange={e => setNewSigned(p => ({ ...p, pos: e.target.value }))}
-                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                    className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                     {LEAD_POSITIONS.map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
@@ -939,7 +939,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                     <div className="flex-1 h-6 bg-surface-accent rounded-full overflow-hidden min-w-0">
                       <div className="h-full bg-brand-primary rounded-full" style={{ width: `${Math.max((p.count / maxPathway) * 100, 8)}%` }} />
                     </div>
-                    <span className="font-mono font-black text-[12px] text-text-heading w-6 text-right shrink-0 tabular-nums">{p.count}</span>
+                    <span className="font-mono font-black text-[12px] text-text-strong w-6 text-right shrink-0 tabular-nums">{p.count}</span>
                   </div>
                 ))}
               </div>
@@ -953,7 +953,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                     <div className="flex-1 h-6 bg-surface-accent rounded-full overflow-hidden min-w-0">
                       <div className={`h-full rounded-full ${s.bar}`} style={{ width: `${Math.max((s.count / maxStatus) * 100, 8)}%`, ...(s.style || {}) }} />
                     </div>
-                    <span className="font-mono font-black text-[12px] text-text-heading w-6 text-right shrink-0 tabular-nums">{s.count}</span>
+                    <span className="font-mono font-black text-[12px] text-text-strong w-6 text-right shrink-0 tabular-nums">{s.count}</span>
                   </div>
                 ))}
               </div>
@@ -967,7 +967,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
           {/* Latest Videos */}
           <div className="min-w-0 bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
             <div className="px-4 sm:px-6 py-4 border-b border-border-default flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-text-heading" /></div>
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-text-strong" /></div>
               <div className="min-w-0 flex-1">
                 <h3 className="font-heading font-bold text-[16px] text-text-heading">Latest Videos</h3>
                 <p className="font-body text-[12px] text-text-body font-medium">Newest videos by player</p>
@@ -977,15 +977,15 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
               {HIGHLIGHTS_FEED.map(h => (
                 <button key={h.id} onClick={() => setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym })}
                   className="w-full px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors text-left">
-                  <div className="w-8 h-8 rounded-xl bg-surface-card text-text-heading flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{h.initials}</div>
+                  <div className="w-8 h-8 rounded-xl bg-surface-card text-text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{h.initials}</div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-body font-bold text-[14px] text-text-heading truncate">{h.name}</span>
-                      <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-surface-page text-text-heading border border-border-default">{h.list === 'short' ? 'Short' : 'Target'}</span>
+                      <span className="font-body font-bold text-[14px] text-text-body truncate">{h.name}</span>
+                      <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-surface-page text-text-body border border-border-default">{h.list === 'short' ? 'Short' : 'Target'}</span>
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
-                      {h.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-heading font-body font-bold px-1.5 py-0.5 rounded text-[11px]">F{h.matchVideos}</span>}
-                      {h.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-heading font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{h.highlightVideos}</span>}
+                      {h.matchVideos > 0 && <span className="bg-brand-primary/20 text-text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">F{h.matchVideos}</span>}
+                      {h.highlightVideos > 0 && <span className="bg-brand-primary/10 text-text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{h.highlightVideos}</span>}
                     </div>
                   </div>
                   <span className="font-body text-[12px] text-text-body font-medium tabular-nums shrink-0">{h.hoursAgo}h ago</span>
@@ -997,7 +997,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
           {/* Matches — combined: Recent Results | Upcoming (two columns) */}
           <div className="min-w-0 bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
             <div className="px-4 sm:px-6 py-4 border-b border-border-default flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-text-heading" /></div>
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-text-strong" /></div>
               <div className="min-w-0 flex-1">
                 <h3 className="font-heading font-bold text-[16px] text-text-heading">Matches</h3>
                 <p className="font-body text-[12px] text-text-body font-medium">Results &amp; fixtures</p>
@@ -1013,7 +1013,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                   {RECENT_RESULTS.map(r => (
                     <button key={r.id} onClick={() => navigate('/lead-scout/matches')}
                       className="w-full px-3 sm:px-4 py-2.5 hover:bg-surface-accent transition-colors text-left block min-w-0">
-                      <span className="font-body font-bold text-[12px] text-text-heading block truncate">{r.home} <span className="text-brand-primary tabular-nums">{r.hs}–{r.as}</span> {r.away}</span>
+                      <span className="font-body font-bold text-[12px] text-text-body block truncate">{r.home} <span className="text-brand-primary tabular-nums">{r.hs}–{r.as}</span> {r.away}</span>
                       <span className="font-body text-[11px] text-text-body font-medium block">{r.date}</span>
                     </button>
                   ))}
@@ -1028,7 +1028,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                   {UPCOMING_MATCHES.map(m => (
                     <button key={m.id} onClick={() => navigate('/lead-scout/matches')}
                       className="w-full px-3 sm:px-4 py-2.5 hover:bg-surface-accent transition-colors text-left block min-w-0">
-                      <span className="font-body font-bold text-[12px] text-text-heading block truncate">{m.home} vs {m.away}</span>
+                      <span className="font-body font-bold text-[12px] text-text-body block truncate">{m.home} vs {m.away}</span>
                       <span className="font-body text-[11px] text-text-body font-medium block">{m.date}</span>
                     </button>
                   ))}
@@ -1057,7 +1057,7 @@ const PackagesTab = ({ onNudge }: { onNudge: (name: string) => void }) => {
         <div className="flex items-center bg-surface-accent rounded-full p-1 gap-1">
           {([['all','All'],['short','Short List'],['target','Target List']] as const).map(([val,label]) => (
             <button key={val} onClick={() => setFilter(val)}
-              className={`px-5 py-2 rounded-full font-body text-[14px] font-bold transition-all ${filter===val?'bg-brand-primary text-text-inverse shadow-sm':'text-text-body hover:text-text-heading'}`}>
+              className={`px-5 py-2 rounded-full font-body text-[14px] font-bold transition-all ${filter===val?'bg-brand-primary text-text-inverse shadow-sm':'text-text-body hover:text-text-strong'}`}>
               {label}
             </button>
           ))}
@@ -1069,23 +1069,23 @@ const PackagesTab = ({ onNudge }: { onNudge: (name: string) => void }) => {
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-[14px] bg-brand-primary text-text-on-brand flex items-center justify-center font-body font-black text-[14px] shrink-0">{pkg.initials}</div>
               <div className="flex-1">
-                <div className="font-body font-bold text-[16px] text-text-heading">{pkg.playerName}</div>
+                <div className="font-body font-bold text-[16px] text-text-body">{pkg.playerName}</div>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className={`font-body text-[12px] font-black px-2 py-0.5 rounded-full ${pkg.list==='target'?'bg-brand-primary/15 text-text-heading':'bg-surface-accent text-text-body'}`}>
+                  <span className={`font-body text-[12px] font-black px-2 py-0.5 rounded-full ${pkg.list==='target'?'bg-brand-primary/15 text-text-strong':'bg-surface-accent text-text-body'}`}>
                     {pkg.list==='target'?'Target':'Short'}
                   </span>
                   <span className="font-body text-[12px] text-text-body font-medium">by {pkg.scout}</span>
                 </div>
               </div>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${pkg.watched?'bg-brand-primary/10':'bg-brand-primary/10'}`}>
-                {pkg.watched ? <Eye size={16} className="text-text-heading" /> : <EyeOff size={16} className="text-text-heading" />}
+                {pkg.watched ? <Eye size={16} className="text-text-strong" /> : <EyeOff size={16} className="text-text-strong" />}
               </div>
             </div>
             <div className="flex items-center justify-between">
               <span className="font-body text-[12px] font-black text-text-body">{pkg.clipCount} clips · {pkg.uploadDate}</span>
               {!pkg.watched && (
                 <button onClick={() => onNudge(pkg.scout)}
-                  className="font-body text-[12px] font-black px-3 py-1 rounded-full border-2 border-brand-primary text-text-heading hover:bg-brand-primary/10 transition-colors">
+                  className="font-body text-[12px] font-black px-3 py-1 rounded-full border-2 border-brand-primary text-text-body hover:bg-brand-primary/10 transition-colors">
                   Nudge {pkg.scout}
                 </button>
               )}
@@ -1152,7 +1152,7 @@ export default function LeadScoutDashboard() {
   const FLAG_MAP: Record<string,string> = { "GAM":"gm","CMR":"cm","MLI":"ml","SEN":"sn","BDI":"bi","NGA":"ng","GHA":"gh","CIV":"ci","ENG":"gb-eng" };
 
   return (
-    <div className="flex min-h-screen bg-surface-page font-body text-text-heading">
+    <div className="flex min-h-screen bg-surface-page font-body text-text-strong">
       <style dangerouslySetInnerHTML={{__html:`
         ::-webkit-scrollbar{width:6px;height:6px;}::-webkit-scrollbar-track{background:transparent;}
         ::-webkit-scrollbar-thumb{background:var(--blue-100);border-radius:4px;}::-webkit-scrollbar-thumb:hover{background:var(--blue-200);}
@@ -1165,7 +1165,7 @@ export default function LeadScoutDashboard() {
           <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-md border border-border-default flex flex-col max-h-[80vh]" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 border-b border-border-default flex items-center justify-between bg-brand-primary rounded-t-[16px] shrink-0">
               <div className="flex items-center gap-3">
-                <Calendar size={20} className="text-text-heading" />
+                <Calendar size={20} className="text-text-strong" />
                 <span className="font-heading font-semibold text-[16px] text-text-on-brand">Tasks This Week</span>
               </div>
               <button onClick={() => setShowThisWeek(false)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-text-on-brand/60 hover:text-text-on-brand"><X size={16} /></button>
@@ -1173,7 +1173,7 @@ export default function LeadScoutDashboard() {
             <div className="px-6 py-4 border-b border-border-default shrink-0">
               <div className="flex items-center gap-3">
                 <input type="text" placeholder="Add a task..." onKeyDown={e => { if (e.key === 'Enter' && e.currentTarget.value.trim()) { addTask(e.currentTarget.value.trim()); e.currentTarget.value = ''; } }}
-                  className="flex-1 bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                  className="flex-1 bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 <div className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-text-on-brand shrink-0"><Plus size={18} /></div>
               </div>
             </div>
@@ -1182,9 +1182,9 @@ export default function LeadScoutDashboard() {
                 <div key={task.id} className="flex items-start gap-3 p-3 rounded-[20px] hover:bg-surface-accent cursor-pointer group" onClick={() => toggleTask(task.id)}>
                   <div className="w-5 h-5 rounded-full border-2 border-border-default group-hover:border-brand-primary shrink-0 mt-0.5 transition-colors" />
                   <div className="flex-1 min-w-0">
-                    <p className="font-body font-bold text-[14px] text-text-heading">{task.text}</p>
+                    <p className="font-body font-bold text-[14px] text-text-body">{task.text}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${task.priority === 'High' ? 'bg-brand-primary/15 text-text-heading' : 'bg-surface-accent text-text-body'}`}>{task.priority}</span>
+                      <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${task.priority === 'High' ? 'bg-brand-primary/15 text-text-strong' : 'bg-surface-accent text-text-body'}`}>{task.priority}</span>
                       <span className="font-body text-[12px] text-text-body font-medium">{task.dueDate}</span>
                     </div>
                   </div>
@@ -1224,18 +1224,18 @@ export default function LeadScoutDashboard() {
                 {[{label:'Full Name',ph:'e.g. Kofi Mensah',type:'text'},{label:'Date of Birth',ph:'',type:'date'},{label:'Nationality',ph:'e.g. Ghana',type:'text'},{label:'Team',ph:'e.g. Hawks FC',type:'text'}].map(f => (
                   <div key={f.label}>
                     <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">{f.label}</label>
-                    <input type={f.type} placeholder={f.ph} className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                    <input type={f.type} placeholder={f.ph} className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                   </div>
                 ))}
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label>
-                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                     {['ST','LW','RW','CM','CDM','CAM','FB','CB'].map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Preferred Foot</label>
-                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                     <option>Right</option><option>Left</option><option>Both</option>
                   </select>
                 </div>
@@ -1246,7 +1246,7 @@ export default function LeadScoutDashboard() {
                   {['Long List','Short List','Target List'].map(list => (
                     <label key={list} className="flex items-center gap-2 cursor-pointer">
                       <input type="checkbox" className="w-4 h-4 accent-[#1e88e5]" />
-                      <span className="font-body font-bold text-[14px] text-text-heading">{list}</span>
+                      <span className="font-body font-bold text-[14px] text-text-body">{list}</span>
                     </label>
                   ))}
                 </div>
@@ -1272,7 +1272,7 @@ export default function LeadScoutDashboard() {
           rolePill={(
             <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-full shrink-0">
               <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-              <span className="hidden md:inline font-body text-[14px] font-bold text-text-heading whitespace-nowrap">Lead Scout Dashboard</span>
+              <span className="hidden md:inline font-body text-[14px] font-bold text-text-body whitespace-nowrap">Lead Scout Dashboard</span>
             </div>
           )}
           unreadCount={unreadCount}
@@ -1288,10 +1288,10 @@ export default function LeadScoutDashboard() {
                 {notifications.map(n => (
                   <div key={n.id} className={`px-5 py-3 flex items-start gap-3 ${!n.read?'bg-surface-card':''}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${n.type==='nudge'?'bg-brand-primary/10':n.type==='package'?'bg-brand-primary/20':'bg-brand-primary/10'}`}>
-                      {n.type==='nudge'?<Zap size={12} className="text-text-heading" />:n.type==='package'?<Video size={12} className="text-text-heading" />:<FileText size={12} className="text-text-heading" />}
+                      {n.type==='nudge'?<Zap size={12} className="text-text-strong" />:n.type==='package'?<Video size={12} className="text-text-strong" />:<FileText size={12} className="text-text-strong" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-body text-[14px] font-bold text-text-heading leading-snug">{n.text}</p>
+                      <p className="font-body text-[14px] font-bold text-text-body leading-snug">{n.text}</p>
                       <p className="font-body text-[12px] text-text-body font-medium mt-0.5">{n.time}</p>
                     </div>
                     {!n.read && <div className="w-2 h-2 rounded-full bg-brand-primary shrink-0 mt-2" />}
@@ -1311,7 +1311,7 @@ export default function LeadScoutDashboard() {
               <div className="px-5 py-4 border-b border-border-default flex items-center gap-3 bg-surface-card">
                 <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=faces&q=80" alt="Tom" className="w-10 h-10 rounded-full object-cover shrink-0" />
                 <div>
-                  <div className="font-body font-bold text-[14px] text-text-heading">Tom</div>
+                  <div className="font-body font-bold text-[14px] text-text-body">Tom</div>
                   <div className="font-body text-[12px] text-text-body font-medium">Lead Scout</div>
                 </div>
               </div>

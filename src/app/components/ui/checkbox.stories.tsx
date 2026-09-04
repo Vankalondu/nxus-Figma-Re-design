@@ -35,7 +35,7 @@ export const WithLabel: Story = {
     return (
       <label className="flex items-center gap-3 cursor-pointer">
         <Checkbox checked={on} onCheckedChange={(v) => setOn(!!v)} />
-        <span className="font-body font-bold text-[12px] text-text-heading">
+        <span className="font-body font-bold text-[12px] text-text-body">
           Review Kofi Mensah target package
         </span>
       </label>

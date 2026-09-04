@@ -71,7 +71,7 @@ export default function LoginCredentials() {
             <form onSubmit={handleSubmit} className="space-y-6 mb-10">
 
               <div>
-                <label className="block text-[14px] font-extrabold text-text-heading mb-3">Email Address</label>
+                <label className="block text-[14px] font-extrabold text-text-strong mb-3">Email Address</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                     <Mail className="h-[22px] w-[22px] text-text-body" />
@@ -80,7 +80,7 @@ export default function LoginCredentials() {
                     type="email" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-[52px] pr-5 py-4 border-2 border-border-default rounded-[20px] text-[15px] focus:ring-4 focus:ring-border-focus/20 focus:border-border-focus transition-all bg-surface-card hover:border-border-default text-text-heading font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
+                    className="block w-full pl-[52px] pr-5 py-4 border-2 border-border-default rounded-[20px] text-[15px] focus:ring-4 focus:ring-border-focus/20 focus:border-border-focus transition-all bg-surface-card hover:border-border-default text-text-strong font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
                     placeholder="Enter your email"
                     required
                   />
@@ -88,7 +88,7 @@ export default function LoginCredentials() {
               </div>
 
               <div>
-                <label className="block text-[14px] font-extrabold text-text-heading mb-3">Password</label>
+                <label className="block text-[14px] font-extrabold text-text-strong mb-3">Password</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                     <Lock className="h-[22px] w-[22px] text-text-body" />
@@ -97,7 +97,7 @@ export default function LoginCredentials() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-[52px] pr-[52px] py-4 border-2 border-border-default rounded-[20px] text-[15px] focus:ring-4 focus:ring-border-focus/20 focus:border-border-focus transition-all bg-surface-card hover:border-border-default text-text-heading font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
+                    className="block w-full pl-[52px] pr-[52px] py-4 border-2 border-border-default rounded-[20px] text-[15px] focus:ring-4 focus:ring-border-focus/20 focus:border-border-focus transition-all bg-surface-card hover:border-border-default text-text-strong font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
                     placeholder="••••••••••••"
                     required
                   />
@@ -105,7 +105,7 @@ export default function LoginCredentials() {
                     <button 
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="text-text-body hover:text-text-heading focus:outline-none transition-colors"
+                      className="text-text-body hover:text-text-strong focus:outline-none transition-colors"
                     >
                       <Eye className="h-[22px] w-[22px]" />
                     </button>
@@ -115,13 +115,13 @@ export default function LoginCredentials() {
 
               <div className="flex items-center justify-between mt-4">
                 <div className="flex items-center group cursor-pointer">
-                  <input id="remember-me" name="remember-me" type="checkbox" className="h-5 w-5 text-text-heading focus:ring-brand-primary border-border-default rounded-[6px] cursor-pointer" />
-                  <label htmlFor="remember-me" className="ml-3 block text-[14px] text-text-body font-bold cursor-pointer group-hover:text-text-heading transition-colors">
+                  <input id="remember-me" name="remember-me" type="checkbox" className="h-5 w-5 text-text-strong focus:ring-brand-primary border-border-default rounded-[6px] cursor-pointer" />
+                  <label htmlFor="remember-me" className="ml-3 block text-[14px] text-text-body font-bold cursor-pointer group-hover:text-text-strong transition-colors">
                     Remember me
                   </label>
                 </div>
                 <div className="text-[14px]">
-                  <a href="#" className="font-extrabold text-text-heading hover:text-text-heading hover:underline underline-offset-4 transition-all">Forgot your password?</a>
+                  <a href="#" className="font-extrabold text-text-strong hover:text-text-strong hover:underline underline-offset-4 transition-all">Forgot your password?</a>
                 </div>
               </div>
 

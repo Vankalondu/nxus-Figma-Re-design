@@ -142,7 +142,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                       >
                         <button
                           onClick={() => applyPreset(preset)}
-                          className="flex-1 min-w-0 text-left text-[14px] font-bold text-text-heading truncate"
+                          className="flex-1 min-w-0 text-left text-[14px] font-bold text-text-strong truncate"
                           title={`Load "${preset.name}" (${preset.ids.length} columns)`}
                         >
                           {preset.name}
@@ -167,7 +167,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                     onChange={e => setPresetName(e.target.value)}
                     onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); saveCurrentPreset(); } }}
                     placeholder="Save current as…"
-                    className="w-full rounded-full bg-surface-card border border-border-default pl-4 pr-11 py-2 text-[14px] font-body font-medium text-text-heading placeholder:text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all"
+                    className="w-full rounded-full bg-surface-card border border-border-default pl-4 pr-11 py-2 text-[14px] font-body font-medium text-text-body placeholder:text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all"
                   />
                   <button aria-label="Save preset" onClick={saveCurrentPreset}
                     className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-brand-primary text-text-inverse flex items-center justify-center hover:bg-brand-primary/80 transition-colors">
@@ -198,7 +198,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                             className={`w-full rounded-[12px] px-4 py-2 text-[14px] font-bold text-left transition-colors ${
                               selected
                                 ? 'bg-brand-primary text-text-inverse'
-                                : 'bg-surface-card border border-border-default text-text-heading hover:border-brand-primary'
+                                : 'bg-surface-card border border-border-default text-text-strong hover:border-brand-primary'
                             }`}
                           >
                             {col.label}

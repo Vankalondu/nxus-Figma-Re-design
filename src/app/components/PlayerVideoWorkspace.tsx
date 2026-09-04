@@ -122,7 +122,7 @@ const VideoCard = ({ video, playerName, onClick }: { video: PlayerVideo; playerN
       </div>
       {/* Meta */}
       <div className="flex flex-col gap-1 px-1 pb-1 min-w-0">
-        <span className="font-heading font-semibold text-[14px] text-text-heading truncate">
+        <span className="font-heading font-semibold text-[14px] text-text-strong truncate">
           {isMatch ? <>{video.home} <span className="text-text-body">vs</span> {video.away}</> : video.title}
         </span>
         <span className="font-body font-medium text-[12px] text-text-body truncate">
@@ -247,7 +247,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
                   <span className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${t.chipClass}`}>
                     <Icon size={12} />
                   </span>
-                  <span className="font-body font-bold text-[12px] text-text-heading truncate">{t.label}</span>
+                  <span className="font-body font-bold text-[12px] text-text-body truncate">{t.label}</span>
                 </button>
               );
             })}
@@ -259,7 +259,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
           <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Add With Note</span>
           <div className="flex gap-2">
             <select value={draftTypeId} onChange={e => setDraftTypeId(e.target.value)} title="Tag type"
-              className="w-[120px] shrink-0 rounded-[10px] border border-border-default bg-surface-card px-2 py-2 font-body font-bold text-[12px] text-text-heading focus:outline-none focus:border-brand-primary transition-colors">
+              className="w-[120px] shrink-0 rounded-[10px] border border-border-default bg-surface-card px-2 py-2 font-body font-bold text-[12px] text-text-body focus:outline-none focus:border-brand-primary transition-colors">
               {TAG_EVENT_TYPES.map(t => (
                 <option key={t.id} value={t.id}>{t.label}</option>
               ))}
@@ -267,7 +267,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
             <input value={draftNote} onChange={e => setDraftNote(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') addDraftTag(); }}
               placeholder="Optional note…" maxLength={80} title="Optional note"
-              className="flex-1 min-w-0 rounded-[10px] border border-border-default bg-surface-accent/30 px-3 py-2 font-body font-medium text-[12px] text-text-heading placeholder:text-text-body focus:outline-none focus:border-brand-primary transition-colors" />
+              className="flex-1 min-w-0 rounded-[10px] border border-border-default bg-surface-accent/30 px-3 py-2 font-body font-medium text-[12px] text-text-body placeholder:text-text-body focus:outline-none focus:border-brand-primary transition-colors" />
           </div>
           <button onClick={addDraftTag} title={`Add tag at ${fmtTime(currentSec)}`}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary text-text-inverse py-2 font-body font-semibold text-[12px] hover:bg-brand-primary/80 transition-colors shadow-sm">
@@ -284,7 +284,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
               <div className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
                 <Tag size={20} className="text-text-body" />
               </div>
-              <p className="font-body font-bold text-[14px] text-text-heading">No tags yet</p>
+              <p className="font-body font-bold text-[14px] text-text-body">No tags yet</p>
               <p className="font-body font-medium text-[12px] text-text-body max-w-[220px]">
                 Use the buttons above to tag moments as you watch.
               </p>
@@ -310,7 +310,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
                     <Icon size={12} />
                   </span>
                   <div className="flex-1 min-w-0">
-                    <span className="font-body font-bold text-[12px] text-text-heading block truncate">{type.label}</span>
+                    <span className="font-body font-bold text-[12px] text-text-body block truncate">{type.label}</span>
                     {tag.note && (
                       <span className="font-body font-medium text-[12px] text-text-body block truncate">{tag.note}</span>
                     )}
@@ -393,7 +393,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
             {section.criteria.map(c => (
               <div key={c.id} className="rounded-[12px] border border-border-default bg-surface-accent/30 p-3 flex flex-col gap-2">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-body font-bold text-[12px] text-text-heading truncate">{c.label}</span>
+                  <span className="font-body font-bold text-[12px] text-text-body truncate">{c.label}</span>
                   {c.required && (
                     <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-[#E8A838]/10 text-[#E8A838] px-2 py-0.5 rounded-full shrink-0">Required</span>
                   )}
@@ -404,7 +404,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
                       className={`py-1 rounded-[10px] font-heading font-bold text-[12px] border transition-colors ${
                         grades[c.id] === g
                           ? 'bg-brand-primary text-text-on-brand border-brand-primary shadow-sm'
-                          : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'
+                          : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-strong'
                       }`}>
                       {g}
                     </button>
@@ -429,7 +429,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
             Save Report
           </button>
           <button onClick={() => setGrades({})} disabled={graded === 0}
-            className="px-5 py-2 rounded-full border border-border-default bg-surface-card text-text-body font-body font-bold text-[14px] hover:border-brand-primary hover:text-text-heading transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+            className="px-5 py-2 rounded-full border border-border-default bg-surface-card text-text-body font-body font-bold text-[14px] hover:border-brand-primary hover:text-text-body transition-all disabled:opacity-40 disabled:cursor-not-allowed">
             Clear
           </button>
         </div>
@@ -517,7 +517,7 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
                       {(['tagging', 'reports'] as PanelMode[]).map(mode => (
                         <button key={mode} onClick={() => setPanelMode(mode)}
                           className={`h-full px-4 rounded-[10px] font-body font-bold text-[12px] capitalize transition-colors ${
-                            panelMode === mode ? 'bg-brand-primary text-text-on-brand' : 'text-text-body hover:text-text-heading'
+                            panelMode === mode ? 'bg-brand-primary text-text-on-brand' : 'text-text-body hover:text-text-strong'
                           }`}>
                           {mode}
                         </button>
@@ -599,7 +599,7 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
               {/* Meta row */}
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
-                  <span className="font-heading font-semibold text-[20px] text-text-heading leading-tight block truncate">
+                  <span className="font-heading font-semibold text-[20px] text-text-strong leading-tight block truncate">
                     {isMatch
                       ? <>{selectedVideo.home} <span className="text-text-body font-medium">vs</span> {selectedVideo.away}</>
                       : selectedVideo.title}
@@ -620,7 +620,7 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
               {/* Controls row */}
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <button onClick={backToLibrary}
-                  className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors">
+                  className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors">
                   <ArrowLeft size={14} />All Videos
                 </button>
                 <div className="flex items-center gap-2">

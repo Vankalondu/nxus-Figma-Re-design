@@ -32,8 +32,8 @@ export default function LoginDepartment() {
               Q
             </div>
             <div className="flex flex-col pr-2 text-left">
-              <span className="font-heading font-extrabold text-[20px] leading-tight text-text-heading tracking-tight">NXUS</span>
-              <span className="font-heading font-bold text-[12px] tracking-[0.2em] text-text-heading">SPORTS</span>
+              <span className="font-heading font-extrabold text-[20px] leading-tight text-text-strong tracking-tight">NXUS</span>
+              <span className="font-heading font-bold text-[12px] tracking-[0.2em] text-text-strong">SPORTS</span>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ export default function LoginDepartment() {
                   }`}
                 >
                   <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center mr-5 transition-colors duration-300 ${
-                    selectedDepartment === mode.id ? 'bg-brand-primary text-text-inverse shadow-md' : 'bg-surface-accent text-text-body group-hover:text-text-heading group-hover:bg-surface-accent'
+                    selectedDepartment === mode.id ? 'bg-brand-primary text-text-inverse shadow-md' : 'bg-surface-accent text-text-body group-hover:text-text-strong group-hover:bg-surface-accent'
                   }`}>
                     <mode.icon size={24} />
                   </div>

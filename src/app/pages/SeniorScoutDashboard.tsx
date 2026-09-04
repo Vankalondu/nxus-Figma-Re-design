@@ -121,17 +121,17 @@ const FLAG_MAP: Record<string, string> = {
 
 // ─── Colour helpers ───────────────────────────────────────────────────────────
 const POS_COLORS: Record<string, string> = {
-  ST: 'bg-[#E05C4B]/10 text-[#E05C4B]', LW: 'bg-brand-primary/10 text-text-heading',
-  RW: 'bg-brand-primary/10 text-text-heading', CAM: 'bg-[#E8A838]/10 text-[#E8A838]',
-  CM: 'bg-text-body/10 text-text-body', CDM: 'bg-brand-primary/10 text-text-heading',
-  FB: 'bg-brand-primary/10 text-text-heading', CB: 'bg-text-body/20 text-text-body',
+  ST: 'bg-[#E05C4B]/10 text-[#E05C4B]', LW: 'bg-brand-primary/10 text-text-strong',
+  RW: 'bg-brand-primary/10 text-text-strong', CAM: 'bg-[#E8A838]/10 text-[#E8A838]',
+  CM: 'bg-text-body/10 text-text-body', CDM: 'bg-brand-primary/10 text-text-strong',
+  FB: 'bg-brand-primary/10 text-text-strong', CB: 'bg-text-body/20 text-text-body',
 };
 // Senior grades are TINTED pills, unlike the Lead dashboard's solid fills —
 // the two dashboards present the same scale differently. Flagged, not resolved:
 // unifying them is an information-hierarchy decision, not a styling one.
 // B+ now binds the scout-amber token instead of bracketed hex (L-C4).
 const GRADE_COLORS: Record<string, string> = {
-  'A+': 'bg-brand-primary text-text-inverse', 'A': 'bg-brand-primary/15 text-text-heading',
+  'A+': 'bg-brand-primary text-text-inverse', 'A': 'bg-brand-primary/15 text-text-strong',
   'B+': 'bg-status-warning/15 text-status-warning-fg', 'B': 'bg-text-body/10 text-text-body',
   'C+': 'bg-surface-accent text-text-body', 'C': 'bg-surface-accent text-text-body',
 };
@@ -142,7 +142,7 @@ const GradePill = ({ grade }: { grade: string }) => (
   <span className={`inline-block px-2 py-[2px] rounded font-body text-[12px] font-black ${GRADE_COLORS[grade] || 'bg-surface-accent text-text-body'}`}>{grade}</span>
 );
 const PriorityPill = ({ priority }: { priority: 'High' | 'Low' }) => (
-  <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black ${priority === 'High' ? 'bg-brand-primary/15 text-text-heading' : 'bg-text-body/15 text-text-body'}`}>{priority}</span>
+  <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black ${priority === 'High' ? 'bg-brand-primary/15 text-text-strong' : 'bg-text-body/15 text-text-body'}`}>{priority}</span>
 );
 
 // ─── Circular Progress Ring ───────────────────────────────────────────────────
@@ -195,7 +195,7 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
         <div className={`px-6 py-5 flex items-start justify-between shrink-0 ${isTom ? 'bg-brand-primary' : 'bg-surface-card border-b border-border-default'}`}>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className={`font-heading font-semibold text-[16px] ${isTom ? 'text-text-on-brand' : 'text-text-heading'}`}>{report.playerName}</span>
+              <span className={`font-heading font-semibold text-[16px] ${isTom ? 'text-text-on-brand' : 'text-text-strong'}`}>{report.playerName}</span>
               <PosPill pos={report.pos} />
               <GradePill grade={report.grade} />
             </div>
@@ -206,7 +206,7 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
               </span>
             </div>
           </div>
-          <button onClick={onClose} className={`mt-0.5 shrink-0 ${isTom ? 'text-text-on-brand/50 hover:text-text-on-brand' : 'text-text-body hover:text-text-heading'}`}><X size={18} /></button>
+          <button onClick={onClose} className={`mt-0.5 shrink-0 ${isTom ? 'text-text-on-brand/50 hover:text-text-on-brand' : 'text-text-body hover:text-text-strong'}`}><X size={18} /></button>
         </div>
         <div className="px-6 py-4 border-b border-border-default flex items-center gap-6 bg-surface-card shrink-0">
           {[['Overall', report.grade], ['PLR', report.plr], ['POR', report.por]].map(([label, val]) => (
@@ -217,12 +217,12 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
           ))}
           <div className="ml-auto flex flex-col gap-1">
             <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Filed</span>
-            <span className="font-body text-[14px] font-bold text-text-heading">{report.date}</span>
+            <span className="font-body text-[14px] font-bold text-text-body">{report.date}</span>
           </div>
         </div>
         <div className="px-6 py-5 flex-1">
           <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-3">Scouting Notes</span>
-          <p className="font-body text-[15px] font-medium text-text-heading leading-relaxed">{report.notes}</p>
+          <p className="font-body text-[15px] font-medium text-text-body leading-relaxed">{report.notes}</p>
         </div>
       </div>
     </div>
@@ -254,7 +254,7 @@ const ThisWeekModal = ({
         {/* Header */}
         <div className="px-8 py-6 border-b border-border-default flex items-center justify-between bg-brand-primary rounded-t-[32px] shrink-0">
           <div className="flex items-center gap-3">
-            <Calendar size={20} className="text-text-heading" />
+            <Calendar size={20} className="text-text-strong" />
             <span className="font-heading font-semibold text-[16px] text-text-on-brand">Tasks This Week</span>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-text-on-brand/60 hover:text-text-on-brand transition-colors">
@@ -271,7 +271,7 @@ const ThisWeekModal = ({
               onChange={e => setNewText(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleAdd()}
               placeholder="Add a task..."
-              className="flex-1 bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all"
+              className="flex-1 bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all"
             />
             <button onClick={handleAdd}
               className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-text-on-brand hover:bg-brand-primary/80 transition-colors shrink-0">
@@ -288,7 +288,7 @@ const ThisWeekModal = ({
               onClick={() => onToggle(task.id)}>
               <div className="w-5 h-5 rounded-full border-2 border-border-default group-hover:border-brand-primary shrink-0 mt-0.5 transition-colors" />
               <div className="flex-1 min-w-0">
-                <p className="font-body font-bold text-[14px] text-text-heading">{task.text}</p>
+                <p className="font-body font-bold text-[14px] text-text-body">{task.text}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <PriorityPill priority={task.priority} />
                   <span className="font-body text-[12px] text-text-body font-medium">{task.dueDate}</span>
@@ -428,14 +428,14 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
   }) => (
     <button onClick={onClick}
       className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
-        selected ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-border-default hover:border-brand-primary/50'
+        selected ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-border-default hover:border-brand-primary/50'
       }`}>
-      {icon && <span className={selected ? 'text-text-on-brand' : 'text-text-heading'}>{icon}</span>}
+      {icon && <span className={selected ? 'text-text-on-brand' : 'text-text-strong'}>{icon}</span>}
       {label}
     </button>
   );
 
-  const inputCls = 'w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:border-border-focus transition-all';
+  const inputCls = 'w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:border-border-focus transition-all';
   const labelCls = 'font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2';
 
   // ── Step titles ──
@@ -485,14 +485,14 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                   <input type="text" value={playerSearch}
                     onChange={e => { setPlayerSearch(e.target.value); setSelectedPlayer(''); setShowNewPlayer(false); }}
                     placeholder="Type player name..."
-                    className="w-full bg-surface-card border border-border-default rounded-xl pl-9 pr-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                    className="w-full bg-surface-card border border-border-default rounded-xl pl-9 pr-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 </div>
                 {/* Search results */}
                 {searchResults.length > 0 && !selectedPlayer && (
                   <div className="mt-2 bg-surface-card border border-border-default rounded-xl overflow-hidden shadow-lg">
                     {searchResults.map(p => (
                       <button key={p} onClick={() => { setSelectedPlayer(p); setPlayerSearch(p); setShowNewPlayer(false); }}
-                        className="w-full text-left px-4 py-3 font-body text-[14px] font-bold border-b border-border-default last:border-0 transition-colors text-text-heading hover:bg-surface-accent">
+                        className="w-full text-left px-4 py-3 font-body text-[14px] font-bold border-b border-border-default last:border-0 transition-colors text-text-body hover:bg-surface-accent">
                         {p}
                       </button>
                     ))}
@@ -501,8 +501,8 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 {/* Selected confirmation */}
                 {selectedPlayer && (
                   <div className="mt-2 flex items-center gap-2 px-4 py-2 bg-brand-primary/5 border border-brand-primary/20 rounded-xl">
-                    <Check size={14} className="text-text-heading shrink-0" />
-                    <span className="font-body font-bold text-[14px] text-text-heading">{selectedPlayer}</span>
+                    <Check size={14} className="text-text-strong shrink-0" />
+                    <span className="font-body font-bold text-[14px] text-text-body">{selectedPlayer}</span>
                   </div>
                 )}
                 {/* Not found */}
@@ -518,7 +518,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 {/* New player form */}
                 {showNewPlayer && (
                   <div className="mt-3 p-4 bg-surface-card rounded-xl border border-border-default space-y-3">
-                    <p className="font-heading font-black text-[14px] text-text-heading">New Player Details</p>
+                    <p className="font-heading font-black text-[14px] text-text-strong">New Player Details</p>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label className={labelCls}>Position</label>
@@ -541,7 +541,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className={labelCls}>Scout</label>
-                  <div className="bg-surface-accent border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading">{scoutName}</div>
+                  <div className="bg-surface-accent border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body">{scoutName}</div>
                 </div>
                 <div>
                   <label className={labelCls}>Scouting Date</label>
@@ -556,11 +556,11 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {step === 2 && (
             <>
               <h3 className="font-heading font-semibold text-[16px] text-text-heading">Report Type</h3>
-              <p className="font-body text-[14px] text-text-body font-medium">For: <span className="text-text-heading font-bold">{selectedPlayer}</span> · {scoutingDate}</p>
+              <p className="font-body text-[14px] text-text-body font-medium">For: <span className="text-text-strong font-bold">{selectedPlayer}</span> · {scoutingDate}</p>
               <div className="space-y-3 pt-1">
                 <button onClick={() => setReportLength('full')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'full' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-border-default hover:border-brand-primary/50'
+                    reportLength === 'full' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Full Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-text-on-brand/60' : 'text-text-body'}`}>
@@ -569,7 +569,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 </button>
                 <button onClick={() => setReportLength('short')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'short' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-border-default hover:border-brand-primary/50'
+                    reportLength === 'short' ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Short Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-text-on-brand/60' : 'text-text-body'}`}>
@@ -612,7 +612,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 ))}
                 <button onClick={() => { setAddingManually(true); setSelectedSource(''); }}
                   className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-2 ${
-                    addingManually ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-heading border-dashed border-border-default hover:border-brand-primary/50'
+                    addingManually ? 'bg-brand-primary text-text-inverse border-brand-primary' : 'bg-surface-card text-text-strong border-dashed border-border-default hover:border-brand-primary/50'
                   }`}>
                   <Plus size={14} /> Not on platform — add manually
                 </button>
@@ -656,13 +656,13 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
             <>
               <h3 className="font-heading font-semibold text-[16px] text-text-heading">Quick Entry</h3>
               <p className="font-body text-[12px] text-text-body font-medium">
-                {selectedPlayer} · {sourceLabel}: <span className="text-text-heading font-bold">{selectedSourceLabel}</span>
+                {selectedPlayer} · {sourceLabel}: <span className="text-text-strong font-bold">{selectedSourceLabel}</span>
               </p>
               <div>
                 <label className={labelCls}>Performance Note</label>
                 <textarea value={perfNote} onChange={e => setPerfNote(e.target.value)} rows={4}
                   placeholder="Quick observation — key moments, standout qualities, concerns..."
-                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
+                  className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
               </div>
               <div className="grid grid-cols-3 gap-4">
                 {([['PLR', plr, setPlr, GRADES],['POG', pog, setPog, GRADES],['NXT', nxt, setNxt, NXT_VALS]] as [string,string,(v:string)=>void,string[]][]).map(([label, val, set, opts]) => (
@@ -682,7 +682,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
             <>
               <h3 className="font-heading font-semibold text-[16px] text-text-heading">Fill Report</h3>
               <p className="font-body text-[12px] text-text-body font-medium">
-                {selectedPlayer} · {sourceLabel}: <span className="text-text-heading font-bold">{selectedSourceLabel}</span>
+                {selectedPlayer} · {sourceLabel}: <span className="text-text-strong font-bold">{selectedSourceLabel}</span>
               </p>
               {/* Template selection */}
               {!selectedTemplate ? (
@@ -691,7 +691,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                   <div className="grid grid-cols-2 gap-2">
                     {TEMPLATES.map(t => (
                       <button key={t} onClick={() => setSelectedTemplate(t)}
-                        className="px-4 py-3 rounded-[14px] text-left font-body font-bold text-[12px] transition-all border bg-surface-card text-text-heading border-border-default hover:border-brand-primary hover:bg-surface-accent">
+                        className="px-4 py-3 rounded-[14px] text-left font-body font-bold text-[12px] transition-all border bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:bg-surface-accent">
                         {t}
                       </button>
                     ))}
@@ -701,14 +701,14 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 <>
                   <div className="flex items-center gap-2">
                     <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-text-body">Template</span>
-                    <span className="font-body font-bold text-[14px] text-text-heading">{selectedTemplate}</span>
-                    <button onClick={() => setSelectedTemplate('')} className="ml-auto text-[12px] font-bold text-text-body underline hover:text-text-heading">Change</button>
+                    <span className="font-body font-bold text-[14px] text-text-body">{selectedTemplate}</span>
+                    <button onClick={() => setSelectedTemplate('')} className="ml-auto text-[12px] font-bold text-text-body underline hover:text-text-strong">Change</button>
                   </div>
                   <div>
                     <label className={labelCls}>Performance Notes</label>
                     <textarea value={fullNotes} onChange={e => setFullNotes(e.target.value)} rows={6}
                       placeholder="Describe the player's performance, key moments, strengths and areas to develop..."
-                      className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
+                      className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none" />
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     {([['PLR', plr, setPlr, GRADES],['POG', pog, setPog, GRADES],['NXT', nxt, setNxt, NXT_VALS]] as [string,string,(v:string)=>void,string[]][]).map(([label, val, set, opts]) => (
@@ -741,7 +741,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 ].map(([label, val]) => (
                   <div key={label} className="flex items-center justify-between px-5 py-3 border-b border-border-default last:border-0">
                     <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-text-body">{label}</span>
-                    <span className="font-body font-bold text-[14px] text-text-heading text-right max-w-[55%]">{val || '—'}</span>
+                    <span className="font-body font-bold text-[14px] text-text-body text-right max-w-[55%]">{val || '—'}</span>
                   </div>
                 ))}
               </div>
@@ -749,7 +749,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">
                   {reportLength === 'full' && selectedTemplate ? selectedTemplate + ' — ' : ''}Notes
                 </span>
-                <p className="font-body text-[14px] font-medium text-text-heading leading-relaxed whitespace-pre-wrap">
+                <p className="font-body text-[14px] font-medium text-text-body leading-relaxed whitespace-pre-wrap">
                   {reportLength === 'short' ? perfNote : fullNotes}
                 </p>
               </div>
@@ -832,7 +832,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
           <div className="px-8 py-3 border-b border-border-default flex items-center gap-4">
             <input value={newTask} onChange={e => setNewTask(e.target.value)} placeholder="Add a task..."
               onKeyDown={e => { if (e.key === 'Enter' && newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
-              className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:border-border-focus" />
+              className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:border-border-focus" />
             <button onClick={() => { if (newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
               className="w-9 h-9 bg-brand-primary text-text-inverse rounded-xl flex items-center justify-center shrink-0"><Plus size={14} /></button>
           </div>
@@ -844,7 +844,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                 </button>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="font-body text-[14px] font-bold text-text-heading">{t.text}</p>
+                    <p className="font-body text-[14px] font-bold text-text-body">{t.text}</p>
                     {t.priority === 'High' && <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#E05C4B]/10 text-[#E05C4B]">HIGH</span>}
                   </div>
                   <p className="font-body text-[12px] text-text-body mt-0.5">{t.assignedBy} • Due {t.dueDate}</p>
@@ -886,7 +886,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                 <div key={scout.name} className="px-6 py-4 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
                   <div className="w-9 h-9 rounded-xl bg-brand-primary text-text-on-brand flex items-center justify-center font-body font-black text-[12px] shrink-0">{scout.name[0]}</div>
                   <div className="flex-1 min-w-0">
-                    <span className="font-body font-bold text-[14px] text-text-heading">{scout.name}</span>
+                    <span className="font-body font-bold text-[14px] text-text-body">{scout.name}</span>
                     <p className="font-body text-[12px] text-text-body">{scout.role} · {scout.count} reports</p>
                   </div>
                   {scout.unread > 0 && (
@@ -942,9 +942,9 @@ const PackagesTab = () => {
             className={`bg-surface-card rounded-[20px] border p-5 hover:shadow-md transition-all ${pkg.watched ? 'border-border-default opacity-60' : 'border-brand-primary shadow-sm'}`}>
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-xl bg-surface-accent text-text-heading flex items-center justify-center font-black text-[12px]">{pkg.initials}</div>
+                <div className="w-9 h-9 rounded-xl bg-surface-accent text-text-strong flex items-center justify-center font-black text-[12px]">{pkg.initials}</div>
                 <div>
-                  <div className="font-body font-bold text-[14px] text-text-heading">{pkg.playerName}</div>
+                  <div className="font-body font-bold text-[14px] text-text-body">{pkg.playerName}</div>
                   <div className="font-body text-[12px] text-text-body">{pkg.uploadDate}</div>
                 </div>
               </div>
@@ -954,7 +954,7 @@ const PackagesTab = () => {
               <span className="font-body text-[12px] font-bold text-text-body">
                 <Video size={12} className="inline -mt-0.5 mr-1" />{pkg.clipCount} clips
               </span>
-              <button className="flex items-center gap-2 text-[12px] font-bold text-text-heading hover:underline">
+              <button className="flex items-center gap-2 text-[12px] font-bold text-text-strong hover:underline">
                 <Play size={12} />Watch
               </button>
             </div>
@@ -1063,7 +1063,7 @@ export default function SeniorScoutDashboard() {
   }
 
   return (
-    <div className="flex min-h-screen bg-surface-page font-body text-text-heading">
+    <div className="flex min-h-screen bg-surface-page font-body text-text-strong">
       <style dangerouslySetInnerHTML={{__html: `
         ::-webkit-scrollbar{width:6px;height:6px;}
         ::-webkit-scrollbar-track{background:transparent;}
@@ -1088,29 +1088,29 @@ export default function SeniorScoutDashboard() {
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Full Name</label>
-                  <input type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                  <input type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 </div>
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Date of Birth</label>
-                  <input type="date" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                  <input type="date" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 </div>
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Nationality</label>
-                  <input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                  <input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 </div>
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label>
-                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                     {['ST','LW','RW','CM','CDM','CAM','FB','CB'].map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Team</label>
-                  <input type="text" placeholder="e.g. Hawks FC" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                  <input type="text" placeholder="e.g. Hawks FC" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 </div>
                 <div>
                   <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Preferred Foot</label>
-                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none appearance-none">
+                  <select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none appearance-none">
                     <option>Right</option><option>Left</option><option>Both</option>
                   </select>
                 </div>
@@ -1121,7 +1121,7 @@ export default function SeniorScoutDashboard() {
                   {['Long List','Short List','Target List'].map(list => (
                     <label key={list} className="flex items-center gap-2 cursor-pointer">
                       <input type="checkbox" className="w-4 h-4 rounded border-2 border-border-default checked:bg-brand-primary checked:border-brand-primary accent-[#1e88e5]" />
-                      <span className="font-body font-bold text-[14px] text-text-heading">{list}</span>
+                      <span className="font-body font-bold text-[14px] text-text-body">{list}</span>
                     </label>
                   ))}
                 </div>
@@ -1150,11 +1150,11 @@ export default function SeniorScoutDashboard() {
             <div className="hidden md:flex items-center bg-surface-accent rounded-full p-1 h-[44px] relative shrink-0">
               <div className={`absolute inset-y-1 w-[114px] bg-brand-primary rounded-full shadow-sm transition-all duration-300 z-0 ${activeRole === 'Head Scout' ? 'left-[118px]' : 'left-1'}`} />
               <button onClick={() => { sessionStorage.removeItem('userRole'); sessionStorage.setItem('loginRole', 'Senior Scout'); setActiveRole('Senior Scout'); }}
-                className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${activeRole === 'Senior Scout' ? 'text-text-on-brand' : 'text-text-body hover:text-text-heading'}`}>
+                className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${activeRole === 'Senior Scout' ? 'text-text-on-brand' : 'text-text-body hover:text-text-strong'}`}>
                 Senior Scout
               </button>
               <button onClick={() => { sessionStorage.setItem('userRole', 'Head Scout'); setActiveRole('Head Scout'); }}
-                className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${activeRole === 'Head Scout' ? 'text-text-on-brand' : 'text-text-body hover:text-text-heading'}`}>
+                className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${activeRole === 'Head Scout' ? 'text-text-on-brand' : 'text-text-body hover:text-text-strong'}`}>
                 Head Scout
               </button>
             </div>
@@ -1172,10 +1172,10 @@ export default function SeniorScoutDashboard() {
                 {notifications.map(n => (
                   <div key={n.id} className={`px-5 py-3 flex items-start gap-3 ${!n.read ? 'bg-surface-card' : ''}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${n.type === 'nudge' ? 'bg-brand-primary/10' : n.type === 'task' ? 'bg-brand-primary/10' : n.type === 'package' ? 'bg-brand-primary/20' : 'bg-brand-primary/10'}`}>
-                      {n.type === 'nudge' ? <Zap size={12} className="text-text-heading" /> : n.type === 'task' ? <CheckCircle size={12} className="text-text-heading" /> : n.type === 'package' ? <Video size={12} className="text-text-heading" /> : <FileText size={12} className="text-text-heading" />}
+                      {n.type === 'nudge' ? <Zap size={12} className="text-text-strong" /> : n.type === 'task' ? <CheckCircle size={12} className="text-text-strong" /> : n.type === 'package' ? <Video size={12} className="text-text-strong" /> : <FileText size={12} className="text-text-strong" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-body text-[14px] font-bold text-text-heading leading-snug">{n.text}</p>
+                      <p className="font-body text-[14px] font-bold text-text-body leading-snug">{n.text}</p>
                       <p className="font-body text-[12px] text-text-body font-medium mt-0.5">{n.time}</p>
                     </div>
                     {!n.read && <div className="w-2 h-2 rounded-full bg-brand-primary shrink-0 mt-2" />}
@@ -1195,7 +1195,7 @@ export default function SeniorScoutDashboard() {
               <div className="px-5 py-4 border-b border-border-default flex items-center gap-3 bg-surface-card">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80" alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
                 <div>
-                  <div className="font-body font-bold text-[14px] text-text-heading">David</div>
+                  <div className="font-body font-bold text-[14px] text-text-body">David</div>
                   <div className="font-body text-[12px] text-text-body font-medium">Senior Scout</div>
                 </div>
               </div>

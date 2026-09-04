@@ -35,7 +35,7 @@ export const Default: Story = {
         </DrawerHeader>
         <div className="px-4 flex flex-col gap-2">
           {['Add to shortlist', 'Add to target', 'Upload highlight'].map((a) => (
-            <span key={a} className="font-body font-bold text-[13px] text-text-heading py-2">{a}</span>
+            <span key={a} className="font-body font-bold text-[13px] text-text-body py-2">{a}</span>
           ))}
         </div>
         <DrawerFooter>

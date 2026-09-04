@@ -25,9 +25,9 @@ export const StatsCards = () => {
         </div>
 
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
-          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-heading leading-none">29</div>
+          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-strong leading-none">29</div>
           <div className="flex flex-col sm:pb-2">
-            <div className="bg-surface-accent text-text-heading text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
+            <div className="bg-surface-accent text-text-strong text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
               82% <span className="w-1.5 h-1.5 rounded-full border border-brand-primary ml-1"></span>
             </div>
             <div className="text-text-body font-bold text-[12px]">/ 35</div>
@@ -64,9 +64,9 @@ export const StatsCards = () => {
         </div>
 
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
-          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-heading leading-none">18</div>
+          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-strong leading-none">18</div>
           <div className="flex flex-col sm:pb-2">
-            <div className="bg-surface-card/10 text-text-heading text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1 border border-border-default">
+            <div className="bg-surface-card/10 text-text-strong text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1 border border-border-default">
               68% <span className="w-1.5 h-1.5 rounded-full border border-brand-primary ml-1"></span>
             </div>
             <div className="text-text-body font-bold text-[12px]">/ 26</div>
@@ -136,7 +136,7 @@ export const StatsCards = () => {
         </div>
 
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
-          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-heading leading-none">46<span className="text-base md:text-[32px] text-text-body">%</span></div>
+          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-strong leading-none">46<span className="text-base md:text-[32px] text-text-body">%</span></div>
           <div className="flex flex-col sm:pb-2">
             <div className="bg-[#F6FAFE] text-[#E05C4B] text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
               Down <span className="w-1.5 h-1.5 rounded-full border border-[#E05C4B] ml-1"></span>
@@ -177,9 +177,9 @@ export const HeadScoutStatsCards = () => {
         </div>
 
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
-          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-heading leading-none">6</div>
+          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-strong leading-none">6</div>
           <div className="flex flex-col sm:pb-2">
-            <div className="bg-surface-accent text-text-heading text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
+            <div className="bg-surface-accent text-text-strong text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
               82% <span className="w-1.5 h-1.5 rounded-full border border-brand-primary ml-1"></span>
             </div>
             <div className="text-text-body font-bold text-[12px]">/ 10</div>
@@ -288,9 +288,9 @@ export const HeadScoutStatsCards = () => {
         </div>
 
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
-          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-heading leading-none">37<span className="text-base md:text-[32px] text-text-body">%</span></div>
+          <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-text-strong leading-none">37<span className="text-base md:text-[32px] text-text-body">%</span></div>
           <div className="flex flex-col sm:pb-2">
-            <div className="bg-surface-accent text-text-heading text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
+            <div className="bg-surface-accent text-text-strong text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
               8% <span className="w-1.5 h-1.5 rounded-full border border-brand-primary ml-1"></span>
             </div>
           </div>
@@ -320,7 +320,7 @@ export const RegionalRankings = () => {
             <div className="flex items-center space-x-3">
               <span className="text-xl">🇳🇬</span>
               <div>
-                <div className="font-bold text-text-heading text-[14px]">Nigeria</div>
+                <div className="font-bold text-text-strong text-[14px]">Nigeria</div>
                 <div className="text-[12px] text-text-body font-semibold flex items-center"><Crown size={12} className="mr-1 text-text-body" /> Chidi Okafor</div>
               </div>
             </div>
@@ -331,32 +331,32 @@ export const RegionalRankings = () => {
             <div className="flex items-center space-x-3">
               <span className="text-xl">🇬🇭</span>
               <div>
-                <div className="font-bold text-text-heading text-[14px]">Ghana</div>
+                <div className="font-bold text-text-strong text-[14px]">Ghana</div>
               </div>
             </div>
-            <span className="font-extrabold text-text-heading bg-surface-accent px-3 py-1 rounded-full text-[14px]">76</span>
+            <span className="font-extrabold text-text-strong bg-surface-accent px-3 py-1 rounded-full text-[14px]">76</span>
           </div>
 
           <div className="flex items-center justify-between p-3 rounded-2xl border border-border-default hover:bg-surface-accent/50 transition-colors">
             <div className="flex items-center space-x-3">
               <span className="text-xl">🇸🇳</span>
               <div>
-                <div className="font-bold text-text-heading text-[14px]">Senegal</div>
+                <div className="font-bold text-text-strong text-[14px]">Senegal</div>
                 <div className="text-[12px] text-text-body font-semibold flex items-center"><Crown size={12} className="mr-1 text-text-body" /> Amara Diallo</div>
               </div>
             </div>
-            <span className="font-extrabold text-text-heading bg-surface-accent px-3 py-1 rounded-full text-[14px]">70</span>
+            <span className="font-extrabold text-text-strong bg-surface-accent px-3 py-1 rounded-full text-[14px]">70</span>
           </div>
 
           <div className="flex items-center justify-between p-3 rounded-2xl border border-border-default hover:bg-surface-accent/50 transition-colors">
             <div className="flex items-center space-x-3">
               <span className="text-xl">🇨🇮</span>
               <div>
-                <div className="font-bold text-text-heading text-[14px]">Ivory Coast</div>
+                <div className="font-bold text-text-strong text-[14px]">Ivory Coast</div>
                 <div className="text-[12px] text-text-body font-semibold flex items-center"><Crown size={12} className="mr-1 text-text-body" /> Didier Bamba</div>
               </div>
             </div>
-            <span className="font-extrabold text-text-heading bg-surface-accent px-3 py-1 rounded-full text-[14px]">60</span>
+            <span className="font-extrabold text-text-strong bg-surface-accent px-3 py-1 rounded-full text-[14px]">60</span>
           </div>
         </div>
       </div>
@@ -380,16 +380,16 @@ export const RegionalRankings = () => {
                 </div>
                 <div className="w-10 h-10 rounded-full bg-brand-primary text-text-on-brand flex items-center justify-center font-bold shadow-sm shrink-0">KA</div>
                 <div>
-                  <div className="font-bold text-text-heading text-[14px] flex items-center">Kwame Asante <span className="text-[#E8A838] ml-1 text-sm">🔥</span></div>
+                  <div className="font-bold text-text-strong text-[14px] flex items-center">Kwame Asante <span className="text-[#E8A838] ml-1 text-sm">🔥</span></div>
                   <div className="text-[12px] text-text-body font-semibold flex items-center space-x-2 mt-0.5">
-                    <span className="text-text-heading flex items-center"><Crown size={10} className="mr-0.5" /> 38 Grade A</span>
+                    <span className="text-text-strong flex items-center"><Crown size={10} className="mr-0.5" /> 38 Grade A</span>
                     <span className="text-[#b4d7f6]">•</span>
                     <span>78 total</span>
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-semibold text-[24px] text-text-heading">38</div>
+                <div className="font-semibold text-[24px] text-text-strong">38</div>
                 <div className="text-brand-primary text-[12px] font-bold flex items-center justify-end"><TrendingUp size={10} className="mr-0.5" /> +8</div>
               </div>
             </div>
@@ -412,16 +412,16 @@ export const RegionalRankings = () => {
                     <div className="w-8 h-8 rounded-full bg-surface-accent text-text-body font-bold flex items-center justify-center text-[14px] shrink-0">{scout.rank}</div>
                     <div className="w-10 h-10 rounded-full bg-brand-primary text-text-on-brand flex items-center justify-center font-bold shadow-sm shrink-0">{scout.init}</div>
                     <div>
-                      <div className="font-bold text-text-heading text-[14px] flex items-center">{scout.name} {scout.rank === 1 && <TrendingUp size={12} className="text-brand-primary ml-1" />}</div>
+                      <div className="font-bold text-text-strong text-[14px] flex items-center">{scout.name} {scout.rank === 1 && <TrendingUp size={12} className="text-brand-primary ml-1" />}</div>
                       <div className="text-[12px] text-text-body font-semibold flex items-center space-x-2 mt-0.5">
-                        <span className="text-text-heading flex items-center"><Crown size={10} className="mr-0.5" /> {scout.gradeA} Grade A</span>
+                        <span className="text-text-strong flex items-center"><Crown size={10} className="mr-0.5" /> {scout.gradeA} Grade A</span>
                         <span className="text-[#b4d7f6]">•</span>
                         <span>{scout.total} total</span>
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="font-extrabold text-[20px] text-text-heading">{scout.val}</div>
+                    <div className="font-extrabold text-[20px] text-text-strong">{scout.val}</div>
                     <div className="text-brand-primary text-[12px] font-bold flex items-center justify-end"><TrendingUp size={10} className="mr-0.5" /> {scout.diff}</div>
                   </div>
                 </div>

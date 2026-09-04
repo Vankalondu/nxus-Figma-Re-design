@@ -66,7 +66,7 @@ export function TopNav({
       {/* Hamburger — mobile only; opens the Sidebar drawer via a decoupled event */}
       {responsive && (
         <button onClick={() => window.dispatchEvent(new CustomEvent('nxus:open-menu'))} aria-label="Open menu"
-          className="md:hidden w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-heading shrink-0">
+          className="md:hidden w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-strong shrink-0">
           <Menu size={18} />
         </button>
       )}
@@ -89,31 +89,31 @@ export function TopNav({
       <div className={'flex items-center shrink-0 ' + actionsGap}>
         <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme"
           className="w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm shrink-0">
-          {theme === 'dark' ? <Sun size={16} className="text-text-heading" /> : <Moon size={16} className="text-text-heading" />}
+          {theme === 'dark' ? <Sun size={16} className="text-text-strong" /> : <Moon size={16} className="text-text-strong" />}
         </button>
         <div className="relative">
           <button onClick={onNotifToggle} className="relative w-10 h-10 rounded-full bg-surface-card border border-border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm">
-            <Bell size={16} className="text-text-heading" />
+            <Bell size={16} className="text-text-strong" />
             {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-primary rounded-full text-text-on-brand type-micro font-black flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
           </button>
           {notifOpen && notifPanel}
         </div>
 
         {onThisWeek && (
-          <button onClick={onThisWeek} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-text-heading hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
+          <button onClick={onThisWeek} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
             <Calendar size={15} strokeWidth={2.5} /><span className={btnText}>This Week</span>
           </button>
         )}
 
         {onAddReport && (
-          <button onClick={onAddReport} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-text-heading hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
+          <button onClick={onAddReport} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
             <FileText size={15} strokeWidth={2.5} /><span className={btnText}>Add Report</span>
           </button>
         )}
 
         {onUploadVideo && (
           <button onClick={onUploadVideo}
-            className={(uploadVideoVariant === 'secondary' ? secondaryCls : 'flex') + ' items-center gap-2 ' + btnPad + ' py-3 rounded-full font-body type-body-sm font-bold transition-colors ' + (uploadVideoVariant === 'secondary' ? 'bg-transparent border-2 border-brand-primary text-text-heading hover:bg-brand-primary/10' : 'bg-brand-primary border-2 border-brand-primary text-text-on-brand hover:bg-brand-primary/80 shadow-md')}>
+            className={(uploadVideoVariant === 'secondary' ? secondaryCls : 'flex') + ' items-center gap-2 ' + btnPad + ' py-3 rounded-full font-body type-body-sm font-bold transition-colors ' + (uploadVideoVariant === 'secondary' ? 'bg-transparent border-2 border-brand-primary text-text-strong hover:bg-brand-primary/10' : 'bg-brand-primary border-2 border-brand-primary text-text-on-brand hover:bg-brand-primary/80 shadow-md')}>
             <UploadCloud size={15} strokeWidth={2.5} /><span className={btnText}>Upload Video</span>
           </button>
         )}
@@ -136,7 +136,7 @@ export function TopNav({
       {responsive && searchOpen && (
         <div className="md:hidden absolute inset-0 z-20 flex items-center gap-3 bg-surface-card rounded-[20px] px-4">
           <PlayerSearch className="flex-1 min-w-0" autoFocus />
-          <button onClick={() => setSearchOpen(false)} aria-label="Close search" className="shrink-0 text-text-body hover:text-text-heading"><X size={18} /></button>
+          <button onClick={() => setSearchOpen(false)} aria-label="Close search" className="shrink-0 text-text-body hover:text-text-strong"><X size={18} /></button>
         </div>
       )}
     </div>

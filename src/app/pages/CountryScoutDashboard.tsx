@@ -32,9 +32,9 @@ const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnD
     isSticky: 'left-[160px]', minWidth: 'min-w-[240px]', borderRight: true,
     renderCell: (p) => (
       <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}>
-        <div className="w-8 h-8 rounded-xl bg-surface-input text-text-heading flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{p.initials}</div>
+        <div className="w-8 h-8 rounded-xl bg-surface-input text-text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-border-default">{p.initials}</div>
         <div className="flex flex-col">
-          <span className="font-body font-bold text-text-heading text-[14px] hover:underline">{p.name}</span>
+          <span className="font-body font-bold text-text-body text-[14px] hover:underline">{p.name}</span>
           <span className="font-body text-text-body text-[12px]">Age {p.age}</span>
         </div>
       </div>
@@ -43,13 +43,13 @@ const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnD
   { id: 'dob', group: 'BIO DATA', label: 'DOB', renderCell: (p) => <span className="font-body font-medium text-text-body text-[14px]">{p.dob}</span> },
   { id: 'nat', group: 'BIO DATA', label: 'Nat', align: 'center', renderCell: (p) => <FlagCircle code={flagMap[p.nationality] || 'un'} label={p.nationality} /> },
   { id: 'country', group: 'BIO DATA', label: 'Ctry', align: 'center', renderCell: (p) => <FlagCircle code={flagMap[p.country] || 'un'} label={p.country} /> },
-  { id: 'pos', group: 'BIO DATA', label: 'Pos', renderCell: (p) => <span className="font-body font-bold text-text-heading text-[14px]">{p.pos}</span> },
+  { id: 'pos', group: 'BIO DATA', label: 'Pos', renderCell: (p) => <span className="font-body font-bold text-text-body text-[14px]">{p.pos}</span> },
   { id: 'pteam', group: 'BIO DATA', label: 'P.Team', renderCell: (p) => <span className="font-body font-medium text-text-body text-[14px]">{p.pTeam}</span> },
   { id: 'lvl', group: 'BIO DATA', label: 'Lvl', renderCell: (p) => <span className="font-body font-medium text-text-body text-[14px]">{p.pCountry}</span> },
   { id: 'match', group: 'BIO DATA', label: 'Match', borderRight: true, renderCell: (p) => <span className="font-body font-medium text-text-body text-[14px]">{p.cTeam}</span> },
   { id: 'mins',  group: 'GAME STATS', label: 'Mins',  bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.app}</span> },
   { id: 'gls',   group: 'GAME STATS', label: 'Gls',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.starts}</span> },
-  { id: 'ast',   group: 'GAME STATS', label: 'Ast',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-text-heading text-[14px]">{p.goals}</span> },
+  { id: 'ast',   group: 'GAME STATS', label: 'Ast',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-text-strong text-[14px]">{p.goals}</span> },
   { id: 'xg',    group: 'GAME STATS', label: 'xG',    fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.ass}</span> },
   { id: 'xa',    group: 'GAME STATS', label: 'xA',    bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.pens}</span> },
   { id: 'shots', group: 'GAME STATS', label: 'Shots', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.gcMins}</span> },
@@ -58,11 +58,11 @@ const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnD
   { id: 'tckl',  group: 'GAME STATS', label: 'Tckl',  bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.a90}</span> },
   { id: 'int',   group: 'GAME STATS', label: 'Int',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.gc90}</span> },
   { id: 'clr',   group: 'GAME STATS', label: 'Clr',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-text-body text-[14px]">{p.mpg}</span> },
-  { id: 'aer',   group: 'GAME STATS', label: 'Aer',   fontMono: true, borderRight: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-text-heading text-[14px]">{p.potMins}</span> },
+  { id: 'aer',   group: 'GAME STATS', label: 'Aer',   fontMono: true, borderRight: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-text-strong text-[14px]">{p.potMins}</span> },
   { id: 'match_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center space-x-1"><Video size={14} /><span>Match</span></div>, fontMono: true, align: 'center',
-    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/20 text-text-heading font-body font-bold px-2 py-0.5 rounded text-[12px]">F{p.matchVideos}</span></div>) },
+    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/20 text-text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">F{p.matchVideos}</span></div>) },
   { id: 'high_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center space-x-1"><Video size={14} /><span>High</span></div>, fontMono: true, align: 'center',
-    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/10 text-text-heading font-body font-bold px-2 py-0.5 rounded text-[12px]">H{p.highlightVideos}</span></div>) },
+    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/10 text-text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">H{p.highlightVideos}</span></div>) },
 ];
 
 let seed = 123;
@@ -145,7 +145,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId }: {
         return (
           <button key={i} onClick={(e) => { e.stopPropagation(); setSelectedIdx(fullIdx); setOpenId(null); }}
             className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors
-              ${item.danger ? 'text-status-error hover:bg-status-error/15' : 'text-text-heading hover:bg-surface-accent'}`}>
+              ${item.danger ? 'text-status-error hover:bg-status-error/15' : 'text-text-strong hover:bg-surface-accent'}`}>
             {item.icon}{item.label}
           </button>
         );
@@ -160,14 +160,14 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId }: {
         className={`w-7 h-7 rounded-l-lg flex items-center justify-center transition-all border border-r-0 ${
           primaryItem.danger
             ? 'bg-status-error/10 text-status-error hover:bg-status-error hover:text-text-on-brand border-status-error/20'
-            : 'bg-surface-accent text-text-heading hover:bg-brand-primary/80 hover:text-text-inverse border-border-default'
+            : 'bg-surface-accent text-text-strong hover:bg-brand-primary/80 hover:text-text-inverse border-border-default'
         }`}>
         {primaryItem.icon}
       </button>
       {restItems.length > 0 && (
         <>
           <button ref={chevronRef} onClick={handleChevron}
-            className="w-5 h-7 rounded-r-lg bg-surface-accent border border-border-default text-text-heading hover:bg-brand-primary/80 hover:text-text-inverse flex items-center justify-center transition-all">
+            className="w-5 h-7 rounded-r-lg bg-surface-accent border border-border-default text-text-strong hover:bg-brand-primary/80 hover:text-text-inverse flex items-center justify-center transition-all">
             <ChevronDown size={10} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </button>
           {portal}
@@ -313,7 +313,7 @@ export default function CountryScoutDashboardPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-surface-page font-body text-text-heading">
+    <div className="flex min-h-screen bg-surface-page font-body text-text-strong">
       <style dangerouslySetInnerHTML={{__html:`
         ::-webkit-scrollbar{width:8px;height:8px;}::-webkit-scrollbar-track{background:transparent;}
         ::-webkit-scrollbar-thumb{background:var(--blue-100);border-radius:4px;border:2px solid #d2e7fa;}
@@ -333,13 +333,13 @@ export default function CountryScoutDashboardPage() {
             rolePill={loggedInRole==='Senior Scout' ? (
               <div className="hidden md:flex p-1 bg-surface-accent rounded-[32px] relative items-center h-[44px] min-w-[240px]">
                 <div className={`absolute inset-y-1 w-[114px] bg-brand-primary rounded-[32px] shadow-sm transition-all duration-300 z-0 ${userRoleState==='Head Scout'?'left-[122px]':'left-1'}`} />
-                <button onClick={()=>handleSeniorViewSwitch('Senior Scout')} className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${userRoleState!=='Head Scout'?'text-text-on-brand':'text-text-body hover:text-text-heading'}`}>Senior Scout</button>
-                <button onClick={()=>handleSeniorViewSwitch('Head Scout')} className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${userRoleState==='Head Scout'?'text-text-on-brand':'text-text-body hover:text-text-heading'}`}>Head Scout</button>
+                <button onClick={()=>handleSeniorViewSwitch('Senior Scout')} className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${userRoleState!=='Head Scout'?'text-text-on-brand':'text-text-body hover:text-text-strong'}`}>Senior Scout</button>
+                <button onClick={()=>handleSeniorViewSwitch('Head Scout')} className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${userRoleState==='Head Scout'?'text-text-on-brand':'text-text-body hover:text-text-strong'}`}>Head Scout</button>
               </div>
             ) : (
               <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-[32px]">
                 <span className="w-2 h-2 rounded-full shrink-0 bg-brand-primary" />
-                <span className="hidden md:inline font-body text-[14px] font-bold text-text-heading whitespace-nowrap">{loggedInRole} Dashboard</span>
+                <span className="hidden md:inline font-body text-[14px] font-bold text-text-body whitespace-nowrap">{loggedInRole} Dashboard</span>
               </div>
             )}
             unreadCount={raiseNotifications.length}
@@ -356,8 +356,8 @@ export default function CountryScoutDashboardPage() {
                     ? <div className="px-5 py-8 text-center font-body text-text-body text-[14px] font-medium">No raised players yet</div>
                     : raiseNotifications.map((n,i)=>(
                       <div key={i} className="px-5 py-3 border-b border-border-default last:border-0 flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><ArrowUpRight size={14} className="text-text-heading" /></div>
-                        <div><div className="font-body font-bold text-[14px] text-text-heading">{n.name}</div><div className="font-body text-[12px] text-text-body font-medium">Raised to Long List</div></div>
+                        <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><ArrowUpRight size={14} className="text-text-strong" /></div>
+                        <div><div className="font-body font-bold text-[14px] text-text-body">{n.name}</div><div className="font-body text-[12px] text-text-body font-medium">Raised to Long List</div></div>
                       </div>
                     ))}
                 </div>
@@ -374,7 +374,7 @@ export default function CountryScoutDashboardPage() {
             profileOpen={isProfileOpen}
             onProfileToggle={()=>setIsProfileOpen(!isProfileOpen)}
             profileMenu={(
-              <div className="absolute right-0 mt-3 w-64 bg-surface-card text-text-heading rounded-[24px] shadow-xl overflow-visible z-50 border border-border-default font-body">
+              <div className="absolute right-0 mt-3 w-64 bg-surface-card text-text-strong rounded-[24px] shadow-xl overflow-visible z-50 border border-border-default font-body">
                 <div className="p-4 border-b border-border-default flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-full bg-brand-primary text-text-on-brand flex items-center justify-center font-body font-bold text-[14px] shadow-sm">V</div>
                   <div>
@@ -413,10 +413,10 @@ export default function CountryScoutDashboardPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-[var(--gap-grid)] w-full mt-4 pb-4">
                   <div className="lg:col-span-2 portrait-tablet:col-span-full bg-surface-accent border border-border-default rounded-[40px] p-[var(--pad-card)] shadow-[0_4px_24px_rgba(6,27,46,0.12),0_1px_4px_rgba(6,27,46,0.10)] h-[550px] flex flex-col">
                     <div className="flex items-center gap-4 mb-6 shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-surface-card flex items-center justify-center text-text-heading"><Users size={20} /></div>
+                      <div className="w-12 h-12 rounded-full bg-surface-card flex items-center justify-center text-text-strong"><Users size={20} /></div>
                       <h2 className="font-heading font-bold type-h5 text-text-heading flex items-center">
                         Scout Leaderboard
-                        <span className="inline-flex items-center gap-2 px-3 py-1 bg-surface-card text-text-heading border border-border-default rounded-full text-[14px] font-bold shadow-sm ml-4">Ghana 🇬🇭</span>
+                        <span className="inline-flex items-center gap-2 px-3 py-1 bg-surface-card text-text-strong border border-border-default rounded-full text-[14px] font-bold shadow-sm ml-4">Ghana 🇬🇭</span>
                       </h2>
                     </div>
                     <div className="flex-1 flex flex-col min-h-0">
@@ -426,9 +426,9 @@ export default function CountryScoutDashboardPage() {
                       <div className="flex-1 overflow-y-auto hide-scrollbar">
                         {[{name:'Kwame Asante',init:'KA',val:'38 players',country:'Ghana 🇬🇭',color:'bg-brand-primary text-text-inverse'},{name:'Chidi Obinna',init:'CO',val:'24 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-text-inverse'},{name:'Wekesa Omondi',init:'WO',val:'18 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-text-inverse'},{name:'Emeka Okafor',init:'EO',val:'14 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-text-inverse'},{name:'Joseph Njoroge',init:'JN',val:'11 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-text-inverse'},{name:'Amani Mushi',init:'AM',val:'8 players',country:'Tanzania 🇹🇿',color:'bg-brand-primary text-text-inverse'}].map((scout,i)=>(
                           <div key={i} className="grid grid-cols-12 px-2 py-5 items-center border-b border-border-default last:border-0 hover:bg-surface-accent/50 transition-colors cursor-pointer">
-                            <div className="col-span-6 flex items-center space-x-4"><div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-[14px] ${scout.color}`}>{scout.init}</div><span className="font-body font-bold text-text-heading text-[14px]">{scout.name}</span></div>
+                            <div className="col-span-6 flex items-center space-x-4"><div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-[14px] ${scout.color}`}>{scout.init}</div><span className="font-body font-bold text-text-body text-[14px]">{scout.name}</span></div>
                             <div className="col-span-3 font-body text-[14px] font-medium text-text-body">{scout.val}</div>
-                            <div className="col-span-3 text-right font-bold text-text-heading text-[14px]">{scout.country}</div>
+                            <div className="col-span-3 text-right font-bold text-text-strong text-[14px]">{scout.country}</div>
                           </div>
                         ))}
                       </div>
@@ -436,7 +436,7 @@ export default function CountryScoutDashboardPage() {
                   </div>
                   <div className="lg:col-span-1 flex flex-col gap-[var(--gap-grid)] h-[550px]">
                     <div className="bg-surface-card border border-border-default rounded-[40px] p-[var(--pad-card)] shadow-[var(--shadow-lg)] flex flex-col flex-1 relative overflow-hidden group cursor-pointer h-1/2">
-                      <div className="w-12 h-12 rounded-full bg-surface-card/10 flex items-center justify-center text-text-heading mb-auto shrink-0 border border-text-on-brand/5"><TrendingUp size={18} strokeWidth={2.5} /></div>
+                      <div className="w-12 h-12 rounded-full bg-surface-card/10 flex items-center justify-center text-text-strong mb-auto shrink-0 border border-text-on-brand/5"><TrendingUp size={18} strokeWidth={2.5} /></div>
                       <div className="mt-8"><h4 className="font-heading font-bold type-body text-text-heading mb-1">Top Prospect</h4><p className="font-body type-caption text-text-body font-medium mb-3">Based on scout rating</p><div className="font-heading font-bold type-h5 tracking-tight text-text-heading leading-tight">Kofi Mensah</div></div>
                     </div>
                     <div className="bg-brand-primary rounded-[40px] p-[var(--pad-card)] shadow-sm flex flex-col flex-1 relative overflow-hidden group h-1/2">
@@ -447,7 +447,7 @@ export default function CountryScoutDashboardPage() {
                           {['Gor Mahia vs Kariobangi','Enyimba FC vs Kano Pillars'].map((m,i)=>(
                             <div key={i} className="flex justify-between items-center font-body text-[14px] font-bold text-text-on-brand bg-surface-card/20 px-3 py-2 rounded-[16px]">
                               <span className="truncate pr-4">{m}</span>
-                              <span className="shrink-0 bg-surface-card/50 px-2 py-1 rounded-full font-body text-[12px] font-bold uppercase text-text-heading">Dec {15+i}</span>
+                              <span className="shrink-0 bg-surface-card/50 px-2 py-1 rounded-full font-body text-[12px] font-bold uppercase text-text-body">Dec {15+i}</span>
                             </div>
                           ))}
                         </div>
@@ -485,12 +485,12 @@ export default function CountryScoutDashboardPage() {
                   {activeTab!=='combined-top-10' && (
                     <div className="flex items-center gap-3 shrink-0">
                       <button onClick={()=>setColsModalOpen(true)} aria-label="Columns"
-                        className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[14px] border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-heading shrink-0 transition-colors">
+                        className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[14px] border border-border-default bg-surface-card text-text-body hover:border-brand-primary hover:text-text-body shrink-0 transition-colors">
                         <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
                       </button>
                       <div className="hidden md:flex items-center space-x-1 bg-surface-card border border-border-default p-2 rounded-full shadow-sm shrink-0">
-                        <button onClick={()=>setViewMode('table')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='table'?'bg-brand-primary text-text-inverse shadow-sm':'text-text-body hover:text-text-heading hover:bg-surface-accent'}`} title="Table View"><List size={16} /></button>
-                        <button onClick={()=>setViewMode('card')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='card'?'bg-brand-primary text-text-inverse shadow-sm':'text-text-body hover:text-text-heading hover:bg-surface-accent'}`} title="Card View"><LayoutGrid size={16} /></button>
+                        <button onClick={()=>setViewMode('table')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='table'?'bg-brand-primary text-text-inverse shadow-sm':'text-text-body hover:text-text-strong hover:bg-surface-accent'}`} title="Table View"><List size={16} /></button>
+                        <button onClick={()=>setViewMode('card')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='card'?'bg-brand-primary text-text-inverse shadow-sm':'text-text-body hover:text-text-strong hover:bg-surface-accent'}`} title="Card View"><LayoutGrid size={16} /></button>
                       </div>
                     </div>
                   )}
@@ -501,10 +501,10 @@ export default function CountryScoutDashboardPage() {
                 <div className="flex items-center gap-2 mb-6 overflow-x-auto hide-scrollbar flex-nowrap">
                   {([{id:'players-in-scope',label:'Players in Scope'},{id:'top-10',label:'Top 10'},{id:'reserve-list',label:'Reserve List'},{id:'combined-top-10',label:'Combined Top 10'}] as {id:typeof activeTab;label:string}[]).map(tab=>(
                     <button key={tab.id} onClick={()=>handleTabChange(tab.id)}
-                      className={`relative shrink-0 px-6 py-2 rounded-full font-body font-bold text-[14px] transition-all flex items-center gap-2 border ${activeTab===tab.id?'bg-brand-primary text-text-inverse border-brand-primary shadow-sm':'bg-surface-card text-text-body border-text-on-brand hover:border-brand-primary hover:text-text-heading'}`}>
+                      className={`relative shrink-0 px-6 py-2 rounded-full font-body font-bold text-[14px] transition-all flex items-center gap-2 border ${activeTab===tab.id?'bg-brand-primary text-text-inverse border-brand-primary shadow-sm':'bg-surface-card text-text-body border-text-on-brand hover:border-brand-primary hover:text-text-strong'}`}>
                       <span>{tab.label}</span>
-                      {tab.id==='top-10'&&top10PlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='top-10'?'bg-surface-card/20 text-text-on-brand':'bg-brand-primary/15 text-text-heading'}`}>{top10PlayerIds.length}</span>}
-                      {tab.id==='reserve-list'&&reservePlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='reserve-list'?'bg-surface-card/20 text-text-on-brand':'bg-surface-accent text-text-heading'}`}>{reservePlayerIds.length}</span>}
+                      {tab.id==='top-10'&&top10PlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='top-10'?'bg-surface-card/20 text-text-on-brand':'bg-brand-primary/15 text-text-strong'}`}>{top10PlayerIds.length}</span>}
+                      {tab.id==='reserve-list'&&reservePlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='reserve-list'?'bg-surface-card/20 text-text-on-brand':'bg-surface-accent text-text-strong'}`}>{reservePlayerIds.length}</span>}
                     </button>
                   ))}
                 </div>
@@ -519,7 +519,7 @@ export default function CountryScoutDashboardPage() {
                       {[{label:'Foot',opts:['Any','Right','Left','Both']},{label:'Ht',opts:['Any','<170','170–180','180–190','>190']},{label:'Age',opts:['Any','U18','U21','U23','U25','25+']}].map(f=>(
                         <div key={f.label} className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
                           <span className="font-body text-[14px] font-bold text-text-body">{f.label}:</span>
-                          <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-heading focus:outline-none cursor-pointer pr-5">
+                          <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5">
                             {f.opts.map(o=><option key={o} className="text-ink-midnight">{o}</option>)}
                           </select>
                           <ChevronDown size={14} className="absolute right-4 text-text-body pointer-events-none" />
@@ -531,7 +531,7 @@ export default function CountryScoutDashboardPage() {
                       {[{label:'Pos',opts:['All','ST','LW','RW','CM','FB','CB'],state:positionFilter,set:setPositionFilter},{label:'Profile',opts:['All','Wonderkid','Prospect','Performance','Journeyman'],state:'All',set:()=>{}},{label:'Scout',opts:['All','Scouted','Unscouted'],state:'All',set:()=>{}}].map(f=>(
                         <div key={f.label} className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
                           <span className="font-body text-[14px] font-bold text-text-body">{f.label}:</span>
-                          <select value={f.state} onChange={e=>f.set(e.target.value)} className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-heading focus:outline-none cursor-pointer pr-5">
+                          <select value={f.state} onChange={e=>f.set(e.target.value)} className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5">
                             {f.opts.map(o=><option key={o} className="text-ink-midnight">{o}</option>)}
                           </select>
                           <ChevronDown size={14} className="absolute right-4 text-text-body pointer-events-none" />
@@ -541,7 +541,7 @@ export default function CountryScoutDashboardPage() {
                       {/* SHOW */}
                       <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body shrink-0">Show</span>
                       <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-                        <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-heading focus:outline-none cursor-pointer pr-5" value={showFilter} onChange={e=>setShowFilter(e.target.value)}>
+                        <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5" value={showFilter} onChange={e=>setShowFilter(e.target.value)}>
                           <option value="All players" className="text-ink-midnight">All Players</option>
                           <option value="Raised" className="text-ink-midnight">Raised</option>
                           <option value="Can add" className="text-ink-midnight">Can add</option>
@@ -552,7 +552,7 @@ export default function CountryScoutDashboardPage() {
                       {/* STATS */}
                       <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body shrink-0">Stats</span>
                       <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-                        <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-heading focus:outline-none cursor-pointer pr-5" value={statFilter} onChange={e=>setStatFilter(e.target.value)}>
+                        <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-text-body focus:outline-none cursor-pointer pr-5" value={statFilter} onChange={e=>setStatFilter(e.target.value)}>
                           {['All Stats','Goals','Assists','Mins','xG','xA','Shots','SOT','Pass%','Tackles','Interceptions','Clearances','Starts'].map(s=><option key={s} className="text-ink-midnight">{s}</option>)}
                         </select>
                         <ChevronDown size={14} className="absolute right-4 text-text-body pointer-events-none" />
@@ -572,7 +572,7 @@ export default function CountryScoutDashboardPage() {
                       <button className="flex items-center gap-2 px-4 py-2 bg-brand-primary text-text-inverse rounded-full font-body text-[14px] font-bold"><ChevronDown size={14} />Filters</button>
                       <div className="flex items-center bg-surface-card border border-border-default rounded-full p-1 ml-auto">
                         {['Active','Audit'].map((mode,i)=>(
-                          <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-text-inverse':'text-text-body hover:text-text-heading'}`}>{mode}</button>
+                          <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-text-inverse':'text-text-body hover:text-text-strong'}`}>{mode}</button>
                         ))}
                       </div>
                     </div>
@@ -585,12 +585,12 @@ export default function CountryScoutDashboardPage() {
                     <div className="flex items-center gap-4">
                       <div className="flex flex-col">
                         <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Performance</span>
-                        <span className="font-heading font-semibold text-[16px] text-text-heading leading-none">{perfCount}/10</span>
+                        <span className="font-heading font-semibold text-[16px] text-text-strong leading-none">{perfCount}/10</span>
                       </div>
                       <div className="w-px h-8 bg-surface-canvas" />
                       <div className="flex flex-col">
                         <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Prospects</span>
-                        <span className="font-heading font-semibold text-[16px] text-text-heading leading-none">{prospectCount}/10</span>
+                        <span className="font-heading font-semibold text-[16px] text-text-strong leading-none">{prospectCount}/10</span>
                       </div>
                     </div>
                     <button className="ml-auto bg-brand-primary text-text-inverse px-6 py-2 rounded-full font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm"
@@ -615,20 +615,20 @@ export default function CountryScoutDashboardPage() {
                         <div className="absolute top-0 left-0 w-2 h-full bg-brand-primary" />
                         <div className="flex items-center justify-between mb-8">
                           <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-[16px] bg-brand-primary/10 flex items-center justify-center text-text-heading"><ShieldCheck size={24} strokeWidth={2.5} /></div>
-                            <div><h3 className="font-heading font-bold text-[24px] text-text-heading">Submitted</h3><p className="font-body font-bold text-[14px] text-text-heading">Action Required: None</p></div>
+                            <div className="w-12 h-12 rounded-[16px] bg-brand-primary/10 flex items-center justify-center text-text-strong"><ShieldCheck size={24} strokeWidth={2.5} /></div>
+                            <div><h3 className="font-heading font-bold text-[24px] text-text-heading">Submitted</h3><p className="font-body font-bold text-[14px] text-text-body">Action Required: None</p></div>
                           </div>
-                          <div className="font-heading font-black text-[44px] tracking-tight text-text-heading">12</div>
+                          <div className="font-heading font-black text-[44px] tracking-tight text-text-strong">12</div>
                         </div>
                         <div className="flex-1 overflow-y-auto pr-4 space-y-4">
                           {[{name:'Kofi Mensah',role:'Country Scout',region:'Ghana',date:'Today, 10:45 AM'},{name:'Ngozi Eze',role:'Country Scout',region:'Nigeria',date:'Yesterday, 4:20 PM'},{name:'Pape Sarr',role:'Country Scout',region:'Senegal',date:'Yesterday, 1:15 PM'},{name:'Emeka Okafor',role:'Country Scout',region:'Nigeria',date:'Monday, 9:00 AM'}].map((scout,i)=>(
                             <div key={i} className="bg-surface-card border border-border-default rounded-[24px] p-5 flex items-center justify-between hover:bg-surface-accent transition-colors">
                               <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-border-default flex items-center justify-center font-body font-bold text-[12px] text-text-heading">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
-                                <div><div className="font-body font-bold text-[14px] text-text-heading">{scout.name}</div><div className="font-body text-[12px] font-medium text-text-body">{scout.region} • {scout.role}</div></div>
+                                <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-border-default flex items-center justify-center font-body font-bold text-[12px] text-text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
+                                <div><div className="font-body font-bold text-[14px] text-text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-text-body">{scout.region} • {scout.role}</div></div>
                               </div>
                               <div className="text-right">
-                                <div className="text-text-heading bg-brand-primary/10 px-3 py-1 rounded-full font-body text-[10px] font-bold uppercase tracking-wider mb-1 inline-block">Complete</div>
+                                <div className="text-text-body bg-brand-primary/10 px-3 py-1 rounded-full font-body text-[10px] font-bold uppercase tracking-wider mb-1 inline-block">Complete</div>
                                 <div className="font-body text-[12px] font-medium text-text-body block">{scout.date}</div>
                               </div>
                             </div>
@@ -648,8 +648,8 @@ export default function CountryScoutDashboardPage() {
                           {[{name:'Fatou Mensah',role:'Country Scout',region:'Ghana',status:'7/10 Profiles'},{name:'Aliou Cisse',role:'Country Scout',region:'Senegal',status:'2/10 Profiles'},{name:'Kwame Asante',role:'Head Scout',region:'Ghana',status:'Reviewing'},{name:'Moussa Sow',role:'Head Scout',region:'Senegal',status:'Reviewing'}].map((scout,i)=>(
                             <div key={i} className="bg-[#E05C4B]/5 border border-[#E05C4B]/10 rounded-[24px] p-5 flex items-center justify-between hover:bg-[#E05C4B]/10 transition-colors">
                               <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-border-default flex items-center justify-center font-body font-bold text-[12px] text-text-heading">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
-                                <div><div className="font-body font-bold text-[14px] text-text-heading">{scout.name}</div><div className="font-body text-[12px] font-medium text-text-body">{scout.region} • {scout.role}</div></div>
+                                <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-border-default flex items-center justify-center font-body font-bold text-[12px] text-text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
+                                <div><div className="font-body font-bold text-[14px] text-text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-text-body">{scout.region} • {scout.role}</div></div>
                               </div>
                               <div className="flex flex-col items-end gap-2">
                                 <div className="font-body font-bold text-[14px] text-[#E05C4B]">{scout.status}</div>
@@ -670,7 +670,7 @@ export default function CountryScoutDashboardPage() {
                     {currentPlayersData.length===0 && (
                       <div className="flex-1 flex flex-col items-center justify-center py-24 text-center">
                         <div className="w-16 h-16 rounded-full bg-surface-accent flex items-center justify-center mb-4"><Users size={28} className="text-text-body" /></div>
-                        <div className="font-heading font-semibold text-[16px] text-text-heading mb-2">No players here</div>
+                        <div className="font-heading font-semibold text-[16px] text-text-strong mb-2">No players here</div>
                         <div className="font-body text-[14px] text-text-body font-medium max-w-xs">
                           {activeTab==='top-10'&&'Move players from Players in Scope using the Top Ten button.'}
                           {activeTab==='reserve-list'&&'Move players from Players in Scope or Top 10 using the Reserve button.'}
@@ -685,7 +685,7 @@ export default function CountryScoutDashboardPage() {
                             <tr>
                               {groupHeaders.map((grp,idx)=>(
                                 <th key={idx} colSpan={grp.count}
-                                  className={`px-4 py-3 text-center font-heading font-bold text-[10px] text-text-on-brand uppercase tracking-widest bg-brand-primary border-b border-text-on-brand/10 ${grp.group==='PLAYER IDENTIFICATION'?'sticky left-0 z-[60] bg-brand-primary':''} ${grp.group==='GAME STATS'||grp.group==='VIDEOS'?'text-text-heading':'text-text-on-brand/60'}`}>
+                                  className={`px-4 py-3 text-center font-heading font-bold text-[10px] text-text-on-brand uppercase tracking-widest bg-brand-primary border-b border-text-on-brand/10 ${grp.group==='PLAYER IDENTIFICATION'?'sticky left-0 z-[60] bg-brand-primary':''} ${grp.group==='GAME STATS'||grp.group==='VIDEOS'?'text-text-strong':'text-text-on-brand/60'}`}>
                                   {grp.group}
                                 </th>
                               ))}
@@ -701,7 +701,7 @@ export default function CountryScoutDashboardPage() {
                                 <th key={col.id} className={`px-4 py-4 ${col.isSticky?`sticky ${col.isSticky} z-[60] bg-surface-card shadow-right`:''} ${col.width||''} ${col.minWidth||''} ${col.borderRight?'border-r border-border-default':''} ${col.bgHeader||'bg-surface-card'} ${col.align==='center'?'text-center':'text-left'} cursor-context-menu hover:bg-surface-canvas`}
                                   onContextMenu={e=>handleContextMenu(e,idx,col.group)}>
                                   {editingColumn?.index===idx
-                                    ? <input autoFocus type="text" defaultValue={editingColumn.label} onBlur={e=>finishEditColumn(e.target.value)} onKeyDown={e=>e.key==='Enter'&&finishEditColumn(e.currentTarget.value)} className="bg-surface-accent px-2 py-1 rounded text-text-heading font-bold text-[12px] outline-none w-full" />
+                                    ? <input autoFocus type="text" defaultValue={editingColumn.label} onBlur={e=>finishEditColumn(e.target.value)} onKeyDown={e=>e.key==='Enter'&&finishEditColumn(e.currentTarget.value)} className="bg-surface-accent px-2 py-1 rounded text-text-strong font-bold text-[12px] outline-none w-full" />
                                     : col.label}
                                 </th>
                               ))}
@@ -783,7 +783,7 @@ export default function CountryScoutDashboardPage() {
                     {currentPlayersData.length===0 && (
                       <div className="flex flex-col items-center justify-center py-24 text-center">
                         <div className="w-16 h-16 rounded-full bg-surface-accent flex items-center justify-center mb-4"><Users size={28} className="text-text-body" /></div>
-                        <div className="font-heading font-semibold text-[16px] text-text-heading mb-2">No players here</div>
+                        <div className="font-heading font-semibold text-[16px] text-text-strong mb-2">No players here</div>
                         <div className="font-body text-[14px] text-text-body font-medium">Move players from Players in Scope to see them here.</div>
                       </div>
                     )}
@@ -960,14 +960,14 @@ export default function CountryScoutDashboardPage() {
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={()=>setIsTaskModalOpen(false)}>
           <div className="bg-surface-card border border-border-default w-full max-w-md rounded-[32px] shadow-2xl flex flex-col max-h-[80vh] overflow-hidden" onClick={e=>e.stopPropagation()}>
             <div className="p-6 border-b border-border-default flex justify-between items-center bg-surface-accent/50 shrink-0">
-              <h2 className="font-heading font-extrabold text-2xl text-text-heading flex items-center gap-3"><Calendar className="text-text-heading" size={24} />Tasks for This Week</h2>
+              <h2 className="font-heading font-extrabold text-2xl text-text-heading flex items-center gap-3"><Calendar className="text-text-strong" size={24} />Tasks for This Week</h2>
               <button onClick={()=>setIsTaskModalOpen(false)} className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:text-status-error hover:bg-status-error/10 transition-colors shadow-sm"><X size={16} /></button>
             </div>
             <div className="p-6 flex-1 overflow-y-auto">
               <div className="flex items-center gap-3 mb-6">
                 <input type="text" placeholder="Add a new task..." value={newTaskText} onChange={e=>setNewTaskText(e.target.value)}
                   onKeyDown={e=>{if(e.key==='Enter'&&newTaskText.trim()){setTasks([...tasks,{id:Date.now(),text:newTaskText,completed:false}]);setNewTaskText('');}}}
-                  className="flex-1 bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
+                  className="flex-1 bg-surface-card border border-border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
                 <button onClick={()=>{if(newTaskText.trim()){setTasks([...tasks,{id:Date.now(),text:newTaskText,completed:false}]);setNewTaskText('');}}} className="bg-brand-primary text-text-on-brand p-3 rounded-xl hover:bg-brand-primary/80 transition-colors shadow-sm shrink-0"><Plus size={20} /></button>
               </div>
               <div className="space-y-3">
@@ -976,7 +976,7 @@ export default function CountryScoutDashboardPage() {
                     <button onClick={()=>setTasks(tasks.map(t=>t.id===task.id?{...t,completed:!t.completed}:t))} className={`mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors ${task.completed?'bg-brand-primary text-text-inverse border-brand-primary':'border-2 border-border-default hover:border-brand-primary'}`}>
                       {task.completed&&<ShieldCheck size={14} strokeWidth={3} />}
                     </button>
-                    <span className={`flex-1 font-body text-[14px] font-medium leading-relaxed ${task.completed?'text-text-body line-through':'text-text-heading'}`}>{task.text}</span>
+                    <span className={`flex-1 font-body text-[14px] font-medium leading-relaxed ${task.completed?'text-text-body line-through':'text-text-strong'}`}>{task.text}</span>
                     <button onClick={()=>setTasks(tasks.filter(t=>t.id!==task.id))} className="opacity-0 group-hover:opacity-100 p-2 text-text-body hover:text-status-error hover:bg-status-error/10 rounded-lg transition-all shrink-0"><Archive size={16} /></button>
                   </div>
                 ))}
@@ -984,7 +984,7 @@ export default function CountryScoutDashboardPage() {
             </div>
             <div className="p-6 border-t border-border-default bg-surface-accent/50 flex justify-between items-center shrink-0">
               <span className="font-body text-[14px] font-bold text-text-body">{tasks.filter(t=>t.completed).length}/{tasks.length} completed</span>
-              <button onClick={()=>setIsTaskModalOpen(false)} className="px-6 py-2 bg-surface-canvas text-text-heading hover:bg-surface-canvas rounded-full font-body font-bold text-[14px] transition-colors">Close</button>
+              <button onClick={()=>setIsTaskModalOpen(false)} className="px-6 py-2 bg-surface-canvas text-text-body hover:bg-surface-canvas rounded-full font-body font-bold text-[14px] transition-colors">Close</button>
             </div>
           </div>
         </div>
@@ -1007,25 +1007,25 @@ export default function CountryScoutDashboardPage() {
                 <div className="space-y-5">
                   <h3 className="font-heading font-black text-[10px] uppercase tracking-widest text-text-heading pb-2 border-b border-border-default">Bio Data</h3>
                   <div className="space-y-4">
-                    <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Full Name</label><input type="text" placeholder="e.g. John Doe" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
+                    <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Full Name</label><input type="text" placeholder="e.g. John Doe" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Parent Team</label><select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>Manchester United</option><option>Right to Dream</option></select></div>
-                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Current Team</label><select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>U21</option><option>Senior</option></select></div>
+                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Parent Team</label><select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>Manchester United</option><option>Right to Dream</option></select></div>
+                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Current Team</label><select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>U21</option><option>Senior</option></select></div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Date of Birth</label><input type="date" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all" /></div>
-                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Nationality</label><input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Date of Birth</label><input type="date" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Nationality</label><input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all" /></div>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-5">
                   <h3 className="font-heading font-black text-[10px] uppercase tracking-widests text-text-heading pb-2 border-b border-border-default">Technical Data</h3>
                   <div className="space-y-4">
-                    <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Positions</label><div className="flex space-x-2">{['Primary','Secondary','Tertiary'].map(p=><select key={p} className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all appearance-none cursor-pointer text-center"><option>{p}</option><option>ST</option><option>LW</option><option>RW</option><option>CM</option></select>)}</div></div>
-                    <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Preferred Foot</label><select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Foot</option><option>Right</option><option>Left</option><option>Both</option></select></div>
+                    <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Positions</label><div className="flex space-x-2">{['Primary','Secondary','Tertiary'].map(p=><select key={p} className="flex-1 bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all appearance-none cursor-pointer text-center"><option>{p}</option><option>ST</option><option>LW</option><option>RW</option><option>CM</option></select>)}</div></div>
+                    <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Preferred Foot</label><select className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Foot</option><option>Right</option><option>Left</option><option>Both</option></select></div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Height (cm)</label><input type="number" placeholder="185" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all" /></div>
-                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Weight (kg)</label><input type="number" placeholder="78" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Height (cm)</label><input type="number" placeholder="185" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold text-[10px] text-text-body mb-2 uppercase tracking-widest">Weight (kg)</label><input type="number" placeholder="78" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-body focus:outline-none transition-all" /></div>
                     </div>
                   </div>
                 </div>
@@ -1039,7 +1039,7 @@ export default function CountryScoutDashboardPage() {
                         <input type="checkbox" className="peer appearance-none w-5 h-5 border-2 border-text-body rounded bg-transparent checked:bg-brand-primary checked:border-brand-primary transition-colors cursor-pointer" />
                         <svg className="absolute w-3.5 h-3.5 text-text-on-brand pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 14 14" fill="none"><path d="M3 8L6 11L11 3.5" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" stroke="currentColor" /></svg>
                       </div>
-                      <span className="font-body text-[14px] font-bold text-text-heading group-hover:text-text-body transition-colors">Add to {action}</span>
+                      <span className="font-body text-[14px] font-bold text-text-body group-hover:text-text-body transition-colors">Add to {action}</span>
                     </label>
                   ))}
                 </div>

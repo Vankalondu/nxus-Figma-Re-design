@@ -37,7 +37,7 @@ export const AgeRange: Story = {
           <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
             Age range
           </span>
-          <span className="font-body font-bold text-[12px] text-text-heading tabular-nums">
+          <span className="font-body font-bold text-[12px] text-text-body tabular-nums">
             {v[0]}–{v[1]}
           </span>
         </div>

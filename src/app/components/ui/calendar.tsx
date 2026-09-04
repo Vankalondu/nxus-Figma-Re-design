@@ -50,12 +50,12 @@ function Calendar({
           "day-range-end aria-selected:bg-brand-primary aria-selected:text-text-inverse",
         day_selected:
           "bg-brand-primary text-text-inverse hover:bg-brand-primary hover:text-text-inverse focus:bg-brand-primary focus:text-text-inverse",
-        day_today: "bg-surface-accent text-text-heading",
+        day_today: "bg-surface-accent text-text-strong",
         day_outside:
           "day-outside text-text-body aria-selected:text-text-body",
         day_disabled: "text-text-body opacity-50",
         day_range_middle:
-          "aria-selected:bg-surface-accent aria-selected:text-text-heading",
+          "aria-selected:bg-surface-accent aria-selected:text-text-strong",
         day_hidden: "invisible",
         ...classNames,
       }}

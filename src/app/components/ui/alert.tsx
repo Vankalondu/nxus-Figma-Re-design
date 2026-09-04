@@ -8,7 +8,7 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-surface-card text-text-heading",
+        default: "bg-surface-card text-text-strong",
         destructive:
           "text-status-error bg-surface-card [&>svg]:text-current *:data-[slot=alert-description]:text-status-error/90",
       },

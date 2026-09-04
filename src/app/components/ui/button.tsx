@@ -13,11 +13,11 @@ const buttonVariants = cva(
         destructive:
           "bg-status-error text-text-on-brand hover:bg-status-error/90 focus-visible:ring-status-error/20 dark:focus-visible:ring-status-error/40 dark:bg-status-error/60",
         outline:
-          "border bg-surface-page text-text-heading hover:bg-surface-accent hover:text-text-heading dark:bg-border-input/30 dark:border-border-input dark:hover:bg-border-input/50",
+          "border bg-surface-page text-text-strong hover:bg-surface-accent hover:text-text-strong dark:bg-border-input/30 dark:border-border-input dark:hover:bg-border-input/50",
         secondary:
-          "bg-surface-canvas text-text-heading hover:bg-surface-canvas/80",
+          "bg-surface-canvas text-text-strong hover:bg-surface-canvas/80",
         ghost:
-          "hover:bg-surface-accent hover:text-text-heading dark:hover:bg-surface-accent/50",
+          "hover:bg-surface-accent hover:text-text-strong dark:hover:bg-surface-accent/50",
         link: "text-brand-primary underline-offset-4 hover:underline",
       },
       size: {

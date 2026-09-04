@@ -183,7 +183,7 @@ function KitColorsModal({
       >
         <span className={`flex items-center gap-2 ${active ? 'text-brand-primary' : 'text-text-body'}`}>
           {icon}
-          <span className="font-heading font-semibold text-[14px] text-text-heading">{label}</span>
+          <span className="font-heading font-semibold text-[14px] text-text-strong">{label}</span>
         </span>
         <span className="flex items-center gap-2">
           <span
@@ -236,7 +236,7 @@ function KitColorsModal({
         <div className="p-6 flex flex-col gap-4 overflow-y-auto">
           {/* Step progress */}
           <div className="flex flex-col gap-2">
-            <span className="font-heading font-semibold text-[14px] text-text-heading">
+            <span className="font-heading font-semibold text-[14px] text-text-strong">
               {step === 1 ? 'Step 1/2: Select Jersey Color' : 'Step 2/2: Select Shorts Color'}
             </span>
             <div className="h-1 rounded-full bg-surface-accent overflow-hidden">
@@ -287,7 +287,7 @@ function KitColorsModal({
             />
             <button
               onClick={() => onAddToPalette(customColor)}
-              className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-4 py-2 font-body font-bold text-[12px] transition-colors"
+              className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-4 py-2 font-body font-bold text-[12px] transition-colors"
             >
               <Palette size={12} className="shrink-0" />
               Add to Palette
@@ -299,7 +299,7 @@ function KitColorsModal({
         <div className="px-6 py-4 border-t border-border-default flex items-center justify-between gap-2 shrink-0">
           <button
             onClick={onCancel}
-            className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
+            className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
           >
             Cancel
           </button>
@@ -307,7 +307,7 @@ function KitColorsModal({
             {step === 2 && (
               <button
                 onClick={() => setStep(1)}
-                className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
+                className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
               >
                 Back
               </button>
@@ -355,11 +355,11 @@ function PlayerRow({
 
   return (
     <div className="flex items-center gap-3 py-3 border-b border-border-default/40 last:border-b-0 flex-wrap">
-      <span className="w-8 h-8 rounded-full bg-surface-accent border border-border-default flex items-center justify-center font-mono font-bold text-[12px] text-text-heading shrink-0">
+      <span className="w-8 h-8 rounded-full bg-surface-accent border border-border-default flex items-center justify-center font-mono font-bold text-[12px] text-text-strong shrink-0">
         {player.jersey}
       </span>
       <div className="flex flex-col min-w-0 flex-1">
-        <span className="font-heading font-semibold text-[14px] text-text-heading truncate" title={player.name}>
+        <span className="font-heading font-semibold text-[14px] text-text-strong truncate" title={player.name}>
           {player.name}
         </span>
         <span className="font-body font-medium text-[12px] text-text-body">YOB {player.yob}</span>
@@ -378,12 +378,12 @@ function PlayerRow({
             if (e.key === 'Enter') commit();
             if (e.key === 'Escape') { setDraft(String(player.jersey)); setEditing(false); }
           }}
-          className="w-16 bg-surface-card border border-border-default rounded-xl px-2 py-1 font-mono font-bold text-[12px] text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shrink-0"
+          className="w-16 bg-surface-card border border-border-default rounded-xl px-2 py-1 font-mono font-bold text-[12px] text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all shrink-0"
         />
       ) : (
         <button
           onClick={() => { setDraft(String(player.jersey)); setEditing(true); }}
-          className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-3 py-1 font-body font-bold text-[12px] transition-colors shrink-0"
+          className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-3 py-1 font-body font-bold text-[12px] transition-colors shrink-0"
         >
           Edit J. No.
         </button>
@@ -455,7 +455,7 @@ function TeamCard({
         </div>
         <button
           onClick={onEditKit}
-          className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-4 py-1 font-body font-bold text-[12px] transition-colors"
+          className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-4 py-1 font-body font-bold text-[12px] transition-colors"
         >
           <Palette size={12} className="shrink-0" />
           Edit Kit Colors
@@ -564,7 +564,7 @@ function SelectField({
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full appearance-none bg-surface-card border border-border-default rounded-xl pl-4 pr-8 py-2 font-body font-bold text-[14px] text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all cursor-pointer"
+        className="w-full appearance-none bg-surface-card border border-border-default rounded-xl pl-4 pr-8 py-2 font-body font-bold text-[14px] text-text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all cursor-pointer"
       >
         {children}
       </select>
@@ -659,7 +659,7 @@ function MatchEventsTab({
         <span className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-2 min-w-0">
             <Timer size={14} className={`shrink-0 ${active ? 'text-brand-primary' : 'text-text-body'}`} />
-            <span className="font-heading font-semibold text-[14px] text-text-heading truncate">
+            <span className="font-heading font-semibold text-[14px] text-text-strong truncate">
               {target === 'regular' ? 'Regular Time' : 'Extra Time'}
             </span>
           </span>
@@ -669,7 +669,7 @@ function MatchEventsTab({
             </span>
           )}
         </span>
-        <span className="font-heading font-semibold text-[24px] text-text-heading leading-none">{minutes}</span>
+        <span className="font-heading font-semibold text-[24px] text-text-strong leading-none">{minutes}</span>
         <span className="font-body font-medium text-[12px] text-text-body">{caption}</span>
         <span className="flex items-center gap-2 flex-wrap">
           {chips.map(chip => (
@@ -694,22 +694,22 @@ function MatchEventsTab({
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <TeamAvatar name={match.home} />
-              <span className="font-heading font-semibold text-[14px] text-text-heading truncate" title={match.home}>
+              <span className="font-heading font-semibold text-[14px] text-text-strong truncate" title={match.home}>
                 {match.home}
               </span>
             </div>
-            <span className="font-heading font-extrabold text-[36px] tracking-tight text-text-heading leading-none whitespace-nowrap shrink-0">
+            <span className="font-heading font-extrabold text-[36px] tracking-tight text-text-strong leading-none whitespace-nowrap shrink-0">
               {homeGoals} – {awayGoals}
             </span>
             <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
-              <span className="font-heading font-semibold text-[14px] text-text-heading truncate text-right" title={match.away}>
+              <span className="font-heading font-semibold text-[14px] text-text-strong truncate text-right" title={match.away}>
                 {match.away}
               </span>
               <TeamAvatar name={match.away} />
             </div>
           </div>
           <div className="flex flex-col gap-1 md:items-end md:text-right md:border-l md:border-border-default md:pl-4 shrink-0">
-            <span className="font-heading font-semibold text-[14px] text-text-heading">{roundName}</span>
+            <span className="font-heading font-semibold text-[14px] text-text-strong">{roundName}</span>
             <span className="font-body font-medium text-[12px] text-text-body">{competitionName}</span>
             <span className="font-mono font-bold text-[12px] text-text-body">{match.date}</span>
             <button
@@ -795,7 +795,7 @@ function MatchEventsTab({
               >
                 {capturedCount === PHASES.length ? <Check size={12} /> : '1'}
               </span>
-              <span className="font-heading font-semibold text-[14px] text-text-heading">Phase Tracking</span>
+              <span className="font-heading font-semibold text-[14px] text-text-strong">Phase Tracking</span>
             </span>
             <span className="font-body font-bold text-[14px] text-text-body">·</span>
             <span className="flex items-center gap-2">
@@ -806,7 +806,7 @@ function MatchEventsTab({
               >
                 2
               </span>
-              <span className="font-heading font-semibold text-[14px] text-text-heading">Event Entry</span>
+              <span className="font-heading font-semibold text-[14px] text-text-strong">Event Entry</span>
             </span>
           </div>
           <div className="flex items-center bg-surface-accent rounded-full p-0.5">
@@ -818,7 +818,7 @@ function MatchEventsTab({
                 key={m.id}
                 onClick={() => setMode(m.id)}
                 className={`inline-flex items-center gap-2 px-4 py-1 rounded-full font-body font-bold text-[12px] transition-colors ${
-                  mode === m.id ? 'bg-surface-card text-text-heading shadow-sm' : 'text-text-body hover:text-text-heading'
+                  mode === m.id ? 'bg-surface-card text-text-strong shadow-sm' : 'text-text-body hover:text-text-strong'
                 }`}
               >
                 <m.icon size={12} className="shrink-0" />
@@ -845,11 +845,11 @@ function MatchEventsTab({
             <div className="flex items-center gap-2 shrink-0">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-border-default font-body font-bold text-[12px] text-text-body">
                 Current Phase:
-                <span className="text-text-heading">{currentPhase ? currentPhase.label : 'Not started'}</span>
+                <span className="text-text-strong">{currentPhase ? currentPhase.label : 'Not started'}</span>
               </span>
               <button
                 onClick={() => setPhasesOpen(o => !o)}
-                className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:border-brand-primary hover:text-text-heading transition-colors"
+                className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:border-brand-primary hover:text-text-strong transition-colors"
                 title={phasesOpen ? 'Collapse phases' : 'Expand phases'}
               >
                 {phasesOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -880,7 +880,7 @@ function MatchEventsTab({
                       )}
                     </span>
                     <div className="flex flex-col min-w-0 flex-1">
-                      <span className="font-heading font-semibold text-[14px] text-text-heading truncate">{ph.label}</span>
+                      <span className="font-heading font-semibold text-[14px] text-text-strong truncate">{ph.label}</span>
                       {stampedAt && (
                         <span className="font-mono font-bold text-[12px] text-text-body">at {stampedAt}</span>
                       )}
@@ -889,7 +889,7 @@ function MatchEventsTab({
                       <div className="flex items-center gap-2 shrink-0">
                         <button
                           onClick={() => capturePhase(ph.id)}
-                          className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-3 py-1 font-body font-bold text-[12px] transition-colors"
+                          className="inline-flex items-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-3 py-1 font-body font-bold text-[12px] transition-colors"
                         >
                           <RotateCcw size={12} className="shrink-0" />
                           Re-capture
@@ -931,7 +931,7 @@ function MatchEventsTab({
               <FieldLabel>Event Type</FieldLabel>
               <SelectField value={formType} onChange={setFormType}>
                 {EVENT_TYPES.map(t => (
-                  <option key={t.id} value={t.id} className="bg-surface-card text-text-heading">{t.label}</option>
+                  <option key={t.id} value={t.id} className="bg-surface-card text-text-strong">{t.label}</option>
                 ))}
               </SelectField>
             </div>
@@ -941,16 +941,16 @@ function MatchEventsTab({
                 value={formTeam}
                 onChange={v => { setFormTeam(v as TeamSide); setFormPlayer(''); }}
               >
-                <option value="home" className="bg-surface-card text-text-heading">{match.home}</option>
-                <option value="away" className="bg-surface-card text-text-heading">{match.away}</option>
+                <option value="home" className="bg-surface-card text-text-strong">{match.home}</option>
+                <option value="away" className="bg-surface-card text-text-strong">{match.away}</option>
               </SelectField>
             </div>
             <div className="flex flex-col gap-2">
               <FieldLabel>Player</FieldLabel>
               <SelectField value={formPlayer} onChange={setFormPlayer}>
-                <option value="" className="bg-surface-card text-text-heading">Select player…</option>
+                <option value="" className="bg-surface-card text-text-strong">Select player…</option>
                 {teams[formTeam].players.map(pl => (
-                  <option key={pl.id} value={pl.id} className="bg-surface-card text-text-heading">
+                  <option key={pl.id} value={pl.id} className="bg-surface-card text-text-strong">
                     #{pl.jersey} {pl.name}
                   </option>
                 ))}
@@ -965,7 +965,7 @@ function MatchEventsTab({
                 value={formMinute}
                 onChange={e => setFormMinute(e.target.value)}
                 placeholder={`1–${maxMinute}`}
-                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-mono font-bold text-[14px] text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all placeholder:text-text-body"
+                className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-mono font-bold text-[14px] text-text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all placeholder:text-text-body"
               />
             </div>
           </div>
@@ -998,7 +998,7 @@ function MatchEventsTab({
               <span className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
                 <ClipboardList size={20} className="text-text-body" />
               </span>
-              <span className="font-heading font-semibold text-[14px] text-text-heading">No events recorded yet</span>
+              <span className="font-heading font-semibold text-[14px] text-text-strong">No events recorded yet</span>
               <span className="font-body font-medium text-[12px] text-text-body">
                 Add your first event using the form above.
               </span>
@@ -1010,14 +1010,14 @@ function MatchEventsTab({
                 const TypeIcon = type.icon;
                 return (
                   <div key={ev.id} className="flex items-center gap-3 py-3 border-b border-border-default/40 last:border-b-0">
-                    <span className="min-w-10 px-2 py-1 rounded-full bg-surface-accent border border-border-default font-mono font-bold text-[12px] text-text-heading text-center shrink-0">
+                    <span className="min-w-10 px-2 py-1 rounded-full bg-surface-accent border border-border-default font-mono font-bold text-[12px] text-text-strong text-center shrink-0">
                       {ev.minute}&#39;
                     </span>
                     <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${type.chipClass}`}>
                       <TypeIcon size={14} />
                     </span>
                     <div className="flex flex-col min-w-0 flex-1">
-                      <span className="font-heading font-semibold text-[14px] text-text-heading truncate">
+                      <span className="font-heading font-semibold text-[14px] text-text-strong truncate">
                         {ev.playerName} · {teamName(ev.team)}
                       </span>
                       <span className="font-body font-medium text-[12px] text-text-body">{type.label}</span>
@@ -1050,7 +1050,7 @@ function MatchEventsTab({
                 key={side}
                 onClick={() => setRailSide(side)}
                 className={`px-4 py-1 rounded-full font-body font-bold text-[12px] transition-colors ${
-                  railSide === side ? 'bg-surface-card text-text-heading shadow-sm' : 'text-text-body hover:text-text-heading'
+                  railSide === side ? 'bg-surface-card text-text-strong shadow-sm' : 'text-text-body hover:text-text-strong'
                 }`}
               >
                 {side === 'home' ? 'Home' : 'Away'}
@@ -1060,7 +1060,7 @@ function MatchEventsTab({
           <div className="flex items-center gap-3 min-w-0">
             <TeamAvatar name={teamName(railSide)} />
             <div className="flex flex-col gap-1 min-w-0">
-              <span className="font-heading font-semibold text-[16px] text-text-heading truncate" title={teamName(railSide)}>
+              <span className="font-heading font-semibold text-[16px] text-text-strong truncate" title={teamName(railSide)}>
                 {teamName(railSide)}
               </span>
               <span className="inline-flex items-center self-start px-3 py-0.5 rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20 font-heading font-bold text-[10px] uppercase tracking-widest">
@@ -1112,11 +1112,11 @@ function MatchEventsTab({
               const active = pl.starter || pl.sub;
               return (
                 <React.Fragment key={pl.id}>
-                  <span className="font-mono font-bold text-[12px] text-text-heading py-2 border-t border-border-default/40">
+                  <span className="font-mono font-bold text-[12px] text-text-strong py-2 border-t border-border-default/40">
                     {pl.jersey}
                   </span>
                   <span
-                    className="font-body font-bold text-[12px] text-text-heading truncate py-2 border-t border-border-default/40"
+                    className="font-body font-bold text-[12px] text-text-body truncate py-2 border-t border-border-default/40"
                     title={pl.name}
                   >
                     {pl.name}
@@ -1208,7 +1208,7 @@ export function MatchEntry({
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToCompetition}
-            className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:border-brand-primary hover:text-text-heading transition-colors shadow-sm"
+            className="w-8 h-8 rounded-full bg-surface-card border border-border-default flex items-center justify-center text-text-body hover:border-brand-primary hover:text-text-strong transition-colors shadow-sm"
             title="Back to competition"
           >
             <ArrowLeft size={14} />
@@ -1261,7 +1261,7 @@ export function MatchEntry({
               key={t.id}
               onClick={() => setTab(t.id)}
               className={`flex items-center gap-2 pb-2 -mb-px border-b-2 font-body font-bold text-[14px] whitespace-nowrap transition-colors ${
-                tab === t.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-text-body hover:text-text-heading'
+                tab === t.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-text-body hover:text-text-strong'
               }`}
             >
               <t.icon size={14} />
@@ -1309,7 +1309,7 @@ export function MatchEntry({
                       className={`px-4 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
                         filter === f.id
                           ? 'bg-brand-primary text-text-on-brand shadow-sm'
-                          : 'bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading'
+                          : 'bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-strong'
                       }`}
                     >
                       {f.label}
@@ -1355,7 +1355,7 @@ export function MatchEntry({
               </button>
               <button
                 onClick={() => setTab('events')}
-                className="inline-flex items-center justify-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
               >
                 <ListChecks size={14} className="shrink-0" />
                 View Detailed Entry

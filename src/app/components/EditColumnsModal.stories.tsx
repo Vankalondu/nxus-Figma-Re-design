@@ -49,7 +49,7 @@ export const Default: Story = {
         {!open && (
           <button
             onClick={() => setOpen(true)}
-            className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
+            className="bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
           >
             Edit columns ({visible.size} visible)
           </button>
@@ -82,7 +82,7 @@ export const DraftIsDiscardedOnClose: Story = {
     const [open, setOpen] = useState(false)
     return (
       <div className="p-6 flex flex-col gap-4 items-start">
-        <span className="font-body font-bold text-[12px] text-text-heading">
+        <span className="font-body font-bold text-[12px] text-text-body">
           Committed: <span className="tabular-nums">{visible.size}</span> columns visible
         </span>
         <button

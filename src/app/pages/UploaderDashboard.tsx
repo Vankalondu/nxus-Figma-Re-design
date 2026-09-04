@@ -86,7 +86,7 @@ export default function UploaderDashboard() {
   const avatar = 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&h=100&fit=crop&crop=faces&q=80';
 
   return (
-    <div className="flex min-h-screen bg-surface-page font-body text-text-heading">
+    <div className="flex min-h-screen bg-surface-page font-body text-text-strong">
       <Sidebar actions={[]} />
       <main className="flex-1 flex flex-col min-w-0">
         <TopNav
@@ -94,7 +94,7 @@ export default function UploaderDashboard() {
           rolePill={(
             <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-[32px]">
               <span className="w-2 h-2 rounded-full shrink-0 bg-brand-primary" />
-              <span className="hidden md:inline font-body text-[14px] font-bold text-text-heading whitespace-nowrap">{role || 'Uploader'} Dashboard</span>
+              <span className="hidden md:inline font-body text-[14px] font-bold text-text-body whitespace-nowrap">{role || 'Uploader'} Dashboard</span>
             </div>
           )}
           avatarImg={avatar}
@@ -105,7 +105,7 @@ export default function UploaderDashboard() {
             <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-border-default z-50 overflow-hidden">
               <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
                 <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div><div className="font-body font-bold text-[14px] text-text-heading">{myName}</div><div className="font-body text-[12px] text-text-body font-medium">{role}</div></div>
+                <div><div className="font-body font-bold text-[14px] text-text-body">{myName}</div><div className="font-body text-[12px] text-text-body font-medium">{role}</div></div>
               </div>
               <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
             </div>
@@ -158,13 +158,13 @@ export default function UploaderDashboard() {
                     {/* Upcoming matches */}
                     <div className={`${CARD} flex flex-col`}>
                       <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-text-heading" /></div>
+                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-text-strong" /></div>
                         <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Upcoming matches</h3><p className="font-body text-[12px] text-text-body font-medium">Capture opportunities</p></div>
                       </div>
                       <div className="divide-y divide-border-default">
                         {UPCOMING.map((m, i) => (
                           <button key={i} onClick={() => openMatch(m.home, m.away)} className="w-full text-left px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors">
-                            <div className="min-w-0 flex-1"><div className="font-body font-bold text-[14px] text-text-heading truncate">{m.home} <span className="text-text-body font-medium">vs</span> {m.away}</div><p className="font-body text-[12px] text-text-body mt-0.5">{m.date}</p></div>
+                            <div className="min-w-0 flex-1"><div className="font-body font-bold text-[14px] text-text-body truncate">{m.home} <span className="text-text-body font-medium">vs</span> {m.away}</div><p className="font-body text-[12px] text-text-body mt-0.5">{m.date}</p></div>
                             <ArrowRight size={14} className="text-text-body shrink-0" />
                           </button>
                         ))}
@@ -174,7 +174,7 @@ export default function UploaderDashboard() {
                     {/* My tasks */}
                     <div className={`${CARD} flex flex-col`}>
                       <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><ListChecks size={16} className="text-text-heading" /></div>
+                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><ListChecks size={16} className="text-text-strong" /></div>
                         <div className="min-w-0 flex-1"><h3 className="font-heading font-bold text-[16px] text-text-heading">My tasks</h3><p className="font-body text-[12px] text-text-body font-medium">{activeTasks.length} open</p></div>
                         <button onClick={() => setActiveTab('tasks')} className="font-body font-bold text-[12px] text-brand-primary hover:underline shrink-0">View all</button>
                       </div>
@@ -182,7 +182,7 @@ export default function UploaderDashboard() {
                         {activeTasks.slice(0, 4).map(t => (
                           <div key={t.id} className="px-5 py-3 flex items-center gap-3">
                             <span className={`w-2 h-2 rounded-full shrink-0 ${t.priority === 'High' ? 'bg-status-error' : t.priority === 'Medium' ? 'bg-status-warning' : 'bg-text-body'}`} />
-                            <span className="font-body font-bold text-[13px] text-text-heading truncate flex-1">{t.text}</span>
+                            <span className="font-body font-bold text-[13px] text-text-body truncate flex-1">{t.text}</span>
                             <span className="font-body text-[11px] text-text-body shrink-0">{t.dueDate}</span>
                           </div>
                         ))}
@@ -193,14 +193,14 @@ export default function UploaderDashboard() {
                     {/* Recent uploads */}
                     <div className={`${CARD} flex flex-col`}>
                       <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Video size={16} className="text-text-heading" /></div>
+                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Video size={16} className="text-text-strong" /></div>
                         <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Recent uploads</h3><p className="font-body text-[12px] text-text-body font-medium">Newest first</p></div>
                       </div>
                       <div className="divide-y divide-border-default">
                         {[...pending, ...approved].slice(0, 4).map(item => (
                           <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                             <span className="w-8 h-8 rounded-xl bg-brand-primary/10 flex items-center justify-center shrink-0"><Play size={13} className="text-brand-primary" /></span>
-                            <span className="font-body font-bold text-[13px] text-text-heading truncate flex-1">{item.videoName}</span>
+                            <span className="font-body font-bold text-[13px] text-text-body truncate flex-1">{item.videoName}</span>
                           </div>
                         ))}
                         {pending.length === 0 && approved.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-text-body">Nothing uploaded yet.</div>}
@@ -214,7 +214,7 @@ export default function UploaderDashboard() {
                 <div className="flex flex-col gap-6 pb-8">
                   <div className={CARD}>
                     <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Video size={16} className="text-text-heading" /></div>
+                      <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Video size={16} className="text-text-strong" /></div>
                       <div className="min-w-0 flex-1">
                         <h3 className="font-heading font-bold text-[16px] text-text-heading">{middleLabel}</h3>
                         <p className="font-body text-[12px] text-text-body font-medium">Your uploads · newest first</p>
@@ -227,7 +227,7 @@ export default function UploaderDashboard() {
                       {pending.map(item => (
                         <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                           <div className="min-w-0 flex-1">
-                            <span className="font-body font-bold text-[14px] text-text-heading truncate">{item.videoName}</span>
+                            <span className="font-body font-bold text-[14px] text-text-body truncate">{item.videoName}</span>
                             <p className="font-body text-[12px] text-text-body mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
                           </div>
                           <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-warning/15 text-status-warning-fg shrink-0">Pending</span>
@@ -236,7 +236,7 @@ export default function UploaderDashboard() {
                       {approved.map(item => (
                         <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                           <div className="min-w-0 flex-1">
-                            <span className="font-body font-bold text-[14px] text-text-heading truncate">{item.videoName}</span>
+                            <span className="font-body font-bold text-[14px] text-text-body truncate">{item.videoName}</span>
                             <p className="font-body text-[12px] text-text-body mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
                           </div>
                           <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-success/15 text-status-success-fg shrink-0">Approved</span>
@@ -248,7 +248,7 @@ export default function UploaderDashboard() {
                   {isPackage && (
                     <div className={CARD}>
                       <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Clapperboard size={16} className="text-text-heading" /></div>
+                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Clapperboard size={16} className="text-text-strong" /></div>
                         <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Highlights uploaded</h3><p className="font-body text-[12px] text-text-body font-medium">External clips · no approval needed</p></div>
                       </div>
                       <div className="divide-y divide-border-default">
@@ -256,8 +256,8 @@ export default function UploaderDashboard() {
                         {myHighlights.map(h => (
                           <div key={h.id} className="px-5 py-3 flex items-center gap-3">
                             <span className="w-8 h-8 rounded-xl bg-brand-primary/10 flex items-center justify-center shrink-0"><Play size={13} className="text-brand-primary" /></span>
-                            <div className="min-w-0 flex-1"><span className="font-body font-bold text-[14px] text-text-heading truncate">{h.title}</span><p className="font-body text-[12px] text-text-body mt-0.5">{h.dateLabel}</p></div>
-                            <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-brand-primary/15 text-text-heading shrink-0">External</span>
+                            <div className="min-w-0 flex-1"><span className="font-body font-bold text-[14px] text-text-body truncate">{h.title}</span><p className="font-body text-[12px] text-text-body mt-0.5">{h.dateLabel}</p></div>
+                            <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-brand-primary/15 text-text-body shrink-0">External</span>
                           </div>
                         ))}
                       </div>

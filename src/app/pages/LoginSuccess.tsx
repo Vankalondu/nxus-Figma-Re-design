@@ -69,8 +69,8 @@ export default function LoginSuccess() {
         </p>
 
         <div className="bg-surface-card/80 backdrop-blur-md border border-text-on-brand shadow-xl rounded-full px-6 py-3 flex items-center space-x-4">
-          <Loader2 className="w-5 h-5 text-text-heading animate-spin shrink-0" />
-          <div className="font-bold text-text-heading text-sm">Onboarding you into the system...</div>
+          <Loader2 className="w-5 h-5 text-text-strong animate-spin shrink-0" />
+          <div className="font-bold text-text-strong text-sm">Onboarding you into the system...</div>
         </div>
       </div>
     </div>
