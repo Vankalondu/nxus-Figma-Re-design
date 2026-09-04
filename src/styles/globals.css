@@ -173,6 +173,53 @@
   --gap-grid: 8px;
   --pad-card: 12px;
   --gap-stack: 8px;
+
+  /* ── Figma vocabulary (Mapped). Aliases during the migration; step 4.3 makes
+     these the definitions and retires the old names. See
+     scripts/token-rename-map.json. ── */
+  --surface-page: var(--background);
+  --surface-card: var(--card);
+  --surface-elevated: var(--popover);
+  --surface-canvas: var(--secondary);
+  --surface-accent: var(--accent);
+  --surface-input: var(--input-background);
+  --surface-sidebar: var(--sidebar);
+  --surface-midtone: var(--midtone);
+  --surface-switch: var(--switch-background);
+  --surface-sidebar-accent: var(--sidebar-accent);
+
+  --text-heading: var(--foreground);
+  --text-body: var(--muted-foreground);
+  --text-inverse: var(--primary-foreground);
+  --text-on-brand: var(--chalk);
+  --text-on-status: var(--destructive-foreground);
+  --text-sidebar-muted: var(--sidebar-muted);
+
+  --border-default: var(--border);
+  --border-focus: var(--ring);
+  --border-input: var(--input);
+
+  --status-error: var(--destructive);
+  --status-success: var(--scout-green);
+  --status-warning: var(--scout-amber);
+
+  --brand-primary: var(--primary);
+  --brand-primary-hover: var(--ember-hover);
+
+  --ink-midnight: var(--midnight);
+
+  /* ── Roles the code did not have. Values from Figma Mapped (step 3). ── */
+  --text-muted: #596774;        /* Dark Blue/400 — genuinely secondary, 5.54:1 */
+  --text-placeholder: #828d96;  /* Dark Blue/300 — AA-large only, placeholders */
+  --text-disabled: #acb3b9;     /* Dark Blue/200 — below AA; disabled is exempt */
+  --text-link: #1e88e5;
+  --surface-inverse: #061b2e;
+  --surface-overlay: #061b2e;   /* modal scrims apply the opacity (P-CO14) */
+  --border-subtle: #d2e7fa;
+  --border-strong: #8ec4f2;
+  --status-success-tint: #d7f5e2;
+  --status-warning-tint: #fbefd6;
+  --status-error-tint: #fce9e5;
 }
 
 /* ── Tablet (768–1023): headings step up one notch; jumper gaps widen. ── */
@@ -295,6 +342,19 @@
   --status-error-fg:   #f3a698;
   --midtone: #1971bf;
   --canvas: #061b2e;
+
+  /* ── Dark values for the new roles. ── */
+  --text-muted: #8c9aa7;
+  --text-placeholder: #69747d;
+  --text-disabled: #464d53;
+  --text-link: #449ce9;
+  --surface-inverse: #d2e7fa;
+  --surface-overlay: #061b2e;
+  --border-subtle: #0f4472;
+  --border-strong: #1971bf;
+  --status-success-tint: #0f5529;
+  --status-warning-tint: #6e4b0d;
+  --status-error-tint: #7a2419;
 }
 
 @theme inline {
@@ -337,6 +397,43 @@
   --color-status-success-fg: var(--status-success-fg);
   --color-status-warning-fg: var(--status-warning-fg);
   --color-status-error-fg: var(--status-error-fg);
+
+  --color-surface-page: var(--surface-page);
+  --color-surface-card: var(--surface-card);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-canvas: var(--surface-canvas);
+  --color-surface-accent: var(--surface-accent);
+  --color-surface-input: var(--surface-input);
+  --color-surface-sidebar: var(--surface-sidebar);
+  --color-surface-sidebar-accent: var(--surface-sidebar-accent);
+  --color-surface-midtone: var(--surface-midtone);
+  --color-surface-switch: var(--surface-switch);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-surface-overlay: var(--surface-overlay);
+  --color-text-heading: var(--text-heading);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-text-placeholder: var(--text-placeholder);
+  --color-text-disabled: var(--text-disabled);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-on-brand: var(--text-on-brand);
+  --color-text-on-status: var(--text-on-status);
+  --color-text-link: var(--text-link);
+  --color-text-sidebar-muted: var(--text-sidebar-muted);
+  --color-border-default: var(--border-default);
+  --color-border-focus: var(--border-focus);
+  --color-border-input: var(--border-input);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-status-error: var(--status-error);
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-success-tint: var(--status-success-tint);
+  --color-status-warning-tint: var(--status-warning-tint);
+  --color-status-error-tint: var(--status-error-tint);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-ink-midnight: var(--ink-midnight);
 }
 
 /* ── Base layer ── */
