@@ -14,14 +14,14 @@ export function TransferWindows() {
 
   return (
     <div>
-      <div className="mb-3 text-sm text-muted-foreground">
-        Next Available Transfer Window: <span className="font-medium text-foreground">Winter 2026</span>
+      <div className="mb-3 text-sm text-text-body">
+        Next Available Transfer Window: <span className="font-medium text-text-heading">Winter 2026</span>
       </div>
       <div className="flex flex-wrap gap-2">
         {windows.map((window) => (
           <Button
             key={window}
-            className="bg-primary hover:bg-primary/80"
+            className="bg-brand-primary hover:bg-brand-primary/80"
           >
             {window}
           </Button>

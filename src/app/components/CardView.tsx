@@ -17,8 +17,8 @@ const ActionGroup = ({ items }: { items: ActionItem[] }) => {
           <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
             className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
               item.label === 'Restore'
-                ? 'text-scout-green hover:bg-scout-green hover:text-chalk'
-                : 'text-[#061b2e] hover:bg-primary hover:text-chalk'
+                ? 'text-status-success hover:bg-status-success hover:text-text-on-brand'
+                : 'text-[#061b2e] hover:bg-brand-primary hover:text-text-on-brand'
             }`}>
             {item.icon}
           </button>
@@ -130,7 +130,7 @@ export const CardView = ({
                         <span className="font-heading font-bold text-[13px] text-[#304151] tracking-wider">
                           {yob}
                         </span>
-                        <span className="text-[#304151]/40 font-body font-bold text-[11px] group-hover:text-primary transition-colors uppercase">
+                        <span className="text-[#304151]/40 font-body font-bold text-[11px] group-hover:text-brand-primary transition-colors uppercase">
                           {isCollapsed ? `Show ${grpPlayers.length}` : 'Hide'}
                         </span>
                       </button>
@@ -185,8 +185,8 @@ export const CardView = ({
                   return (
                     <div key={player.id} className={`bg-[#f4faff] relative rounded-[32px] overflow-hidden border border-[#b4d7f6] shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-none ${isArchived ? 'opacity-50' : ''}`}>
                       {isArchived && (
-                        <div className="bg-muted-foreground/80 py-2 px-4 text-center">
-                          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-chalk">Archived – Not Visible to Scouts</span>
+                        <div className="bg-text-body/80 py-2 px-4 text-center">
+                          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-on-brand">Archived – Not Visible to Scouts</span>
                         </div>
                       )}
                       <div className="p-[16px] flex flex-col gap-[10px]">

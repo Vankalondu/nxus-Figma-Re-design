@@ -10,7 +10,7 @@ const meta = {
       description: {
         component:
           'The tab strip used on every page that has tabs (**P-CO2**). Active pill is ' +
-          '`bg-primary text-primary-foreground`; inactive is `bg-card text-muted-foreground` ' +
+          '`bg-brand-primary text-text-inverse`; inactive is `bg-surface-card text-text-body` ' +
           'that borders primary on hover. Row is `flex items-center gap-2` (**R-S2**).\n\n' +
           'Tabs can carry a count badge. Tone is `muted` by default; `red` marks something ' +
           'needing attention, such as the Video Manager approval queue — that is L-C3 applied ' +

@@ -137,11 +137,11 @@ export function ScoutQualityLeaderboard() {
     
     return (
       <TooltipProvider delayDuration={200}>
-        <div className={`group bg-card border ${
+        <div className={`group bg-surface-card border ${
           isHeadScout 
-            ? 'border-primary/30 bg-gradient-to-r from-accent to-card' 
+            ? 'border-brand-primary/30 bg-gradient-to-r from-surface-accent to-surface-card' 
             : 'border-[#e8edf2]'
-        } rounded-xl p-4 hover:border-primary/50 transition-all hover:shadow-sm flex items-center gap-4`}>
+        } rounded-xl p-4 hover:border-brand-primary/50 transition-all hover:shadow-sm flex items-center gap-4`}>
           
           {/* Rank or Crown */}
           <div className="shrink-0">
@@ -150,7 +150,7 @@ export function ScoutQualityLeaderboard() {
                 <Crown size={18} strokeWidth={2.5} />
               </div>
             ) : (
-              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] text-muted-foreground font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] text-text-body font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 {scout.rank}
               </div>
             )}
@@ -158,7 +158,7 @@ export function ScoutQualityLeaderboard() {
 
           {/* Avatar & Info */}
           <div className="flex items-center gap-4 flex-1 min-w-0">
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-chalk shrink-0 shadow-sm ${
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-text-on-brand shrink-0 shadow-sm ${
               isHeadScout 
                 ? 'bg-gradient-to-br from-[#0D47A1] to-[#1565C0]' 
                 : 'bg-gradient-to-br from-[#1E88E5] to-[#1976D2]'
@@ -242,10 +242,10 @@ export function ScoutQualityLeaderboard() {
   };
 
   return (
-    <div className="bg-card border border-[#e0e7ef] rounded-2xl flex flex-col md:flex-row overflow-hidden h-full min-h-[500px] shadow-sm">
+    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl flex flex-col md:flex-row overflow-hidden h-full min-h-[500px] shadow-sm">
       {/* Left Pane - Countries */}
       <div className="w-full md:w-1/3 xl:w-[35%] border-b md:border-b-0 md:border-r border-[#e0e7ef] bg-[#f8fafc] flex flex-col shrink-0">
-        <div className="p-5 border-b border-[#e0e7ef] flex items-center gap-2 bg-card">
+        <div className="p-5 border-b border-[#e0e7ef] flex items-center gap-2 bg-surface-card">
           <Globe className="w-5 h-5 text-[#1E88E5]" />
           <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Regions
@@ -262,12 +262,12 @@ export function ScoutQualityLeaderboard() {
                 onClick={() => setActiveCountryId(country.id)}
                 className={`w-full text-left p-4 rounded-xl transition-all relative group ${
                   activeCountryId === country.id 
-                    ? 'bg-card shadow-sm border border-primary ring-1 ring-primary/10' 
-                    : 'hover:bg-card/60 border border-transparent hover:border-[#e8edf2]'
+                    ? 'bg-surface-card shadow-sm border border-brand-primary ring-1 ring-brand-primary/10' 
+                    : 'hover:bg-surface-card/60 border border-transparent hover:border-[#e8edf2]'
                 }`}
               >
                 {activeCountryId === country.id && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-12 bg-primary rounded-r-full" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-12 bg-brand-primary rounded-r-full" />
                 )}
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2">
@@ -280,7 +280,7 @@ export function ScoutQualityLeaderboard() {
                     {totalGradeA}
                   </div>
                 </div>
-                <div className="text-xs text-muted-foreground flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="text-xs text-text-body flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   <Crown className="w-3 h-3 text-[#94a3b8] shrink-0" />
                   <span className="truncate">{country.headScout.name}</span>
                 </div>
@@ -291,8 +291,8 @@ export function ScoutQualityLeaderboard() {
       </div>
       
       {/* Right Pane - Scouts */}
-      <div className="w-full md:w-2/3 xl:w-[65%] flex flex-col bg-card">
-        <div className="p-5 border-b border-[#e0e7ef] flex items-center justify-between bg-gradient-to-b from-[#fbfcff] to-chalk">
+      <div className="w-full md:w-2/3 xl:w-[65%] flex flex-col bg-surface-card">
+        <div className="p-5 border-b border-[#e0e7ef] flex items-center justify-between bg-gradient-to-b from-[#fbfcff] to-text-on-brand">
           <div className="flex items-center gap-2">
             <span className="text-2xl leading-none">{activeData.flag}</span>
             <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
@@ -306,13 +306,13 @@ export function ScoutQualityLeaderboard() {
           </button>
         </div>
         
-        <div className="p-6 overflow-y-auto space-y-8 flex-1 bg-card">
+        <div className="p-6 overflow-y-auto space-y-8 flex-1 bg-surface-card">
           
           {/* Head Scout Section */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Trophy className="w-4 h-4 text-[#F9A825]" />
-              <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <h3 className="text-xs uppercase tracking-wider text-text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Head Scout
               </h3>
             </div>
@@ -324,7 +324,7 @@ export function ScoutQualityLeaderboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#1E88E5]" />
-                <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <h3 className="text-xs uppercase tracking-wider text-text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Country Scouts
                 </h3>
               </div>

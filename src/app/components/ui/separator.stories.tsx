@@ -25,9 +25,9 @@ type Story = StoryObj<typeof meta>
 export const Horizontal: Story = {
   render: () => (
     <div className="w-[360px]">
-      <p className="font-body text-[12px] text-foreground mb-4">Short List</p>
+      <p className="font-body text-[12px] text-text-heading mb-4">Short List</p>
       <Separator />
-      <p className="font-body text-[12px] text-foreground mt-4">Target List</p>
+      <p className="font-body text-[12px] text-text-heading mt-4">Target List</p>
     </div>
   ),
 }
@@ -35,11 +35,11 @@ export const Horizontal: Story = {
 export const Vertical: Story = {
   render: () => (
     <div className="flex items-center gap-4 h-10">
-      <span className="font-body font-bold text-[12px] text-foreground">248 players</span>
+      <span className="font-body font-bold text-[12px] text-text-heading">248 players</span>
       <Separator orientation="vertical" />
-      <span className="font-body font-bold text-[12px] text-muted-foreground">14 shortlisted</span>
+      <span className="font-body font-bold text-[12px] text-text-body">14 shortlisted</span>
       <Separator orientation="vertical" />
-      <span className="font-body font-bold text-[12px] text-muted-foreground">6 targeted</span>
+      <span className="font-body font-bold text-[12px] text-text-body">6 targeted</span>
     </div>
   ),
 }

@@ -71,13 +71,13 @@ export function Sidebar({ actions = [] }: SidebarProps) {
   return (
     <>
       {/* ── Desktop Sidebar ── */}
-      <aside className="hidden md:flex w-[76px] hover:w-[232px] transition-all duration-300 bg-card rounded-r-[24px] border-r border-border flex-col py-6 h-screen sticky top-0 shrink-0 z-[100] group overflow-hidden shadow-[var(--shadow-sidebar)]">
+      <aside className="hidden md:flex w-[76px] hover:w-[232px] transition-all duration-300 bg-surface-card rounded-r-[24px] border-r border-border-default flex-col py-6 h-screen sticky top-0 shrink-0 z-[100] group overflow-hidden shadow-[var(--shadow-surface-sidebar)]">
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 mb-8 w-[232px]">
-          <div className="w-9 h-9 flex items-center justify-center rounded-[12px] bg-accent shadow-sm shrink-0">
-            <Zap size={18} className="text-primary" fill="currentColor" />
+          <div className="w-9 h-9 flex items-center justify-center rounded-[12px] bg-surface-accent shadow-sm shrink-0">
+            <Zap size={18} className="text-brand-primary" fill="currentColor" />
           </div>
-          <span className="font-heading font-bold text-foreground text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
+          <span className="font-heading font-bold text-text-heading text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
         </div>
 
         {/* Main Menu */}
@@ -90,14 +90,14 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                 onClick={() => navigate(item.path)}
                 className={`w-full h-11 flex items-center rounded-[14px] transition-all px-2 ${
                   active
-                    ? 'border-l-[3px] border-primary bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                    ? 'border-l-[3px] border-brand-primary bg-brand-primary/10 text-brand-primary'
+                    : 'text-text-body hover:text-text-heading hover:bg-surface-accent'
                 }`}
               >
                 <div className="shrink-0 flex items-center justify-center w-6 ml-0.5">
                   <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
                 </div>
-                <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${active ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'}`}>
+                <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${active ? 'text-brand-primary' : 'text-text-body group-hover:text-text-heading'}`}>
                   {item.label}
                 </span>
               </button>
@@ -110,16 +110,16 @@ export function Sidebar({ actions = [] }: SidebarProps) {
       {/* ── Mobile: Overlay Sidebar ── */}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-[200] flex">
-          <div className="absolute inset-0 bg-midnight/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
-          <aside className="relative z-10 w-[280px] bg-card border-r border-border flex flex-col py-8 min-h-screen shadow-[4px_0_24px_rgba(6,27,46,0.12)]">
+          <div className="absolute inset-0 bg-ink-midnight/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <aside className="relative z-10 w-[280px] bg-surface-card border-r border-border-default flex flex-col py-8 min-h-screen shadow-[4px_0_24px_rgba(6,27,46,0.12)]">
             <div className="flex items-center justify-between px-6 mb-10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-accent shadow-sm">
-                  <Zap size={20} className="text-primary" fill="currentColor" />
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-surface-accent shadow-sm">
+                  <Zap size={20} className="text-brand-primary" fill="currentColor" />
                 </div>
-                <span className="font-heading font-extrabold text-foreground text-xl">NXUS</span>
+                <span className="font-heading font-extrabold text-text-heading text-xl">NXUS</span>
               </div>
-              <button onClick={() => setMobileOpen(false)} className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-border transition-colors">
+              <button onClick={() => setMobileOpen(false)} className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-text-body hover:text-text-heading hover:bg-border-default transition-colors">
                 <X size={16} />
               </button>
             </div>
@@ -130,8 +130,8 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                   <button key={i} onClick={() => handleNav(item.path)}
                     className={`w-full h-11 flex items-center rounded-[14px] transition-all px-3 gap-4 ${
                       active
-                        ? 'border-l-[3px] border-primary bg-primary/10 text-primary'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                        ? 'border-l-[3px] border-brand-primary bg-brand-primary/10 text-brand-primary'
+                        : 'text-text-body hover:text-text-heading hover:bg-surface-accent'
                     }`}
                   >
                     <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
@@ -140,11 +140,11 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                 );
               })}
               {actions.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-border flex flex-col gap-2">
-                  <span className="px-3 mb-1 font-heading font-bold text-micro uppercase tracking-widest text-muted-foreground">Quick Actions</span>
+                <div className="mt-4 pt-4 border-t border-border-default flex flex-col gap-2">
+                  <span className="px-3 mb-1 font-heading font-bold text-micro uppercase tracking-widest text-text-body">Quick Actions</span>
                   {actions.map((a, i) => (
                     <button key={i} onClick={() => { a.onClick(); setMobileOpen(false); }}
-                      className="w-full h-11 flex items-center rounded-[14px] px-3 gap-4 text-muted-foreground hover:text-foreground hover:bg-accent transition-all">
+                      className="w-full h-11 flex items-center rounded-[14px] px-3 gap-4 text-text-body hover:text-text-heading hover:bg-surface-accent transition-all">
                       <a.icon size={20} />
                       <span className="font-body font-bold text-[14px]">{a.label}</span>
                     </button>

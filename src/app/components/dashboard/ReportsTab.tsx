@@ -73,13 +73,13 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
         {summaryStats.map(stat => {
           const Icon = stat.icon;
           return (
-            <div key={stat.label} className="lg:col-span-1 min-w-0 bg-card border border-border rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-all">
+            <div key={stat.label} className="lg:col-span-1 min-w-0 bg-surface-card border border-border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-all">
               <div className="flex items-center justify-between gap-2">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground truncate">{stat.label}</span>
-                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-primary" /></div>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body truncate">{stat.label}</span>
+                <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
               </div>
-              <div className="font-heading font-extrabold text-[32px] text-foreground leading-none">{stat.value}</div>
-              <span className="font-body text-[12px] text-muted-foreground font-medium">{stat.sub}</span>
+              <div className="font-heading font-extrabold text-[32px] text-text-heading leading-none">{stat.value}</div>
+              <span className="font-body text-[12px] text-text-body font-medium">{stat.sub}</span>
             </div>
           );
         })}
@@ -90,9 +90,9 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
       <div className="flex items-center gap-2 flex-wrap">
         {/* Search — outlined like the filters, wider */}
         <div className="relative flex-1 min-w-[240px] max-w-md">
-          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or scout…"
-            className="w-full bg-card/60 border border-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary hover:bg-card transition-colors" />
+            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
         </div>
 
         {/* Inline filters — always in view */}
@@ -101,17 +101,17 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
         <InlineSel value={fGrade} onChange={setFGrade} opts={gradeOpts} allLabel="All grades" />
         <InlineSel value={fPos} onChange={setFPos} opts={posOpts} allLabel="All positions" />
         <InlineSel value={fRecency === 'all' ? 'All' : fRecency === 'month' ? 'This month' : 'This week'} onChange={v => setFRecency(v === 'This week' ? 'week' : v === 'This month' ? 'month' : 'all')} opts={['All', 'This month', 'This week']} allLabel="All time" />
-        {activeFilters > 0 && <button onClick={clearFilters} className="font-body text-[12px] font-bold text-primary hover:underline px-1 shrink-0">Clear</button>}
+        {activeFilters > 0 && <button onClick={clearFilters} className="font-body text-[12px] font-bold text-brand-primary hover:underline px-1 shrink-0">Clear</button>}
 
         <button onClick={() => { setRefreshing(true); setTimeout(() => setRefreshing(false), 600); }}
-          className="ml-auto shrink-0 flex items-center gap-2 bg-transparent border border-primary text-foreground px-4 py-2 rounded-full font-body font-bold text-[13px] hover:bg-primary/10 transition-colors">
+          className="ml-auto shrink-0 flex items-center gap-2 bg-transparent border border-brand-primary text-text-heading px-4 py-2 rounded-full font-body font-bold text-[13px] hover:bg-brand-primary/10 transition-colors">
           <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />Refresh
         </button>
       </div>
 
       {/* Report cards */}
       {shown.length === 0 && (
-        <div className="bg-card border border-border rounded-[20px] p-10 text-center font-body text-[14px] text-muted-foreground shadow-[var(--shadow-lg)]">
+        <div className="bg-surface-card border border-border-default rounded-[20px] p-10 text-center font-body text-[14px] text-text-body shadow-[var(--shadow-lg)]">
           No reports match your search or filters.
         </div>
       )}
@@ -120,15 +120,15 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
           const overall = Math.round((gradeToScore(r.plr) + gradeToScore(r.pog)) / 2);
           return (
           <div key={r.id}
-            className={`bg-card rounded-[20px] border p-5 flex flex-col gap-3 hover:shadow-xl transition-all ${r.status === 'unseen' ? 'border-primary ring-2 ring-primary/40 shadow-md' : r.status === 'opened' ? 'border-border shadow-[var(--shadow-lg)] opacity-60' : 'border-border shadow-[var(--shadow-lg)]'}`}>
+            className={`bg-surface-card rounded-[20px] border p-5 flex flex-col gap-3 hover:shadow-xl transition-all ${r.status === 'unseen' ? 'border-brand-primary ring-2 ring-brand-primary/40 shadow-md' : r.status === 'opened' ? 'border-border-default shadow-[var(--shadow-lg)] opacity-60' : 'border-border-default shadow-[var(--shadow-lg)]'}`}>
             {/* Header */}
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-11 h-11 rounded-full bg-primary/10 text-primary flex items-center justify-center font-heading font-black text-[14px] shrink-0">{r.initials}</div>
+                <div className="w-11 h-11 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[14px] shrink-0">{r.initials}</div>
                 <div className="min-w-0">
-                  <div className="font-heading font-bold text-[15px] text-foreground truncate">{r.player}</div>
-                  <div className="flex items-center gap-1.5 font-body text-[12px] text-muted-foreground">
-                    <span className="font-bold text-foreground">{r.pos}</span>
+                  <div className="font-heading font-bold text-[15px] text-text-heading truncate">{r.player}</div>
+                  <div className="flex items-center gap-1.5 font-body text-[12px] text-text-body">
+                    <span className="font-bold text-text-heading">{r.pos}</span>
                     <span>·</span>
                     <User size={11} />{r.scout}
                     <span>·</span>
@@ -140,26 +140,26 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
             {/* Grade strip */}
             <div className="grid grid-cols-3 gap-2">
               {([['PLR', r.plr], ['POG', r.pog], ['NXT', r.nxt]] as const).map(([k, v]) => (
-                <div key={k} className="bg-accent/50 rounded-[14px] py-2 text-center">
-                  <div className="font-heading font-bold text-[16px] text-foreground leading-none">{v}</div>
-                  <div className="font-heading font-bold text-[9px] uppercase tracking-widest text-muted-foreground mt-1">{k}</div>
+                <div key={k} className="bg-surface-accent/50 rounded-[14px] py-2 text-center">
+                  <div className="font-heading font-bold text-[16px] text-text-heading leading-none">{v}</div>
+                  <div className="font-heading font-bold text-[9px] uppercase tracking-widest text-text-body mt-1">{k}</div>
                 </div>
               ))}
             </div>
             {/* Overall score */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">Overall</span>
-                <span className="font-heading font-black text-[13px] text-foreground tabular-nums">{overall}</span>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">Overall</span>
+                <span className="font-heading font-black text-[13px] text-text-heading tabular-nums">{overall}</span>
               </div>
-              <div className="h-2 bg-accent rounded-full overflow-hidden">
-                <div className="h-full bg-primary rounded-full" style={{ width: `${overall}%` }} />
+              <div className="h-2 bg-surface-accent rounded-full overflow-hidden">
+                <div className="h-full bg-brand-primary rounded-full" style={{ width: `${overall}%` }} />
               </div>
             </div>
             {/* Footer */}
             <div className="flex items-center gap-2 pt-1">
-              <button onClick={() => openReport(r)} className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-full py-2 transition-colors"><Eye size={14} />View</button>
-              <button className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-border text-muted-foreground hover:bg-accent hover:text-foreground hover:border-primary rounded-full py-2 transition-colors"><Download size={14} />Export</button>
+              <button onClick={() => openReport(r)} className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-text-inverse rounded-full py-2 transition-colors"><Eye size={14} />View</button>
+              <button className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-border-default text-text-body hover:bg-surface-accent hover:text-text-heading hover:border-brand-primary rounded-full py-2 transition-colors"><Download size={14} />Export</button>
             </div>
           </div>
           );
@@ -167,7 +167,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
       </div>
 
       {remaining > 0 && (
-        <button onClick={() => setVisibleCount(v => v + 9)} className="mx-auto flex items-center gap-2 bg-transparent border border-primary text-foreground px-6 py-2 rounded-full font-body font-bold text-[13px] hover:bg-primary/10 transition-colors">
+        <button onClick={() => setVisibleCount(v => v + 9)} className="mx-auto flex items-center gap-2 bg-transparent border border-brand-primary text-text-heading px-6 py-2 rounded-full font-body font-bold text-[13px] hover:bg-brand-primary/10 transition-colors">
           Load more ({remaining} remaining)
         </button>
       )}

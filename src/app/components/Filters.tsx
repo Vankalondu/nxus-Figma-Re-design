@@ -4,7 +4,7 @@ export function Filters() {
   return (
     <div className="grid grid-cols-3 gap-4">
       <div>
-        <label className="block text-sm text-muted-foreground mb-2">Filter by Team:</label>
+        <label className="block text-sm text-text-body mb-2">Filter by Team:</label>
         <Select defaultValue="all">
           <SelectTrigger>
             <SelectValue placeholder="All Teams" />
@@ -18,7 +18,7 @@ export function Filters() {
       </div>
       
       <div>
-        <label className="block text-sm text-muted-foreground mb-2">Filter by Country:</label>
+        <label className="block text-sm text-text-body mb-2">Filter by Country:</label>
         <Select defaultValue="all">
           <SelectTrigger>
             <SelectValue placeholder="All Countries" />
@@ -32,7 +32,7 @@ export function Filters() {
       </div>
       
       <div>
-        <label className="block text-sm text-muted-foreground mb-2">Filter by Weeks:</label>
+        <label className="block text-sm text-text-body mb-2">Filter by Weeks:</label>
         <Select defaultValue="all">
           <SelectTrigger>
             <SelectValue placeholder="All weeks" />

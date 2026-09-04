@@ -143,24 +143,24 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
       <>
         {contextMenu && (
           <div 
-            className="fixed z-50 bg-card border border-border shadow-lg rounded-xl overflow-hidden min-w-[200px] text-sm py-1"
+            className="fixed z-50 bg-surface-card border border-border-default shadow-lg rounded-xl overflow-hidden min-w-[200px] text-sm py-1"
             style={{ top: contextMenu.y, left: contextMenu.x }}
             onClick={(e) => e.stopPropagation()}
           >
-            <button className="w-full text-left px-4 py-2 hover:bg-accent flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={() => insertColumn('left')}>
+            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={() => insertColumn('left')}>
               <Plus size={14} className="mr-2" /> Insert column left
             </button>
-            <button className="w-full text-left px-4 py-2 hover:bg-accent flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={() => insertColumn('right')}>
+            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={() => insertColumn('right')}>
               <Plus size={14} className="mr-2" /> Insert column right
             </button>
-            <div className="h-px bg-accent my-1"></div>
-            <button className="w-full text-left px-4 py-2 hover:bg-scout-red/10 flex items-center text-scout-red font-semibold transition-colors" onClick={deleteColumn}>
+            <div className="h-px bg-surface-accent my-1"></div>
+            <button className="w-full text-left px-4 py-2 hover:bg-status-error/10 flex items-center text-status-error font-semibold transition-colors" onClick={deleteColumn}>
               <Trash2 size={14} className="mr-2" /> Delete column
             </button>
-            <button className="w-full text-left px-4 py-2 hover:bg-accent flex items-center text-primary font-semibold transition-colors" onClick={clearColumn}>
+            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-brand-primary font-semibold transition-colors" onClick={clearColumn}>
               <X size={14} className="mr-2" /> Clear column
             </button>
-            <div className="h-px bg-accent my-1"></div>
+            <div className="h-px bg-surface-accent my-1"></div>
             <button className="w-full text-left px-4 py-2 hover:bg-[#CCFF00]/10 flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={startEditColumn}>
               <FileText size={14} className="mr-2" /> Edit/Rename
             </button>
@@ -168,7 +168,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
         )}
         
         {deletedColumnCache && (
-          <div className="fixed bottom-6 right-6 z-50 bg-card border border-border shadow-lg rounded-xl p-4 flex items-center space-x-4 animate-in slide-in-from-bottom-5">
+          <div className="fixed bottom-6 right-6 z-50 bg-surface-card border border-border-default shadow-lg rounded-xl p-4 flex items-center space-x-4 animate-in slide-in-from-bottom-5">
             <div>
               <p className="text-sm font-semibold text-[#1a1c1d]">Column deleted</p>
               <p className="text-xs text-[#838d97]">You can restore it for a short time</p>

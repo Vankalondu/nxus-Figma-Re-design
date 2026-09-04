@@ -29,7 +29,7 @@ export function UpcomingMatches() {
   ];
 
   return (
-    <div className="bg-card border border-[#e0e7ef] rounded-2xl p-6">
+    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Upcoming Matches

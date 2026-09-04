@@ -39,8 +39,8 @@ export const Default: Story = {
               key={item}
               className={
                 i === 0
-                  ? 'bg-primary/10 text-primary border-l-[3px] border-primary px-3 py-2 font-body font-bold text-[12px]'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent transition-colors px-3 py-2 font-body font-bold text-[12px]'
+                  ? 'bg-brand-primary/10 text-brand-primary border-l-[3px] border-brand-primary px-3 py-2 font-body font-bold text-[12px]'
+                  : 'text-text-body hover:text-text-heading hover:bg-surface-accent transition-colors px-3 py-2 font-body font-bold text-[12px]'
               }
             >
               {item}

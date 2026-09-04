@@ -45,10 +45,10 @@ export const NxusGradePills: Story = {
   },
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
-      <span className="px-2 py-0.5 rounded-full bg-primary text-primary-foreground font-body font-black text-[10px]">A+</span>
-      <span className="px-2 py-0.5 rounded-full bg-primary/12 text-foreground font-body font-black text-[10px]">A</span>
-      <span className="px-2 py-0.5 rounded-full bg-muted-foreground/10 text-muted-foreground font-body font-black text-[10px]">B</span>
-      <span className="px-2 py-0.5 rounded-full bg-accent text-muted-foreground font-body font-black text-[10px]">C</span>
+      <span className="px-2 py-0.5 rounded-full bg-brand-primary text-text-inverse font-body font-black text-[10px]">A+</span>
+      <span className="px-2 py-0.5 rounded-full bg-brand-primary/12 text-text-heading font-body font-black text-[10px]">A</span>
+      <span className="px-2 py-0.5 rounded-full bg-text-body/10 text-text-body font-body font-black text-[10px]">B</span>
+      <span className="px-2 py-0.5 rounded-full bg-surface-accent text-text-body font-body font-black text-[10px]">C</span>
     </div>
   ),
 }
@@ -60,8 +60,8 @@ export const NxusVideoCounts: Story = {
   },
   render: () => (
     <div className="flex items-center gap-2">
-      <span className="bg-primary/20 text-foreground font-bold px-2 py-0.5 rounded text-[12px]">F3</span>
-      <span className="bg-primary/20 text-foreground font-bold px-2 py-0.5 rounded text-[12px]">H5</span>
+      <span className="bg-brand-primary/20 text-text-heading font-bold px-2 py-0.5 rounded text-[12px]">F3</span>
+      <span className="bg-brand-primary/20 text-text-heading font-bold px-2 py-0.5 rounded text-[12px]">H5</span>
     </div>
   ),
 }

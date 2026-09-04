@@ -10,14 +10,14 @@ export function YearSelector() {
         {years.map((year) => (
           <Button
             key={year}
-            className="bg-primary hover:bg-primary/80"
+            className="bg-brand-primary hover:bg-brand-primary/80"
           >
             {year}
           </Button>
         ))}
       </div>
-      <button className="p-2 bg-primary rounded-full hover:bg-primary/80">
-        <Settings className="w-5 h-5 text-chalk" />
+      <button className="p-2 bg-brand-primary rounded-full hover:bg-brand-primary/80">
+        <Settings className="w-5 h-5 text-text-on-brand" />
       </button>
     </div>
   );

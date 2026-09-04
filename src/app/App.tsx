@@ -23,17 +23,17 @@ function RootLayout() {
 
 function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-      <div className="w-16 h-16 rounded-full bg-border flex items-center justify-center mb-4">
-        <span style={{ fontSize: 28, color: 'var(--muted-foreground)' }}>404</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-surface-page">
+      <div className="w-16 h-16 rounded-full bg-border-default flex items-center justify-center mb-4">
+        <span style={{ fontSize: 28, color: 'var(--text-body)' }}>404</span>
       </div>
-      <h1 className="font-heading font-black text-[18px] text-foreground">Page not found</h1>
-      <p className="font-body text-[14px] text-muted-foreground font-medium mt-2 max-w-xs text-center">
+      <h1 className="font-heading font-black text-[18px] text-text-heading">Page not found</h1>
+      <p className="font-body text-[14px] text-text-body font-medium mt-2 max-w-xs text-center">
         The route you navigated to doesn't exist.
       </p>
       <button
         onClick={() => window.history.back()}
-        className="mt-6 bg-primary border-2 border-primary text-chalk hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
+        className="mt-6 bg-brand-primary border-2 border-brand-primary text-text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
       >
         Go back
       </button>
@@ -43,17 +43,17 @@ function NotFound() {
 
 function ErrorBoundaryPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-      <div className="w-16 h-16 rounded-full bg-scout-red/10 flex items-center justify-center mb-4">
-        <span style={{ fontSize: 24, color: 'var(--scout-red)' }}>!</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-surface-page">
+      <div className="w-16 h-16 rounded-full bg-status-error/10 flex items-center justify-center mb-4">
+        <span style={{ fontSize: 24, color: 'var(--status-error)' }}>!</span>
       </div>
-      <h1 className="font-heading font-black text-[18px] text-foreground">Something went wrong</h1>
-      <p className="font-body text-[14px] text-muted-foreground font-medium mt-2 max-w-xs text-center">
+      <h1 className="font-heading font-black text-[18px] text-text-heading">Something went wrong</h1>
+      <p className="font-body text-[14px] text-text-body font-medium mt-2 max-w-xs text-center">
         An unexpected error occurred. Please try again.
       </p>
       <button
         onClick={() => (window.location.href = '/')}
-        className="mt-6 bg-primary border-2 border-primary text-chalk hover:bg-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
+        className="mt-6 bg-brand-primary border-2 border-brand-primary text-text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors"
       >
         Return to login
       </button>

@@ -17,8 +17,8 @@ const meta = {
           'which breaks **L-C1** and **L-C2**. It is kept in the repo (nothing is being deleted) ' +
           'and documented here so nobody imports it by mistake — an undocumented duplicate is ' +
           'how a stale component gets picked up months later.\n\n' +
-          'The real sidebar’s specification is **P-CO8**: `bg-sidebar` surface, active item ' +
-          '`bg-primary/10 text-primary border-l-[3px] border-primary`.',
+          'The real sidebar’s specification is **P-CO8**: `bg-surface-sidebar` surface, active item ' +
+          '`bg-brand-primary/10 text-brand-primary border-l-[3px] border-brand-primary`.',
       },
     },
   },
@@ -33,7 +33,7 @@ export const StaleCopy: Story = {
     docs: { description: { story: 'Rendered only so the duplicate is visible and identifiable.' } },
   },
   render: () => (
-    <div className="relative h-[520px] overflow-hidden rounded-[20px] border border-dashed border-border">
+    <div className="relative h-[520px] overflow-hidden rounded-[20px] border border-dashed border-border-default">
       <Sidebar />
     </div>
   ),

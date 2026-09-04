@@ -31,21 +31,21 @@ export function OperationsDashboard() {
           <h1 className="text-[#0a0e1a] text-3xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Dashboard
           </h1>
-          <p className="text-muted-foreground" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Welcome back, <span className="font-semibold text-[#0a0e1a]">Operations Officer</span>. Your weekly pipeline overview.
           </p>
         </div>
 
         {/* Department Navigation Tabs */}
-        <div className="mb-8 bg-card border border-[#e8edf2] rounded-2xl p-2 inline-flex gap-2 shadow-sm">
+        <div className="mb-8 bg-surface-card border border-[#e8edf2] rounded-2xl p-2 inline-flex gap-2 shadow-sm">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`px-6 py-3 rounded-xl text-sm font-bold tracking-wide transition-all ${
                 activeTab === tab.id
-                  ? 'bg-[#1E88E5] text-chalk shadow-sm'
-                  : 'text-muted-foreground hover:text-[#0a0e1a] hover:bg-[#f8fafc]'
+                  ? 'bg-[#1E88E5] text-text-on-brand shadow-sm'
+                  : 'text-text-body hover:text-[#0a0e1a] hover:bg-[#f8fafc]'
               }`}
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             >
@@ -76,7 +76,7 @@ export function OperationsDashboard() {
                 <h3 className="text-[#0a0e1a] text-xl font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
                   Country & Regional Performance
                 </h3>
-                <p className="text-muted-foreground text-sm mt-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-text-body text-sm mt-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Track scout performance and Grade A player submissions by region
                 </p>
               </div>
@@ -91,11 +91,11 @@ export function OperationsDashboard() {
         {activeTab === 'video' && <VideoDepartmentDashboard />}
 
         {activeTab === 'reviews' && (
-          <div className="bg-card border border-[#e8edf2] rounded-2xl p-12 text-center">
+          <div className="bg-surface-card border border-[#e8edf2] rounded-2xl p-12 text-center">
             <h3 className="text-[#0a0e1a] text-xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
               Final Reviews
             </h3>
-            <p className="text-muted-foreground" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Senior scout review queue and grade conversion tracking.
             </p>
           </div>

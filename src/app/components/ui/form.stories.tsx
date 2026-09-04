@@ -17,7 +17,7 @@ const meta = {
           'Form scaffolding over `react-hook-form`. `FormField` wires a control to its label, ' +
           'description and error message, and links them with the right `aria-describedby` — the ' +
           'accessibility plumbing that is easy to skip when hand-rolling a form.\n\n' +
-          'Error text uses `text-destructive` (**R-TY3**). Under **L-C3** that red means a real ' +
+          'Error text uses `text-status-error` (**R-TY3**). Under **L-C3** that red means a real ' +
           'problem, so do not borrow it for hints or character counts.\n\n' +
           'Field styling follows **P-CO13**; labels are `.text-micro`, uppercase and tracked.',
       },
@@ -43,7 +43,7 @@ export const Default: Story = {
             rules={{ required: 'A player name is required' }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">
+                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
                   Player name
                 </FormLabel>
                 <FormControl>
@@ -59,7 +59,7 @@ export const Default: Story = {
             name="team"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">
+                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
                   Team
                 </FormLabel>
                 <FormControl>
@@ -91,7 +91,7 @@ export const WithValidationError: Story = {
             rules={{ required: 'A player name is required' }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">
+                <FormLabel className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
                   Player name
                 </FormLabel>
                 <FormControl>

@@ -8,8 +8,8 @@ const meta = {
     docs: {
       description: {
         component:
-          'Text input. NXUS field styling is specified in **P-CO13**: `bg-card`, `border-border`, ' +
-          '`rounded-xl`, bold 14px text, and a `focus:ring-2 focus:ring-ring/20` focus state. ' +
+          'Text input. NXUS field styling is specified in **P-CO13**: `bg-surface-card`, `border-border-default`, ' +
+          '`rounded-xl`, bold 14px text, and a `focus:ring-2 focus:ring-border-focus/20` focus state. ' +
           'Labels sit above at `.text-micro`, uppercase and tracked.',
       },
     },
@@ -38,7 +38,7 @@ export const WithLabel: Story = {
   parameters: { docs: { description: { story: 'Label styling per **P-CO13**.' } } },
   render: (a) => (
     <div className="w-[320px]">
-      <label className="block font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
+      <label className="block font-heading font-bold text-[10px] uppercase tracking-widest text-text-body mb-2">
         Player name
       </label>
       <Input {...a} placeholder="e.g. Kofi Mensah" />

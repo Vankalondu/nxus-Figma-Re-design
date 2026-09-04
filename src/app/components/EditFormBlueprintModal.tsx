@@ -78,26 +78,26 @@
 
   // ── Reusable atoms (module scope, token-styled) ──
   const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground
+    <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-text-body
   block`}>{children}</label>
   );
 
   const SlideToggle = ({ on, onChange }: { on: boolean; onChange: () => void }) => (
     <button type="button" onClick={onChange}
-      className={`w-12 h-7 rounded-full relative transition-colors shrink-0 ${on ? `bg-primary` :
-  `bg-muted-foreground/30`}`}>
-      <div className={`w-5 h-5 bg-card rounded-full absolute top-1 transition-all ${on ? `left-6` : `left-1`}`} />
+      className={`w-12 h-7 rounded-full relative transition-colors shrink-0 ${on ? `bg-brand-primary` :
+  `bg-text-body/30`}`}>
+      <div className={`w-5 h-5 bg-surface-card rounded-full absolute top-1 transition-all ${on ? `left-6` : `left-1`}`} />
     </button>
   );
 
   const CheckRow = ({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) => (
     <label className={`flex items-center gap-2 cursor-pointer`}>
-      <div className={`w-4 h-4 rounded-sm border flex items-center justify-center transition-all ${checked ? `bg-primary
-  border-primary` : `border-border`}`}>
-        {checked && <Check size={10} className={`text-primary-foreground`} />}
+      <div className={`w-4 h-4 rounded-sm border flex items-center justify-center transition-all ${checked ? `bg-brand-primary
+  border-brand-primary` : `border-border-default`}`}>
+        {checked && <Check size={10} className={`text-text-inverse`} />}
       </div>
       <input type="checkbox" checked={checked} onChange={onChange} className={`hidden`} />
-      <span className={`font-body text-[14px] font-bold text-foreground`}>{label}</span>
+      <span className={`font-body text-[14px] font-bold text-text-heading`}>{label}</span>
     </label>
   );
 
@@ -191,30 +191,30 @@
     return (
       <div className={`fixed inset-0 bg-[#061B2E]/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4`}
   onClick={onClose}>
-        <div className={`bg-card rounded-[32px] shadow-[var(--shadow-2xl)] w-full max-w-5xl h-[85vh] border border-border
+        <div className={`bg-surface-card rounded-[32px] shadow-[var(--shadow-2xl)] w-full max-w-5xl h-[85vh] border border-border-default
   flex flex-col overflow-hidden`} onClick={e => e.stopPropagation()}>
 
           {/* Header */}
-          <div className={`px-8 py-6 bg-primary flex items-center justify-between shrink-0`}>
+          <div className={`px-8 py-6 bg-brand-primary flex items-center justify-between shrink-0`}>
             <div className={`flex flex-col gap-1`}>
-              <span className={`font-heading font-semibold text-[20px] text-chalk`}>Edit Form Blueprint</span>
-              <span className={`font-body font-medium text-[12px] text-chalk/60`}>Configure questions, scope and
+              <span className={`font-heading font-semibold text-[20px] text-text-on-brand`}>Edit Form Blueprint</span>
+              <span className={`font-body font-medium text-[12px] text-text-on-brand/60`}>Configure questions, scope and
   behavior.</span>
             </div>
-            <button onClick={onClose} className={`w-8 h-8 rounded-full bg-card/10 flex items-center justify-center
-  text-chalk/60 hover:text-chalk transition-colors`}><X size={16} /></button>
+            <button onClick={onClose} className={`w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center
+  text-text-on-brand/60 hover:text-text-on-brand transition-colors`}><X size={16} /></button>
           </div>
 
           {/* Tab strip + metadata counter */}
-          <div className={`px-8 pt-4 pb-4 flex items-center justify-between gap-4 border-b border-border shrink-0 bg-card`}>
+          <div className={`px-8 pt-4 pb-4 flex items-center justify-between gap-4 border-b border-border-default shrink-0 bg-surface-card`}>
             <div className={`flex items-center gap-2`}>
               {['Template Info', 'Questions', 'Settings'].map((tab) => {
                 const isActive = activeTab === tab;
                 return (
                   <button key={tab} onClick={() => setActiveTab(tab)}
                     className={`rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors border ${isActive ?
-  `bg-primary text-primary-foreground border-primary shadow-sm` : `bg-card text-muted-foreground border-border
-  hover:border-primary hover:text-foreground`}`}>
+  `bg-brand-primary text-text-inverse border-brand-primary shadow-sm` : `bg-surface-card text-text-body border-border-default
+  hover:border-brand-primary hover:text-text-heading`}`}>
                     {tab}
                   </button>
                 );
@@ -225,14 +225,14 @@
   bg-[#22C55E]/10 text-[#22C55E]`}>
                 <Check size={11} /> Template ready
               </span>
-              <span className={`font-body font-bold text-[12px] px-2 py-1 rounded-full bg-primary/10 text-primary`}>
+              <span className={`font-body font-bold text-[12px] px-2 py-1 rounded-full bg-brand-primary/10 text-brand-primary`}>
                 {questions.length} questions
               </span>
             </div>
           </div>
 
           {/* Canvas */}
-          <div className={`flex-1 overflow-hidden relative bg-background`}>
+          <div className={`flex-1 overflow-hidden relative bg-surface-page`}>
 
             {/* ── Tab 1: Template Info ── */}
             {activeTab === 'Template Info' && (
@@ -240,44 +240,44 @@
                 <div className={`flex flex-col gap-2`}>
                   <FieldLabel>Form Title</FieldLabel>
                   <input value={title} onChange={e => setTitle(e.target.value)}
-                    className={`w-full bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                    className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                 </div>
 
                 <div className={`flex flex-col gap-2`}>
                   <div className={`flex items-center justify-between`}>
                     <FieldLabel>Description</FieldLabel>
                     <span className={`font-body font-medium text-[12px]
-  text-muted-foreground`}>{description.length}/500</span>
+  text-text-body`}>{description.length}/500</span>
                   </div>
                   <textarea value={description} maxLength={500} rows={3} onChange={e => setDescription(e.target.value)}
-                    className={`w-full bg-card border border-border rounded-xl px-4 py-3 text-[14px] font-bold
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground resize-none`} />
+                    className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-3 text-[14px] font-bold
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body resize-none`} />
                 </div>
 
                 <div className={`grid grid-cols-2 gap-6`}>
                   <div className={`flex flex-col gap-2`}>
                     <FieldLabel>Template Type</FieldLabel>
-                    <div className={`relative bg-card border border-border rounded-xl px-4 py-2 focus-within:ring-2
-  focus-within:ring-ring/20 focus-within:border-ring transition-all`}>
+                    <div className={`relative bg-surface-card border border-border-default rounded-xl px-4 py-2 focus-within:ring-2
+  focus-within:ring-border-focus/20 focus-within:border-border-focus transition-all`}>
                       <select value={formType} onChange={e => setFormType(e.target.value)}
-                        className={`w-full bg-transparent text-[14px] font-bold text-foreground focus:outline-none
+                        className={`w-full bg-transparent text-[14px] font-bold text-text-heading focus:outline-none
   appearance-none cursor-pointer`}>
                         {['Scouting Report', 'Player Evaluation', 'Match Report', 'Training Session'].map(t => <option
-  key={t} className={`bg-card`}>{t}</option>)}
+  key={t} className={`bg-surface-card`}>{t}</option>)}
                       </select>
-                      <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground
+                      <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-text-body
   pointer-events-none`} />
                     </div>
                   </div>
                   <div className={`flex flex-col gap-2`}>
                     <FieldLabel>Est. Time</FieldLabel>
                     <input value={estTime} onChange={e => setEstTime(e.target.value)} placeholder="e.g. 8m"
-                      className={`w-full bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                      className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                   </div>
                 </div>
 
@@ -289,11 +289,11 @@
                       return (
                         <button key={c} type="button" onClick={() => toggleCategory(c)}
                           className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px]
-  transition-all cursor-pointer border ${active ? `bg-primary/10 text-primary border-primary/20 shadow-sm` : `bg-card
-  text-muted-foreground border-border hover:border-primary/50 hover:text-foreground`}`}>
+  transition-all cursor-pointer border ${active ? `bg-brand-primary/10 text-brand-primary border-brand-primary/20 shadow-sm` : `bg-surface-card
+  text-text-body border-border-default hover:border-brand-primary/50 hover:text-text-heading`}`}>
                           <div className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center transition-all
-  ${active ? `bg-primary border-primary` : `border-border`}`}>
-                            {active && <Check size={10} className={`text-primary-foreground`} />}
+  ${active ? `bg-brand-primary border-brand-primary` : `border-border-default`}`}>
+                            {active && <Check size={10} className={`text-text-inverse`} />}
                           </div>
                           {c}
                         </button>
@@ -305,24 +305,24 @@
                 <div className={`flex flex-col gap-2`}>
                   <FieldLabel>Role Permission Visibility</FieldLabel>
                   <div className={`flex gap-2 flex-wrap`}>
-                    <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-primary/10
-  text-primary`}>SUPERVISOR</span>
+                    <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-brand-primary/10
+  text-brand-primary`}>SUPERVISOR</span>
                     <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-[#E8A838]/10
   text-[#E8A838]`}>DIRECTOR</span>
                   </div>
                 </div>
 
-                <div className={`flex flex-col gap-2 bg-card border border-border rounded-[20px] p-6`}>
+                <div className={`flex flex-col gap-2 bg-surface-card border border-border-default rounded-[20px] p-6`}>
                   <FieldLabel>Grade Abbreviation</FieldLabel>
                   <div className={`flex items-center gap-3`}>
                     <input value={gradeAbbr} maxLength={3} onChange={e => setGradeAbbr(e.target.value.toUpperCase().slice(0,
   3))}
                       placeholder="Optional"
-                      className={`flex-1 bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold font-mono
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                      className={`flex-1 bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold font-mono
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                     <button type="button" onClick={fillFromTitle}
-                      className={`bg-primary border-2 border-primary text-primary-foreground hover:bg-primary/80
+                      className={`bg-brand-primary border-2 border-brand-primary text-text-inverse hover:bg-brand-primary/80
   rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm shrink-0`}>
                       Fill from title
                     </button>
@@ -335,12 +335,12 @@
             {activeTab === 'Questions' && (
               <div className={`flex h-full w-full`}>
                 {/* Left rail */}
-                <div className={`w-[30%] border-r border-border flex flex-col bg-card shrink-0
-  shadow-[var(--shadow-sidebar)] z-10`}>
-                  <div className={`p-4 border-b border-border bg-card`}>
+                <div className={`w-[30%] border-r border-border-default flex flex-col bg-surface-card shrink-0
+  shadow-[var(--shadow-surface-sidebar)] z-10`}>
+                  <div className={`p-4 border-b border-border-default bg-surface-card`}>
                     <button onClick={addQuestion}
-                      className={`w-full py-3 bg-primary border-2 border-primary text-primary-foreground font-body font-bold
-  text-[14px] rounded-full shadow-md hover:bg-primary/80 transition-colors flex items-center justify-center gap-2`}>
+                      className={`w-full py-3 bg-brand-primary border-2 border-brand-primary text-text-inverse font-body font-bold
+  text-[14px] rounded-full shadow-md hover:bg-brand-primary/80 transition-colors flex items-center justify-center gap-2`}>
                       <Plus size={16} /> Add Question
                     </button>
                   </div>
@@ -350,18 +350,18 @@
                       return (
                         <button key={q.id} onClick={() => setActiveQuestionId(q.id)}
                           className={`w-full flex flex-col gap-2 p-3 rounded-xl transition-colors text-left border
-  ${isActive ? `bg-primary/5 border-primary/30 shadow-sm` : `bg-transparent border-transparent hover:bg-accent/50`}`}>
+  ${isActive ? `bg-brand-primary/5 border-brand-primary/30 shadow-sm` : `bg-transparent border-transparent hover:bg-surface-accent/50`}`}>
                           <div className={`flex items-center gap-2 w-full`}>
-                            <span className={`font-mono text-[12px] font-black shrink-0 ${isActive ? `text-primary` :
-  `text-muted-foreground`}`}>{String(idx + 1).padStart(2, '0')}</span>
-                            <span className={`font-body font-bold text-[14px] truncate flex-1 ${isActive ? `text-primary` :
-  `text-foreground`}`}>{q.text || 'Untitled question'}</span>
+                            <span className={`font-mono text-[12px] font-black shrink-0 ${isActive ? `text-brand-primary` :
+  `text-text-body`}`}>{String(idx + 1).padStart(2, '0')}</span>
+                            <span className={`font-body font-bold text-[14px] truncate flex-1 ${isActive ? `text-brand-primary` :
+  `text-text-heading`}`}>{q.text || 'Untitled question'}</span>
                             {q.linkStart && <span className={`shrink-0 font-body font-black text-[10px] px-2 py-0.5
   rounded-full bg-[#22C55E]/10 text-[#22C55E]`}>Linked 1a</span>}
                           </div>
                           <div className={`flex items-center gap-2 ml-[22px]`}>
-                            <span className={`shrink-0 bg-accent border border-border px-2 py-0.5 rounded-full font-body
-  font-bold text-[10px] text-muted-foreground whitespace-nowrap`}>{q.type}</span>
+                            <span className={`shrink-0 bg-surface-accent border border-border-default px-2 py-0.5 rounded-full font-body
+  font-bold text-[10px] text-text-body whitespace-nowrap`}>{q.type}</span>
                           </div>
                         </button>
                       );
@@ -375,35 +375,35 @@
 
                     {/* Floating utility strip */}
                     <div className={`sticky top-0 z-10 flex justify-end -mt-2 -mr-2`}>
-                      <div className={`flex items-center gap-1 bg-card border border-border rounded-full p-1
+                      <div className={`flex items-center gap-1 bg-surface-card border border-border-default rounded-full p-1
   shadow-[var(--shadow-md)]`}>
                         <button onClick={() => move(-1)} disabled={activeIndex <= 0} title="Move up"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-foreground
-  hover:bg-primary/80 hover:text-primary-foreground transition-colors disabled:opacity-40`}><ArrowUp size={13} /></button>
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-text-heading
+  hover:bg-brand-primary/80 hover:text-text-inverse transition-colors disabled:opacity-40`}><ArrowUp size={13} /></button>
                         <button onClick={() => move(1)} disabled={activeIndex >= questions.length - 1} title="Move down"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-foreground
-  hover:bg-primary/80 hover:text-primary-foreground transition-colors disabled:opacity-40`}><ArrowDown size={13} /></button>
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-text-heading
+  hover:bg-brand-primary/80 hover:text-text-inverse transition-colors disabled:opacity-40`}><ArrowDown size={13} /></button>
                         <button onClick={duplicateQuestion} title="Duplicate"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-foreground
-  hover:bg-primary/80 hover:text-primary-foreground transition-colors`}><Copy size={13} /></button>
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-text-heading
+  hover:bg-brand-primary/80 hover:text-text-inverse transition-colors`}><Copy size={13} /></button>
                         <button onClick={deleteQuestion} disabled={questions.length <= 1} title="Delete"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-destructive
-  hover:bg-destructive/10 transition-colors disabled:opacity-40`}><Trash2 size={13} /></button>
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-status-error
+  hover:bg-status-error/10 transition-colors disabled:opacity-40`}><Trash2 size={13} /></button>
                         <button title="Preview"
-                          className={`w-7 h-7 rounded-full flex items-center justify-center text-foreground
-  hover:bg-primary/80 hover:text-primary-foreground transition-colors`}><Eye size={13} /></button>
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-text-heading
+  hover:bg-brand-primary/80 hover:text-text-inverse transition-colors`}><Eye size={13} /></button>
                       </div>
                     </div>
 
                     {/* Question text */}
                     <div className={`flex flex-col gap-2`}>
-                      <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground
-  flex items-center gap-1`}>Question Text <span className={`text-destructive`}>*</span></label>
+                      <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-text-body
+  flex items-center gap-1`}>Question Text <span className={`text-status-error`}>*</span></label>
                       <input key={`text-${activeQuestion.id}`} value={activeQuestion.text} onChange={e =>
   updateActive('text', e.target.value)}
-                        className={`w-full bg-card border border-border shadow-sm rounded-[16px] px-4 py-3 text-[16px]
-  font-black text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                        className={`w-full bg-surface-card border border-border-default shadow-sm rounded-[16px] px-4 py-3 text-[16px]
+  font-black text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                     </div>
 
                     {/* Help text + required */}
@@ -412,27 +412,27 @@
                       <textarea key={`help-${activeQuestion.id}`} value={activeQuestion.helpText} rows={2} onChange={e =>
   updateActive('helpText', e.target.value)}
                         placeholder="Instruction text"
-                        className={`w-full bg-card border border-border shadow-sm rounded-[16px] px-4 py-3 text-[14px]
-  font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground resize-none`} />
+                        className={`w-full bg-surface-card border border-border-default shadow-sm rounded-[16px] px-4 py-3 text-[14px]
+  font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body resize-none`} />
                       <CheckRow checked={activeQuestion.required} onChange={() => updateActive('required',
   !activeQuestion.required)} label="Required Question" />
                     </div>
 
                     {/* Question Linking Matrix */}
-                    <div className={`flex flex-col gap-5 bg-accent/40 border border-border rounded-[20px] p-6`}>
-                      <span className={`font-heading font-black text-[14px] text-foreground`}>Question Linking Matrix</span>
+                    <div className={`flex flex-col gap-5 bg-surface-accent/40 border border-border-default rounded-[20px] p-6`}>
+                      <span className={`font-heading font-black text-[14px] text-text-heading`}>Question Linking Matrix</span>
 
                       <div className={`grid grid-cols-2 gap-4`}>
-                        <div className={`flex items-center justify-between bg-card border border-border rounded-xl px-4
+                        <div className={`flex items-center justify-between bg-surface-card border border-border-default rounded-xl px-4
   py-3`}>
-                          <span className={`font-body font-bold text-[14px] text-foreground`}>Start Linked Set (1a)</span>
+                          <span className={`font-body font-bold text-[14px] text-text-heading`}>Start Linked Set (1a)</span>
                           <SlideToggle on={activeQuestion.linkStart} onChange={() => updateActive('linkStart',
   !activeQuestion.linkStart)} />
                         </div>
-                        <div className={`flex items-center justify-between bg-card border border-border rounded-xl px-4
+                        <div className={`flex items-center justify-between bg-surface-card border border-border-default rounded-xl px-4
   py-3`}>
-                          <span className={`font-body font-bold text-[14px] text-foreground`}>Link to Previous</span>
+                          <span className={`font-body font-bold text-[14px] text-text-heading`}>Link to Previous</span>
                           <SlideToggle on={activeQuestion.linkPrev} onChange={() => updateActive('linkPrev',
   !activeQuestion.linkPrev)} />
                         </div>
@@ -443,66 +443,66 @@
                           <FieldLabel>Main Number</FieldLabel>
                           <input value={activeQuestion.varMain} onChange={e => updateActive('varMain', e.target.value)}
   placeholder="1"
-                            className={`w-full bg-card border border-border rounded-xl px-3 py-2 text-[14px] font-bold
-  font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                            className={`w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 text-[14px] font-bold
+  font-mono text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                         </div>
                         <div className={`flex flex-col gap-2`}>
                           <FieldLabel>Sub Label</FieldLabel>
                           <input value={activeQuestion.varSub} onChange={e => updateActive('varSub', e.target.value)}
   placeholder="a"
-                            className={`w-full bg-card border border-border rounded-xl px-3 py-2 text-[14px] font-bold
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                            className={`w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 text-[14px] font-bold
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                         </div>
                         <div className={`flex flex-col gap-2`}>
                           <FieldLabel>3-Letter Code</FieldLabel>
                           <input value={activeQuestion.varCode} maxLength={3} onChange={e => updateActive('varCode',
   e.target.value.toUpperCase().slice(0, 3))} placeholder="TEC"
-                            className={`w-full bg-card border border-border rounded-xl px-3 py-2 text-[14px] font-bold
-  font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                            className={`w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 text-[14px] font-bold
+  font-mono text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                         </div>
                       </div>
 
                       <label className={`flex items-start gap-2 cursor-pointer`}>
                         <div className={`w-4 h-4 rounded-sm border flex items-center justify-center transition-all mt-0.5
-  shrink-0 ${activeQuestion.reviewColumn ? `bg-primary border-primary` : `border-border`}`}>
-                          {activeQuestion.reviewColumn && <Check size={10} className={`text-primary-foreground`} />}
+  shrink-0 ${activeQuestion.reviewColumn ? `bg-brand-primary border-brand-primary` : `border-border-default`}`}>
+                          {activeQuestion.reviewColumn && <Check size={10} className={`text-text-inverse`} />}
                         </div>
                         <input type="checkbox" checked={activeQuestion.reviewColumn} onChange={() =>
   updateActive('reviewColumn', !activeQuestion.reviewColumn)} className={`hidden`} />
-                        <span className={`font-body text-[14px] font-bold text-foreground`}>Control whether this grade
+                        <span className={`font-body text-[14px] font-bold text-text-heading`}>Control whether this grade
   appears as a column on Review Long / Short / Target lists.</span>
                       </label>
                     </div>
 
                     {/* Position Applicability accordion */}
-                    <div className={`bg-card border border-border rounded-[20px] overflow-hidden`}>
+                    <div className={`bg-surface-card border border-border-default rounded-[20px] overflow-hidden`}>
                       <button onClick={() => setPositionsExpanded(!positionsExpanded)}
                         className={`w-full px-6 py-4 flex items-center justify-between font-heading font-bold text-[14px]
-  text-foreground hover:bg-accent/40 transition-colors`}>
+  text-text-heading hover:bg-surface-accent/40 transition-colors`}>
                         <span className={`flex items-center gap-3`}>
                           <span className={`w-6 h-6 rounded-full flex items-center justify-center transition-all
-  ${positionsExpanded ? `bg-primary text-primary-foreground` : `bg-accent text-muted-foreground`}`}>
+  ${positionsExpanded ? `bg-brand-primary text-text-inverse` : `bg-surface-accent text-text-body`}`}>
                             <ChevronRight size={14} className={`transition-transform duration-200 ${positionsExpanded ?
   `rotate-90` : ``}`} />
                           </span>
                           Position Applicability
                         </span>
                         <span className={`font-body font-medium text-[12px]
-  text-muted-foreground`}>{activeQuestion.positions.length ? activeQuestion.positions.join(', ') : 'All positions'}</span>
+  text-text-body`}>{activeQuestion.positions.length ? activeQuestion.positions.join(', ') : 'All positions'}</span>
                       </button>
                       {positionsExpanded && (
-                        <div className={`px-6 pb-6 pt-2 border-t border-border`}>
+                        <div className={`px-6 pb-6 pt-2 border-t border-border-default`}>
                           <div className={`grid grid-cols-5 gap-2`}>
                             {POSITION_CODES.map(pos => {
                               const on = activeQuestion.positions.includes(pos);
                               return (
                                 <button key={pos} type="button" onClick={() => togglePosition(pos)}
                                   className={`flex items-center justify-center px-3 py-2 rounded-lg font-body font-bold
-  text-[12px] transition-colors border ${on ? `bg-primary text-primary-foreground border-primary` : `bg-accent/50
-  border-transparent text-foreground hover:bg-accent`}`}>
+  text-[12px] transition-colors border ${on ? `bg-brand-primary text-text-inverse border-brand-primary` : `bg-surface-accent/50
+  border-transparent text-text-heading hover:bg-surface-accent`}`}>
                                   {pos}
                                 </button>
                               );
@@ -515,14 +515,14 @@
                     {/* Input type + dynamic constraints */}
                     <div className={`flex flex-col gap-2`}>
                       <FieldLabel>Input Type</FieldLabel>
-                      <div className={`relative bg-card border border-border shadow-sm rounded-xl px-4 py-2
-  focus-within:ring-2 focus-within:ring-ring/20 focus-within:border-ring transition-all`}>
+                      <div className={`relative bg-surface-card border border-border-default shadow-sm rounded-xl px-4 py-2
+  focus-within:ring-2 focus-within:ring-border-focus/20 focus-within:border-border-focus transition-all`}>
                         <select value={activeQuestion.type} onChange={e => updateActive('type', e.target.value)}
-                          className={`w-full bg-transparent text-[14px] font-bold text-foreground focus:outline-none
+                          className={`w-full bg-transparent text-[14px] font-bold text-text-heading focus:outline-none
   appearance-none cursor-pointer pr-6`}>
-                          {INPUT_TYPES.map(t => <option key={t} className={`bg-card`}>{t}</option>)}
+                          {INPUT_TYPES.map(t => <option key={t} className={`bg-surface-card`}>{t}</option>)}
                         </select>
-                        <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground
+                        <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-text-body
   pointer-events-none`} />
                       </div>
                     </div>
@@ -533,26 +533,26 @@
                           <FieldLabel>Placeholder Text</FieldLabel>
                           <input value={activeQuestion.placeholder} onChange={e => updateActive('placeholder',
   e.target.value)}
-                            className={`w-full bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                            className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                         </div>
                         <div className={`grid grid-cols-2 gap-4`}>
                           <div className={`flex flex-col gap-2`}>
                             <FieldLabel>Minimum Length</FieldLabel>
                             <input type="number" value={activeQuestion.minLen} onChange={e => updateActive('minLen',
   e.target.value)} placeholder="0"
-                              className={`w-full bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold
-  font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                              className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold
+  font-mono text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                           </div>
                           <div className={`flex flex-col gap-2`}>
                             <FieldLabel>Maximum Length</FieldLabel>
                             <input type="number" value={activeQuestion.maxLen} onChange={e => updateActive('maxLen',
   e.target.value)} placeholder="500"
-                              className={`w-full bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold
-  font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                              className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold
+  font-mono text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                           </div>
                         </div>
                       </div>
@@ -567,17 +567,17 @@
               <div className={`p-8 flex flex-col gap-8 overflow-y-auto h-full max-w-3xl mx-auto pb-32`}>
 
                 {/* Form Behavior */}
-                <div className={`bg-card rounded-[20px] border border-border shadow-sm overflow-hidden flex flex-col`}>
-                  <div className={`px-6 py-4 bg-accent/40 border-b border-border`}>
-                    <h3 className={`font-heading font-black text-[15px] text-foreground`}>Form Behavior</h3>
+                <div className={`bg-surface-card rounded-[20px] border border-border-default shadow-sm overflow-hidden flex flex-col`}>
+                  <div className={`px-6 py-4 bg-surface-accent/40 border-b border-border-default`}>
+                    <h3 className={`font-heading font-black text-[15px] text-text-heading`}>Form Behavior</h3>
                   </div>
-                  <div className={`flex flex-col divide-y divide-border`}>
+                  <div className={`flex flex-col divide-y divide-border-default`}>
                     {BEHAVIOR_ROWS.map(item => (
-                      <div key={item.key} className={`flex items-center justify-between gap-4 p-5 hover:bg-accent/30
+                      <div key={item.key} className={`flex items-center justify-between gap-4 p-5 hover:bg-surface-accent/30
   transition-colors`}>
                         <div className={`flex flex-col gap-1`}>
-                          <span className={`font-body font-bold text-[14px] text-foreground`}>{item.label}</span>
-                          <span className={`font-body text-[12px] text-muted-foreground`}>{item.desc}</span>
+                          <span className={`font-body font-bold text-[14px] text-text-heading`}>{item.label}</span>
+                          <span className={`font-body text-[12px] text-text-body`}>{item.desc}</span>
                         </div>
                         <SlideToggle on={behavior[item.key]} onChange={() => setBehavior(b => ({ ...b, [item.key]:
   !b[item.key] }))} />
@@ -587,22 +587,22 @@
                 </div>
 
                 {/* Access & Limits */}
-                <div className={`bg-card rounded-[20px] border border-border shadow-sm overflow-hidden flex flex-col`}>
-                  <div className={`px-6 py-4 bg-accent/40 border-b border-border`}>
-                    <h3 className={`font-heading font-black text-[15px] text-foreground`}>Access & Limits Control</h3>
+                <div className={`bg-surface-card rounded-[20px] border border-border-default shadow-sm overflow-hidden flex flex-col`}>
+                  <div className={`px-6 py-4 bg-surface-accent/40 border-b border-border-default`}>
+                    <h3 className={`font-heading font-black text-[15px] text-text-heading`}>Access & Limits Control</h3>
                   </div>
                   <div className={`p-6 flex flex-col gap-6`}>
                     <div className={`flex flex-col gap-2`}>
                       <FieldLabel>Template Visibility</FieldLabel>
-                      <div className={`relative bg-card border border-border rounded-xl px-4 py-2 focus-within:ring-2
-  focus-within:ring-ring/20 focus-within:border-ring transition-all`}>
-                        <select className={`w-full bg-transparent text-[14px] font-bold text-foreground focus:outline-none
+                      <div className={`relative bg-surface-card border border-border-default rounded-xl px-4 py-2 focus-within:ring-2
+  focus-within:ring-border-focus/20 focus-within:border-border-focus transition-all`}>
+                        <select className={`w-full bg-transparent text-[14px] font-bold text-text-heading focus:outline-none
   appearance-none cursor-pointer`}>
-                          <option className={`bg-card`}>Public</option>
-                          <option className={`bg-card`}>Restricted</option>
-                          <option className={`bg-card`}>Private</option>
+                          <option className={`bg-surface-card`}>Public</option>
+                          <option className={`bg-surface-card`}>Restricted</option>
+                          <option className={`bg-surface-card`}>Private</option>
                         </select>
-                        <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground
+                        <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-text-body
   pointer-events-none`} />
                       </div>
                     </div>
@@ -610,15 +610,15 @@
                       <div className={`flex flex-col gap-2`}>
                         <FieldLabel>Submission Limits</FieldLabel>
                         <input type="number" placeholder="No limit"
-                          className={`w-full bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold
-  font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all
-  placeholder:text-muted-foreground`} />
+                          className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold
+  font-mono text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all
+  placeholder:text-text-body`} />
                       </div>
                       <div className={`flex flex-col gap-2`}>
                         <FieldLabel>Submission Deadline</FieldLabel>
                         <input type="date"
-                          className={`w-full bg-card border border-border rounded-xl px-4 py-2 text-[14px] font-bold
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all [color-scheme:light]
+                          className={`w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 text-[14px] font-bold
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all [color-scheme:light]
   dark:[color-scheme:dark]`} />
                       </div>
                     </div>
@@ -626,55 +626,55 @@
                 </div>
 
                 {/* Data Execution & Advanced */}
-                <div className={`bg-card rounded-[20px] border border-border shadow-sm overflow-hidden flex flex-col`}>
-                  <div className={`px-6 py-4 bg-accent/40 border-b border-border`}>
-                    <h3 className={`font-heading font-black text-[15px] text-foreground`}>Data Execution</h3>
+                <div className={`bg-surface-card rounded-[20px] border border-border-default shadow-sm overflow-hidden flex flex-col`}>
+                  <div className={`px-6 py-4 bg-surface-accent/40 border-b border-border-default`}>
+                    <h3 className={`font-heading font-black text-[15px] text-text-heading`}>Data Execution</h3>
                   </div>
                   <div className={`p-6 flex flex-col gap-6`}>
                     <div className={`grid grid-cols-2 gap-6`}>
                       <div className={`flex flex-col gap-2`}>
                         <FieldLabel>Default Export Format</FieldLabel>
-                        <div className={`relative bg-card border border-border rounded-xl px-4 py-2 focus-within:ring-2
-  focus-within:ring-ring/20 focus-within:border-ring transition-all`}>
-                          <select className={`w-full bg-transparent text-[14px] font-bold text-foreground focus:outline-none
+                        <div className={`relative bg-surface-card border border-border-default rounded-xl px-4 py-2 focus-within:ring-2
+  focus-within:ring-border-focus/20 focus-within:border-border-focus transition-all`}>
+                          <select className={`w-full bg-transparent text-[14px] font-bold text-text-heading focus:outline-none
   appearance-none cursor-pointer`}>
-                            <option className={`bg-card`}>PDF Document</option>
-                            <option className={`bg-card`}>Excel Spreadsheet</option>
-                            <option className={`bg-card`}>CSV Data</option>
+                            <option className={`bg-surface-card`}>PDF Document</option>
+                            <option className={`bg-surface-card`}>Excel Spreadsheet</option>
+                            <option className={`bg-surface-card`}>CSV Data</option>
                           </select>
-                          <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground
+                          <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-text-body
   pointer-events-none`} />
                         </div>
                       </div>
                       <div className={`flex flex-col gap-2`}>
                         <FieldLabel>Data Retention Policy</FieldLabel>
-                        <div className={`relative bg-card border border-border rounded-xl px-4 py-2 focus-within:ring-2
-  focus-within:ring-ring/20 focus-within:border-ring transition-all`}>
-                          <select className={`w-full bg-transparent text-[14px] font-bold text-foreground focus:outline-none
+                        <div className={`relative bg-surface-card border border-border-default rounded-xl px-4 py-2 focus-within:ring-2
+  focus-within:ring-border-focus/20 focus-within:border-border-focus transition-all`}>
+                          <select className={`w-full bg-transparent text-[14px] font-bold text-text-heading focus:outline-none
   appearance-none cursor-pointer`}>
-                            <option className={`bg-card`}>Indefinite</option>
-                            <option className={`bg-card`}>Archive after 1 year</option>
-                            <option className={`bg-card`}>Delete after 3 years</option>
+                            <option className={`bg-surface-card`}>Indefinite</option>
+                            <option className={`bg-surface-card`}>Archive after 1 year</option>
+                            <option className={`bg-surface-card`}>Delete after 3 years</option>
                           </select>
-                          <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground
+                          <ChevronDown size={14} className={`absolute right-4 top-1/2 -translate-y-1/2 text-text-body
   pointer-events-none`} />
                         </div>
                       </div>
                     </div>
 
-                    <div className={`border border-border rounded-[16px] overflow-hidden`}>
+                    <div className={`border border-border-default rounded-[16px] overflow-hidden`}>
                       <button onClick={() => setAdvancedExpanded(!advancedExpanded)}
-                        className={`w-full px-5 py-4 bg-accent/40 flex items-center gap-3 font-heading font-bold text-[14px]
-  text-foreground hover:bg-accent/60 transition-colors`}>
+                        className={`w-full px-5 py-4 bg-surface-accent/40 flex items-center gap-3 font-heading font-bold text-[14px]
+  text-text-heading hover:bg-surface-accent/60 transition-colors`}>
                         <span className={`w-6 h-6 rounded-full flex items-center justify-center transition-all
-  ${advancedExpanded ? `bg-primary text-primary-foreground` : `bg-card text-muted-foreground`}`}>
+  ${advancedExpanded ? `bg-brand-primary text-text-inverse` : `bg-surface-card text-text-body`}`}>
                           <ChevronRight size={14} className={`transition-transform duration-200 ${advancedExpanded ?
   `rotate-90` : ``}`} />
                         </span>
                         Advanced Technical Options
                       </button>
                       {advancedExpanded && (
-                        <div className={`p-5 flex flex-col gap-6 border-t border-border`}>
+                        <div className={`p-5 flex flex-col gap-6 border-t border-border-default`}>
                           <div className={`flex flex-col gap-2`}>
                             <FieldLabel>Custom CSS Box</FieldLabel>
                             <div className={`bg-[#030E17] border border-[#145B99] rounded-[16px] p-4 shadow-inner`}>
@@ -686,8 +686,8 @@
                           <div className={`flex flex-col gap-2`}>
                             <FieldLabel>Thank You Message</FieldLabel>
                             <textarea rows={2} defaultValue="Thank you for submitting your evaluation."
-                              className={`w-full bg-card border border-border rounded-[16px] px-4 py-3 text-[14px] font-bold
-  text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all resize-none`} />
+                              className={`w-full bg-surface-card border border-border-default rounded-[16px] px-4 py-3 text-[14px] font-bold
+  text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all resize-none`} />
                           </div>
                         </div>
                       )}
@@ -699,21 +699,21 @@
           </div>
 
           {/* Footer */}
-          <div className={`px-8 py-5 border-t border-border flex items-center justify-between gap-3 bg-card shrink-0
+          <div className={`px-8 py-5 border-t border-border-default flex items-center justify-between gap-3 bg-surface-card shrink-0
   shadow-[0_-4px_16px_rgba(6,27,46,0.06)] z-20`}>
             <button onClick={handleDelete}
-              className={`border-2 border-destructive text-destructive hover:bg-destructive/10 rounded-full px-6 py-3
+              className={`border-2 border-status-error text-status-error hover:bg-status-error/10 rounded-full px-6 py-3
   font-body font-bold text-[14px] transition-colors`}>
               Delete Template
             </button>
             <div className={`flex items-center gap-3`}>
               <button onClick={onClose}
-                className={`bg-card text-muted-foreground border border-border hover:border-primary hover:text-foreground
+                className={`bg-surface-card text-text-body border border-border-default hover:border-brand-primary hover:text-text-heading
   rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors`}>
                 Cancel
               </button>
               <button onClick={onClose}
-                className={`bg-primary border-2 border-primary text-primary-foreground hover:bg-primary/80 rounded-full px-6
+                className={`bg-brand-primary border-2 border-brand-primary text-text-inverse hover:bg-brand-primary/80 rounded-full px-6
   py-3 font-body font-bold text-[14px] transition-colors shadow-md`}>
                 Update Template
               </button>

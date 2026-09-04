@@ -36,15 +36,15 @@ const Flag = ({ nat, country }: { nat: string; country: string }) => {
   return <img src={`https://flagcdn.com/w40/${code}.png`} alt={country} className="w-4 h-3 rounded-[2px] object-cover shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />;
 };
 
-const CARD = 'bg-card rounded-[20px] border border-border shadow-[var(--shadow-lg)] overflow-hidden';
+const CARD = 'bg-surface-card rounded-[20px] border border-border-default shadow-[var(--shadow-lg)] overflow-hidden';
 
 // ── semantic status pill ──
 const STATUS_META: Record<CoverageStatus, { label: string; cls: string }> = {
-  'unassigned':    { label: 'Unassigned',    cls: 'bg-scout-red/15 text-status-error-fg' },
-  'assigned':      { label: 'Assigned',      cls: 'bg-primary/15 text-primary' },
-  'in-progress':   { label: 'In progress',   cls: 'bg-scout-amber/15 text-status-warning-fg' },
-  'has-video':     { label: 'Has video',     cls: 'bg-scout-green/15 text-status-success-fg' },
-  'not-available': { label: 'Not available', cls: 'bg-accent text-muted-foreground' },
+  'unassigned':    { label: 'Unassigned',    cls: 'bg-status-error/15 text-status-error-fg' },
+  'assigned':      { label: 'Assigned',      cls: 'bg-brand-primary/15 text-brand-primary' },
+  'in-progress':   { label: 'In progress',   cls: 'bg-status-warning/15 text-status-warning-fg' },
+  'has-video':     { label: 'Has video',     cls: 'bg-status-success/15 text-status-success-fg' },
+  'not-available': { label: 'Not available', cls: 'bg-surface-accent text-text-body' },
 };
 const StatusPill = ({ s }: { s: CoverageStatus }) => (
   <span className={`inline-flex items-center px-2.5 py-1 rounded-full font-body font-black text-[11px] ${STATUS_META[s].cls}`}>{STATUS_META[s].label}</span>
@@ -107,10 +107,10 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
     <div className="flex flex-col gap-6 pb-8">
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <KpiCard icon={ClipboardCheck} heading="Approvals" value={pending}
-          descriptor={pending > 0 ? <span className="text-scout-red font-black">awaiting your review</span> : 'all clear'}
+          descriptor={pending > 0 ? <span className="text-status-error font-black">awaiting your review</span> : 'all clear'}
           action="Open Approvals" onClick={() => onNavigate('approval')} />
         <KpiCard icon={ListChecks} heading="Tasks" value={activeTasksCount}
-          descriptor={overdueCount > 0 ? <><span className="text-scout-red font-black">{overdueCount} overdue</span> · open</> : 'open · none overdue'}
+          descriptor={overdueCount > 0 ? <><span className="text-status-error font-black">{overdueCount} overdue</span> · open</> : 'open · none overdue'}
           action="Open Tasks" onClick={() => onNavigate('tasks')} />
         <KpiCard icon={Film} heading="Missing Packages" value={missPkg}
           descriptor="across Target + Short" action="Review Packages" onClick={() => onMissing('package')} />
@@ -123,26 +123,26 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
       <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
         {/* Raised requests */}
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-border flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><AlertTriangle size={16} className="text-foreground" /></div>
+          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><AlertTriangle size={16} className="text-text-heading" /></div>
             <div className="min-w-0 flex-1">
-              <h3 className="font-heading font-bold text-[16px] text-foreground">Raised requests</h3>
-              <p className="font-body text-[12px] text-muted-foreground font-medium">Video the scouts are waiting on — oldest first</p>
+              <h3 className="font-heading font-bold text-[16px] text-text-heading">Raised requests</h3>
+              <p className="font-body text-[12px] text-text-body font-medium">Video the scouts are waiting on — oldest first</p>
             </div>
           </div>
-          <div className="divide-y divide-border">
-            {vstate.approvals.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-muted-foreground">Queue is clear.</div>}
+          <div className="divide-y divide-border-default">
+            {vstate.approvals.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-text-body">Queue is clear.</div>}
             {[...vstate.approvals].sort((a, b) => b.daysAgo - a.daysAgo).slice(0, 6).map(r => (
-              <div key={r.id} className="px-5 py-3 flex items-center gap-3 hover:bg-accent transition-colors">
-                <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-heading font-black text-[12px] shrink-0">{(r.playerName || r.videoName).split(' ').map(w => w[0]).join('').slice(0, 2)}</div>
+              <div key={r.id} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors">
+                <div className="w-9 h-9 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[12px] shrink-0">{(r.playerName || r.videoName).split(' ').map(w => w[0]).join('').slice(0, 2)}</div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-body font-bold text-[14px] text-foreground truncate">{r.playerName || r.videoName}</span>
-                    <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${r.type === 'package' ? 'bg-primary/15 text-foreground' : 'bg-accent text-muted-foreground'}`}>{r.type === 'package' ? 'Package' : 'Full match'}</span>
+                    <span className="font-body font-bold text-[14px] text-text-heading truncate">{r.playerName || r.videoName}</span>
+                    <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${r.type === 'package' ? 'bg-brand-primary/15 text-text-heading' : 'bg-surface-accent text-text-body'}`}>{r.type === 'package' ? 'Package' : 'Full match'}</span>
                   </div>
-                  <p className="font-body text-[12px] text-muted-foreground mt-0.5">{r.uploader} · {r.dateLabel}</p>
+                  <p className="font-body text-[12px] text-text-body mt-0.5">{r.uploader} · {r.dateLabel}</p>
                 </div>
-                <button onClick={() => onNavigate('approval')} className="shrink-0 inline-flex items-center gap-1 bg-transparent border border-primary text-foreground px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-primary/10 transition-colors">Review</button>
+                <button onClick={() => onNavigate('approval')} className="shrink-0 inline-flex items-center gap-1 bg-transparent border border-brand-primary text-text-heading px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-brand-primary/10 transition-colors">Review</button>
               </div>
             ))}
           </div>
@@ -150,36 +150,36 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
 
         <div className="lg:col-span-1 flex flex-col gap-6">
           <div className={`${CARD} flex flex-col`}>
-            <div className="px-5 py-4 border-b border-border flex items-center gap-3">
-              <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-foreground" /></div>
-              <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-foreground">Upcoming matches</h3><p className="font-body text-[12px] text-muted-foreground font-medium">Capture opportunities</p></div>
+            <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-text-heading" /></div>
+              <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Upcoming matches</h3><p className="font-body text-[12px] text-text-body font-medium">Capture opportunities</p></div>
             </div>
-            <div className="divide-y divide-border">
+            <div className="divide-y divide-border-default">
               {UPCOMING_MATCHES.map(m => (
-                <button key={m.id} onClick={() => onOpenMatch(m.home, m.away)} className="w-full text-left px-5 py-3 flex items-center gap-3 hover:bg-accent transition-colors">
+                <button key={m.id} onClick={() => onOpenMatch(m.home, m.away)} className="w-full text-left px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors">
                   <div className="min-w-0 flex-1">
-                    <div className="font-body font-bold text-[14px] text-foreground truncate">{m.home} <span className="text-muted-foreground font-medium">vs</span> {m.away}</div>
-                    <p className="font-body text-[12px] text-muted-foreground mt-0.5">{m.date}{m.note ? ` · ${m.note}` : ''}</p>
+                    <div className="font-body font-bold text-[14px] text-text-heading truncate">{m.home} <span className="text-text-body font-medium">vs</span> {m.away}</div>
+                    <p className="font-body text-[12px] text-text-body mt-0.5">{m.date}{m.note ? ` · ${m.note}` : ''}</p>
                   </div>
-                  <ArrowRight size={14} className="text-muted-foreground shrink-0" />
+                  <ArrowRight size={14} className="text-text-body shrink-0" />
                 </button>
               ))}
             </div>
           </div>
           <div className={`${CARD} flex flex-col`}>
-            <div className="px-5 py-4 border-b border-border flex items-center gap-3">
-              <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Users size={16} className="text-foreground" /></div>
-              <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-foreground">Team activity</h3><p className="font-body text-[12px] text-muted-foreground font-medium">Editors &amp; uploaders this week</p></div>
+            <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Users size={16} className="text-text-heading" /></div>
+              <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Team activity</h3><p className="font-body text-[12px] text-text-body font-medium">Editors &amp; uploaders this week</p></div>
             </div>
-            <div className="divide-y divide-border">
+            <div className="divide-y divide-border-default">
               {TEAM.map(t => (
                 <div key={t.name} className="px-5 py-3 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-accent text-foreground flex items-center justify-center font-heading font-black text-[12px] shrink-0">{t.name.split(' ').map(w => w[0]).join('')}</div>
+                  <div className="w-9 h-9 rounded-xl bg-surface-accent text-text-heading flex items-center justify-center font-heading font-black text-[12px] shrink-0">{t.name.split(' ').map(w => w[0]).join('')}</div>
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2"><span className="font-body font-bold text-[14px] text-foreground truncate">{t.name}</span><span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-primary/15 text-foreground">{t.role}</span></div>
-                    <p className="font-body text-[12px] text-muted-foreground mt-0.5 truncate">{t.current}</p>
+                    <div className="flex items-center gap-2"><span className="font-body font-bold text-[14px] text-text-heading truncate">{t.name}</span><span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-text-heading">{t.role}</span></div>
+                    <p className="font-body text-[12px] text-text-body mt-0.5 truncate">{t.current}</p>
                   </div>
-                  <span className="font-heading font-black text-[14px] text-foreground tabular-nums shrink-0">{t.submitted}</span>
+                  <span className="font-heading font-black text-[14px] text-text-heading tabular-nums shrink-0">{t.submitted}</span>
                 </div>
               ))}
             </div>
@@ -193,13 +193,13 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
 // ─── Coverage tab (Packages | Full Matches) ───────────────────────────────────
 const KpiTile = ({ icon: Icon, label, value, sub, onClick }: { icon: any; label: string; value: React.ReactNode; sub: string; onClick?: () => void }) => (
   <button onClick={onClick} disabled={!onClick}
-    className={`min-w-0 bg-card border border-border rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between transition-all text-left ${onClick ? 'hover:-translate-y-1 hover:shadow-xl cursor-pointer' : 'cursor-default'}`}>
+    className={`min-w-0 bg-surface-card border border-border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between transition-all text-left ${onClick ? 'hover:-translate-y-1 hover:shadow-xl cursor-pointer' : 'cursor-default'}`}>
     <div className="flex items-center justify-between gap-2">
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground truncate">{label}</span>
-      <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-primary" /></div>
+      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body truncate">{label}</span>
+      <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
     </div>
-    <div className="font-heading font-extrabold text-[32px] text-foreground leading-none">{value}</div>
-    <span className="font-body text-[12px] text-muted-foreground font-medium">{sub}</span>
+    <div className="font-heading font-extrabold text-[32px] text-text-heading leading-none">{value}</div>
+    <span className="font-body text-[12px] text-text-body font-medium">{sub}</span>
   </button>
 );
 
@@ -257,59 +257,59 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
       {/* Table card */}
       <div className={CARD}>
         {/* toolbar — tier · search · status dropdown */}
-        <div className="px-4 sm:px-5 py-4 border-b border-border flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-1 p-1 bg-card border border-border rounded-full shrink-0">
+        <div className="px-4 sm:px-5 py-4 border-b border-border-default flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-1 p-1 bg-surface-card border border-border-default rounded-full shrink-0">
             {TIERS.map(t => (
-              <button key={t.id} onClick={() => setTier(t.id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === t.id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>{t.label}</button>
+              <button key={t.id} onClick={() => setTier(t.id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === t.id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>{t.label}</button>
             ))}
           </div>
           <div className="relative flex-1 min-w-[160px]">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or team…"
-              className="w-full bg-card/60 border border-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary hover:bg-card transition-colors" />
+              className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-text-heading placeholder:text-text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
           </div>
           {/* status dropdown filter */}
           <div className="relative shrink-0">
             <select value={filter} onChange={e => setFilter(e.target.value as StatusFilter)}
-              className="appearance-none bg-card border border-border rounded-full pl-4 pr-9 py-2 font-body font-bold text-[12px] text-foreground cursor-pointer outline-none focus:border-primary hover:border-primary transition-colors">
+              className="appearance-none bg-surface-card border border-border-default rounded-full pl-4 pr-9 py-2 font-body font-bold text-[12px] text-text-heading cursor-pointer outline-none focus:border-brand-primary hover:border-brand-primary transition-colors">
               {chips.map(c => (
                 <option key={c.id} value={c.id}>{c.label}{c.n != null ? ` (${c.n})` : ''}</option>
               ))}
             </select>
-            <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+            <ChevronDown size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-text-body pointer-events-none" />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full min-w-[620px]">
             <thead>
-              <tr className="bg-accent/40">
+              <tr className="bg-surface-accent/40">
                 {['Player', 'Pos', 'Team', 'Status', ''].map(h => (
-                  <th key={h} className="px-4 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">{h}</th>
+                  <th key={h} className="px-4 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {rows.length === 0 && <tr><td colSpan={5} className="px-4 py-10 text-center font-body text-[14px] text-muted-foreground">No players match.</td></tr>}
+              {rows.length === 0 && <tr><td colSpan={5} className="px-4 py-10 text-center font-body text-[14px] text-text-body">No players match.</td></tr>}
               {pageRows.map(({ p, status }) => (
-                <tr key={p.id} className="border-t border-border hover:bg-accent transition-colors group">
+                <tr key={p.id} className="border-t border-border-default hover:bg-surface-accent transition-colors group">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2 min-w-0">
                       <Flag nat={p.nationality} country={p.country} />
-                      <span className="font-body font-bold text-[14px] text-foreground truncate">{p.name}</span>
+                      <span className="font-body font-bold text-[14px] text-text-heading truncate">{p.name}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 font-body font-bold text-[13px] text-foreground">{p.posAcronym}</td>
-                  <td className="px-4 py-3 font-body text-[13px] text-muted-foreground truncate max-w-[140px]">{p.team}</td>
+                  <td className="px-4 py-3 font-body font-bold text-[13px] text-text-heading">{p.posAcronym}</td>
+                  <td className="px-4 py-3 font-body text-[13px] text-text-body truncate max-w-[140px]">{p.team}</td>
                   <td className="px-4 py-3"><StatusPill s={status} /></td>
                   <td className="px-4 py-3 text-right whitespace-nowrap">
                     <div className="inline-flex items-center gap-1.5">
                       {status === 'unassigned' && (
-                        <button onClick={() => doAssign(p)} className="inline-flex items-center gap-1 bg-transparent border border-primary text-foreground px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-primary/10 transition-colors"><Upload size={12} /> Assign</button>
+                        <button onClick={() => doAssign(p)} className="inline-flex items-center gap-1 bg-transparent border border-brand-primary text-text-heading px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:bg-brand-primary/10 transition-colors"><Upload size={12} /> Assign</button>
                       )}
-                      <button onClick={() => onView(p)} className="inline-flex items-center gap-1 bg-transparent border border-border text-muted-foreground px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-primary hover:text-foreground transition-colors"><Play size={12} /> View</button>
+                      <button onClick={() => onView(p)} className="inline-flex items-center gap-1 bg-transparent border border-border-default text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-heading transition-colors"><Play size={12} /> View</button>
                       <button onClick={() => doNudge(p)} disabled={status !== 'assigned' && status !== 'in-progress'}
-                        className="inline-flex items-center gap-1 bg-transparent border border-border text-muted-foreground px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-primary hover:text-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"><Send size={12} /> Nudge</button>
+                        className="inline-flex items-center gap-1 bg-transparent border border-border-default text-text-body px-3 py-1.5 rounded-full font-body font-bold text-[12px] hover:border-brand-primary hover:text-text-heading transition-colors disabled:opacity-40 disabled:cursor-not-allowed"><Send size={12} /> Nudge</button>
                     </div>
                   </td>
                 </tr>
@@ -318,13 +318,13 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
           </table>
         </div>
         {pageCount > 1 && (
-          <div className="border-t border-border flex items-center justify-center gap-1 px-4 py-3">
-            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed"><ChevronLeft size={15} /></button>
+          <div className="border-t border-border-default flex items-center justify-center gap-1 px-4 py-3">
+            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="w-8 h-8 rounded-full border border-border-default flex items-center justify-center text-text-body hover:text-text-heading disabled:opacity-30 disabled:cursor-not-allowed"><ChevronLeft size={15} /></button>
             {Array.from({ length: pageCount }).slice(0, 6).map((_, i) => (
-              <button key={i} onClick={() => setPage(i)} className={`w-8 h-8 rounded-full font-body font-bold text-[12px] transition-colors ${page === i ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-accent'}`}>{i + 1}</button>
+              <button key={i} onClick={() => setPage(i)} className={`w-8 h-8 rounded-full font-body font-bold text-[12px] transition-colors ${page === i ? 'bg-brand-primary text-text-inverse' : 'text-text-body hover:bg-surface-accent'}`}>{i + 1}</button>
             ))}
-            {pageCount > 6 && <span className="px-1 text-muted-foreground">…</span>}
-            <button onClick={() => setPage(p => Math.min(pageCount - 1, p + 1))} disabled={page >= pageCount - 1} className="ml-1 inline-flex items-center gap-1 px-3 h-8 rounded-full border border-border font-body font-bold text-[12px] text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed">Next <ChevronRight size={13} /></button>
+            {pageCount > 6 && <span className="px-1 text-text-body">…</span>}
+            <button onClick={() => setPage(p => Math.min(pageCount - 1, p + 1))} disabled={page >= pageCount - 1} className="ml-1 inline-flex items-center gap-1 px-3 h-8 rounded-full border border-border-default font-body font-bold text-[12px] text-text-body hover:text-text-heading disabled:opacity-30 disabled:cursor-not-allowed">Next <ChevronRight size={13} /></button>
           </div>
         )}
       </div>
@@ -337,19 +337,19 @@ const REDO_CHIPS = ['Wrong clips', 'Quality', 'Wrong player', 'Missing moments']
 const RedoPanel = ({ onConfirm, onCancel }: { onConfirm: (reason: string) => void; onCancel: () => void }) => {
   const [reason, setReason] = useState('');
   return (
-    <div className="bg-card border border-border rounded-[16px] shadow-2xl p-3 w-72" onClick={e => e.stopPropagation()}>
-      <div className="font-heading font-bold text-[12px] text-foreground mb-2">Send back for redo</div>
+    <div className="bg-surface-card border border-border-default rounded-[16px] shadow-2xl p-3 w-72" onClick={e => e.stopPropagation()}>
+      <div className="font-heading font-bold text-[12px] text-text-heading mb-2">Send back for redo</div>
       <div className="flex flex-wrap gap-1.5 mb-2">
         {REDO_CHIPS.map(c => (
-          <button key={c} onClick={() => setReason(r => r ? r : c)} className="px-2.5 py-1 rounded-full bg-accent text-muted-foreground hover:text-foreground font-body font-bold text-[11px]">{c}</button>
+          <button key={c} onClick={() => setReason(r => r ? r : c)} className="px-2.5 py-1 rounded-full bg-surface-accent text-text-body hover:text-text-heading font-body font-bold text-[11px]">{c}</button>
         ))}
       </div>
       <textarea autoFocus value={reason} onChange={e => setReason(e.target.value)} rows={2} placeholder="Reason (required)…"
-        className="w-full bg-card border border-border rounded-xl px-3 py-2 font-body text-[13px] text-foreground focus:outline-none focus:border-ring resize-none" />
+        className="w-full bg-surface-card border border-border-default rounded-xl px-3 py-2 font-body text-[13px] text-text-heading focus:outline-none focus:border-border-focus resize-none" />
       <div className="flex justify-end gap-2 mt-2">
-        <button onClick={onCancel} className="font-body font-bold text-[12px] text-muted-foreground hover:text-foreground px-2">Cancel</button>
+        <button onClick={onCancel} className="font-body font-bold text-[12px] text-text-body hover:text-text-heading px-2">Cancel</button>
         <button onClick={() => reason.trim() && onConfirm(reason.trim())} disabled={!reason.trim()}
-          className="inline-flex items-center gap-1 bg-scout-red/15 text-status-error-fg border border-scout-red/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full disabled:opacity-40"><RotateCcw size={12} /> Send back</button>
+          className="inline-flex items-center gap-1 bg-status-error/15 text-status-error-fg border border-status-error/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full disabled:opacity-40"><RotateCcw size={12} /> Send back</button>
       </div>
     </div>
   );
@@ -372,43 +372,43 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
   return (
     <div className="flex flex-col gap-6 pb-8">
       <div className={CARD}>
-        <div className="px-5 py-4 border-b border-border flex items-center gap-3 flex-wrap">
-          <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><ClipboardCheck size={18} className="text-foreground" /></div>
+        <div className="px-5 py-4 border-b border-border-default flex items-center gap-3 flex-wrap">
+          <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><ClipboardCheck size={18} className="text-text-heading" /></div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-heading font-bold text-[16px] text-foreground">Approval queue</h3>
-            <p className="font-body text-[12px] text-muted-foreground font-medium">Review before it enters the system · oldest first</p>
+            <h3 className="font-heading font-bold text-[16px] text-text-heading">Approval queue</h3>
+            <p className="font-body text-[12px] text-text-body font-medium">Review before it enters the system · oldest first</p>
           </div>
-          <div className="flex items-center gap-1 p-1 bg-card border border-border rounded-full shrink-0">
+          <div className="flex items-center gap-1 p-1 bg-surface-card border border-border-default rounded-full shrink-0">
             {([['all', 'All'], ['package', 'Packages'], ['full-match', 'Full Matches']] as const).map(([id, l]) => (
-              <button key={id} onClick={() => setTypeFilter(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${typeFilter === id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>{l}<span className="ml-1 tabular-nums opacity-80">{counts[id]}</span></button>
+              <button key={id} onClick={() => setTypeFilter(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${typeFilter === id ? 'bg-brand-primary text-text-inverse shadow-sm' : 'text-text-body hover:text-text-heading'}`}>{l}<span className="ml-1 tabular-nums opacity-80">{counts[id]}</span></button>
             ))}
           </div>
         </div>
 
-        <div className="divide-y divide-border">
-          {queue.length === 0 && <div className="px-5 py-12 text-center font-body text-[14px] text-muted-foreground">Queue is clear — nothing to review. 🎬</div>}
+        <div className="divide-y divide-border-default">
+          {queue.length === 0 && <div className="px-5 py-12 text-center font-body text-[14px] text-text-body">Queue is clear — nothing to review. 🎬</div>}
           {queue.map(item => (
             <div key={item.id} className="px-5 py-4 flex items-center gap-4">
               {/* thumbnail + play */}
-              <button onClick={() => setPlaying(item)} className="relative w-24 h-14 rounded-[12px] bg-gradient-to-br from-[#B4D7F6]/70 to-accent flex items-center justify-center shrink-0 group">
-                <span className="w-8 h-8 rounded-full bg-card/90 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"><Play size={14} className="text-primary ml-0.5" /></span>
+              <button onClick={() => setPlaying(item)} className="relative w-24 h-14 rounded-[12px] bg-gradient-to-br from-[#B4D7F6]/70 to-surface-accent flex items-center justify-center shrink-0 group">
+                <span className="w-8 h-8 rounded-full bg-surface-card/90 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"><Play size={14} className="text-brand-primary ml-0.5" /></span>
               </button>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-body font-bold text-[14px] text-foreground truncate">{item.videoName}</span>
-                  <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${item.type === 'package' ? 'bg-primary/15 text-foreground' : 'bg-accent text-muted-foreground'}`}>{item.type === 'package' ? 'Package' : 'Full match'}</span>
+                  <span className="font-body font-bold text-[14px] text-text-heading truncate">{item.videoName}</span>
+                  <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${item.type === 'package' ? 'bg-brand-primary/15 text-text-heading' : 'bg-surface-accent text-text-body'}`}>{item.type === 'package' ? 'Package' : 'Full match'}</span>
                 </div>
-                <div className="flex items-center gap-2 font-body text-[12px] text-muted-foreground mt-0.5 flex-wrap">
+                <div className="flex items-center gap-2 font-body text-[12px] text-text-body mt-0.5 flex-wrap">
                   <span className="inline-flex items-center gap-1"><Users size={11} /> {item.uploader} · {item.uploaderRole}</span>
                   <span>·</span>
-                  {item.playerId ? <span>{item.playerName}</span> : <span className="inline-flex items-center gap-1 text-scout-amber font-bold"><AlertTriangle size={11} /> No player linked</span>}
+                  {item.playerId ? <span>{item.playerName}</span> : <span className="inline-flex items-center gap-1 text-status-warning font-bold"><AlertTriangle size={11} /> No player linked</span>}
                   <span>·</span>
                   <span>{item.dateLabel}</span>
                 </div>
               </div>
               <div className="relative flex items-center gap-1.5 shrink-0">
-                <button onClick={() => approve(item)} className="inline-flex items-center gap-1 bg-scout-green/15 text-status-success-fg border border-scout-green/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full hover:bg-scout-green/25 transition-colors"><Check size={13} /> Approve</button>
-                <button onClick={() => setRedoFor(redoFor === item.id ? null : item.id)} className="inline-flex items-center gap-1 bg-transparent border border-border text-muted-foreground font-body font-bold text-[12px] px-3 py-1.5 rounded-full hover:border-scout-red hover:text-scout-red transition-colors"><RotateCcw size={12} /> Redo</button>
+                <button onClick={() => approve(item)} className="inline-flex items-center gap-1 bg-status-success/15 text-status-success-fg border border-status-success/30 font-body font-black text-[12px] px-3 py-1.5 rounded-full hover:bg-status-success/25 transition-colors"><Check size={13} /> Approve</button>
+                <button onClick={() => setRedoFor(redoFor === item.id ? null : item.id)} className="inline-flex items-center gap-1 bg-transparent border border-border-default text-text-body font-body font-bold text-[12px] px-3 py-1.5 rounded-full hover:border-status-error hover:text-status-error transition-colors"><RotateCcw size={12} /> Redo</button>
                 {redoFor === item.id && (
                   <div className="absolute right-0 top-full mt-2 z-30"><RedoPanel onConfirm={r => redo(item, r)} onCancel={() => setRedoFor(null)} /></div>
                 )}
@@ -422,18 +422,18 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
       {vstate.reviewed.length > 0 && (
         <div className={CARD}>
           <button onClick={() => setShowReviewed(s => !s)} className="w-full px-5 py-4 flex items-center gap-3 text-left">
-            <div className="w-10 h-10 rounded-[12px] bg-accent flex items-center justify-center shrink-0"><Clock size={16} className="text-muted-foreground" /></div>
-            <div className="flex-1"><h3 className="font-heading font-bold text-[16px] text-foreground">Recently reviewed</h3><p className="font-body text-[12px] text-muted-foreground font-medium">{vstate.reviewed.length} decisions</p></div>
-            <span className="font-body font-bold text-[12px] text-primary">{showReviewed ? 'Hide' : 'Show'}</span>
+            <div className="w-10 h-10 rounded-[12px] bg-surface-accent flex items-center justify-center shrink-0"><Clock size={16} className="text-text-body" /></div>
+            <div className="flex-1"><h3 className="font-heading font-bold text-[16px] text-text-heading">Recently reviewed</h3><p className="font-body text-[12px] text-text-body font-medium">{vstate.reviewed.length} decisions</p></div>
+            <span className="font-body font-bold text-[12px] text-brand-primary">{showReviewed ? 'Hide' : 'Show'}</span>
           </button>
           {showReviewed && (
-            <div className="divide-y divide-border border-t border-border">
+            <div className="divide-y divide-border-default border-t border-border-default">
               {vstate.reviewed.map(r => (
                 <div key={r.id} className="px-5 py-3 flex items-center gap-3">
-                  <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${r.outcome === 'approved' ? 'bg-scout-green/15 text-status-success-fg' : 'bg-scout-red/15 text-status-error-fg'}`}>{r.outcome === 'approved' ? <Check size={13} /> : <RotateCcw size={12} />}</span>
+                  <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${r.outcome === 'approved' ? 'bg-status-success/15 text-status-success-fg' : 'bg-status-error/15 text-status-error-fg'}`}>{r.outcome === 'approved' ? <Check size={13} /> : <RotateCcw size={12} />}</span>
                   <div className="min-w-0 flex-1">
-                    <span className="font-body font-bold text-[13px] text-foreground">{r.videoName}</span>
-                    <p className="font-body text-[12px] text-muted-foreground">{r.outcome === 'approved' ? 'Approved' : `Sent back — ${r.reason}`} · {r.uploader}</p>
+                    <span className="font-body font-bold text-[13px] text-text-heading">{r.videoName}</span>
+                    <p className="font-body text-[12px] text-text-body">{r.outcome === 'approved' ? 'Approved' : `Sent back — ${r.reason}`} · {r.uploader}</p>
                   </div>
                 </div>
               ))}
@@ -444,21 +444,21 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
 
       {/* Play modal */}
       {playing && (
-        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => { setPlaying(null); setRedoFor(null); }}>
-          <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-border overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => { setPlaying(null); setRedoFor(null); }}>
+          <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-border-default overflow-hidden" onClick={e => e.stopPropagation()}>
             <div className="relative aspect-video bg-gradient-to-br from-[#061b2e] to-[#0a2d4c] flex items-center justify-center">
-              <span className="w-16 h-16 rounded-full bg-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-primary ml-1" /></span>
-              <button onClick={() => { setPlaying(null); setRedoFor(null); }} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-card/20 text-chalk flex items-center justify-center hover:bg-card/40"><X size={18} /></button>
+              <span className="w-16 h-16 rounded-full bg-surface-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-brand-primary ml-1" /></span>
+              <button onClick={() => { setPlaying(null); setRedoFor(null); }} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/20 text-text-on-brand flex items-center justify-center hover:bg-surface-card/40"><X size={18} /></button>
             </div>
             <div className="p-6">
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-heading font-bold text-[18px] text-foreground">{playing.videoName}</h3>
-                <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${playing.type === 'package' ? 'bg-primary/15 text-foreground' : 'bg-accent text-muted-foreground'}`}>{playing.type === 'package' ? 'Package' : 'Full match'}</span>
+                <h3 className="font-heading font-bold text-[18px] text-text-heading">{playing.videoName}</h3>
+                <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${playing.type === 'package' ? 'bg-brand-primary/15 text-text-heading' : 'bg-surface-accent text-text-body'}`}>{playing.type === 'package' ? 'Package' : 'Full match'}</span>
               </div>
-              <p className="font-body text-[13px] text-muted-foreground">{playing.uploader} · {playing.uploaderRole} · {playing.dateLabel} · {playing.playerId ? playing.playerName : 'No player linked'}</p>
+              <p className="font-body text-[13px] text-text-body">{playing.uploader} · {playing.uploaderRole} · {playing.dateLabel} · {playing.playerId ? playing.playerName : 'No player linked'}</p>
               <div className="flex items-center gap-2 mt-5 relative">
-                <button onClick={() => approve(playing)} className="inline-flex items-center gap-1.5 bg-scout-green/15 text-status-success-fg border border-scout-green/30 font-body font-black text-[13px] px-5 py-2.5 rounded-full hover:bg-scout-green/25 transition-colors"><Check size={15} /> Approve</button>
-                <button onClick={() => setRedoFor(redoFor === playing.id ? null : playing.id)} className="inline-flex items-center gap-1.5 bg-transparent border border-border text-muted-foreground font-body font-bold text-[13px] px-5 py-2.5 rounded-full hover:border-scout-red hover:text-scout-red transition-colors"><RotateCcw size={14} /> Redo</button>
+                <button onClick={() => approve(playing)} className="inline-flex items-center gap-1.5 bg-status-success/15 text-status-success-fg border border-status-success/30 font-body font-black text-[13px] px-5 py-2.5 rounded-full hover:bg-status-success/25 transition-colors"><Check size={15} /> Approve</button>
+                <button onClick={() => setRedoFor(redoFor === playing.id ? null : playing.id)} className="inline-flex items-center gap-1.5 bg-transparent border border-border-default text-text-body font-body font-bold text-[13px] px-5 py-2.5 rounded-full hover:border-status-error hover:text-status-error transition-colors"><RotateCcw size={14} /> Redo</button>
                 {redoFor === playing.id && <div className="absolute left-0 bottom-full mb-2 z-30"><RedoPanel onConfirm={r => redo(playing, r)} onCancel={() => setRedoFor(null)} /></div>}
               </div>
             </div>
@@ -487,13 +487,13 @@ const VmAnalyticsTab = () => {
   const maxDemand = Math.max(...demand.map(d => d.v));
   const Board = ({ title, rows, max }: { title: string; rows: TeamMember[]; max: number }) => (
     <div className="flex-1 min-w-0">
-      <h4 className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted-foreground mb-3">{title}</h4>
+      <h4 className="font-heading font-bold text-[12px] uppercase tracking-widest text-text-body mb-3">{title}</h4>
       <div className="flex flex-col gap-3">
         {rows.map((r, i) => (
           <div key={r.name} className="flex items-center gap-3">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-accent text-muted-foreground'}`}>{i + 1}</span>
-            <div className="flex-1 min-w-0"><div className="font-body font-bold text-[13px] text-foreground truncate">{r.name}</div><div className="h-2 bg-accent rounded-full overflow-hidden mt-1"><div className="h-full bg-primary rounded-full" style={{ width: `${(r.submitted / max) * 100}%` }} /></div></div>
-            <span className="font-heading font-black text-[14px] text-foreground tabular-nums shrink-0">{r.submitted}</span>
+            <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-text-inverse' : 'bg-surface-accent text-text-body'}`}>{i + 1}</span>
+            <div className="flex-1 min-w-0"><div className="font-body font-bold text-[13px] text-text-heading truncate">{r.name}</div><div className="h-2 bg-surface-accent rounded-full overflow-hidden mt-1"><div className="h-full bg-brand-primary rounded-full" style={{ width: `${(r.submitted / max) * 100}%` }} /></div></div>
+            <span className="font-heading font-black text-[14px] text-text-heading tabular-nums shrink-0">{r.submitted}</span>
           </div>
         ))}
       </div>
@@ -503,35 +503,35 @@ const VmAnalyticsTab = () => {
     <div className="flex flex-col gap-6 pb-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-border flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-foreground" /></div>
-            <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-foreground">Coverage over time</h3><p className="font-body text-[12px] text-muted-foreground font-medium">% of pipeline players with video, monthly</p></div>
+          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-text-heading" /></div>
+            <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Coverage over time</h3><p className="font-body text-[12px] text-text-body font-medium">% of pipeline players with video, monthly</p></div>
           </div>
           <div className="px-5 py-4 flex-1 flex flex-col">
             <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 220 }} preserveAspectRatio="xMidYMid meet">
-              {[0, 25, 50, 75, 100].map(g => (<g key={g}><line x1={pL} y1={Y(g)} x2={pR} y2={Y(g)} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" /><text x={pL - 6} y={Y(g) + 3} textAnchor="end" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text></g>))}
-              {months.map((m, i) => (<text key={m} x={X(i)} y={pB + 20} textAnchor="middle" fontSize="10" fill="var(--muted-foreground)" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>))}
+              {[0, 25, 50, 75, 100].map(g => (<g key={g}><line x1={pL} y1={Y(g)} x2={pR} y2={Y(g)} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" /><text x={pL - 6} y={Y(g) + 3} textAnchor="end" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text></g>))}
+              {months.map((m, i) => (<text key={m} x={X(i)} y={pB + 20} textAnchor="middle" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>))}
               {series.map(s => (<g key={s.label}><path d={path(s.data)} fill="none" stroke={s.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />{s.data.map((v, i) => <circle key={i} cx={X(i)} cy={Y(v)} r={3} fill={s.color} />)}</g>))}
             </svg>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">{series.map(s => (<div key={s.label} className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} /><span className="font-heading font-bold text-[12px] text-foreground">{s.label}</span></div>))}</div>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3">{series.map(s => (<div key={s.label} className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} /><span className="font-heading font-bold text-[12px] text-text-heading">{s.label}</span></div>))}</div>
           </div>
         </div>
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-border flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Clock size={16} className="text-foreground" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-foreground">Request turnaround</h3><p className="font-body text-[12px] text-muted-foreground font-medium">Raised → fulfilled</p></div></div>
+          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Clock size={16} className="text-text-heading" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Request turnaround</h3><p className="font-body text-[12px] text-text-body font-medium">Raised → fulfilled</p></div></div>
           <div className="p-5 flex-1 flex flex-col justify-center gap-5">
-            <div><div className="font-heading font-extrabold text-[40px] text-foreground leading-none">2.8<span className="text-[18px] text-muted-foreground"> days</span></div><span className="font-body text-[12px] text-muted-foreground font-medium">median this month</span></div>
-            <div className="flex items-center justify-between rounded-[16px] border border-border p-4"><span className="font-body text-[13px] font-bold text-foreground">Open &gt; 7 days</span><span className="font-heading font-black text-[20px] text-foreground tabular-nums">2</span></div>
+            <div><div className="font-heading font-extrabold text-[40px] text-text-heading leading-none">2.8<span className="text-[18px] text-text-body"> days</span></div><span className="font-body text-[12px] text-text-body font-medium">median this month</span></div>
+            <div className="flex items-center justify-between rounded-[16px] border border-border-default p-4"><span className="font-body text-[13px] font-bold text-text-heading">Open &gt; 7 days</span><span className="font-heading font-black text-[20px] text-text-heading tabular-nums">2</span></div>
           </div>
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
         <div className={`lg:col-span-2 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-border flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-[#E8A838]" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-foreground">Team output</h3><p className="font-body text-[12px] text-muted-foreground font-medium">Videos submitted this week</p></div></div>
+          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-[#E8A838]" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Team output</h3><p className="font-body text-[12px] text-text-body font-medium">Videos submitted this week</p></div></div>
           <div className="p-5 flex flex-col sm:flex-row gap-8"><Board title="Editors · packages" rows={editors} max={maxEd} /><Board title="Uploaders · full matches" rows={uploaders} max={maxUp} /></div>
         </div>
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
-          <div className="px-5 py-4 border-b border-border flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-foreground" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-foreground">Demand profile</h3><p className="font-body text-[12px] text-muted-foreground font-medium">What scouts are asking for</p></div></div>
-          <div className="p-5 flex flex-col justify-center gap-5 flex-1">{demand.map(d => (<div key={d.label}><div className="flex items-center justify-between mb-1"><span className="font-body text-[13px] font-bold text-foreground">{d.label}</span><span className="font-heading font-black text-[14px] text-foreground tabular-nums">{d.v}</span></div><div className="h-3 bg-accent rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(d.v / maxDemand) * 100}%`, backgroundColor: d.color }} /></div></div>))}</div>
+          <div className="px-5 py-4 border-b border-border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Film size={16} className="text-text-heading" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-text-heading">Demand profile</h3><p className="font-body text-[12px] text-text-body font-medium">What scouts are asking for</p></div></div>
+          <div className="p-5 flex flex-col justify-center gap-5 flex-1">{demand.map(d => (<div key={d.label}><div className="flex items-center justify-between mb-1"><span className="font-body text-[13px] font-bold text-text-heading">{d.label}</span><span className="font-heading font-black text-[14px] text-text-heading tabular-nums">{d.v}</span></div><div className="h-3 bg-surface-accent rounded-full overflow-hidden"><div className="h-full rounded-full" style={{ width: `${(d.v / maxDemand) * 100}%`, backgroundColor: d.color }} /></div></div>))}</div>
         </div>
       </div>
     </div>
@@ -593,34 +593,34 @@ export default function VideoManagerDashboard() {
   const avatar = 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&h=100&fit=crop&crop=faces&q=80';
 
   return (
-    <div className="flex min-h-screen bg-background font-body text-foreground">
+    <div className="flex min-h-screen bg-surface-page font-body text-text-heading">
       <Sidebar actions={[]} />
       <main className="flex-1 flex flex-col min-w-0">
         <TopNav
           responsive
           rolePill={(
-            <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-accent rounded-[32px]">
-              <span className="w-2 h-2 rounded-full shrink-0 bg-primary" />
-              <span className="hidden md:inline font-body text-[14px] font-bold text-foreground whitespace-nowrap">Video Manager Dashboard</span>
+            <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-[32px]">
+              <span className="w-2 h-2 rounded-full shrink-0 bg-brand-primary" />
+              <span className="hidden md:inline font-body text-[14px] font-bold text-text-heading whitespace-nowrap">Video Manager Dashboard</span>
             </div>
           )}
           unreadCount={pendingApprovals}
           notifOpen={showNotif}
           onNotifToggle={() => setShowNotif(p => !p)}
           notifPanel={(
-            <div className="absolute right-0 mt-3 w-80 bg-card rounded-[24px] shadow-2xl border border-border z-50 overflow-hidden">
-              <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-primary rounded-t-[24px]">
-                <span className="font-heading font-black text-[14px] text-chalk">Notifications</span>
-                <button onClick={() => setShowNotif(false)} className="text-chalk/60 hover:text-chalk"><X size={16} /></button>
+            <div className="absolute right-0 mt-3 w-80 bg-surface-card rounded-[24px] shadow-2xl border border-border-default z-50 overflow-hidden">
+              <div className="px-6 py-4 border-b border-border-default flex items-center justify-between bg-brand-primary rounded-t-[24px]">
+                <span className="font-heading font-black text-[14px] text-text-on-brand">Notifications</span>
+                <button onClick={() => setShowNotif(false)} className="text-text-on-brand/60 hover:text-text-on-brand"><X size={16} /></button>
               </div>
-              <div className="max-h-80 overflow-y-auto divide-y divide-border">
-                {vstate.approvals.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-muted-foreground">You're all caught up.</div>}
+              <div className="max-h-80 overflow-y-auto divide-y divide-border-default">
+                {vstate.approvals.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-text-body">You're all caught up.</div>}
                 {[...vstate.approvals].sort((a, b) => b.daysAgo - a.daysAgo).map(a => (
-                  <button key={a.id} onClick={() => { setActiveTab('approval'); setShowNotif(false); }} className="w-full text-left px-5 py-3 flex items-start gap-3 hover:bg-accent transition-colors">
-                    <span className="w-8 h-8 rounded-full bg-scout-red/15 text-status-error-fg flex items-center justify-center shrink-0 mt-0.5"><ClipboardCheck size={13} /></span>
+                  <button key={a.id} onClick={() => { setActiveTab('approval'); setShowNotif(false); }} className="w-full text-left px-5 py-3 flex items-start gap-3 hover:bg-surface-accent transition-colors">
+                    <span className="w-8 h-8 rounded-full bg-status-error/15 text-status-error-fg flex items-center justify-center shrink-0 mt-0.5"><ClipboardCheck size={13} /></span>
                     <div className="flex-1 min-w-0">
-                      <p className="font-body text-[13px] font-bold text-foreground leading-snug">{a.uploader} uploaded “{a.videoName}” — needs approval</p>
-                      <p className="font-body text-[12px] text-muted-foreground mt-0.5">{a.dateLabel}</p>
+                      <p className="font-body text-[13px] font-bold text-text-heading leading-snug">{a.uploader} uploaded “{a.videoName}” — needs approval</p>
+                      <p className="font-body text-[12px] text-text-body mt-0.5">{a.dateLabel}</p>
                     </div>
                   </button>
                 ))}
@@ -634,10 +634,10 @@ export default function VideoManagerDashboard() {
           profileOpen={showProfile}
           onProfileToggle={() => setShowProfile(p => !p)}
           profileMenu={(
-            <div className="absolute right-0 mt-3 w-64 bg-card rounded-[24px] shadow-xl border border-border z-50 overflow-hidden">
-              <div className="px-5 py-4 border-b border-border flex items-center gap-3">
+            <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-border-default z-50 overflow-hidden">
+              <div className="px-5 py-4 border-b border-border-default flex items-center gap-3">
                 <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div><div className="font-body font-bold text-[14px] text-foreground">Marcus</div><div className="font-body text-[12px] text-muted-foreground font-medium">Video Manager</div></div>
+                <div><div className="font-body font-bold text-[14px] text-text-heading">Marcus</div><div className="font-body text-[12px] text-text-body font-medium">Video Manager</div></div>
               </div>
               <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-[#E05C4B] hover:bg-[#E05C4B]/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
             </div>
@@ -652,12 +652,12 @@ export default function VideoManagerDashboard() {
           {activePage === 'dashboard' && (
             <>
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold text-h3 tracking-tight text-foreground flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold text-h3 tracking-tight text-text-heading flex items-center gap-4 leading-none">
                   Welcome
-                  <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm shrink-0"><Video size={26} className="text-chalk" /></span>
+                  <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0"><Video size={26} className="text-text-on-brand" /></span>
                   Marcus
                 </h1>
-                <p className="font-body font-medium text-[15px] text-muted-foreground mt-2 short:hidden">Every player, a video for the scouts 🎬</p>
+                <p className="font-body font-medium text-[15px] text-text-body mt-2 short:hidden">Every player, a video for the scouts 🎬</p>
               </div>
 
               <ResponsiveTabs className="mt-4 mb-6" tabs={tabs} activeId={activeTab} onSelect={(id) => setActiveTab(id as VmTab)} />
@@ -676,24 +676,24 @@ export default function VideoManagerDashboard() {
       {showUpload && <UploadVideoModal uploaderName="Marcus" onClose={() => setShowUpload(false)} />}
 
       {showAddPlayer && (
-        <div className="fixed inset-0 bg-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
-          <div className="bg-card rounded-[20px] shadow-2xl w-full max-w-md border border-border" onClick={e => e.stopPropagation()}>
-            <div className="px-8 py-6 bg-primary rounded-t-[16px] flex items-center justify-between">
-              <span className="font-heading font-semibold text-[16px] text-chalk">Add a Player</span>
-              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-card/10 flex items-center justify-center text-chalk/60 hover:text-chalk"><X size={16} /></button>
+        <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
+          <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-md border border-border-default" onClick={e => e.stopPropagation()}>
+            <div className="px-8 py-6 bg-brand-primary rounded-t-[16px] flex items-center justify-between">
+              <span className="font-heading font-semibold text-[16px] text-text-on-brand">Add a Player</span>
+              <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-text-on-brand/60 hover:text-text-on-brand"><X size={16} /></button>
             </div>
             <div className="p-8 space-y-4">
               <div>
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Player name</label>
-                <input autoFocus type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" />
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Player name</label>
+                <input autoFocus type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Team</label><input type="text" placeholder="Club" className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" /></div>
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground block mb-2">Position</label><input type="text" placeholder="e.g. ST" className="w-full bg-card border border-border rounded-xl px-4 py-2 font-body text-[14px] font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" /></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Team</label><input type="text" placeholder="Club" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body block mb-2">Position</label><input type="text" placeholder="e.g. ST" className="w-full bg-surface-card border border-border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-text-heading focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-border-focus transition-all" /></div>
               </div>
               <div className="flex gap-3 pt-2">
-                <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-transparent border-2 border-border text-muted-foreground rounded-full font-body font-bold text-[14px] hover:border-muted-foreground transition-colors">Cancel</button>
-                <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-primary border-2 border-primary text-chalk rounded-full font-body font-bold text-[14px] hover:bg-primary/80 transition-colors">Add Player</button>
+                <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-transparent border-2 border-border-default text-text-body rounded-full font-body font-bold text-[14px] hover:border-text-body transition-colors">Cancel</button>
+                <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-brand-primary border-2 border-brand-primary text-text-on-brand rounded-full font-body font-bold text-[14px] hover:bg-brand-primary/80 transition-colors">Add Player</button>
               </div>
             </div>
           </div>

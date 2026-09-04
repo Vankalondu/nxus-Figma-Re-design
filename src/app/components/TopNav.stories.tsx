@@ -13,7 +13,7 @@ const AVATAR =
   )
 
 const RolePill = ({ label }: { label: string }) => (
-  <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-body font-bold text-[12px] whitespace-nowrap">
+  <span className="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary font-body font-bold text-[12px] whitespace-nowrap">
     {label}
   </span>
 )
@@ -27,7 +27,7 @@ const meta = {
       description: {
         component:
           'The top navigation bar, identical on every page (**P-CO7**): `sticky top-6`, ' +
-          '`bg-card/90` with a backdrop blur, `rounded-[24px]`, `--shadow-lg`.\n\n' +
+          '`bg-surface-card/90` with a backdrop blur, `rounded-[24px]`, `--shadow-lg`.\n\n' +
           'It holds search and actions rather than links — navigation is the sidebar plus tabs ' +
           '(**P-L2**). Contents run left to right: player search, role pill, notification bell ' +
           'with unread count, This Week, Add Report, Add Player, theme toggle, avatar.\n\n' +

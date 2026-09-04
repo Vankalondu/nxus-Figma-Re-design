@@ -42,10 +42,10 @@ export function OperationsKPICards() {
       {kpis.map((kpi) => (
         <div
           key={kpi.label}
-          className="bg-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all"
+          className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all"
         >
           <div className="flex items-start justify-between mb-4">
-            <p className="text-muted-foreground text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {kpi.label}
             </p>
             <div className={`p-2 rounded-xl ${kpi.iconBg} shrink-0 ml-3`}>

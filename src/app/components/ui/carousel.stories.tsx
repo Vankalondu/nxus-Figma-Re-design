@@ -27,7 +27,7 @@ export const Default: Story = {
         <CarouselContent>
           {Array.from({ length: 6 }, (_, i) => (
             <CarouselItem key={i} className="basis-1/2">
-              <div className="aspect-video rounded-[16px] bg-accent border border-border flex items-center justify-center font-body text-[12px] text-muted-foreground">
+              <div className="aspect-video rounded-[16px] bg-surface-accent border border-border-default flex items-center justify-center font-body text-[12px] text-text-body">
                 Clip {i + 1}
               </div>
             </CarouselItem>

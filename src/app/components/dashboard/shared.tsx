@@ -23,10 +23,10 @@ export const fmtDate = (iso?: string) => {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 export const TASK_STATE_META: Record<'pending' | 'in-progress' | 'done' | 'overdue', { label: string; cls: string }> = {
-  'pending':     { label: 'Pending',     cls: 'bg-scout-amber/15 text-status-warning-fg' },
-  'in-progress': { label: 'In progress', cls: 'bg-primary/15 text-primary' },
-  'done':        { label: 'Done',        cls: 'bg-scout-green/15 text-status-success-fg' },
-  'overdue':     { label: 'Overdue',     cls: 'bg-scout-red/15 text-status-error-fg' },
+  'pending':     { label: 'Pending',     cls: 'bg-status-warning/15 text-status-warning-fg' },
+  'in-progress': { label: 'In progress', cls: 'bg-brand-primary/15 text-brand-primary' },
+  'done':        { label: 'Done',        cls: 'bg-status-success/15 text-status-success-fg' },
+  'overdue':     { label: 'Overdue',     cls: 'bg-status-error/15 text-status-error-fg' },
 };
 
 // ─── Task data + helpers (Tasks tab) ────────────────────────────────────────
@@ -97,9 +97,9 @@ export const TASK_STATUS = [
 
 // Priority pill: high = red (needs attention), medium = amber, low = muted. Soft tints, no shout.
 const PRIORITY_PILL: Record<'High' | 'Medium' | 'Low', string> = {
-  High:   'bg-scout-red/15 text-status-error-fg',
-  Medium: 'bg-scout-amber/15 text-status-warning-fg',
-  Low:    'bg-accent text-muted-foreground',
+  High:   'bg-status-error/15 text-status-error-fg',
+  Medium: 'bg-status-warning/15 text-status-warning-fg',
+  Low:    'bg-surface-accent text-text-body',
 };
 export const PriorityPill = ({ p }: { p: 'High' | 'Medium' | 'Low' }) => (
   <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black shrink-0 ${PRIORITY_PILL[p]}`}>{p}</span>
@@ -127,31 +127,31 @@ export const ChampionPodium = ({ scouts }: { scouts: { name: string; role: strin
   // Podium — smiley avatars, crown on 1st. 1st=primary blue · 2nd=silver · 3rd=soft teal.
   const Person = ({ scout, rank }: { scout: { name: string; role: string; count: number }; rank: 1 | 2 | 3 }) => {
     const cfg = rank === 1
-      ? { ring: 'var(--primary)', badgeBg: 'var(--primary)', badgeText: 'var(--primary-foreground)', label: '1st', av: 'w-12 h-12', smile: 24 }
+      ? { ring: 'var(--brand-primary)', badgeBg: 'var(--brand-primary)', badgeText: 'var(--text-inverse)', label: '1st', av: 'w-12 h-12', smile: 24 }
       : rank === 2
       ? { ring: '#cdd1d5', badgeBg: '#cdd1d5', badgeText: '#304151', label: '2nd', av: 'w-10 h-10', smile: 18 }
       : { ring: TEAL, badgeBg: TEAL, badgeText: '#f6fafe', label: '3rd', av: 'w-10 h-10', smile: 18 };
     return (
       <div className="flex flex-col items-center gap-1 flex-1 min-w-0">
         <div className="relative mb-1.5">
-          {rank === 1 && <Crown size={15} className="champ-float absolute -top-4 left-1/2 -translate-x-1/2 text-primary" fill="currentColor" />}
-          <div className={`rounded-full bg-card flex items-center justify-center border-2 shadow-sm ${cfg.av}`} style={{ borderColor: cfg.ring }}>
-            <Smile size={cfg.smile} style={{ color: 'var(--scout-green)' }} />
+          {rank === 1 && <Crown size={15} className="champ-float absolute -top-4 left-1/2 -translate-x-1/2 text-brand-primary" fill="currentColor" />}
+          <div className={`rounded-full bg-surface-card flex items-center justify-center border-2 shadow-sm ${cfg.av}`} style={{ borderColor: cfg.ring }}>
+            <Smile size={cfg.smile} style={{ color: 'var(--status-success)' }} />
           </div>
           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full font-heading font-bold text-[8px] shadow-sm" style={{ backgroundColor: cfg.badgeBg, color: cfg.badgeText }}>{cfg.label}</span>
         </div>
         <div className="text-center min-w-0 w-full mt-1">
-          <p className="font-body text-[11px] text-foreground truncate leading-tight">{scout.name}</p>
-          <p className="font-body text-[13px] text-foreground leading-tight">{scout.count}</p>
+          <p className="font-body text-[11px] text-text-heading truncate leading-tight">{scout.name}</p>
+          <p className="font-body text-[13px] text-text-heading leading-tight">{scout.count}</p>
         </div>
       </div>
     );
   };
 
   return (
-    <div className="h-full min-h-[135px] rounded-[20px] border-2 border-primary/40 bg-transparent p-4 flex flex-col">
+    <div className="h-full min-h-[135px] rounded-[20px] border-2 border-brand-primary/40 bg-transparent p-4 flex flex-col">
       <style>{CHAMP_KEYFRAMES}</style>
-      <h3 className="font-heading font-bold text-[14px] text-foreground text-left shrink-0">Report Champion</h3>
+      <h3 className="font-heading font-bold text-[14px] text-text-heading text-left shrink-0">Report Champion</h3>
       <div className="flex-1 flex items-end justify-center gap-2 pt-2 pb-2">
         {second && <Person scout={second} rank={2} />}
         {first  && <Person scout={first}  rank={1} />}
@@ -182,19 +182,19 @@ export const InlineSel = ({ value, onChange, opts, allLabel }: { value: string; 
   return (
     <div className="relative shrink-0" ref={ref}>
       <button type="button" onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-primary text-primary-foreground border-transparent' : 'bg-card/60 border-primary/40 text-foreground hover:bg-card'}`}>
+        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-brand-primary text-text-inverse border-transparent' : 'bg-surface-card/60 border-brand-primary/40 text-text-heading hover:bg-surface-card'}`}>
         {label(value)}
-        <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''} ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+        <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''} ${active ? 'text-text-inverse' : 'text-text-body'}`} />
       </button>
       {open && (
-        <div className="absolute z-40 mt-1 left-0 min-w-[150px] bg-card border border-border rounded-[20px] shadow-2xl py-2 flex flex-col max-h-[280px] overflow-y-auto">
+        <div className="absolute z-40 mt-1 left-0 min-w-[150px] bg-surface-card border border-border-default rounded-[20px] shadow-2xl py-2 flex flex-col max-h-[280px] overflow-y-auto">
           {opts.map(o => {
             const sel = o === value;
             return (
               <button key={o} type="button" onClick={() => { onChange(o); setOpen(false); }}
-                className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-accent text-foreground' : 'text-foreground hover:bg-accent'}`}>
+                className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-surface-accent text-text-heading' : 'text-text-heading hover:bg-surface-accent'}`}>
                 {label(o)}
-                {sel && <Check size={13} className="text-primary shrink-0" />}
+                {sel && <Check size={13} className="text-brand-primary shrink-0" />}
               </button>
             );
           })}

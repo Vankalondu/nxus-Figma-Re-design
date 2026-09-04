@@ -23,10 +23,10 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
     if (tab.count == null || tab.count <= 0) return null;
     const red = tab.countTone === 'red';
     const cls = activeTab
-      ? 'bg-card/20 text-primary-foreground'
+      ? 'bg-surface-card/20 text-text-inverse'
       : red
-        ? 'bg-scout-red/15 text-status-error-fg'
-        : 'bg-primary/15 text-foreground';
+        ? 'bg-status-error/15 text-status-error-fg'
+        : 'bg-brand-primary/15 text-text-heading';
     return <span className={`ml-1.5 font-body text-micro font-black px-1.5 py-0.5 rounded-full tabular-nums ${cls}`}>{tab.count}</span>;
   };
 
@@ -36,7 +36,7 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
       <div className="hidden md:flex items-center gap-2 overflow-x-auto hide-scrollbar flex-nowrap pb-1">
         {tabs.map(tab => (
           <button key={tab.id} onClick={() => onSelect(tab.id)}
-            className={`shrink-0 inline-flex items-center px-6 py-2 rounded-full font-body font-bold text-body-sm transition-colors border ${activeId === tab.id ? 'bg-primary text-primary-foreground border-primary shadow-sm' : 'bg-card text-muted-foreground border-border hover:border-primary hover:text-foreground'}`}>
+            className={`shrink-0 inline-flex items-center px-6 py-2 rounded-full font-body font-bold text-body-sm transition-colors border ${activeId === tab.id ? 'bg-brand-primary text-text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-text-body border-border-default hover:border-brand-primary hover:text-text-heading'}`}>
             {tab.label}{badge(tab, activeId === tab.id)}
           </button>
         ))}
@@ -44,16 +44,16 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
       {/* Mobile: active label + dropdown */}
       <div className="md:hidden relative">
         <button onClick={() => setOpen(o => !o)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground font-body font-bold text-body-sm">
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-text-inverse font-body font-bold text-body-sm">
           <span className="truncate max-w-[180px]">{active?.label ?? 'Select'}</span>
           {active && badge(active, true)}
           <ChevronDown size={14} className={`shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
         </button>
         {open && (
-          <div className="absolute left-0 top-full mt-1 z-50 bg-card border border-border rounded-[16px] shadow-2xl overflow-hidden min-w-[200px] py-1">
+          <div className="absolute left-0 top-full mt-1 z-50 bg-surface-card border border-border-default rounded-[16px] shadow-2xl overflow-hidden min-w-[200px] py-1">
             {tabs.map(tab => (
               <button key={tab.id} onClick={() => { onSelect(tab.id); setOpen(false); }}
-                className={`w-full text-left px-4 py-2 font-body font-bold text-body-sm inline-flex items-center ${activeId === tab.id ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:bg-accent'}`}>
+                className={`w-full text-left px-4 py-2 font-body font-bold text-body-sm inline-flex items-center ${activeId === tab.id ? 'text-brand-primary bg-brand-primary/10' : 'text-text-body hover:bg-surface-accent'}`}>
                 {tab.label}{badge(tab, false)}
               </button>
             ))}

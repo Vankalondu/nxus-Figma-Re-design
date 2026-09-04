@@ -20,7 +20,7 @@ const meta = {
           'Target `--blue-700`. Deepening reads as movement toward signing, and it leaves green ' +
           'reserved for the status meaning in **L-C3** rather than spending it on a pipeline ' +
           'stage.\n\n' +
-          'Axis labels and gridline text bind `var(--muted-foreground)` rather than a literal. ' +
+          'Axis labels and gridline text bind `var(--text-body)` rather than a literal. ' +
           'They were fixed hexes until 31 Aug, which meant they never adapted to dark mode — a ' +
           'live **L-C8** violation. Toggle the theme to confirm they follow now.',
       },

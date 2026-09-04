@@ -12,8 +12,8 @@ const meta = {
           'Date picker built on `react-day-picker`. NXUS also ships a bespoke date picker ' +
           '(**P-CO16**) for Scope Settings, which replaces the browser default with month and ' +
           'year dropdowns, a ±10-year list and Clear / Today actions.\n\n' +
-          'Selected day is `bg-primary text-primary-foreground rounded-full`; today is ' +
-          '`bg-primary/10 text-primary`.\n\n' +
+          'Selected day is `bg-brand-primary text-text-inverse rounded-full`; today is ' +
+          '`bg-brand-primary/10 text-brand-primary`.\n\n' +
           'Note this imports `react-day-picker@8.10.1` — a version-suffixed Figma Make specifier ' +
           'that the shared Vite alias layer maps back to the bare package.',
       },
@@ -27,7 +27,7 @@ type Story = StoryObj<typeof meta>
 export const Single: Story = {
   render: () => {
     const [date, setDate] = useState<Date | undefined>(new Date(2026, 7, 14))
-    return <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-xl border border-border" />
+    return <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-xl border border-border-default" />
   },
 }
 
@@ -37,11 +37,11 @@ export const DeadlinePicker: Story = {
     const [date, setDate] = useState<Date | undefined>(new Date(2026, 7, 14))
     return (
       <div className="flex flex-col gap-3">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">
+        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
           Deadline
         </span>
-        <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-xl border border-border" />
-        <span className="font-body font-bold text-[12px] text-foreground">
+        <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-xl border border-border-default" />
+        <span className="font-body font-bold text-[12px] text-text-heading">
           {date ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}
         </span>
       </div>

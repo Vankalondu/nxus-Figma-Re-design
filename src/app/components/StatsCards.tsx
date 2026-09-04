@@ -53,7 +53,7 @@ export function StatsCards() {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="bg-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all"
+          className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all"
         >
           <div className="flex items-start justify-between mb-3">
             <p className="text-[#333640] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

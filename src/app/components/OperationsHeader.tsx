@@ -5,7 +5,7 @@ export function OperationsHeader() {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div className="bg-card border-b border-[#e0e7ef] px-6 py-4">
+    <div className="bg-surface-card border-b border-[#e0e7ef] px-6 py-4">
       <div className="flex items-center gap-4 max-w-[1800px] mx-auto">
         {/* Search Bar */}
         <div className="flex-1 max-w-2xl relative">
@@ -22,22 +22,22 @@ export function OperationsHeader() {
 
         {/* Date Picker */}
         <button className="flex items-center gap-2 px-4 py-3 bg-[#f8fafc] border border-[#e8edf2] rounded-xl hover:bg-[#f1f5f9] transition-all">
-          <Calendar className="w-5 h-5 text-muted-foreground" />
+          <Calendar className="w-5 h-5 text-text-body" />
           <span className="text-[#0a0e1a] font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             This Week
           </span>
         </button>
 
         {/* Add Player Button */}
-        <button className="flex items-center gap-2 px-5 py-3 bg-[#1E88E5] text-chalk rounded-xl hover:bg-[#1976D2] transition-all shadow-sm hover:shadow-md font-semibold">
+        <button className="flex items-center gap-2 px-5 py-3 bg-[#1E88E5] text-text-on-brand rounded-xl hover:bg-[#1976D2] transition-all shadow-sm hover:shadow-md font-semibold">
           <Plus className="w-5 h-5" strokeWidth={2.5} />
           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Add Player</span>
         </button>
 
         {/* Notification Bell */}
         <button className="relative p-3 hover:bg-[#f8fafc] rounded-xl transition-all">
-          <Bell className="w-5 h-5 text-muted-foreground" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-[#E53935] rounded-full ring-2 ring-chalk" />
+          <Bell className="w-5 h-5 text-text-body" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-[#E53935] rounded-full ring-2 ring-text-on-brand" />
         </button>
       </div>
     </div>

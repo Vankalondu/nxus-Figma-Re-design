@@ -128,7 +128,7 @@ const provisionalPoolPlayers: Player[] = [
 
 export function ProvisionalPoolList() {
   return (
-    <div className="bg-card border border-[#e0e7ef] rounded-2xl p-6 h-full flex flex-col">
+    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e8edf2]">
         <div className="flex items-center gap-2">
@@ -180,7 +180,7 @@ export function ProvisionalPoolList() {
                   Grade {player.grade}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="flex items-center gap-2 text-xs text-text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <span>{player.position}</span>
                 <span>•</span>
                 <span>{player.age} yrs</span>

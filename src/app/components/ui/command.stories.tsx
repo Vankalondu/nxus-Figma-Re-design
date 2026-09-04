@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => (
-    <Command className="w-[380px] rounded-xl border border-border">
+    <Command className="w-[380px] rounded-xl border border-border-default">
       <CommandInput placeholder="Find a player" />
       <CommandList>
         <CommandEmpty>No players found.</CommandEmpty>

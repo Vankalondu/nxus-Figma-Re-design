@@ -41,13 +41,13 @@ export const OnTableBadges: Story = {
       <div className="flex items-center gap-2">
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="bg-primary/20 text-foreground font-bold px-2 py-0.5 rounded text-[12px] cursor-default">F3</span>
+            <span className="bg-brand-primary/20 text-text-heading font-bold px-2 py-0.5 rounded text-[12px] cursor-default">F3</span>
           </TooltipTrigger>
           <TooltipContent>3 full matches available</TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="bg-primary/20 text-foreground font-bold px-2 py-0.5 rounded text-[12px] cursor-default">H5</span>
+            <span className="bg-brand-primary/20 text-text-heading font-bold px-2 py-0.5 rounded text-[12px] cursor-default">H5</span>
           </TooltipTrigger>
           <TooltipContent>5 highlights uploaded</TooltipContent>
         </Tooltip>

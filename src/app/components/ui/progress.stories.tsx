@@ -10,7 +10,7 @@ const meta = {
         component:
           'Determinate progress bar. NXUS uses it for coverage ratios — how much of a list has ' +
           'video, how much of a cycle is reported.\n\n' +
-          'The track is `bg-border` and the fill `bg-primary` (**P-CO4**). Always pair it with a ' +
+          'The track is `bg-border-default` and the fill `bg-brand-primary` (**P-CO4**). Always pair it with a ' +
           'number: a bar alone tells a scout roughly, and roughly is not useful when the ' +
           'question is how many players still need footage.',
       },
@@ -32,13 +32,13 @@ export const WithReadout: Story = {
   render: (a) => (
     <div className="w-[320px]">
       <div className="flex items-center justify-between mb-2">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground">
+        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-text-body">
           Short List coverage
         </span>
-        <span className="font-body font-bold text-[12px] text-foreground tabular-nums">{a.value}%</span>
+        <span className="font-body font-bold text-[12px] text-text-heading tabular-nums">{a.value}%</span>
       </div>
       <Progress {...a} />
-      <p className="font-body text-[12px] text-muted-foreground mt-2">
+      <p className="font-body text-[12px] text-text-body mt-2">
         <span className="tabular-nums">14</span> of <span className="tabular-nums">37</span> still need full match footage
       </p>
     </div>

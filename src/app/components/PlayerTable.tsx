@@ -40,13 +40,13 @@ export function PlayerTable() {
         />
       </div>
       
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-text-body">
         Selected Years: <span className="font-medium">None</span>
       </div>
 
       <div className="border rounded-lg overflow-hidden">
         <table className="w-full">
-          <thead className="bg-primary text-chalk">
+          <thead className="bg-brand-primary text-text-on-brand">
             <tr>
               <th className="px-4 py-3 text-left uppercase text-xs">Actions</th>
               <th className="px-4 py-3 text-left uppercase text-xs">Name</th>
@@ -60,18 +60,18 @@ export function PlayerTable() {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-midnight text-chalk">
+            <tr className="bg-ink-midnight text-text-on-brand">
               <td colSpan={9} className="px-4 py-2 font-medium">Strikers</td>
             </tr>
-            <tr className="bg-accent">
-              <td colSpan={9} className="px-4 py-2 text-sm text-muted-foreground">2003</td>
+            <tr className="bg-surface-accent">
+              <td colSpan={9} className="px-4 py-2 text-sm text-text-body">2003</td>
             </tr>
             {players.map((player) => (
-              <tr key={player.id} className="border-b hover:bg-accent">
+              <tr key={player.id} className="border-b hover:bg-surface-accent">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <Checkbox />
-                    <button className="p-2 bg-destructive text-chalk rounded hover:bg-destructive/80">
+                    <button className="p-2 bg-status-error text-text-on-brand rounded hover:bg-status-error/80">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -84,7 +84,7 @@ export function PlayerTable() {
                 <td className="px-4 py-3">{player.position}</td>
                 <td className="px-4 py-3">{player.team}</td>
                 <td className="px-4 py-3">
-                  <Button className="bg-primary hover:bg-primary/80">
+                  <Button className="bg-brand-primary hover:bg-brand-primary/80">
                     <Plus className="w-4 h-4 mr-2" />
                     New Player
                   </Button>

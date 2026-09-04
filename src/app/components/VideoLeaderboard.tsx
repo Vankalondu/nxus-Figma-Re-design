@@ -90,7 +90,7 @@ export function VideoLeaderboard() {
   };
 
   return (
-    <div className="bg-card border border-[#e0e7ef] rounded-2xl p-6">
+    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Video Uploader/Editor Leaderboard
@@ -106,10 +106,10 @@ export function VideoLeaderboard() {
         {editors.map((editor) => (
           <div
             key={editor.name}
-            className="bg-card border border-[#e8edf2] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-all hover:shadow-sm flex items-center gap-4"
+            className="bg-surface-card border border-[#e8edf2] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-all hover:shadow-sm flex items-center gap-4"
           >
             {/* Avatar with initials */}
-            <div className={`w-11 h-11 ${editor.initialsColor} rounded-xl flex items-center justify-center text-chalk shrink-0`}
+            <div className={`w-11 h-11 ${editor.initialsColor} rounded-xl flex items-center justify-center text-text-on-brand shrink-0`}
               style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
               {editor.initials}
             </div>

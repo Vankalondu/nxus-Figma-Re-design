@@ -25,11 +25,11 @@ export const Default: Story = {
     const [open, setOpen] = useState(false)
     return (
       <Collapsible open={open} onOpenChange={setOpen} className="w-[420px]">
-        <CollapsibleTrigger className="flex items-center gap-2 font-heading font-bold text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors">
+        <CollapsibleTrigger className="flex items-center gap-2 font-heading font-bold text-[10px] uppercase tracking-widest text-text-body hover:text-text-heading transition-colors">
           Advanced filters
           <ChevronDown size={12} className={open ? 'rotate-180 transition-transform' : 'transition-transform'} />
         </CollapsibleTrigger>
-        <CollapsibleContent className="pt-4 font-body text-[12px] text-muted-foreground">
+        <CollapsibleContent className="pt-4 font-body text-[12px] text-text-body">
           Minutes played, contract expiry, and preferred foot.
         </CollapsibleContent>
       </Collapsible>

@@ -49,21 +49,21 @@ export const InTopNavContext: Story = {
     docs: {
       description: {
         story:
-          'Against the nav shell it sits in (**P-CO7**) — `bg-card/90` with a backdrop blur, ' +
+          'Against the nav shell it sits in (**P-CO7**) — `bg-surface-card/90` with a backdrop blur, ' +
           'border, and `rounded-[24px]`.',
       },
     },
   },
   render: (args) => (
-    <div className="flex items-center justify-between bg-card/90 backdrop-blur-xl border border-border p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]">
+    <div className="flex items-center justify-between bg-surface-card/90 backdrop-blur-xl border border-border-default p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]">
       <div className="w-[380px]">
         <PlayerSearch {...args} />
       </div>
       <div className="flex items-center gap-2">
-        <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-body font-bold text-[12px]">
+        <span className="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary font-body font-bold text-[12px]">
           Lead Scout
         </span>
-        <div className="w-12 h-12 rounded-full bg-primary/15" />
+        <div className="w-12 h-12 rounded-full bg-brand-primary/15" />
       </div>
     </div>
   ),

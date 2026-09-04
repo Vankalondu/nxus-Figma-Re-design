@@ -3,17 +3,17 @@ import { Input } from './ui/input';
 
 export function Header() {
   return (
-    <header className="border-b bg-card px-6 py-4">
+    <header className="border-b bg-surface-card px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-8">
           <div className="text-2xl">NXUS</div>
           <nav className="flex gap-6">
-            <a href="#" className="text-primary">Review</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">Raise</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">Insights</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">Matches</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">Videos</a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">Admin</a>
+            <a href="#" className="text-brand-primary">Review</a>
+            <a href="#" className="text-text-body hover:text-text-heading">Raise</a>
+            <a href="#" className="text-text-body hover:text-text-heading">Insights</a>
+            <a href="#" className="text-text-body hover:text-text-heading">Matches</a>
+            <a href="#" className="text-text-body hover:text-text-heading">Videos</a>
+            <a href="#" className="text-text-body hover:text-text-heading">Admin</a>
           </nav>
         </div>
         <div className="flex items-center gap-4">
@@ -22,12 +22,12 @@ export function Header() {
             placeholder="Search players..." 
             className="w-64"
           />
-          <button className="p-2 hover:bg-accent rounded-full">
+          <button className="p-2 hover:bg-surface-accent rounded-full">
             <Moon className="w-5 h-5" />
           </button>
-          <button className="p-2 hover:bg-accent rounded-full relative">
+          <button className="p-2 hover:bg-surface-accent rounded-full relative">
             <User className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 bg-primary text-chalk text-xs rounded-full w-4 h-4 flex items-center justify-center">5</span>
+            <span className="absolute -top-1 -right-1 bg-brand-primary text-text-on-brand text-xs rounded-full w-4 h-4 flex items-center justify-center">5</span>
           </button>
         </div>
       </div>

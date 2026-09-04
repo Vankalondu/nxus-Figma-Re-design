@@ -16,7 +16,7 @@ export function AdminNav() {
   ];
   
   return (
-    <div className="border-b bg-card">
+    <div className="border-b bg-surface-card">
       <div className="px-6 flex gap-2 overflow-x-auto">
         {tabs.map((tab, index) => (
           <Button
@@ -24,8 +24,8 @@ export function AdminNav() {
             variant={index === 0 ? 'default' : 'ghost'}
             className={`rounded-none border-b-2 ${
               index === 0 
-                ? 'bg-primary hover:bg-primary/80 border-primary' 
-                : 'bg-transparent hover:bg-accent border-transparent text-muted-foreground'
+                ? 'bg-brand-primary hover:bg-brand-primary/80 border-brand-primary' 
+                : 'bg-transparent hover:bg-surface-accent border-transparent text-text-body'
             } rounded-t-lg`}
           >
             {tab}

@@ -37,7 +37,7 @@ const data = [
 
 const config = {
   long: { label: 'Long added', color: 'var(--blue-300)' },
-  short: { label: 'Short added', color: 'var(--scout-amber)' },
+  short: { label: 'Short added', color: 'var(--status-warning)' },
   target: { label: 'Moved to Target', color: 'var(--blue-700)' },
 }
 

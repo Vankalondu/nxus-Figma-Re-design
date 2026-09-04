@@ -7,14 +7,14 @@ import { Plus } from 'lucide-react';
 
 export default function AdminPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-surface-page">
       <Header />
       <AdminNav />
       
       <main className="p-6">
         <div className="max-w-[1400px] mx-auto flex gap-6">
           <aside className="flex-shrink-0">
-            <Button className="bg-primary hover:bg-primary/80 mb-4 w-full">
+            <Button className="bg-brand-primary hover:bg-brand-primary/80 mb-4 w-full">
               <Plus className="w-4 h-4 mr-2" />
               New Territory
             </Button>
@@ -27,7 +27,7 @@ export default function AdminPage() {
         </div>
       </main>
 
-      <button className="fixed bottom-8 right-8 bg-primary hover:bg-primary/80 text-chalk px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
+      <button className="fixed bottom-8 right-8 bg-brand-primary hover:bg-brand-primary/80 text-text-on-brand px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
         <Plus className="w-5 h-5" />
         New Player
       </button>

@@ -9,7 +9,7 @@ export function ViewTabs() {
         <Button
           key={tab}
           variant={index === 0 ? 'default' : 'outline'}
-          className={index === 0 ? 'bg-primary hover:bg-primary/80' : ''}
+          className={index === 0 ? 'bg-brand-primary hover:bg-brand-primary/80' : ''}
         >
           {tab}
         </Button>
