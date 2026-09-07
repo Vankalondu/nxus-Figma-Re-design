@@ -965,9 +965,25 @@ through the alias layer: **zero raw hex outside the scale definitions themselves
 
 *(OR-6 — bare `text-white` / `bg-white` classes — resolved 31 Aug 2026 by D-9.)*
 
-**OR-4 · Dead code.** `VideoDepartmentDashboard.tsx`, `GlobalPulseDashboard.tsx` and
-`OperationsDashboard.tsx` are unrouted and hold 114+ bracketed-hex uses between them. Delete
-them rather than migrate?
+**OR-4 · RESOLVED 7 Sep 2026 — they are not dead, so they get the design system.**
+`VideoDepartmentDashboard.tsx`, `GlobalPulseDashboard.tsx` and `OperationsDashboard.tsx` are
+unrouted but not dead: they are unused *for now*. Ruling: migrate, do not delete. All four
+colour passes included them on the same terms as live code.
+
+Worth knowing the scale of this, because it changes what "unrouted" means here. The import
+closure from `App.tsx` reaches only **44 of 113** app files; 69 cannot render at all, and
+they held the large majority of the colour debt. So the computed-style snapshot — which walks
+six routes in their default state — is structurally unable to verify most of this work. Two
+consequences, both accepted deliberately:
+
+- A `0 changed` result on a pass that touched mainly unreachable files is **not** evidence of
+  correctness. Those passes are justified by the substitution being provably value-identical,
+  or by the value change being the intended one, not by the net.
+- Reachable is not the same as rendered. `CardView.tsx` is reachable but only appears when the
+  user switches to card view, so the snapshot never sees it either.
+
+Rebinding these files to the token layer is what makes them safe to route later: whenever one
+is switched on, it will already be themed rather than carrying frozen light-mode literals.
 
 ---
 
