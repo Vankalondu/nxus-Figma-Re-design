@@ -19,7 +19,7 @@ export function DashboardHeader() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 px-4 py-2 bg-surface-card text-[#333640] rounded-lg hover:bg-[#f0f4f8] transition-colors border border-default"
+          <button className="flex items-center gap-2 px-4 py-2 bg-surface-card text-[#333640] rounded-lg hover:bg-[var(--light-100)] transition-colors border border-default"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <Calendar className="w-4 h-4" />
             <span>This Week</span>

@@ -94,7 +94,7 @@ const VideoCard = ({ video, playerName, onClick }: { video: PlayerVideo; playerN
     <button onClick={onClick} title="Open video"
       className="text-left bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-3 flex flex-col gap-3 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
       {/* Thumbnail — dark video surface */}
-      <div className="relative aspect-video bg-[#02090F] rounded-[16px] overflow-hidden flex items-center justify-center px-4">
+      <div className="relative aspect-video bg-[var(--navy-900)] rounded-[16px] overflow-hidden flex items-center justify-center px-4">
         <span className={`absolute top-2 left-2 font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full ${
           isMatch ? 'bg-brand-primary text-on-brand' : 'bg-status-success/15 text-status-success border border-status-success/30'
         }`}>
@@ -140,7 +140,7 @@ const VideoCard = ({ video, playerName, onClick }: { video: PlayerVideo; playerN
 // ─── Filmstrip thumbnail ─────────────────────────────────────────────────────────
 const FilmThumb = ({ video, active, onClick }: { video: PlayerVideo; active: boolean; onClick: () => void }) => (
   <button onClick={onClick} title={video.title}
-    className={`text-left w-[200px] shrink-0 bg-[#02090F] rounded-[12px] border border-default p-3 flex flex-col gap-2 hover:border-brand-primary/60 transition-colors ${
+    className={`text-left w-[200px] shrink-0 bg-[var(--navy-900)] rounded-[12px] border border-default p-3 flex flex-col gap-2 hover:border-brand-primary/60 transition-colors ${
       active ? 'ring-2 ring-brand-primary' : ''
     }`}>
     <div className="flex items-center justify-between gap-2">
@@ -555,7 +555,7 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
             <div className={`flex flex-col gap-4 min-w-0 ${!focus && swapped ? 'lg:order-2' : ''}`}>
 
               {/* Video player (mock — mirrors MatchEntry) */}
-              <div className="bg-[#02090F] rounded-[20px] overflow-hidden border border-default shadow-[var(--shadow-lg)]">
+              <div className="bg-[var(--navy-900)] rounded-[20px] overflow-hidden border border-default shadow-[var(--shadow-lg)]">
                 <div className="aspect-video relative flex items-center justify-center">
                   <button
                     className="w-16 h-16 rounded-full bg-brand-primary hover:bg-brand-primary/80 flex items-center justify-center transition-colors shadow-[var(--shadow-md)]"

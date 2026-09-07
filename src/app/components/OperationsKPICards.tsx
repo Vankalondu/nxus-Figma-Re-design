@@ -16,7 +16,7 @@ export function OperationsKPICards() {
       value: '22/24',
       subtext: 'Countries Active',
       icon: Globe,
-      iconBg: 'bg-[#E3F2FD]',
+      iconBg: 'bg-[var(--light-300)]',
       iconColor: 'text-[#1E88E5]',
     },
     {
@@ -32,7 +32,7 @@ export function OperationsKPICards() {
       value: '14',
       subtext: 'Shortlists pending',
       icon: Clock,
-      iconBg: 'bg-[#FCE4EC]',
+      iconBg: 'bg-[var(--red-50)]',
       iconColor: 'text-[#E53935]',
     },
   ];
@@ -53,7 +53,7 @@ export function OperationsKPICards() {
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               {kpi.value}
             </div>
             {kpi.trend && (

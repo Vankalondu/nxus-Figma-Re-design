@@ -723,7 +723,7 @@ function MatchEventsTab({
         </div>
 
         {/* Video player (mock) */}
-        <div className="bg-[#02090F] rounded-[20px] overflow-hidden border border-default shadow-[var(--shadow-lg)]">
+        <div className="bg-[var(--navy-900)] rounded-[20px] overflow-hidden border border-default shadow-[var(--shadow-lg)]">
           <div className="aspect-video relative flex items-center justify-center">
             <button
               className="w-16 h-16 rounded-full bg-brand-primary hover:bg-brand-primary/80 flex items-center justify-center transition-colors shadow-[var(--shadow-md)]"

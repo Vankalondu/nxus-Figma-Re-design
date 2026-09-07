@@ -162,7 +162,7 @@ export function VideoDepartmentDashboard() {
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               485
             </div>
             <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -180,12 +180,12 @@ export function VideoDepartmentDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Missing Video Packages
             </p>
-            <div className="p-2 rounded-xl bg-[#FFEBEE] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--red-50)] shrink-0 ml-3">
               <AlertCircle className="w-5 h-5 text-[#E53935]" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               125
             </div>
             <div className="flex items-center gap-1 text-[#E53935] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -203,12 +203,12 @@ export function VideoDepartmentDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Avg. Turnaround Time
             </p>
-            <div className="p-2 rounded-xl bg-[#E3F2FD] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--light-300)] shrink-0 ml-3">
               <Clock className="w-5 h-5 text-[#1E88E5]" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               2.4
             </div>
             <div className="text-body text-xl font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
@@ -230,7 +230,7 @@ export function VideoDepartmentDashboard() {
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               70%
             </div>
             <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -247,7 +247,7 @@ export function VideoDepartmentDashboard() {
       {/* Weekly Production Chart */}
       <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
         <div className="mb-6">
-          <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
+          <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Weekly Production Trends
           </h3>
           <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -287,8 +287,8 @@ export function VideoDepartmentDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Video Editor Performance Leaderboard - 60% */}
         <div className="lg:col-span-3 bg-surface-card border border-[#e0e7ef] rounded-2xl overflow-hidden">
-          <div className="p-6 border-b border-[#e8edf2]">
-            <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
+          <div className="p-6 border-b border-[var(--light-200)]">
+            <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Video Editor Performance Leaderboard
             </h3>
             <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -298,7 +298,7 @@ export function VideoDepartmentDashboard() {
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-surface-card border-b border-[#e8edf2]">
+              <thead className="bg-surface-card border-b border-[var(--light-200)]">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-body uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -326,16 +326,16 @@ export function VideoDepartmentDashboard() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#e8edf2]">
+              <tbody className="divide-y divide-[var(--light-200)]">
                 {editorLeaderboard.map((editor) => (
                   <tr key={editor.rank} className="hover:bg-surface-card transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${
                           editor.rank === 1 ? 'bg-[#FFD700] text-[#8B6914]' :
-                          editor.rank === 2 ? 'bg-[#C0C0C0] text-[#4A4A4A]' :
+                          editor.rank === 2 ? 'bg-[#C0C0C0] text-[var(--light-900)]' :
                           editor.rank === 3 ? 'bg-[#CD7F32] text-on-brand' :
-                          'bg-[#F1F5F9] text-body'
+                          'bg-[var(--light-100)] text-body'
                         }`} style={{ fontFamily: "'Figtree', sans-serif" }}>
                           {editor.rank}
                         </div>
@@ -348,14 +348,14 @@ export function VideoDepartmentDashboard() {
                           {editor.avatar}
                         </div>
                         <div>
-                          <div className="text-[#0a0e1a] font-medium text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                          <div className="text-[var(--navy-800)] font-medium text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                             {editor.name}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className="text-[#0a0e1a] font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <span className="text-[var(--navy-800)] font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {editor.packagesCompleted}
                       </span>
                     </td>
@@ -372,7 +372,7 @@ export function VideoDepartmentDashboard() {
                           {editor.trend === 'up' && <TrendingUp className="w-3.5 h-3.5 text-[#43A047]" strokeWidth={2.5} />}
                           {editor.trend === 'down' && <TrendingDown className="w-3.5 h-3.5 text-[#E53935]" strokeWidth={2.5} />}
                         </div>
-                        <div className="w-full bg-[#E8EDF2] rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-[var(--light-200)] rounded-full h-1.5 overflow-hidden">
                           <div 
                             className={`h-full rounded-full ${
                               editor.uploadPercentage >= 95 ? 'bg-[#43A047]' :
@@ -405,7 +405,7 @@ export function VideoDepartmentDashboard() {
             </table>
           </div>
 
-          <div className="p-4 border-t border-[#e8edf2] bg-surface-card">
+          <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
             <button className="text-[#1E88E5] text-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View Full Editor Performance Details →
@@ -415,8 +415,8 @@ export function VideoDepartmentDashboard() {
 
         {/* Players Awaiting Video Packages - 40% */}
         <div className="lg:col-span-2 bg-surface-card border border-[#e0e7ef] rounded-2xl overflow-hidden">
-          <div className="p-6 border-b border-[#e8edf2]">
-            <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
+          <div className="p-6 border-b border-[var(--light-200)]">
+            <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Priority Video Queue
             </h3>
             <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -424,17 +424,17 @@ export function VideoDepartmentDashboard() {
             </p>
           </div>
 
-          <div className="divide-y divide-[#e8edf2]">
+          <div className="divide-y divide-[var(--light-200)]">
             {awaitingVideoPlayers.map((player, index) => (
               <div key={index} className="p-4 hover:bg-surface-card transition-colors">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h4 className="text-[#0a0e1a] font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <h4 className="text-[var(--navy-800)] font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {player.name}
                       </h4>
                       <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                        player.priority === 'high' ? 'bg-[#FFEBEE] text-[#E53935]' : 'bg-[#FFF9C4] text-[#F9A825]'
+                        player.priority === 'high' ? 'bg-[var(--red-50)] text-[#E53935]' : 'bg-[#FFF9C4] text-[#F9A825]'
                       }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {player.priority.toUpperCase()}
                       </span>
@@ -449,10 +449,10 @@ export function VideoDepartmentDashboard() {
                     <span className="font-medium text-[#E53935]">{player.daysWaiting} days</span> waiting
                   </div>
                 </div>
-                <div className="mt-2 pt-2 border-t border-[#e8edf2]">
+                <div className="mt-2 pt-2 border-t border-[var(--light-200)]">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      Assigned to: <span className="font-medium text-[#0a0e1a]">{player.assignedTo}</span>
+                      Assigned to: <span className="font-medium text-[var(--navy-800)]">{player.assignedTo}</span>
                     </span>
                   </div>
                   <div className="mt-1">
@@ -469,7 +469,7 @@ export function VideoDepartmentDashboard() {
             ))}
           </div>
 
-          <div className="p-4 border-t border-[#e8edf2] bg-surface-card">
+          <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
             <button className="text-[#1E88E5] text-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View All Pending Videos ({awaitingVideoPlayers.length + 120}) →

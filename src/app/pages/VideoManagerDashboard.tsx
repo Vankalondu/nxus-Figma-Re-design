@@ -446,7 +446,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
       {playing && (
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => { setPlaying(null); setRedoFor(null); }}>
           <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-default overflow-hidden" onClick={e => e.stopPropagation()}>
-            <div className="relative aspect-video bg-gradient-to-br from-ink-midnight to-[#0a2d4c] flex items-center justify-center">
+            <div className="relative aspect-video bg-gradient-to-br from-ink-midnight to-[var(--blue-900)] flex items-center justify-center">
               <span className="w-16 h-16 rounded-full bg-surface-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-brand-primary ml-1" /></span>
               <button onClick={() => { setPlaying(null); setRedoFor(null); }} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/20 text-on-brand flex items-center justify-center hover:bg-surface-card/40"><X size={18} /></button>
             </div>

@@ -20,7 +20,7 @@ export function OperationsDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc]">
+    <div className="min-h-screen bg-[var(--light-50)]">
       {/* Global Header */}
       <OperationsHeader />
 
@@ -28,16 +28,16 @@ export function OperationsDashboard() {
       <div className="max-w-[1800px] mx-auto px-6 py-8">
         {/* Page Title */}
         <div className="mb-6">
-          <h1 className="text-[#0a0e1a] text-3xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+          <h1 className="text-[var(--navy-800)] text-3xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Dashboard
           </h1>
           <p className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Welcome back, <span className="font-semibold text-[#0a0e1a]">Operations Officer</span>. Your weekly pipeline overview.
+            Welcome back, <span className="font-semibold text-[var(--navy-800)]">Operations Officer</span>. Your weekly pipeline overview.
           </p>
         </div>
 
         {/* Department Navigation Tabs */}
-        <div className="mb-8 bg-surface-card border border-[#e8edf2] rounded-2xl p-2 inline-flex gap-2 shadow-sm">
+        <div className="mb-8 bg-surface-card border border-[var(--light-200)] rounded-2xl p-2 inline-flex gap-2 shadow-sm">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -45,7 +45,7 @@ export function OperationsDashboard() {
               className={`px-6 py-3 rounded-xl text-sm font-bold tracking-wide transition-all ${
                 activeTab === tab.id
                   ? 'bg-[#1E88E5] text-on-brand shadow-sm'
-                  : 'text-body hover:text-[#0a0e1a] hover:bg-[#f8fafc]'
+                  : 'text-body hover:text-[var(--navy-800)] hover:bg-[var(--light-50)]'
               }`}
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             >
@@ -73,7 +73,7 @@ export function OperationsDashboard() {
             {/* Row 3: Country & Regional Performance Leaderboard */}
             <div>
               <div className="mb-4">
-                <h3 className="text-[#0a0e1a] text-xl font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+                <h3 className="text-[var(--navy-800)] text-xl font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
                   Country & Regional Performance
                 </h3>
                 <p className="text-body text-sm mt-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -91,8 +91,8 @@ export function OperationsDashboard() {
         {activeTab === 'video' && <VideoDepartmentDashboard />}
 
         {activeTab === 'reviews' && (
-          <div className="bg-surface-card border border-[#e8edf2] rounded-2xl p-12 text-center">
-            <h3 className="text-[#0a0e1a] text-xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+          <div className="bg-surface-card border border-[var(--light-200)] rounded-2xl p-12 text-center">
+            <h3 className="text-[var(--navy-800)] text-xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
               Final Reviews
             </h3>
             <p className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

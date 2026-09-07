@@ -140,7 +140,7 @@ export function ScoutQualityLeaderboard() {
         <div className={`group bg-surface-card border ${
           isHeadScout 
             ? 'border-brand-primary/30 bg-gradient-to-r from-surface-accent to-surface-card' 
-            : 'border-[#e8edf2]'
+            : 'border-[var(--light-200)]'
         } rounded-xl p-4 hover:border-brand-primary/50 transition-all hover:shadow-sm flex items-center gap-4`}>
           
           {/* Rank or Crown */}
@@ -150,7 +150,7 @@ export function ScoutQualityLeaderboard() {
                 <Crown size={18} strokeWidth={2.5} />
               </div>
             ) : (
-              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] text-body font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[var(--light-50)] to-[var(--light-100)] text-body font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 {scout.rank}
               </div>
             )}
@@ -169,7 +169,7 @@ export function ScoutQualityLeaderboard() {
             {/* Name and Details */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="text-[#0a0e1a] truncate font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <h3 className="text-[var(--navy-800)] truncate font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {scout.name}
                 </h3>
                 {scout.badge && (
@@ -223,9 +223,9 @@ export function ScoutQualityLeaderboard() {
           </div>
 
           {/* Score Section - Simplified and clearer */}
-          <div className="text-right shrink-0 pl-3 border-l border-[#e8edf2]">
+          <div className="text-right shrink-0 pl-3 border-l border-[var(--light-200)]">
             <div className="flex items-baseline gap-1 justify-end mb-0.5">
-              <span className="text-[#0a0e1a] text-3xl font-bold tracking-tight" style={{ fontFamily: "'Figtree', sans-serif" }}>
+              <span className="text-[var(--navy-800)] text-3xl font-bold tracking-tight" style={{ fontFamily: "'Figtree', sans-serif" }}>
                 {scout.gradeA}
               </span>
             </div>
@@ -244,10 +244,10 @@ export function ScoutQualityLeaderboard() {
   return (
     <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl flex flex-col md:flex-row overflow-hidden h-full min-h-[500px] shadow-sm">
       {/* Left Pane - Countries */}
-      <div className="w-full md:w-1/3 xl:w-[35%] border-b md:border-b-0 md:border-r border-[#e0e7ef] bg-[#f8fafc] flex flex-col shrink-0">
+      <div className="w-full md:w-1/3 xl:w-[35%] border-b md:border-b-0 md:border-r border-[#e0e7ef] bg-[var(--light-50)] flex flex-col shrink-0">
         <div className="p-5 border-b border-[#e0e7ef] flex items-center gap-2 bg-surface-card">
           <Globe className="w-5 h-5 text-[#1E88E5]" />
-          <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+          <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Regions
           </h2>
         </div>
@@ -263,7 +263,7 @@ export function ScoutQualityLeaderboard() {
                 className={`w-full text-left p-4 rounded-xl transition-all relative group ${
                   activeCountryId === country.id 
                     ? 'bg-surface-card shadow-sm border border-brand-primary ring-1 ring-brand-primary/10' 
-                    : 'hover:bg-surface-card/60 border border-transparent hover:border-[#e8edf2]'
+                    : 'hover:bg-surface-card/60 border border-transparent hover:border-[var(--light-200)]'
                 }`}
               >
                 {activeCountryId === country.id && (
@@ -272,7 +272,7 @@ export function ScoutQualityLeaderboard() {
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-2xl leading-none">{country.flag}</span>
-                    <span className="font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    <span className="font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                       {country.name}
                     </span>
                   </div>
@@ -292,10 +292,10 @@ export function ScoutQualityLeaderboard() {
       
       {/* Right Pane - Scouts */}
       <div className="w-full md:w-2/3 xl:w-[65%] flex flex-col bg-surface-card">
-        <div className="p-5 border-b border-[#e0e7ef] flex items-center justify-between bg-gradient-to-b from-[#fbfcff] to-text-on-brand">
+        <div className="p-5 border-b border-[#e0e7ef] flex items-center justify-between bg-gradient-to-b from-[var(--light-50)] to-text-on-brand">
           <div className="flex items-center gap-2">
             <span className="text-2xl leading-none">{activeData.flag}</span>
-            <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+            <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
               {activeData.name} Rankings
             </h2>
           </div>

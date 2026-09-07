@@ -21,8 +21,8 @@ export function ScoutLeaderboard() {
       weeklyChange: '+98',
       trend: 'up',
       badge: 'star',
-      initialsColor: 'bg-gradient-to-br from-[#8c9aa7] to-[#596774]',
-      borderColor: 'border-[#8c9aa7]/50',
+      initialsColor: 'bg-gradient-to-br from-[var(--light-700)] to-[#596774]',
+      borderColor: 'border-[var(--light-700)]/50',
     },
     {
       rank: 3,
@@ -101,7 +101,7 @@ export function ScoutLeaderboard() {
         {scouts.map((scout) => (
           <div
             key={scout.name}
-            className={`bg-[#0a2d4c] border ${scout.borderColor} rounded-lg p-4 hover:border-brand-primary/50 transition-all hover:shadow-md hover:shadow-brand-primary/10`}
+            className={`bg-[var(--blue-900)] border ${scout.borderColor} rounded-lg p-4 hover:border-brand-primary/50 transition-all hover:shadow-md hover:shadow-brand-primary/10`}
           >
             <div className="flex items-center gap-4">
               {/* Rank */}

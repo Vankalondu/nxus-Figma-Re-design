@@ -56,11 +56,11 @@ export function MissingFootageMatches() {
   return (
     <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-start justify-between mb-6 pb-4 border-b border-[#e8edf2]">
+      <div className="flex items-start justify-between mb-6 pb-4 border-b border-[var(--light-200)]">
         <div className="flex items-start gap-2">
           <Video className="w-5 h-5 text-[#E53935] mt-0.5" />
           <div>
-            <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Matches with Missing Talent Footage
             </h3>
             <p className="text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -75,13 +75,13 @@ export function MissingFootageMatches() {
         {matchesWithMissingFootage.map((match) => (
           <div
             key={match.id}
-            className="group p-4 rounded-xl border border-[#e8edf2] hover:border-[#1E88E5]/40 hover:bg-[#f8fbff] transition-all cursor-pointer"
+            className="group p-4 rounded-xl border border-[var(--light-200)] hover:border-[#1E88E5]/40 hover:bg-[var(--light-50)] transition-all cursor-pointer"
           >
             {/* Match Header */}
             <div className="mb-3">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex-1">
-                  <div className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <div className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {match.homeTeam} <span className="text-[#94a3b8] font-normal">vs</span> {match.awayTeam}
                   </div>
                   <div className="text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -97,7 +97,7 @@ export function MissingFootageMatches() {
             </div>
 
             {/* Raised Players Alert */}
-            <div className="flex items-start gap-2 bg-[#FFF3E0] border border-[#FFB74D]/30 rounded-lg p-3">
+            <div className="flex items-start gap-2 bg-[var(--amber-50)] border border-[#FFB74D]/30 rounded-lg p-3">
               <AlertCircle className="w-4 h-4 text-[#F57C00] shrink-0 mt-0.5" />
               <div className="flex-1">
                 <div className="text-xs font-semibold text-[#E65100] mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -113,7 +113,7 @@ export function MissingFootageMatches() {
       </div>
 
       {/* Footer CTA */}
-      <div className="pt-4 mt-4 border-t border-[#e8edf2]">
+      <div className="pt-4 mt-4 border-t border-[var(--light-200)]">
         <button className="text-[#1E88E5] text-sm hover:underline font-medium flex items-center gap-1 w-full justify-center"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All Missing Footage</span>

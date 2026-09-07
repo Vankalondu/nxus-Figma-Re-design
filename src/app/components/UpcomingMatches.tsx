@@ -31,7 +31,7 @@ export function UpcomingMatches() {
   return (
     <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+        <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Upcoming Matches
         </h2>
         <button className="flex items-center gap-1 text-[#999] hover:text-[#1E88E5] transition-colors text-sm"
@@ -45,7 +45,7 @@ export function UpcomingMatches() {
         {matches.map((match, index) => (
           <div
             key={index}
-            className="border border-[#e8edf2] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-colors"
+            className="border border-[var(--light-200)] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <span className="text-[#666] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -58,7 +58,7 @@ export function UpcomingMatches() {
             
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[#0a0e1a] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-[var(--navy-800)] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.homeTeam}
                 </span>
                 <span className="text-[#1E88E5] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
@@ -66,7 +66,7 @@ export function UpcomingMatches() {
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#0a0e1a] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-[var(--navy-800)] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.awayTeam}
                 </span>
                 <span className="text-[#666] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>

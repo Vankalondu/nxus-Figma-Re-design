@@ -677,10 +677,10 @@
                         <div className={`p-5 flex flex-col gap-6 border-t border-default`}>
                           <div className={`flex flex-col gap-2`}>
                             <FieldLabel>Custom CSS Box</FieldLabel>
-                            <div className={`bg-[#030E17] border border-[#145B99] rounded-[16px] p-4 shadow-inner`}>
+                            <div className={`bg-[var(--navy-800)] border border-[var(--blue-700)] rounded-[16px] p-4 shadow-inner`}>
                               <textarea rows={4} placeholder="/* custom CSS */"
-                                className={`w-full bg-transparent text-[#AFC1D0] font-mono text-[14px] focus:outline-none
-  resize-none placeholder:text-[#AFC1D0]/50`} />
+                                className={`w-full bg-transparent text-[var(--light-600)] font-mono text-[14px] focus:outline-none
+  resize-none placeholder:text-[var(--light-600)]/50`} />
                             </div>
                           </div>
                           <div className={`flex flex-col gap-2`}>

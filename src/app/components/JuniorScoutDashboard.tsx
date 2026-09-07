@@ -6,7 +6,7 @@ export function JuniorScoutDashboard() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-[#0a0e1a] mb-1" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
+        <h1 className="text-[var(--navy-800)] mb-1" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
           Junior Scout Dashboard
         </h1>
         <p className="text-[#666]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

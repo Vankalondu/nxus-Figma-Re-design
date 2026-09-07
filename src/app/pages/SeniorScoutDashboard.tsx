@@ -768,11 +768,11 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {step < TOTAL_STEPS
             ? <button onClick={() => { if (canContinue()) setStep(s => (s + 1) as StepNum); }}
                 disabled={!canContinue()}
-                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#0a2d4c]">
+                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--blue-900)]">
                 Continue →
               </button>
             : <button onClick={onClose}
-                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] hover:bg-[#0a2d4c] transition-colors">
+                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] hover:bg-[var(--blue-900)] transition-colors">
                 Submit Report ✓
               </button>}
         </div>

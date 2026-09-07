@@ -130,10 +130,10 @@ export function ProvisionalPoolList() {
   return (
     <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#e8edf2]">
+      <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--light-200)]">
         <div className="flex items-center gap-2">
           <Award className="w-5 h-5 text-[#1E88E5]" />
-          <h3 className="text-[#0a0e1a] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+          <h3 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Top 10 Provisional Pool
           </h3>
         </div>
@@ -149,7 +149,7 @@ export function ProvisionalPoolList() {
         {provisionalPoolPlayers.map((player, index) => (
           <div
             key={player.id}
-            className="group flex items-center gap-4 p-3 rounded-xl hover:bg-[#f8fafc] border border-transparent hover:border-[#e8edf2] transition-all cursor-pointer"
+            className="group flex items-center gap-4 p-3 rounded-xl hover:bg-[var(--light-50)] border border-transparent hover:border-[var(--light-200)] transition-all cursor-pointer"
           >
             {/* Rank */}
             <div className="text-[#94a3b8] text-sm font-semibold w-6 shrink-0 text-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -169,13 +169,13 @@ export function ProvisionalPoolList() {
             {/* Player Info */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <h4 className="text-[#0a0e1a] font-semibold truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <h4 className="text-[var(--navy-800)] font-semibold truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {player.name}
                 </h4>
                 <span className={`px-2 py-0.5 rounded-md text-xs font-semibold shrink-0 ${
                   player.grade === 'A' 
                     ? 'bg-[#E8F5E9] text-[#2E7D32]' 
-                    : 'bg-[#E3F2FD] text-[#1565C0]'
+                    : 'bg-[var(--light-300)] text-[#1565C0]'
                 }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Grade {player.grade}
                 </span>

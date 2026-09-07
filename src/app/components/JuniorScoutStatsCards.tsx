@@ -10,7 +10,7 @@ export function JuniorScoutStatsCards() {
       linkText: 'Review list',
       linkHref: '#',
       icon: Video,
-      iconBg: 'bg-[#E3F2FD]',
+      iconBg: 'bg-[var(--light-300)]',
       iconColor: 'text-[#1E88E5]',
     },
     {
@@ -43,7 +43,7 @@ export function JuniorScoutStatsCards() {
       linkText: 'View Report',
       linkHref: '#',
       icon: CheckCircle,
-      iconBg: 'bg-[#FCE4EC]',
+      iconBg: 'bg-[var(--red-50)]',
       iconColor: 'text-[#E53935]',
     },
   ];
@@ -63,7 +63,7 @@ export function JuniorScoutStatsCards() {
               <stat.icon className={`w-5 h-5 ${stat.iconColor}`} />
             </div>
           </div>
-          <div className="text-[#0a0e1a] text-4xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
+          <div className="text-[var(--navy-800)] text-4xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
             {stat.value}
           </div>
           <div className={`${stat.subtextColor} text-sm mb-3`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

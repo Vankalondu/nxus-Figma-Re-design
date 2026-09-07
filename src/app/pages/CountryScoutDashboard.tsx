@@ -716,7 +716,7 @@ export default function CountryScoutDashboardPage() {
                               if (!posPlayers.length) return null;
                               return (
                                 <Fragment key={posGroup}>
-                                  <tr className="bg-brand-primary border-b border-ink-midnight sticky top-[87px] z-[40] cursor-pointer hover:bg-[#0a2d4c] transition-colors" onClick={()=>togglePosition(posGroup)}>
+                                  <tr className="bg-brand-primary border-b border-ink-midnight sticky top-[87px] z-[40] cursor-pointer hover:bg-[var(--blue-900)] transition-colors" onClick={()=>togglePosition(posGroup)}>
                                     <td colSpan={columns.length+1+extraCols.length} className="bg-brand-primary p-0">
                                       <div className="sticky left-0 z-[40] px-6 py-3 font-heading font-bold text-[10px] text-on-brand uppercase tracking-widest flex items-center gap-2 w-max bg-brand-primary">
                                         <ChevronDown size={16} className={`transition-transform ${collapsedPositions[posGroup]?'-rotate-90':''}`} />
@@ -824,8 +824,8 @@ export default function CountryScoutDashboardPage() {
                                         onClick={() => togglePosition(groupKey)}
                                         className="flex items-center gap-2 w-fit hover:opacity-70 transition-opacity group"
                                       >
-                                        <ChevronDown size={16} className={`text-[#061b2e] transition-transform ${isCollapsed ? '-rotate-90' : ''}`} />
-                                        <span className="font-heading font-bold text-[14px] text-[#061b2e]">
+                                        <ChevronDown size={16} className={`text-[var(--blue-950)] transition-transform ${isCollapsed ? '-rotate-90' : ''}`} />
+                                        <span className="font-heading font-bold text-[14px] text-[var(--blue-950)]">
                                           {yob}
                                         </span>
                                       </button>
@@ -839,7 +839,7 @@ export default function CountryScoutDashboardPage() {
                                           const isRaised = raisedPlayerIds.has(player.id);
                                           
                                           return (
-                                            <div key={player.id} className={`bg-[#f4faff] relative rounded-[32px] overflow-hidden border border-[#b4d7f6] shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-[380px] ${isRaised ? 'border-brand-primary/40' : ''}`}>
+                                            <div key={player.id} className={`bg-[var(--light-50)] relative rounded-[32px] overflow-hidden border border-[#b4d7f6] shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-[380px] ${isRaised ? 'border-brand-primary/40' : ''}`}>
                                               {isRaised && <div className="absolute top-0 left-0 w-full h-1 bg-brand-primary z-10" />}
                                               <div className="p-[24.8px] flex flex-col gap-[16px]">
                                                 {/* Top Row */}
@@ -847,17 +847,17 @@ export default function CountryScoutDashboardPage() {
                                                   <div className="flex items-center gap-[12px]">
                                                     {/* Avatar */}
                                                     <div className="bg-[#f0f7fd] drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[56px] rounded-full shrink-0 border border-[#b4d7f6] relative">
-                                                      <p className="font-heading font-bold text-[#061b2e] text-[14px]">{player.initials}</p>
+                                                      <p className="font-heading font-bold text-[var(--blue-950)] text-[14px]">{player.initials}</p>
                                                     </div>
                                                     {/* Name and Tags */}
                                                     <div className="flex flex-col gap-[6px]">
-                                                      <h3 onClick={() => navigate(`/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[#061b2e] text-[16px] hover:underline cursor-pointer truncate max-w-[140px] leading-tight">{player.name}</h3>
+                                                      <h3 onClick={() => navigate(`/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[16px] hover:underline cursor-pointer truncate max-w-[140px] leading-tight">{player.name}</h3>
                                                       <div className="flex gap-[6px]">
-                                                        <div className="bg-[#d2e7fa] px-[8px] py-[2px] rounded-[4px]">
-                                                          <p className="font-heading font-bold text-[#304151] text-[12px] whitespace-nowrap">{player.age}</p>
+                                                        <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
+                                                          <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">{player.age}</p>
                                                         </div>
-                                                        <div className="bg-[#d2e7fa] px-[8px] py-[2px] rounded-[4px]">
-                                                          <p className="font-heading font-bold text-[#304151] text-[12px] whitespace-nowrap">F{player.matchVideos + player.highlightVideos}</p>
+                                                        <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
+                                                          <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">F{player.matchVideos + player.highlightVideos}</p>
                                                         </div>
                                                         <div className={`w-2 h-2 rounded-full mt-2 self-start ${player.dotColor}`} />
                                                       </div>
@@ -893,9 +893,9 @@ export default function CountryScoutDashboardPage() {
                                                 {/* Bottom Row */}
                                                 <div className="relative h-[81.6px] w-full">
                                                   {/* Team */}
-                                                  <div className="absolute left-0 top-0 bg-[#f4faff] border border-[#b4d7f6] rounded-[16px] p-[12.8px] w-[138.2px] h-[65.6px] flex flex-col items-start">
-                                                    <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
-                                                    <p className="font-heading font-bold text-[#061b2e] text-[14px] truncate leading-tight w-full">{player.pTeam}</p>
+                                                  <div className="absolute left-0 top-0 bg-[var(--light-50)] border border-[#b4d7f6] rounded-[16px] p-[12.8px] w-[138.2px] h-[65.6px] flex flex-col items-start">
+                                                    <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
+                                                    <p className="font-heading font-bold text-[var(--blue-950)] text-[14px] truncate leading-tight w-full">{player.pTeam}</p>
                                                   </div>
                                                   {/* Flag */}
                                                   <div className="absolute left-[97.2px] top-[31px] size-[20px] rounded-full pointer-events-none z-10 overflow-hidden border border-[#b4d7f6]">
@@ -904,20 +904,20 @@ export default function CountryScoutDashboardPage() {
                                                   {/* Stats */}
                                                   <div className="absolute left-[149.2px] top-[12.2px] flex items-start gap-[20px]">
                                                     <div className="flex flex-col">
-                                                      <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">APP</p>
-                                                      <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">{player.app}</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">APP</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">{player.app}</p>
                                                     </div>
                                                     <div className="flex flex-col">
-                                                      <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">G</p>
-                                                      <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">{player.goals}</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">G</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">{player.goals}</p>
                                                     </div>
                                                     <div className="flex flex-col">
-                                                      <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">A</p>
-                                                      <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">{player.ass}</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">A</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">{player.ass}</p>
                                                     </div>
                                                     <div className="flex flex-col items-center">
-                                                      <p className="font-heading font-bold text-[#304151] text-[10px] tracking-[0.5px] uppercase mb-[2px]">SCOUTS</p>
-                                                      <p className="font-mono font-bold text-[#061b2e] text-[16px] leading-[24px]">1</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">SCOUTS</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">1</p>
                                                     </div>
                                                   </div>
                                                 </div>

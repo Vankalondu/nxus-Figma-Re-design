@@ -92,7 +92,7 @@ export function VideoLeaderboard() {
   return (
     <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[#0a0e1a]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+        <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Video Uploader/Editor Leaderboard
         </h2>
         <button className="flex items-center gap-1 text-[#999] hover:text-[#1E88E5] transition-colors text-sm"
@@ -106,7 +106,7 @@ export function VideoLeaderboard() {
         {editors.map((editor) => (
           <div
             key={editor.name}
-            className="bg-surface-card border border-[#e8edf2] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-all hover:shadow-sm flex items-center gap-4"
+            className="bg-surface-card border border-[var(--light-200)] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-all hover:shadow-sm flex items-center gap-4"
           >
             {/* Avatar with initials */}
             <div className={`w-11 h-11 ${editor.initialsColor} rounded-xl flex items-center justify-center text-on-brand shrink-0`}
@@ -117,7 +117,7 @@ export function VideoLeaderboard() {
             {/* Name and status dot */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="text-[#0a0e1a] truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
+                <h3 className="text-[var(--navy-800)] truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
                   {editor.name}
                 </h3>
                 <span className="w-2 h-2 rounded-full bg-[#43A047] shrink-0" />
@@ -135,7 +135,7 @@ export function VideoLeaderboard() {
 
             {/* Score and trend */}
             <div className="text-right shrink-0">
-              <div className="text-[#0a0e1a] text-2xl" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
+              <div className="text-[var(--navy-800)] text-2xl" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
                 {editor.score}%
               </div>
               <div className="flex items-center gap-1 justify-end">

@@ -64,13 +64,13 @@ export function Sidebar() {
   return (
     <>
       {/* ── Desktop Sidebar ── */}
-      <aside className="hidden md:flex w-[80px] hover:w-[240px] transition-all duration-300 bg-[#F8FAFC] border-r border-[#D0E8E3] rounded-r-[40px] flex-col py-8 min-h-screen shrink-0 relative z-[100] group overflow-hidden shadow-[4px_0_24px_rgba(15,23,42,0.06)]">
+      <aside className="hidden md:flex w-[80px] hover:w-[240px] transition-all duration-300 bg-[var(--light-50)] border-r border-[#D0E8E3] rounded-r-[40px] flex-col py-8 min-h-screen shrink-0 relative z-[100] group overflow-hidden shadow-[4px_0_24px_rgba(15,23,42,0.06)]">
         {/* Logo */}
         <div className="flex items-center gap-4 px-6 mb-12 w-[240px]">
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#EBF9F6] border border-[#D0E8E3] shadow-sm shrink-0">
-            <Zap size={20} className="text-[#0F172A]" fill="currentColor" />
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--light-100)] border border-[#D0E8E3] shadow-sm shrink-0">
+            <Zap size={20} className="text-[var(--blue-950)]" fill="currentColor" />
           </div>
-          <span className="font-heading font-extrabold text-[#0F172A] text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
+          <span className="font-heading font-extrabold text-[var(--blue-950)] text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
         </div>
 
         {/* Main Menu */}
@@ -83,15 +83,15 @@ export function Sidebar() {
                   onClick={() => navigate(item.path)}
                   className={`w-full h-12 flex items-center rounded-[16px] transition-all px-3 ${
                     active
-                      ? 'bg-[#0F172A] text-[#F8FAFC] shadow-sm'
-                      : 'text-[#64748B] hover:text-[#0F172A] hover:bg-[#EBF9F6]'
+                      ? 'bg-[var(--blue-950)] text-[var(--light-50)] shadow-sm'
+                      : 'text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[var(--light-100)]'
                   }`}
                 >
                   <div className="shrink-0 flex items-center justify-center w-6 ml-1">
                     <item.icon size={22} strokeWidth={active ? 2.5 : 2} />
                   </div>
                   <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                    active ? 'text-[#F8FAFC]' : 'text-[#64748B] group-hover:text-[#0F172A]'
+                    active ? 'text-[var(--light-50)]' : 'text-[#64748B] group-hover:text-[var(--blue-950)]'
                   }`}>
                     {item.label}
                   </span>
@@ -105,7 +105,7 @@ export function Sidebar() {
         <div className="mt-auto px-6 w-[240px] flex flex-col gap-6 pb-6">
           <button
             onClick={(e) => { e.stopPropagation(); setTheme(theme === 'dark' ? 'light' : 'dark'); }}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-[#EBF9F6] border border-[#D0E8E3] text-[#64748B] hover:text-[#0F172A] hover:bg-[#D0E8E3] transition-colors shrink-0"
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--light-100)] border border-[#D0E8E3] text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[#D0E8E3] transition-colors shrink-0"
             title="Toggle Theme"
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
@@ -117,7 +117,7 @@ export function Sidebar() {
               className="w-10 h-10 rounded-full border-2 border-[#D0E8E3] object-cover shrink-0"
             />
             <div className="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden whitespace-nowrap">
-              <span className="font-body font-bold text-[14px] text-[#0F172A]">{displayName}</span>
+              <span className="font-body font-bold text-[14px] text-[var(--blue-950)]">{displayName}</span>
               <span className="font-body text-[12px] font-semibold text-[#64748B]">{displayRole}</span>
             </div>
           </div>
@@ -128,17 +128,17 @@ export function Sidebar() {
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-[200] flex">
           <div className="absolute inset-0 bg-ink-midnight/40 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
-          <aside className="relative z-10 w-[280px] bg-[#F8FAFC] border-r border-[#D0E8E3] flex flex-col py-8 min-h-screen shadow-2xl">
+          <aside className="relative z-10 w-[280px] bg-[var(--light-50)] border-r border-[#D0E8E3] flex flex-col py-8 min-h-screen shadow-2xl">
             <div className="flex items-center justify-between px-6 mb-10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#EBF9F6] border border-[#D0E8E3] shadow-sm">
-                  <Zap size={20} className="text-[#0F172A]" fill="currentColor" />
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--light-100)] border border-[#D0E8E3] shadow-sm">
+                  <Zap size={20} className="text-[var(--blue-950)]" fill="currentColor" />
                 </div>
-                <span className="font-heading font-extrabold text-[#0F172A] text-xl">NXUS</span>
+                <span className="font-heading font-extrabold text-[var(--blue-950)] text-xl">NXUS</span>
               </div>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="w-8 h-8 rounded-full bg-[#EBF9F6] border border-[#D0E8E3] flex items-center justify-center text-[#64748B] hover:text-[#0F172A] transition-colors"
+                className="w-8 h-8 rounded-full bg-[var(--light-100)] border border-[#D0E8E3] flex items-center justify-center text-[#64748B] hover:text-[var(--blue-950)] transition-colors"
               >
                 <X size={16} />
               </button>
@@ -150,8 +150,8 @@ export function Sidebar() {
                   <button key={i} onClick={() => handleNav(item.path)}
                     className={`w-full h-12 flex items-center rounded-[16px] transition-all px-3 gap-4 ${
                       active
-                        ? 'bg-[#0F172A] text-[#F8FAFC] shadow-sm'
-                        : 'text-[#64748B] hover:text-[#0F172A] hover:bg-[#EBF9F6]'
+                        ? 'bg-[var(--blue-950)] text-[var(--light-50)] shadow-sm'
+                        : 'text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[var(--light-100)]'
                     }`}
                   >
                     <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
@@ -163,7 +163,7 @@ export function Sidebar() {
             <div className="mt-auto px-6 flex flex-col gap-6 pb-8">
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-[#EBF9F6] border border-[#D0E8E3] text-[#64748B] hover:text-[#0F172A] hover:bg-[#D0E8E3] transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--light-100)] border border-[#D0E8E3] text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[#D0E8E3] transition-colors"
               >
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
               </button>
@@ -174,7 +174,7 @@ export function Sidebar() {
                   className="w-10 h-10 rounded-full border-2 border-[#D0E8E3] object-cover"
                 />
                 <div>
-                  <div className="font-body font-bold text-[14px] text-[#0F172A]">{displayName}</div>
+                  <div className="font-body font-bold text-[14px] text-[var(--blue-950)]">{displayName}</div>
                   <div className="font-body text-[12px] text-[#64748B]">{displayRole}</div>
                 </div>
               </div>
@@ -184,10 +184,10 @@ export function Sidebar() {
       )}
 
       {/* ── Mobile: Bottom Nav ── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[150] bg-[#F8FAFC] border-t border-[#D0E8E3] flex items-center justify-around h-16 px-4 safe-area-bottom shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[150] bg-[var(--light-50)] border-t border-[#D0E8E3] flex items-center justify-around h-16 px-4 safe-area-bottom shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
         <button
           onClick={() => setMobileOpen(true)}
-          className="flex flex-col items-center gap-1 text-[#64748B] hover:text-[#0F172A] transition-colors"
+          className="flex flex-col items-center gap-1 text-[#64748B] hover:text-[var(--blue-950)] transition-colors"
         >
           <Menu size={20} />
           <span className="font-body text-[10px] font-bold uppercase tracking-wide">Menu</span>
@@ -197,7 +197,7 @@ export function Sidebar() {
           return (
             <button key={i} onClick={() => navigate(item.path)}
               className={`flex flex-col items-center gap-1 transition-colors ${
-                active ? 'text-[#0F172A]' : 'text-[#64748B] hover:text-[#0F172A]'
+                active ? 'text-[var(--blue-950)]' : 'text-[#64748B] hover:text-[var(--blue-950)]'
               }`}
             >
               <item.icon size={20} strokeWidth={active ? 2.5 : 2} />

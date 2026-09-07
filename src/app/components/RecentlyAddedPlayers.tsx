@@ -58,7 +58,7 @@ export function RecentlyAddedPlayers() {
         {players.map((player) => (
           <div
             key={player.name}
-            className="bg-[#0a2d4c] border border-default rounded-lg p-4 hover:border-[#1971bf] transition-colors"
+            className="bg-[var(--blue-900)] border border-default rounded-lg p-4 hover:border-[#1971bf] transition-colors"
           >
             <div className="flex items-start gap-3">
               <div className="relative">
@@ -68,7 +68,7 @@ export function RecentlyAddedPlayers() {
                 <div
                   className={`absolute -bottom-1 -right-1 w-3 h-3 ${
                     player.status === 'online' ? 'bg-status-success' : 'bg-[#596774]'
-                  } border-2 border-[#0a2d4c] rounded-full`}
+                  } border-2 border-[var(--blue-900)] rounded-full`}
                 />
               </div>
               

@@ -40,7 +40,7 @@ export function GlobalPulseDashboard() {
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               1,587
             </div>
             <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -58,12 +58,12 @@ export function GlobalPulseDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Organization Velocity
             </p>
-            <div className="p-2 rounded-xl bg-[#E3F2FD] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--light-300)] shrink-0 ml-3">
               <Activity className="w-5 h-5 text-[#1E88E5]" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               78%
             </div>
             <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -86,7 +86,7 @@ export function GlobalPulseDashboard() {
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               485
             </div>
             <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -104,12 +104,12 @@ export function GlobalPulseDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Grade A Conversion
             </p>
-            <div className="p-2 rounded-xl bg-[#FCE4EC] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--red-50)] shrink-0 ml-3">
               <Target className="w-5 h-5 text-[#E53935]" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <div className="text-[#0a0e1a] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               34%
             </div>
             <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -128,7 +128,7 @@ export function GlobalPulseDashboard() {
         {/* Weekly Throughput Trend */}
         <div className="lg:col-span-2 bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
           <div className="mb-6">
-            <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Department Throughput Trends
             </h3>
             <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -189,7 +189,7 @@ export function GlobalPulseDashboard() {
         {/* Department Efficiency */}
         <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
           <div className="mb-6">
-            <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Department Efficiency
             </h3>
             <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -230,7 +230,7 @@ export function GlobalPulseDashboard() {
                     {dept.name}
                   </span>
                 </div>
-                <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {dept.value}%
                 </span>
               </div>
@@ -242,7 +242,7 @@ export function GlobalPulseDashboard() {
       {/* Task Completion Breakdown */}
       <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
         <div className="mb-6">
-          <h3 className="text-[#0a0e1a] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
+          <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Task Completion Overview
           </h3>
           <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -286,7 +286,7 @@ export function GlobalPulseDashboard() {
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
               <Users className="w-6 h-6 text-[#43A047]" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[#0a0e1a] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <h4 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Scouting Department
             </h4>
           </div>
@@ -295,7 +295,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Discover Rate
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 84%
               </span>
             </div>
@@ -303,7 +303,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Active Territories
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 22/24
               </span>
             </div>
@@ -311,7 +311,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Players Raised
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 612
               </span>
             </div>
@@ -323,12 +323,12 @@ export function GlobalPulseDashboard() {
         </div>
 
         {/* Video Department Summary */}
-        <div className="bg-gradient-to-br from-[#E3F2FD] to-text-on-brand border border-[#1E88E5]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[var(--light-300)] to-text-on-brand border border-[#1E88E5]/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
               <Video className="w-6 h-6 text-[#1E88E5]" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[#0a0e1a] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <h4 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Video Department
             </h4>
           </div>
@@ -337,7 +337,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Packages Ready
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 485
               </span>
             </div>
@@ -345,7 +345,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Editor Capacity
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 70%
               </span>
             </div>
@@ -353,7 +353,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Avg. Turnaround
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 2.4 days
               </span>
             </div>
@@ -370,7 +370,7 @@ export function GlobalPulseDashboard() {
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
               <FileCheck className="w-6 h-6 text-[#F9A825]" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[#0a0e1a] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <h4 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Data Entry
             </h4>
           </div>
@@ -379,7 +379,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Entries Completed
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 490
               </span>
             </div>
@@ -387,7 +387,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Field Completeness
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 92%
               </span>
             </div>
@@ -395,7 +395,7 @@ export function GlobalPulseDashboard() {
               <span className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Quality Score
               </span>
-              <span className="text-sm font-semibold text-[#0a0e1a]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-sm font-semibold text-[var(--navy-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 4.6/5.0
               </span>
             </div>

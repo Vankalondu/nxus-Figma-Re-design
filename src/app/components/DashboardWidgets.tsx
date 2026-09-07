@@ -86,7 +86,7 @@ export const StatsCards = () => {
       </div>
 
       {/* Card 3: Image Card */}
-      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[#0a2d4c] to-ink-midnight"
+      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[var(--blue-900)] to-ink-midnight"
         onClick={() => navigate('/players?tab=combined-top-10')}
       >
         <img
@@ -138,7 +138,7 @@ export const StatsCards = () => {
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 mt-auto">
           <div className="font-heading font-extrabold text-2xl md:text-[44px] tracking-tight text-strong leading-none">46<span className="text-base md:text-[32px] text-body">%</span></div>
           <div className="flex flex-col sm:pb-2">
-            <div className="bg-[#F6FAFE] text-status-error text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
+            <div className="bg-[var(--light-50)] text-status-error text-[12px] font-extrabold px-2 py-0.5 rounded-full inline-flex items-center w-fit mb-1">
               Down <span className="w-1.5 h-1.5 rounded-full border border-status-error ml-1"></span>
             </div>
           </div>
@@ -238,7 +238,7 @@ export const HeadScoutStatsCards = () => {
       </div>
 
       {/* Card 3: Image Card */}
-      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[#0a2d4c] to-ink-midnight"
+      <div className="min-w-0 rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(6,27,46,0.14)] min-h-[140px] md:h-[180px] cursor-pointer hover:-translate-y-1 transition-transform group bg-gradient-to-br from-[var(--blue-900)] to-ink-midnight"
         onClick={() => navigate('/players?tab=combined-top-10')}
       >
         <img

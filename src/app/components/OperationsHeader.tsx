@@ -15,15 +15,15 @@ export function OperationsHeader() {
             placeholder="Search players, teams, matches..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-[#f8fafc] border border-[#e8edf2] rounded-xl text-[#0a0e1a] placeholder:text-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-[#1E88E5]/20 focus:border-[#1E88E5] transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-[var(--light-50)] border border-[var(--light-200)] rounded-xl text-[var(--navy-800)] placeholder:text-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-[#1E88E5]/20 focus:border-[#1E88E5] transition-all"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           />
         </div>
 
         {/* Date Picker */}
-        <button className="flex items-center gap-2 px-4 py-3 bg-[#f8fafc] border border-[#e8edf2] rounded-xl hover:bg-[#f1f5f9] transition-all">
+        <button className="flex items-center gap-2 px-4 py-3 bg-[var(--light-50)] border border-[var(--light-200)] rounded-xl hover:bg-[var(--light-100)] transition-all">
           <Calendar className="w-5 h-5 text-body" />
-          <span className="text-[#0a0e1a] font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <span className="text-[var(--navy-800)] font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             This Week
           </span>
         </button>
@@ -35,7 +35,7 @@ export function OperationsHeader() {
         </button>
 
         {/* Notification Bell */}
-        <button className="relative p-3 hover:bg-[#f8fafc] rounded-xl transition-all">
+        <button className="relative p-3 hover:bg-[var(--light-50)] rounded-xl transition-all">
           <Bell className="w-5 h-5 text-body" />
           <span className="absolute top-2 right-2 w-2 h-2 bg-[#E53935] rounded-full ring-2 ring-text-on-brand" />
         </button>
