@@ -1016,12 +1016,17 @@ Rebinding these files to the token layer is what makes them safe to route later:
 is switched on, it will already be themed rather than carrying frozen light-mode literals.
 
 **What would close the gap.** Storybook renders a component in isolation regardless of
-routing, so the 131 stories are the natural verification surface for unreachable code — a
-story for `GlobalPulseDashboard` would put it in front of the snapshot without routing it.
-This is currently blocked, and not by the design system: `npm run build-storybook` fails
-because Windows Application Control blocks
-`@oxc-resolver/binding-win32-x64-msvc/resolver.win32-x64-msvc.node`, which is present on
-disk. Until that is unblocked, "unreachable" and "unverifiable" are the same thing here.
+routing, so the stories are the natural verification surface for unreachable code — a story
+for `GlobalPulseDashboard` would put it in front of the snapshot without routing it.
+
+*Corrected 7 Sep 2026:* this section previously said the route was blocked, because
+`npm run build-storybook` had failed earlier on Windows Application Control refusing
+`@oxc-resolver/binding-win32-x64-msvc`. **It builds fine** — 196 entries, 65 docs pages,
+exit 0 — and the claim was carried forward without being re-tested. Smart App Control is
+still enforced on the machine; whatever combination caused that failure no longer does.
+
+So the gap is open by choice, not by obstruction: the unreachable files have no stories, and
+writing them is the work that would let the snapshot see those components. Not started.
 
 ---
 
