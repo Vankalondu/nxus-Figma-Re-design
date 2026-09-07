@@ -22,7 +22,7 @@ export function JuniorScoutStatsCards() {
       linkHref: '#',
       icon: FileText,
       iconBg: 'bg-[#FFF9C4]',
-      iconColor: 'text-[#F9A825]',
+      iconColor: 'text-status-warning',
     },
     {
       label: 'Raised players missing detailed match entry',
@@ -33,7 +33,7 @@ export function JuniorScoutStatsCards() {
       linkHref: '#',
       icon: ClipboardList,
       iconBg: 'bg-[#E8F5E9]',
-      iconColor: 'text-[#43A047]',
+      iconColor: 'text-status-success',
     },
     {
       label: 'Raised players submitted for review',
@@ -44,7 +44,7 @@ export function JuniorScoutStatsCards() {
       linkHref: '#',
       icon: CheckCircle,
       iconBg: 'bg-[var(--red-50)]',
-      iconColor: 'text-[#E53935]',
+      iconColor: 'text-status-error',
     },
   ];
 
@@ -71,7 +71,7 @@ export function JuniorScoutStatsCards() {
           </div>
           <a
             href={stat.linkHref}
-            className="text-brand-primary hover:text-[#1565C0] transition-colors text-sm hover:underline"
+            className="text-brand-primary hover:text-brand-primary-hover transition-colors text-sm hover:underline"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}
           >
             {stat.linkText} →

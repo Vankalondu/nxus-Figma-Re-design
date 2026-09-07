@@ -158,14 +158,14 @@ export function VideoDepartmentDashboard() {
               Packages Completed
             </p>
             <div className="p-2 rounded-xl bg-[#E8F5E9] shrink-0 ml-3">
-              <CheckCircle className="w-5 h-5 text-[#43A047]" strokeWidth={2.5} />
+              <CheckCircle className="w-5 h-5 text-status-success" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               485
             </div>
-            <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +18
             </div>
@@ -181,14 +181,14 @@ export function VideoDepartmentDashboard() {
               Missing Video Packages
             </p>
             <div className="p-2 rounded-xl bg-[var(--red-50)] shrink-0 ml-3">
-              <AlertCircle className="w-5 h-5 text-[#E53935]" strokeWidth={2.5} />
+              <AlertCircle className="w-5 h-5 text-status-error" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               125
             </div>
-            <div className="flex items-center gap-1 text-[#E53935] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-error text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingDown className="w-3.5 h-3.5" strokeWidth={2.5} />
               -8
             </div>
@@ -226,14 +226,14 @@ export function VideoDepartmentDashboard() {
               Editor Capacity
             </p>
             <div className="p-2 rounded-xl bg-[#FFF9C4] shrink-0 ml-3">
-              <Video className="w-5 h-5 text-[#F9A825]" strokeWidth={2.5} />
+              <Video className="w-5 h-5 text-status-warning" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               70%
             </div>
-            <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +5%
             </div>
@@ -343,7 +343,7 @@ export function VideoDepartmentDashboard() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-[#1565C0] flex items-center justify-center text-on-brand font-semibold text-sm"
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-brand-primary-hover flex items-center justify-center text-on-brand font-semibold text-sm"
                           style={{ fontFamily: "'Figtree', sans-serif" }}>
                           {editor.avatar}
                         </div>
@@ -363,21 +363,21 @@ export function VideoDepartmentDashboard() {
                       <div className="flex flex-col items-center gap-1">
                         <div className="flex items-center gap-2">
                           <span className={`text-sm font-bold ${
-                            editor.uploadPercentage >= 95 ? 'text-[#43A047]' :
-                            editor.uploadPercentage >= 85 ? 'text-[#F9A825]' :
-                            'text-[#E53935]'
+                            editor.uploadPercentage >= 95 ? 'text-status-success' :
+                            editor.uploadPercentage >= 85 ? 'text-status-warning' :
+                            'text-status-error'
                           }`} style={{ fontFamily: "'Figtree', sans-serif" }}>
                             {editor.uploadPercentage}%
                           </span>
-                          {editor.trend === 'up' && <TrendingUp className="w-3.5 h-3.5 text-[#43A047]" strokeWidth={2.5} />}
-                          {editor.trend === 'down' && <TrendingDown className="w-3.5 h-3.5 text-[#E53935]" strokeWidth={2.5} />}
+                          {editor.trend === 'up' && <TrendingUp className="w-3.5 h-3.5 text-status-success" strokeWidth={2.5} />}
+                          {editor.trend === 'down' && <TrendingDown className="w-3.5 h-3.5 text-status-error" strokeWidth={2.5} />}
                         </div>
                         <div className="w-full bg-[var(--light-200)] rounded-full h-1.5 overflow-hidden">
                           <div 
                             className={`h-full rounded-full ${
-                              editor.uploadPercentage >= 95 ? 'bg-[#43A047]' :
-                              editor.uploadPercentage >= 85 ? 'bg-[#F9A825]' :
-                              'bg-[#E53935]'
+                              editor.uploadPercentage >= 95 ? 'bg-status-success' :
+                              editor.uploadPercentage >= 85 ? 'bg-status-warning' :
+                              'bg-status-error'
                             }`}
                             style={{ width: `${editor.uploadPercentage}%` }}
                           />
@@ -391,10 +391,10 @@ export function VideoDepartmentDashboard() {
                     </td>
                     <td className="px-6 py-4 text-center">
                       <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E8F5E9]">
-                        <span className="text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        <span className="text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                           {editor.qualityScore}
                         </span>
-                        <span className="text-[#43A047] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        <span className="text-status-success text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                           /5.0
                         </span>
                       </div>
@@ -434,7 +434,7 @@ export function VideoDepartmentDashboard() {
                         {player.name}
                       </h4>
                       <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                        player.priority === 'high' ? 'bg-[var(--red-50)] text-[#E53935]' : 'bg-[#FFF9C4] text-[#F9A825]'
+                        player.priority === 'high' ? 'bg-[var(--red-50)] text-status-error' : 'bg-[#FFF9C4] text-status-warning'
                       }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {player.priority.toUpperCase()}
                       </span>
@@ -446,7 +446,7 @@ export function VideoDepartmentDashboard() {
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <div className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                    <span className="font-medium text-[#E53935]">{player.daysWaiting} days</span> waiting
+                    <span className="font-medium text-status-error">{player.daysWaiting} days</span> waiting
                   </div>
                 </div>
                 <div className="mt-2 pt-2 border-t border-[var(--light-200)]">
@@ -458,8 +458,8 @@ export function VideoDepartmentDashboard() {
                   <div className="mt-1">
                     <span className={`text-xs font-medium ${
                       player.status === 'In Progress' ? 'text-brand-primary' :
-                      player.status === 'Not Started' ? 'text-[#E53935]' :
-                      'text-[#F9A825]'
+                      player.status === 'Not Started' ? 'text-status-error' :
+                      'text-status-warning'
                     }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                       {player.status}
                     </span>

@@ -36,14 +36,14 @@ export function GlobalPulseDashboard() {
               Total Active Players
             </p>
             <div className="p-2 rounded-xl bg-[#E8F5E9] shrink-0 ml-3">
-              <Users className="w-5 h-5 text-[#43A047]" strokeWidth={2.5} />
+              <Users className="w-5 h-5 text-status-success" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               1,587
             </div>
-            <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +12%
             </div>
@@ -66,7 +66,7 @@ export function GlobalPulseDashboard() {
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               78%
             </div>
-            <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +5%
             </div>
@@ -82,14 +82,14 @@ export function GlobalPulseDashboard() {
               Video Packages Ready
             </p>
             <div className="p-2 rounded-xl bg-[#FFF9C4] shrink-0 ml-3">
-              <Video className="w-5 h-5 text-[#F9A825]" strokeWidth={2.5} />
+              <Video className="w-5 h-5 text-status-warning" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               485
             </div>
-            <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +18
             </div>
@@ -105,14 +105,14 @@ export function GlobalPulseDashboard() {
               Grade A Conversion
             </p>
             <div className="p-2 rounded-xl bg-[var(--red-50)] shrink-0 ml-3">
-              <Target className="w-5 h-5 text-[#E53935]" strokeWidth={2.5} />
+              <Target className="w-5 h-5 text-status-error" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               34%
             </div>
-            <div className="flex items-center gap-1 text-[#43A047] text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +3%
             </div>
@@ -281,10 +281,10 @@ export function GlobalPulseDashboard() {
       {/* Department Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Scouting Summary */}
-        <div className="bg-gradient-to-br from-[#E8F5E9] to-text-on-brand border border-[#43A047]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[#E8F5E9] to-text-on-brand border border-status-success/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
-              <Users className="w-6 h-6 text-[#43A047]" strokeWidth={2.5} />
+              <Users className="w-6 h-6 text-status-success" strokeWidth={2.5} />
             </div>
             <h4 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Scouting Department
@@ -315,7 +315,7 @@ export function GlobalPulseDashboard() {
                 612
               </span>
             </div>
-            <button className="text-[#43A047] text-sm hover:underline font-medium mt-2"
+            <button className="text-status-success text-sm hover:underline font-medium mt-2"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View Scouting Dashboard →
             </button>
@@ -365,10 +365,10 @@ export function GlobalPulseDashboard() {
         </div>
 
         {/* Data Entry Summary */}
-        <div className="bg-gradient-to-br from-[#FFF9C4] to-text-on-brand border border-[#F9A825]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[#FFF9C4] to-text-on-brand border border-status-warning/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
-              <FileCheck className="w-6 h-6 text-[#F9A825]" strokeWidth={2.5} />
+              <FileCheck className="w-6 h-6 text-status-warning" strokeWidth={2.5} />
             </div>
             <h4 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Data Entry
@@ -399,7 +399,7 @@ export function GlobalPulseDashboard() {
                 4.6/5.0
               </span>
             </div>
-            <button className="text-[#F9A825] text-sm hover:underline font-medium mt-2"
+            <button className="text-status-warning text-sm hover:underline font-medium mt-2"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View Data Dashboard →
             </button>

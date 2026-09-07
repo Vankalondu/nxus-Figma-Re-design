@@ -37,7 +37,7 @@ export function OperationsHeader() {
         {/* Notification Bell */}
         <button className="relative p-3 hover:bg-[var(--light-50)] rounded-xl transition-all">
           <Bell className="w-5 h-5 text-body" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-[#E53935] rounded-full ring-2 ring-text-on-brand" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-status-error rounded-full ring-2 ring-text-on-brand" />
         </button>
       </div>
     </div>

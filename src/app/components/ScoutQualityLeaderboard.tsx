@@ -111,9 +111,9 @@ export function ScoutQualityLeaderboard() {
       case 'hot':
         return <Flame className="w-3.5 h-3.5 text-[#FF6D00]" />;
       case 'star':
-        return <Star className="w-3.5 h-3.5 text-[#F9A825]" fill="#F9A825" />;
+        return <Star className="w-3.5 h-3.5 text-status-warning" fill="#F9A825" />;
       case 'rising':
-        return <TrendingUp className="w-3.5 h-3.5 text-[#43A047]" />;
+        return <TrendingUp className="w-3.5 h-3.5 text-status-success" />;
       default:
         return null;
     }
@@ -146,7 +146,7 @@ export function ScoutQualityLeaderboard() {
           {/* Rank or Crown */}
           <div className="shrink-0">
             {isHeadScout ? (
-              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#FFF8E1] to-[#FFECB3] text-[#F9A825]" title="Head Scout">
+              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#FFF8E1] to-[#FFECB3] text-status-warning" title="Head Scout">
                 <Crown size={18} strokeWidth={2.5} />
               </div>
             ) : (
@@ -160,7 +160,7 @@ export function ScoutQualityLeaderboard() {
           <div className="flex items-center gap-4 flex-1 min-w-0">
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-on-brand shrink-0 shadow-sm ${
               isHeadScout 
-                ? 'bg-gradient-to-br from-[#0D47A1] to-[#1565C0]' 
+                ? 'bg-gradient-to-br from-[#0D47A1] to-brand-primary-hover' 
                 : 'bg-gradient-to-br from-brand-primary to-[#1976D2]'
             }`} style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
               {scout.initials}
@@ -191,8 +191,8 @@ export function ScoutQualityLeaderboard() {
                 <TooltipTrigger asChild>
                   <div className="flex items-center gap-2 cursor-help">
                     <div className="flex items-center gap-2">
-                      <Award className="w-3.5 h-3.5 text-[#43A047]" />
-                      <span className="text-[#43A047] font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <Award className="w-3.5 h-3.5 text-status-success" />
+                      <span className="text-status-success font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {scout.gradeA} Grade A
                       </span>
                     </div>
@@ -205,7 +205,7 @@ export function ScoutQualityLeaderboard() {
                   <div className="space-y-2">
                     <p className="text-xs font-semibold mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Player Quality Breakdown</p>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#43A047]" />
+                      <div className="w-2 h-2 rounded-full bg-status-success" />
                       <span className="text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Grade A: <strong>{scout.gradeA}</strong> players</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -213,7 +213,7 @@ export function ScoutQualityLeaderboard() {
                       <span className="text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Grade B: <strong>{scout.gradeB}</strong> players</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#E53935]" />
+                      <div className="w-2 h-2 rounded-full bg-status-error" />
                       <span className="text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Grade C: <strong>{scout.gradeC}</strong> players</span>
                     </div>
                   </div>
@@ -230,8 +230,8 @@ export function ScoutQualityLeaderboard() {
               </span>
             </div>
             <div className="flex items-center gap-1 justify-end">
-              <TrendingUp className="w-3 h-3 text-[#43A047]" strokeWidth={2.5} />
-              <span className="text-[#43A047] text-xs font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <TrendingUp className="w-3 h-3 text-status-success" strokeWidth={2.5} />
+              <span className="text-status-success text-xs font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 {scout.weeklyChange}
               </span>
             </div>
@@ -311,7 +311,7 @@ export function ScoutQualityLeaderboard() {
           {/* Head Scout Section */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Trophy className="w-4 h-4 text-[#F9A825]" />
+              <Trophy className="w-4 h-4 text-status-warning" />
               <h3 className="text-xs uppercase tracking-wider text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Head Scout
               </h3>

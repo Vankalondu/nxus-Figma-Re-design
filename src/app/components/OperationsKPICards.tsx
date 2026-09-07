@@ -9,7 +9,7 @@ export function OperationsKPICards() {
       trendPositive: true,
       icon: TrendingUp,
       iconBg: 'bg-[#E8F5E9]',
-      iconColor: 'text-[#43A047]',
+      iconColor: 'text-status-success',
     },
     {
       label: 'Territory Coverage',
@@ -25,7 +25,7 @@ export function OperationsKPICards() {
       subtext: 'Total players raised this week',
       icon: Users,
       iconBg: 'bg-[#FFF9C4]',
-      iconColor: 'text-[#F9A825]',
+      iconColor: 'text-status-warning',
     },
     {
       label: 'Awaiting Head Scout Review',
@@ -33,7 +33,7 @@ export function OperationsKPICards() {
       subtext: 'Shortlists pending',
       icon: Clock,
       iconBg: 'bg-[var(--red-50)]',
-      iconColor: 'text-[#E53935]',
+      iconColor: 'text-status-error',
     },
   ];
 
@@ -57,7 +57,7 @@ export function OperationsKPICards() {
               {kpi.value}
             </div>
             {kpi.trend && (
-              <div className={`flex items-center gap-1 ${kpi.trendPositive ? 'text-[#43A047]' : 'text-[#E53935]'} text-sm font-semibold`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className={`flex items-center gap-1 ${kpi.trendPositive ? 'text-status-success' : 'text-status-error'} text-sm font-semibold`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
                 {kpi.trend}
               </div>

@@ -58,7 +58,7 @@ export function MissingFootageMatches() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6 pb-4 border-b border-[var(--light-200)]">
         <div className="flex items-start gap-2">
-          <Video className="w-5 h-5 text-[#E53935] mt-0.5" />
+          <Video className="w-5 h-5 text-status-error mt-0.5" />
           <div>
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Matches with Missing Talent Footage

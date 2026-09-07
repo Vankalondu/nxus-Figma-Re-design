@@ -81,9 +81,9 @@ export function VideoLeaderboard() {
       case 'hot':
         return <Flame className="w-4 h-4 text-[#FF6D00]" />;
       case 'star':
-        return <Star className="w-4 h-4 text-[#F9A825]" />;
+        return <Star className="w-4 h-4 text-status-warning" />;
       case 'rising':
-        return <TrendingUp className="w-4 h-4 text-[#43A047]" />;
+        return <TrendingUp className="w-4 h-4 text-status-success" />;
       default:
         return null;
     }
@@ -120,7 +120,7 @@ export function VideoLeaderboard() {
                 <h3 className="text-[var(--navy-800)] truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
                   {editor.name}
                 </h3>
-                <span className="w-2 h-2 rounded-full bg-[#43A047] shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-status-success shrink-0" />
                 {editor.badge && getBadgeIcon(editor.badge)}
               </div>
               <div className="flex items-center gap-3 mt-1">
@@ -139,8 +139,8 @@ export function VideoLeaderboard() {
                 {editor.score}%
               </div>
               <div className="flex items-center gap-1 justify-end">
-                <TrendingUp className="w-3 h-3 text-[#43A047]" />
-                <span className="text-[#43A047] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <TrendingUp className="w-3 h-3 text-status-success" />
+                <span className="text-status-success text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {editor.weeklyChange}
                 </span>
               </div>
