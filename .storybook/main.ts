@@ -35,10 +35,16 @@ const config: StorybookConfig = {
 
   // Storybook must resolve imports exactly as the app does, or a story can
   // render something the app cannot build. Both read the same shared module.
-  viteFinal: async (cfg) =>
+  viteFinal: async (cfg, { configType }) =>
     mergeConfig(cfg, {
       plugins: [figmaAssetResolver()],
       resolve: { alias: resolveAlias },
+      // Relative asset paths, PRODUCTION only. The built catalogue is deployed
+      // into dist/storybook so it rides along with the app on one Cloudflare
+      // project — no second project, no extra secrets — and absolute `/assets`
+      // paths would 404 from a subpath. Left as '/' in dev because the dev
+      // server serves Storybook from the root.
+      ...(configType === 'PRODUCTION' ? { base: './' } : {}),
     }),
 }
 

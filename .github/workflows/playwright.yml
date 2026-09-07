@@ -46,6 +46,13 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
+      # The catalogue is a deliverable now, so a broken story should fail on
+      # push rather than surface at deploy time. It is also the only build that
+      # exercises every component in isolation, including the ones no route
+      # reaches (see OR-4).
+      - name: Build component catalogue (Storybook)
+        run: npm run build-storybook
+
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
@@ -76,6 +83,17 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # The component catalogue ships with the app rather than as a second
+      # Cloudflare project: one deploy, one domain, no extra secrets. Storybook
+      # is built with a relative Vite base (see .storybook/main.ts) so its
+      # assets resolve from the /storybook subpath. Order matters — `npm run
+      # build` clears dist, so this has to follow it.
+      - name: Build component catalogue (Storybook)
+        run: npm run build-storybook
+
+      - name: Stage catalogue at /storybook
+        run: cp -r storybook-static dist/storybook
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
