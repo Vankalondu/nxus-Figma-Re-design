@@ -29,7 +29,7 @@ export function OperationsHeader() {
         </button>
 
         {/* Add Player Button */}
-        <button className="flex items-center gap-2 px-5 py-3 bg-brand-primary text-on-brand rounded-xl hover:bg-[#1976D2] transition-all shadow-sm hover:shadow-md font-semibold">
+        <button className="flex items-center gap-2 px-5 py-3 bg-brand-primary text-on-brand rounded-xl hover:bg-[var(--blue-600)] transition-all shadow-sm hover:shadow-md font-semibold">
           <Plus className="w-5 h-5" strokeWidth={2.5} />
           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Add Player</span>
         </button>

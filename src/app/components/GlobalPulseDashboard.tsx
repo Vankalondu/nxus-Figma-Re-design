@@ -35,7 +35,7 @@ export function GlobalPulseDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Total Active Players
             </p>
-            <div className="p-2 rounded-xl bg-[#E8F5E9] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--green-50)] shrink-0 ml-3">
               <Users className="w-5 h-5 text-status-success" strokeWidth={2.5} />
             </div>
           </div>
@@ -81,7 +81,7 @@ export function GlobalPulseDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Video Packages Ready
             </p>
-            <div className="p-2 rounded-xl bg-[#FFF9C4] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--amber-50)] shrink-0 ml-3">
               <Video className="w-5 h-5 text-status-warning" strokeWidth={2.5} />
             </div>
           </div>
@@ -281,7 +281,7 @@ export function GlobalPulseDashboard() {
       {/* Department Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Scouting Summary */}
-        <div className="bg-gradient-to-br from-[#E8F5E9] to-text-on-brand border border-status-success/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[var(--green-50)] to-text-on-brand border border-status-success/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
               <Users className="w-6 h-6 text-status-success" strokeWidth={2.5} />
@@ -365,7 +365,7 @@ export function GlobalPulseDashboard() {
         </div>
 
         {/* Data Entry Summary */}
-        <div className="bg-gradient-to-br from-[#FFF9C4] to-text-on-brand border border-status-warning/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[var(--amber-50)] to-text-on-brand border border-status-warning/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
               <FileCheck className="w-6 h-6 text-status-warning" strokeWidth={2.5} />

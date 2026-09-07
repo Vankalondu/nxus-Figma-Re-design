@@ -97,7 +97,7 @@ export function MissingFootageMatches() {
             </div>
 
             {/* Raised Players Alert */}
-            <div className="flex items-start gap-2 bg-[var(--amber-50)] border border-[#FFB74D]/30 rounded-lg p-3">
+            <div className="flex items-start gap-2 bg-[var(--amber-50)] border border-[var(--amber-300)]/30 rounded-lg p-3">
               <AlertCircle className="w-4 h-4 text-[#F57C00] shrink-0 mt-0.5" />
               <div className="flex-1">
                 <div className="text-xs font-semibold text-[#E65100] mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

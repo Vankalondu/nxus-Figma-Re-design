@@ -21,7 +21,7 @@ export function JuniorScoutStatsCards() {
       linkText: 'Review List',
       linkHref: '#',
       icon: FileText,
-      iconBg: 'bg-[#FFF9C4]',
+      iconBg: 'bg-[var(--amber-50)]',
       iconColor: 'text-status-warning',
     },
     {
@@ -32,7 +32,7 @@ export function JuniorScoutStatsCards() {
       linkText: 'Review List',
       linkHref: '#',
       icon: ClipboardList,
-      iconBg: 'bg-[#E8F5E9]',
+      iconBg: 'bg-[var(--green-50)]',
       iconColor: 'text-status-success',
     },
     {

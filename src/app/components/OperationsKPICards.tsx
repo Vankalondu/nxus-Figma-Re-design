@@ -8,7 +8,7 @@ export function OperationsKPICards() {
       trend: '+5%',
       trendPositive: true,
       icon: TrendingUp,
-      iconBg: 'bg-[#E8F5E9]',
+      iconBg: 'bg-[var(--green-50)]',
       iconColor: 'text-status-success',
     },
     {
@@ -24,7 +24,7 @@ export function OperationsKPICards() {
       value: '612',
       subtext: 'Total players raised this week',
       icon: Users,
-      iconBg: 'bg-[#FFF9C4]',
+      iconBg: 'bg-[var(--amber-50)]',
       iconColor: 'text-status-warning',
     },
     {

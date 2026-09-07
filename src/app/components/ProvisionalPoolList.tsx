@@ -174,7 +174,7 @@ export function ProvisionalPoolList() {
                 </h4>
                 <span className={`px-2 py-0.5 rounded-md text-xs font-semibold shrink-0 ${
                   player.grade === 'A' 
-                    ? 'bg-[#E8F5E9] text-[#2E7D32]' 
+                    ? 'bg-[var(--green-50)] text-[var(--green-700)]' 
                     : 'bg-[var(--light-300)] text-brand-primary-hover'
                 }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Grade {player.grade}

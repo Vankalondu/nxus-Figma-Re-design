@@ -157,7 +157,7 @@ export function VideoDepartmentDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Packages Completed
             </p>
-            <div className="p-2 rounded-xl bg-[#E8F5E9] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--green-50)] shrink-0 ml-3">
               <CheckCircle className="w-5 h-5 text-status-success" strokeWidth={2.5} />
             </div>
           </div>
@@ -225,7 +225,7 @@ export function VideoDepartmentDashboard() {
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Editor Capacity
             </p>
-            <div className="p-2 rounded-xl bg-[#FFF9C4] shrink-0 ml-3">
+            <div className="p-2 rounded-xl bg-[var(--amber-50)] shrink-0 ml-3">
               <Video className="w-5 h-5 text-status-warning" strokeWidth={2.5} />
             </div>
           </div>
@@ -390,7 +390,7 @@ export function VideoDepartmentDashboard() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#E8F5E9]">
+                      <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[var(--green-50)]">
                         <span className="text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                           {editor.qualityScore}
                         </span>
@@ -434,7 +434,7 @@ export function VideoDepartmentDashboard() {
                         {player.name}
                       </h4>
                       <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                        player.priority === 'high' ? 'bg-[var(--red-50)] text-status-error' : 'bg-[#FFF9C4] text-status-warning'
+                        player.priority === 'high' ? 'bg-[var(--red-50)] text-status-error' : 'bg-[var(--amber-50)] text-status-warning'
                       }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {player.priority.toUpperCase()}
                       </span>

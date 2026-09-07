@@ -146,7 +146,7 @@ export function ScoutQualityLeaderboard() {
           {/* Rank or Crown */}
           <div className="shrink-0">
             {isHeadScout ? (
-              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#FFF8E1] to-[#FFECB3] text-status-warning" title="Head Scout">
+              <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[var(--amber-50)] to-[var(--amber-100)] text-status-warning" title="Head Scout">
                 <Crown size={18} strokeWidth={2.5} />
               </div>
             ) : (
@@ -160,8 +160,8 @@ export function ScoutQualityLeaderboard() {
           <div className="flex items-center gap-4 flex-1 min-w-0">
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-on-brand shrink-0 shadow-sm ${
               isHeadScout 
-                ? 'bg-gradient-to-br from-[#0D47A1] to-brand-primary-hover' 
-                : 'bg-gradient-to-br from-brand-primary to-[#1976D2]'
+                ? 'bg-gradient-to-br from-[var(--blue-700)] to-brand-primary-hover' 
+                : 'bg-gradient-to-br from-brand-primary to-[var(--blue-600)]'
             }`} style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
               {scout.initials}
             </div>
@@ -276,7 +276,7 @@ export function ScoutQualityLeaderboard() {
                       {country.name}
                     </span>
                   </div>
-                  <div className="bg-[#E8F5E9] text-[#2E7D32] px-2 py-0.5 rounded-md text-xs font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <div className="bg-[var(--green-50)] text-[var(--green-700)] px-2 py-0.5 rounded-md text-xs font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {totalGradeA}
                   </div>
                 </div>
