@@ -1,0 +1,54 @@
+/**
+ * Storybook-only overrides. Kept out of src/styles/globals.css on purpose:
+ * these are selectors for Storybook's own chrome (.sbdocs-*), and the app's
+ * token layer should not carry knowledge of the tool that displays it.
+ *
+ * Why this exists: Storybook's docs pages paint their own background, so with
+ * the theme switched to dark the tiles went dark while the page around them
+ * stayed light. Binding the docs surfaces to the NXUS role tokens makes the
+ * docs chrome follow the same theme as the components it is showing.
+ */
+
+.sbdocs.sbdocs-wrapper,
+.sbdocs.sbdocs-preview,
+.docs-story {
+  background-color: var(--surface-page) !important;
+}
+
+/* Prose inside docs pages: Storybook hard-codes near-black text, which is a
+   white/black value the palette forbids (L-C1) and unreadable in dark mode. */
+.sbdocs.sbdocs-content,
+.sbdocs h1,
+.sbdocs h2,
+.sbdocs h3,
+.sbdocs p,
+.sbdocs li,
+.sbdocs td,
+.sbdocs th {
+  color: var(--text-body);
+}
+
+.sbdocs h1,
+.sbdocs h2,
+.sbdocs h3 {
+  color: var(--text-heading);
+}
+
+.sbdocs hr,
+.sbdocs.sbdocs-hr {
+  border-color: var(--border-default);
+}
+
+/* Inline code and code blocks: same problem, plus a grey background that is
+   off-palette. */
+.sbdocs code,
+.sbdocs .prismjs {
+  background-color: var(--surface-canvas);
+  color: var(--text-strong);
+}
+
+/* The docs page is wider than Storybook's 1000px default here, because the
+   All Components grid wants four columns before it wraps. */
+.sbdocs.sbdocs-content {
+  max-width: 1180px;
+}

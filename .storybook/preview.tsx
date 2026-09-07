@@ -6,6 +6,8 @@ import { MemoryRouter } from 'react-router'
 // Stories render against exactly the CSS the app ships, so a component that
 // looks right here looks right in NXUS.
 import '../src/styles/index.css'
+// Storybook-chrome overrides, bound to the same role tokens (see preview.css).
+import './preview.css'
 
 const preview: Preview = {
   parameters: {
@@ -41,7 +43,13 @@ const preview: Preview = {
     // gets a memory router — harmless for components that never route.
     (Story) => (
       <MemoryRouter initialEntries={['/lead-scout']}>
-        <div className="bg-background text-foreground p-6 min-h-[120px]">
+        {/* bg-surface-page / text-body, matching what globals.css sets on <body>.
+            This used to read `bg-background text-foreground`, which survived
+            step 4.3 only because default_theme.css ships its own @theme bridge —
+            so the canvas was rendering that file's `--background: #ffffff`.
+            Pure white, in the tool that demonstrates L-C1's ban on it. The lint
+            never saw it because its scope is src/app. */}
+        <div className="bg-surface-page text-body p-6 min-h-[120px]">
           <Story />
         </div>
       </MemoryRouter>
@@ -52,3 +60,4 @@ const preview: Preview = {
 }
 
 export default preview
+

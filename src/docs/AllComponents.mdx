@@ -1,105 +1,69 @@
 import { Meta } from '@storybook/addon-docs/blocks'
+import { NXUS_COMPONENTS, PRIMITIVES, ALL } from './catalogue'
+import { CatalogueGrid, CatalogueCount } from './CatalogueGrid'
 
 <Meta title="All Components" />
 
-<div className="font-body">
+<div className="font-body text-body">
 
 # All components
 
-Everything in the NXUS design system, in one place. Click through to a live demo,
-the import line, and a props table generated from the component's own types.
+Everything in the NXUS design system, in one place. Click a tile for a live demo, the
+import line, and a props table generated from the component's own types.
 
 New here? Read the <a href="/?path=/docs/guides-ui-style-guide--docs">UI Style Guide</a> first —
 it carries the Laws that bind every component below.
 
-<div style={{
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-  gap: '16px',
-  marginTop: '24px',
-}}>
+<CatalogueCount entries={ALL} /> · the code beside each name is the rule that governs it.
+Cite it in review as `// per P-CO9`.
 
-{[
-  { name: 'KpiCard', desc: 'Dashboard stat card. Icon chip, big number, action link.', href: '/?path=/docs/components-kpicard--docs', rule: 'P-CO4' },
-  { name: 'Status pills', desc: 'Priority and task-state pills. The colour vocabulary.', href: '/?path=/docs/components-status-pills--docs', rule: 'P-CO5' },
-  { name: 'ResponsiveTabs', desc: 'The tab strip, with optional count badges.', href: '/?path=/docs/components-responsivetabs--docs', rule: 'P-CO2' },
-].map((c) => (
-  <a key={c.name} href={c.href} style={{ textDecoration: 'none' }}>
-    <div style={{
-      border: '1px solid var(--border)',
-      background: 'var(--card)',
-      borderRadius: '20px',
-      padding: '20px',
-      height: '100%',
-      transition: 'all 150ms',
-    }}>
-      <div style={{
-        fontFamily: 'Figtree, sans-serif',
-        fontWeight: 600,
-        fontSize: '16px',
-        color: 'var(--foreground)',
-        marginBottom: '6px',
-      }}>{c.name}</div>
-      <div style={{
-        fontFamily: '"Plus Jakarta Sans", sans-serif',
-        fontSize: '12px',
-        color: 'var(--muted-foreground)',
-        lineHeight: 1.5,
-        marginBottom: '12px',
-      }}>{c.desc}</div>
-      <span style={{
-        display: 'inline-block',
-        padding: '2px 8px',
-        borderRadius: '999px',
-        background: 'color-mix(in srgb, var(--primary) 12%, transparent)',
-        color: 'var(--primary)',
-        fontFamily: '"Plus Jakarta Sans", sans-serif',
-        fontSize: '10px',
-        fontWeight: 800,
-      }}>{c.rule}</span>
-    </div>
-  </a>
-))}
+Previews are the **real components**, rendered live against the shipped token layer — so a
+tile cannot drift from what the component actually looks like. Where a tile reads
+*Open story*, the component only exists on interaction (a dialog, a menu, a drawer) and a
+small crop of it would show nothing useful.
 
-</div>
+Use the toolbar to switch light and dark. Both are fully supported, and no component may be
+styled for only one (**L-C8**).
 
-<hr style={{ margin: '32px 0', border: 0, borderTop: '1px solid var(--border)' }} />
+---
+
+## NXUS components
+
+Built for this product. These carry the layout and behaviour decisions, so they are the ones
+to read before designing a new screen.
+
+<CatalogueGrid entries={NXUS_COMPONENTS} />
+
+---
 
 ## Primitives
 
-All **46** primitives in `src/app/components/ui/` are documented under
-**Primitives** in the sidebar — form controls, overlays, navigation, data
-display.
+The shadcn/Radix layer underneath, restyled to bind NXUS tokens — no primitive here uses a
+default shadcn colour.
 
 Two things to know before reaching for one:
 
-**Only 7 are actually used in NXUS** — `button`, `input`, `select`, `checkbox`,
-`tooltip`, `switch`, `sonner`. The other 39 are stock shadcn scaffolding that
-shipped with the Figma Make export; nothing in the app imports them. They are
-documented so you know what exists, not to suggest they are load-bearing.
+**Only 7 of the 46 are actually imported by app code** — `button`, `input`, `select`,
+`checkbox`, `tooltip`, `switch`, `sonner`. They carry an **In use** marker below. The other 39
+are stock scaffolding from the Figma Make export; nothing in the app imports them. They are
+catalogued so you know what already exists, not to suggest they are load-bearing.
 
-**Where a primitive and the style guide disagree, the style guide wins.** The
-shadcn button ships `rounded-md` variants; NXUS buttons are `rounded-full`
-(**L-R1**) in the three shapes of **P-CO1**. Each story flags this where it
-applies.
+**Where a primitive and the style guide disagree, the style guide wins.** The shadcn button
+ships `rounded-md` variants; NXUS buttons are `rounded-full` (**L-R1**) in the three shapes of
+**P-CO1**. Each story flags this where it applies.
 
-`Primitives/Sidebar` is a **stale duplicate** — not shadcn's sidebar, but an old
-copy of the NXUS one. Use `src/app/components/Sidebar.tsx`.
+<CatalogueGrid entries={PRIMITIVES} />
+
+---
 
 ## Coverage
 
-**17 components + 46 primitives**, across 131 stories. Every shared component
-in NXUS is now documented.
+**17 components + 46 primitives**, across 131 stories. Every shared component in NXUS is
+documented.
 
-Components: `KpiCard` · `Status pills` · `ResponsiveTabs` · `ChampionPodium` ·
-`PlayerSearch` · `TasksTab` · `InlineSel` · `VideoTrackerGrid` ·
-`UploadVideoModal` · `TopNav` · `CardView` · `EditColumnsModal` ·
-`AnalyticsTab` · `ReportsTab` · `Sidebar` · `PlayerVideoWorkspace` ·
-`EditFormBlueprintModal`
-
-Not documented, deliberately: the role dashboards themselves
-(`LeadScoutDashboard`, `VideoManagerDashboard`, …) are pages rather than
-reusable components, and the 25 unrouted files that stay in the repo but out
-of the catalogue.
+Not documented, deliberately: the role dashboards themselves (`LeadScoutDashboard`,
+`VideoManagerDashboard`, …) are pages rather than reusable components. Of the 113 files under
+`src/app`, only **44 are reachable** from the router — the rest are unused rather than dead
+(**OR-4**), and they stay in the repo but out of this catalogue.
 
 </div>

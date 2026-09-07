@@ -17,7 +17,13 @@
 import fs from 'fs';
 import path from 'path';
 
-const ROOT = 'src/app';
+// src/app is the product, but it is not the only place that ships class names.
+// `.storybook/preview.tsx` carried `bg-background text-foreground` for three
+// days after step 4.3 retired both tokens, and nothing caught it because the
+// scope stopped at src/app. It rendered the canvas from default_theme.css's
+// `--background: #ffffff` — pure white, in the tool that demonstrates L-C1's
+// ban on it. Anything that emits utilities gets linted.
+const ROOTS = ['src/app', 'src/docs', '.storybook'];
 const SKIP_DIRS = new Set(['imports']);
 
 // Every Tailwind palette, not just the neutrals. The rulebook's own catch-grep
@@ -103,20 +109,37 @@ const HEX_EXEMPT = ['#ffd700', '#c0c0c0', '#cd7f32', '#8b6914'];
 const BASELINE = 12; // re-measured 2026-09-07. All 12 are in the tombstoned ui/sidebar.tsx. Only ever lower this.
 
 const files = [];
-(function walk(dir) {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const f = path.join(dir, e.name);
-    if (e.isDirectory()) { if (!SKIP_DIRS.has(e.name)) walk(f); continue; }
-    if (/\.tsx?$/.test(e.name)) files.push(f);
-  }
-})(ROOT);
+for (const root of ROOTS) {
+  if (!fs.existsSync(root)) continue;
+  (function walk(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const f = path.join(dir, e.name);
+      if (e.isDirectory()) { if (!SKIP_DIRS.has(e.name)) walk(f); continue; }
+      // .mdx too: the All Components page styles its own tiles, so it can
+      // reference a retired token exactly like a component can.
+      if (/\.(tsx?|mdx)$/.test(e.name)) files.push(f);
+    }
+  })(root);
+}
 
 const errors = [];
 let hexCount = 0;
 
+// Comments are prose, not shipped classes. A rule's own explanation legitimately
+// quotes the thing it forbids — the note in .storybook/preview.tsx describing the
+// `bg-background` bug flagged itself the moment this scope widened. Blank the
+// comment bodies but keep the newlines, so reported line numbers stay true.
+function stripComments(src) {
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
+    // `[^:\w]` guard keeps `https://…` intact — stripping from the `//` of a URL
+    // would swallow the rest of the line and hide a real class sitting after it.
+    .replace(/(^|[^:\w])\/\/[^\n]*/g, (m, p) => p + ' '.repeat(m.length - p.length));
+}
+
 for (const file of files) {
   const rel = file.split(path.sep).join('/');
-  const lines = fs.readFileSync(file, 'utf8').split('\n');
+  const lines = stripComments(fs.readFileSync(file, 'utf8')).split('\n');
   lines.forEach((line, i) => {
     for (const rule of RULES) {
       rule.re.lastIndex = 0;
@@ -133,7 +156,7 @@ for (const file of files) {
   });
 }
 
-console.log(`token lint — ${files.length} files scanned (src/app, imports/ excluded)\n`);
+console.log(`token lint — ${files.length} files scanned (${ROOTS.join(', ')}; imports/ excluded)\n`);
 
 if (errors.length) {
   console.log(`FAIL  ${errors.length} violation(s):\n`);
