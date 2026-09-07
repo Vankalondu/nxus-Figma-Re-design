@@ -75,7 +75,7 @@ export function MissingFootageMatches() {
         {matchesWithMissingFootage.map((match) => (
           <div
             key={match.id}
-            className="group p-4 rounded-xl border border-[var(--light-200)] hover:border-[#1E88E5]/40 hover:bg-[var(--light-50)] transition-all cursor-pointer"
+            className="group p-4 rounded-xl border border-[var(--light-200)] hover:border-brand-primary/40 hover:bg-[var(--light-50)] transition-all cursor-pointer"
           >
             {/* Match Header */}
             <div className="mb-3">
@@ -88,7 +88,7 @@ export function MissingFootageMatches() {
                     {match.competition}
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#94a3b8] group-hover:text-[#1E88E5] transition-colors shrink-0 mt-1" />
+                <ArrowRight className="w-4 h-4 text-[#94a3b8] group-hover:text-brand-primary transition-colors shrink-0 mt-1" />
               </div>
               <div className="text-xs text-[#94a3b8] flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <span>📅</span>
@@ -114,7 +114,7 @@ export function MissingFootageMatches() {
 
       {/* Footer CTA */}
       <div className="pt-4 mt-4 border-t border-[var(--light-200)]">
-        <button className="text-[#1E88E5] text-sm hover:underline font-medium flex items-center gap-1 w-full justify-center"
+        <button className="text-brand-primary text-sm hover:underline font-medium flex items-center gap-1 w-full justify-center"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All Missing Footage</span>
           <ArrowRight className="w-4 h-4" />

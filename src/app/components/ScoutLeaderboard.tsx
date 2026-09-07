@@ -21,7 +21,7 @@ export function ScoutLeaderboard() {
       weeklyChange: '+98',
       trend: 'up',
       badge: 'star',
-      initialsColor: 'bg-gradient-to-br from-[var(--light-700)] to-[#596774]',
+      initialsColor: 'bg-gradient-to-br from-[var(--light-700)] to-[var(--navy-300)]',
       borderColor: 'border-[var(--light-700)]/50',
     },
     {

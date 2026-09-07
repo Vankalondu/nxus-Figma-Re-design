@@ -15,7 +15,7 @@ export function OperationsHeader() {
             placeholder="Search players, teams, matches..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-[var(--light-50)] border border-[var(--light-200)] rounded-xl text-[var(--navy-800)] placeholder:text-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-[#1E88E5]/20 focus:border-[#1E88E5] transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-[var(--light-50)] border border-[var(--light-200)] rounded-xl text-[var(--navy-800)] placeholder:text-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-brand-primary transition-all"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           />
         </div>
@@ -29,7 +29,7 @@ export function OperationsHeader() {
         </button>
 
         {/* Add Player Button */}
-        <button className="flex items-center gap-2 px-5 py-3 bg-[#1E88E5] text-on-brand rounded-xl hover:bg-[#1976D2] transition-all shadow-sm hover:shadow-md font-semibold">
+        <button className="flex items-center gap-2 px-5 py-3 bg-brand-primary text-on-brand rounded-xl hover:bg-[#1976D2] transition-all shadow-sm hover:shadow-md font-semibold">
           <Plus className="w-5 h-5" strokeWidth={2.5} />
           <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Add Player</span>
         </button>

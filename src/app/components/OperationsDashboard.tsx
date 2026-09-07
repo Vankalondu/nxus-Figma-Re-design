@@ -44,7 +44,7 @@ export function OperationsDashboard() {
               onClick={() => setActiveTab(tab.id)}
               className={`px-6 py-3 rounded-xl text-sm font-bold tracking-wide transition-all ${
                 activeTab === tab.id
-                  ? 'bg-[#1E88E5] text-on-brand shadow-sm'
+                  ? 'bg-brand-primary text-on-brand shadow-sm'
                   : 'text-body hover:text-[var(--navy-800)] hover:bg-[var(--light-50)]'
               }`}
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}

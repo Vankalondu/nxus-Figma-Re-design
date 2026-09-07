@@ -6,18 +6,18 @@ export function StatsCards() {
       label: 'Raised players with missing packages',
       value: '47',
       subtext: '+8 from last week',
-      subtextColor: 'text-[#1E88E5]',
+      subtextColor: 'text-brand-primary',
       linkText: 'Upload package',
       linkHref: '#',
       icon: Package,
       iconBg: 'bg-[var(--light-300)]',
-      iconColor: 'text-[#1E88E5]',
+      iconColor: 'text-brand-primary',
     },
     {
       label: 'Raised players with missing Full matches',
       value: '32',
       subtext: '+5 this week',
-      subtextColor: 'text-[#1E88E5]',
+      subtextColor: 'text-brand-primary',
       linkText: 'Upload Full Match',
       linkHref: '#',
       icon: Film,
@@ -71,7 +71,7 @@ export function StatsCards() {
           </div>
           <a
             href={stat.linkHref}
-            className="text-[#1E88E5] hover:text-[#1565C0] transition-colors text-sm hover:underline"
+            className="text-brand-primary hover:text-[#1565C0] transition-colors text-sm hover:underline"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}
           >
             {stat.linkText} →

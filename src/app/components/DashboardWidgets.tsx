@@ -383,7 +383,7 @@ export const RegionalRankings = () => {
                   <div className="font-bold text-strong text-[14px] flex items-center">Kwame Asante <span className="text-status-warning ml-1 text-sm">🔥</span></div>
                   <div className="text-[12px] text-body font-semibold flex items-center space-x-2 mt-0.5">
                     <span className="text-strong flex items-center"><Crown size={10} className="mr-0.5" /> 38 Grade A</span>
-                    <span className="text-[#b4d7f6]">•</span>
+                    <span className="text-[var(--blue-100)]">•</span>
                     <span>78 total</span>
                   </div>
                 </div>
@@ -415,7 +415,7 @@ export const RegionalRankings = () => {
                       <div className="font-bold text-strong text-[14px] flex items-center">{scout.name} {scout.rank === 1 && <TrendingUp size={12} className="text-brand-primary ml-1" />}</div>
                       <div className="text-[12px] text-body font-semibold flex items-center space-x-2 mt-0.5">
                         <span className="text-strong flex items-center"><Crown size={10} className="mr-0.5" /> {scout.gradeA} Grade A</span>
-                        <span className="text-[#b4d7f6]">•</span>
+                        <span className="text-[var(--blue-100)]">•</span>
                         <span>{scout.total} total</span>
                       </div>
                     </div>

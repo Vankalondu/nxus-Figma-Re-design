@@ -6,18 +6,18 @@ export function JuniorScoutStatsCards() {
       label: 'Raised players with no videos',
       value: '29',
       subtext: '+6 from last week',
-      subtextColor: 'text-[#1E88E5]',
+      subtextColor: 'text-brand-primary',
       linkText: 'Review list',
       linkHref: '#',
       icon: Video,
       iconBg: 'bg-[var(--light-300)]',
-      iconColor: 'text-[#1E88E5]',
+      iconColor: 'text-brand-primary',
     },
     {
       label: 'Raised Players missing Basic Match entry',
       value: '18',
       subtext: '5 added today',
-      subtextColor: 'text-[#1E88E5]',
+      subtextColor: 'text-brand-primary',
       linkText: 'Review List',
       linkHref: '#',
       icon: FileText,
@@ -39,7 +39,7 @@ export function JuniorScoutStatsCards() {
       label: 'Raised players submitted for review',
       value: '37',
       subtext: '+9 this week',
-      subtextColor: 'text-[#1E88E5]',
+      subtextColor: 'text-brand-primary',
       linkText: 'View Report',
       linkHref: '#',
       icon: CheckCircle,
@@ -71,7 +71,7 @@ export function JuniorScoutStatsCards() {
           </div>
           <a
             href={stat.linkHref}
-            className="text-[#1E88E5] hover:text-[#1565C0] transition-colors text-sm hover:underline"
+            className="text-brand-primary hover:text-[#1565C0] transition-colors text-sm hover:underline"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}
           >
             {stat.linkText} →

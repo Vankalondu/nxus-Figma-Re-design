@@ -1245,7 +1245,7 @@ export default function LeadScoutDashboard() {
                 <div className="flex gap-3">
                   {['Long List','Short List','Target List'].map(list => (
                     <label key={list} className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" className="w-4 h-4 accent-[#1e88e5]" />
+                      <input type="checkbox" className="w-4 h-4 accent-brand-primary" />
                       <span className="font-body font-bold text-[14px] text-body">{list}</span>
                     </label>
                   ))}

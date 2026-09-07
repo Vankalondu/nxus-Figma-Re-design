@@ -161,7 +161,7 @@ export function ScoutQualityLeaderboard() {
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-on-brand shrink-0 shadow-sm ${
               isHeadScout 
                 ? 'bg-gradient-to-br from-[#0D47A1] to-[#1565C0]' 
-                : 'bg-gradient-to-br from-[#1E88E5] to-[#1976D2]'
+                : 'bg-gradient-to-br from-brand-primary to-[#1976D2]'
             }`} style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
               {scout.initials}
             </div>
@@ -209,7 +209,7 @@ export function ScoutQualityLeaderboard() {
                       <span className="text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Grade A: <strong>{scout.gradeA}</strong> players</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#1E88E5]" />
+                      <div className="w-2 h-2 rounded-full bg-brand-primary" />
                       <span className="text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Grade B: <strong>{scout.gradeB}</strong> players</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -246,7 +246,7 @@ export function ScoutQualityLeaderboard() {
       {/* Left Pane - Countries */}
       <div className="w-full md:w-1/3 xl:w-[35%] border-b md:border-b-0 md:border-r border-[#e0e7ef] bg-[var(--light-50)] flex flex-col shrink-0">
         <div className="p-5 border-b border-[#e0e7ef] flex items-center gap-2 bg-surface-card">
-          <Globe className="w-5 h-5 text-[#1E88E5]" />
+          <Globe className="w-5 h-5 text-brand-primary" />
           <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Regions
           </h2>
@@ -299,7 +299,7 @@ export function ScoutQualityLeaderboard() {
               {activeData.name} Rankings
             </h2>
           </div>
-          <button className="text-[#1E88E5] text-sm hover:underline font-medium flex items-center gap-1 transition-all"
+          <button className="text-brand-primary text-sm hover:underline font-medium flex items-center gap-1 transition-all"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <span>View All</span>
             <ArrowRight className="w-4 h-4" />
@@ -323,7 +323,7 @@ export function ScoutQualityLeaderboard() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-[#1E88E5]" />
+                <MapPin className="w-4 h-4 text-brand-primary" />
                 <h3 className="text-xs uppercase tracking-wider text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Country Scouts
                 </h3>

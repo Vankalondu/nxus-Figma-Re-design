@@ -59,7 +59,7 @@ export function GlobalPulseDashboard() {
               Organization Velocity
             </p>
             <div className="p-2 rounded-xl bg-[var(--light-300)] shrink-0 ml-3">
-              <Activity className="w-5 h-5 text-[#1E88E5]" strokeWidth={2.5} />
+              <Activity className="w-5 h-5 text-brand-primary" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
@@ -323,10 +323,10 @@ export function GlobalPulseDashboard() {
         </div>
 
         {/* Video Department Summary */}
-        <div className="bg-gradient-to-br from-[var(--light-300)] to-text-on-brand border border-[#1E88E5]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[var(--light-300)] to-text-on-brand border border-brand-primary/20 rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 rounded-xl bg-surface-card shadow-sm">
-              <Video className="w-6 h-6 text-[#1E88E5]" strokeWidth={2.5} />
+              <Video className="w-6 h-6 text-brand-primary" strokeWidth={2.5} />
             </div>
             <h4 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Video Department
@@ -357,7 +357,7 @@ export function GlobalPulseDashboard() {
                 2.4 days
               </span>
             </div>
-            <button className="text-[#1E88E5] text-sm hover:underline font-medium mt-2"
+            <button className="text-brand-primary text-sm hover:underline font-medium mt-2"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View Video Dashboard →
             </button>

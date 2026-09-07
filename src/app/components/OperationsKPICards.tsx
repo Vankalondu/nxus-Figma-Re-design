@@ -17,7 +17,7 @@ export function OperationsKPICards() {
       subtext: 'Countries Active',
       icon: Globe,
       iconBg: 'bg-[var(--light-300)]',
-      iconColor: 'text-[#1E88E5]',
+      iconColor: 'text-brand-primary',
     },
     {
       label: 'Raised Player Throughput',

@@ -34,7 +34,7 @@ export function UpcomingMatches() {
         <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Upcoming Matches
         </h2>
-        <button className="flex items-center gap-1 text-[#999] hover:text-[#1E88E5] transition-colors text-sm"
+        <button className="flex items-center gap-1 text-[#999] hover:text-brand-primary transition-colors text-sm"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -45,13 +45,13 @@ export function UpcomingMatches() {
         {matches.map((match, index) => (
           <div
             key={index}
-            className="border border-[var(--light-200)] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-colors"
+            className="border border-[var(--light-200)] rounded-xl p-4 hover:border-brand-primary/30 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <span className="text-[#666] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 {match.league}
               </span>
-              <span className="text-[#1E88E5] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
+              <span className="text-brand-primary text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
                 {match.date}
               </span>
             </div>
@@ -61,7 +61,7 @@ export function UpcomingMatches() {
                 <span className="text-[var(--navy-800)] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.homeTeam}
                 </span>
-                <span className="text-[#1E88E5] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
+                <span className="text-brand-primary text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
                   {match.homeLabel}
                 </span>
               </div>

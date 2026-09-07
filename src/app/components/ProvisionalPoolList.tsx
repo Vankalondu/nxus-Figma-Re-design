@@ -132,12 +132,12 @@ export function ProvisionalPoolList() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--light-200)]">
         <div className="flex items-center gap-2">
-          <Award className="w-5 h-5 text-[#1E88E5]" />
+          <Award className="w-5 h-5 text-brand-primary" />
           <h3 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Top 10 Provisional Pool
           </h3>
         </div>
-        <button className="text-[#1E88E5] text-sm hover:underline font-medium flex items-center gap-1"
+        <button className="text-brand-primary text-sm hover:underline font-medium flex items-center gap-1"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -190,7 +190,7 @@ export function ProvisionalPoolList() {
             </div>
 
             {/* Action Arrow */}
-            <ArrowRight className="w-5 h-5 text-[#94a3b8] group-hover:text-[#1E88E5] transition-colors shrink-0" />
+            <ArrowRight className="w-5 h-5 text-[#94a3b8] group-hover:text-brand-primary transition-colors shrink-0" />
           </div>
         ))}
       </div>

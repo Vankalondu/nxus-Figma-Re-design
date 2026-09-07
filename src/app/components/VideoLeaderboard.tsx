@@ -12,7 +12,7 @@ export function VideoLeaderboard() {
       weeklyChange: '+12%',
       trend: 'up',
       badge: 'hot',
-      initialsColor: 'bg-[#1E88E5]',
+      initialsColor: 'bg-brand-primary',
     },
     {
       rank: 2,
@@ -24,7 +24,7 @@ export function VideoLeaderboard() {
       weeklyChange: '+9%',
       trend: 'up',
       badge: 'star',
-      initialsColor: 'bg-[#1E88E5]',
+      initialsColor: 'bg-brand-primary',
     },
     {
       rank: 3,
@@ -36,7 +36,7 @@ export function VideoLeaderboard() {
       weeklyChange: '+7%',
       trend: 'up',
       badge: 'rising',
-      initialsColor: 'bg-[#1E88E5]',
+      initialsColor: 'bg-brand-primary',
     },
     {
       rank: 4,
@@ -48,7 +48,7 @@ export function VideoLeaderboard() {
       weeklyChange: '+5%',
       trend: 'up',
       badge: null,
-      initialsColor: 'bg-[#1E88E5]',
+      initialsColor: 'bg-brand-primary',
     },
     {
       rank: 5,
@@ -60,7 +60,7 @@ export function VideoLeaderboard() {
       weeklyChange: '+4%',
       trend: 'up',
       badge: null,
-      initialsColor: 'bg-[#1E88E5]',
+      initialsColor: 'bg-brand-primary',
     },
     {
       rank: 6,
@@ -72,7 +72,7 @@ export function VideoLeaderboard() {
       weeklyChange: '+3%',
       trend: 'up',
       badge: null,
-      initialsColor: 'bg-[#1E88E5]',
+      initialsColor: 'bg-brand-primary',
     },
   ];
 
@@ -95,7 +95,7 @@ export function VideoLeaderboard() {
         <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Video Uploader/Editor Leaderboard
         </h2>
-        <button className="flex items-center gap-1 text-[#999] hover:text-[#1E88E5] transition-colors text-sm"
+        <button className="flex items-center gap-1 text-[#999] hover:text-brand-primary transition-colors text-sm"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -106,7 +106,7 @@ export function VideoLeaderboard() {
         {editors.map((editor) => (
           <div
             key={editor.name}
-            className="bg-surface-card border border-[var(--light-200)] rounded-xl p-4 hover:border-[#1E88E5]/30 transition-all hover:shadow-sm flex items-center gap-4"
+            className="bg-surface-card border border-[var(--light-200)] rounded-xl p-4 hover:border-brand-primary/30 transition-all hover:shadow-sm flex items-center gap-4"
           >
             {/* Avatar with initials */}
             <div className={`w-11 h-11 ${editor.initialsColor} rounded-xl flex items-center justify-center text-on-brand shrink-0`}

@@ -10,10 +10,10 @@ interface ActionItem { label: string; action: () => void; danger?: boolean; icon
 const ActionGroup = ({ items }: { items: ActionItem[] }) => {
   if (!items.length) return null;
   return (
-    <div className="inline-flex items-center rounded-full bg-[var(--light-200)] border border-[#b4d7f6] p-0.5 shrink-0">
+    <div className="inline-flex items-center rounded-full bg-[var(--light-200)] border border-default p-0.5 shrink-0">
       {items.map((item, i) => (
         <React.Fragment key={i}>
-          {i > 0 && <span className="w-px h-4 bg-[#b4d7f6] self-center shrink-0" />}
+          {i > 0 && <span className="w-px h-4 bg-surface-midtone self-center shrink-0" />}
           <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
             className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
               item.label === 'Restore'
@@ -183,7 +183,7 @@ export const CardView = ({
                   };
 
                   return (
-                    <div key={player.id} className={`bg-[var(--light-50)] relative rounded-[32px] overflow-hidden border border-[#b4d7f6] shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-none ${isArchived ? 'opacity-50' : ''}`}>
+                    <div key={player.id} className={`bg-[var(--light-50)] relative rounded-[32px] overflow-hidden border border-default shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-none ${isArchived ? 'opacity-50' : ''}`}>
                       {isArchived && (
                         <div className="bg-text-body/80 py-2 px-4 text-center">
                           <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand">Archived – Not Visible to Scouts</span>
@@ -192,14 +192,14 @@ export const CardView = ({
                       <div className="p-[16px] flex flex-col gap-[10px]">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex items-center gap-[10px] min-w-0 flex-1">
-                            <div className="bg-[#f0f7fd] drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[44px] rounded-full shrink-0 border border-[#b4d7f6] relative">
+                            <div className="bg-surface-input drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[44px] rounded-full shrink-0 border border-default relative">
                               <p className="font-heading font-bold text-[var(--blue-950)] text-[12px]">{player.initials}</p>
                               <span className={`absolute bottom-0 right-0 w-[13px] h-[13px] rounded-full border-2 border-[var(--light-50)] ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                             </div>
                             <div className="flex flex-col gap-[6px] min-w-0">
                               <div className="flex items-center gap-[6px] min-w-0">
                                 <p onClick={() => navigate(`/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[15px] hover:underline cursor-pointer leading-tight truncate min-w-0">{player.name}</p>
-                                <span className="size-[16px] rounded-full overflow-hidden border border-[#b4d7f6] shrink-0">
+                                <span className="size-[16px] rounded-full overflow-hidden border border-default shrink-0">
                                   <img src={`https://flagcdn.com/w40/${natCode}.png`} alt={player.nationality} className="size-full object-cover" />
                                 </span>
                                 {player.dotColor && <div className={`w-2 h-2 rounded-full shrink-0 ${player.dotColor}`} />}
@@ -224,12 +224,12 @@ export const CardView = ({
                         </div>
 
                         <div className="flex items-stretch gap-[10px] w-full">
-                          <div className="relative bg-[var(--light-50)] border border-[#b4d7f6] rounded-[16px] px-[12px] py-[7px] flex-1 min-w-0 flex items-center gap-[10px]">
+                          <div className="relative bg-[var(--light-50)] border border-default rounded-[16px] px-[12px] py-[7px] flex-1 min-w-0 flex items-center gap-[10px]">
                             <div className="flex flex-col items-start min-w-0 flex-1">
                               <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
                               <p className="font-heading font-bold text-[var(--blue-950)] text-[14px] leading-tight truncate w-full">{player.team || player.pTeam}</p>
                             </div>
-                            <div className="w-px self-stretch bg-[#b4d7f6] shrink-0" />
+                            <div className="w-px self-stretch bg-surface-midtone shrink-0" />
                             <div className="flex flex-col items-center shrink-0">
                               <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Pos</p>
                               <p className="font-heading font-bold text-[var(--blue-950)] text-[14px] leading-tight whitespace-nowrap">{player.posAcronym || player.pos}</p>

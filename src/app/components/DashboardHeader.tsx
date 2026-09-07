@@ -11,7 +11,7 @@ export function DashboardHeader() {
             <input
               type="text"
               placeholder="Search players, teams, matches..."
-              className="w-full bg-surface-card border border-default rounded-lg pl-10 pr-4 py-2 text-[#333640] placeholder-[#9ca3af] focus:outline-none focus:border-[#1E88E5]"
+              className="w-full bg-surface-card border border-default rounded-lg pl-10 pr-4 py-2 text-[#333640] placeholder-[#9ca3af] focus:outline-none focus:border-brand-primary"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             />
           </div>
@@ -25,15 +25,15 @@ export function DashboardHeader() {
             <span>This Week</span>
           </button>
           
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#1E88E5] text-on-brand rounded-lg hover:bg-[#1976D2] transition-colors"
+          <button className="flex items-center gap-2 px-4 py-2 bg-brand-primary text-on-brand rounded-lg hover:bg-[#1976D2] transition-colors"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <Plus className="w-4 h-4" />
             <span>Add Player</span>
           </button>
 
-          <button className="relative p-2 text-[#333640] hover:text-[#1E88E5] transition-colors">
+          <button className="relative p-2 text-[#333640] hover:text-brand-primary transition-colors">
             <Bell className="w-6 h-6" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-[#1E88E5] rounded-full" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-brand-primary rounded-full" />
           </button>
         </div>
       </div>

@@ -250,7 +250,7 @@ export default function PlayerProfile() {
   // ---- Render helpers ----
   const videoCard = (vid: any, i: number) => (
     <div key={vid.title} className="w-full bg-surface-card border border-default rounded-[20px] overflow-hidden shadow-[var(--shadow-lg)] group hover:shadow-[var(--shadow-xl)] transition-all cursor-pointer">
-      <div className="relative aspect-[16/9] bg-gradient-to-br from-[#B4D7F6]/70 via-[var(--blue-50)]/50 to-surface-accent flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-[16/9] bg-gradient-to-br from-surface-midtone/70 via-[var(--blue-50)]/50 to-surface-accent flex items-center justify-center overflow-hidden">
         <Video size={36} strokeWidth={1.5} className="text-brand-primary/50" />
         <span className="absolute top-3 left-3 bg-surface-card/90 backdrop-blur-md text-strong font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-1 rounded-lg shadow-sm">{(vid.type === 'Match' ? 'F' : 'H') + (i + 1)}</span>
       </div>

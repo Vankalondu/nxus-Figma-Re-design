@@ -390,7 +390,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
           {queue.map(item => (
             <div key={item.id} className="px-5 py-4 flex items-center gap-4">
               {/* thumbnail + play */}
-              <button onClick={() => setPlaying(item)} className="relative w-24 h-14 rounded-[12px] bg-gradient-to-br from-[#B4D7F6]/70 to-surface-accent flex items-center justify-center shrink-0 group">
+              <button onClick={() => setPlaying(item)} className="relative w-24 h-14 rounded-[12px] bg-gradient-to-br from-surface-midtone/70 to-surface-accent flex items-center justify-center shrink-0 group">
                 <span className="w-8 h-8 rounded-full bg-surface-card/90 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"><Play size={14} className="text-brand-primary ml-0.5" /></span>
               </button>
               <div className="min-w-0 flex-1">

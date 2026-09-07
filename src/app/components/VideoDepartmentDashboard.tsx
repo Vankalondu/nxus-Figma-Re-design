@@ -204,7 +204,7 @@ export function VideoDepartmentDashboard() {
               Avg. Turnaround Time
             </p>
             <div className="p-2 rounded-xl bg-[var(--light-300)] shrink-0 ml-3">
-              <Clock className="w-5 h-5 text-[#1E88E5]" strokeWidth={2.5} />
+              <Clock className="w-5 h-5 text-brand-primary" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
@@ -343,7 +343,7 @@ export function VideoDepartmentDashboard() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1E88E5] to-[#1565C0] flex items-center justify-center text-on-brand font-semibold text-sm"
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-[#1565C0] flex items-center justify-center text-on-brand font-semibold text-sm"
                           style={{ fontFamily: "'Figtree', sans-serif" }}>
                           {editor.avatar}
                         </div>
@@ -406,7 +406,7 @@ export function VideoDepartmentDashboard() {
           </div>
 
           <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
-            <button className="text-[#1E88E5] text-sm hover:underline font-medium"
+            <button className="text-brand-primary text-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View Full Editor Performance Details →
             </button>
@@ -457,7 +457,7 @@ export function VideoDepartmentDashboard() {
                   </div>
                   <div className="mt-1">
                     <span className={`text-xs font-medium ${
-                      player.status === 'In Progress' ? 'text-[#1E88E5]' :
+                      player.status === 'In Progress' ? 'text-brand-primary' :
                       player.status === 'Not Started' ? 'text-[#E53935]' :
                       'text-[#F9A825]'
                     }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -470,7 +470,7 @@ export function VideoDepartmentDashboard() {
           </div>
 
           <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
-            <button className="text-[#1E88E5] text-sm hover:underline font-medium"
+            <button className="text-brand-primary text-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View All Pending Videos ({awaitingVideoPlayers.length + 120}) →
             </button>

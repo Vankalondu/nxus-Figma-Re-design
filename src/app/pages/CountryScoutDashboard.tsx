@@ -839,14 +839,14 @@ export default function CountryScoutDashboardPage() {
                                           const isRaised = raisedPlayerIds.has(player.id);
                                           
                                           return (
-                                            <div key={player.id} className={`bg-[var(--light-50)] relative rounded-[32px] overflow-hidden border border-[#b4d7f6] shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-[380px] ${isRaised ? 'border-brand-primary/40' : ''}`}>
+                                            <div key={player.id} className={`bg-[var(--light-50)] relative rounded-[32px] overflow-hidden border border-default shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-[380px] ${isRaised ? 'border-brand-primary/40' : ''}`}>
                                               {isRaised && <div className="absolute top-0 left-0 w-full h-1 bg-brand-primary z-10" />}
                                               <div className="p-[24.8px] flex flex-col gap-[16px]">
                                                 {/* Top Row */}
                                                 <div className="flex items-start justify-between">
                                                   <div className="flex items-center gap-[12px]">
                                                     {/* Avatar */}
-                                                    <div className="bg-[#f0f7fd] drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[56px] rounded-full shrink-0 border border-[#b4d7f6] relative">
+                                                    <div className="bg-surface-input drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[56px] rounded-full shrink-0 border border-default relative">
                                                       <p className="font-heading font-bold text-[var(--blue-950)] text-[14px]">{player.initials}</p>
                                                     </div>
                                                     {/* Name and Tags */}
@@ -893,12 +893,12 @@ export default function CountryScoutDashboardPage() {
                                                 {/* Bottom Row */}
                                                 <div className="relative h-[81.6px] w-full">
                                                   {/* Team */}
-                                                  <div className="absolute left-0 top-0 bg-[var(--light-50)] border border-[#b4d7f6] rounded-[16px] p-[12.8px] w-[138.2px] h-[65.6px] flex flex-col items-start">
+                                                  <div className="absolute left-0 top-0 bg-[var(--light-50)] border border-default rounded-[16px] p-[12.8px] w-[138.2px] h-[65.6px] flex flex-col items-start">
                                                     <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
                                                     <p className="font-heading font-bold text-[var(--blue-950)] text-[14px] truncate leading-tight w-full">{player.pTeam}</p>
                                                   </div>
                                                   {/* Flag */}
-                                                  <div className="absolute left-[97.2px] top-[31px] size-[20px] rounded-full pointer-events-none z-10 overflow-hidden border border-[#b4d7f6]">
+                                                  <div className="absolute left-[97.2px] top-[31px] size-[20px] rounded-full pointer-events-none z-10 overflow-hidden border border-default">
                                                     <img src={`https://flagcdn.com/w40/${natCode}.png`} alt={player.nationality} className="absolute inset-0 size-full object-cover" />
                                                   </div>
                                                   {/* Stats */}
