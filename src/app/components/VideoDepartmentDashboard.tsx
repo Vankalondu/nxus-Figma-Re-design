@@ -152,7 +152,7 @@ export function VideoDepartmentDashboard() {
     <div className="space-y-6">
       {/* Video Department KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Packages Completed
@@ -170,12 +170,12 @@ export function VideoDepartmentDashboard() {
               +18
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             This week (+24% vs last week)
           </div>
         </div>
 
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Missing Video Packages
@@ -193,12 +193,12 @@ export function VideoDepartmentDashboard() {
               -8
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Pending player packages
           </div>
         </div>
 
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Avg. Turnaround Time
@@ -215,12 +215,12 @@ export function VideoDepartmentDashboard() {
               days
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             From footage to upload
           </div>
         </div>
 
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Editor Capacity
@@ -238,14 +238,14 @@ export function VideoDepartmentDashboard() {
               +5%
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Current workload utilization
           </div>
         </div>
       </div>
 
       {/* Weekly Production Chart */}
-      <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
+      <div className="bg-surface-card border border-default rounded-2xl p-6">
         <div className="mb-6">
           <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Weekly Production Trends
@@ -286,7 +286,7 @@ export function VideoDepartmentDashboard() {
       {/* Main Content: Video Editor Leaderboard and Players Awaiting Video */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Video Editor Performance Leaderboard - 60% */}
-        <div className="lg:col-span-3 bg-surface-card border border-[#e0e7ef] rounded-2xl overflow-hidden">
+        <div className="lg:col-span-3 bg-surface-card border border-default rounded-2xl overflow-hidden">
           <div className="p-6 border-b border-[var(--light-200)]">
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Video Editor Performance Leaderboard
@@ -414,7 +414,7 @@ export function VideoDepartmentDashboard() {
         </div>
 
         {/* Players Awaiting Video Packages - 40% */}
-        <div className="lg:col-span-2 bg-surface-card border border-[#e0e7ef] rounded-2xl overflow-hidden">
+        <div className="lg:col-span-2 bg-surface-card border border-default rounded-2xl overflow-hidden">
           <div className="p-6 border-b border-[var(--light-200)]">
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Priority Video Queue

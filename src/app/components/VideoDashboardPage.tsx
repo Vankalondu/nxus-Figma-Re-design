@@ -9,7 +9,7 @@ export function VideoDashboardPage() {
         <h1 className="text-[var(--navy-800)] mb-1" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
           Video Dashboard
         </h1>
-        <p className="text-[#666]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+        <p className="text-muted" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           Welcome back. Here's your video team overview.
         </p>
       </div>

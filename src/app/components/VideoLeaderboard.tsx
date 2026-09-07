@@ -90,12 +90,12 @@ export function VideoLeaderboard() {
   };
 
   return (
-    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
+    <div className="bg-surface-card border border-default rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Video Uploader/Editor Leaderboard
         </h2>
-        <button className="flex items-center gap-1 text-[#999] hover:text-brand-primary transition-colors text-sm"
+        <button className="flex items-center gap-1 text-muted hover:text-brand-primary transition-colors text-sm"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -124,10 +124,10 @@ export function VideoLeaderboard() {
                 {editor.badge && getBadgeIcon(editor.badge)}
               </div>
               <div className="flex items-center gap-3 mt-1">
-                <span className="text-[#999] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Pkg: {editor.packagesPercent}%
                 </span>
-                <span className="text-[#999] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Match: {editor.matchesPercent}%
                 </span>
               </div>

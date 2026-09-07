@@ -42,7 +42,7 @@ export function OperationsKPICards() {
       {kpis.map((kpi) => (
         <div
           key={kpi.label}
-          className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all"
+          className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all"
         >
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -64,7 +64,7 @@ export function OperationsKPICards() {
             )}
           </div>
           {kpi.subtext && (
-            <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {kpi.subtext}
             </div>
           )}

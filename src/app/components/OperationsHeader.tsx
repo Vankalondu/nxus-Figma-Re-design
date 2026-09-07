@@ -5,17 +5,17 @@ export function OperationsHeader() {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div className="bg-surface-card border-b border-[#e0e7ef] px-6 py-4">
+    <div className="bg-surface-card border-b border-default px-6 py-4">
       <div className="flex items-center gap-4 max-w-[1800px] mx-auto">
         {/* Search Bar */}
         <div className="flex-1 max-w-2xl relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#94a3b8]" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
           <input
             type="text"
             placeholder="Search players, teams, matches..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-[var(--light-50)] border border-[var(--light-200)] rounded-xl text-[var(--navy-800)] placeholder:text-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-brand-primary transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-[var(--light-50)] border border-[var(--light-200)] rounded-xl text-[var(--navy-800)] placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-brand-primary transition-all"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           />
         </div>

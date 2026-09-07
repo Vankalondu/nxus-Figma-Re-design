@@ -128,7 +128,7 @@ const provisionalPoolPlayers: Player[] = [
 
 export function ProvisionalPoolList() {
   return (
-    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 h-full flex flex-col">
+    <div className="bg-surface-card border border-default rounded-2xl p-6 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--light-200)]">
         <div className="flex items-center gap-2">
@@ -152,7 +152,7 @@ export function ProvisionalPoolList() {
             className="group flex items-center gap-4 p-3 rounded-xl hover:bg-[var(--light-50)] border border-transparent hover:border-[var(--light-200)] transition-all cursor-pointer"
           >
             {/* Rank */}
-            <div className="text-[#94a3b8] text-sm font-semibold w-6 shrink-0 text-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="text-muted text-sm font-semibold w-6 shrink-0 text-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {index + 1}
             </div>
 
@@ -190,7 +190,7 @@ export function ProvisionalPoolList() {
             </div>
 
             {/* Action Arrow */}
-            <ArrowRight className="w-5 h-5 text-[#94a3b8] group-hover:text-brand-primary transition-colors shrink-0" />
+            <ArrowRight className="w-5 h-5 text-muted group-hover:text-brand-primary transition-colors shrink-0" />
           </div>
         ))}
       </div>

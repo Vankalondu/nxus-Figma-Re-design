@@ -54,7 +54,7 @@ const matchesWithMissingFootage: Match[] = [
 
 export function MissingFootageMatches() {
   return (
-    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 h-full flex flex-col">
+    <div className="bg-surface-card border border-default rounded-2xl p-6 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-start justify-between mb-6 pb-4 border-b border-[var(--light-200)]">
         <div className="flex items-start gap-2">
@@ -82,15 +82,15 @@ export function MissingFootageMatches() {
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex-1">
                   <div className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                    {match.homeTeam} <span className="text-[#94a3b8] font-normal">vs</span> {match.awayTeam}
+                    {match.homeTeam} <span className="text-muted font-normal">vs</span> {match.awayTeam}
                   </div>
                   <div className="text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {match.competition}
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#94a3b8] group-hover:text-brand-primary transition-colors shrink-0 mt-1" />
+                <ArrowRight className="w-4 h-4 text-muted group-hover:text-brand-primary transition-colors shrink-0 mt-1" />
               </div>
-              <div className="text-xs text-[#94a3b8] flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="text-xs text-muted flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <span>📅</span>
                 <span>{match.date}</span>
               </div>

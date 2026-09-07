@@ -30,7 +30,7 @@ export function GlobalPulseDashboard() {
     <div className="space-y-6">
       {/* Top-level Organization KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Total Active Players
@@ -48,12 +48,12 @@ export function GlobalPulseDashboard() {
               +12%
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             In pipeline across all territories
           </div>
         </div>
 
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Organization Velocity
@@ -71,12 +71,12 @@ export function GlobalPulseDashboard() {
               +5%
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Average completion rate
           </div>
         </div>
 
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Video Packages Ready
@@ -94,12 +94,12 @@ export function GlobalPulseDashboard() {
               +18
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             This week
           </div>
         </div>
 
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all">
+        <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
             <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Grade A Conversion
@@ -117,7 +117,7 @@ export function GlobalPulseDashboard() {
               +3%
             </div>
           </div>
-          <div className="text-[#94a3b8] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Players upgraded to Grade A
           </div>
         </div>
@@ -126,7 +126,7 @@ export function GlobalPulseDashboard() {
       {/* Department Performance Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Weekly Throughput Trend */}
-        <div className="lg:col-span-2 bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
+        <div className="lg:col-span-2 bg-surface-card border border-default rounded-2xl p-6">
           <div className="mb-6">
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Department Throughput Trends
@@ -187,7 +187,7 @@ export function GlobalPulseDashboard() {
         </div>
 
         {/* Department Efficiency */}
-        <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
+        <div className="bg-surface-card border border-default rounded-2xl p-6">
           <div className="mb-6">
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Department Efficiency
@@ -240,7 +240,7 @@ export function GlobalPulseDashboard() {
       </div>
 
       {/* Task Completion Breakdown */}
-      <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
+      <div className="bg-surface-card border border-default rounded-2xl p-6">
         <div className="mb-6">
           <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Task Completion Overview

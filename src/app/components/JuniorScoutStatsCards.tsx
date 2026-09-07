@@ -28,7 +28,7 @@ export function JuniorScoutStatsCards() {
       label: 'Raised players missing detailed match entry',
       value: '14',
       subtext: '3 pending completion',
-      subtextColor: 'text-[#666]',
+      subtextColor: 'text-muted',
       linkText: 'Review List',
       linkHref: '#',
       icon: ClipboardList,
@@ -53,10 +53,10 @@ export function JuniorScoutStatsCards() {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6 hover:shadow-md transition-all"
+          className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all"
         >
           <div className="flex items-start justify-between mb-3">
-            <p className="text-[#333640] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {stat.label}
             </p>
             <div className={`p-2 rounded-xl ${stat.iconBg} shrink-0 ml-3`}>

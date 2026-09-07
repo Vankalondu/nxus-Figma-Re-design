@@ -196,7 +196,7 @@ export function ScoutQualityLeaderboard() {
                         {scout.gradeA} Grade A
                       </span>
                     </div>
-                    <span className="text-[#94a3b8] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                       • {totalPlayers} total
                     </span>
                   </div>
@@ -242,10 +242,10 @@ export function ScoutQualityLeaderboard() {
   };
 
   return (
-    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl flex flex-col md:flex-row overflow-hidden h-full min-h-[500px] shadow-sm">
+    <div className="bg-surface-card border border-default rounded-2xl flex flex-col md:flex-row overflow-hidden h-full min-h-[500px] shadow-sm">
       {/* Left Pane - Countries */}
-      <div className="w-full md:w-1/3 xl:w-[35%] border-b md:border-b-0 md:border-r border-[#e0e7ef] bg-[var(--light-50)] flex flex-col shrink-0">
-        <div className="p-5 border-b border-[#e0e7ef] flex items-center gap-2 bg-surface-card">
+      <div className="w-full md:w-1/3 xl:w-[35%] border-b md:border-b-0 md:border-r border-default bg-[var(--light-50)] flex flex-col shrink-0">
+        <div className="p-5 border-b border-default flex items-center gap-2 bg-surface-card">
           <Globe className="w-5 h-5 text-brand-primary" />
           <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Regions
@@ -281,7 +281,7 @@ export function ScoutQualityLeaderboard() {
                   </div>
                 </div>
                 <div className="text-xs text-body flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  <Crown className="w-3 h-3 text-[#94a3b8] shrink-0" />
+                  <Crown className="w-3 h-3 text-muted shrink-0" />
                   <span className="truncate">{country.headScout.name}</span>
                 </div>
               </button>
@@ -292,7 +292,7 @@ export function ScoutQualityLeaderboard() {
       
       {/* Right Pane - Scouts */}
       <div className="w-full md:w-2/3 xl:w-[65%] flex flex-col bg-surface-card">
-        <div className="p-5 border-b border-[#e0e7ef] flex items-center justify-between bg-gradient-to-b from-[var(--light-50)] to-text-on-brand">
+        <div className="p-5 border-b border-default flex items-center justify-between bg-gradient-to-b from-[var(--light-50)] to-text-on-brand">
           <div className="flex items-center gap-2">
             <span className="text-2xl leading-none">{activeData.flag}</span>
             <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
@@ -328,7 +328,7 @@ export function ScoutQualityLeaderboard() {
                   Country Scouts
                 </h3>
               </div>
-              <div className="text-xs text-[#94a3b8]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="text-xs text-muted" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Sorted by Grade A players
               </div>
             </div>

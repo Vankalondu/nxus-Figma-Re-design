@@ -84,7 +84,7 @@ export function ScoutLeaderboard() {
   };
 
   return (
-    <div className="bg-[#0F1419] border border-default rounded-xl p-6">
+    <div className="bg-[var(--navy-800)] border border-default rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-status-warning/10 rounded-lg">

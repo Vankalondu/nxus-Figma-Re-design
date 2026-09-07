@@ -7,11 +7,11 @@ export function DashboardHeader() {
         {/* Search */}
         <div className="flex-1 max-w-md">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9ca3af]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
             <input
               type="text"
               placeholder="Search players, teams, matches..."
-              className="w-full bg-surface-card border border-default rounded-lg pl-10 pr-4 py-2 text-[#333640] placeholder-[#9ca3af] focus:outline-none focus:border-brand-primary"
+              className="w-full bg-surface-card border border-default rounded-lg pl-10 pr-4 py-2 text-body placeholder:text-placeholder focus:outline-none focus:border-brand-primary"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             />
           </div>
@@ -19,7 +19,7 @@ export function DashboardHeader() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 px-4 py-2 bg-surface-card text-[#333640] rounded-lg hover:bg-[var(--light-100)] transition-colors border border-default"
+          <button className="flex items-center gap-2 px-4 py-2 bg-surface-card text-body rounded-lg hover:bg-[var(--light-100)] transition-colors border border-default"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <Calendar className="w-4 h-4" />
             <span>This Week</span>
@@ -31,7 +31,7 @@ export function DashboardHeader() {
             <span>Add Player</span>
           </button>
 
-          <button className="relative p-2 text-[#333640] hover:text-brand-primary transition-colors">
+          <button className="relative p-2 text-body hover:text-brand-primary transition-colors">
             <Bell className="w-6 h-6" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-brand-primary rounded-full" />
           </button>

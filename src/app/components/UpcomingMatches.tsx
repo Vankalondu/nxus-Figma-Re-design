@@ -29,12 +29,12 @@ export function UpcomingMatches() {
   ];
 
   return (
-    <div className="bg-surface-card border border-[#e0e7ef] rounded-2xl p-6">
+    <div className="bg-surface-card border border-default rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Upcoming Matches
         </h2>
-        <button className="flex items-center gap-1 text-[#999] hover:text-brand-primary transition-colors text-sm"
+        <button className="flex items-center gap-1 text-muted hover:text-brand-primary transition-colors text-sm"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -48,7 +48,7 @@ export function UpcomingMatches() {
             className="border border-[var(--light-200)] rounded-xl p-4 hover:border-brand-primary/30 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[#666] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 {match.league}
               </span>
               <span className="text-brand-primary text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
@@ -69,7 +69,7 @@ export function UpcomingMatches() {
                 <span className="text-[var(--navy-800)] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.awayTeam}
                 </span>
-                <span className="text-[#666] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
+                <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
                   {match.awayLabel}
                 </span>
               </div>

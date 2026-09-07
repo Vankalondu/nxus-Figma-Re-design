@@ -45,7 +45,7 @@ export function RecentlyAddedPlayers() {
   ];
 
   return (
-    <div className="bg-[#0F1419] border border-default rounded-xl p-6">
+    <div className="bg-[var(--navy-800)] border border-default rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-on-brand text-xl font-semibold">Recently Added Players</h2>
         <button className="flex items-center gap-2 text-body hover:text-on-brand transition-colors">

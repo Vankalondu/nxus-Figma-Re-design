@@ -84,14 +84,14 @@ export function Sidebar() {
                   className={`w-full h-12 flex items-center rounded-[16px] transition-all px-3 ${
                     active
                       ? 'bg-[var(--blue-950)] text-[var(--light-50)] shadow-sm'
-                      : 'text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[var(--light-100)]'
+                      : 'text-muted hover:text-[var(--blue-950)] hover:bg-[var(--light-100)]'
                   }`}
                 >
                   <div className="shrink-0 flex items-center justify-center w-6 ml-1">
                     <item.icon size={22} strokeWidth={active ? 2.5 : 2} />
                   </div>
                   <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                    active ? 'text-[var(--light-50)]' : 'text-[#64748B] group-hover:text-[var(--blue-950)]'
+                    active ? 'text-[var(--light-50)]' : 'text-muted group-hover:text-[var(--blue-950)]'
                   }`}>
                     {item.label}
                   </span>
@@ -105,7 +105,7 @@ export function Sidebar() {
         <div className="mt-auto px-6 w-[240px] flex flex-col gap-6 pb-6">
           <button
             onClick={(e) => { e.stopPropagation(); setTheme(theme === 'dark' ? 'light' : 'dark'); }}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--light-100)] border border-[#D0E8E3] text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[#D0E8E3] transition-colors shrink-0"
+            className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--light-100)] border border-[#D0E8E3] text-muted hover:text-[var(--blue-950)] hover:bg-[#D0E8E3] transition-colors shrink-0"
             title="Toggle Theme"
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
@@ -118,7 +118,7 @@ export function Sidebar() {
             />
             <div className="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden whitespace-nowrap">
               <span className="font-body font-bold text-[14px] text-[var(--blue-950)]">{displayName}</span>
-              <span className="font-body text-[12px] font-semibold text-[#64748B]">{displayRole}</span>
+              <span className="font-body text-[12px] font-semibold text-muted">{displayRole}</span>
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@ export function Sidebar() {
               </div>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="w-8 h-8 rounded-full bg-[var(--light-100)] border border-[#D0E8E3] flex items-center justify-center text-[#64748B] hover:text-[var(--blue-950)] transition-colors"
+                className="w-8 h-8 rounded-full bg-[var(--light-100)] border border-[#D0E8E3] flex items-center justify-center text-muted hover:text-[var(--blue-950)] transition-colors"
               >
                 <X size={16} />
               </button>
@@ -151,7 +151,7 @@ export function Sidebar() {
                     className={`w-full h-12 flex items-center rounded-[16px] transition-all px-3 gap-4 ${
                       active
                         ? 'bg-[var(--blue-950)] text-[var(--light-50)] shadow-sm'
-                        : 'text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[var(--light-100)]'
+                        : 'text-muted hover:text-[var(--blue-950)] hover:bg-[var(--light-100)]'
                     }`}
                   >
                     <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
@@ -163,7 +163,7 @@ export function Sidebar() {
             <div className="mt-auto px-6 flex flex-col gap-6 pb-8">
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--light-100)] border border-[#D0E8E3] text-[#64748B] hover:text-[var(--blue-950)] hover:bg-[#D0E8E3] transition-colors"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--light-100)] border border-[#D0E8E3] text-muted hover:text-[var(--blue-950)] hover:bg-[#D0E8E3] transition-colors"
               >
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
               </button>
@@ -175,7 +175,7 @@ export function Sidebar() {
                 />
                 <div>
                   <div className="font-body font-bold text-[14px] text-[var(--blue-950)]">{displayName}</div>
-                  <div className="font-body text-[12px] text-[#64748B]">{displayRole}</div>
+                  <div className="font-body text-[12px] text-muted">{displayRole}</div>
                 </div>
               </div>
             </div>
@@ -187,7 +187,7 @@ export function Sidebar() {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[150] bg-[var(--light-50)] border-t border-[#D0E8E3] flex items-center justify-around h-16 px-4 safe-area-bottom shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
         <button
           onClick={() => setMobileOpen(true)}
-          className="flex flex-col items-center gap-1 text-[#64748B] hover:text-[var(--blue-950)] transition-colors"
+          className="flex flex-col items-center gap-1 text-muted hover:text-[var(--blue-950)] transition-colors"
         >
           <Menu size={20} />
           <span className="font-body text-[10px] font-bold uppercase tracking-wide">Menu</span>
@@ -197,7 +197,7 @@ export function Sidebar() {
           return (
             <button key={i} onClick={() => navigate(item.path)}
               className={`flex flex-col items-center gap-1 transition-colors ${
-                active ? 'text-[var(--blue-950)]' : 'text-[#64748B] hover:text-[var(--blue-950)]'
+                active ? 'text-[var(--blue-950)]' : 'text-muted hover:text-[var(--blue-950)]'
               }`}
             >
               <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
