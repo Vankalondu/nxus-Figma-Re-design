@@ -916,12 +916,20 @@ The original table, kept for the reasoning behind each hold:
 
 Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
 
-**Progress, 7 Sep 2026.** The ratchet has come down **662 → 140** in four passes, each
-verified separately: 161 bound to invariant roles, 222 near-misses snapped to their palette
-token, 72 theme-frozen literals bound to roles (an L-C8 fix — they never responded to dark
-mode), and 67 Material Design leftovers mapped to the status roles. What remains is 140 uses
-across 31 colours, and none of them can be swept: every one changes a rendered colour rather
-than just its name. Grouped by what they appear to be:
+**How it came down: 662 → 12**, in eight separately-verified passes.
+
+| Pass | Uses | What |
+|---|---|---|
+| Invariant roles | 161 | Literals whose value a theme-invariant role already held exactly |
+| Near-miss snap | 222 | Off-by-a-digit transcriptions, bound to the nearest scale step |
+| Theme-frozen | 72 | Bound to roles so they finally respond to dark mode — an **L-C8** fix |
+| Material (1) | 67 | `#43A047` `#E53935` `#F9A825` `#1565C0` → status / brand |
+| Material (2) | 25 | The rest of the Material palette, mapped inside each family |
+| Greys | 75 | **24 of these were below AA** — `#94a3b8` 2.44:1 → 5.54:1. An accessibility fix, not a rename |
+| Accents | 15 | Lime button restyled, scouted dot → success, oranges → Warning, cyan + violet became tokens |
+| Medals | 4 | Exempted as L-G2 data, code untouched |
+
+The groups below record the reasoning that got each colour to its answer.
 
 | Group | Colours | Uses | Observation |
 |---|---|---|---|
