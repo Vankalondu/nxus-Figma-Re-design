@@ -17,7 +17,7 @@ const TIER_PRIO: Record<PipelineTier, { n: number; cls: string; label: string }>
 
 // coverage status → slot appearance
 const slotCls = (kind: 'filled' | 'progress' | 'missing' | 'na') =>
-  kind === 'filled' ? 'bg-[#22d3ee]/15 text-[var(--blue-700)] border-[#22d3ee]/40'   // cyan = uploaded
+  kind === 'filled' ? 'bg-status-uploaded/15 text-[var(--blue-700)] border-status-uploaded/40'   // cyan = uploaded
   : kind === 'progress' ? 'bg-status-warning/15 text-status-warning-fg border-status-warning/30'
   : kind === 'na' ? 'bg-surface-accent text-body border-default'
   : 'bg-status-error/15 text-status-error-fg border-status-error/30';                     // red = missing
@@ -120,7 +120,7 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
         </table>
       </div>
       <p className="font-body text-[12px] text-body">
-        <span className="inline-flex items-center gap-1.5 mr-4"><span className="w-3 h-3 rounded-[4px] bg-[#22d3ee]/40" /> Uploaded</span>
+        <span className="inline-flex items-center gap-1.5 mr-4"><span className="w-3 h-3 rounded-[4px] bg-status-uploaded/40" /> Uploaded</span>
         <span className="inline-flex items-center gap-1.5 mr-4"><span className="w-3 h-3 rounded-[4px] bg-status-warning/40" /> In progress</span>
         <span className="inline-flex items-center gap-1.5 mr-4"><span className="w-3 h-3 rounded-[4px] bg-status-error/40" /> Missing</span>
         <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-[4px] bg-surface-accent border border-default" /> N/A</span>

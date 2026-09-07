@@ -948,7 +948,7 @@ const PackagesTab = () => {
                   <div className="font-body text-[12px] text-muted">{pkg.uploadDate}</div>
                 </div>
               </div>
-              {pkg.watched ? <CheckCircle size={14} className="text-[#3A8C6A]" /> : <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-status-warning/15 text-status-warning">NEW</span>}
+              {pkg.watched ? <CheckCircle size={14} className="text-status-success" /> : <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-status-warning/15 text-status-warning">NEW</span>}
             </div>
             <div className="flex items-center justify-between">
               <span className="font-body text-[12px] font-bold text-body">

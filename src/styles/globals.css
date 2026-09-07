@@ -117,6 +117,19 @@
   --green-900: #093218;
   --green-950: #051b0d;
 
+  /* ── Qaza palette — two single-value accents ──
+     Not families: each marks exactly one state the six scales cannot express,
+     and generating 11 steps for a colour used three times would be inventing a
+     ramp nobody asked for. Base position (500) so they read consistently with
+     the scales above, and so a family can grow around them later if needed.
+       cyan   — the fourth video state, "uploaded / playable", legend in
+                VideoTrackerGrid. Amber/red/green were already taken by
+                pending / missing / complete.
+       violet — the Ladder marker: a player reached via the scouting process
+                rather than direct entry. */
+  --cyan-500: #22d3ee;
+  --violet-500: #7c5cfc;
+
   /* ── Named semantic tokens ── */
 
   /* Status pill TEXT. The tinted-pill pattern (P-CO5) uses bg-X/15 with text
@@ -202,6 +215,11 @@
   --status-error: var(--red-500);
   --status-success: var(--green-500);
   --status-warning: var(--amber-500);
+  /* Theme-invariant like the three above, for the same reason (L-C3): a state
+     colour must mean the same thing in both themes or the scanning skill a
+     scout builds stops transferring. */
+  --status-uploaded: var(--cyan-500);
+  --status-ladder: var(--violet-500);
 
   --brand-primary: var(--blue-500);
   --brand-primary-hover: var(--blue-600);
@@ -379,6 +397,8 @@
   --color-status-error: var(--status-error);
   --color-status-success: var(--status-success);
   --color-status-warning: var(--status-warning);
+  --color-status-uploaded: var(--status-uploaded);
+  --color-status-ladder: var(--status-ladder);
   --color-status-success-tint: var(--status-success-tint);
   --color-status-warning-tint: var(--status-warning-tint);
   --color-status-error-tint: var(--status-error-tint);

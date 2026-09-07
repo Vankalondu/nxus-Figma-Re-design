@@ -98,12 +98,12 @@ export function MissingFootageMatches() {
 
             {/* Raised Players Alert */}
             <div className="flex items-start gap-2 bg-[var(--amber-50)] border border-[var(--amber-300)]/30 rounded-lg p-3">
-              <AlertCircle className="w-4 h-4 text-[#F57C00] shrink-0 mt-0.5" />
+              <AlertCircle className="w-4 h-4 text-[var(--amber-600)] shrink-0 mt-0.5" />
               <div className="flex-1">
-                <div className="text-xs font-semibold text-[#E65100] mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="text-xs font-semibold text-[var(--amber-600)] mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.raisedPlayers.length} Raised Player{match.raisedPlayers.length > 1 ? 's' : ''}
                 </div>
-                <div className="text-xs text-[#5D4037]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="text-xs text-[var(--amber-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.raisedPlayers.join(', ')}
                 </div>
               </div>

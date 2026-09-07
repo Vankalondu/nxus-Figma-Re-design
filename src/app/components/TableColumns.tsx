@@ -67,7 +67,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
           value={cellData} 
           onChange={(e) => onCellChange(e.target.value)}
           placeholder="Empty"
-          className="w-full bg-transparent border-none text-center focus:outline-none focus:ring-1 focus:ring-[#1a1c1d] rounded px-1 py-0.5"
+          className="w-full bg-transparent border-none text-center focus:outline-none focus:ring-1 focus:ring-border-focus rounded px-1 py-0.5"
         />
       )
     };
@@ -147,10 +147,10 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
             style={{ top: contextMenu.y, left: contextMenu.x }}
             onClick={(e) => e.stopPropagation()}
           >
-            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={() => insertColumn('left')}>
+            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-strong font-semibold transition-colors" onClick={() => insertColumn('left')}>
               <Plus size={14} className="mr-2" /> Insert column left
             </button>
-            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={() => insertColumn('right')}>
+            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-strong font-semibold transition-colors" onClick={() => insertColumn('right')}>
               <Plus size={14} className="mr-2" /> Insert column right
             </button>
             <div className="h-px bg-surface-accent my-1"></div>
@@ -161,7 +161,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
               <X size={14} className="mr-2" /> Clear column
             </button>
             <div className="h-px bg-surface-accent my-1"></div>
-            <button className="w-full text-left px-4 py-2 hover:bg-[#CCFF00]/10 flex items-center text-[#1a1c1d] font-semibold transition-colors" onClick={startEditColumn}>
+            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-strong font-semibold transition-colors" onClick={startEditColumn}>
               <FileText size={14} className="mr-2" /> Edit/Rename
             </button>
           </div>
@@ -170,12 +170,12 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
         {deletedColumnCache && (
           <div className="fixed bottom-6 right-6 z-50 bg-surface-card border border-default shadow-lg rounded-xl p-4 flex items-center space-x-4 animate-in slide-in-from-bottom-5">
             <div>
-              <p className="text-sm font-semibold text-[#1a1c1d]">Column deleted</p>
+              <p className="text-sm font-semibold text-strong">Column deleted</p>
               <p className="text-xs text-[var(--navy-200)]">You can restore it for a short time</p>
             </div>
             <button 
               onClick={undoDelete}
-              className="px-3 py-2 bg-[#CCFF00] text-[#1a1c1d] rounded-lg text-sm font-bold shadow hover:bg-[#b3e600] transition-colors flex items-center"
+              className="px-3 py-2 bg-brand-primary text-inverse rounded-lg text-sm font-bold shadow hover:bg-brand-primary-hover transition-colors flex items-center"
             >
               <Undo size={14} className="mr-1" /> Undo
             </button>

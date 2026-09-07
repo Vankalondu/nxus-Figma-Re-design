@@ -194,7 +194,7 @@ export const CardView = ({
                           <div className="flex items-center gap-[10px] min-w-0 flex-1">
                             <div className="bg-surface-input drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[44px] rounded-full shrink-0 border border-default relative">
                               <p className="font-heading font-bold text-[var(--blue-950)] text-[12px]">{player.initials}</p>
-                              <span className={`absolute bottom-0 right-0 w-[13px] h-[13px] rounded-full border-2 border-[var(--light-50)] ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
+                              <span className={`absolute bottom-0 right-0 w-[13px] h-[13px] rounded-full border-2 border-[var(--light-50)] ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                             </div>
                             <div className="flex flex-col gap-[6px] min-w-0">
                               <div className="flex items-center gap-[6px] min-w-0">

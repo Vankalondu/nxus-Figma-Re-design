@@ -915,7 +915,7 @@ const PlayerTable = ({
                               </div>
                               <div className="flex items-center gap-2 mt-0.5">
                                 <span className="font-body text-[12px] text-muted shrink-0">{player.age}</span>
-                                <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
+                                <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                                 <FlagBadge code={natCode} label={player.nationality} />
                               </div>
                             </div>
@@ -933,7 +933,7 @@ const PlayerTable = ({
                               {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{player.highlightVideos}</span>}
                               {isRaised
                                 ? <span title="Direct — added directly to the Long List"><UserRoundCheck size={15} className="text-status-warning" /></span>
-                                : <span title="Ladder — reached via the scouting process"><StairsIcon className="w-[15px] h-[15px] text-[#7C5CFC]" /></span>}
+                                : <span title="Ladder — reached via the scouting process"><StairsIcon className="w-[15px] h-[15px] text-status-ladder" /></span>}
                               <button onClick={() => onOpenVideos?.(player)} title="Watch videos"
                                 className="w-6 h-6 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors">
                                 <Play size={11} className="ml-0.5" />
@@ -1205,7 +1205,7 @@ const TargetSuperTable = ({
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1 mt-0.5">
                                 <span className="font-body text-[12px] text-muted">{player.age}</span>
-                                <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} />
+                                <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
                                 <FlagBadge code={natCode} label={player.nationality} />
                                 {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
@@ -1548,7 +1548,7 @@ const ShortListTable = ({
                               })()}
                             </div>
                             <div className="flex items-center gap-1 mt-0.5">
-                              <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} />
+                              <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
                               <FlagBadge code={natCode} label={player.nationality} />
                             </div>
                           </div>
@@ -3279,7 +3279,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         )}
         {isListTab && (
           <div className="flex flex-col gap-1 items-start shrink-0">
-            <span className="flex items-center gap-1 font-body type-caption font-bold text-body"><span className="w-2 h-2 rounded-full bg-[#3A8C6A] inline-block" />Scouted</span>
+            <span className="flex items-center gap-1 font-body type-caption font-bold text-body"><span className="w-2 h-2 rounded-full bg-status-success inline-block" />Scouted</span>
             <span className="flex items-center gap-1 font-body type-caption font-bold text-body"><span className="w-2 h-2 rounded-full bg-status-error inline-block" />Unscouted</span>
           </div>
         )}

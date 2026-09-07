@@ -79,7 +79,7 @@ export function VideoLeaderboard() {
   const getBadgeIcon = (badge: string | null) => {
     switch (badge) {
       case 'hot':
-        return <Flame className="w-4 h-4 text-[#FF6D00]" />;
+        return <Flame className="w-4 h-4 text-[var(--amber-600)]" />;
       case 'star':
         return <Star className="w-4 h-4 text-status-warning" />;
       case 'rising':

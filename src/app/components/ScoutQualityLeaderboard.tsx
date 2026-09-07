@@ -109,7 +109,7 @@ export function ScoutQualityLeaderboard() {
   const getBadgeIcon = (badge?: string | null) => {
     switch (badge) {
       case 'hot':
-        return <Flame className="w-3.5 h-3.5 text-[#FF6D00]" />;
+        return <Flame className="w-3.5 h-3.5 text-[var(--amber-600)]" />;
       case 'star':
         return <Star className="w-3.5 h-3.5 text-status-warning" fill="#F9A825" />;
       case 'rising':
