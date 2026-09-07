@@ -1,8 +1,58 @@
 # HANDOFF — NXUS Responsive System v1
 
-_Last updated: 2026-07-29. Resume by reading this file._
+_Last updated: 2026-09-07. Resume by reading this file._
 
-## LATEST (2026-07-29) — Video Manager dashboard + shared KPI/Tasks refactor (DONE, NOT deployed)
+## LATEST (2026-09-07) — Phase 3 Figma↔code reconciliation COMPLETE + colour debt 662→115 (DONE, NOT pushed, NOT deployed)
+
+**21 commits, all local.** Nothing pushed to `Vankalondu/nxus-Figma-Re-design`, no deploy. Vanessa's
+instruction: push once the phases are finished.
+
+**Phase 3 is closed.** All three plan open items resolved. The token layer now speaks Figma's
+vocabulary end to end, and `scripts/figma-css-diff.mjs` reports **66 match · 0 drift · 0
+figma-only · 0 ramp drift**.
+
+- **The vocabulary migration** (steps 4.1–4.3): 6,069 usages renamed to the Figma Mapped names,
+  then shortened — `text-text-body` → `text-body`, `border-border-default` → `border-default`
+  (3,472 more). All 40 legacy tokens and 35 legacy `@theme` bridges deleted. Every colour role
+  now resolves **Qaza → Allias → Mapped**; zero raw hex outside the scale definitions.
+- **The type ramp is `type-*`, not `text-*`** (L-TY5). `.text-body` was already the ramp's
+  font-size class on 145 elements, and Tailwind would have emitted a *second* `.text-body` for
+  the colour — both applying, neither overriding. Renaming the ramp (43 usages) was the cheap
+  side and removes the shared prefix permanently.
+- **Text roles split three ways** (L-C10): `text-heading` (117, titles only), `text-strong`
+  (444, emphatic non-titles — same value, so it shipped with zero rendered change),
+  `text-body` (1,027), `text-muted` (358), `text-placeholder` (46).
+- **L-G3 is the rule that mattered.** Retinting by `font-body` alone moved 6,438 elements — but
+  only 16 were real; the rest inherited from the app shell, and 241 fell below 4.5:1. A colour
+  on a wrapper is an inheritance default, not a role claim.
+- **Figma brought level**: 7 variables added to Mapped (`Surface/midtone|switch|sidebar-accent`,
+  `Text/strong|on-status|sidebar-muted`, `Border/input`) + `Ink/midnight` to Allias. Reading
+  Figma also corrected the **code**: 12 role pointers realigned where a hex belongs to two
+  families (`#d2e7fa` is both `Primary/100` and `Light Mode/Base`) — Figma governs naming (D-13).
+- **Status families brought into code**: `--red-*`, `--amber-*`, `--green-*` at 11 steps each,
+  transcribed from Qaza where they already existed. They were never missing; only the code was.
+- **Colour debt, ratchet 662 → 115** in five gated passes: 161 bound to invariant roles, 222
+  near-misses snapped, 72 theme-frozen literals bound (an L-C8 dark-mode fix), 67 + 25 Material
+  values mapped to status/brand families.
+
+**Figma library is NOT published.** The Plugin API cannot publish (`teamLibrary` is read-only) —
+it is a UI action: Assets → Libraries → Publish. All 8 new variables are staged
+(`hiddenFromPublishing: false`). **Probably unnecessary**: publishing only matters if another
+Figma file subscribes to QAZA_FE. The LightHouse contract is the rulebook + code tokens.
+
+**The verification caveat, and it is important.** The import closure from `App.tsx` reaches only
+**44 of 113** app files. Most of the rebound literals live in the 69 unreachable ones, so a
+`0 changed` snapshot on those passes is **not** evidence of correctness — see OR-4. Storybook
+would close it but `build-storybook` is blocked by Windows Application Control on
+`@oxc-resolver/binding-win32-x64-msvc`.
+
+**Next, and needing Vanessa:** the 115 remaining literals — greys (73 uses, breaks L-C2, but
+mapping tints a neutral blue), three vivid oranges (no NXUS equivalent; nearest step is 59–74/255
+away), teals, and the already-held cyan/lime/violet. Plus OR-8: eight roles defined and rendered
+nowhere (`text-link`, `surface-overlay`, `border-subtle`, `border-strong`, `text-disabled`,
+`text-sidebar-muted`, `text-on-status`, `surface-inverse`).
+
+## (2026-07-29) — Video Manager dashboard + shared KPI/Tasks refactor (DONE, NOT deployed)
 Built the **Video Manager** as a new role/dashboard, plus polish that touches Lead + Senior. All verified: `npm run build` clean, **Playwright 20/20 pass**, 0 h-overflow @1440/834/390. **Not deployed** (pre-meeting draft — the video dashboard is a first draft to review with the video team; all its data is mock).
 - **Shared `KpiCard`** (`components/dashboard/KpiCard.tsx`): one source of truth for the clean KPI card (chip + SHORT HEADING · big number + descriptor · actionable link + `ArrowUpRight`). `rounded-[32px]` (was 20). Robust bottom row (fixes the Lead Coverage link mis-wrap). Lead + Senior + Video Manager all use it.
   - Actionable link copy: Lead `Opens Reports·View Coverage·Opens Short List·View A+ Players`; Senior `Opens Reports·Opens Short List·View Packages·Opens Target List`.
