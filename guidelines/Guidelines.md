@@ -908,7 +908,7 @@ than just its name. Grouped by what they appear to be:
 | Material ambers | `#fff9c4` `#ffb74d` `#f57c00` `#e65100` `#ff6d00` `#fff8e1` `#ffecb3` `#8b6914` | 21 | Same shape as the `#f9a825` mapping already applied — the Warning family covers all of them. |
 | Material blues | `#1976d2` `#0d47a1` | 4 | Blue 700 and Blue 900. `Primary/Base` and `Primary/900`. |
 | Teals | `#d0e8e3` `#3a8c6a` | 18 | No palette equivalent, and `#3a8c6a` was already held in the table above. Extend the palette, or map to Success? |
-| Medal colours | `#ffd700` `#c0c0c0` `#cd7f32` | 3 | Gold, silver, bronze on the video leaderboard. These look like **L-G2 colour-as-data**: a bronze medal is bronze, and mapping it onto the brand scale would make the interface lie the same way a recoloured team kit would. Recommend exempting them explicitly rather than mapping. |
+| Medal colours | `#ffd700` `#c0c0c0` `#cd7f32` | 3 | Gold, silver, bronze on the video leaderboard. **L-G2 already covers these** — apply its test: would a rebrand of NXUS change this colour? No. A bronze medal is bronze. Mapping them onto the brand scale would make the interface lie exactly as a recoloured team kit would. Treating as data, not styling, and dropping them from the count on the same grounds as `MatchEntry`'s kit colours — flagged here for confirmation, not adjudication. |
 | Already held above | `#22d3ee` `#ccff00` `#b3e600` `#7c5cfc` | 10 | Cyan fourth state, the lime block, the violet tag. Unchanged from the table above. |
 
 **OR-7 · RESOLVED 2026-09-04.** Figma and the code are level. As first written this ruling was
@@ -984,6 +984,14 @@ consequences, both accepted deliberately:
 
 Rebinding these files to the token layer is what makes them safe to route later: whenever one
 is switched on, it will already be themed rather than carrying frozen light-mode literals.
+
+**What would close the gap.** Storybook renders a component in isolation regardless of
+routing, so the 131 stories are the natural verification surface for unreachable code — a
+story for `GlobalPulseDashboard` would put it in front of the snapshot without routing it.
+This is currently blocked, and not by the design system: `npm run build-storybook` fails
+because Windows Application Control blocks
+`@oxc-resolver/binding-win32-x64-msvc/resolver.win32-x64-msvc.node`, which is present on
+disk. Until that is unblocked, "unreachable" and "unverifiable" are the same thing here.
 
 ---
 
