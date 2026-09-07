@@ -91,7 +91,16 @@ const RULES = [
 // Bracketed hex: correct colours are often written as literals here
 // (text-[#1E88E5] IS --primary), so this is debt rather than breakage.
 const HEX_UTIL = new RegExp(`\\b(${UTIL})-\\[#[0-9A-Fa-f]{3,8}\\]`, 'g');
-const BASELINE = 16; // re-measured 2026-09-07. 12 are the tombstoned ui/sidebar.tsx + 4 L-G2 medals. Only ever lower this.
+
+// L-G2 exempt: colour that is DATA, not styling. These are medal ranks on the
+// video leaderboard — gold, silver, bronze — and they pass L-G2's own test:
+// a rebrand of NXUS would not change what colour a bronze medal is. Mapping
+// them onto the brand scale would make the interface lie, exactly as
+// recolouring a team kit would. Ruled 7 Sep 2026. Kept as a narrow allow-list
+// rather than a blanket file exception so a NEW literal in the same file still
+// counts.
+const HEX_EXEMPT = ['#ffd700', '#c0c0c0', '#cd7f32', '#8b6914'];
+const BASELINE = 12; // re-measured 2026-09-07. All 12 are in the tombstoned ui/sidebar.tsx. Only ever lower this.
 
 const files = [];
 (function walk(dir) {
@@ -118,7 +127,9 @@ for (const file of files) {
       }
     }
     HEX_UTIL.lastIndex = 0;
-    hexCount += (line.match(HEX_UTIL) || []).length;
+    hexCount += (line.match(HEX_UTIL) || [])
+      .filter((hit) => !HEX_EXEMPT.some((h) => hit.toLowerCase().includes(h)))
+      .length;
   });
 }
 

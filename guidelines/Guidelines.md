@@ -72,7 +72,9 @@ When a colour describes something in the real world rather than styling the inte
 data. It does not bind a token, and the palette Laws do not apply to it.
 
 In NXUS this covers **team kit colours** (`DEFAULT_PALETTE` and each team’s `kit.jersey` /
-`kit.shorts` in `src/app/components/MatchEntry.tsx`) and any colour a **user picks and
+`kit.shorts` in `src/app/components/MatchEntry.tsx`), **medal ranks** on the video leaderboard
+(`#ffd700` gold, `#c0c0c0` silver, `#cd7f32` bronze and the `#8b6914` dark-gold accent beside
+them, in `VideoDepartmentDashboard.tsx` — ruled 7 Sep 2026), and any colour a **user picks and
 stores**, such as custom tag colours.
 
 **Why:** a team that plays in maroon plays in maroon. Mapping its strip onto the brand scale
@@ -118,9 +120,12 @@ rendering bug rather than a design choice.
 **Catch:** `grep -rE '(bg|text|border)-(gray|slate|zinc|stone|neutral)-' src/app`
 
 ### L-C3 · Law — Status colour carries meaning, never decoration
-`--scout-green` = success, complete, scouted, approved. `--scout-red` = late, flagged,
-unscouted, destructive. `--scout-amber` = pending, in progress, warning, monitor.
-Identical in both themes.
+`--status-success` = success, complete, scouted, approved. `--status-error` = late, flagged,
+unscouted, destructive. `--status-warning` = pending, in progress, warning, monitor.
+`--status-uploaded` = footage uploaded and playable — the fourth video state, because the
+three above were already spoken for. `--status-ladder` = a player reached via the scouting
+process rather than direct entry. **All five are identical in both themes** — that is the
+point of the rule, not an implementation detail.
 
 **Why:** scouts scan hundreds of rows. A green dot must mean the same thing in every view,
 or the scanning skill a user builds stops transferring between pages.
@@ -881,8 +886,25 @@ when next touched. See open ruling **OR-4**.
 
 ## 13. Open rulings — still need a decision
 
-**OR-3 · Off-palette colour in live UI.** 59 of the original 99 occurrences are resolved
-(31 Aug). What remains, and why each was held:
+**OR-3 · RESOLVED 7 Sep 2026 — the ratchet is at 12, and all 12 are deliberate.** Every
+question in the table below has an answer now; it is kept for the reasoning, not as an ask.
+
+| Ruling | Outcome |
+|---|---|
+| `#22d3ee` cyan — the fourth video state | Became a real token. `--cyan-500` in Qaza, aliased in Allias, `Color/Status/uploaded` in Mapped, `--status-uploaded` in code. Named in L-C3. |
+| `#7c5cfc` violet — the Ladder marker | Same treatment: `--violet-500` → `--status-ladder`, `Color/Status/ladder`. Named in L-C3. |
+| `#3a8c6a` teal — the scouted dot | Bound to `status-success`. It reports a state, so L-C3 always governed it. |
+| `#ccff00` `#b3e600` `#1a1c1d` — the lime slab | Restyled to the system primary button. It was **live**, not dead: `CountryScoutDashboard` imports `TableColumns`, so a lime button with near-black text was shipping. |
+| `#7baac7` grade-B badge | Resolved earlier by the grade-badge per-grade text fix (D-9 era). |
+| Vivid oranges + brown | Bound to the Warning family at a 59–74/255 shift, accepted because nothing about them was load-bearing beyond "this is a warning". |
+| Medal colours | L-G2 data. Exempt, code untouched, and now on L-G2's named list plus a narrow allow-list in `lint-tokens.mjs`. |
+
+**The 12 that remain are all in `src/app/components/ui/sidebar.tsx`** — the tombstoned duplicate
+sidebar. Left deliberately: the rulebook says nobody should import it, and rebinding it would
+make a dead file look maintained. If it is ever deleted or revived, that number goes to zero or
+gets fixed with it.
+
+The original table, kept for the reasoning behind each hold:
 
 | Colour(s) | Where | Why it needs a decision |
 |---|---|---|

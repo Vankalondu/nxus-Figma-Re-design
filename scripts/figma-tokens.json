@@ -1,6 +1,6 @@
 {
  "_comment": "Snapshot of every variable in QAZA_FE, extracted via the Figma MCP plugin bridge. The extract needs the MCP (an agent runs it); this file is the committed result so scripts/figma-css-diff.mjs can run standalone and the diff is reviewable in a PR. Refresh by re-running the extract and replacing this file.",
- "extractedAt": "2026-09-04",
+ "extractedAt": "2026-09-07",
  "fileKey": "qefpAyr3MEEklQRV96YlSv",
  "scaleSteps": "Figma colour families run 100,200,300,400,500,Base,600,700,800,900,1000 — 11 steps with Base in the middle (the tonal anchor). CSS runs 50,100,...,900,950. So Figma/100 = CSS/-50, Figma/Base = CSS/-500, Figma/1000 = CSS/-950.",
  "Qaza": {
@@ -125,7 +125,14 @@
     "SemiBold",
     "Bold"
    ]
-  }
+  },
+  "Colors/Cyan": {
+   "Base": "#22d3ee"
+  },
+  "Colors/Violet": {
+   "Base": "#7c5cfc"
+  },
+  "_accentNote": "Added 2026-09-07. Cyan and Violet are single Base values, not 11-step families: each marks exactly one state (uploaded/playable video; Ladder entry route) and generating a ramp for a colour used three times would be inventing structure nobody asked for. Base position so a family can grow around them later."
  },
  "Allias": {
   "_role": "Groups raw values into families with all variations recorded. Pure aliases to Qaza.",
@@ -135,7 +142,9 @@
    "Colors/Dark Mode": "Colors/Dark Blue",
    "Colors/Error": "Colors/Red",
    "Colors/Warning": "Colors/Amber",
-   "Colors/Success": "Colors/Green"
+   "Colors/Success": "Colors/Green",
+   "Colors/Cyan": "Colors/Cyan",
+   "Colors/Violet": "Colors/Violet"
   },
   "_familyNote": "Each family aliases all 11 steps 1:1 (Primary/100 -> Blue/100 … Primary/1000 -> Blue/1000).",
   "Border Width": {
@@ -173,7 +182,7 @@
  },
  "Mapped": {
   "_role": "Gives variables specific functions. References Allias, which references Qaza. Light/Dark modes.",
-  "_updated": "2026-09-04 — 7 added so every code colour role has a Mapped counterpart: Surface/midtone|switch|sidebar-accent, Text/strong|on-status|sidebar-muted, Border/input. Border/input light is a raw #061b2e at 0 alpha, not an alias — an alias cannot carry an alpha override, and #00000000 would break L-C1. Mapped is now 52 variables.",
+  "_updated": "2026-09-04 — 7 added so every code colour role has a Mapped counterpart: Surface/midtone|switch|sidebar-accent, Text/strong|on-status|sidebar-muted, Border/input. Border/input light is a raw #061b2e at 0 alpha, not an alias — an alias cannot carry an alpha override, and #00000000 would break L-C1. Mapped is now 52 variables. 2026-09-07: Status/uploaded and Status/ladder added, theme-invariant per L-C3, each aliasing a new single-value Qaza accent through Allias. Mapped is now 54 variables.",
   "_format": "[Light, Dark] resolved hex",
   "_cssPair": {
    "Color/Surface/page": "--surface-page",
@@ -214,7 +223,9 @@
    "Color/Status/error-fg": "--status-error-fg",
    "Color/Status/success-tint": "--status-success-tint",
    "Color/Status/warning-tint": "--status-warning-tint",
-   "Color/Status/error-tint": "--status-error-tint"
+   "Color/Status/error-tint": "--status-error-tint",
+   "Color/Status/uploaded": "--status-uploaded",
+   "Color/Status/ladder": "--status-ladder"
   },
   "Color/Surface/page": [
    "#d2e7fa",
@@ -423,6 +434,14 @@
   "Color/Border/input": [
    "#061b2e00",
    "#0f4472"
+  ],
+  "Color/Status/uploaded": [
+   "#22d3ee",
+   "#22d3ee"
+  ],
+  "Color/Status/ladder": [
+   "#7c5cfc",
+   "#7c5cfc"
   ]
  },
  "Responsive": {
@@ -702,5 +721,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-09-04 — all 41 Mapped colour variables re-read from the live file and resolved through their alias chains; every one matches the value recorded here. This file is an extract, not a reconstruction. Re-verify after any Figma-side edit: the diff script trusts this snapshot and cannot detect its own staleness."
+ "_verified": "2026-09-07 — the 2 new roles re-read from the live file and resolved through their chains (Status/uploaded -> Colors/Cyan/Base -> Colors/Cyan/Base = #22d3ee; same shape for ladder). Earlier verification of all 41 pre-existing Mapped colour variables still stands. This file is an extract, not a reconstruction — re-verify after any Figma edit, because the diff script trusts it and cannot detect its own staleness."
 }

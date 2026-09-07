@@ -38,6 +38,9 @@ const FAMILY = {
   'Colors/Red': 'red',
   'Colors/Amber': 'amber',
   'Colors/Green': 'green',
+  // single-value accents, Base only — the loop skips the steps they lack
+  'Colors/Cyan': 'cyan',
+  'Colors/Violet': 'violet',
 };
 
 // --- parse the CSS :root block (light mode) ---
