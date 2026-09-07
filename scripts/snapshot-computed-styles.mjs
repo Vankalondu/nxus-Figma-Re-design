@@ -7,7 +7,7 @@
  * fault, not a failing assertion. This script closes that gap.
  *
  * It walks every visible element on the main routes in BOTH themes and records
- * the computed color / backgroundColor / borderTopColor / fontSize / fontWeight
+ *  color / backgroundColor / borderTopColor / fontSize / fontWeight / accentColor / backgroundImage
  * against a stable path key. Capture before, capture again after, diff. A wrong
  * or missed rename changes a rendered style, so it shows up here.
  *
@@ -64,11 +64,15 @@ const COLLECT = () => {
       ? 'rgb(' + ch.join(', ') + ')'
       : 'rgba(' + ch.join(', ') + ', ' + alpha + ')';
   };
-  const norm = (v) => {
-    const m = /^oklab\(([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)(?:\s*\/\s*([\d.]+))?\)$/.exec(v || '');
-    if (!m) return v;
-    return oklabToRgb(+m[1], +m[2], +m[3], m[4] === undefined ? undefined : +m[4]);
-  };
+  // Replaces EVERY oklab() in the string, not just a whole-value match: a
+  // computed gradient reads
+  //   linear-gradient(to right, oklab(0.216 -0.017 -0.043 / 0.85) 0%, …)
+  // so anchoring to ^…$ would leave gradient stops un-normalised and reopen the
+  // same false-positive on the next literal-to-token swap inside a gradient.
+  const norm = (v) => String(v || '').replace(
+    /oklab\(([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)(?:\s*\/\s*([\d.]+))?\)/g,
+    (_, L, A, B, al) => oklabToRgb(+L, +A, +B, al === undefined ? undefined : +al),
+  );
   const pathOf = (el) => {
     const parts = [];
     while (el && el !== document.body) {
@@ -87,7 +91,17 @@ const COLLECT = () => {
     // fontSize/fontWeight are here because the type ramp (.type-h1 … .type-micro)
     // is a class vocabulary too: renaming it moves sizes, not colours, and a
     // colour-only snapshot reported PASS on a change it structurally could not see.
-    out[pathOf(el)] = [norm(cs.color), norm(cs.backgroundColor), norm(cs.borderTopColor), cs.fontSize, cs.fontWeight].join('|');
+    // backgroundImage and accentColor are here because binding gradient stops
+    // (from-[#B4D7F6] -> from-surface-midtone) and form-control accents
+    // (accent-[#1e88e5] -> accent-brand-primary) changed neither `color` nor
+    // `backgroundColor`, so a pass touching only those reported 0 changed while
+    // genuinely altering the page. Same failure as the colour-only version had
+    // with font sizes: the net said PASS about something it could not see.
+    out[pathOf(el)] = [
+      norm(cs.color), norm(cs.backgroundColor), norm(cs.borderTopColor),
+      cs.fontSize, cs.fontWeight,
+      norm(cs.accentColor), norm(cs.backgroundImage).slice(0, 240),
+    ].join('|');
   }
   return out;
 };
