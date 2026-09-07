@@ -894,6 +894,23 @@ when next touched. See open ruling **OR-4**.
 
 Kit colours in `MatchEntry.tsx` are **no longer counted** as violations — L-G2 exempts them.
 
+**Progress, 7 Sep 2026.** The ratchet has come down **662 → 140** in four passes, each
+verified separately: 161 bound to invariant roles, 222 near-misses snapped to their palette
+token, 72 theme-frozen literals bound to roles (an L-C8 fix — they never responded to dark
+mode), and 67 Material Design leftovers mapped to the status roles. What remains is 140 uses
+across 31 colours, and none of them can be swept: every one changes a rendered colour rather
+than just its name. Grouped by what they appear to be:
+
+| Group | Colours | Uses | Observation |
+|---|---|---|---|
+| Greys | `#e0e7ef` `#94a3b8` `#64748b` `#666` `#999` `#9ca3af` `#333640` `#0f1419` `#1a1c1d` `#c0c0c0` | 73 | Breaks **L-C2** — these are Tailwind slate and plain neutrals. Every one has a near equivalent in the Light or Dark scale, so this is the largest and most mechanical group left, but each swap tints a grey blue and that is a visible decision. |
+| Material greens | `#e8f5e9` `#2e7d32` | 11 | Tints and a dark green. `--status-success-tint` and `Success/700` are the natural homes. |
+| Material ambers | `#fff9c4` `#ffb74d` `#f57c00` `#e65100` `#ff6d00` `#fff8e1` `#ffecb3` `#8b6914` | 21 | Same shape as the `#f9a825` mapping already applied — the Warning family covers all of them. |
+| Material blues | `#1976d2` `#0d47a1` | 4 | Blue 700 and Blue 900. `Primary/Base` and `Primary/900`. |
+| Teals | `#d0e8e3` `#3a8c6a` | 18 | No palette equivalent, and `#3a8c6a` was already held in the table above. Extend the palette, or map to Success? |
+| Medal colours | `#ffd700` `#c0c0c0` `#cd7f32` | 3 | Gold, silver, bronze on the video leaderboard. These look like **L-G2 colour-as-data**: a bronze medal is bronze, and mapping it onto the brand scale would make the interface lie the same way a recoloured team kit would. Recommend exempting them explicitly rather than mapping. |
+| Already held above | `#22d3ee` `#ccff00` `#b3e600` `#7c5cfc` | 10 | Cyan fourth state, the lime block, the violet tag. Unchanged from the table above. |
+
 **OR-7 · RESOLVED 2026-09-04.** Figma and the code are level. As first written this ruling was
 wrong twice, recorded here rather than quietly edited:
 
@@ -918,13 +935,27 @@ text from the Dark Mode ramp, even where the hex is identical.
 
 `scripts/figma-css-diff.mjs` now reports **66 match · 0 drift · 0 figma-only · 0 ramp drift**.
 
-**OR-8 · Two roles exist on one side only, and nothing renders either.** `--text-muted` is
-defined, bridged and short-aliased in code but used **zero** times; `Status/info` and
-`Status/info-tint` are the mirror image, present in Figma with no code counterpart and no info
-state anywhere in the product. Either some of the 1,428 `text-body` usages are genuinely the
-muted tier — a design judgement, not a sweep — or these are aspirational and R-TY3 should say
-so. `Button/*` (11 Figma vars) is deliberately excluded: that is a component layer the code
-expresses as utilities rather than tokens.
+**OR-8 · PARTLY RESOLVED 7 Sep 2026 — eight roles are still defined and unrendered.** The
+secondary tier is now real: 256 uppercase micro-labels and 102 captions moved to
+`text-muted`, and 46 placeholders to `text-placeholder`. Current adoption:
+
+| Role | Uses | | Role | Uses |
+|---|---|---|---|---|
+| `text-body` | 1027 | | `border-default` | 806 |
+| `text-strong` | 444 | | `border-focus` | 100 |
+| `text-muted` | 358 | | `border-input` | 8 |
+| `text-on-brand` | 349 | | `text-placeholder` | 46 |
+| `text-inverse` | 156 | | `text-heading` | 117 |
+
+Still defined, bridged, documented and used **zero** times: `text-disabled`, `text-link`,
+`text-sidebar-muted`, `text-on-status`, `border-subtle`, `border-strong`, `surface-inverse`,
+`surface-overlay`. Several have obvious homes — `text-link` on the anchors that currently use
+`text-brand-primary`, `surface-overlay` on the modal scrims that hand-roll
+`bg-ink-midnight/60` — but each is a judgement about what the product means, not a sweep.
+
+`Status/info` and `Status/info-tint` remain the mirror image: present in Figma, absent from
+code, and nothing in the product renders an info state. `Button/*` (11 Figma vars) is
+deliberately excluded — that is a component layer the code expresses as utilities, not tokens.
 
 **OR-9 · RESOLVED 2026-09-04.** The status families were never missing — Qaza already held
 `Colors/Red`, `Colors/Amber` and `Colors/Green` at the full 11 steps, and Allias already grouped
