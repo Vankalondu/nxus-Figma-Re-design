@@ -75,11 +75,11 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
           return (
             <div key={stat.label} className="lg:col-span-1 min-w-0 bg-surface-card border border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-all">
               <div className="flex items-center justify-between gap-2">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body truncate">{stat.label}</span>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted truncate">{stat.label}</span>
                 <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
               </div>
               <div className="font-heading font-extrabold text-[32px] text-strong leading-none">{stat.value}</div>
-              <span className="font-body text-[12px] text-body font-medium">{stat.sub}</span>
+              <span className="font-body text-[12px] text-muted font-medium">{stat.sub}</span>
             </div>
           );
         })}
@@ -92,7 +92,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
         <div className="relative flex-1 min-w-[240px] max-w-md">
           <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or scout…"
-            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
+            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
         </div>
 
         {/* Inline filters — always in view */}
@@ -127,7 +127,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
                 <div className="w-11 h-11 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[14px] shrink-0">{r.initials}</div>
                 <div className="min-w-0">
                   <div className="font-heading font-bold text-[15px] text-strong truncate">{r.player}</div>
-                  <div className="flex items-center gap-1.5 font-body text-[12px] text-body">
+                  <div className="flex items-center gap-1.5 font-body text-[12px] text-muted">
                     <span className="font-bold text-strong">{r.pos}</span>
                     <span>·</span>
                     <User size={11} />{r.scout}
@@ -142,14 +142,14 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
               {([['PLR', r.plr], ['POG', r.pog], ['NXT', r.nxt]] as const).map(([k, v]) => (
                 <div key={k} className="bg-surface-accent/50 rounded-[14px] py-2 text-center">
                   <div className="font-heading font-bold text-[16px] text-strong leading-none">{v}</div>
-                  <div className="font-heading font-bold text-[9px] uppercase tracking-widest text-body mt-1">{k}</div>
+                  <div className="font-heading font-bold text-[9px] uppercase tracking-widest text-muted mt-1">{k}</div>
                 </div>
               ))}
             </div>
             {/* Overall score */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Overall</span>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Overall</span>
                 <span className="font-heading font-black text-[13px] text-strong tabular-nums">{overall}</span>
               </div>
               <div className="h-2 bg-surface-accent rounded-full overflow-hidden">

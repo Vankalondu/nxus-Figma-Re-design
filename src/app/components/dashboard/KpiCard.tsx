@@ -21,7 +21,7 @@ export const KpiCard = ({ icon: Icon, heading, value, descriptor, action, onClic
       <span className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 group-hover:bg-brand-primary/15 transition-colors">
         <Icon size={18} className="text-brand-primary" />
       </span>
-      <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-body">{heading}</span>
+      <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted">{heading}</span>
     </div>
     {/* Bottom row wraps rather than overflows. The action link is shrink-0 +
         whitespace-nowrap by design (a truncated "Review Full Matc…" is worse

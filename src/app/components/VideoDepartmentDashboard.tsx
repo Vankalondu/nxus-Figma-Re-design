@@ -300,27 +300,27 @@ export function VideoDepartmentDashboard() {
             <table className="w-full">
               <thead className="bg-surface-card border-b border-[var(--light-200)]">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-body uppercase tracking-wider"
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Rank
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-body uppercase tracking-wider"
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Editor
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-body uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Packages
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-body uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Upload %
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-body uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Avg. Time
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-body uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Quality
                   </th>

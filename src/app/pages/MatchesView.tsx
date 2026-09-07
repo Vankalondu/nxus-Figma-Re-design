@@ -278,7 +278,7 @@ function CompetitionCard({ comp, onOpen }: { comp: Competition; onOpen: (c: Comp
       </div>
 
       {comp.category && (
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
           {comp.category}
         </span>
       )}
@@ -355,18 +355,18 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
         <div className="flex-1 min-w-0 flex flex-col gap-1">
           <span className="inline-flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Home</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Home</span>
           </span>
           <span className="font-heading font-semibold text-[16px] text-strong truncate" title={match.home}>
             {match.home}
           </span>
         </div>
-        <span className="shrink-0 w-8 h-8 rounded-full bg-surface-accent border border-default flex items-center justify-center font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+        <span className="shrink-0 w-8 h-8 rounded-full bg-surface-accent border border-default flex items-center justify-center font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
           VS
         </span>
         <div className="flex-1 min-w-0 flex flex-col gap-1 items-end text-right">
           <span className="inline-flex items-center gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Away</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Away</span>
             <span className="w-2 h-2 rounded-full bg-status-error shrink-0" />
           </span>
           <span className="font-heading font-semibold text-[16px] text-strong truncate w-full" title={match.away}>
@@ -378,7 +378,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       {/* Venue */}
       <div className="flex items-center gap-2">
         <MapPin size={12} className="text-body shrink-0" />
-        <span className="font-body font-medium text-[12px] text-body truncate">{match.venue}</span>
+        <span className="font-body font-medium text-[12px] text-muted truncate">{match.venue}</span>
       </div>
 
       {/* Status chips */}
@@ -413,7 +413,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       {/* Footer */}
       <div className="flex items-center gap-2 pt-2 border-t border-default/40">
         <Info size={12} className="text-body/60 shrink-0" />
-        <span className="font-body font-medium text-[12px] text-body truncate">
+        <span className="font-body font-medium text-[12px] text-muted truncate">
           Last updated by {match.lastUpdatedBy}
         </span>
       </div>
@@ -611,7 +611,7 @@ export function MatchesView() {
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search competitions…"
-            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body"
+            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-placeholder text-body"
           />
         </div>
 
@@ -654,7 +654,7 @@ export function MatchesView() {
           {archived.length > 0 && (
             <>
               <div className="flex items-center gap-3 pt-4">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body shrink-0">
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">
                   Archived
                 </span>
                 <div className="flex-1 h-px bg-border-default" />

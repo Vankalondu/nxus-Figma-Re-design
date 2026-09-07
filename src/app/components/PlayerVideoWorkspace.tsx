@@ -125,12 +125,12 @@ const VideoCard = ({ video, playerName, onClick }: { video: PlayerVideo; playerN
         <span className="font-heading font-semibold text-[14px] text-strong truncate">
           {isMatch ? <>{video.home} <span className="text-body">vs</span> {video.away}</> : video.title}
         </span>
-        <span className="font-body font-medium text-[12px] text-body truncate">
+        <span className="font-body font-medium text-[12px] text-muted truncate">
           {video.competition} · {video.competition} ({video.season}) · {video.round}
         </span>
         <div className="flex items-center justify-between gap-2 mt-1">
-          <span className="font-body font-medium text-[12px] text-body">{video.round}</span>
-          <span className="font-body font-medium text-[12px] text-body">{video.date}</span>
+          <span className="font-body font-medium text-[12px] text-muted">{video.round}</span>
+          <span className="font-body font-medium text-[12px] text-muted">{video.date}</span>
         </div>
       </div>
     </button>
@@ -222,7 +222,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
       {/* Header */}
       <div className="p-5 pb-4 flex items-center justify-between gap-2 shrink-0 border-b border-default">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-body">Tagging</span>
+          <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">Tagging</span>
           <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full shrink-0">
             {tags.length} {tags.length === 1 ? 'tag' : 'tags'}
           </span>
@@ -237,7 +237,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
       <div className="flex-1 min-h-0 overflow-y-auto p-5 flex flex-col gap-5">
         {/* Quick-tag buttons */}
         <div className="flex flex-col gap-2">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Quick Tag</span>
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Quick Tag</span>
           <div className="grid grid-cols-2 gap-2">
             {TAG_EVENT_TYPES.map(t => {
               const Icon = t.icon;
@@ -256,7 +256,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
 
         {/* Add with note */}
         <div className="flex flex-col gap-2">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Add With Note</span>
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Add With Note</span>
           <div className="flex gap-2">
             <select value={draftTypeId} onChange={e => setDraftTypeId(e.target.value)} title="Tag type"
               className="w-[120px] shrink-0 rounded-[10px] border border-default bg-surface-card px-2 py-2 font-body font-bold text-[12px] text-body focus:outline-none focus:border-brand-primary transition-colors">
@@ -267,7 +267,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
             <input value={draftNote} onChange={e => setDraftNote(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') addDraftTag(); }}
               placeholder="Optional note…" maxLength={80} title="Optional note"
-              className="flex-1 min-w-0 rounded-[10px] border border-default bg-surface-accent/30 px-3 py-2 font-body font-medium text-[12px] text-body placeholder:text-body focus:outline-none focus:border-brand-primary transition-colors" />
+              className="flex-1 min-w-0 rounded-[10px] border border-default bg-surface-accent/30 px-3 py-2 font-body font-medium text-[12px] text-body placeholder:text-placeholder focus:outline-none focus:border-brand-primary transition-colors" />
           </div>
           <button onClick={addDraftTag} title={`Add tag at ${fmtTime(currentSec)}`}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary text-inverse py-2 font-body font-semibold text-[12px] hover:bg-brand-primary/80 transition-colors shadow-sm">
@@ -278,7 +278,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
 
         {/* Tags timeline */}
         <div className="flex flex-col gap-2">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Tags</span>
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Tags</span>
           {sorted.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center gap-3 py-8">
               <div className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
@@ -312,7 +312,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
                   <div className="flex-1 min-w-0">
                     <span className="font-body font-bold text-[12px] text-body block truncate">{type.label}</span>
                     {tag.note && (
-                      <span className="font-body font-medium text-[12px] text-body block truncate">{tag.note}</span>
+                      <span className="font-body font-medium text-[12px] text-muted block truncate">{tag.note}</span>
                     )}
                   </div>
                   <button onClick={e => { e.stopPropagation(); removeTag(tag.id); }} title="Delete tag"
@@ -368,7 +368,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
       {/* Header */}
       <div className="p-5 pb-4 flex flex-col gap-3 shrink-0 border-b border-default">
         <div className="flex items-center justify-between gap-2">
-          <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-body">Short Report</span>
+          <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">Short Report</span>
           <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full">New</span>
         </div>
         <p className="font-body font-medium text-[12px] text-body">Creating new report</p>
@@ -389,7 +389,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
       <div className="flex-1 min-h-0 overflow-y-auto p-5 flex flex-col gap-5">
         {SHORT_REPORT_TEMPLATE.sections.map(section => (
           <div key={section.title} className="flex flex-col gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{section.title}</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{section.title}</span>
             {section.criteria.map(c => (
               <div key={c.id} className="rounded-[12px] border border-default bg-surface-accent/30 p-3 flex flex-col gap-2">
                 <div className="flex items-center justify-between gap-2">
@@ -604,12 +604,12 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
                       ? <>{selectedVideo.home} <span className="text-body font-medium">vs</span> {selectedVideo.away}</>
                       : selectedVideo.title}
                   </span>
-                  <span className="font-body font-medium text-[12px] text-body block truncate mt-1">
+                  <span className="font-body font-medium text-[12px] text-muted block truncate mt-1">
                     {selectedVideo.competition} · {selectedVideo.competition} ({selectedVideo.season}) · {selectedVideo.round}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="font-body font-medium text-[12px] text-body">{selectedVideo.date}</span>
+                  <span className="font-body font-medium text-[12px] text-muted">{selectedVideo.date}</span>
                   <button title="Flag video"
                     className="w-10 h-10 rounded-[12px] bg-brand-primary/10 text-brand-primary flex items-center justify-center hover:bg-brand-primary/20 transition-colors">
                     <Flag size={16} />

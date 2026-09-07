@@ -86,8 +86,8 @@ export const NxusTable: Story = {
           </div>
           <span className="font-body font-bold text-[13px] text-body hover:underline cursor-pointer">{name}</span>
           <span className="w-2 h-2 rounded-full shrink-0" style={{ background: scouted ? 'var(--status-success)' : 'var(--status-error)' }} />
-          <span className="font-body text-[12px] text-body">{team}</span>
-          <span className="font-body text-[12px] text-body tabular-nums ml-auto">{age}</span>
+          <span className="font-body text-[12px] text-muted">{team}</span>
+          <span className="font-body text-[12px] text-muted tabular-nums ml-auto">{age}</span>
           <span className="bg-brand-primary/20 text-strong font-bold px-2 py-0.5 rounded text-[12px]">F3</span>
           <span className="bg-brand-primary/20 text-strong font-bold px-2 py-0.5 rounded text-[12px]">H5</span>
         </div>

@@ -29,7 +29,7 @@ export const Default: Story = {
         <Button variant="outline">Redo</Button>
       </PopoverTrigger>
       <PopoverContent className="w-[300px]">
-        <p className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-3">
+        <p className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mb-3">
           Reason for redo
         </p>
         <div className="flex flex-wrap gap-2 mb-3">

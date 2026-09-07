@@ -254,7 +254,7 @@ function KitColorsModal({
 
           {/* Palette grid */}
           <div className="flex flex-col gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
               Palette
             </span>
             <div className="grid grid-cols-6 gap-2">
@@ -276,7 +276,7 @@ function KitColorsModal({
 
           {/* Custom color */}
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
               Custom Color
             </span>
             <input
@@ -362,7 +362,7 @@ function PlayerRow({
         <span className="font-heading font-semibold text-[14px] text-strong truncate" title={player.name}>
           {player.name}
         </span>
-        <span className="font-body font-medium text-[12px] text-body">YOB {player.yob}</span>
+        <span className="font-body font-medium text-[12px] text-muted">YOB {player.yob}</span>
       </div>
 
       {editing ? (
@@ -390,11 +390,11 @@ function PlayerRow({
       )}
 
       <label className="flex items-center gap-2 shrink-0 cursor-pointer">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Starter</span>
+        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Starter</span>
         <Switch checked={player.starter} onCheckedChange={v => onToggleRole('starter', v)} />
       </label>
       <label className="flex items-center gap-2 shrink-0 cursor-pointer">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Sub</span>
+        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Sub</span>
         <Switch checked={player.sub} onCheckedChange={v => onToggleRole('sub', v)} />
       </label>
     </div>
@@ -449,7 +449,7 @@ function TeamCard({
             className="w-6 h-6 rounded-full border-2 border-default shadow-sm"
             style={{ backgroundColor: team.kit.shorts }}
           />
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
             Kit
           </span>
         </div>
@@ -473,7 +473,7 @@ function TeamCard({
           <span className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center">
             <UserX size={16} className="text-body" />
           </span>
-          <span className="font-body font-medium text-[12px] text-body">
+          <span className="font-body font-medium text-[12px] text-muted">
             No players registered for this team yet.
           </span>
         </div>
@@ -482,7 +482,7 @@ function TeamCard({
           <span className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center">
             <UserX size={16} className="text-body" />
           </span>
-          <span className="font-body font-medium text-[12px] text-body">
+          <span className="font-body font-medium text-[12px] text-muted">
             No players match the active filter.
           </span>
         </div>
@@ -546,7 +546,7 @@ let eventSeq = 0;
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
       {children}
     </span>
   );
@@ -670,7 +670,7 @@ function MatchEventsTab({
           )}
         </span>
         <span className="font-heading font-semibold text-[24px] text-strong leading-none">{minutes}</span>
-        <span className="font-body font-medium text-[12px] text-body">{caption}</span>
+        <span className="font-body font-medium text-[12px] text-muted">{caption}</span>
         <span className="flex items-center gap-2 flex-wrap">
           {chips.map(chip => (
             <span
@@ -710,7 +710,7 @@ function MatchEventsTab({
           </div>
           <div className="flex flex-col gap-1 md:items-end md:text-right md:border-l md:border-default md:pl-4 shrink-0">
             <span className="font-heading font-semibold text-[14px] text-strong">{roundName}</span>
-            <span className="font-body font-medium text-[12px] text-body">{competitionName}</span>
+            <span className="font-body font-medium text-[12px] text-muted">{competitionName}</span>
             <span className="font-mono font-bold text-[12px] text-body">{match.date}</span>
             <button
               onClick={onViewLineups}
@@ -776,7 +776,7 @@ function MatchEventsTab({
             {durationCard('regular', '90', '90 minutes + stoppage', ['1-90 min', '45+, 90+'])}
             {durationCard('extra', '120', '120 minutes + stoppage', ['1-120 min', '45+, 90+, 105+, 120+'])}
           </div>
-          <span className="flex items-center gap-2 font-body font-medium text-[12px] text-body">
+          <span className="flex items-center gap-2 font-body font-medium text-[12px] text-muted">
             <Info size={12} className="shrink-0" />
             {duration === 'regular'
               ? 'Regular time selected — events can be logged from minute 1 to 90 plus stoppage.'
@@ -837,7 +837,7 @@ function MatchEventsTab({
               </span>
               <div className="flex flex-col min-w-0">
                 <h4 className="font-heading font-semibold text-[16px] text-heading">Match Phase Tracking</h4>
-                <span className="font-body font-medium text-[12px] text-body">
+                <span className="font-body font-medium text-[12px] text-muted">
                   {capturedCount}/{PHASES.length} phases captured
                 </span>
               </div>
@@ -965,7 +965,7 @@ function MatchEventsTab({
                 value={formMinute}
                 onChange={e => setFormMinute(e.target.value)}
                 placeholder={`1–${maxMinute}`}
-                className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-mono font-bold text-[14px] text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-body"
+                className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-mono font-bold text-[14px] text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-placeholder"
               />
             </div>
           </div>
@@ -999,7 +999,7 @@ function MatchEventsTab({
                 <ClipboardList size={20} className="text-body" />
               </span>
               <span className="font-heading font-semibold text-[14px] text-strong">No events recorded yet</span>
-              <span className="font-body font-medium text-[12px] text-body">
+              <span className="font-body font-medium text-[12px] text-muted">
                 Add your first event using the form above.
               </span>
             </div>
@@ -1020,7 +1020,7 @@ function MatchEventsTab({
                       <span className="font-heading font-semibold text-[14px] text-strong truncate">
                         {ev.playerName} · {teamName(ev.team)}
                       </span>
-                      <span className="font-body font-medium text-[12px] text-body">{type.label}</span>
+                      <span className="font-body font-medium text-[12px] text-muted">{type.label}</span>
                     </div>
                     <button
                       onClick={() => setEvents(prev => prev.filter(e => e.id !== ev.id))}
@@ -1041,7 +1041,7 @@ function MatchEventsTab({
       <div className="lg:col-span-1 flex flex-col gap-4 min-w-0">
         {/* TEAMS card */}
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
             Teams
           </span>
           <div className="grid grid-cols-2 bg-surface-accent rounded-full p-0.5">
@@ -1096,7 +1096,7 @@ function MatchEventsTab({
         {/* SQUAD card */}
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
               Squad
             </span>
             <span className="inline-flex items-center px-3 py-0.5 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-heading font-bold text-[10px] uppercase tracking-widest">
@@ -1104,9 +1104,9 @@ function MatchEventsTab({
             </span>
           </div>
           <div className="grid grid-cols-[32px_1fr_48px_16px] gap-2 items-center">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">#</span>
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Player</span>
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">YOB</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">#</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Player</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">YOB</span>
             <span />
             {railTeam.players.map(pl => {
               const active = pl.starter || pl.sub;
@@ -1273,7 +1273,7 @@ export function MatchEntry({
         {/* ── Live-presence banner ── */}
         <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-surface-accent/60 border border-default flex-wrap">
           <Info size={12} className="text-body shrink-0" />
-          <span className="font-body font-medium text-[12px] text-body">
+          <span className="font-body font-medium text-[12px] text-muted">
             Another scout is viewing this page:
           </span>
           <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-status-success/10 border border-status-success/20">
@@ -1298,7 +1298,7 @@ export function MatchEntry({
             {/* ── Player filter ── */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body shrink-0">
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">
                   Filter Players:
                 </span>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -1317,7 +1317,7 @@ export function MatchEntry({
                   ))}
                 </div>
               </div>
-              <span className="font-body font-medium text-[12px] text-body">
+              <span className="font-body font-medium text-[12px] text-muted">
                 {activeFilter.caption}
               </span>
             </div>

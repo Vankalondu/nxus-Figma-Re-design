@@ -143,7 +143,7 @@ const TemplateCard = ({ tpl, onAction }: {
           {stats.map(([label, val]) => (
             <div key={label} className="py-3 text-center">
               <div className="font-heading font-semibold text-[16px] text-strong leading-none">{val}</div>
-              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mt-2">{label}</div>
+              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mt-2">{label}</div>
             </div>
           ))}
         </div>
@@ -264,7 +264,7 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
                     <div className={`grid gap-4 ${sec.fields.some(f => f.cols === 3) ? 'grid-cols-3' : sec.fields.some(f => f.cols === 2) ? 'grid-cols-2' : 'grid-cols-1'}`}>
                       {sec.fields.map(f => (
                         <div key={f.label} className={f.type === 'text' || f.type === 'rating' || f.type === 'toggle3' ? 'col-span-full' : ''}>
-                          <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-2 block">{f.label}</label>
+                          <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mb-2 block">{f.label}</label>
                           {f.type === 'rating' && <RatingToggle value={ratings[f.label] || 0} onChange={v => setRatings(p => ({ ...p, [f.label]: v }))} />}
                           {f.type === 'toggle3' && <NxtToggle value={nxtVal} onChange={setNxtVal} />}
                           {f.type === 'dropdown' && (
@@ -276,8 +276,8 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
                               <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
                             </div>
                           )}
-                          {f.type === 'input' && <input className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus placeholder:text-body transition-all" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
-                          {f.type === 'text' && <textarea rows={3} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus placeholder:text-body transition-all resize-none" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
+                          {f.type === 'input' && <input className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus placeholder:text-placeholder transition-all" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
+                          {f.type === 'text' && <textarea rows={3} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus placeholder:text-placeholder transition-all resize-none" value={textVals[f.label] || ''} onChange={e => setTextVals(p => ({ ...p, [f.label]: e.target.value }))} />}
                         </div>
                       ))}
                     </div>
@@ -290,7 +290,7 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
             <h4 className="font-heading font-semibold text-[14px] text-heading">Scout Information</h4>
             <div className="flex flex-col gap-3">
               {[{ label: 'Scout', value: 'Mbugua' }, { label: 'Role', value: 'Senior Scout' }, { label: 'Region', value: 'West Africa' }, { label: 'Scope', value: 'U19 Cycle 2026' }, { label: 'Player', value: '—' }, { label: 'Date', value: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }].map(f => (
-                <div key={f.label}><span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block">{f.label}</span><span className="font-body font-bold text-[14px] text-body">{f.value}</span></div>
+                <div key={f.label}><span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block">{f.label}</span><span className="font-body font-bold text-[14px] text-body">{f.value}</span></div>
               ))}
             </div>
             <div className="flex-1" />
@@ -450,7 +450,7 @@ const AnalyticsTab = () => {
                   <span className="font-heading font-semibold text-[16px] text-strong leading-none">{kpi.value}</span>
                   {kpi.trend && <span className="font-body font-bold text-[12px] text-status-success">{kpi.trend}</span>}
                 </div>
-                <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mt-1">{kpi.label}</div>
+                <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mt-1">{kpi.label}</div>
               </div>
             </div>
           ))}
@@ -615,7 +615,7 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
                     <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-bold text-[12px] shrink-0">{initials}</div>
                     <div className="min-w-0">
                       <div className="font-body text-[14px] font-bold text-body truncate">{scout.name}</div>
-                      <div className="font-body text-[12px] text-body font-medium">{scout.role}</div>
+                      <div className="font-body text-[12px] text-muted font-medium">{scout.role}</div>
                     </div>
                   </div>
                   <button onClick={() => handleRemove(tier, scout.id)} className="shrink-0 text-body/60 hover:text-status-error transition-colors p-2 rounded-full hover:bg-status-error/10">
@@ -747,7 +747,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
             <div className="relative w-full sm:flex-1 sm:max-w-sm">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-body" size={16} />
               <input value={formSearch} onChange={e => setFormSearch(e.target.value)} placeholder="Search templates…"
-                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body" />
+                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-placeholder text-body" />
             </div>
             <FilterToggleBtn open={rhFiltersOpen} onClick={() => setRhFiltersOpen(o => !o)} />
             <div className="flex items-center gap-2 flex-wrap sm:ml-auto shrink-0">
@@ -770,7 +770,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
             <div className="relative w-full sm:flex-1 sm:max-w-sm">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-body" size={16} />
               <input value={subSearch} onChange={e => setSubSearch(e.target.value)} placeholder="Search submissions…"
-                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body" />
+                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-placeholder text-body" />
             </div>
             <FilterToggleBtn open={rhFiltersOpen} onClick={() => setRhFiltersOpen(o => !o)} />
             <button className="flex items-center gap-2 px-4 py-2 sm:ml-auto shrink-0 bg-surface-card text-body border border-default hover:border-brand-primary rounded-full font-body font-bold text-[14px] transition-colors shadow-sm"><Download size={14} /> Export CSV</button>
@@ -792,7 +792,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
             <div className="relative w-full sm:flex-1 sm:max-w-sm">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-body" size={16} />
               <input value={rgSearch} onChange={e => setRgSearch(e.target.value)} placeholder="Search scouts…"
-                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-body text-body" />
+                className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-placeholder text-body" />
             </div>
             <FilterToggleBtn open={rhFiltersOpen} onClick={() => setRhFiltersOpen(o => !o)} />
           </div>
@@ -819,7 +819,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
               {statusFilter === 'All' && activeTemplates.length > 0 && (
                 <div className="flex items-center gap-4 my-1">
                   <div className="flex-1 h-px bg-border-default" />
-                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Archived Templates</span>
+                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Archived Templates</span>
                   <div className="flex-1 h-px bg-border-default" />
                 </div>
               )}
@@ -852,12 +852,12 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
             <button onClick={createBlankForm} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
               <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Edit2 size={18} className="text-brand-primary" /></div>
               <span className="font-heading font-semibold text-[14px] text-strong">Create with a scout</span>
-              <span className="font-body font-medium text-[12px] text-body">Build a new form from scratch in the editor.</span>
+              <span className="font-body font-medium text-[12px] text-muted">Build a new form from scratch in the editor.</span>
             </button>
             <button onClick={() => { setShowNewForm(false); setShowImport(true); }} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
               <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Download size={18} className="text-brand-primary" /></div>
               <span className="font-heading font-semibold text-[14px] text-strong">Import a form</span>
-              <span className="font-body font-medium text-[12px] text-body">Bring in an existing form from a file or another source.</span>
+              <span className="font-body font-medium text-[12px] text-muted">Bring in an existing form from a file or another source.</span>
             </button>
           </div>
         </div>
@@ -874,7 +874,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
           </div>
           <div className="p-6 space-y-4">
             <div>
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Form name</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Form name</label>
               <input value={importName} onChange={e => setImportName(e.target.value)} placeholder="e.g. FIFA Talent Report" className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus" />
             </div>
             <div className="border-2 border-dashed border-default rounded-xl px-4 py-8 text-center">
@@ -908,14 +908,14 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
               { label: 'Assign by User', placeholder: 'Search users…', options: ['Mbugua', 'Tom Okeke', 'Nene Balde', 'Dr. Kwame Asante', 'Scott'] },
             ].map(row => (
               <div key={row.label} className="flex flex-col gap-2">
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{row.label}</label>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{row.label}</label>
                 <div className="flex flex-wrap gap-2 min-h-[44px] items-center bg-surface-card border border-default rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-border-focus/20 focus-within:border-focus transition-all">
                   {row.options.slice(0, 2).map(o => (
                     <span key={o} className="inline-flex items-center gap-2 bg-brand-primary/10 text-brand-primary rounded-full px-3 py-1 font-body font-bold text-[12px]">
                       {o} <button className="hover:text-status-error transition-colors"><X size={12} /></button>
                     </span>
                   ))}
-                  <input placeholder={row.placeholder} className="flex-1 min-w-[120px] bg-transparent font-body text-[14px] font-bold text-body outline-none placeholder:text-body" />
+                  <input placeholder={row.placeholder} className="flex-1 min-w-[120px] bg-transparent font-body text-[14px] font-bold text-body outline-none placeholder:text-placeholder" />
                 </div>
               </div>
             ))}

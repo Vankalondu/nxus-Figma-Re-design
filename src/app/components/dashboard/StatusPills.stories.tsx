@@ -100,7 +100,7 @@ export const SemanticMeanings: Story = {
           <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black w-16 text-center ${cls}`}>
             {label}
           </span>
-          <span className="font-body text-[12px] text-body">{meaning}</span>
+          <span className="font-body text-[12px] text-muted">{meaning}</span>
         </div>
       ))}
     </div>

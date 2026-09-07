@@ -135,20 +135,20 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
         </div>
         <div className="p-8 space-y-4">
           <div>
-            <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Player Name</label>
+            <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Player Name</label>
             <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Kofi Mensah"
               className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Position</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Position</label>
               <select value={position} onChange={e => setPosition(e.target.value)}
                 className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
                 {POSITIONS.map(p => <option key={p}>{p}</option>)}
               </select>
             </div>
             <div>
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Grade</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Grade</label>
               <div className="flex gap-2 flex-wrap">
                 {['A+','A','B+','B'].map(g => (
                   <button key={g} onClick={() => setGrade(g)}
@@ -159,12 +159,12 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Birth Year</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Birth Year</label>
               <input type="number" value={birthYear} onChange={e => setBirthYear(Number(e.target.value))} min={2000} max={2015}
                 className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
             </div>
             <div>
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Year Signed</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Year Signed</label>
               <input type="number" value={yearSigned} onChange={e => setYearSigned(Number(e.target.value))} min={2020} max={2035}
                 className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
             </div>
@@ -291,7 +291,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
   );
 
   const inputCls = 'w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus transition-all';
-  const labelCls = 'font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2';
+  const labelCls = 'font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2';
 
   // ── Step titles ──
   const STEP_TITLES: Record<StepNum, string> = {
@@ -555,7 +555,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
               ) : (
                 <>
                   <div className="flex items-center gap-2">
-                    <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-body">Template</span>
+                    <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">Template</span>
                     <span className="font-body font-bold text-[14px] text-body">{selectedTemplate}</span>
                     <button onClick={() => setSelectedTemplate('')} className="ml-auto text-[12px] font-bold text-body underline hover:text-strong">Change</button>
                   </div>
@@ -595,13 +595,13 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                   ['PLR / POG / NXT', `${plr} / ${pog} / ${nxt}`],
                 ].map(([label, val]) => (
                   <div key={label} className="flex items-center justify-between px-5 py-3 border-b border-default last:border-0">
-                    <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-body">{label}</span>
+                    <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">{label}</span>
                     <span className="font-body font-bold text-[14px] text-body text-right max-w-[55%]">{val || '—'}</span>
                   </div>
                 ))}
               </div>
               <div className="bg-surface-card rounded-[20px] border border-default p-4">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">
+                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">
                   {reportLength === 'full' && selectedTemplate ? selectedTemplate + ' — ' : ''}Notes
                 </span>
                 <p className="font-body text-[14px] font-medium text-body leading-relaxed whitespace-pre-wrap">
@@ -717,7 +717,7 @@ const PipelineTab = () => {
       <div className="bg-surface-card rounded-[20px] border border-default p-6 shadow-[var(--shadow-lg)] flex flex-col">
         <div className="mb-5 shrink-0">
           <h3 className="font-heading font-bold text-[20px] text-heading">Pipeline Overview</h3>
-          <span className="font-body text-[12px] font-medium text-body">Hover a slice for its count · click to open the list</span>
+          <span className="font-body text-[12px] font-medium text-muted">Hover a slice for its count · click to open the list</span>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center gap-8">
 
@@ -736,13 +736,13 @@ const PipelineTab = () => {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2 text-center">
               <span className="font-heading font-black text-[30px] leading-none text-strong tabular-nums">{hoveredStage !== null ? funnelStages[hoveredStage].count : funnelStages[0].count}</span>
-              <span className="font-body text-[11px] text-body font-medium mt-1">{hoveredStage !== null ? funnelStages[hoveredStage].label : 'in pipeline'}</span>
+              <span className="font-body text-[11px] text-muted font-medium mt-1">{hoveredStage !== null ? funnelStages[hoveredStage].label : 'in pipeline'}</span>
             </div>
           </div>
 
           {/* Stage legend — what each colour represents */}
           <div className="w-full flex flex-col gap-1.5">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-1">By stage</span>
+            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mb-1">By stage</span>
             {funnelStages.map((s, i) => (
               <button key={s.label} onClick={() => navigate(s.path)}
                 onMouseEnter={() => setHoveredStage(i)} onMouseLeave={() => setHoveredStage(null)}
@@ -775,7 +775,7 @@ const PipelineTab = () => {
             <thead>
               <tr>
                 <th className="sticky left-0 z-10 bg-brand-primary px-3 py-3 text-left w-[56px] border-r border-text-on-brand/10">
-                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Pos</span>
+                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Pos</span>
                 </th>
                 {SIGNED_YEARS.map(year => (
                   <th key={year} className="bg-brand-primary px-4 py-3 text-center border-r border-text-on-brand/10 last:border-r-0 min-w-[120px]">
@@ -837,21 +837,21 @@ const PipelineTab = () => {
             <div className="p-8 space-y-4">
               {[{label:'Player Name',key:'name',type:'text'},{label:'Birth Year',key:'birthYear',type:'number'},{label:'Year Signed',key:'yearSigned',type:'number'}].map(f => (
                 <div key={f.key}>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">{f.label}</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">{f.label}</label>
                   <input type={f.type} value={(newSigned as any)[f.key] || ''} onChange={e => setNewSigned(p => ({ ...p, [f.key]: f.type === 'number' ? Number(e.target.value) : e.target.value }))}
                     className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                 </div>
               ))}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Position</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Position</label>
                   <select value={newSigned.pos || 'ST'} onChange={e => setNewSigned(p => ({ ...p, pos: e.target.value }))}
                     className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
                     {LEAD_POSITIONS.map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Grade</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Grade</label>
                   <div className="flex gap-2 flex-wrap">
                     {['A+','A','B+','B'].map(g => (
                       <button key={g} onClick={() => setNewSigned(p => ({ ...p, grade: g }))}
@@ -931,7 +931,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
           </div>
           <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between gap-8">
             <div>
-              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">By pathway</span>
+              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">By pathway</span>
               <div className="space-y-3 mt-3">
                 {BY_PATHWAY.map(p => (
                   <div key={p.label} className="flex items-center gap-2">
@@ -945,7 +945,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
               </div>
             </div>
             <div>
-              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">By status</span>
+              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">By status</span>
               <div className="space-y-3 mt-3">
                 {BY_STATUS.map(s => (
                   <div key={s.label} className="flex items-center gap-2">
@@ -988,7 +988,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                       {h.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{h.highlightVideos}</span>}
                     </div>
                   </div>
-                  <span className="font-body text-[12px] text-body font-medium tabular-nums shrink-0">{h.hoursAgo}h ago</span>
+                  <span className="font-body text-[12px] text-muted font-medium tabular-nums shrink-0">{h.hoursAgo}h ago</span>
                 </button>
               ))}
             </div>
@@ -1007,14 +1007,14 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
               {/* Recent Results */}
               <div className="min-w-0">
                 <div className="px-3 sm:px-4 py-2 border-b border-default">
-                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Recent Results</span>
+                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Recent Results</span>
                 </div>
                 <div className="divide-y divide-border-default">
                   {RECENT_RESULTS.map(r => (
                     <button key={r.id} onClick={() => navigate('/lead-scout/matches')}
                       className="w-full px-3 sm:px-4 py-2.5 hover:bg-surface-accent transition-colors text-left block min-w-0">
                       <span className="font-body font-bold text-[12px] text-body block truncate">{r.home} <span className="text-brand-primary tabular-nums">{r.hs}–{r.as}</span> {r.away}</span>
-                      <span className="font-body text-[11px] text-body font-medium block">{r.date}</span>
+                      <span className="font-body text-[11px] text-muted font-medium block">{r.date}</span>
                     </button>
                   ))}
                 </div>
@@ -1022,14 +1022,14 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
               {/* Upcoming */}
               <div className="min-w-0">
                 <div className="px-3 sm:px-4 py-2 border-b border-default">
-                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Upcoming</span>
+                  <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Upcoming</span>
                 </div>
                 <div className="divide-y divide-border-default">
                   {UPCOMING_MATCHES.map(m => (
                     <button key={m.id} onClick={() => navigate('/lead-scout/matches')}
                       className="w-full px-3 sm:px-4 py-2.5 hover:bg-surface-accent transition-colors text-left block min-w-0">
                       <span className="font-body font-bold text-[12px] text-body block truncate">{m.home} vs {m.away}</span>
-                      <span className="font-body text-[11px] text-body font-medium block">{m.date}</span>
+                      <span className="font-body text-[11px] text-muted font-medium block">{m.date}</span>
                     </button>
                   ))}
                 </div>
@@ -1074,7 +1074,7 @@ const PackagesTab = ({ onNudge }: { onNudge: (name: string) => void }) => {
                   <span className={`font-body text-[12px] font-black px-2 py-0.5 rounded-full ${pkg.list==='target'?'bg-brand-primary/15 text-strong':'bg-surface-accent text-body'}`}>
                     {pkg.list==='target'?'Target':'Short'}
                   </span>
-                  <span className="font-body text-[12px] text-body font-medium">by {pkg.scout}</span>
+                  <span className="font-body text-[12px] text-muted font-medium">by {pkg.scout}</span>
                 </div>
               </div>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${pkg.watched?'bg-brand-primary/10':'bg-brand-primary/10'}`}>
@@ -1185,7 +1185,7 @@ export default function LeadScoutDashboard() {
                     <p className="font-body font-bold text-[14px] text-body">{task.text}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${task.priority === 'High' ? 'bg-brand-primary/15 text-strong' : 'bg-surface-accent text-body'}`}>{task.priority}</span>
-                      <span className="font-body text-[12px] text-body font-medium">{task.dueDate}</span>
+                      <span className="font-body text-[12px] text-muted font-medium">{task.dueDate}</span>
                     </div>
                   </div>
                 </div>
@@ -1194,7 +1194,7 @@ export default function LeadScoutDashboard() {
                 <>
                   <div className="flex items-center gap-2 py-2">
                     <div className="flex-1 h-px bg-surface-canvas" />
-                    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{tasks.filter(t => t.completed).length} completed</span>
+                    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{tasks.filter(t => t.completed).length} completed</span>
                     <div className="flex-1 h-px bg-surface-canvas" />
                   </div>
                   {tasks.filter(t => t.completed).map(task => (
@@ -1223,25 +1223,25 @@ export default function LeadScoutDashboard() {
               <div className="grid grid-cols-2 gap-6">
                 {[{label:'Full Name',ph:'e.g. Kofi Mensah',type:'text'},{label:'Date of Birth',ph:'',type:'date'},{label:'Nationality',ph:'e.g. Ghana',type:'text'},{label:'Team',ph:'e.g. Hawks FC',type:'text'}].map(f => (
                   <div key={f.label}>
-                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">{f.label}</label>
+                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">{f.label}</label>
                     <input type={f.type} placeholder={f.ph} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                   </div>
                 ))}
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Position</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Position</label>
                   <select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
                     {['ST','LW','RW','CM','CDM','CAM','FB','CB'].map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Preferred Foot</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Preferred Foot</label>
                   <select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
                     <option>Right</option><option>Left</option><option>Both</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Add to Pipeline</label>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Add to Pipeline</label>
                 <div className="flex gap-3">
                   {['Long List','Short List','Target List'].map(list => (
                     <label key={list} className="flex items-center gap-2 cursor-pointer">
@@ -1312,7 +1312,7 @@ export default function LeadScoutDashboard() {
                 <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=faces&q=80" alt="Tom" className="w-10 h-10 rounded-full object-cover shrink-0" />
                 <div>
                   <div className="font-body font-bold text-[14px] text-body">Tom</div>
-                  <div className="font-body text-[12px] text-body font-medium">Lead Scout</div>
+                  <div className="font-body text-[12px] text-muted font-medium">Lead Scout</div>
                 </div>
               </div>
               <div className="p-2">

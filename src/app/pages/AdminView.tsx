@@ -153,7 +153,7 @@ export function AdminView() {
             placeholder={`Search ${activeTab}...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-6 py-3 bg-surface-card border border-default rounded-xl font-body font-bold text-[14px] text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shadow-sm placeholder:text-body"
+            className="w-full pl-12 pr-6 py-3 bg-surface-card border border-default rounded-xl font-body font-bold text-[14px] text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shadow-sm placeholder:text-placeholder"
           />
         </div>
 
@@ -179,7 +179,7 @@ export function AdminView() {
 
           <div className="flex items-center gap-4 mb-4">
             <div className="relative inline-flex items-center space-x-2 px-4 py-2 bg-surface-card border border-default rounded-xl cursor-pointer flex-1 shadow-sm">
-              <span className="font-body font-bold text-[12px] text-body uppercase tracking-wider">Parent Team:</span>
+              <span className="font-body font-bold text-[12px] text-muted uppercase tracking-wider">Parent Team:</span>
               <select
                 className="appearance-none bg-transparent border-none text-body font-body font-bold text-[14px] focus:outline-none cursor-pointer w-full pr-6"
                 value={transferParentTeam}
@@ -192,7 +192,7 @@ export function AdminView() {
               <ChevronDown size={14} className="absolute right-3 text-body pointer-events-none" />
             </div>
             <div className="relative inline-flex items-center space-x-2 px-4 py-2 bg-surface-card border border-default rounded-xl cursor-pointer flex-1 shadow-sm">
-              <span className="font-body font-bold text-[12px] text-body uppercase tracking-wider">Specific Team:</span>
+              <span className="font-body font-bold text-[12px] text-muted uppercase tracking-wider">Specific Team:</span>
               <select
                 className="appearance-none bg-transparent border-none text-body font-body font-bold text-[14px] focus:outline-none cursor-pointer w-full pr-6"
                 value={transferSpecificTeam}
@@ -224,7 +224,7 @@ export function AdminView() {
                     className="flex items-center justify-between gap-2 bg-surface-card border border-default rounded-[12px] px-3 py-2 shadow-sm cursor-grab active:cursor-grabbing hover:border-brand-primary/40 hover:shadow-md transition-all">
                     <div className="min-w-0">
                       <div className="font-body font-bold text-[14px] text-body truncate">{player.name}</div>
-                      <div className="font-body font-medium text-[12px] text-body">{player.position}</div>
+                      <div className="font-body font-medium text-[12px] text-muted">{player.position}</div>
                     </div>
                     <button onClick={() => handleTransferToTeam(player)} title="Transfer to Team" className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary inline-flex items-center justify-center hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0"><ArrowRight size={14} /></button>
                   </div>
@@ -252,7 +252,7 @@ export function AdminView() {
                     className="flex items-center justify-between gap-2 bg-surface-card border border-default rounded-[12px] px-3 py-2 shadow-sm cursor-grab active:cursor-grabbing hover:border-brand-primary/40 hover:shadow-md transition-all">
                     <div className="min-w-0">
                       <div className="font-body font-bold text-[14px] text-body truncate">{player.name}</div>
-                      <div className="font-body font-medium text-[12px] text-body">{player.position}</div>
+                      <div className="font-body font-medium text-[12px] text-muted">{player.position}</div>
                     </div>
                     <button onClick={() => handleRemoveFromTeam(player)} title="Remove from Team" className="w-8 h-8 rounded-full bg-status-error/10 text-status-error inline-flex items-center justify-center hover:bg-status-error hover:text-on-brand transition-colors shrink-0"><X size={14} /></button>
                   </div>
@@ -272,7 +272,7 @@ export function AdminView() {
           <div className="flex-1 overflow-auto hide-scrollbar rounded-[24px]">
             <table className="w-full text-left whitespace-nowrap border-collapse min-w-max">
               <thead className="bg-surface-card/90 sticky top-0 z-30">
-                <tr className="font-heading font-bold text-[10px] text-body uppercase tracking-widest border-b border-default">
+                <tr className="font-heading font-bold text-[10px] text-muted uppercase tracking-widest border-b border-default">
                   {/* Bodies Columns */}
                   {activeTab === 'bodies' && (
                     <>

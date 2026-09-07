@@ -195,11 +195,11 @@ const KpiTile = ({ icon: Icon, label, value, sub, onClick }: { icon: any; label:
   <button onClick={onClick} disabled={!onClick}
     className={`min-w-0 bg-surface-card border border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between transition-all text-left ${onClick ? 'hover:-translate-y-1 hover:shadow-xl cursor-pointer' : 'cursor-default'}`}>
     <div className="flex items-center justify-between gap-2">
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body truncate">{label}</span>
+      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted truncate">{label}</span>
       <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
     </div>
     <div className="font-heading font-extrabold text-[32px] text-strong leading-none">{value}</div>
-    <span className="font-body text-[12px] text-body font-medium">{sub}</span>
+    <span className="font-body text-[12px] text-muted font-medium">{sub}</span>
   </button>
 );
 
@@ -266,7 +266,7 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
           <div className="relative flex-1 min-w-[160px]">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or team…"
-              className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
+              className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
           </div>
           {/* status dropdown filter */}
           <div className="relative shrink-0">
@@ -285,7 +285,7 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
             <thead>
               <tr className="bg-surface-accent/40">
                 {['Player', 'Pos', 'Team', 'Status', ''].map(h => (
-                  <th key={h} className="px-4 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-body">{h}</th>
+                  <th key={h} className="px-4 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -398,7 +398,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
                   <span className="font-body font-bold text-[14px] text-body truncate">{item.videoName}</span>
                   <span className={`font-body text-[10px] font-black px-2 py-0.5 rounded-full ${item.type === 'package' ? 'bg-brand-primary/15 text-strong' : 'bg-surface-accent text-body'}`}>{item.type === 'package' ? 'Package' : 'Full match'}</span>
                 </div>
-                <div className="flex items-center gap-2 font-body text-[12px] text-body mt-0.5 flex-wrap">
+                <div className="flex items-center gap-2 font-body text-[12px] text-muted mt-0.5 flex-wrap">
                   <span className="inline-flex items-center gap-1"><Users size={11} /> {item.uploader} · {item.uploaderRole}</span>
                   <span>·</span>
                   {item.playerId ? <span>{item.playerName}</span> : <span className="inline-flex items-center gap-1 text-status-warning font-bold"><AlertTriangle size={11} /> No player linked</span>}
@@ -487,7 +487,7 @@ const VmAnalyticsTab = () => {
   const maxDemand = Math.max(...demand.map(d => d.v));
   const Board = ({ title, rows, max }: { title: string; rows: TeamMember[]; max: number }) => (
     <div className="flex-1 min-w-0">
-      <h4 className="font-heading font-bold text-[12px] uppercase tracking-widest text-body mb-3">{title}</h4>
+      <h4 className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted mb-3">{title}</h4>
       <div className="flex flex-col gap-3">
         {rows.map((r, i) => (
           <div key={r.name} className="flex items-center gap-3">
@@ -519,7 +519,7 @@ const VmAnalyticsTab = () => {
         <div className={`lg:col-span-1 ${CARD} flex flex-col`}>
           <div className="px-5 py-4 border-b border-default flex items-center gap-3"><div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Clock size={16} className="text-strong" /></div><div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-heading">Request turnaround</h3><p className="font-body text-[12px] text-body font-medium">Raised → fulfilled</p></div></div>
           <div className="p-5 flex-1 flex flex-col justify-center gap-5">
-            <div><div className="font-heading font-extrabold text-[40px] text-strong leading-none">2.8<span className="text-[18px] text-body"> days</span></div><span className="font-body text-[12px] text-body font-medium">median this month</span></div>
+            <div><div className="font-heading font-extrabold text-[40px] text-strong leading-none">2.8<span className="text-[18px] text-body"> days</span></div><span className="font-body text-[12px] text-muted font-medium">median this month</span></div>
             <div className="flex items-center justify-between rounded-[16px] border border-default p-4"><span className="font-body text-[13px] font-bold text-body">Open &gt; 7 days</span><span className="font-heading font-black text-[20px] text-strong tabular-nums">2</span></div>
           </div>
         </div>
@@ -637,7 +637,7 @@ export default function VideoManagerDashboard() {
             <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-default z-50 overflow-hidden">
               <div className="px-5 py-4 border-b border-default flex items-center gap-3">
                 <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div><div className="font-body font-bold text-[14px] text-body">Marcus</div><div className="font-body text-[12px] text-body font-medium">Video Manager</div></div>
+                <div><div className="font-body font-bold text-[14px] text-body">Marcus</div><div className="font-body text-[12px] text-muted font-medium">Video Manager</div></div>
               </div>
               <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
             </div>
@@ -684,12 +684,12 @@ export default function VideoManagerDashboard() {
             </div>
             <div className="p-8 space-y-4">
               <div>
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Player name</label>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Player name</label>
                 <input autoFocus type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Team</label><input type="text" placeholder="Club" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Position</label><input type="text" placeholder="e.g. ST" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Team</label><input type="text" placeholder="Club" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Position</label><input type="text" placeholder="e.g. ST" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
               </div>
               <div className="flex gap-3 pt-2">
                 <button onClick={() => setShowAddPlayer(false)} className="flex-1 px-6 py-3 bg-transparent border-2 border-default text-body rounded-full font-body font-bold text-[14px] hover:border-text-body transition-colors">Cancel</button>

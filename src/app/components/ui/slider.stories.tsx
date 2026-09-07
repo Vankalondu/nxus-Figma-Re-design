@@ -34,7 +34,7 @@ export const AgeRange: Story = {
     return (
       <div className="w-[360px]">
         <div className="flex items-center justify-between mb-3">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
             Age range
           </span>
           <span className="font-body font-bold text-[12px] text-body tabular-nums">

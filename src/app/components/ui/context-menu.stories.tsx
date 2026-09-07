@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: () => (
     <ContextMenu>
-      <ContextMenuTrigger className="flex h-[140px] w-[360px] items-center justify-center rounded-[20px] border border-dashed border-default text-body font-body text-[12px]">
+      <ContextMenuTrigger className="flex h-[140px] w-[360px] items-center justify-center rounded-[20px] border border-dashed border-default text-muted font-body text-[12px]">
         Right-click this row
       </ContextMenuTrigger>
       <ContextMenuContent>

@@ -105,7 +105,7 @@ export default function UploaderDashboard() {
             <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-default z-50 overflow-hidden">
               <div className="px-5 py-4 border-b border-default flex items-center gap-3">
                 <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div><div className="font-body font-bold text-[14px] text-body">{myName}</div><div className="font-body text-[12px] text-body font-medium">{role}</div></div>
+                <div><div className="font-body font-bold text-[14px] text-body">{myName}</div><div className="font-body text-[12px] text-muted font-medium">{role}</div></div>
               </div>
               <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
             </div>
@@ -183,7 +183,7 @@ export default function UploaderDashboard() {
                           <div key={t.id} className="px-5 py-3 flex items-center gap-3">
                             <span className={`w-2 h-2 rounded-full shrink-0 ${t.priority === 'High' ? 'bg-status-error' : t.priority === 'Medium' ? 'bg-status-warning' : 'bg-text-body'}`} />
                             <span className="font-body font-bold text-[13px] text-body truncate flex-1">{t.text}</span>
-                            <span className="font-body text-[11px] text-body shrink-0">{t.dueDate}</span>
+                            <span className="font-body text-[11px] text-muted shrink-0">{t.dueDate}</span>
                           </div>
                         ))}
                         {activeTasks.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-body">No open tasks.</div>}

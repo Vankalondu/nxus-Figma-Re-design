@@ -26,13 +26,13 @@ export const Horizontal: Story = {
     <div className="w-[520px] h-[220px] rounded-[20px] border border-default overflow-hidden">
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={65}>
-          <div className="h-full flex items-center justify-center bg-surface-card font-body text-[12px] text-body">
+          <div className="h-full flex items-center justify-center bg-surface-card font-body text-[12px] text-muted">
             Footage
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={35}>
-          <div className="h-full flex items-center justify-center bg-surface-accent/40 font-body text-[12px] text-body">
+          <div className="h-full flex items-center justify-center bg-surface-accent/40 font-body text-[12px] text-muted">
             Player list
           </div>
         </ResizablePanel>

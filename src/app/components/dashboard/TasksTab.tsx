@@ -93,7 +93,7 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
         <div className="relative flex-1 min-w-[180px]">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search tasks…"
-            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
+            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
         </div>
         {/* status dropdown filter */}
         <div className="relative shrink-0">
@@ -119,7 +119,7 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
             <thead>
               <tr className="bg-surface-accent/40">
                 {['Task', 'Priority', 'Description', 'Assignee', 'Assigned', 'Deadline', 'Status', ''].map(h => (
-                  <th key={h} className="px-3 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-body whitespace-nowrap">{h}</th>
+                  <th key={h} className="px-3 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-muted whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -129,11 +129,11 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
                 const meta = od ? TASK_STATE_META.overdue : TASK_STATE_META[st];
                 return (
                   <tr key={t.id} className={`border-t border-default/70 hover:bg-surface-accent/50 transition-colors ${st === 'done' ? 'opacity-70' : ''}`}>
-                    <td className="px-3 py-3 min-w-0 max-w-[220px]"><div className={`font-body font-bold text-[13px] truncate ${st === 'done' ? 'text-body line-through' : 'text-strong'}`}>{t.text}</div>{t.playerName && <div className="font-body text-[11px] text-body truncate">{t.playerName}</div>}</td>
+                    <td className="px-3 py-3 min-w-0 max-w-[220px]"><div className={`font-body font-bold text-[13px] truncate ${st === 'done' ? 'text-body line-through' : 'text-strong'}`}>{t.text}</div>{t.playerName && <div className="font-body text-[11px] text-muted truncate">{t.playerName}</div>}</td>
                     <td className="px-3 py-3"><PriorityPill p={t.priority} /></td>
-                    <td className="px-3 py-3 max-w-[220px] hidden lg:table-cell"><span className="font-body text-[12px] text-body line-clamp-1">{t.description || '—'}</span></td>
-                    <td className="px-3 py-3 hidden md:table-cell"><span className="font-body text-[12px] text-body whitespace-nowrap">{t.assignedTo}</span></td>
-                    <td className="px-3 py-3 hidden xl:table-cell"><span className="font-body text-[12px] text-body whitespace-nowrap tabular-nums">{fmtDate(t.assignedDate)}</span></td>
+                    <td className="px-3 py-3 max-w-[220px] hidden lg:table-cell"><span className="font-body text-[12px] text-muted line-clamp-1">{t.description || '—'}</span></td>
+                    <td className="px-3 py-3 hidden md:table-cell"><span className="font-body text-[12px] text-muted whitespace-nowrap">{t.assignedTo}</span></td>
+                    <td className="px-3 py-3 hidden xl:table-cell"><span className="font-body text-[12px] text-muted whitespace-nowrap tabular-nums">{fmtDate(t.assignedDate)}</span></td>
                     <td className="px-3 py-3"><span className={`font-body text-[12px] whitespace-nowrap tabular-nums ${od ? 'text-status-error font-bold' : 'text-body'}`}>{fmtDate(t.deadline)}</span></td>
                     <td className="px-3 py-3">
                       <button onClick={e => { const r = e.currentTarget.getBoundingClientRect(); setStatusOpen(statusOpen?.id === t.id ? null : { id: t.id, top: r.bottom + 4, left: r.left }); }}
@@ -210,13 +210,13 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
           <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-md border border-default" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 bg-brand-primary rounded-t-[16px] flex items-center justify-between"><span className="font-heading font-semibold text-[16px] text-on-brand">Assign a Task</span><button onClick={() => setShowAssign(false)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={16} /></button></div>
             <div className="p-8 space-y-4">
-              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Task name</label><input autoFocus type="text" value={form.text} onChange={e => setForm(f => ({ ...f, text: e.target.value }))} placeholder="What needs doing?" onKeyDown={e => { if (e.key === 'Enter') submitAssign(); }} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
-              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Description</label><input type="text" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Optional details" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
+              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Task name</label><input autoFocus type="text" value={form.text} onChange={e => setForm(f => ({ ...f, text: e.target.value }))} placeholder="What needs doing?" onKeyDown={e => { if (e.key === 'Enter') submitAssign(); }} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
+              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Description</label><input type="text" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Optional details" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Assignee</label><select value={form.assignedTo} onChange={e => setForm(f => ({ ...f, assignedTo: e.target.value }))} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none cursor-pointer">{TASK_ASSIGNEES.map(a => <option key={a}>{a}</option>)}</select></div>
-                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Deadline</label><input type="date" value={form.deadline} onChange={e => setForm(f => ({ ...f, deadline: e.target.value }))} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Assignee</label><select value={form.assignedTo} onChange={e => setForm(f => ({ ...f, assignedTo: e.target.value }))} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none cursor-pointer">{TASK_ASSIGNEES.map(a => <option key={a}>{a}</option>)}</select></div>
+                <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Deadline</label><input type="date" value={form.deadline} onChange={e => setForm(f => ({ ...f, deadline: e.target.value }))} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
               </div>
-              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Priority</label><div className="flex gap-2">{(['High', 'Medium', 'Low'] as const).map(pp => (<button key={pp} onClick={() => setForm(f => ({ ...f, priority: pp }))} className={`px-4 py-2 rounded-full font-body text-[12px] font-black border transition-all ${form.priority === pp ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary'}`}>{pp}</button>))}</div></div>
+              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Priority</label><div className="flex gap-2">{(['High', 'Medium', 'Low'] as const).map(pp => (<button key={pp} onClick={() => setForm(f => ({ ...f, priority: pp }))} className={`px-4 py-2 rounded-full font-body text-[12px] font-black border transition-all ${form.priority === pp ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary'}`}>{pp}</button>))}</div></div>
               <button onClick={submitAssign} disabled={!form.text.trim()} className="w-full bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full py-3 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">Assign Task</button>
             </div>
           </div>

@@ -70,17 +70,17 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
           <div className="space-y-8">
             {/* Primary Identity Fields */}
             <div className="space-y-2">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Name:*</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Name:*</label>
               <input 
                 type="text" 
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
-                className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-body/40 shadow-sm"
+                className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-placeholder/40 shadow-sm"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">DOB:</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">DOB:</label>
               <div className="relative group">
                 <input 
                   type="text" 
@@ -94,7 +94,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
 
             {/* Nationality Chip Collector Row */}
             <div className="space-y-4">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Nationality:</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Nationality:</label>
               <div className="relative group">
                 <select 
                   onChange={(e) => handleAddNationality(e.target.value)}
@@ -120,7 +120,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
 
             {/* 3-Column Position Matrix Track */}
             <div className="space-y-4">
-              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-body border-b border-default pb-2">Positional Depth</div>
+              <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted border-b border-default pb-2">Positional Depth</div>
               <div className="grid grid-cols-3 gap-6">
                 {[
                   { label: 'Primary:', key: 'primaryPos' },
@@ -128,7 +128,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                   { label: 'Tertiary:', key: 'tertiaryPos' }
                 ].map(pos => (
                   <div key={pos.key} className="space-y-2">
-                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{pos.label}</label>
+                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{pos.label}</label>
                     <div className="relative group">
                       <select 
                         value={formData[pos.key as keyof typeof formData] as string}
@@ -148,7 +148,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
             {/* Physical & Mechanical Metrics */}
             <div className="space-y-8 pt-4 border-t border-default">
               <div className="space-y-2">
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Preferred foot</label>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Preferred foot</label>
                 <div className="relative group">
                   <select 
                     value={formData.preferredFoot}
@@ -165,7 +165,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
 
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Height (cm):</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Height (cm):</label>
                   <input 
                     type="number" 
                     value={formData.height}
@@ -174,7 +174,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Weight (kg):</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Weight (kg):</label>
                   <input 
                     type="number" 
                     value={formData.weight}

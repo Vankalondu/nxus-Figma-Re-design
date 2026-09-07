@@ -129,7 +129,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
             {/* Custom presets panel */}
             <div className="break-inside-avoid mb-4 inline-block w-full">
               <div className="bg-surface-accent rounded-[16px] p-4 flex flex-col gap-3">
-                <span className="font-heading font-bold type-micro uppercase tracking-widest text-body">Custom Presets</span>
+                <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Custom Presets</span>
 
                 {presets.length === 0 ? (
                   <p className="text-body text-[14px] font-body">None saved yet.</p>
@@ -167,7 +167,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                     onChange={e => setPresetName(e.target.value)}
                     onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); saveCurrentPreset(); } }}
                     placeholder="Save current as…"
-                    className="w-full rounded-full bg-surface-card border border-default pl-4 pr-11 py-2 text-[14px] font-body font-medium text-body placeholder:text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
+                    className="w-full rounded-full bg-surface-card border border-default pl-4 pr-11 py-2 text-[14px] font-body font-medium text-body placeholder:text-placeholder focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
                   />
                   <button aria-label="Save preset" onClick={saveCurrentPreset}
                     className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-brand-primary text-inverse flex items-center justify-center hover:bg-brand-primary/80 transition-colors">
@@ -185,7 +185,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                 <div key={group} className="break-inside-avoid mb-4 inline-block w-full">
                   <div className="flex flex-col gap-2">
                     <div className="bg-surface-accent/60 rounded-[10px] px-4 py-2">
-                      <span className="font-heading font-bold type-micro uppercase tracking-widest text-body">{group}</span>
+                      <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">{group}</span>
                     </div>
                     <div className="flex flex-col gap-2">
                       {groupCols.map(col => {

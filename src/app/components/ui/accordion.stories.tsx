@@ -28,13 +28,13 @@ export const Default: Story = {
       <Accordion type="single" collapsible defaultValue="a">
         <AccordionItem value="a">
           <AccordionTrigger>Recently reviewed</AccordionTrigger>
-          <AccordionContent className="font-body text-[12px] text-body">
+          <AccordionContent className="font-body text-[12px] text-muted">
             Six packages approved since Monday.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="b">
           <AccordionTrigger>Redo requests</AccordionTrigger>
-          <AccordionContent className="font-body text-[12px] text-body">
+          <AccordionContent className="font-body text-[12px] text-muted">
             Two sent back to editors, each with a High-priority task attached.
           </AccordionContent>
         </AccordionItem>
@@ -50,11 +50,11 @@ export const Multiple: Story = {
       <Accordion type="multiple" defaultValue={['a', 'b']}>
         <AccordionItem value="a">
           <AccordionTrigger>Long List</AccordionTrigger>
-          <AccordionContent className="font-body text-[12px] text-body">60 players.</AccordionContent>
+          <AccordionContent className="font-body text-[12px] text-muted">60 players.</AccordionContent>
         </AccordionItem>
         <AccordionItem value="b">
           <AccordionTrigger>Short List</AccordionTrigger>
-          <AccordionContent className="font-body text-[12px] text-body">14 players.</AccordionContent>
+          <AccordionContent className="font-body text-[12px] text-muted">14 players.</AccordionContent>
         </AccordionItem>
       </Accordion>
     </div>

@@ -50,7 +50,7 @@ export function UploadHighlightModal({ playerId, playerName, onClose }: { player
           </div>
 
           <div>
-            <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Title</label>
+            <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Title</label>
             <input autoFocus type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. vs Gor Mahia — 2 goals"
               className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
           </div>
@@ -67,7 +67,7 @@ export function UploadHighlightModal({ playerId, playerName, onClose }: { player
 
           {mode === 'link' ? (
             <div>
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Video link</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Video link</label>
               <input type="url" value={url} onChange={e => setUrl(e.target.value)} placeholder="https://…  (YouTube, Veo, Hudl…)"
                 onKeyDown={e => { if (e.key === 'Enter') submit(); }}
                 className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
@@ -89,7 +89,7 @@ export function UploadHighlightModal({ playerId, playerName, onClose }: { player
                 <>
                   <UploadCloud size={22} className="text-body" />
                   <div className="font-body font-bold text-[13px] text-body">Drop a video here, or click to choose</div>
-                  <div className="font-body text-[11px] text-body">MP4, MOV — from your device</div>
+                  <div className="font-body text-[11px] text-muted">MP4, MOV — from your device</div>
                 </>
               )}
             </div>

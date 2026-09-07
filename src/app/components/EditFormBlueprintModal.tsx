@@ -78,7 +78,7 @@
 
   // ── Reusable atoms (module scope, token-styled) ──
   const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-body
+    <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-muted
   block`}>{children}</label>
   );
 
@@ -242,19 +242,19 @@
                   <input value={title} onChange={e => setTitle(e.target.value)}
                     className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                 </div>
 
                 <div className={`flex flex-col gap-2`}>
                   <div className={`flex items-center justify-between`}>
                     <FieldLabel>Description</FieldLabel>
                     <span className={`font-body font-medium text-[12px]
-  text-body`}>{description.length}/500</span>
+  text-muted`}>{description.length}/500</span>
                   </div>
                   <textarea value={description} maxLength={500} rows={3} onChange={e => setDescription(e.target.value)}
                     className={`w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body resize-none`} />
+  placeholder:text-placeholder resize-none`} />
                 </div>
 
                 <div className={`grid grid-cols-2 gap-6`}>
@@ -277,7 +277,7 @@
                     <input value={estTime} onChange={e => setEstTime(e.target.value)} placeholder="e.g. 8m"
                       className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                   </div>
                 </div>
 
@@ -320,7 +320,7 @@
                       placeholder="Optional"
                       className={`flex-1 bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold font-mono
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                     <button type="button" onClick={fillFromTitle}
                       className={`bg-brand-primary border-2 border-brand-primary text-inverse hover:bg-brand-primary/80
   rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm shrink-0`}>
@@ -397,13 +397,13 @@
 
                     {/* Question text */}
                     <div className={`flex flex-col gap-2`}>
-                      <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-body
+                      <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-muted
   flex items-center gap-1`}>Question Text <span className={`text-status-error`}>*</span></label>
                       <input key={`text-${activeQuestion.id}`} value={activeQuestion.text} onChange={e =>
   updateActive('text', e.target.value)}
                         className={`w-full bg-surface-card border border-default shadow-sm rounded-[16px] px-4 py-3 text-[16px]
   font-black text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                     </div>
 
                     {/* Help text + required */}
@@ -414,7 +414,7 @@
                         placeholder="Instruction text"
                         className={`w-full bg-surface-card border border-default shadow-sm rounded-[16px] px-4 py-3 text-[14px]
   font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body resize-none`} />
+  placeholder:text-placeholder resize-none`} />
                       <CheckRow checked={activeQuestion.required} onChange={() => updateActive('required',
   !activeQuestion.required)} label="Required Question" />
                     </div>
@@ -445,7 +445,7 @@
   placeholder="1"
                             className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                         </div>
                         <div className={`flex flex-col gap-2`}>
                           <FieldLabel>Sub Label</FieldLabel>
@@ -453,7 +453,7 @@
   placeholder="a"
                             className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                         </div>
                         <div className={`flex flex-col gap-2`}>
                           <FieldLabel>3-Letter Code</FieldLabel>
@@ -461,7 +461,7 @@
   e.target.value.toUpperCase().slice(0, 3))} placeholder="TEC"
                             className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                         </div>
                       </div>
 
@@ -491,7 +491,7 @@
                           Position Applicability
                         </span>
                         <span className={`font-body font-medium text-[12px]
-  text-body`}>{activeQuestion.positions.length ? activeQuestion.positions.join(', ') : 'All positions'}</span>
+  text-muted`}>{activeQuestion.positions.length ? activeQuestion.positions.join(', ') : 'All positions'}</span>
                       </button>
                       {positionsExpanded && (
                         <div className={`px-6 pb-6 pt-2 border-t border-default`}>
@@ -535,7 +535,7 @@
   e.target.value)}
                             className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                         </div>
                         <div className={`grid grid-cols-2 gap-4`}>
                           <div className={`flex flex-col gap-2`}>
@@ -544,7 +544,7 @@
   e.target.value)} placeholder="0"
                               className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                           </div>
                           <div className={`flex flex-col gap-2`}>
                             <FieldLabel>Maximum Length</FieldLabel>
@@ -552,7 +552,7 @@
   e.target.value)} placeholder="500"
                               className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                           </div>
                         </div>
                       </div>
@@ -577,7 +577,7 @@
   transition-colors`}>
                         <div className={`flex flex-col gap-1`}>
                           <span className={`font-body font-bold text-[14px] text-body`}>{item.label}</span>
-                          <span className={`font-body text-[12px] text-body`}>{item.desc}</span>
+                          <span className={`font-body text-[12px] text-muted`}>{item.desc}</span>
                         </div>
                         <SlideToggle on={behavior[item.key]} onChange={() => setBehavior(b => ({ ...b, [item.key]:
   !b[item.key] }))} />
@@ -612,7 +612,7 @@
                         <input type="number" placeholder="No limit"
                           className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
-  placeholder:text-body`} />
+  placeholder:text-placeholder`} />
                       </div>
                       <div className={`flex flex-col gap-2`}>
                         <FieldLabel>Submission Deadline</FieldLabel>

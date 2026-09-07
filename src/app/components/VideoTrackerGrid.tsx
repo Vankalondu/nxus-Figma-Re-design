@@ -68,7 +68,7 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
         <button onClick={() => setOnlyMissing(m => !m)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-body font-bold text-[12px] border transition-colors ${onlyMissing ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card border-default text-body hover:text-strong'}`}>Needs video only</button>
         <div className="relative flex-1 min-w-[180px] max-w-xs ml-auto">
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or team…"
-            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full px-4 py-2 font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
+            className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full px-4 py-2 font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
         </div>
       </div>
 
@@ -77,7 +77,7 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
           <thead>
             <tr className="bg-surface-accent/40">
               {['#', 'List', 'Player', 'Pos', 'Year', 'Age', 'DOB', 'Team', 'Nat', 'JRSY', 'PKG', 'FM1', 'FM2', 'FM3', ...(canFm ? ['FM avail.'] : [])].map((h, i) => (
-                <th key={i} className="px-3 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-body whitespace-nowrap">{h}</th>
+                <th key={i} className="px-3 py-2.5 text-left font-heading font-bold text-[10px] uppercase tracking-widest text-muted whitespace-nowrap">{h}</th>
               ))}
             </tr>
           </thead>
@@ -94,10 +94,10 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
                   <td className="px-3 py-2.5"><span className={`inline-flex items-center px-2 py-0.5 rounded-full font-body font-black text-[10px] ${prio.cls}`}>{prio.label}</span></td>
                   <td className="px-3 py-2.5 font-body font-bold text-[13px] text-body whitespace-nowrap">{p.name}</td>
                   <td className="px-3 py-2.5 font-body font-bold text-[12px] text-body">{p.posAcronym}</td>
-                  <td className="px-3 py-2.5 font-body text-[12px] text-body tabular-nums">{p.yob}</td>
-                  <td className="px-3 py-2.5 font-body text-[12px] text-body tabular-nums">{p.age}</td>
-                  <td className="px-3 py-2.5 font-body text-[12px] text-body tabular-nums whitespace-nowrap">{p.dob}</td>
-                  <td className="px-3 py-2.5 font-body text-[12px] text-body truncate max-w-[120px]">{p.team}</td>
+                  <td className="px-3 py-2.5 font-body text-[12px] text-muted tabular-nums">{p.yob}</td>
+                  <td className="px-3 py-2.5 font-body text-[12px] text-muted tabular-nums">{p.age}</td>
+                  <td className="px-3 py-2.5 font-body text-[12px] text-muted tabular-nums whitespace-nowrap">{p.dob}</td>
+                  <td className="px-3 py-2.5 font-body text-[12px] text-muted truncate max-w-[120px]">{p.team}</td>
                   <td className="px-3 py-2.5">{code && <img src={`https://flagcdn.com/w40/${code}.png`} alt={p.country} className="w-4 h-3 rounded-[2px] object-cover" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />}</td>
                   <td className="px-3 py-2.5 font-mono font-bold text-[12px] text-strong tabular-nums">{jersey(p.id)}</td>
                   <td className="px-3 py-2.5"><Slot label={ps.label} kind={ps.kind} onClick={ps.kind === 'filled' ? () => setPlaying({ name: p.name, label: 'Package' }) : canPkg && pkg !== 'has-video' ? () => onUpload?.(p.name) : undefined} /></td>

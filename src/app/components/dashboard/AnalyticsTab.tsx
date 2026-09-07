@@ -156,7 +156,7 @@ export const AnalyticsTab = () => {
                   <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-inverse' : 'bg-surface-accent text-body'}`}>{i+1}</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-body font-bold text-[14px] text-body truncate">{p.n}</div>
-                    {board === 'scouts' && <div className="font-body text-[11px] text-body truncate">{(p as any).role}</div>}
+                    {board === 'scouts' && <div className="font-body text-[11px] text-muted truncate">{(p as any).role}</div>}
                   </div>
                   <span className="font-heading font-black text-[14px] text-strong tabular-nums">{p.c}</span>
                   {board === 'scouts' && (p as any).removable && (
@@ -254,7 +254,7 @@ export const AnalyticsTab = () => {
           <div className="px-5 py-4 border-b border-default flex flex-wrap gap-x-8 gap-y-3">
             {convStats.map(([label,val]) => (
               <div key={label} className="flex flex-col gap-1">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-body">{label}</span>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted">{label}</span>
                 <span className="font-heading font-black text-[16px] text-strong">{val}</span>
               </div>
             ))}
@@ -323,7 +323,7 @@ export const AnalyticsTab = () => {
           <div className="px-5 py-4 border-b border-default flex flex-wrap gap-x-8 gap-y-3">
             {[['LONG','98'],['SHORT','402'],['TARGET','17']].map(([label,val]) => (
               <div key={label} className="flex flex-col gap-1">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-body">{label}</span>
+                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted">{label}</span>
                 <span className="font-heading font-black text-[16px] text-strong">{val}</span>
               </div>
             ))}

@@ -312,7 +312,7 @@ export function ScoutQualityLeaderboard() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Trophy className="w-4 h-4 text-status-warning" />
-              <h3 className="text-xs uppercase tracking-wider text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <h3 className="text-xs uppercase tracking-wider text-muted font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Head Scout
               </h3>
             </div>
@@ -324,7 +324,7 @@ export function ScoutQualityLeaderboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-brand-primary" />
-                <h3 className="text-xs uppercase tracking-wider text-body font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <h3 className="text-xs uppercase tracking-wider text-muted font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Country Scouts
                 </h3>
               </div>

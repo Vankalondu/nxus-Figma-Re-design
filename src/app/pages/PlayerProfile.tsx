@@ -114,7 +114,7 @@ const INITIAL_NOTES = [
 ];
 
 const NOTE_TYPES = ['General', 'Scouting', 'Performance', 'Personal', 'Other'];
-const LABEL = 'font-heading font-bold text-[10px] uppercase tracking-widest text-body';
+const LABEL = 'font-heading font-bold text-[10px] uppercase tracking-widest text-muted';
 
 const Donut = ({ pct, center, label }: { pct: number; center: string; label: string }) => {
   const R = 30;
@@ -129,7 +129,7 @@ const Donut = ({ pct, center, label }: { pct: number; center: string; label: str
         </svg>
         <div className="absolute inset-0 flex items-center justify-center font-heading font-semibold text-[16px] text-strong">{center}</div>
       </div>
-      <div className="text-[10px] font-black uppercase tracking-widest text-body text-center leading-tight">{label}</div>
+      <div className="text-[10px] font-black uppercase tracking-widest text-muted text-center leading-tight">{label}</div>
     </div>
   );
 };
@@ -256,11 +256,11 @@ export default function PlayerProfile() {
       </div>
       <div className="p-4">
         <h4 className="font-heading font-black text-[14px] text-heading group-hover:text-brand-primary transition-colors truncate">{vid.title}</h4>
-        <div className="font-body font-medium text-[12px] text-body mt-1">{vid.date}</div>
+        <div className="font-body font-medium text-[12px] text-muted mt-1">{vid.date}</div>
         <div className="flex items-center gap-4 mt-2 font-mono font-bold text-[14px] text-strong">
           {vid.type === 'Match' ? (<><span>Mins: {vid.mins}</span><span>Goals: {vid.goals}</span></>) : (<span>{vid.dur}</span>)}
         </div>
-        <div className="font-body font-medium text-[12px] text-body mt-2">{vid.tags && vid.tags.length ? vid.tags.join(' • ') : 'No tags assigned'}</div>
+        <div className="font-body font-medium text-[12px] text-muted mt-2">{vid.tags && vid.tags.length ? vid.tags.join(' • ') : 'No tags assigned'}</div>
       </div>
     </div>
   );
@@ -349,7 +349,7 @@ export default function PlayerProfile() {
             {[{ l: 'Minutes', v: '1,842' }, { l: 'Min/Game', v: '76.8' }].map(s => (
               <div key={s.l} className="bg-surface-accent/40 rounded-[14px] px-3 py-2 border border-default/40">
                 <div className="font-mono font-bold text-[14px] text-strong leading-none">{s.v}</div>
-                <div className="text-[10px] font-black text-body uppercase tracking-widest mt-1">{s.l}</div>
+                <div className="text-[10px] font-black text-muted uppercase tracking-widest mt-1">{s.l}</div>
               </div>
             ))}
           </div>
@@ -359,7 +359,7 @@ export default function PlayerProfile() {
               {DISCIPLINE_ITEMS.map(d => (
                 <div key={d.l} className="text-center">
                   <div className="font-mono font-bold text-[14px] leading-none" style={{ color: d.c }}>{d.v}</div>
-                  <div className="text-[10px] font-black text-body uppercase tracking-widest mt-1">{d.l}</div>
+                  <div className="text-[10px] font-black text-muted uppercase tracking-widest mt-1">{d.l}</div>
                 </div>
               ))}
             </div>
@@ -378,12 +378,12 @@ export default function PlayerProfile() {
           <div key={sect.title} className="bg-surface-card border border-default rounded-[24px] p-4 shadow-[var(--shadow-lg)] flex flex-col min-h-0">
             <h3 className={LABEL + ' shrink-0'}>{sect.title}</h3>
             <div className="flex flex-col flex-1 min-h-0 overflow-y-auto no-scrollbar mt-2">
-              {sect.items.length === 0 && <div className="text-[12px] font-medium text-body py-2">No entries yet.</div>}
+              {sect.items.length === 0 && <div className="text-[12px] font-medium text-muted py-2">No entries yet.</div>}
               {sect.items.map(entry => (
                 <div key={entry.id} className="py-2 border-b border-default/60 last:border-0">
                   <div className="flex items-center justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="font-body font-medium text-[12px] text-body">{entry.d}</div>
+                      <div className="font-body font-medium text-[12px] text-muted">{entry.d}</div>
                       {isEditing(si, entry.id, null) ? (
                         <div className="flex items-center gap-1 mt-0.5">
                           <input value={editText} onChange={e => setEditText(e.target.value)} className="bg-surface-card border border-default rounded-lg px-2 py-1 text-[12px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
@@ -412,7 +412,7 @@ export default function PlayerProfile() {
                               <button onClick={saveEdit} className="text-brand-primary"><Check size={13} strokeWidth={3} /></button>
                             </div>
                           ) : (
-                            <span className="font-body font-medium text-[12px] text-body truncate">{loan.label}</span>
+                            <span className="font-body font-medium text-[12px] text-muted truncate">{loan.label}</span>
                           )}
                           <div className="flex items-center gap-2 shrink-0">
                             <button onClick={() => startEdit(si, entry.id, loan.id, loan.label)} className="text-body hover:text-brand-primary transition-colors"><Edit2 size={12} /></button>
@@ -459,12 +459,12 @@ export default function PlayerProfile() {
                   <div className="w-9 h-9 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[12px] shrink-0">{note.initials}</div>
                   <div className="min-w-0 flex-1">
                     <div className="font-body font-bold text-[14px] text-body truncate">{note.author}</div>
-                    <div className="font-heading text-[10px] font-bold text-body uppercase tracking-widest">{note.date}</div>
+                    <div className="font-heading text-[10px] font-bold text-muted uppercase tracking-widest">{note.date}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 mt-3">
                   <span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">{note.type}</span>
-                  <span className="font-heading text-[10px] font-black uppercase tracking-widest text-body">{note.isPublic ? 'Public' : 'Private'}</span>
+                  <span className="font-heading text-[10px] font-black uppercase tracking-widest text-muted">{note.isPublic ? 'Public' : 'Private'}</span>
                 </div>
                 {editNoteId === note.id ? (
                   <div className="mt-3">
@@ -488,7 +488,7 @@ export default function PlayerProfile() {
                       <div key={r.id}>
                         <div className="flex items-center gap-2">
                           <span className="font-body font-bold text-[12px] text-body">{r.author}</span>
-                          <span className="font-heading text-[10px] font-medium text-body uppercase tracking-widest">{r.date}</span>
+                          <span className="font-heading text-[10px] font-medium text-muted uppercase tracking-widest">{r.date}</span>
                         </div>
                         <p className="font-body font-medium text-[12px] text-body leading-relaxed">{r.text}</p>
                       </div>
@@ -570,8 +570,8 @@ export default function PlayerProfile() {
             <div className="text-center mt-5">
               <h1 className="font-heading font-semibold text-[24px] text-heading tracking-tight leading-tight">{player.name}</h1>
               <div className="flex items-center justify-center gap-2 mt-2">
-                <span className="font-heading font-bold text-[12px] text-body uppercase tracking-widest">{player.currentTeam}</span>
-                <span className="bg-surface-accent text-body font-body font-black text-[10px] px-2 py-0.5 rounded uppercase">{(Array.isArray(player.nationality) ? player.nationality[0] : (player.nationality || '')).slice(0, 2).toUpperCase()}</span>
+                <span className="font-heading font-bold text-[12px] text-muted uppercase tracking-widest">{player.currentTeam}</span>
+                <span className="bg-surface-accent text-muted font-body font-black text-[10px] px-2 py-0.5 rounded uppercase">{(Array.isArray(player.nationality) ? player.nationality[0] : (player.nationality || '')).slice(0, 2).toUpperCase()}</span>
               </div>
             </div>
             <div className="flex items-start justify-center gap-8 mt-5">
@@ -581,7 +581,7 @@ export default function PlayerProfile() {
             <div className="mt-5 pt-5 border-t border-default flex-1">
               {bio.map(row => (
                 <div key={row.l} className="flex items-center justify-between py-2 border-b border-default/40 last:border-0">
-                  <span className="flex items-center gap-2 font-heading text-[10px] font-bold text-body uppercase tracking-widest">
+                  <span className="flex items-center gap-2 font-heading text-[10px] font-bold text-muted uppercase tracking-widest">
                     <row.icon size={13} className="text-brand-primary" /> {row.l}
                   </span>
                   <span className="font-body font-bold text-[12px] text-body text-right">{row.v}</span>
@@ -634,7 +634,7 @@ export default function PlayerProfile() {
             <div className="p-8 space-y-5 overflow-y-auto no-scrollbar">
               <div>
                 <label className={LABEL + ' block mb-2'}>Note</label>
-                <textarea value={newNoteText} onChange={e => setNewNoteText(e.target.value)} rows={5} placeholder="Enter your note..." className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-body/40 shadow-sm resize-none" />
+                <textarea value={newNoteText} onChange={e => setNewNoteText(e.target.value)} rows={5} placeholder="Enter your note..." className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-placeholder/40 shadow-sm resize-none" />
               </div>
               <div className="grid grid-cols-2 gap-4 items-end">
                 <div className="relative">

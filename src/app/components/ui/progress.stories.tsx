@@ -32,7 +32,7 @@ export const WithReadout: Story = {
   render: (a) => (
     <div className="w-[320px]">
       <div className="flex items-center justify-between mb-2">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">
+        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
           Short List coverage
         </span>
         <span className="font-body font-bold text-[12px] text-body tabular-nums">{a.value}%</span>

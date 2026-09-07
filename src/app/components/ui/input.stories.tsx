@@ -38,7 +38,7 @@ export const WithLabel: Story = {
   parameters: { docs: { description: { story: 'Label styling per **P-CO13**.' } } },
   render: (a) => (
     <div className="w-[320px]">
-      <label className="block font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-2">
+      <label className="block font-heading font-bold text-[10px] uppercase tracking-widest text-muted mb-2">
         Player name
       </label>
       <Input {...a} placeholder="e.g. Kofi Mensah" />

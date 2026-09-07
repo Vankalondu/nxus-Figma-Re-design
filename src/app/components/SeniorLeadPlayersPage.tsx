@@ -194,7 +194,7 @@ const TCell = ({ value, onChange, type = 'text', opts, placeholder = '' }:
   );
   return (
     <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-      className="w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none placeholder:text-body min-w-0 text-center" />
+      className="w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none placeholder:text-placeholder min-w-0 text-center" />
   );
 };
 
@@ -631,13 +631,13 @@ const FilterBar = ({
   // ── NumIn: sized to match ──
   const NumIn = ({ value, onChange, ph }: { value: string; onChange: (v: string) => void; ph: string }) => (
     <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={ph}
-      className="w-14 bg-surface-card border border-default rounded-full px-3 py-2 text-body font-body text-[14px] font-bold focus:outline-none placeholder:text-body" />
+      className="w-14 bg-surface-card border border-default rounded-full px-3 py-2 text-body font-body text-[14px] font-bold focus:outline-none placeholder:text-placeholder" />
   );
 
   return (
     <div className="bg-brand-primary rounded-[24px] px-[var(--pad-card)] py-4 flex flex-col md:flex-row md:items-center md:flex-wrap gap-3 md:gap-4 border border-text-on-brand/5 w-full">
       {/* BIO section */}
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body shrink-0">BIO</span>
+      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">BIO</span>
       <div className="flex items-center gap-2">
         <span className="font-body text-[14px] font-bold text-body">Foot:</span>
         <Sel value={filterFoot} onChange={setFilterFoot} opts={['All','Left','Right','Both']} />
@@ -659,7 +659,7 @@ const FilterBar = ({
       <div className="w-px h-6 bg-surface-card/10 mx-1 shrink-0" />
 
       {/* TECH section */}
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body shrink-0">TECH</span>
+      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">TECH</span>
       <div className="flex items-center gap-2">
         <span className="font-body text-[14px] font-bold text-body">Pos:</span>
         <Sel value={filterPos} onChange={setFilterPos} opts={['All','ST','LW','RW','CM','CDM','CAM','FB','CB']} />
@@ -829,44 +829,44 @@ const PlayerTable = ({
 
             {/* ── COLUMN SUB-HEADER ROW — light grey background, dark text ── */}
             <tr className="bg-surface-card border-b-2 border-default">
-              <th className={`sticky left-0 z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center ${actWCls}`}></th>
+              <th className={`sticky left-0 z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center ${actWCls}`}></th>
               {/* Player — vertical divider after (end of Player ID group) */}
-              <th className={`sticky z-40 bg-surface-card pl-3 pr-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest w-[200px] border-r-2 border-default ${idLeftCls}`}><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[92px]">DOB</th>
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[56px]">POS</th>
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Team</th>
+              <th className={`sticky z-40 bg-surface-card pl-3 pr-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[200px] border-r-2 border-default ${idLeftCls}`}><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[92px]">DOB</th>
+              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[56px]">POS</th>
+              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Team</th>
               {currentTab === 'long-list'
-                ? <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Status</th>
+                ? <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Status</th>
                 : <>
-                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widests text-center w-[52px]">
+                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widests text-center w-[52px]">
                       <div className="flex justify-center items-center gap-1"><Video size={10} /><span>Match</span></div>
                     </th>
-                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[52px]">
+                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]">
                       <div className="flex justify-center items-center gap-1"><Video size={10} /><span>High</span></div>
                     </th>
-                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[80px] border-r-2 border-default"><EditableColHeaderLight label="Added" onRename={()=>{}} onRemove={()=>{}} /></th>
+                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[80px] border-r-2 border-default"><EditableColHeaderLight label="Added" onRename={()=>{}} onRemove={()=>{}} /></th>
                   </>}
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[52px]"><EditableColHeaderLight label="Ft" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]"><EditableColHeaderLight label="Ft" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Ht — vertical divider after (end of Bio Data group) */}
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[52px] border-r-2 border-default"><EditableColHeaderLight label="Ht" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px] border-r-2 border-default"><EditableColHeaderLight label="Ht" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Scout — vertical divider after (end of Scout group) */}
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest w-[110px] border-r-2 border-default"><EditableColHeaderLight label="Scout" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[110px] border-r-2 border-default"><EditableColHeaderLight label="Scout" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Game Stats — alternating shaded sub-headers */}
               {(currentTab !== 'database' || visibleStats.has('app')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="App" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="App" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {(currentTab !== 'database' || visibleStats.has('gls')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {(currentTab !== 'database' || visibleStats.has('pen')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Pen" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Pen" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {/* Ast — vertical divider after (end of Game Stats group) */}
               {(currentTab !== 'database' || visibleStats.has('ast')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[60px] bg-surface-card border-r-2 border-default"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card border-r-2 border-default"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {extraCols.map(c => (
-                <th key={c.id} className="px-2 py-4 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[64px] whitespace-nowrap">{c.label}</th>
+                <th key={c.id} className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap">{c.label}</th>
               ))}
             </tr>
           </thead>
@@ -911,19 +911,19 @@ const PlayerTable = ({
                             <div className="flex flex-col min-w-0">
                               <div className="flex items-center gap-1">
                                 <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
-                                {isArchived && <span className="bg-text-body/15 text-body font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
+                                {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
                               <div className="flex items-center gap-2 mt-0.5">
-                                <span className="font-body text-[12px] text-body shrink-0">{player.age}</span>
+                                <span className="font-body text-[12px] text-muted shrink-0">{player.age}</span>
                                 <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                                 <FlagBadge code={natCode} label={player.nationality} />
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-2 py-3 text-center w-[92px]"><span className="font-body text-[12px] text-body">{player.dob}</span></td>
+                        <td className="px-2 py-3 text-center w-[92px]"><span className="font-body text-[12px] text-muted">{player.dob}</span></td>
                         <td className="px-2 py-3 text-center w-[56px]"><span className="font-body text-[12px] font-bold text-body">{player.posAcronym}</span></td>
-                        <td className="px-2 py-3 w-[120px] border-r-2 border-default"><span className="font-body text-[12px] text-body truncate block max-w-[110px]">{player.team}</span></td>
+                        <td className="px-2 py-3 w-[120px] border-r-2 border-default"><span className="font-body text-[12px] text-muted truncate block max-w-[110px]">{player.team}</span></td>
 
                         {/* Status — long-list only (video badges + method icon + play) / Videos — database */}
                         {currentTab === 'long-list' ? (
@@ -949,7 +949,7 @@ const PlayerTable = ({
                               <span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px] cursor-pointer hover:opacity-80">H{player.highlightVideos}</span>
                             </td>
                             <td className="px-2 py-3 text-center w-[80px] border-r-2 border-default">
-                              <span className="font-body text-[12px] font-medium text-body">{player.submissionDate}</span>
+                              <span className="font-body text-[12px] font-medium text-muted">{player.submissionDate}</span>
                             </td>
                           </>
                         )}
@@ -994,7 +994,7 @@ const PlayerTable = ({
 
                         {extraCols.map(c => (
                           <td key={c.id} className="px-2 py-3 text-center w-[64px]">
-                            <span className={`text-[12px] font-medium text-body whitespace-nowrap ${c.mono ? 'font-mono' : 'font-body'}`}>{c.value(player, 0)}</span>
+                            <span className={`text-[12px] font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : 'font-body'}`}>{c.value(player, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1115,39 +1115,39 @@ const TargetSuperTable = ({
             {/* Sub-header row — light, matches Short List */}
             <tr className="bg-surface-card border-b-2 border-default">
               {/* Action — first sticky col */}
-              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Player */}
-              <th className="sticky left-[76px] z-40 bg-surface-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest w-[180px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[76px] z-40 bg-surface-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[180px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* DOB / POS / Team */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[80px] border-l border-default">DOB</th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[48px]">POS</th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[110px]">Team</th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[80px] border-l border-default">DOB</th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[48px]">POS</th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[110px]">Team</th>
               {/* Status — N&T + F/H + video popup */}
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[120px] border-l border-default">Status</th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[120px] border-l border-default">Status</th>
               {/* Lead */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[70px] border-l border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[60px]"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[70px] border-l border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px]"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Grades */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[36px] border-l border-default"><EditableColHeaderLight label="RPT" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="PLR" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POR" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px] border-l border-default"><EditableColHeaderLight label="RPT" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="PLR" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POR" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Video Links */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Match Data */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="Ssn" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[50px]"><EditableColHeaderLight label="Comp" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="Ssn" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[50px]"><EditableColHeaderLight label="Comp" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Financials */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[56px] border-l border-default"><EditableColHeaderLight label="Cost" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[56px]"><EditableColHeaderLight label="Fee" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="%" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[56px] border-l border-default"><EditableColHeaderLight label="Cost" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[56px]"><EditableColHeaderLight label="Fee" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="%" onRename={()=>{}} onRemove={()=>{}} /></th>
               {extraCols.map(c => (
-                <th key={c.id} className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default">{c.label}</th>
+                <th key={c.id} className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default">{c.label}</th>
               ))}
             </tr>
           </thead>
@@ -1204,17 +1204,17 @@ const TargetSuperTable = ({
                             <div className="flex flex-col min-w-0">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1 mt-0.5">
-                                <span className="font-body text-[12px] text-body">{player.age}</span>
+                                <span className="font-body text-[12px] text-muted">{player.age}</span>
                                 <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-[#3A8C6A]' : 'bg-status-error'}`} />
                                 <FlagBadge code={natCode} label={player.nationality} />
-                                {isArchived && <span className="bg-text-body/15 text-body font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
+                                {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-1 py-2 border-b border-default text-center w-[80px]"><span className="font-body text-[12px] text-body">{player.dob}</span></td>
+                        <td className="px-1 py-2 border-b border-default text-center w-[80px]"><span className="font-body text-[12px] text-muted">{player.dob}</span></td>
                         <td className="px-1 py-2 border-b border-default text-center w-[48px]"><span className="font-body text-[12px] font-bold text-body">{player.posAcronym}</span></td>
-                        <td className="px-1 py-2 border-b border-default text-center w-[110px]"><span className="font-body text-[12px] text-body truncate block max-w-[100px]">{player.team}</span></td>
+                        <td className="px-1 py-2 border-b border-default text-center w-[110px]"><span className="font-body text-[12px] text-muted truncate block max-w-[100px]">{player.team}</span></td>
                         {/* Status — N&T, F/H video counts, video popup */}
                         <td className="px-2 py-2 border-b border-default border-l border-default text-center w-[120px]">
                           {openNotesId === player.id && <NotesTasksPopup playerId={player.id} playerName={player.name} onClose={() => setOpenNotesId(null)} />}
@@ -1258,7 +1258,7 @@ const TargetSuperTable = ({
                         <EC field="cost" ph="€0" /><EC field="fee" ph="€0" /><EC field="pct" ph="%" />
                         {extraCols.map(c => (
                           <td key={c.id} className="px-2 py-2 border-b border-default text-center w-[64px] border-l border-default">
-                            <span className={`font-body text-[12px] font-medium text-body whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(player, 0)}</span>
+                            <span className={`font-body text-[12px] font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(player, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1433,7 +1433,7 @@ const ShortListTable = ({
       </div>
     ) : (
       <input value={val} onChange={e=>onChange(e.target.value)} placeholder={ph}
-        className="w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none placeholder:text-body text-center" />
+        className="w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none placeholder:text-placeholder text-center" />
     )
   );
 
@@ -1462,30 +1462,30 @@ const ShortListTable = ({
             </tr>
             {/* Sub-header row */}
             <tr className="bg-surface-card border-b-2 border-default">
-              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[108px]"></th>
-              <th className="sticky left-[108px] z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center min-w-[56px] w-[56px]"><EditableColHeaderLight label="Rank" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="sticky left-[164px] z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest w-[190px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[80px]"><EditableColHeaderLight label="DOB" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="Pos" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest w-[110px]"><EditableColHeaderLight label="Team" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest w-[110px] border-r border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest w-[64px] border-r-2 border-default"><EditableColHeaderLight label="Pathway" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[130px] border-r-2 border-default">Status</th>
+              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[108px]"></th>
+              <th className="sticky left-[108px] z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center min-w-[56px] w-[56px]"><EditableColHeaderLight label="Rank" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[164px] z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[190px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[80px]"><EditableColHeaderLight label="DOB" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="Pos" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[110px]"><EditableColHeaderLight label="Team" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[110px] border-r border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[64px] border-r-2 border-default"><EditableColHeaderLight label="Pathway" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[130px] border-r-2 border-default">Status</th>
               {SCOUT_COLS.map(s => (
                 <React.Fragment key={s.key}>
-                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[40px] border-l border-default"><EditableColHeaderLight label="PLG" onRename={()=>{}} onRemove={()=>{}} /></th>
-                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POG" onRename={()=>{}} onRemove={()=>{}} /></th>
-                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[40px] border-r border-default"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
+                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px] border-l border-default"><EditableColHeaderLight label="PLG" onRename={()=>{}} onRemove={()=>{}} /></th>
+                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POG" onRename={()=>{}} onRemove={()=>{}} /></th>
+                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px] border-r border-default"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
                 </React.Fragment>
               ))}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px] border-l-2 border-default"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM3" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="PK1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK2" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK3" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l-2 border-default"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM3" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="PK1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK3" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
             </tr>
           </thead>
           <tbody>
@@ -1537,7 +1537,7 @@ const ShortListTable = ({
                             <div className="flex flex-col min-w-0">
                             <div className="flex items-center gap-1">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
-                              {isArchived && <span className="bg-text-body/15 text-body font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
+                              {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               {(() => {
                                 const nxtVals = Object.values(scoutData.get(player.id) || {});
                                 const tCount = nxtVals.filter((sd:any) => sd?.nxt === 'T').length;
@@ -1556,7 +1556,7 @@ const ShortListTable = ({
                         </td>
                         {/* DOB */}
                         <td className="px-1 py-2 text-center w-[80px]">
-                          <span className="font-body text-[12px] text-body">{player.dob}</span>
+                          <span className="font-body text-[12px] text-muted">{player.dob}</span>
                         </td>
                         {/* Pos */}
                         <td className="px-1 py-2 text-center w-[32px]">
@@ -1564,7 +1564,7 @@ const ShortListTable = ({
                         </td>
                         {/* Team */}
                         <td className="px-2 py-2 w-[110px]">
-                          <span className="font-body text-[12px] font-medium text-body truncate block max-w-[100px]">{player.team}</span>
+                          <span className="font-body text-[12px] font-medium text-muted truncate block max-w-[100px]">{player.team}</span>
                         </td>
                         {/* Profile — editable dropdown, muted tint pill */}
                         <td className="px-1 py-2 w-[110px] border-r border-default">
@@ -1775,22 +1775,22 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
               </tr>
               {/* Row 2: Column sub-headers */}
               <tr className="bg-surface-card border-b-2 border-default">
-                <th className="px-4 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-left w-[180px]">Name</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[90px]">DOB</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[52px]">POS</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-left w-[100px]">Team</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-left w-[80px]">Source</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-left w-[70px]">Scout</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-left w-[90px] border-r border-default/30">Move</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[52px]">Year</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-right w-[80px]">Fee</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-right w-[90px]">Current</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-right w-[90px] border-r border-default/30">Potential</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[100px]">Scout</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[100px]">Dev</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-left w-[100px]">Note</th>
+                <th className="px-4 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[180px]">Name</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[90px]">DOB</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]">POS</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[100px]">Team</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[80px]">Source</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[70px]">Scout</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[90px] border-r border-default/30">Move</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]">Year</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-right w-[80px]">Fee</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-right w-[90px]">Current</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-right w-[90px] border-r border-default/30">Potential</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[100px]">Scout</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[100px]">Dev</th>
+                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[100px]">Note</th>
                 {extraCols.map(c => (
-                  <th key={c.id} className="px-3 py-3 font-heading font-bold text-[12px] text-body uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default/30">{c.label}</th>
+                  <th key={c.id} className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default/30">{c.label}</th>
                 ))}
               </tr>
             </thead>
@@ -1823,7 +1823,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                           </div>
                         </td>
                         {/* DOB */}
-                        <td className="px-3 py-2 text-center"><span className="font-body text-[12px] text-body">{p.dob}</span></td>
+                        <td className="px-3 py-2 text-center"><span className="font-body text-[12px] text-muted">{p.dob}</span></td>
                         {/* POS */}
                         <td className="px-3 py-2 text-center"><span className="font-body text-[12px] font-bold text-body">{p.pos}</span></td>
                         {/* Team (Club) */}
@@ -1881,7 +1881,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         </td>
                         {extraCols.map(c => (
                           <td key={c.id} className="px-3 py-2 text-center border-l border-default/10">
-                            <span className={`font-body text-[12px] font-medium text-body whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(p, 0)}</span>
+                            <span className={`font-body text-[12px] font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(p, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1913,20 +1913,20 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                   { label: 'Year Signed', key: 'year', type: 'number' },
                 ].map(field => (
                   <div key={field.key}>
-                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">{field.label}</label>
+                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">{field.label}</label>
                     <input type={field.type} value={(newPlayer as any)[field.key] || ''} onChange={e => setNewPlayer(prev => ({ ...prev, [field.key]: field.type === 'number' ? Number(e.target.value) : e.target.value }))}
                       className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                   </div>
                 ))}
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Position</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Position</label>
                   <select value={newPlayer.pos || 'ST'} onChange={e => setNewPlayer(prev => ({ ...prev, pos: e.target.value }))}
                     className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
                     {['ST','LW','RW','CM','CDM','CAM','FB','CB','DM','LB','RB'].map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Move Type</label>
+                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Move Type</label>
                   <select value={newPlayer.move || 'Signed'} onChange={e => setNewPlayer(prev => ({ ...prev, move: e.target.value }))}
                     className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
                     {['Signed','Loan','Trial/Signed','Loan/Signed'].map(m => <option key={m}>{m}</option>)}
@@ -1934,7 +1934,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                 </div>
               </div>
               <div>
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body block mb-2">Note</label>
+                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Note</label>
                 <input type="text" value={newPlayer.note || ''} onChange={e => setNewPlayer(prev => ({ ...prev, note: e.target.value }))} placeholder="Optional note..."
                   className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
               </div>
@@ -2003,7 +2003,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
 
   return (
     <div className="flex flex-col gap-1" ref={ref}>
-      <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{label}</label>
+      <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{label}</label>
       <button onClick={() => {
           if (!open) {
             const p = value ? new Date(value) : new Date();
@@ -2074,7 +2074,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
           {/* Day labels */}
           <div className="grid grid-cols-7 mb-1">
             {DAY_LABELS.map(d => (
-              <span key={d} className="text-center font-heading font-bold text-[10px] uppercase tracking-wider text-body py-1">{d}</span>
+              <span key={d} className="text-center font-heading font-bold text-[10px] uppercase tracking-wider text-muted py-1">{d}</span>
             ))}
           </div>
           {/* Day grid */}
@@ -2109,7 +2109,7 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
   onAdd: () => void; onRemove: (i: number) => void;
 }) => (
   <div className="flex flex-col gap-2 flex-1 min-w-0">
-    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">{label}</span>
+    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{label}</span>
     <div className="flex flex-wrap gap-2">
       {items.map((c, i) => (
         <span key={i} className="inline-flex items-center gap-1 bg-surface-accent border border-default rounded-full px-2 py-1 font-body font-black text-[12px] text-body">
@@ -2121,7 +2121,7 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
     <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden">
       <input value={newVal} onChange={e => setNewVal(e.target.value)} placeholder="Add…"
         onKeyDown={e => e.key === 'Enter' && onAdd()}
-        className="font-body text-[12px] font-semibold text-body border-none outline-none px-2 py-1 flex-1 min-w-0 bg-transparent placeholder:text-body" />
+        className="font-body text-[12px] font-semibold text-body border-none outline-none px-2 py-1 flex-1 min-w-0 bg-transparent placeholder:text-placeholder" />
       <button onClick={onAdd}
         className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-2 py-1 hover:bg-brand-primary hover:text-inverse transition-colors shrink-0">+</button>
     </div>
@@ -2312,7 +2312,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
         <div className="p-5 flex flex-col gap-5 flex-1">
           {/* Scope Name */}
           <div className="flex flex-col gap-1">
-            <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Scope Name</label>
+            <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Scope Name</label>
             <input type="text" value={scopeName} onChange={e => setScopeName(e.target.value)}
               className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus transition-all" />
           </div>
@@ -2327,7 +2327,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           </div>
 
           {/* Description */}
-          <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mt-1">Description</label>
+          <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mt-1">Description</label>
           <textarea value={description} onChange={e => setDescription(e.target.value)}
             placeholder="Enter start and end dates, then use the Scope Requirements builder below to set target positions per year…"
             className="w-full min-h-[120px] flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-mono text-[12px] font-bold text-strong focus:outline-none focus:border-focus transition-all resize-none leading-relaxed" />
@@ -2351,7 +2351,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
         <div className="p-5 flex-1 min-h-0 overflow-y-auto no-scrollbar">
           {activeYearBadge ? (
             <>
-              <p className="font-heading font-bold text-[10px] uppercase tracking-widest text-body mb-4">{activeYearBadge} — target positions</p>
+              <p className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mb-4">{activeYearBadge} — target positions</p>
               <div className="flex flex-wrap gap-3">
                 {ALL_POSITIONS.map(pos => {
                   const active = description.split('\n').some(l => l.startsWith(`${activeYearBadge}:`) && l.split(':')[1]?.split(',').map(s => s.trim()).includes(pos));
@@ -2393,7 +2393,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <div className="flex items-center gap-2 px-3 py-3 mt-1 border border-dashed border-default rounded-xl">
             <input value={newProfileName} onChange={e => setNewProfileName(e.target.value)}
               placeholder="New profile…"
-              className="flex-1 min-w-0 bg-transparent font-body text-[12px] font-bold text-body outline-none placeholder:text-body" />
+              className="flex-1 min-w-0 bg-transparent font-body text-[12px] font-bold text-body outline-none placeholder:text-placeholder" />
             <div className="flex gap-1 shrink-0">{COLOR_SWATCHES.map(c => (
               <button key={c} onClick={() => setNewProfileColor(c)}
                 className={`w-4 h-4 rounded-full hover:scale-110 transition-transform ${newProfileColor === c ? 'ring-2 ring-text-heading ring-offset-1' : ''}`}
@@ -2454,7 +2454,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newGrade} onChange={e => setNewGrade(e.target.value)} placeholder="Add grade…"
                   onKeyDown={e => e.key === 'Enter' && newGrade.trim() && (setCustomGrades(p => [...p, newGrade.trim()]), setNewGrade(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-body" />
+                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newGrade.trim()) { setCustomGrades(p => [...p, newGrade.trim()]); setNewGrade(''); }}}
                   className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-inverse transition-colors">+</button>
               </div>
@@ -2475,7 +2475,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newNxtVal} onChange={e => setNewNxtVal(e.target.value)} placeholder="Add value…"
                   onKeyDown={e => e.key === 'Enter' && newNxtVal.trim() && (setCustomNxt(p => [...p, newNxtVal.trim()]), setNewNxtVal(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-body" />
+                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newNxtVal.trim()) { setCustomNxt(p => [...p, newNxtVal.trim()]); setNewNxtVal(''); }}}
                   className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-inverse transition-colors">+</button>
               </div>
@@ -2496,7 +2496,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newPathway} onChange={e => setNewPathway(e.target.value)} placeholder="Add pathway…"
                   onKeyDown={e => e.key === 'Enter' && newPathway.trim() && (setCustomPathways(p => [...p, newPathway.trim()]), setNewPathway(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-body" />
+                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newPathway.trim()) { setCustomPathways(p => [...p, newPathway.trim()]); setNewPathway(''); }}}
                   className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-inverse transition-colors">+</button>
               </div>
@@ -2518,7 +2518,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           </div>
           <div className="p-6 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Scope Name</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Scope Name</label>
               <input type="text" value={newScope.name} onChange={e => setNewScope(p => ({ ...p, name: e.target.value }))}
                 placeholder="e.g. East Africa U17 Cycle 2026"
                 className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus" />
@@ -2532,7 +2532,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-body">Description</label>
+              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Description</label>
               <textarea value={newScope.desc} onChange={e => setNewScope(p => ({ ...p, desc: e.target.value }))}
                 placeholder="Scope description…" rows={3}
                 className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus resize-none" />
@@ -2699,7 +2699,7 @@ const DatabaseToolbar = ({
     setVisibleStats(prev => { const n = new Set(prev); if (n.has(key)) n.delete(key); else n.add(key); return n; });
   const dobTooltip = `Players born between 01/01/${scopeYearMin} to 31/12/${scopeYearMax}`;
   const trigger = "flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body hover:border-brand-primary transition-colors";
-  const label = "font-heading font-bold text-[9px] uppercase tracking-wider text-body px-1";
+  const label = "font-heading font-bold text-[9px] uppercase tracking-wider text-muted px-1";
   return (
     <div className="flex items-end gap-4 flex-wrap w-full">
       {/* DOB range — read-only, driven by Scope Settings */}
@@ -2756,7 +2756,7 @@ const DatabaseToolbar = ({
       <div className="relative shrink-0">
         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
         <input value={dbSearch} onChange={e => setDbSearch(e.target.value)} placeholder="Look for a player"
-          className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
+          className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
       </div>
     </div>
   );
@@ -2770,7 +2770,7 @@ const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey }: {
   const open = openKey === label;
   return (
     <div className="flex flex-col gap-0.5 shrink-0" data-llselect>
-      <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-body px-1">{label}</span>
+      <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-muted px-1">{label}</span>
       <div className="relative">
         <button onClick={() => setOpenKey(open ? null : label)}
           className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body hover:border-brand-primary transition-colors whitespace-nowrap">
@@ -2829,7 +2829,7 @@ const LongListToolbar = ({ methodFilter, setMethodFilter, filters, search, setSe
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Look for a player"
-            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
+            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
         </div>
       </div>
     </div>
@@ -2864,13 +2864,13 @@ const ListFilterToolbar = ({
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
   }, []);
-  const num = "w-16 px-2 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body placeholder:text-body outline-none focus:border-brand-primary transition-colors";
+  const num = "w-16 px-2 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors";
   const RangePair = ({ label, minV, setMin, maxV, setMax }: { label: string; minV: string; setMin: (v: string) => void; maxV: string; setMax: (v: string) => void }) => (
     <div className="flex flex-col gap-0.5 shrink-0">
-      <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-body px-1">{label}</span>
+      <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-muted px-1">{label}</span>
       <div className="flex items-center gap-1">
         <input type="number" value={minV} onChange={e => setMin(e.target.value)} placeholder="min" className={num} />
-        <span className="text-body text-[12px]">–</span>
+        <span className="text-muted text-[12px]">–</span>
         <input type="number" value={maxV} onChange={e => setMax(e.target.value)} placeholder="max" className={num} />
       </div>
     </div>
@@ -2898,7 +2898,7 @@ const ListFilterToolbar = ({
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Look for a player"
-            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary transition-colors w-[220px]" />
+            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
         </div>
       </div>
     </div>

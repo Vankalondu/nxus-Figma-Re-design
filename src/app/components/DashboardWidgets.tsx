@@ -372,7 +372,7 @@ export const RegionalRankings = () => {
 
         <div className="flex-1 overflow-y-auto pr-2 space-y-4">
           <div>
-            <div className="text-[10px] font-bold text-body uppercase tracking-widest mb-2 flex items-center font-heading"><Crown size={12} className="mr-1 text-status-warning" /> HEAD SCOUT</div>
+            <div className="text-[10px] font-bold text-muted uppercase tracking-widest mb-2 flex items-center font-heading"><Crown size={12} className="mr-1 text-status-warning" /> HEAD SCOUT</div>
             <div className="flex items-center justify-between p-4 rounded-2xl border border-default hover:border-brand-primary/30 transition-colors bg-surface-card">
               <div className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-full bg-status-warning/20 text-status-warning flex items-center justify-center relative shrink-0">
@@ -396,7 +396,7 @@ export const RegionalRankings = () => {
           </div>
 
           <div>
-            <div className="flex items-center justify-between text-[10px] font-bold text-body uppercase tracking-widest mb-2 font-heading">
+            <div className="flex items-center justify-between text-[10px] font-bold text-muted uppercase tracking-widest mb-2 font-heading">
               <span className="flex items-center"><Search size={12} className="mr-1" /> COUNTRY SCOUTS</span>
               <span className="text-[10px] normal-case font-medium">Sorted by Grade A players</span>
             </div>

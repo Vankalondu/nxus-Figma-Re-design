@@ -83,7 +83,7 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
         onKeyDown={onKeyDown}
         placeholder="Find a player"
         role="combobox" aria-expanded={showDropdown} aria-autocomplete="list"
-        className="w-full pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-body outline-none focus:border-brand-primary transition-colors" />
+        className="w-full pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors" />
 
       {showDropdown && (
         <div className="absolute left-0 top-full mt-2 w-full min-w-[320px] sm:min-w-[360px] max-h-[400px] overflow-y-auto bg-surface-card border border-default rounded-[20px] shadow-2xl z-50 p-1.5" role="listbox">
@@ -101,7 +101,7 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
                 {/* name + meta */}
                 <div className="min-w-0 flex-1">
                   <div className={`font-body font-bold text-[14px] truncate transition-colors ${i === active ? 'text-brand-primary' : 'text-strong group-hover:text-brand-primary'}`}>{p.name}</div>
-                  <div className="flex items-center gap-1.5 font-body text-[12px] text-body min-w-0">
+                  <div className="flex items-center gap-1.5 font-body text-[12px] text-muted min-w-0">
                     {flag && <img src={`https://flagcdn.com/w40/${flag}.png`} alt={p.country} className="w-4 h-3 rounded-[2px] object-cover shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />}
                     <span className="truncate">{p.team}</span>
                     <span className="shrink-0">·</span>
@@ -136,7 +136,7 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
             );
           })}
           {results.length > shown.length && (
-            <div className="px-4 py-2 mt-0.5 border-t border-default font-body text-[12px] text-body text-center">
+            <div className="px-4 py-2 mt-0.5 border-t border-default font-body text-[12px] text-muted text-center">
               Showing {shown.length} of {results.length} — keep typing to narrow
             </div>
           )}
