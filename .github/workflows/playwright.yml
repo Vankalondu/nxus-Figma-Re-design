@@ -14,7 +14,7 @@ jobs:
   # hiding the other. Deploy is unaffected: it still needs `test` only, and
   # still only fires on workflow_dispatch.
   lint-tokens:
-    name: Token lint (L-C1 / L-C2 / L-G1)
+    name: Token lint + Figma drift
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +24,14 @@ jobs:
           node-version: 20
       - name: Lint design tokens
         run: node scripts/lint-tokens.mjs
+
+      # Figma <-> CSS drift, plus a staleness warning. This ran only when a
+      # human remembered to run it, which is exactly why the snapshot could go
+      # quietly out of date — the diff trusts it and cannot detect its own
+      # staleness. Running it here makes drift a build failure and an ageing
+      # snapshot a visible warning instead of silence.
+      - name: Verify Figma ↔ CSS tokens
+        run: node scripts/figma-css-diff.mjs
 
   test:
     name: Build & E2E tests

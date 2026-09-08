@@ -183,7 +183,54 @@ console.log('    invisible here — the deliberate exclusions above are the whol
 console.log('  · This reads a committed snapshot, not the live file. See _verified in');
 console.log('    figma-tokens.json for when it was last confirmed against Figma.');
 
+const driftCount = rows.valueDrift.length + ramp.filter(r => r[4] === 'DRIFT').length
+  + mapped.filter(r => r[4] === 'DRIFT' || r[4] === 'MISSING').length;
+
 console.log('\nSUMMARY  match ' + rows.match.length +
   '  ·  drift ' + rows.valueDrift.length +
   '  ·  figma-only ' + rows.figmaOnly.length +
   '  ·  ramp drift ' + ramp.filter(r => r[4] === 'DRIFT').length + '/' + ramp.length);
+
+// --- staleness -------------------------------------------------------------
+// The gap this closes: everything above compares the CSS to a COMMITTED
+// SNAPSHOT of Figma. If someone edits a variable in Figma, this script keeps
+// reporting "0 drift" until a human re-reads the file — it cannot detect its
+// own staleness, so silence means "nobody looked", not "nothing changed".
+//
+// Age is a proxy, not the truth. The real fix is reading the file's
+// lastModified from Figma and comparing (see docs/figma-sync.md). Until then,
+// an ageing snapshot at least says so out loud.
+//
+// WARN early, FAIL late, on the same reasoning as the L-G1 ratchet: a check
+// that fails noisily every fortnight gets switched off, and then protects
+// nothing.
+const WARN_DAYS = 14;
+const FAIL_DAYS = 45;
+const stamp = String(SNAP._verified || SNAP.extractedAt || '').match(/^\d{4}-\d{2}-\d{2}/);
+let stale = 0;
+console.log('');
+if (!stamp) {
+  console.log('STALENESS  unknown — figma-tokens.json carries no _verified date.');
+  stale = WARN_DAYS + 1;
+} else {
+  const days = Math.floor((Date.now() - new Date(stamp[0] + 'T00:00:00Z').getTime()) / 86400000);
+  stale = days;
+  const how = days >= FAIL_DAYS ? 'FAIL' : days >= WARN_DAYS ? 'WARN' : 'OK  ';
+  console.log(`STALENESS  ${how}  snapshot verified against Figma ${days} day(s) ago (${stamp[0]}).`);
+  if (days >= WARN_DAYS) {
+    console.log('           Everything above is measured against that snapshot, so a Figma');
+    console.log('           edit since then is invisible here. Re-read the variables and');
+    console.log('           update scripts/figma-tokens.json (+ its _verified stamp).');
+  }
+}
+
+if (driftCount > 0) {
+  console.log(`\nFAIL  ${driftCount} token(s) drifted between Figma and the CSS.`);
+  process.exit(1);
+}
+if (stale >= FAIL_DAYS) {
+  console.log(`\nFAIL  snapshot is ${stale} days old (limit ${FAIL_DAYS}).`);
+  process.exit(1);
+}
+console.log('\nPASS  no drift' + (stale >= WARN_DAYS ? ' — but see the staleness warning above.' : '.'));
+process.exit(0);
