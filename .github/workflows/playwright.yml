@@ -33,6 +33,16 @@ jobs:
       - name: Verify Figma ↔ CSS tokens
         run: node scripts/figma-css-diff.mjs
 
+      # Asks Figma when the file actually changed, rather than trusting the
+      # snapshot's own date. Skips cleanly when FIGMA_TOKEN is unset, so this is
+      # a no-op until the secret exists — and a rejected token reports why and
+      # still exits 0, because a plan or scope limitation is not something a
+      # pull request can fix. Only "Figma is newer than the snapshot" fails.
+      - name: Check the Figma snapshot is not stale
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+        run: node scripts/figma-freshness.mjs
+
   test:
     name: Build & E2E tests
     timeout-minutes: 20

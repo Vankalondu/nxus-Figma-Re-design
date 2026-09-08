@@ -127,16 +127,60 @@ up mid-build:
 
 ---
 
-## Build order, if it goes ahead
+## Build order
 
-1. **Verify the plan question** — try the Variables REST endpoint with a real token. If
-   it returns 200, shape A becomes available and is less work than B.
-2. Write the plugin export, and prove its output is byte-identical to the committed
-   `figma-tokens.json`. Until that matches, nothing downstream can be trusted.
-3. Add the `repository_dispatch` Action that regenerates, diffs, and opens the PR.
-4. Only then wire the plugin's network call.
+### Step 1 — truthful staleness — **BUILT, needs one secret**
 
-Steps 2 and 3 are independently testable; step 4 is the only one that needs a secret.
+`scripts/figma-freshness.mjs` asks Figma when the file last changed and compares that
+to the snapshot's `_verified` stamp. This is the highest value per unit of work in the
+whole plan: it turns *"the snapshot claims it is fresh"* into *"Figma agrees it is
+fresh"*, and it needed no plugin.
+
+It runs in CI already and is a **no-op until `FIGMA_TOKEN` exists**. To switch it on:
+
+1. Figma → your avatar → **Settings → Security → Personal access tokens → Generate**.
+   Give it the smallest scope that reads file metadata. It never reads variables or
+   node content — only the file's name and `lastModified`.
+2. GitHub → the repo → **Settings → Secrets and variables → Actions → New repository
+   secret**. Name it exactly `FIGMA_TOKEN`.
+3. Push anything. The `Token lint + Figma drift` job will report either the real
+   comparison, or a 401/403 saying the scope or plan is the problem.
+
+Behaviour, all five paths tested:
+
+| Situation | Result |
+|---|---|
+| No token | Skips, says so, exits 0 |
+| Bad or under-scoped token | Reports the HTTP status and why, exits 0 |
+| Figma older than the snapshot | PASS |
+| Figma edited the same day | PASS — deliberately conservative |
+| Figma newer than the snapshot | **FAIL**, naming how many days |
+
+A rejected token never fails the build. A plan or scope limitation is not something a
+pull request can fix, and a check that goes red for reasons nobody can act on gets
+switched off.
+
+### Step 2 — verify the plan question
+
+Try the **Variables** REST endpoint with the same token. If it returns 200, shape A
+(scheduled pull) becomes available and is less work than the plugin. A 403 confirms the
+Enterprise gate and settles the design. Worth doing at the same time as step 1, since
+the token is already in hand.
+
+### Step 3 — the plugin export
+
+Write it, and prove its output is **byte-identical** to the committed
+`figma-tokens.json`. Until that matches, nothing downstream can be trusted.
+
+### Step 4 — the Action that opens the PR
+
+`repository_dispatch` → regenerate → diff → open a PR against a single long-lived
+`figma-sync` branch.
+
+### Step 5 — wire the plugin's network call
+
+The only step that needs a second secret, and the last one, so everything before it is
+testable without one.
 
 ---
 
