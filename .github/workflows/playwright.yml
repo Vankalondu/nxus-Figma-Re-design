@@ -43,6 +43,14 @@ jobs:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
         run: node scripts/figma-freshness.mjs
 
+      # ONE-OFF DIAGNOSTIC — remove this step and scripts/figma-probe.mjs once
+      # it has reported. It answers whether Variables are readable over REST on
+      # this plan, which decides whether the sync needs a Figma plugin at all.
+      - name: (temporary) Probe Figma REST access
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+        run: node scripts/figma-probe.mjs
+
   test:
     name: Build & E2E tests
     timeout-minutes: 20
