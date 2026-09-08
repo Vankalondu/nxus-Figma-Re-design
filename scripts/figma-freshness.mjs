@@ -15,12 +15,18 @@
  * can read file metadata. It reads ONLY the file's name and lastModified — no
  * node content, no variables.
  *
- * WHY IT NEVER FAILS THE BUILD ON A MISSING OR REJECTED TOKEN
- * The Variables REST API is Enterprise-gated and Lighthouse Sports is on Pro.
- * File metadata is a different endpoint and is expected to work, but that is
- * unverified until a real token exists — so a 401/403 reports the reason and
- * exits 0 rather than turning CI red over a plan limitation nobody can fix from
- * a pull request. Only a genuine "Figma is newer than the snapshot" fails.
+ * WHEN IT FAILS THE BUILD, AND WHEN IT DOES NOT
+ * The distinction is whether a human can act on it.
+ *
+ *   no token   -> skip, exit 0. Nothing is configured yet; that is not a fault.
+ *   403        -> report, exit 0. The scope or the plan forbids this endpoint,
+ *                 and no pull request can change that. The Variables REST API is
+ *                 Enterprise-gated and this account is Pro, so a 403 on a
+ *                 metadata endpoint is plausible too.
+ *   401        -> FAIL. The token is wrong or expired. Somebody can fix that,
+ *                 and skipping would leave freshness unchecked while CI stayed
+ *                 green — the exact silence this script exists to remove.
+ *   Figma newer than the snapshot -> FAIL. The real signal.
  *
  *   node scripts/figma-freshness.mjs
  */
@@ -59,6 +65,7 @@ const ENDPOINTS = [
 
 let lastModified = null;
 let fileName = null;
+let unauthorized = false;
 const tried = [];
 
 // Test seam. The comparison below is the only part that can fail the build, and
@@ -81,8 +88,13 @@ for (const url of lastModified ? [] : ENDPOINTS) {
   }
   if (!res.ok) {
     tried.push(`${url.split('/v1/')[1]} — HTTP ${res.status}`);
-    // 401 = bad token, 403 = token lacks scope OR the plan gates this endpoint.
-    // Both are configuration, not drift, so keep trying then exit clean.
+    if (res.status === 401) unauthorized = true;
+    // 401 and 403 are NOT the same problem, and treating them the same was a
+    // mistake. 403 means the scope or the plan forbids this — nobody can fix
+    // that from a pull request, so it must not fail the build. 401 means the
+    // token is wrong or EXPIRED, which somebody can and should fix. Exiting 0
+    // on an expired token would quietly stop checking freshness while still
+    // showing green — the exact silence this script exists to remove.
     continue;
   }
   const body = await res.json();
@@ -93,6 +105,17 @@ for (const url of lastModified ? [] : ENDPOINTS) {
   tried.push(`${url.split('/v1/')[1]} — 200 but no lastModified field`);
 }
 
+if (!lastModified && unauthorized) {
+  console.log('FRESHNESS  the Figma token was REJECTED (401).');
+  tried.forEach((t) => console.log('           · ' + t));
+  console.log('');
+  console.log('FAIL  the token is invalid or has expired, so nothing is checking whether');
+  console.log('      the snapshot still matches Figma. That is fixable: regenerate the');
+  console.log('      token in Figma and update the FIGMA_TOKEN secret. Failing rather');
+  console.log('      than skipping, because an expired token would otherwise go quiet');
+  console.log('      while CI stayed green — the silence this script exists to remove.');
+  process.exit(1);
+}
 if (!lastModified) {
   console.log('FRESHNESS  could not read the file timestamp. Not failing the build.');
   tried.forEach((t) => console.log('           · ' + t));

@@ -151,14 +151,18 @@ Behaviour, all five paths tested:
 | Situation | Result |
 |---|---|
 | No token | Skips, says so, exits 0 |
-| Bad or under-scoped token | Reports the HTTP status and why, exits 0 |
+| Token rejected (401 — wrong or **expired**) | **FAIL** — regenerate it |
+| Scope or plan forbids it (403) | Reports why, exits 0 |
 | Figma older than the snapshot | PASS |
 | Figma edited the same day | PASS — deliberately conservative |
 | Figma newer than the snapshot | **FAIL**, naming how many days |
 
-A rejected token never fails the build. A plan or scope limitation is not something a
-pull request can fix, and a check that goes red for reasons nobody can act on gets
-switched off.
+The 401/403 split is the point: **403 is a plan or scope limit nobody can fix from a pull
+request, so it must not go red. 401 means the token is wrong or expired, which somebody
+can fix** — and skipping it would leave freshness unchecked while CI stayed green, which
+is the silence this whole script exists to remove.
+
+So pick a **90-day expiry, or none**. A one-day token would fail the build tomorrow.
 
 ### Step 2 — verify the plan question
 
