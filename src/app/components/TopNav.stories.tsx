@@ -19,7 +19,7 @@ const RolePill = ({ label }: { label: string }) => (
 )
 
 const meta = {
-  title: 'Components/TopNav',
+  title: 'NXUS/Navigation/TopNav',
   component: TopNav,
   parameters: {
     layout: 'fullscreen',

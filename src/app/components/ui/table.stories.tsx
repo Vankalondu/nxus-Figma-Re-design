@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TableCaption } from './table'
 
 const meta = {
-  title: 'Primitives/Table',
+  title: 'Primitives/Data Display/Table',
   component: Table,
   parameters: {
     docs: {

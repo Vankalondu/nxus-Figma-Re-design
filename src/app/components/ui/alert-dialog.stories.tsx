@@ -7,7 +7,7 @@ import {
 import { Button } from './button'
 
 const meta = {
-  title: 'Primitives/AlertDialog',
+  title: 'Primitives/Feedback/AlertDialog',
   component: AlertDialog,
   parameters: {
     docs: {

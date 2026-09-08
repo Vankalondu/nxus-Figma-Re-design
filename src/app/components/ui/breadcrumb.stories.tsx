@@ -5,7 +5,7 @@ import {
 } from './breadcrumb'
 
 const meta = {
-  title: 'Primitives/Breadcrumb',
+  title: 'Primitives/Navigation/Breadcrumb',
   component: Breadcrumb,
   parameters: {
     docs: {

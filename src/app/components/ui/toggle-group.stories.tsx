@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { ToggleGroup, ToggleGroupItem } from './toggle-group'
 
 const meta = {
-  title: 'Primitives/ToggleGroup',
+  title: 'Primitives/Inputs/ToggleGroup',
   component: ToggleGroup,
   parameters: {
     docs: {

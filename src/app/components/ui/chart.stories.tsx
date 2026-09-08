@@ -3,7 +3,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from './chart'
 
 const meta = {
-  title: 'Primitives/Chart',
+  title: 'Primitives/Data Display/Chart',
   component: ChartContainer,
   parameters: {
     docs: {

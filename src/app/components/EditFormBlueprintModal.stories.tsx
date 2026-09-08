@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { EditFormBlueprintModal } from './EditFormBlueprintModal'
 
 const meta = {
-  title: 'Components/EditFormBlueprintModal',
+  title: 'NXUS/Modals/EditFormBlueprintModal',
   component: EditFormBlueprintModal,
   parameters: {
     layout: 'fullscreen',

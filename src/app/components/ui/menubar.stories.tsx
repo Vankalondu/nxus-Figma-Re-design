@@ -5,7 +5,7 @@ import {
 } from './menubar'
 
 const meta = {
-  title: 'Primitives/Menubar',
+  title: 'Primitives/Navigation/Menubar',
   component: Menubar,
   parameters: {
     docs: {

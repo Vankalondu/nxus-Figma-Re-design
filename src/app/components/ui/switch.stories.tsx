@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Switch } from './switch'
 
 const meta = {
-  title: 'Primitives/Switch',
+  title: 'Primitives/Inputs/Switch',
   component: Switch,
   parameters: {
     docs: {

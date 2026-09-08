@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ChampionPodium } from './shared'
 
 const meta = {
-  title: 'Components/ChampionPodium',
+  title: 'NXUS/Dashboard/ChampionPodium',
   component: ChampionPodium,
   parameters: {
     docs: {

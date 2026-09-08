@@ -5,7 +5,7 @@ import {
 } from './command'
 
 const meta = {
-  title: 'Primitives/Command',
+  title: 'Primitives/Navigation/Command',
   component: Command,
   parameters: {
     docs: {

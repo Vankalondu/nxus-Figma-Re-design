@@ -5,7 +5,7 @@ import { ALL_GENERATED_PLAYERS } from './SeniorLeadPlayersPage'
 const PLAYER = ALL_GENERATED_PLAYERS[0]
 
 const meta = {
-  title: 'Components/PlayerVideoWorkspace',
+  title: 'NXUS/Media/PlayerVideoWorkspace',
   component: PlayerVideoWorkspace,
   parameters: {
     layout: 'fullscreen',

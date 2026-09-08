@@ -3,7 +3,7 @@ import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './tool
 import { Button } from './button'
 
 const meta = {
-  title: 'Primitives/Tooltip',
+  title: 'Primitives/Data Display/Tooltip',
   component: Tooltip,
   parameters: {
     docs: {

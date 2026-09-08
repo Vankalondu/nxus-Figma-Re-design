@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { VideoTrackerGrid } from './VideoTrackerGrid'
 
 const meta = {
-  title: 'Components/VideoTrackerGrid',
+  title: 'NXUS/Data Display/VideoTrackerGrid',
   component: VideoTrackerGrid,
   parameters: {
     layout: 'fullscreen',

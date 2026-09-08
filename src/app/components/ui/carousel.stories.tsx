@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from './carousel'
 
 const meta = {
-  title: 'Primitives/Carousel',
+  title: 'Primitives/Data Display/Carousel',
   component: Carousel,
   parameters: {
     docs: {

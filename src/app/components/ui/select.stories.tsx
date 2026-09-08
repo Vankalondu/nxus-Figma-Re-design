@@ -5,7 +5,7 @@ import {
 } from './select'
 
 const meta = {
-  title: 'Primitives/Select',
+  title: 'Primitives/Inputs/Select',
   component: Select,
   parameters: {
     docs: {

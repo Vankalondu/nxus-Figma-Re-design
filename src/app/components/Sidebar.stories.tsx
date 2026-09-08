@@ -3,7 +3,7 @@ import { Plus, Upload, FileText } from 'lucide-react'
 import { Sidebar } from './Sidebar'
 
 const meta = {
-  title: 'Components/Sidebar',
+  title: 'NXUS/Navigation/Sidebar',
   component: Sidebar,
   parameters: {
     layout: 'fullscreen',

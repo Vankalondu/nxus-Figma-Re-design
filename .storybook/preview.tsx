@@ -18,14 +18,22 @@ const preview: Preview = {
     // both themes, rather than Storybook's default white/black.
     backgrounds: { disable: true },
     a11y: { test: 'todo' },
+    // Grouped by WHAT A COMPONENT DOES, the way MUI's docs sidebar is organised
+    // — Inputs, Data Display, Feedback, Surfaces, Navigation, Utils. Two flat
+    // buckets told you nothing when the question is "which one takes a date";
+    // a functional group answers it. Order is listed explicitly because
+    // Storybook otherwise sorts alphabetically, which would put Data Display
+    // before Inputs and split the form controls across the list.
     options: {
       storySort: {
         order: [
           'Guides',
           ['Introduction', 'Laws', 'Patterns', 'Reference'],
           'All Components',
-          'Components',
+          'NXUS',
+          ['Dashboard', 'Navigation', 'Data Display', 'Inputs', 'Modals', 'Media'],
           'Primitives',
+          ['Inputs', 'Data Display', 'Feedback', 'Surfaces', 'Navigation', 'Utils'],
         ],
       },
     },

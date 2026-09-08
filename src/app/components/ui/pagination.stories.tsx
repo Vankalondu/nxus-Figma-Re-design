@@ -5,7 +5,7 @@ import {
 } from './pagination'
 
 const meta = {
-  title: 'Primitives/Pagination',
+  title: 'Primitives/Navigation/Pagination',
   component: Pagination,
   parameters: {
     docs: {

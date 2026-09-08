@@ -7,7 +7,7 @@ import { PriorityPill, TASK_STATE_META } from './shared'
  * reports a state, and none of them is decorative.
  */
 const meta = {
-  title: 'Components/Status pills',
+  title: 'NXUS/Data Display/Status pills',
   component: PriorityPill,
   parameters: {
     docs: {

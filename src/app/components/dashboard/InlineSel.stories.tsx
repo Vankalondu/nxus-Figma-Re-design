@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { InlineSel } from './shared'
 
 const meta = {
-  title: 'Components/InlineSel',
+  title: 'NXUS/Inputs/InlineSel',
   component: InlineSel,
   parameters: {
     docs: {

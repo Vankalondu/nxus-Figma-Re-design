@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Sidebar } from './sidebar'
 
 const meta = {
-  title: 'Primitives/Sidebar (stale duplicate)',
+  title: 'Primitives/Navigation/Sidebar (stale duplicate)',
   component: Sidebar,
   parameters: {
     docs: {

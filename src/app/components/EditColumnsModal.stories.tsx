@@ -6,7 +6,7 @@ import { PLAYER_COLUMNS } from './playerColumns'
 const defaultVisible = () => new Set(PLAYER_COLUMNS.filter((c) => c.defaultVisible).map((c) => c.id))
 
 const meta = {
-  title: 'Components/EditColumnsModal',
+  title: 'NXUS/Modals/EditColumnsModal',
   component: EditColumnsModal,
   parameters: {
     layout: 'fullscreen',

@@ -3,7 +3,7 @@ import { Bold, Italic } from 'lucide-react'
 import { Toggle } from './toggle'
 
 const meta = {
-  title: 'Primitives/Toggle',
+  title: 'Primitives/Inputs/Toggle',
   component: Toggle,
   parameters: {
     docs: {

@@ -3,7 +3,7 @@ import { AlertTriangle, Info } from 'lucide-react'
 import { Alert, AlertTitle, AlertDescription } from './alert'
 
 const meta = {
-  title: 'Primitives/Alert',
+  title: 'Primitives/Feedback/Alert',
   component: Alert,
   parameters: {
     docs: {

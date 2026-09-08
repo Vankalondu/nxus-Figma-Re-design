@@ -3,7 +3,7 @@ import { Users, ClipboardCheck, Video, Target } from 'lucide-react'
 import { KpiCard } from './KpiCard'
 
 const meta = {
-  title: 'Components/KpiCard',
+  title: 'NXUS/Dashboard/KpiCard',
   component: KpiCard,
   parameters: {
     docs: {

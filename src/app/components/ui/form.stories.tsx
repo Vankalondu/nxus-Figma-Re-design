@@ -8,7 +8,7 @@ import { Input } from './input'
 import { Button } from './button'
 
 const meta = {
-  title: 'Primitives/Form',
+  title: 'Primitives/Inputs/Form',
   component: Form,
   parameters: {
     docs: {

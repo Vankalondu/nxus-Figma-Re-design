@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Avatar, AvatarImage, AvatarFallback } from './avatar'
 
 const meta = {
-  title: 'Primitives/Avatar',
+  title: 'Primitives/Data Display/Avatar',
   component: Avatar,
   parameters: {
     docs: {

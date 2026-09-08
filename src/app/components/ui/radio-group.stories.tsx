@@ -4,7 +4,7 @@ import { RadioGroup, RadioGroupItem } from './radio-group'
 import { Label } from './label'
 
 const meta = {
-  title: 'Primitives/RadioGroup',
+  title: 'Primitives/Inputs/RadioGroup',
   component: RadioGroup,
   parameters: {
     docs: {

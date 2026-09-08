@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { UploadVideoModal } from './UploadVideoModal'
 
 const meta = {
-  title: 'Components/UploadVideoModal',
+  title: 'NXUS/Modals/UploadVideoModal',
   component: UploadVideoModal,
   parameters: {
     layout: 'fullscreen',

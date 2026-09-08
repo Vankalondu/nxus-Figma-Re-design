@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ReportsTab } from './ReportsTab'
 
 const meta = {
-  title: 'Components/ReportsTab',
+  title: 'NXUS/Dashboard/ReportsTab',
   component: ReportsTab,
   parameters: {
     layout: 'fullscreen',

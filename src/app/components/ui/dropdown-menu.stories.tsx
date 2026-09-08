@@ -7,7 +7,7 @@ import {
 import { Button } from './button'
 
 const meta = {
-  title: 'Primitives/DropdownMenu',
+  title: 'Primitives/Navigation/DropdownMenu',
   component: DropdownMenu,
   parameters: {
     docs: {

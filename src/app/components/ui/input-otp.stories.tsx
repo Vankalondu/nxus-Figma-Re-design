@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from './input-otp'
 
 const meta = {
-  title: 'Primitives/InputOTP',
+  title: 'Primitives/Inputs/InputOTP',
   component: InputOTP,
   parameters: {
     docs: {

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AspectRatio } from './aspect-ratio'
 
 const meta = {
-  title: 'Primitives/AspectRatio',
+  title: 'Primitives/Data Display/AspectRatio',
   component: AspectRatio,
   parameters: {
     docs: {

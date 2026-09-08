@@ -5,7 +5,7 @@ import {
 } from './context-menu'
 
 const meta = {
-  title: 'Primitives/ContextMenu',
+  title: 'Primitives/Navigation/ContextMenu',
   component: ContextMenu,
   parameters: {
     docs: {

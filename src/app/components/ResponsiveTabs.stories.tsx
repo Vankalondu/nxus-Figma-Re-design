@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { ResponsiveTabs } from './ResponsiveTabs'
 
 const meta = {
-  title: 'Components/ResponsiveTabs',
+  title: 'NXUS/Navigation/ResponsiveTabs',
   component: ResponsiveTabs,
   parameters: {
     docs: {

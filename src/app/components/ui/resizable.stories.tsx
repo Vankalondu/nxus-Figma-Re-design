@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './resizable'
 
 const meta = {
-  title: 'Primitives/Resizable',
+  title: 'Primitives/Surfaces/Resizable',
   component: ResizablePanelGroup,
   parameters: {
     docs: {

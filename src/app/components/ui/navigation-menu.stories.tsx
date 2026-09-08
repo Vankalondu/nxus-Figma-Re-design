@@ -5,7 +5,7 @@ import {
 } from './navigation-menu'
 
 const meta = {
-  title: 'Primitives/NavigationMenu',
+  title: 'Primitives/Navigation/NavigationMenu',
   component: NavigationMenu,
   parameters: {
     docs: {

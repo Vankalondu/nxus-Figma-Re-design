@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { PlayerSearch } from './PlayerSearch'
 
 const meta = {
-  title: 'Components/PlayerSearch',
+  title: 'NXUS/Inputs/PlayerSearch',
   component: PlayerSearch,
   parameters: {
     docs: {

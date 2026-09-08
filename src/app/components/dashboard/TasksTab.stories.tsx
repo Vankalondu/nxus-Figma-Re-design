@@ -4,7 +4,7 @@ import { TasksTab } from './TasksTab'
 import { MOCK_TASKS } from './shared'
 
 const meta = {
-  title: 'Components/TasksTab',
+  title: 'NXUS/Dashboard/TasksTab',
   component: TasksTab,
   parameters: {
     layout: 'fullscreen',

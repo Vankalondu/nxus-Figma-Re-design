@@ -4,7 +4,7 @@ import { Toaster } from './sonner'
 import { Button } from './button'
 
 const meta = {
-  title: 'Primitives/Toaster (sonner)',
+  title: 'Primitives/Feedback/Toaster (sonner)',
   component: Toaster,
   parameters: {
     docs: {

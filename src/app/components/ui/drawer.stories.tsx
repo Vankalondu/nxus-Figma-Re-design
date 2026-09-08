@@ -6,7 +6,7 @@ import {
 import { Button } from './button'
 
 const meta = {
-  title: 'Primitives/Drawer',
+  title: 'Primitives/Feedback/Drawer',
   component: Drawer,
   parameters: {
     docs: {

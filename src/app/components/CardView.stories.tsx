@@ -6,7 +6,7 @@ import { ALL_GENERATED_PLAYERS } from './SeniorLeadPlayersPage'
 const PLAYERS = ALL_GENERATED_PLAYERS.slice(0, 12)
 
 const meta = {
-  title: 'Components/CardView',
+  title: 'NXUS/Data Display/CardView',
   component: CardView,
   parameters: {
     layout: 'fullscreen',

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Checkbox } from './checkbox'
 
 const meta = {
-  title: 'Primitives/Checkbox',
+  title: 'Primitives/Inputs/Checkbox',
   component: Checkbox,
   parameters: {
     docs: {

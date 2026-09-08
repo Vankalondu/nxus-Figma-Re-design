@@ -3,7 +3,7 @@ import { Popover, PopoverTrigger, PopoverContent } from './popover'
 import { Button } from './button'
 
 const meta = {
-  title: 'Primitives/Popover',
+  title: 'Primitives/Utils/Popover',
   component: Popover,
   parameters: {
     docs: {
