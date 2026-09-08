@@ -99,10 +99,15 @@ for (const url of lastModified ? [] : ENDPOINTS) {
   }
   const body = await res.json();
   const f = body.file || body;
-  lastModified = f.last_modified || f.lastModified || null;
+  // The two endpoints name this differently, which cost a CI round trip to
+  // discover: /meta answered 200 but carried none of the fields I first looked
+  // for. `?depth=1` uses last_modified; /meta uses last_touched_at.
+  lastModified = f.last_modified || f.lastModified || f.last_touched_at || f.lastTouchedAt || null;
   fileName = f.name || null;
   if (lastModified) break;
-  tried.push(`${url.split('/v1/')[1]} — 200 but no lastModified field`);
+  // Say WHICH keys came back, so a shape change is diagnosable from the CI log
+  // instead of needing another commit to find out. Keys only, never values.
+  tried.push(`${url.split('/v1/')[1]} — 200, but no timestamp field. keys: ${Object.keys(f).join(', ')}`);
 }
 
 if (!lastModified && unauthorized) {
