@@ -1,0 +1,13 @@
+{
+  "name": "NXUS Token Export",
+  "id": "nxus-token-export",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "reasoning": "v1 exports to the clipboard or a file only. Posting straight to GitHub is step 5 of docs/figma-sync.md and will need a domain listed here plus a credential, so it stays off until that is deliberately built."
+  }
+}

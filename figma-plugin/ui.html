@@ -1,0 +1,78 @@
+<style>
+  /* Deliberately plain. This panel is a tool, not a product surface, so it
+     borrows Figma's own theme variables rather than importing NXUS tokens —
+     a design-system export that restyles its own chrome is a distraction. */
+  body { font: 12px/1.5 Inter, sans-serif; margin: 0; padding: 12px;
+         color: var(--figma-color-text); background: var(--figma-color-bg); }
+  h1 { font-size: 13px; margin: 0 0 2px; }
+  p  { margin: 0 0 10px; color: var(--figma-color-text-secondary); }
+  textarea { width: 100%; height: 300px; box-sizing: border-box; resize: vertical;
+             font: 11px/1.4 ui-monospace, Menlo, monospace; padding: 8px;
+             border: 1px solid var(--figma-color-border); border-radius: 6px;
+             background: var(--figma-color-bg-secondary); color: var(--figma-color-text); }
+  .row { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+  button { font: 600 12px Inter, sans-serif; padding: 7px 12px; border-radius: 6px;
+           border: 1px solid var(--figma-color-border); cursor: pointer;
+           background: var(--figma-color-bg-secondary); color: var(--figma-color-text); }
+  button.primary { background: var(--figma-color-bg-brand); color: var(--figma-color-text-onbrand);
+                   border-color: transparent; }
+  .counts { color: var(--figma-color-text-secondary); margin-left: auto; }
+  .warn { color: var(--figma-color-text-danger); white-space: pre-wrap; margin-top: 8px; }
+</style>
+
+<h1>NXUS token export</h1>
+<p>Qaza, Mapped and Responsive, in the shape <code>scripts/figma-tokens.json</code> expects.</p>
+
+<textarea id="out" readonly spellcheck="false">Reading variables…</textarea>
+
+<div class="row">
+  <button class="primary" id="copy">Copy JSON</button>
+  <button id="save">Save file</button>
+  <button id="close">Close</button>
+  <span class="counts" id="counts"></span>
+</div>
+
+<div class="warn" id="warn"></div>
+
+<script>
+  let payload = null;
+
+  onmessage = (e) => {
+    const msg = e.data.pluginMessage;
+    if (!msg) return;
+
+    if (msg.type === 'error') {
+      document.getElementById('out').value = 'Export failed:\n\n' + msg.message;
+      return;
+    }
+
+    payload = msg.data;
+    // Pretty-printed at indent 1 to match the committed file, so a diff against
+    // it shows real changes rather than reformatting.
+    document.getElementById('out').value = JSON.stringify(payload, null, 1);
+    document.getElementById('counts').textContent =
+      msg.counts.qaza + ' Qaza · ' + msg.counts.mapped + ' Mapped · ' + msg.counts.responsive + ' Responsive';
+    if (msg.warnings && msg.warnings.length) {
+      document.getElementById('warn').textContent = 'Warnings:\n· ' + msg.warnings.join('\n· ');
+    }
+  };
+
+  document.getElementById('copy').onclick = () => {
+    const t = document.getElementById('out');
+    t.select();
+    document.execCommand('copy');           // clipboard API is blocked in the plugin iframe
+    document.getElementById('copy').textContent = 'Copied';
+    setTimeout(() => { document.getElementById('copy').textContent = 'Copy JSON'; }, 1200);
+  };
+
+  document.getElementById('save').onclick = () => {
+    const blob = new Blob([document.getElementById('out').value], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'figma-export.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  document.getElementById('close').onclick = () => parent.postMessage({ pluginMessage: { type: 'close' } }, '*');
+</script>

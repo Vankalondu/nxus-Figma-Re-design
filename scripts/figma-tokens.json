@@ -1,10 +1,24 @@
 {
  "_comment": "Snapshot of every variable in QAZA_FE, extracted via the Figma MCP plugin bridge. The extract needs the MCP (an agent runs it); this file is the committed result so scripts/figma-css-diff.mjs can run standalone and the diff is reviewable in a PR. Refresh by re-running the extract and replacing this file.",
- "extractedAt": "2026-09-07",
+ "extractedAt": "2026-09-09",
  "fileKey": "qefpAyr3MEEklQRV96YlSv",
  "scaleSteps": "Figma colour families run 100,200,300,400,500,Base,600,700,800,900,1000 — 11 steps with Base in the middle (the tonal anchor). CSS runs 50,100,...,900,950. So Figma/100 = CSS/-50, Figma/Base = CSS/-500, Figma/1000 = CSS/-950.",
  "Qaza": {
   "_role": "Raw hardcoded values. Every value in its raw form.",
+  "_accentNote": "Added 2026-09-07. Cyan and Violet are single Base values, not 11-step families: each marks exactly one state (uploaded/playable video; Ladder entry route) and generating a ramp for a colour used three times would be inventing structure nobody asked for. Base position so a family can grow around them later.",
+  "Colors/Amber": {
+   "100": "#fbefd6",
+   "200": "#f7dfaa",
+   "300": "#f3cd7a",
+   "400": "#efbc52",
+   "500": "#ebb244",
+   "600": "#c68b20",
+   "700": "#996a15",
+   "800": "#6e4b0d",
+   "900": "#473006",
+   "1000": "#291b03",
+   "Base": "#e8a838"
+  },
   "Colors/Blue": {
    "100": "#d2e7fa",
    "200": "#b4d7f6",
@@ -18,18 +32,8 @@
    "1000": "#061b2e",
    "Base": "#1e88e5"
   },
-  "Colors/Light Blue": {
-   "100": "#f6fafe",
-   "200": "#f0f7fd",
-   "300": "#e8f3fc",
-   "400": "#e1effc",
-   "500": "#daebfb",
-   "600": "#afc0d0",
-   "700": "#8c9aa7",
-   "800": "#69747d",
-   "900": "#464d53",
-   "1000": "#2a2e32",
-   "Base": "#d2e7fa"
+  "Colors/Cyan": {
+   "Base": "#22d3ee"
   },
   "Colors/Dark Blue": {
    "100": "#cdd1d5",
@@ -44,6 +48,32 @@
    "1000": "#010509",
    "Base": "#061b2e"
   },
+  "Colors/Green": {
+   "100": "#d7f5e2",
+   "200": "#abe9c2",
+   "300": "#7cdd9f",
+   "400": "#50d17f",
+   "500": "#34ca6b",
+   "600": "#1b9f4c",
+   "700": "#15793a",
+   "800": "#0f5529",
+   "900": "#093218",
+   "1000": "#051b0d",
+   "Base": "#22c55e"
+  },
+  "Colors/Light Blue": {
+   "100": "#f6fafe",
+   "200": "#f0f7fd",
+   "300": "#e8f3fc",
+   "400": "#e1effc",
+   "500": "#daebfb",
+   "600": "#afc0d0",
+   "700": "#8c9aa7",
+   "800": "#69747d",
+   "900": "#464d53",
+   "1000": "#2a2e32",
+   "Base": "#d2e7fa"
+  },
   "Colors/Red": {
    "100": "#fce9e5",
    "200": "#f8c9c0",
@@ -57,31 +87,26 @@
    "1000": "#2e0b07",
    "Base": "#e05c4b"
   },
-  "Colors/Amber": {
-   "100": "#fbefd6",
-   "200": "#f7dfaa",
-   "300": "#f3cd7a",
-   "400": "#efbc52",
-   "500": "#ebb244",
-   "600": "#c68b20",
-   "700": "#996a15",
-   "800": "#6e4b0d",
-   "900": "#473006",
-   "1000": "#291b03",
-   "Base": "#e8a838"
+  "Colors/Violet": {
+   "Base": "#7c5cfc"
   },
-  "Colors/Green": {
-   "100": "#d7f5e2",
-   "200": "#abe9c2",
-   "300": "#7cdd9f",
-   "400": "#50d17f",
-   "500": "#34ca6b",
-   "600": "#1b9f4c",
-   "700": "#15793a",
-   "800": "#0f5529",
-   "900": "#093218",
-   "1000": "#051b0d",
-   "Base": "#22c55e"
+  "Fonts": {
+   "Figtree/Family/Secondary": "Figtree",
+   "Figtree/Weight": [
+    "Light",
+    "Regular",
+    "Medium",
+    "SemiBold",
+    "Bold"
+   ],
+   "Plus Jakarta Sans/Family/Primary": "Plus Jakarta Sans",
+   "Plus Jakarta Sans/Weight": [
+    "Light",
+    "Regular",
+    "Medium",
+    "SemiBold",
+    "Bold"
+   ]
   },
   "Scale": {
    "0": 0,
@@ -107,32 +132,7 @@
    "1800": 400,
    "1900": 440,
    "2000": 480
-  },
-  "Fonts": {
-   "Plus Jakarta Sans/Family/Primary": "Plus Jakarta Sans",
-   "Plus Jakarta Sans/Weight": [
-    "Light",
-    "Regular",
-    "Medium",
-    "SemiBold",
-    "Bold"
-   ],
-   "Figtree/Family/Secondary": "Figtree",
-   "Figtree/Weight": [
-    "Light",
-    "Regular",
-    "Medium",
-    "SemiBold",
-    "Bold"
-   ]
-  },
-  "Colors/Cyan": {
-   "Base": "#22d3ee"
-  },
-  "Colors/Violet": {
-   "Base": "#7c5cfc"
-  },
-  "_accentNote": "Added 2026-09-07. Cyan and Violet are single Base values, not 11-step families: each marks exactly one state (uploaded/playable video; Ladder entry route) and generating a ramp for a colour used three times would be inventing structure nobody asked for. Base position so a family can grow around them later."
+  }
  },
  "Allias": {
   "_role": "Groups raw values into families with all variations recorded. Pure aliases to Qaza.",
@@ -227,74 +227,6 @@
    "Color/Status/uploaded": "--status-uploaded",
    "Color/Status/ladder": "--status-ladder"
   },
-  "Color/Surface/page": [
-   "#d2e7fa",
-   "#061b2e"
-  ],
-  "Color/Surface/card": [
-   "#f6fafe",
-   "#0a2d4c"
-  ],
-  "Color/Surface/elevated": [
-   "#f6fafe",
-   "#0a2d4c"
-  ],
-  "Color/Surface/canvas": [
-   "#e8f3fc",
-   "#0f4472"
-  ],
-  "Color/Surface/accent": [
-   "#d2e7fa",
-   "#0f4472"
-  ],
-  "Color/Surface/input": [
-   "#f0f7fd",
-   "#0f4472"
-  ],
-  "Color/Surface/sidebar": [
-   "#f6fafe",
-   "#030e17"
-  ],
-  "Color/Surface/inverse": [
-   "#061b2e",
-   "#d2e7fa"
-  ],
-  "Color/Surface/overlay": [
-   "#061b2e",
-   "#061b2e"
-  ],
-  "Color/Text/heading": [
-   "#061b2e",
-   "#d2e7fa"
-  ],
-  "Color/Text/body": [
-   "#2f4151",
-   "#afc0d0"
-  ],
-  "Color/Text/muted": [
-   "#596774",
-   "#8c9aa7"
-  ],
-  "Color/Text/placeholder": [
-   "#828d96",
-   "#69747d"
-  ],
-  "Color/Text/disabled": [
-   "#acb3b9",
-   "#464d53"
-  ],
-  "Color/Text/inverse": [
-   "#f6fafe",
-   "#061b2e"
-  ],
-  "Color/Text/link": [
-   "#1e88e5",
-   "#449ce9"
-  ],
-  "Color/Text/on-brand": [
-   "#d2e7fa",
-   "#d2e7fa"
-  ],
   "Color/Border/default": [
    "#b4d7f6",
    "#145b99"
@@ -303,13 +235,17 @@
    "#1e88e5",
    "#449ce9"
   ],
-  "Color/Border/subtle": [
-   "#d2e7fa",
+  "Color/Border/input": [
+   "#061b2e00",
    "#0f4472"
   ],
   "Color/Border/strong": [
    "#8ec4f2",
    "#1971bf"
+  ],
+  "Color/Border/subtle": [
+   "#d2e7fa",
+   "#0f4472"
   ],
   "Color/Brand/primary": [
    "#1e88e5",
@@ -319,74 +255,6 @@
    "#1971bf",
    "#69b0ee"
   ],
-  "Color/Status/success": [
-   "#22c55e",
-   "#22c55e"
-  ],
-  "Color/Status/warning": [
-   "#e8a838",
-   "#e8a838"
-  ],
-  "Color/Status/error": [
-   "#e05c4b",
-   "#e05c4b"
-  ],
-  "Color/Status/info": [
-   "#1e88e5",
-   "#449ce9"
-  ],
-  "Color/Status/success-fg": [
-   "#0f5529",
-   "#7cdd9f"
-  ],
-  "Color/Status/warning-fg": [
-   "#6e4b0d",
-   "#f3cd7a"
-  ],
-  "Color/Status/error-fg": [
-   "#7a2419",
-   "#f3a698"
-  ],
-  "Color/Status/success-tint": [
-   "#d7f5e2",
-   "#0f5529"
-  ],
-  "Color/Status/warning-tint": [
-   "#fbefd6",
-   "#6e4b0d"
-  ],
-  "Color/Status/error-tint": [
-   "#fce9e5",
-   "#7a2419"
-  ],
-  "Color/Status/info-tint": [
-   "#d2e7fa",
-   "#0f4472"
-  ],
-  "Color/Button/primary-bg": [
-   "#1e88e5",
-   "#449ce9"
-  ],
-  "Color/Button/primary-text": [
-   "#d2e7fa",
-   "#d2e7fa"
-  ],
-  "Color/Button/primary-hover": [
-   "#1971bf",
-   "#69b0ee"
-  ],
-  "Color/Button/secondary-bg": [
-   "#f6fafe",
-   "#0a2d4c"
-  ],
-  "Color/Button/secondary-text": [
-   "#2f4151",
-   "#afc0d0"
-  ],
-  "Color/Button/secondary-hover": [
-   "#e8f3fc",
-   "#0f4472"
-  ],
   "Color/Button/danger-bg": [
    "#e05c4b",
    "#e05c4b"
@@ -394,10 +262,6 @@
   "Color/Button/danger-text": [
    "#d2e7fa",
    "#d2e7fa"
-  ],
-  "Color/Button/success-bg": [
-   "#22c55e",
-   "#22c55e"
   ],
   "Color/Button/disabled-bg": [
    "#e8f3fc",
@@ -407,93 +271,261 @@
    "#acb3b9",
    "#464d53"
   ],
+  "Color/Button/primary-bg": [
+   "#1e88e5",
+   "#449ce9"
+  ],
+  "Color/Button/primary-hover": [
+   "#1971bf",
+   "#69b0ee"
+  ],
+  "Color/Button/primary-text": [
+   "#d2e7fa",
+   "#d2e7fa"
+  ],
+  "Color/Button/secondary-bg": [
+   "#f6fafe",
+   "#0a2d4c"
+  ],
+  "Color/Button/secondary-hover": [
+   "#e8f3fc",
+   "#0f4472"
+  ],
+  "Color/Button/secondary-text": [
+   "#2f4151",
+   "#afc0d0"
+  ],
+  "Color/Button/success-bg": [
+   "#22c55e",
+   "#22c55e"
+  ],
+  "Color/Status/error": [
+   "#e05c4b",
+   "#e05c4b"
+  ],
+  "Color/Status/error-fg": [
+   "#7a2419",
+   "#f3a698"
+  ],
+  "Color/Status/error-tint": [
+   "#fce9e5",
+   "#7a2419"
+  ],
+  "Color/Status/info": [
+   "#1e88e5",
+   "#449ce9"
+  ],
+  "Color/Status/info-tint": [
+   "#d2e7fa",
+   "#0f4472"
+  ],
+  "Color/Status/ladder": [
+   "#7c5cfc",
+   "#7c5cfc"
+  ],
+  "Color/Status/success": [
+   "#22c55e",
+   "#22c55e"
+  ],
+  "Color/Status/success-fg": [
+   "#0f5529",
+   "#7cdd9f"
+  ],
+  "Color/Status/success-tint": [
+   "#d7f5e2",
+   "#0f5529"
+  ],
+  "Color/Status/uploaded": [
+   "#22d3ee",
+   "#22d3ee"
+  ],
+  "Color/Status/warning": [
+   "#e8a838",
+   "#e8a838"
+  ],
+  "Color/Status/warning-fg": [
+   "#6e4b0d",
+   "#f3cd7a"
+  ],
+  "Color/Status/warning-tint": [
+   "#fbefd6",
+   "#6e4b0d"
+  ],
+  "Color/Surface/accent": [
+   "#d2e7fa",
+   "#0f4472"
+  ],
+  "Color/Surface/canvas": [
+   "#e8f3fc",
+   "#0f4472"
+  ],
+  "Color/Surface/card": [
+   "#f6fafe",
+   "#0a2d4c"
+  ],
+  "Color/Surface/elevated": [
+   "#f6fafe",
+   "#0a2d4c"
+  ],
+  "Color/Surface/input": [
+   "#f0f7fd",
+   "#0f4472"
+  ],
+  "Color/Surface/inverse": [
+   "#061b2e",
+   "#d2e7fa"
+  ],
   "Color/Surface/midtone": [
    "#b4d7f6",
    "#1971bf"
   ],
-  "Color/Surface/switch": [
-   "#b4d7f6",
-   "#1971bf"
+  "Color/Surface/overlay": [
+   "#061b2e",
+   "#061b2e"
+  ],
+  "Color/Surface/page": [
+   "#d2e7fa",
+   "#061b2e"
+  ],
+  "Color/Surface/sidebar": [
+   "#f6fafe",
+   "#030e17"
   ],
   "Color/Surface/sidebar-accent": [
    "#e8f3fc",
    "#0f4472"
   ],
-  "Color/Text/strong": [
+  "Color/Surface/switch": [
+   "#b4d7f6",
+   "#1971bf"
+  ],
+  "Color/Text/body": [
+   "#2f4151",
+   "#afc0d0"
+  ],
+  "Color/Text/disabled": [
+   "#acb3b9",
+   "#464d53"
+  ],
+  "Color/Text/heading": [
    "#061b2e",
+   "#d2e7fa"
+  ],
+  "Color/Text/inverse": [
+   "#f6fafe",
+   "#061b2e"
+  ],
+  "Color/Text/link": [
+   "#1e88e5",
+   "#449ce9"
+  ],
+  "Color/Text/muted": [
+   "#596774",
+   "#8c9aa7"
+  ],
+  "Color/Text/on-brand": [
+   "#d2e7fa",
    "#d2e7fa"
   ],
   "Color/Text/on-status": [
    "#f6fafe",
    "#f6fafe"
   ],
+  "Color/Text/placeholder": [
+   "#828d96",
+   "#69747d"
+  ],
   "Color/Text/sidebar-muted": [
    "#596774",
    "#8c9aa7"
   ],
-  "Color/Border/input": [
-   "#061b2e00",
-   "#0f4472"
-  ],
-  "Color/Status/uploaded": [
-   "#22d3ee",
-   "#22d3ee"
-  ],
-  "Color/Status/ladder": [
-   "#7c5cfc",
-   "#7c5cfc"
+  "Color/Text/strong": [
+   "#061b2e",
+   "#d2e7fa"
   ]
  },
  "Responsive": {
   "_role": "Device responsiveness only: Mobile / Tablet / Desktop.",
   "_format": "[Mobile, Tablet, Desktop]",
   "_updated": "2026-09-03 — text ramp adopted the code's values (code wins on responsiveness); h4/h5/h6/micro and the Spacing/Layout rhythm group added because the code had them and Figma did not.",
-  "Spacing/3xs": [
-   2,
-   2,
-   2
-  ],
-  "Spacing/2xs": [
-   4,
-   4,
-   4
-  ],
-  "Spacing/xs": [
-   8,
-   8,
-   8
-  ],
-  "Spacing/sm": [
-   12,
-   12,
-   12
-  ],
-  "Spacing/md": [
-   16,
-   16,
-   16
-  ],
-  "Spacing/lg": [
+  "_spacingNote": "RESOLVED 2026-09-04: lg/xl/2xl/3xl are now fixed, matching --space-5/-6/-8/-12 and honouring L-S2 (only the Layout group steps).",
+  "_paragraphNote": "Paragraph spacing has no CSS counterpart; left untouched.",
+  "_radiusNote": "RESOLVED 2026-09-04: 2xl/3xl fixed; 4xl (32) and 5xl (40) added so R-R1 and P-CO3 finally have steps for rounded-[32px] and rounded-[40px].",
+  "Radius/2xl": [
    20,
    20,
    20
   ],
-  "Spacing/xl": [
+  "Radius/3xl": [
    24,
    24,
    24
+  ],
+  "Radius/4xl": [
+   32,
+   32,
+   32
+  ],
+  "Radius/5xl": [
+   40,
+   40,
+   40
+  ],
+  "Radius/lg": [
+   12,
+   12,
+   12
+  ],
+  "Radius/md": [
+   8,
+   8,
+   8
+  ],
+  "Radius/pill": [
+   999,
+   999,
+   999
+  ],
+  "Radius/sm": [
+   4,
+   4,
+   4
+  ],
+  "Radius/xl": [
+   16,
+   16,
+   16
   ],
   "Spacing/2xl": [
    32,
    32,
    32
   ],
+  "Spacing/2xs": [
+   4,
+   4,
+   4
+  ],
   "Spacing/3xl": [
    48,
    48,
    48
   ],
-  "_spacingNote": "RESOLVED 2026-09-04: lg/xl/2xl/3xl are now fixed, matching --space-5/-6/-8/-12 and honouring L-S2 (only the Layout group steps).",
+  "Spacing/3xs": [
+   2,
+   2,
+   2
+  ],
+  "Spacing/Layout/card-padding": [
+   12,
+   16,
+   20
+  ],
+  "Spacing/Layout/grid-gap": [
+   8,
+   12,
+   16
+  ],
   "Spacing/Layout/page-padding": [
    12,
    16,
@@ -504,145 +536,35 @@
    28,
    40
   ],
-  "Spacing/Layout/grid-gap": [
-   8,
-   12,
-   16
-  ],
-  "Spacing/Layout/card-padding": [
-   12,
-   16,
-   20
-  ],
   "Spacing/Layout/stack-gap": [
    8,
    12,
    12
   ],
-  "Text/Headings/h1/text size": [
-   32,
-   40,
-   48
-  ],
-  "Text/Headings/h1/Line height": [
-   40,
-   48,
-   56
-  ],
-  "Text/Headings/h1/Paragraph spacing": [
-   16,
-   24,
-   24
-  ],
-  "Text/Headings/h2/text size": [
-   28,
-   32,
-   40
-  ],
-  "Text/Headings/h2/Line height": [
-   32,
-   40,
-   48
-  ],
-  "Text/Headings/h2/Paragraph spacing": [
-   12,
-   16,
-   20
-  ],
-  "Text/Headings/h3/text size": [
-   24,
-   28,
-   32
-  ],
-  "Text/Headings/h3/Line height": [
-   28,
-   32,
-   40
-  ],
-  "Text/Headings/h3/Paragraph spacing": [
-   8,
-   12,
-   12
-  ],
-  "Text/Headings/h4/text size": [
-   20,
-   24,
-   28
-  ],
-  "Text/Headings/h4/Line height": [
-   24,
-   28,
-   32
-  ],
-  "Text/Headings/h5/text size": [
-   20,
-   20,
-   24
-  ],
-  "Text/Headings/h5/Line height": [
-   24,
-   24,
-   28
-  ],
-  "Text/Headings/h6/text size": [
+  "Spacing/lg": [
    20,
    20,
    20
   ],
-  "Text/Headings/h6/Line height": [
-   24,
-   24,
-   24
-  ],
-  "Text/Body/lg/text size": [
-   20,
-   20,
-   20
-  ],
-  "Text/Body/lg/Line height": [
-   24,
-   24,
-   24
-  ],
-  "Text/Body/lg/Paragraph spacing": [
-   8,
-   8,
-   8
-  ],
-  "Text/Body/md/text size": [
+  "Spacing/md": [
    16,
    16,
    16
   ],
-  "Text/Body/md/Line height": [
-   20,
-   20,
-   20
-  ],
-  "Text/Body/md/Paragraph spacing": [
-   8,
-   8,
-   8
-  ],
-  "Text/Body/sm/text size": [
-   14,
-   14,
-   14
-  ],
-  "Text/Body/sm/Line height": [
-   16,
-   16,
-   16
-  ],
-  "Text/Body/sm/Paragraph spacing": [
-   8,
-   8,
-   8
-  ],
-  "Text/Body/caption/text size": [
+  "Spacing/sm": [
    12,
    12,
    12
+  ],
+  "Spacing/xl": [
+   24,
+   24,
+   24
+  ],
+  "Spacing/xs": [
+   8,
+   8,
+   8
   ],
   "Text/Body/caption/Line height": [
    14,
@@ -654,62 +576,140 @@
    4,
    4
   ],
-  "Text/Body/micro/text size": [
-   10,
-   10,
-   10
+  "Text/Body/caption/text size": [
+   12,
+   12,
+   12
+  ],
+  "Text/Body/lg/Line height": [
+   24,
+   24,
+   24
+  ],
+  "Text/Body/lg/Paragraph spacing": [
+   8,
+   8,
+   8
+  ],
+  "Text/Body/lg/text size": [
+   20,
+   20,
+   20
+  ],
+  "Text/Body/md/Line height": [
+   20,
+   20,
+   20
+  ],
+  "Text/Body/md/Paragraph spacing": [
+   8,
+   8,
+   8
+  ],
+  "Text/Body/md/text size": [
+   16,
+   16,
+   16
   ],
   "Text/Body/micro/Line height": [
    12,
    12,
    12
   ],
-  "_paragraphNote": "Paragraph spacing has no CSS counterpart; left untouched.",
-  "Radius/sm": [
-   4,
-   4,
-   4
+  "Text/Body/micro/text size": [
+   10,
+   10,
+   10
   ],
-  "Radius/md": [
-   8,
-   8,
-   8
-  ],
-  "Radius/lg": [
-   12,
-   12,
-   12
-  ],
-  "Radius/xl": [
+  "Text/Body/sm/Line height": [
    16,
    16,
    16
   ],
-  "Radius/2xl": [
-   20,
-   20,
+  "Text/Body/sm/Paragraph spacing": [
+   8,
+   8,
+   8
+  ],
+  "Text/Body/sm/text size": [
+   14,
+   14,
+   14
+  ],
+  "Text/Headings/h1/Line height": [
+   40,
+   48,
+   56
+  ],
+  "Text/Headings/h1/Paragraph spacing": [
+   16,
+   24,
+   24
+  ],
+  "Text/Headings/h1/text size": [
+   32,
+   40,
+   48
+  ],
+  "Text/Headings/h2/Line height": [
+   32,
+   40,
+   48
+  ],
+  "Text/Headings/h2/Paragraph spacing": [
+   12,
+   16,
    20
   ],
-  "Radius/3xl": [
+  "Text/Headings/h2/text size": [
+   28,
+   32,
+   40
+  ],
+  "Text/Headings/h3/Line height": [
+   28,
+   32,
+   40
+  ],
+  "Text/Headings/h3/Paragraph spacing": [
+   8,
+   12,
+   12
+  ],
+  "Text/Headings/h3/text size": [
+   24,
+   28,
+   32
+  ],
+  "Text/Headings/h4/Line height": [
+   24,
+   28,
+   32
+  ],
+  "Text/Headings/h4/text size": [
+   20,
+   24,
+   28
+  ],
+  "Text/Headings/h5/Line height": [
+   24,
+   24,
+   28
+  ],
+  "Text/Headings/h5/text size": [
+   20,
+   20,
+   24
+  ],
+  "Text/Headings/h6/Line height": [
    24,
    24,
    24
   ],
-  "Radius/pill": [
-   999,
-   999,
-   999
-  ],
-  "_radiusNote": "RESOLVED 2026-09-04: 2xl/3xl fixed; 4xl (32) and 5xl (40) added so R-R1 and P-CO3 finally have steps for rounded-[32px] and rounded-[40px].",
-  "Radius/4xl": [
-   32,
-   32,
-   32
-  ],
-  "Radius/5xl": [
-   40,
-   40,
-   40
+  "Text/Headings/h6/text size": [
+   20,
+   20,
+   20
   ]
  },
  "_shadowStyles": {
