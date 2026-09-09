@@ -211,10 +211,24 @@ Try the **Variables** REST endpoint with the same token. If it returns 200, shap
 Enterprise gate and settles the design. Worth doing at the same time as step 1, since
 the token is already in hand.
 
-### Step 3 — the plugin export
+### Step 3 — the plugin export — **BUILT AND VERIFIED**
 
-Write it, and prove its output is **byte-identical** to the committed
-`figma-tokens.json`. Until that matches, nothing downstream can be trusted.
+`figma-plugin/` (manifest, code, UI) plus `scripts/figma-merge.mjs`.
+
+The bar was that its output be byte-identical to the committed
+`figma-tokens.json`, and it is. Proven twice, on two code paths:
+
+1. The extraction logic run through the Figma MCP and diffed against the
+   snapshot — Qaza, Mapped and Responsive identical, every value.
+2. **The plugin itself**, installed in the Figma desktop app and run by Vanessa
+   against QAZA_FE on 9 Sep 2026. Its export merged to zero value changes, and
+   `git diff` on the snapshot came back completely empty.
+
+The second is the one that counts: different machine, different code path, and
+a human in the loop rather than an agent.
+
+**The loop that works today:** run the plugin → *Copy JSON* or *Save file* →
+`npm run figma:merge -- export.json` → `npm run verify:figma` → review → commit.
 
 ### Step 4 — the Action that opens the PR
 

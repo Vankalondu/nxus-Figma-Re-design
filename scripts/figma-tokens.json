@@ -721,5 +721,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-09-07 — the 2 new roles re-read from the live file and resolved through their chains (Status/uploaded -> Colors/Cyan/Base -> Colors/Cyan/Base = #22d3ee; same shape for ladder). Earlier verification of all 41 pre-existing Mapped colour variables still stands. This file is an extract, not a reconstruction — re-verify after any Figma edit, because the diff script trusts it and cannot detect its own staleness."
+ "_verified": "2026-09-09 — verified by the export plugin itself, run by Vanessa against QAZA_FE in the Figma desktop app. Its output merged to zero value changes and a byte-identical file, independently of the MCP run that built this snapshot. That is the first verification performed by the pipeline rather than by hand, so the extraction is confirmed on a second machine and a second code path. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }
