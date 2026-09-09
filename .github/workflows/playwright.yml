@@ -34,22 +34,17 @@ jobs:
         run: node scripts/figma-css-diff.mjs
 
       # Asks Figma when the file actually changed, rather than trusting the
-      # snapshot's own date. Skips cleanly when FIGMA_TOKEN is unset, so this is
-      # a no-op until the secret exists — and a rejected token reports why and
-      # still exits 0, because a plan or scope limitation is not something a
-      # pull request can fix. Only "Figma is newer than the snapshot" fails.
+      # snapshot's own date. Skips cleanly when FIGMA_TOKEN is unset.
+      #   403 -> reports and exits 0: a scope or plan limit is not something a
+      #          pull request can fix, and unactionable red gets switched off.
+      #   401 -> FAILS: the token is wrong or expired, which somebody can fix,
+      #          and skipping would leave freshness unchecked while CI is green.
+      #   Figma newer than the snapshot -> FAILS. The real signal.
       - name: Check the Figma snapshot is not stale
         env:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
         run: node scripts/figma-freshness.mjs
 
-      # ONE-OFF DIAGNOSTIC — remove this step and scripts/figma-probe.mjs once
-      # it has reported. It answers whether Variables are readable over REST on
-      # this plan, which decides whether the sync needs a Figma plugin at all.
-      - name: (temporary) Probe Figma REST access
-        env:
-          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
-        run: node scripts/figma-probe.mjs
 
   test:
     name: Build & E2E tests

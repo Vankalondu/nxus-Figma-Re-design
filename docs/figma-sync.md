@@ -36,7 +36,7 @@ with a manual refresh, not a pipeline.
 
 ## The three shapes this could take
 
-### A. Scheduled pull — a robot asks Figma every night
+### A. Scheduled pull — a robot asks Figma every night — **RULED OUT 9 Sep 2026**
 
 ```
 cron ──> GitHub Action ──> Figma REST API ──> regenerate snapshot ──> diff ──> open PR
@@ -45,10 +45,27 @@ cron ──> GitHub Action ──> Figma REST API ──> regenerate snapshot �
 The cleanest design, and the one most teams describe. It needs the **Variables REST
 API** (`GET /v1/files/:key/variables/local`).
 
-> **Blocker to verify first.** Figma documents the Variables REST API as
-> **Enterprise-only**. `Lighthouse Sports` is on the **Pro** tier. If that is accurate,
-> this shape is unavailable without an upgrade — so do not let anyone design around it
-> until someone has tried the endpoint with a real token and seen a 200 rather than a 403.
+**Tested, and it is not available on this plan.** The scope list when generating a
+personal access token on Pro is, in full:
+
+```
+Users        current_user:read
+Files        file_comments:read/write · file_content:read · file_metadata:read
+             file_versions:read
+Design sys.  library_assets:read · library_content:read · team_library_content:read
+Development  file_dev_resources:read/write
+Folders      folders:read
+Webhooks     webhooks:read · webhooks:write
+```
+
+There is **no variables scope at all** — not mis-named, not hidden. The endpoint returns
+`403 Invalid scope(s)` because no grantable scope unlocks it. Absence of the checkbox is
+stronger evidence than the 403 itself: this is an Enterprise feature, and no amount of
+token configuration will reach it.
+
+What *was* proven, and it is the part that mattered: **GitHub Actions can authenticate
+to Figma and read this file on Pro.** `GET /v1/files/:key/meta` returns 200. That is why
+step 1 below works.
 
 ### B. Plugin push — the designer publishes, and a PR appears
 
@@ -64,6 +81,29 @@ anything moved.
 **This works on Pro.** The Plugin API has no tier gate; that is how the existing
 snapshot was produced. It needs a click, but the click lands exactly where design intent
 settles — the moment someone publishes a change.
+
+#### B+ — a webhook removes the "designer forgets" failure mode
+
+The scope list has **`webhooks:write`**, which I had not accounted for. Figma can call a
+URL when the library is published:
+
+```
+Figma publish ──> webhook ──> Cloudflare Worker ──> repository_dispatch ──> Action
+```
+
+A Worker is the natural relay because Cloudflare already hosts this project, and because
+GitHub will not accept an arbitrary webhook — `repository_dispatch` needs an
+authenticated POST, so something has to hold that credential.
+
+**Be precise about what this does and does not buy.** A webhook says *that* the file
+changed, never *what* changed — reading the variables still needs the plugin, because a
+plugin needs a human in the editor. So it does not make the loop hands-free. What it
+does is kill the top failure mode in the table above: instead of a snapshot quietly
+ageing until someone notices, a publish immediately opens an issue saying "Figma was
+published, the snapshot is now stale, run the export."
+
+Worth doing *after* the plugin, not before. Without the plugin there is nothing for the
+notification to prompt.
 
 ### C. What we do now — an agent reads Figma on request
 
