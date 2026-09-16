@@ -99,6 +99,18 @@ for (const section of EXTRACTED) {
 
 snap.extractedAt = new Date().toISOString().slice(0, 10);
 
+// --stamp-verified is for the automated path only. An export IS a verification
+// — the values came out of Figma seconds earlier — so leaving the old stamp
+// would make the freshness check fail on a snapshot that is demonstrably
+// current. It stays opt-in rather than automatic because on a manual run a
+// human should be the one asserting they looked.
+if (args.includes('--stamp-verified')) {
+  const today = new Date().toISOString().slice(0, 10);
+  const why = args[args.indexOf('--stamp-verified') + 1];
+  snap._verified = `${today} — ${why && !why.startsWith('--') ? why : 'produced by the export plugin and merged automatically'}`
+    + '. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness.';
+}
+
 const after = JSON.stringify(snap, null, 1) + '\n';
 
 if (checkOnly) {

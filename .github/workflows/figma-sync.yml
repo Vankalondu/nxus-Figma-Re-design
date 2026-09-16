@@ -1,0 +1,149 @@
+name: Figma token sync
+
+# Turns a Figma variable change into a PULL REQUEST, never a push to main.
+# That is deliberate and is the whole governance model: Figma owns naming and
+# structure, the code owns values, and no script can tell "the designer
+# corrected this hex" from "someone nudged a swatch by accident". The PR
+# surfaces the change; a person rules on it.
+on:
+  # Step 5 will have the plugin fire this. Until then the manual trigger below
+  # exercises exactly the same job, so this workflow is testable today.
+  repository_dispatch:
+    types: [figma-export]
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: 'Paste the plugin export JSON (Copy JSON in the plugin panel)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  # Two publishes in quick succession should not race to write the same branch.
+  group: figma-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Merge export and open a PR
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Written from an env var rather than interpolated into the shell. A
+      # payload containing a quote or a backtick would otherwise be executed
+      # rather than saved — the same class of bug that has bitten this repo's
+      # own tooling more than once.
+      - name: Write the export to a file
+        env:
+          DISPATCH_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+          MANUAL_PAYLOAD: ${{ inputs.payload }}
+        run: |
+          node -e '
+            const fs = require("fs");
+            const manual = process.env.MANUAL_PAYLOAD;
+            const dispatch = process.env.DISPATCH_PAYLOAD;
+            let raw = manual && manual.trim() ? manual : dispatch;
+            let obj;
+            try { obj = JSON.parse(raw); } catch (e) {
+              console.error("Payload is not valid JSON: " + e.message);
+              process.exit(2);
+            }
+            // repository_dispatch nests the export under client_payload, and the
+            // plugin wraps it under `data`. Accept every shape.
+            if (obj.client_payload) obj = obj.client_payload;
+            if (obj.data && !obj.Qaza) obj = obj.data;
+            fs.writeFileSync("figma-export.json", JSON.stringify(obj));
+            console.log("Wrote figma-export.json (" + JSON.stringify(obj).length + " bytes)");
+          '
+
+      - name: Merge into the snapshot
+        run: node scripts/figma-merge.mjs figma-export.json --stamp-verified "exported from Figma by the NXUS Token Export plugin and merged by the figma-sync workflow" | tee merge.log
+
+      - name: Did anything actually change?
+        id: changed
+        run: |
+          if git diff --quiet -- scripts/figma-tokens.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No change to the snapshot — Figma and the repo already agree."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Run the checks HERE rather than relying on the PR to trigger them: a PR
+      # opened with GITHUB_TOKEN deliberately does not start further workflows,
+      # so without this the reviewer would see an unchecked diff. Never fails
+      # the job — a drifting token is the reason the PR exists, and failing here
+      # would prevent it being opened at all.
+      - name: Token lint
+        if: steps.changed.outputs.changed == 'true'
+        continue-on-error: true
+        run: node scripts/lint-tokens.mjs | tee lint.log
+
+      - name: Figma to CSS drift
+        if: steps.changed.outputs.changed == 'true'
+        continue-on-error: true
+        run: node scripts/figma-css-diff.mjs | tee diff.log
+
+      - name: Open or update the pull request
+        if: steps.changed.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          BRANCH=figma-sync
+          git config user.name  "figma-sync[bot]"
+          git config user.email "figma-sync@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add scripts/figma-tokens.json
+          git commit -m "Figma token export: snapshot refreshed" -m "Opened by the figma-sync workflow. Review the drift report in the PR body before merging."
+          git push --force origin "$BRANCH"
+
+          node -e '
+            const fs = require("fs");
+            const read = (f) => { try { return fs.readFileSync(f, "utf8").trim(); } catch { return "(not run)"; } };
+            const body = [
+              "A Figma export changed the committed token snapshot.",
+              "",
+              "**What to decide:** whether Figma is right and the CSS should follow, or the code is right and Figma should be corrected. Naming and structure are Figma's; values are the code's.",
+              "",
+              "### What the merge changed",
+              "```", read("merge.log"), "```",
+              "",
+              "### Figma vs CSS after the merge",
+              "```", read("diff.log"), "```",
+              "",
+              "### Token lint",
+              "```", read("lint.log"), "```",
+              "",
+              "---",
+              "Checks ran inside the sync workflow: a PR opened with GITHUB_TOKEN does not start further workflows, so the results are inlined above rather than appearing as PR checks.",
+              "",
+              "If you accept the change, the CSS may also need updating — the merge only refreshes the snapshot. See docs/figma-sync.md.",
+            ].join("\n");
+            fs.writeFileSync("pr-body.md", body);
+          '
+
+          EXISTING=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh pr edit "$EXISTING" --body-file pr-body.md
+            echo "Updated PR #$EXISTING"
+          else
+            gh pr create --head "$BRANCH" --base main \
+              --title "Figma token sync: snapshot changed" \
+              --body-file pr-body.md
+          fi
+
+      - name: Nothing to do
+        if: steps.changed.outputs.changed == 'false'
+        run: echo "Snapshot unchanged. No pull request opened."
