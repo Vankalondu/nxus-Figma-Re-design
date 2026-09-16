@@ -6,7 +6,7 @@
          color: var(--figma-color-text); background: var(--figma-color-bg); }
   h1 { font-size: 13px; margin: 0 0 2px; }
   p  { margin: 0 0 10px; color: var(--figma-color-text-secondary); }
-  textarea { width: 100%; height: 300px; box-sizing: border-box; resize: vertical;
+  textarea { width: 100%; height: 210px; box-sizing: border-box; resize: vertical;
              font: 11px/1.4 ui-monospace, Menlo, monospace; padding: 8px;
              border: 1px solid var(--figma-color-border); border-radius: 6px;
              background: var(--figma-color-bg-secondary); color: var(--figma-color-text); }
@@ -16,8 +16,20 @@
            background: var(--figma-color-bg-secondary); color: var(--figma-color-text); }
   button.primary { background: var(--figma-color-bg-brand); color: var(--figma-color-text-onbrand);
                    border-color: transparent; }
+  button:disabled { opacity: .5; cursor: default; }
   .counts { color: var(--figma-color-text-secondary); margin-left: auto; }
   .warn { color: var(--figma-color-text-danger); white-space: pre-wrap; margin-top: 8px; }
+  details { margin-top: 14px; border-top: 1px solid var(--figma-color-border); padding-top: 10px; }
+  summary { cursor: pointer; font-weight: 600; }
+  label { display: block; margin: 8px 0 2px; color: var(--figma-color-text-secondary); }
+  input { width: 100%; box-sizing: border-box; padding: 6px 8px; border-radius: 6px;
+          border: 1px solid var(--figma-color-border);
+          background: var(--figma-color-bg-secondary); color: var(--figma-color-text);
+          font: 12px Inter, sans-serif; }
+  .hint { color: var(--figma-color-text-secondary); font-size: 11px; margin-top: 6px; }
+  .status { margin-top: 8px; min-height: 16px; }
+  .ok { color: var(--figma-color-text-success, #0f5529); }
+  .bad { color: var(--figma-color-text-danger); }
 </style>
 
 <h1>NXUS token export</h1>
@@ -26,47 +38,145 @@
 <textarea id="out" readonly spellcheck="false">Reading variables…</textarea>
 
 <div class="row">
-  <button class="primary" id="copy">Copy JSON</button>
+  <button class="primary" id="send" disabled>Send to GitHub</button>
+  <button id="copy">Copy JSON</button>
   <button id="save">Save file</button>
   <button id="close">Close</button>
   <span class="counts" id="counts"></span>
 </div>
 
+<div class="status" id="status"></div>
 <div class="warn" id="warn"></div>
+
+<details id="settings">
+  <summary>GitHub settings</summary>
+
+  <label for="repo">Repository</label>
+  <input id="repo" placeholder="Vankalondu/nxus-Figma-Re-design" spellcheck="false" />
+
+  <label for="token">Fine-grained token</label>
+  <input id="token" type="password" placeholder="github_pat_…" spellcheck="false" />
+
+  <p class="hint">
+    Give it access to this one repository, with <strong>Contents: read and write</strong> —
+    that is the minimum <code>repository_dispatch</code> needs. The token is stored by Figma
+    on this machine only. It is never written into the plugin files, which live in a public
+    repository.
+  </p>
+
+  <div class="row">
+    <button class="primary" id="saveSettings">Save</button>
+    <button id="forget">Forget token</button>
+  </div>
+</details>
 
 <script>
   let payload = null;
+
+  const $ = (id) => document.getElementById(id);
+  const setStatus = (text, cls) => {
+    const el = $('status');
+    el.textContent = text;
+    el.className = 'status ' + (cls || '');
+  };
 
   onmessage = (e) => {
     const msg = e.data.pluginMessage;
     if (!msg) return;
 
     if (msg.type === 'error') {
-      document.getElementById('out').value = 'Export failed:\n\n' + msg.message;
+      $('out').value = 'Export failed:\n\n' + msg.message;
+      return;
+    }
+
+    if (msg.type === 'settings-saved') { setStatus('Settings saved on this machine.', 'ok'); return; }
+    if (msg.type === 'settings-forgotten') {
+      $('token').value = '';
+      setStatus('Token forgotten.', 'ok');
       return;
     }
 
     payload = msg.data;
-    // Pretty-printed at indent 1 to match the committed file, so a diff against
-    // it shows real changes rather than reformatting.
-    document.getElementById('out').value = JSON.stringify(payload, null, 1);
-    document.getElementById('counts').textContent =
+    // Indent 1 to match the committed file, so a diff against it shows real
+    // changes rather than reformatting.
+    $('out').value = JSON.stringify(payload, null, 1);
+    $('counts').textContent =
       msg.counts.qaza + ' Qaza · ' + msg.counts.mapped + ' Mapped · ' + msg.counts.responsive + ' Responsive';
     if (msg.warnings && msg.warnings.length) {
-      document.getElementById('warn').textContent = 'Warnings:\n· ' + msg.warnings.join('\n· ');
+      $('warn').textContent = 'Warnings:\n· ' + msg.warnings.join('\n· ');
+    }
+
+    const s = msg.settings || {};
+    if (s.repo) $('repo').value = s.repo;
+    if (s.token) $('token').value = s.token;
+    $('send').disabled = !(s.repo && s.token);
+    if (!s.repo || !s.token) {
+      $('settings').open = true;
+      setStatus('Add a repository and token below to enable "Send to GitHub".');
     }
   };
 
-  document.getElementById('copy').onclick = () => {
-    const t = document.getElementById('out');
-    t.select();
-    document.execCommand('copy');           // clipboard API is blocked in the plugin iframe
-    document.getElementById('copy').textContent = 'Copied';
-    setTimeout(() => { document.getElementById('copy').textContent = 'Copy JSON'; }, 1200);
+  $('saveSettings').onclick = () => {
+    const settings = { repo: $('repo').value.trim(), token: $('token').value.trim() };
+    parent.postMessage({ pluginMessage: { type: 'save-settings', settings } }, '*');
+    $('send').disabled = !(settings.repo && settings.token);
   };
 
-  document.getElementById('save').onclick = () => {
-    const blob = new Blob([document.getElementById('out').value], { type: 'application/json' });
+  $('forget').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'forget-settings' } }, '*');
+    $('send').disabled = true;
+  };
+
+  $('send').onclick = async () => {
+    const repo = $('repo').value.trim();
+    const token = $('token').value.trim();
+    if (!repo || !token || !payload) return;
+
+    $('send').disabled = true;
+    setStatus('Sending…');
+
+    try {
+      const res = await fetch('https://api.github.com/repos/' + repo + '/dispatches', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json',
+        },
+        // repository_dispatch caps client_payload at roughly 64KB; this export
+        // is about 6KB, so it travels whole rather than needing to be chunked.
+        body: JSON.stringify({ event_type: 'figma-export', client_payload: payload }),
+      });
+
+      if (res.status === 204) {
+        setStatus('Sent. The figma-sync workflow is running — check the Actions tab.', 'ok');
+        parent.postMessage({ pluginMessage: { type: 'notify', message: 'Token export sent to GitHub' } }, '*');
+      } else {
+        // Report the status and GitHub's own reason. 401 is a bad or expired
+        // token, 403 usually means it lacks Contents: write, 404 means the
+        // repository name is wrong OR the token cannot see it — GitHub returns
+        // 404 rather than 403 for repositories a token has no access to.
+        let detail = '';
+        try { const b = await res.json(); if (b.message) detail = ' — ' + b.message; } catch {}
+        setStatus('GitHub refused it: HTTP ' + res.status + detail, 'bad');
+        $('send').disabled = false;
+      }
+    } catch (err) {
+      setStatus('Network error: ' + String(err && err.message || err), 'bad');
+      $('send').disabled = false;
+    }
+  };
+
+  $('copy').onclick = () => {
+    const t = $('out');
+    t.select();
+    document.execCommand('copy');           // the async clipboard API is blocked in this iframe
+    $('copy').textContent = 'Copied';
+    setTimeout(() => { $('copy').textContent = 'Copy JSON'; }, 1200);
+  };
+
+  $('save').onclick = () => {
+    const blob = new Blob([$('out').value], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'figma-export.json';
@@ -74,5 +184,5 @@
     URL.revokeObjectURL(a.href);
   };
 
-  document.getElementById('close').onclick = () => parent.postMessage({ pluginMessage: { type: 'close' } }, '*');
+  $('close').onclick = () => parent.postMessage({ pluginMessage: { type: 'close' } }, '*');
 </script>

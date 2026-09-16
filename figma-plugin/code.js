@@ -114,14 +114,41 @@ async function extract() {
   };
 }
 
-figma.showUI(__html__, { width: 460, height: 520, themeColors: true });
+figma.showUI(__html__, { width: 460, height: 640, themeColors: true });
 
-extract().then((result) => {
-  figma.ui.postMessage({ type: 'export', ...result });
-}).catch((e) => {
+// Where the GitHub settings live. clientStorage is per-user and sandboxed to
+// this plugin — NOT part of the plugin source. That distinction is the whole
+// security design: this repository is public, so a credential committed here
+// would be a credential published. The token is typed in once and stays on the
+// machine that typed it.
+const SETTINGS_KEY = 'nxus-token-export.github';
+
+async function boot() {
+  const saved = (await figma.clientStorage.getAsync(SETTINGS_KEY)) || {};
+  const result = await extract();
+  figma.ui.postMessage({ type: 'export', settings: saved, ...result });
+}
+
+boot().catch((e) => {
   figma.ui.postMessage({ type: 'error', message: String((e && e.message) || e) });
 });
 
-figma.ui.onmessage = (msg) => {
-  if (msg.type === 'close') figma.closePlugin();
+figma.ui.onmessage = async (msg) => {
+  if (msg.type === 'close') return figma.closePlugin();
+
+  if (msg.type === 'save-settings') {
+    await figma.clientStorage.setAsync(SETTINGS_KEY, msg.settings || {});
+    figma.ui.postMessage({ type: 'settings-saved' });
+    return;
+  }
+
+  if (msg.type === 'forget-settings') {
+    await figma.clientStorage.deleteAsync(SETTINGS_KEY);
+    figma.ui.postMessage({ type: 'settings-forgotten' });
+    return;
+  }
+
+  // Sent by the UI after a successful dispatch, purely so the toast appears in
+  // Figma rather than only inside the plugin panel.
+  if (msg.type === 'notify') figma.notify(msg.message);
 };

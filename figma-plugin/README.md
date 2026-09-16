@@ -61,9 +61,42 @@ or a `[mobile, tablet, desktop]` triple, the order *is* the data.
 at zero alpha; dropping the alpha would quietly turn an invisible border into a
 solid navy one.
 
-## What this does not do
+## Send to GitHub (the one-click path)
 
-No network access — see `networkAccess` in the manifest. Posting straight to
-GitHub is step 5 of [`../docs/figma-sync.md`](../docs/figma-sync.md) and needs a
-credential, so it stays off until that is deliberately built. Today the loop is:
-run the plugin, merge, review the diff, commit.
+Instead of copying JSON by hand, the plugin can post the export straight to
+GitHub, which starts the `figma-sync` workflow.
+
+**Set it up once:**
+
+1. GitHub → **Settings → Developer settings → Personal access tokens →
+   Fine-grained tokens → Generate new token**
+   - **Repository access:** Only select repositories → this repo
+   - **Permissions → Repository permissions → Contents: Read and write**
+     (that is the minimum `repository_dispatch` accepts — nothing else is needed)
+2. In the plugin, open **GitHub settings**, enter the repository as
+   `Vankalondu/nxus-Figma-Re-design`, paste the token, press **Save**.
+
+**Then, every time:** run the plugin → **Send to GitHub**. The workflow checks
+whether any token value actually moved; if it did, it pushes a `figma-sync`
+branch and GitHub offers you a *Compare & pull request* button.
+
+### Where the token lives
+
+In `figma.clientStorage` — per-user, sandboxed to this plugin, on the machine
+that typed it. **Never in these files.** This repository is public, so a
+credential committed here would be a credential published. That is why the
+plugin asks for it rather than shipping with one, and why there is a
+**Forget token** button.
+
+The manifest allows exactly one host, `https://api.github.com`. The plugin
+cannot reach anywhere else.
+
+### If GitHub refuses it
+
+The panel reports the status and GitHub's own reason:
+
+- **401** — the token is wrong or expired
+- **403** — it lacks *Contents: write*
+- **404** — the repository name is wrong, **or** the token cannot see it. GitHub
+  deliberately returns 404 rather than 403 for repositories a token has no
+  access to, so check the name and the repository-access setting together.

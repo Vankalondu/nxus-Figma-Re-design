@@ -271,10 +271,33 @@ Verified end to end on 16 Sep 2026, both paths:
 4. The report said `drift 0` on its summary line and `FAIL 1 token(s) drifted` two lines
    below, because the counter only measured the scale loop. Each source is now named.
 
-### Step 5 — wire the plugin's network call
+### Step 5 — the plugin sends it — **BUILT**
 
-The only step that needs a second secret, and the last one, so everything before it is
-testable without one.
+The plugin posts the export to GitHub as a `repository_dispatch`, which starts the
+step-4 workflow. Run the plugin, press **Send to GitHub**, done.
+
+**The Cloudflare Worker in the B+ sketch above was dropped.** Its only job was to hold a
+GitHub credential, and a Worker is a deployed service to build, secure and maintain. The
+plugin can call `api.github.com` directly, and the credential problem has a better
+answer: `figma.clientStorage` is per-user and sandboxed, so the token lives on the
+machine that typed it and never enters this repository — which matters, because the
+repository is **public**. A committed credential would be a published one.
+
+The manifest allows exactly one host, `https://api.github.com`, so the plugin cannot
+reach anywhere else. The token is a fine-grained PAT scoped to this one repository with
+**Contents: read and write**, the minimum `repository_dispatch` accepts.
+
+Verified 16 Sep 2026 by sending a real `repository_dispatch` with the actual export:
+the workflow received it, wrote the payload (6,041 bytes, identical to the manual path),
+found no value change and correctly pushed nothing.
+
+### Still open: the publish webhook
+
+`webhooks:write` exists on the Pro plan, so Figma *can* notify on publish. It remains
+worth doing, and it remains the thing that kills "the designer forgets to run the
+plugin" — but be clear about the limit: a webhook says *that* the file changed, never
+*what*. Only the plugin can read variables. So a webhook would open an issue saying
+"publish detected, run the export", not complete the loop by itself.
 
 ---
 
