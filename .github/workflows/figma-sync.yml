@@ -67,18 +67,23 @@ jobs:
             console.log("Wrote figma-export.json (" + JSON.stringify(obj).length + " bytes)");
           '
 
-      - name: Merge into the snapshot
-        run: node scripts/figma-merge.mjs figma-export.json --stamp-verified "exported from Figma by the NXUS Token Export plugin and merged by the figma-sync workflow" | tee merge.log
-
-      - name: Did anything actually change?
+      # Ask about TOKEN VALUES before merging anything. Merging always rewrites
+      # extractedAt and the _verified stamp, so a `git diff` afterwards is
+      # always dirty — the first version of this workflow used that as the
+      # signal and would have opened a pull request on every single run, for no
+      # change at all. --check exits 0 when no value moved.
+      - name: Did any token value actually change?
         id: changed
         run: |
-          if git diff --quiet -- scripts/figma-tokens.json; then
+          if node scripts/figma-merge.mjs figma-export.json --check | tee check.log; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No change to the snapshot — Figma and the repo already agree."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Merge into the snapshot
+        if: steps.changed.outputs.changed == 'true'
+        run: node scripts/figma-merge.mjs figma-export.json --stamp-verified "exported from Figma by the NXUS Token Export plugin and merged by the figma-sync workflow" | tee merge.log
 
       # Run the checks HERE rather than relying on the PR to trigger them: a PR
       # opened with GITHUB_TOKEN deliberately does not start further workflows,
@@ -109,30 +114,7 @@ jobs:
           git commit -m "Figma token export: snapshot refreshed" -m "Opened by the figma-sync workflow. Review the drift report in the PR body before merging."
           git push --force origin "$BRANCH"
 
-          node -e '
-            const fs = require("fs");
-            const read = (f) => { try { return fs.readFileSync(f, "utf8").trim(); } catch { return "(not run)"; } };
-            const body = [
-              "A Figma export changed the committed token snapshot.",
-              "",
-              "**What to decide:** whether Figma is right and the CSS should follow, or the code is right and Figma should be corrected. Naming and structure are Figma's; values are the code's.",
-              "",
-              "### What the merge changed",
-              "```", read("merge.log"), "```",
-              "",
-              "### Figma vs CSS after the merge",
-              "```", read("diff.log"), "```",
-              "",
-              "### Token lint",
-              "```", read("lint.log"), "```",
-              "",
-              "---",
-              "Checks ran inside the sync workflow: a PR opened with GITHUB_TOKEN does not start further workflows, so the results are inlined above rather than appearing as PR checks.",
-              "",
-              "If you accept the change, the CSS may also need updating — the merge only refreshes the snapshot. See docs/figma-sync.md.",
-            ].join("\n");
-            fs.writeFileSync("pr-body.md", body);
-          '
+          node scripts/figma-pr-body.mjs merge.log diff.log lint.log > pr-body.md
 
           EXISTING=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
           if [ -n "$EXISTING" ]; then
