@@ -230,10 +230,46 @@ a human in the loop rather than an agent.
 **The loop that works today:** run the plugin → *Copy JSON* or *Save file* →
 `npm run figma:merge -- export.json` → `npm run verify:figma` → review → commit.
 
-### Step 4 — the Action that opens the PR
+### Step 4 — the Action — **BUILT AND VERIFIED**
 
-`repository_dispatch` → regenerate → diff → open a PR against a single long-lived
-`figma-sync` branch.
+`.github/workflows/figma-sync.yml`. Fires on `repository_dispatch` (which step 5 will
+send) and on `workflow_dispatch` with a pasted payload — so the identical job was
+testable before the plugin could call anything.
+
+```
+payload ──> check for VALUE change ──> merge ──> lint + drift
+                    │                              │
+             no change → stop            push figma-sync branch
+                                         report in the commit message
+                                                   │
+                                          you click "Compare & pull request"
+```
+
+**It pushes a branch and stops.** Opening the PR is a click, which keeps *"Allow GitHub
+Actions to create and approve pull requests"* switched **off** for the whole repo and
+avoids storing a second credential. The review was always going to be human, so
+automating the button bought nothing. `permissions:` is `contents` alone.
+
+Verified end to end on 16 Sep 2026, both paths:
+
+| Payload | Result |
+|---|---|
+| The real, unchanged export | No branch, no PR — "the export matches the committed snapshot" |
+| One value nudged (`Color/Brand/primary` → `#1a7fd4`) | Branch pushed, 3-line diff, drift report in the commit message |
+
+**Four bugs the real runs exposed**, none of which a dry read would have caught:
+
+1. An apostrophe in *"Figma's"* terminated a single-quoted `node -e` inside the YAML.
+   Prose belongs in a script file, not in a workflow.
+2. Change detection used `git diff`, but merging always rewrites `extractedAt` — so it
+   would have opened a PR on **every run, for no change**. It now asks
+   `figma-merge --check` whether a token *value* moved.
+3. `if node … | tee log` branched on `tee`'s exit status, so it detected a changed token,
+   printed so, and took the "nothing changed" path anyway. Fixed at the class level with
+   `defaults.run.shell: bash` (which GitHub runs with `-eo pipefail`) and by not
+   branching on a pipeline at all.
+4. The report said `drift 0` on its summary line and `FAIL 1 token(s) drifted` two lines
+   below, because the counter only measured the scale loop. Each source is now named.
 
 ### Step 5 — wire the plugin's network call
 
