@@ -17,9 +17,13 @@ on:
         required: true
         type: string
 
+# contents only. The workflow pushes a branch and stops there — opening the
+# pull request is a click for a human, which keeps "Allow GitHub Actions to
+# create and approve pull requests" switched OFF for the whole repo. The review
+# step was always going to be human anyway, so nothing is lost by not
+# automating the button.
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   # Two publishes in quick succession should not race to write the same branch.
@@ -120,32 +124,44 @@ jobs:
         continue-on-error: true
         run: node scripts/figma-css-diff.mjs | tee diff.log
 
-      - name: Open or update the pull request
+      - name: Push the branch with the report in its commit message
         if: steps.changed.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -e
           BRANCH=figma-sync
+
+          # The report goes in the COMMIT MESSAGE, not a PR body, because the
+          # workflow no longer opens the PR. GitHub shows the commit message on
+          # the compare page, so the reviewer sees the drift report before they
+          # have created anything.
+          {
+            echo "Figma token export: snapshot changed"
+            echo
+            node scripts/figma-pr-body.mjs merge.log diff.log lint.log
+          } > commit-message.txt
+
           git config user.name  "figma-sync[bot]"
           git config user.email "figma-sync@users.noreply.github.com"
           git checkout -B "$BRANCH"
           git add scripts/figma-tokens.json
-          git commit -m "Figma token export: snapshot refreshed" -m "Opened by the figma-sync workflow. Review the drift report in the PR body before merging."
+          git commit -F commit-message.txt
           git push --force origin "$BRANCH"
 
-          node scripts/figma-pr-body.mjs merge.log diff.log lint.log > pr-body.md
+          REPO_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
+          {
+            echo "## Figma changed the token snapshot"
+            echo
+            echo "Branch \`$BRANCH\` has been pushed."
+            echo
+            echo "**[Open the pull request]($REPO_URL/compare/main...$BRANCH?expand=1)**"
+            echo
+            cat pr-body.md 2>/dev/null || node scripts/figma-pr-body.mjs merge.log diff.log lint.log
+          } >> "$GITHUB_STEP_SUMMARY"
 
-          EXISTING=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
-          if [ -n "$EXISTING" ]; then
-            gh pr edit "$EXISTING" --body-file pr-body.md
-            echo "Updated PR #$EXISTING"
-          else
-            gh pr create --head "$BRANCH" --base main \
-              --title "Figma token sync: snapshot changed" \
-              --body-file pr-body.md
-          fi
+          echo "Branch pushed. Open the PR: $REPO_URL/compare/main...$BRANCH?expand=1"
 
       - name: Nothing to do
         if: steps.changed.outputs.changed == 'false'
-        run: echo "Snapshot unchanged. No pull request opened."
+        run: |
+          echo "Snapshot unchanged — Figma and the repo agree. No branch pushed."
+          echo "### Figma token sync" >> "$GITHUB_STEP_SUMMARY"
+          echo "No change: the export matches the committed snapshot." >> "$GITHUB_STEP_SUMMARY"
