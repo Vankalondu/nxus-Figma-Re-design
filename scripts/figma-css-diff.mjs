@@ -186,10 +186,17 @@ console.log('    figma-tokens.json for when it was last confirmed against Figma.
 const driftCount = rows.valueDrift.length + ramp.filter(r => r[4] === 'DRIFT').length
   + mapped.filter(r => r[4] === 'DRIFT' || r[4] === 'MISSING').length;
 
+// Each source of drift is named. The previous line reported only the scale-loop
+// count as "drift", so a Mapped role could disagree with the CSS while the
+// summary said "drift 0" and the verdict two lines later said "1 token drifted".
+// A reviewer who spots that contradiction is right to distrust the whole report.
+const rampDrift = ramp.filter((r) => r[4] === 'DRIFT').length;
+const mappedDrift = mapped.filter((r) => r[4] === 'DRIFT' || r[4] === 'MISSING').length;
 console.log('\nSUMMARY  match ' + rows.match.length +
-  '  ·  drift ' + rows.valueDrift.length +
-  '  ·  figma-only ' + rows.figmaOnly.length +
-  '  ·  ramp drift ' + ramp.filter(r => r[4] === 'DRIFT').length + '/' + ramp.length);
+  '  ·  scale drift ' + rows.valueDrift.length +
+  '  ·  mapped drift ' + mappedDrift +
+  '  ·  ramp drift ' + rampDrift + '/' + ramp.length +
+  '  ·  figma-only ' + rows.figmaOnly.length);
 
 // --- staleness -------------------------------------------------------------
 // The gap this closes: everything above compares the CSS to a COMMITTED

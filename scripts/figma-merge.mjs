@@ -136,6 +136,11 @@ if (!changed.length) {
 } else {
   console.log(`MERGED  ${changed.length} entr(ies) changed:`);
   changed.forEach((c) => console.log('  ' + c));
-  console.log('\nNext: update _verified in ' + SNAP + ' once you have confirmed the change');
-  console.log('is intended, then run `npm run verify:figma` to see the effect on the CSS.');
+  // Only tell a human to stamp _verified when a human has to. On the automated
+  // path --stamp-verified has already done it, and printing the instruction
+  // anyway put stale advice into the commit message the reviewer reads.
+  if (!args.includes('--stamp-verified')) {
+    console.log('\nNext: update _verified in ' + SNAP + ' once you have confirmed the change');
+    console.log('is intended, then run "npm run verify:figma" to see the effect on the CSS.');
+  }
 }
