@@ -26,6 +26,15 @@ concurrency:
   group: figma-sync
   cancel-in-progress: false
 
+defaults:
+  run:
+    # GitHub's `bash` shell runs with -eo pipefail, which the default shell does
+    # NOT. Without it, `cmd | tee log` reports tee's exit status and a failing
+    # command in a pipeline passes silently — which is precisely how the first
+    # version of the check step detected a changed token, printed so, and then
+    # took the "nothing changed" branch anyway.
+    shell: bash
+
 jobs:
   sync:
     name: Merge export and open a PR
@@ -75,10 +84,21 @@ jobs:
       - name: Did any token value actually change?
         id: changed
         run: |
-          if node scripts/figma-merge.mjs figma-export.json --check | tee check.log; then
+          # Redirect and cat rather than pipe. Even with pipefail set above,
+          # branching on a pipeline's status is easy to get subtly wrong, and
+          # this decision gates whether a pull request exists at all.
+          set +e
+          node scripts/figma-merge.mjs figma-export.json --check > check.log 2>&1
+          STATUS=$?
+          set -e
+          cat check.log
+          if [ "$STATUS" -eq 0 ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
+          elif [ "$STATUS" -eq 1 ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "figma-merge --check failed with status $STATUS (bad or partial payload)."
+            exit "$STATUS"
           fi
 
       - name: Merge into the snapshot
