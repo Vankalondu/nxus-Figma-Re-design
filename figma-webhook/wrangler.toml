@@ -1,0 +1,29 @@
+# Cloudflare Worker that relays a Figma library publish into a GitHub
+# repository_dispatch. See figma-webhook/README.md for deploy + registration.
+#
+# Deploy from this directory:  npx wrangler deploy
+#
+# SECRETS ARE NOT IN THIS FILE and must never be. This repository is public, so a
+# committed credential is a published one -- the same rule that shaped step 5 of
+# docs/figma-sync.md. Set them once with:
+#
+#   npx wrangler secret put FIGMA_PASSCODE
+#   npx wrangler secret put GITHUB_TOKEN
+#
+# GITHUB_TOKEN is a fine-grained PAT scoped to this ONE repository. The dispatch
+# endpoint (POST /repos/:owner/:repo/dispatches) needs exactly one permission --
+# Contents: read and write -- and nothing else. It does NOT need Issues: the
+# workflow opens the issue using its own GITHUB_TOKEN, not this one.
+
+name = "nxus-figma-webhook"
+main = "src/index.js"
+compatibility_date = "2026-09-30"
+
+# Non-secret configuration. These are readable by anyone with the repo, which is
+# fine -- a file key and a repo name are not credentials.
+[vars]
+GITHUB_REPO = "Vankalondu/nxus-Figma-Re-design"
+FIGMA_FILE_KEY = "qefpAyr3MEEklQRV96YlSv"
+
+# No routes block: the workers.dev subdomain is the endpoint Figma calls. Adding a
+# custom domain would mean a second thing to renew and buys nothing here.

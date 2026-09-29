@@ -14,7 +14,8 @@
     "lint:tokens": "node scripts/lint-tokens.mjs",
     "verify:figma": "node scripts/figma-css-diff.mjs",
     "verify:figma-fresh": "node scripts/figma-freshness.mjs",
-    "figma:merge": "node scripts/figma-merge.mjs"
+    "figma:merge": "node scripts/figma-merge.mjs",
+    "figma:webhook": "node scripts/figma-webhook-register.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

@@ -1,0 +1,140 @@
+# Opens a "the token snapshot is stale" issue when QAZA_FE is published in Figma.
+#
+# Fired by figma-webhook/ (a Cloudflare Worker) via repository_dispatch. See
+# docs/figma-sync.md "Still open: the publish webhook" for why this exists and
+# what it deliberately cannot do: a webhook says THAT the file changed, never
+# WHAT changed. Only the export plugin can read variables. So this raises a
+# nudge, never a pull request.
+#
+# The four bugs the step-4 workflow runs exposed are avoided here by design:
+#   1. no prose inside node -e (an apostrophe terminated the quoting)
+#   2. change detection is not a git diff
+#   3. nothing branches on a pipeline's exit status -- see defaults.run.shell
+#   4. every number printed names the source it counted
+
+name: Figma published
+
+on:
+  repository_dispatch:
+    types: [figma-published]
+  # Lets the nudge path be tested without publishing anything in Figma.
+  workflow_dispatch:
+
+# The issue is opened with the workflow's own GITHUB_TOKEN, which needs nothing
+# beyond issues:write. contents:read is for the checkout.
+permissions:
+  issues: write
+  contents: read
+
+defaults:
+  run:
+    # GitHub runs bash with -eo pipefail, which is what makes bug 3 unrepeatable.
+    shell: bash
+
+concurrency:
+  # Two publishes in quick succession should settle into one issue, not race.
+  group: figma-published
+  cancel-in-progress: false
+
+jobs:
+  nudge:
+    name: Raise the stale-snapshot nudge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Ask Figma whether the snapshot is actually behind
+        id: freshness
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+        run: |
+          # Never fail the job on this. A publish already happened, so the nudge
+          # is warranted regardless; this only enriches the issue body. Its exit
+          # code is recorded rather than acted on.
+          node scripts/figma-freshness.mjs > freshness.txt 2>&1 && code=0 || code=$?
+          echo "exit=$code" >> "$GITHUB_OUTPUT"
+          cat freshness.txt
+
+      - name: Make sure the label exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # --force makes this idempotent: creates it, or updates it in place.
+          gh label create figma-stale \
+            --color FBCA04 \
+            --description "QAZA_FE was published; scripts/figma-tokens.json may be behind" \
+            --force
+
+      - name: Open the nudge, or comment on the one already open
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILE_NAME: ${{ github.event.client_payload.file_name }}
+          TRIGGERED_BY: ${{ github.event.client_payload.triggered_by }}
+          PUBLISHED_AT: ${{ github.event.client_payload.timestamp }}
+          WHY: ${{ github.event.client_payload.reason }}
+          FRESHNESS_EXIT: ${{ steps.freshness.outputs.exit }}
+        run: |
+          # Static prose goes in a quoted heredoc so backticks stay literal --
+          # this is bug 1 from step 4, generalised. Dynamic values are appended
+          # separately through the environment, never interpolated into prose.
+          cat > body.md <<'PROSE'
+          QAZA_FE was published in Figma, so `scripts/figma-tokens.json` may now be
+          behind the file it claims to describe.
+
+          **This issue is a nudge, not a diff.** A webhook can only say *that* the
+          file changed. Reading the variables needs the export plugin, because a
+          plugin needs a human in the editor.
+
+          ### What to do
+
+          1. Open QAZA_FE in the Figma desktop app
+          2. Run the **NXUS Token Export** plugin
+          3. Press **Send to GitHub**
+
+          If a token value actually moved, a `figma-sync` branch appears with the
+          drift report in its commit message, and you click *Compare & pull
+          request*. If nothing moved, nothing happens and you can close this issue.
+
+          The full design is in `docs/figma-sync.md`.
+
+          ---
+          PROSE
+
+          {
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| File | ${FILE_NAME:-unknown} |"
+            echo "| Published by | ${TRIGGERED_BY:-unknown} |"
+            echo "| Published at | ${PUBLISHED_AT:-unknown} |"
+            echo "| Why this fired | ${WHY:-triggered manually} |"
+            echo "| Freshness check exit | ${FRESHNESS_EXIT:-not run} (1 = Figma is newer than the snapshot) |"
+            echo ""
+            echo "<details><summary>Freshness check output</summary>"
+            echo ""
+            echo '```'
+            cat freshness.txt
+            echo '```'
+            echo ""
+            echo "</details>"
+          } >> body.md
+
+          # Dedupe. Without this, three publishes in an afternoon produce three
+          # identical issues and the signal is gone inside a week.
+          existing=$(gh issue list --label figma-stale --state open \
+                       --limit 1 --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file body.md
+            echo "Commented on the open nudge #${existing} rather than opening a second."
+          else
+            url=$(gh issue create \
+                    --title "Figma published — run the token export" \
+                    --label figma-stale \
+                    --body-file body.md)
+            echo "Opened ${url}"
+          fi

@@ -291,13 +291,51 @@ Verified 16 Sep 2026 by sending a real `repository_dispatch` with the actual exp
 the workflow received it, wrote the payload (6,041 bytes, identical to the manual path),
 found no value change and correctly pushed nothing.
 
-### Still open: the publish webhook
+### Step 6 — the publish webhook — **BUILT 30 Sep 2026, needs deploying**
 
-`webhooks:write` exists on the Pro plan, so Figma *can* notify on publish. It remains
-worth doing, and it remains the thing that kills "the designer forgets to run the
-plugin" — but be clear about the limit: a webhook says *that* the file changed, never
-*what*. Only the plugin can read variables. So a webhook would open an issue saying
-"publish detected, run the export", not complete the loop by itself.
+`figma-webhook/` (a Cloudflare Worker) plus `.github/workflows/figma-published.yml`
+and `scripts/figma-webhook-register.mjs`.
+
+```
+Figma publish ──> Worker ──> repository_dispatch ──> Action ──> GitHub issue
+```
+
+**The Worker came back, and only here.** Step 5 dropped it because the plugin could
+call `api.github.com` directly — a human was in the editor to type a token into
+`figma.clientStorage`. A webhook has neither a human nor client storage: Figma POSTs
+a fixed body and **cannot send custom headers**, while `repository_dispatch` requires
+an authenticated POST. Something must hold the credential, and the repository is
+public, so it cannot be the repository.
+
+It dispatches only when all of these hold — the passcode matches, `event_type` is
+`LIBRARY_PUBLISH`, `file_key` is QAZA_FE, and **the publish actually touched a
+variable**. That last filter is what separates a nudge from noise: a components-only
+publish should not raise a token issue. If the payload carries no variable arrays at
+all it notifies anyway, because a spurious issue is recoverable and a silently stale
+snapshot is the failure this pipeline exists to remove.
+
+The Action runs the freshness check for context, then **dedupes on an open
+`figma-stale` label** — commenting on the existing issue rather than opening a
+second. Without that, three publishes in an afternoon produce three identical issues
+and the signal is gone inside a week.
+
+**Team tier was the risk, and it is resolved.** Webhooks are plan-gated, and this
+account spans five Figma teams of which only one is Pro. QAZA_FE is on **Lighthouse
+Sports (Pro)** — confirmed 30 Sep 2026 — so `webhooks:write` is available. Had it
+been on `Backup Qaza` or `Qaza Emergency`, both student tier, this would have been
+dead before a line was written.
+
+Still to do, and it needs credentials rather than code: `npx wrangler deploy`, two
+Worker secrets, and one registration call. See `figma-webhook/README.md`.
+
+**It still does not close the loop, by construction.** A webhook says *that* the file
+changed, never *what*. Only the plugin can read variables. So this opens an issue
+saying "publish detected, run the export" — it does not run it.
+
+**And it is not the only safety net.** `LIBRARY_PUBLISH` fires only on publish, so an
+edit you never publish raises nothing. That gap is covered by `figma-freshness.mjs`,
+which runs on every push and fails when Figma is newer than the snapshot. Publish is
+the fast nudge; freshness is the backstop. Neither is load-bearing alone.
 
 ---
 
