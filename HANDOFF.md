@@ -1,8 +1,65 @@
 # HANDOFF — NXUS Responsive System v1
 
-_Last updated: 2026-09-07. Resume by reading this file._
+_Last updated: 2026-09-30. Resume by reading this file._
 
-## LATEST (2026-09-07) — Phase 3 Figma↔code reconciliation COMPLETE + colour debt 662→115 (DONE, NOT pushed, NOT deployed)
+> **Correction to everything below.** The "DONE, NOT pushed / NOT deployed" banners in the
+> older sections are historical. Everything is pushed (`main` == `origin/main`) and the app
+> is live: deploys ran 7, 8, 8 and 9 Sep, and `git diff` shows **zero `src/` changes since**.
+> The Video Manager, uploader roles, video tracker grid and Phases 2/5/6/7 all shipped.
+> Also corrected: colour debt is **662 → 12**, not 115 (`aea7331`), and `build-storybook` is
+> **not** blocked (`ecd7de7`) — Storybook ships at `/storybook` on the live site.
+
+## LATEST (2026-09-30) — the pipeline's last step, and a plan to prove it on a real screen
+
+**Step 6 of the Figma→GitHub pipeline is BUILT** (`ad18416`, pushed). A Figma library publish
+now nudges GitHub to run the token export.
+
+- `figma-webhook/` — Cloudflare Worker. Verifies Figma's passcode, answers the registration
+  `PING`, filters to `LIBRARY_PUBLISH` + QAZA_FE + **publishes that actually touched a
+  variable**, then fires a `repository_dispatch`. The Worker is back only here: a webhook has
+  no human to type a token into `clientStorage`, Figma cannot send custom headers, and the
+  repo is public — so something off-repo must hold the credential.
+- `.github/workflows/figma-published.yml` — runs the freshness check for context, then opens
+  **one** `figma-stale` issue, commenting on the existing one rather than opening a second.
+- `scripts/figma-webhook-register.mjs` (`npm run figma:webhook -- --list|--register|--delete`)
+  — idempotent registration; refuses to create a second hook on the same endpoint.
+
+**Verified end to end on the GitHub half**, via two `workflow_dispatch` runs: label created,
+freshness check reached the real Figma API (Figma 2026-09-07 vs snapshot 2026-09-09 → PASS),
+issue body rendered with backticks intact, and the second run **commented instead of opening
+issue #2**. Test issue #1 closed.
+
+**NOT done — needs credentials, not code:** `npx wrangler deploy`, two Worker secrets
+(`FIGMA_PASSCODE`, and a fine-grained PAT with Contents: read+write), and one registration
+call. Until then a real publish does not reach GitHub. See `figma-webhook/README.md`.
+
+**Team tier was the risk and it is settled.** Webhooks are plan-gated; this account spans five
+Figma teams and only **Lighthouse Sports is Pro**. QAZA_FE is on Lighthouse Sports. Had it
+been on `Backup Qaza` or `Qaza Emergency` (both student) this was dead before a line was written.
+
+### Next: prove the pipeline on a real screen — `docs/lead-scout-pipeline-proof.md`
+
+The pipeline is verified *as a pipeline* but has never shown that a token change is **visible**.
+Plan written, three workstreams, decisions settled with Vanessa on 30 Sep:
+
+- **Desktop canvas = 1440**, matching the app and the Playwright tiers (not the existing 1580
+  artboards) — so a Figma screenshot and a browser screenshot overlay directly.
+- **Trigger = `LIBRARY_PUBLISH`**; the forget-to-publish gap is covered by `figma-freshness.mjs`
+  on every push.
+- **Scope = KPI row + one table**, at 390 / 834 / 1440.
+
+Key findings behind the plan: **`Dashboard Page` (`289:8`) is empty** — the Lead Scout dashboard
+does not exist in Figma, this is a from-scratch build; every existing Figma screen is
+desktop-only at 1580; Mapped (54) and Responsive (52) match the snapshot exactly; and
+**`Colors/Primary/100` and `Color/Surface/page` both resolve to `#d2e7fa`**, so that one
+primitive is the ideal test token — it moves the CSS diff *and* is visible as a page background.
+
+**The collection names are settled and do not change** — `Qaza ` (trailing space is deliberate,
+the plugin trims it), `Allias`, `Mapped`, `Responsive`. The base collection carries the product's
+name because it holds the basics. The only rename ever valid would be Qaza → NXUS for brand
+consistency, and it is **not approved**.
+
+## Earlier (2026-09-07) — Phase 3 Figma↔code reconciliation COMPLETE + colour debt 662→115 (DONE, NOT pushed, NOT deployed)
 
 **21 commits, all local.** Nothing pushed to `Vankalondu/nxus-Figma-Re-design`, no deploy. Vanessa's
 instruction: push once the phases are finished.
