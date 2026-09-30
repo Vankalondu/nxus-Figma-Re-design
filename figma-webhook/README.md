@@ -24,8 +24,22 @@ It fires only when **all** of these hold:
 
 - the request is a POST carrying the right `passcode`
 - `event_type` is `LIBRARY_PUBLISH` (a `PING` gets a 200 and nothing else)
-- `file_key` is QAZA_FE
 - the publish actually touched a variable — a components-only publish is ignored
+
+### The `file_key` filter deliberately fails open, for now
+
+`LIBRARY_PUBLISH` reports the key of the published **library**, and no real publish
+has happened yet — so it has never been observed whether that equals the design file
+key `qefpAyr3MEEklQRV96YlSv`.
+
+A hard filter would be the obvious thing and the wrong thing. If the two keys differ,
+every genuine publish gets dropped, and the symptom is "the webhook does nothing" —
+which sends you debugging the Worker when a single line of config is what's wrong.
+
+So a mismatch is **passed through and labelled**: the dispatch carries
+`file_key_matched: false` and the issue says `UNVERIFIED FILE KEY — expected X, got Y`.
+The first real publish shows exactly what Figma sends. **Tighten it to a hard drop
+then**, with evidence rather than a guess.
 
 That last filter is the difference between a nudge and noise. If the payload
 carries no variable arrays at all, it notifies anyway: a spurious issue is

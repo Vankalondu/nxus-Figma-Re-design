@@ -78,15 +78,31 @@ export default {
     }
 
     // The webhook is registered against the team, so other files on Lighthouse
-    // Sports would reach this endpoint too. Only QAZA_FE drives the token pipeline.
-    if (env.FIGMA_FILE_KEY && body.file_key !== env.FIGMA_FILE_KEY) {
-      return new Response(`Ignored publish of a different file.\n`, { status: 200 });
-    }
+    // Sports reach this endpoint too, and only QAZA_FE drives the token pipeline.
+    //
+    // But this filter DELIBERATELY DOES NOT DROP on a mismatch, and that needs
+    // explaining. LIBRARY_PUBLISH reports the key of the published *library*, and
+    // it has never been observed here -- no real publish has happened yet. If the
+    // library key turns out to differ from the design file key, a hard filter
+    // would silently swallow every genuine publish, and the symptom would be
+    // "the webhook does nothing", which points at the Worker rather than at the
+    // one line of config that is actually wrong.
+    //
+    // So a mismatch is passed through and labelled. One real publish then shows
+    // exactly what Figma sends, and the filter can be tightened to a hard drop
+    // with evidence instead of a guess.
+    const expectedKey = env.FIGMA_FILE_KEY || null;
+    const keyMatches = !expectedKey || body.file_key === expectedKey;
 
     const { touched, reason } = touchedVariables(body);
-    if (!touched) {
+    if (!touched && keyMatches) {
       return new Response(`Ignored: ${reason}.\n`, { status: 200 });
     }
+
+    const note = keyMatches
+      ? reason
+      : `UNVERIFIED FILE KEY — expected ${expectedKey}, got ${body.file_key}. `
+        + `Passing through so one real publish can settle it; tighten the filter afterwards. (${reason})`;
 
     const dispatch = await fetch(
       `https://api.github.com/repos/${env.GITHUB_REPO}/dispatches`,
@@ -108,7 +124,8 @@ export default {
             timestamp: body.timestamp || null,
             triggered_by: (body.triggered_by && body.triggered_by.handle) || null,
             description: body.description || '',
-            reason,
+            reason: note,
+            file_key_matched: keyMatches,
           },
         }),
       },
@@ -121,6 +138,8 @@ export default {
       return new Response(`GitHub dispatch failed with ${dispatch.status}.\n`, { status: 502 });
     }
 
-    return new Response(`Dispatched to GitHub — ${reason}.\n`, { status: 202 });
+    // Echo the note, not the bare reason, so a key mismatch is visible in Figma's
+    // own webhook delivery log as well as in the issue.
+    return new Response(`Dispatched to GitHub — ${note}\n`, { status: 202 });
   },
 };
