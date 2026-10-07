@@ -1,0 +1,131 @@
+# Deploys figma-webhook/ to Cloudflare and registers the Figma webhook, so that
+# none of it needs wrangler, Node, or a browser login on a laptop.
+#
+# WHY THIS EXISTS
+# The README's hand path is five commands plus two interactive secret prompts.
+# Every one of those steps already has its credential sitting in this repo's
+# secrets -- Cloudflare's from the Pages deploy, and the two new ones added once
+# through the GitHub UI. Doing it here means the passcode is generated, stored
+# and used without ever being displayed to anyone, including whoever runs this.
+#
+# WHAT STILL NEEDS A HUMAN, AND WHY IT CANNOT BE AUTOMATED
+#   WEBHOOK_GITHUB_TOKEN  a fine-grained PAT (Contents: read and write, this repo
+#                         only). PAT creation is a browser action behind auth.
+#   FIGMA_WEBHOOK_TOKEN   a Figma PAT with webhooks:read + webhooks:write. Same.
+# Both are set once in Settings -> Secrets and variables -> Actions. After that
+# this workflow is the whole deploy.
+
+name: Deploy webhook Worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      register:
+        description: 'Also register the Figma webhook after deploying'
+        type: boolean
+        default: true
+      endpoint:
+        description: 'Worker URL (leave blank to use the one the deploy prints)'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  deploy:
+    name: Deploy the Worker
+    runs-on: ubuntu-latest
+    outputs:
+      endpoint: ${{ steps.url.outputs.endpoint }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the secrets this needs actually exist
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PASSCODE: ${{ secrets.FIGMA_PASSCODE }}
+          GH_PAT: ${{ secrets.WEBHOOK_GITHUB_TOKEN }}
+        run: |
+          # Name every missing one at once rather than failing on the first.
+          missing=()
+          [ -n "$CF_TOKEN" ]   || missing+=("CLOUDFLARE_API_TOKEN")
+          [ -n "$CF_ACCOUNT" ] || missing+=("CLOUDFLARE_ACCOUNT_ID")
+          [ -n "$PASSCODE" ]   || missing+=("FIGMA_PASSCODE")
+          [ -n "$GH_PAT" ]     || missing+=("WEBHOOK_GITHUB_TOKEN")
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing repository secret(s): ${missing[*]}"
+            echo "Add them under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          echo "All four secrets are present."
+
+      - name: Deploy, and push the two Worker secrets with it
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: figma-webhook
+          command: deploy
+          secrets: |
+            FIGMA_PASSCODE
+            GITHUB_TOKEN
+        env:
+          FIGMA_PASSCODE: ${{ secrets.FIGMA_PASSCODE }}
+          # The Worker reads env.GITHUB_TOKEN. The repo secret cannot be called
+          # that -- GITHUB_TOKEN is reserved by Actions -- so it is mapped here.
+          GITHUB_TOKEN: ${{ secrets.WEBHOOK_GITHUB_TOKEN }}
+
+      - name: Work out the endpoint URL
+        id: url
+        env:
+          GIVEN: ${{ inputs.endpoint }}
+          DEPLOY_OUT: ${{ steps.deploy.outputs.command-output }}
+        run: |
+          if [ -n "$GIVEN" ]; then
+            url="$GIVEN"
+          else
+            # wrangler prints the live URL; take the first workers.dev match.
+            url=$(printf '%s' "$DEPLOY_OUT" | grep -oE 'https://[a-z0-9.-]+\.workers\.dev' | head -1 || true)
+          fi
+          if [ -z "$url" ]; then
+            echo "Could not determine the Worker URL from the deploy output."
+            echo "Re-run this workflow and pass it in the 'endpoint' input."
+            exit 1
+          fi
+          echo "endpoint=$url" >> "$GITHUB_OUTPUT"
+          echo "Worker is at $url"
+
+  register:
+    name: Register the Figma webhook
+    needs: deploy
+    if: ${{ inputs.register }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Register (idempotent — skips if one already points here)
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_WEBHOOK_TOKEN }}
+          FIGMA_PASSCODE: ${{ secrets.FIGMA_PASSCODE }}
+          WEBHOOK_ENDPOINT: ${{ needs.deploy.outputs.endpoint }}
+        run: |
+          if [ -z "$FIGMA_TOKEN" ]; then
+            echo "FIGMA_WEBHOOK_TOKEN is not set — this needs a Figma PAT with"
+            echo "webhooks:read and webhooks:write, which is a different scope set"
+            echo "from the FIGMA_TOKEN used by the freshness check."
+            exit 1
+          fi
+          node scripts/figma-webhook-register.mjs --register
+          echo
+          echo "Listing what is registered now:"
+          node scripts/figma-webhook-register.mjs --list

@@ -49,9 +49,33 @@ recoverable, a silently stale snapshot is the failure this pipeline exists to re
 Reading variables needs the plugin, and a plugin needs a human in the editor. So the
 output is a nudge to run the export, never a pull request.
 
-## Deploy
+## Deploy — the short way
 
-From this directory.
+**Use `.github/workflows/deploy-worker.yml`.** It deploys the Worker, pushes both
+Worker secrets, and registers the Figma webhook, using credentials that already
+live in this repo's secrets. No wrangler, no Node, no browser login on a laptop.
+
+`FIGMA_PASSCODE` is already set — generated and stored without being displayed to
+anyone, and read straight from the secret by both the deploy and the registration,
+so nobody ever needs to see or retype it.
+
+Two secrets still need a human, because creating a token is a browser action
+behind auth. Add them under **Settings → Secrets and variables → Actions**:
+
+| Secret | What it is |
+|---|---|
+| `WEBHOOK_GITHUB_TOKEN` | Fine-grained PAT. Repository access: **only** this repo. Permission: **Contents → Read and write**, nothing else. |
+| `FIGMA_WEBHOOK_TOKEN` | Figma PAT with **`webhooks:read` + `webhooks:write`**. A different scope set from `FIGMA_TOKEN`, which only reads file metadata — make a new one rather than reusing it. |
+
+Then **Actions → Deploy webhook Worker → Run workflow**. That is the whole deploy.
+
+One thing to check first: `CLOUDFLARE_API_TOKEN` was created for the Pages deploy,
+so it may not carry **Workers Scripts: Edit**. If the deploy fails on permissions,
+that is why — edit the token in the Cloudflare dashboard and re-run.
+
+## Deploy — by hand
+
+Only needed if the workflow is unavailable. From this directory.
 
 ```
 npx wrangler deploy
