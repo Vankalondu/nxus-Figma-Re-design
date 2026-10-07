@@ -202,6 +202,36 @@ should be recorded, not patched silently.
 House rules that apply: **L-C1** (never `#FFFFFF`/`#000000` at any opacity — use `--chalk` /
 `--midnight`), light mode only, every text node bound to a named style, 4-pt grid.
 
+### B — BUILT 7 Oct 2026. What was made, and four findings
+
+Three frames on `Dashboard Page` (`289:8`), each pinned to its Responsive mode:
+`Lead Scout — Desktop 1440` (`1424:2`) · `Tablet 834` (`1424:288`) · `Mobile 390` (`1424:516`).
+New `KPI Card` component (`1422:321`) on Molecules with four TEXT properties and a swappable
+icon; four new lucide icon components on Foundations (`Icon/Target` already existed and was
+reused, not duplicated).
+
+**Finding 1 — the Lead Scout dashboard has no table.** Its Overview is the KPI row, Target
+breakdown, Latest Videos and Matches. The agreed scope said "KPI row + one table", so the
+second section built is **Target breakdown** instead — it carries more token surface anyway
+(surface-card, border-default, surface-accent, brand-primary, status-success, four text roles).
+The `Table/*` organisms do exist on `🏛️ Organisms — Tables`, but they are **fixed-width 1386px
+and desktop-only**, so none can go into an 834 or 390 frame without a responsive rebuild. That
+rebuild is its own job, not a side-effect of this one.
+
+**Finding 2 — `createAutoLayout()` returns an opaque white frame.** 64 structural containers
+shipped with `{r:1,g:1,b:1}` fills nobody asked for — an L-C1 breach created by the tool, not a
+decision. Cleared. Recorded as LESSONS #16: in a Figma build script, `fills = []` is part of
+creating a layout container, not cleanup.
+
+**Finding 3 — `Sidebar` and `Top Navigation Bar` are fixed-layout.** At 390 the TopNav overflows
+its frame. The app's own TopNav collapses at `lg`; the Figma component has no such behaviour and
+no variants for it. So the mobile frame is honest about the KPI row and the card, and wrong
+about the nav. Fixing it means giving those two components responsive variants — again its own
+job.
+
+**Finding 4 — `Color/Text/link` now has its first real use.** It is one of the eight roles OR-8
+lists as defined and rendered nowhere; the KPI card's action link binds to it. Seven left.
+
 ### B4 — verify
 
 Screenshot each of the three frames and compare against the B0 app captures. Differences are
