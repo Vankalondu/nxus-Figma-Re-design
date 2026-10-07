@@ -240,7 +240,40 @@ second is the more interesting result.
 
 ---
 
-## Workstream C — the actual pipeline test
+## Workstream C — RUN 7 Oct 2026. The pipeline is proven end to end.
+
+Run without waiting on the Worker deploy, because the sync workflow accepts a pasted
+payload — so the deploy was never on the critical path for proving the pipeline.
+
+| Step | Result |
+|---|---|
+| Change `Qaza :: Colors/Light Blue/Base` `#d2e7fa` → `#f6d2b4` | Done via the Plugin API |
+| Extract, using the plugin's logic transcribed | **6,041 bytes — the exact byte count the real plugin produced on 16 Sep**, which is independent evidence the transcription is faithful |
+| `figma-merge --check` | `8 token value(s) would change` |
+| Sync workflow, real payload | Branch `figma-sync` pushed, full drift report in the commit message |
+| Drift verdict | `VALUE DRIFT (1)` — `Colors/Light Blue/Base #f6d2b4` vs `--light-500 #d2e7fa`, plus 7 Mapped roles flagged DRIFT |
+| Visible in the frames | Page ground went warm across all three; `surface-card` correctly held |
+| Revert | All seven roles back to `#d2e7fa`, no warm value anywhere; test branch deleted |
+
+**The blast radius was the surprise.** One Qaza primitive feeds **seven** Mapped
+roles — `Surface/page`, `Surface/inverse`, `Text/heading`, `Text/strong`,
+`Button/primary-text`, `Button/danger-text`, `Text/on-brand`. A designer nudging
+what looks like a background tint also moves button label colour in both themes.
+That is the single best argument for this being a pull request rather than a push,
+and it is not visible from inside Figma.
+
+**Two corrections this run forced:**
+
+1. `Color/Surface/page` does **not** resolve through `Colors/Primary/100`, as an
+   earlier draft of this plan said. It goes `Allias :: Colors/Light Mode/Base →
+   Qaza :: Colors/Light Blue/Base`. Two different primitives happen to hold
+   `#d2e7fa` — exactly the two-families ambiguity D-13 settled. Shared value is not
+   shared identity, and only the alias chain tells you which.
+2. The PR contains **only** `scripts/figma-tokens.json`, never `globals.css`. See
+   the corrected section in `docs/figma-sync.md`. Merging records that Figma moved;
+   it changes no rendered colour.
+
+### The original plan for C, kept for reference
 
 Needs B built. Steps C3 needs A finished; everything else does not.
 

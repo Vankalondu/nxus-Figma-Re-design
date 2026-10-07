@@ -124,13 +124,24 @@ wrong as a steady state.
 
 ---
 
-## What the PR would contain
+## What the PR contains — measured 7 Oct 2026, and it is less than this said
 
-A single commit touching, at most:
+A single commit touching **one file**:
 
 - `scripts/figma-tokens.json` — the refreshed snapshot
-- `src/styles/globals.css` — **only** where a Mapped role's value changed
-- the diff output, pasted into the PR body so the reviewer sees what moved and why
+- the merge summary and the full Figma↔CSS diff, in the **commit message**, so the
+  reviewer sees what moved and why
+
+**This section used to claim the commit also touched `src/styles/globals.css`
+"only where a Mapped role's value changed". It does not, and never did.** A real
+end-to-end run changed one Qaza primitive and the branch carried
+`scripts/figma-tokens.json | 26 +++----` and nothing else.
+
+That is the correct behaviour, not a gap — the diff's own rule is **"code wins by
+default"**, so the pipeline reports drift and a human decides whether the CSS should
+follow. But the distinction matters when you explain this: merging the PR does
+**not** change a single rendered colour. It records that Figma moved. Applying the
+change to `globals.css` is a separate, deliberate edit.
 
 CI already runs the token lint, 20 Playwright tests, the app build and the Storybook
 build on every PR. A token change that breaks a Law fails before anyone looks at it.
