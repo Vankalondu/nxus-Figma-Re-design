@@ -1,7 +1,9 @@
 # Figma → GitHub: how a token sync would actually work
 
-> Status: **design note, nothing built.** Written so the decision can be made before
-> any code exists. Last updated 7 Sep 2026.
+> Status: **built and proven end to end (7 Oct 2026).** Steps 1–5 run today; step 6
+> (the publish webhook) is built but its Worker is not deployed — the Cloudflare token
+> lacks *Workers Scripts: Edit*. This began as a design note on 7 Sep; the "Build order"
+> section below is the current record. Last updated 8 Oct 2026.
 
 ## The short version
 
@@ -15,7 +17,10 @@ Everything below is about building that PR reliably.
 
 ---
 
-## What exists today
+## What existed before the build (7 Sep 2026)
+
+_Historical — kept because it explains why the pipeline exists. For what runs now, see
+"Build order" below._
 
 Two files, and a human:
 
@@ -352,7 +357,22 @@ the fast nudge; freshness is the backstop. Neither is load-bearing alone.
 
 ## The honest summary for the devs
 
-> We have a reliable *detector* and a manual refresh. Making it automatic is a small
-> Figma plugin plus one GitHub Action, and the output is a pull request rather than a
-> commit — deliberately, because deciding whether Figma or the code is right is a design
+> A designer changes a variable in Figma, runs the NXUS Token Export plugin and presses
+> **Send to GitHub**. A GitHub Action merges the export and, only if a token *value*
+> moved, pushes a `figma-sync` branch with the drift report in the commit message. A
+> person opens the pull request and decides. Proven end to end on 7 Oct 2026 with a real
+> colour change, then reverted.
+>
+> Merging records that Figma moved; it changes **no rendered colour**. The PR touches
+> only `scripts/figma-tokens.json`. Applying a change to `globals.css` is a separate,
+> deliberate edit — because deciding whether Figma or the code is right is a design
 > judgement, not something a script should settle.
+>
+> Two safety nets catch a forgotten export: CI fails when Figma was edited after the
+> snapshot was last verified (on any edit, not only variable edits — so a screens-only
+> session also asks for a re-export), and, once its Worker is deployed, a library
+> publish opens a `figma-stale` issue.
+>
+> Worth showing: one Qaza primitive (`Colors/Light Blue/Base`) feeds **seven** Mapped
+> roles, including button label colour in both themes. Figma does not show that blast
+> radius; the PR's drift report does.
