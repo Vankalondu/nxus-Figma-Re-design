@@ -202,6 +202,27 @@ should be recorded, not patched silently.
 House rules that apply: **L-C1** (never `#FFFFFF`/`#000000` at any opacity — use `--chalk` /
 `--midnight`), light mode only, every text node bound to a named style, 4-pt grid.
 
+### B2 — COMPLETED 9 Oct 2026: full Overview, on its own page
+
+The three frames moved off `Dashboard Page` (`289:8`, now empty) to a new **`Lead Scout`** page
+(`1449:2`), inside section **`A. Overview`** (`1449:3`). Frame IDs are unchanged. The page follows
+the Merlin Wallet layout: one page per role, one titled section per tab, frames side by side.
+
+- **Now the whole Overview tab**, matching the live app at 1440 / 834 / 390: `Welcome Tom` header,
+  tabs (mobile: an `Overview` select), KPI row, Target breakdown, and the two sections Finding 1
+  had left out. Desktop uses the app's 3:2 split; tablet and mobile stack.
+- **New components** on Organisms: `Card/Latest Videos` (`1448:2163`) and `Card/Matches`
+  (`1448:2239`), data from `HIGHLIGHTS_FEED` / `RECENT_RESULTS` / `UPCOMING_MATCHES`. New icons
+  `Icon/Film` and `Icon/Menu` on Foundations.
+- **Finding 3 fixed:** `Top Navigation Bar` is now a variant set (`1448:3303`), `Size=Desktop|Tablet|Mobile`,
+  mirroring the app's lg-collapse. Desktop gained the theme toggle the app has; all 24 existing
+  instances stay linked to `Size=Desktop`.
+- **KPI Card** brought in line with `KpiCard.tsx`: descriptor 14 bold Figtree in `text-strong`,
+  40px round icon chip. Remaining difference: on desktop and tablet the app puts the value and the
+  link on one row; Figma stacks them.
+- Text-style names do not match their sizes (`Body/caption Bold` is 10px, `Body/sm Bold` 12px).
+  Styles were picked by size; renaming them is a separate decision.
+
 ### B — BUILT 7 Oct 2026. What was made, and four findings
 
 Three frames on `Dashboard Page` (`289:8`), each pinned to its Responsive mode:
