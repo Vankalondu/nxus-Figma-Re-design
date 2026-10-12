@@ -202,6 +202,30 @@ should be recorded, not patched silently.
 House rules that apply: **L-C1** (never `#FFFFFF`/`#000000` at any opacity — use `--chalk` /
 `--midnight`), light mode only, every text node bound to a named style, 4-pt grid.
 
+### B3 — ALL FIVE TABS, 9 Oct 2026: one section per device
+
+The `Lead Scout` page (`1449:2`) now holds every tab at every breakpoint, grouped **by device**
+as Vanessa asked: section `Desktop 1440` (`1461:31091`), `Tablet 834` (`1461:31095`),
+`Mobile 390` (`1461:31099`). Inside each, left to right in tab order: Overview, Pipeline,
+Reports, Analytics, Tasks. Frames are named `Lead Scout / <Tab> — <Device>`. This replaces the
+per-tab `A. Overview` / `B. Pipeline` sections described above.
+
+- **Built from the source, not screenshots:** `PipelineTab` (LeadScoutDashboard.tsx),
+  `ReportsTab`, `AnalyticsTab`, `TasksTab` (components/dashboard). Charts (pipeline donut,
+  talent scatter, conversion lines, archive stacks, task stacks) are drawn as vectors with
+  every colour bound to a variable, so they move with the pipeline test.
+- **New components:** Atoms `Grade Badge`, `Priority Pill`, `Task Status`; Organisms
+  `Card/Stat Tile`, `Card/Report Champion`, `Card/Report` (Status=Unseen|Seen|Opened);
+  Foundations icons Eye, Download, RefreshCw, User, Smile, Crown, Trophy, ChevronDown, Film, Menu.
+- **Text styles renamed to match their sizes:** micro 10, caption 12, sm 14, md 16, lg 20, each
+  with Bold (micro also Light). The duplicate 12px bold style was merged (23 layers repointed).
+- **App bugs found while copying (not reproduced in Figma):** at 390 the Signed Pipeline grid
+  squeezes until names vanish (code intends 120px+ columns that scroll); the Tasks table header
+  keeps all 8 columns while cells hide Description/Assignee/Assigned below lg/md/xl, so headers
+  misalign on tablet and mobile.
+- **Colour debt surfaced:** Report Champion 3rd place uses `#3fb4c0` in code with no token;
+  Figma uses `Colors/Cyan/Base` as the nearest and says so in the component description.
+
 ### B2 — COMPLETED 9 Oct 2026: full Overview, on its own page
 
 The three frames moved off `Dashboard Page` (`289:8`, now empty) to a new **`Lead Scout`** page

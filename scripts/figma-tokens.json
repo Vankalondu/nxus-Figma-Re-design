@@ -721,5 +721,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-09 — re-extracted from QAZA_FE after the 9 Oct Lead Scout page build (frames and components only). The fresh extract fingerprints identical to the 8 Oct export, which merged to zero value changes. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-10-09 — re-extracted from QAZA_FE after building the Pipeline, Reports, Analytics and Tasks frames and renaming text styles (frames, components and styles only). The fresh extract fingerprints identical to the 8 Oct export, which merges to zero value changes. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }
