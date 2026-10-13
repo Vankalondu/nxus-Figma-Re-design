@@ -402,12 +402,12 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
 const ActionButtons = ({ items }: { items: ActionItem[] }) => {
   if (!items.length) return null;
   return (
-    <div className="inline-flex items-center justify-center rounded-full bg-surface-accent border border-default p-0.5">
+    <div className="inline-flex items-center justify-center rounded-full bg-surface-accent border border-default">
       {items.map((item, i) => (
         <React.Fragment key={i}>
           {i > 0 && <span className="w-px h-4 bg-border-default/70 self-center shrink-0" />}
           <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
-            className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
+            className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors shrink-0 ${
               item.label === 'Restore'
                 ? 'text-status-success hover:bg-status-success hover:text-on-brand'
                 : 'text-strong hover:bg-brand-primary hover:text-inverse'
@@ -697,7 +697,7 @@ const FilterBar = ({
 // ─── Group Header Rows ────────────────────────────────────────────────────────────
 const PosHeader = ({ pos, count, colSpan }: { pos: string; count: number; colSpan: number }) => (
   <tr className="bg-brand-primary">
-    <td colSpan={colSpan} className="py-2 px-4 sticky top-[58px] md:top-[70px] lg:top-[82px] z-30 bg-brand-primary">
+    <td colSpan={colSpan} className="py-2 px-4 sticky top-[var(--tbl-head-h)] z-30 bg-brand-primary">
       <span className="inline-flex items-center gap-2">
         <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-on-brand">{pos}</span>
         <span className="inline-flex items-center justify-center bg-text-on-brand/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-on-brand">{count}</span>
@@ -708,7 +708,7 @@ const PosHeader = ({ pos, count, colSpan }: { pos: string; count: number; colSpa
 
 const YobHeader = ({ yob, colSpan }: { yob: number; colSpan: number }) => (
   <tr className="border-t border-default">
-    <td colSpan={colSpan} className="py-2 px-4 bg-surface-accent sticky top-[95px] md:top-[113px] lg:top-[131px] z-30">
+    <td colSpan={colSpan} className="py-2 px-4 bg-surface-accent sticky top-[calc(var(--tbl-head-h)+var(--tbl-group-h))] z-30">
       <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-brand-primary">{yob}</span>
     </td>
   </tr>
@@ -765,7 +765,7 @@ const PlayerTable = ({
   const TOTAL_COLS = (currentTab === 'long-list' ? 14 : 16) + extraCols.length;
   const showDirectLadder = loggedInRole === 'Senior Scout' || loggedInRole === 'Lead Scout';
   // Action column width depends on how many inline action buttons the tab shows (DB=1, Long=2).
-  const actWCls = currentTab === 'long-list' ? 'w-[76px]' : 'w-[44px]';
+  const actWCls = currentTab === 'long-list' ? 'w-[76px] min-w-[76px]' : 'w-[44px] min-w-[44px]';
   const idLeftCls = currentTab === 'long-list' ? 'left-[76px]' : 'left-[44px]';
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
@@ -907,13 +907,13 @@ const PlayerTable = ({
                         {/* Identity — vertical divider after (Player ID group end) */}
                         <td className={`sticky z-20 bg-surface-card group-hover:bg-surface-accent pl-3 pr-2 py-2 border-r-2 border-default ${idLeftCls}`}>
                           <div className="flex items-center gap-2 min-w-[190px]">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-default">{player.initials}</div>
-                            <div className="flex flex-col min-w-0">
+                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">{player.initials}</div>
+                            <div className="flex items-center gap-2 min-w-0">
                               <div className="flex items-center gap-1">
                                 <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                                 {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
-                              <div className="flex items-center gap-2 mt-0.5">
+                              <div className="flex items-center gap-2">
                                 <span className="font-body text-[12px] text-muted shrink-0">{player.age}</span>
                                 <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                                 <FlagBadge code={natCode} label={player.nationality} />
@@ -1115,7 +1115,7 @@ const TargetSuperTable = ({
             {/* Sub-header row — light, matches Short List */}
             <tr className="bg-surface-card border-b-2 border-default">
               {/* Action — first sticky col */}
-              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[76px] min-w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Player */}
               <th className="sticky left-[76px] z-40 bg-surface-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[180px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* DOB / POS / Team */}
@@ -1194,16 +1194,16 @@ const TargetSuperTable = ({
                     return (
                       <tr key={player.id} id={`row-${player.id}`} className={`border-b border-default last:border-0 group transition-colors ${isArchived ? 'opacity-50' : 'hover:bg-surface-accent'}${highlightId === player.id ? ' ring-2 ring-brand-primary ring-inset bg-brand-primary/5' : ''}`}>
                         {/* Action — first column */}
-                        <td className="sticky left-0 z-20 bg-surface-card group-hover:bg-surface-accent px-1 py-2 w-[76px] text-center">
+                        <td className="sticky left-0 z-20 bg-surface-card group-hover:bg-surface-accent px-1 py-2 w-[76px] min-w-[76px] text-center">
                           <ActionButtons items={tItems} />
                         </td>
                         {/* Player */}
                         <td className="sticky left-[76px] z-20 bg-surface-card group-hover:bg-surface-accent pl-2 pr-1 py-2 border-r-2 border-default">
                           <div className="flex items-center gap-2 min-w-[160px]">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-default">{player.initials}</div>
-                            <div className="flex flex-col min-w-0">
+                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">{player.initials}</div>
+                            <div className="flex items-center gap-2 min-w-0">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
-                              <div className="flex items-center gap-1 mt-0.5">
+                              <div className="flex items-center gap-1">
                                 <span className="font-body text-[12px] text-muted">{player.age}</span>
                                 <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
                                 <FlagBadge code={natCode} label={player.nationality} />
@@ -1462,9 +1462,9 @@ const ShortListTable = ({
             </tr>
             {/* Sub-header row */}
             <tr className="bg-surface-card border-b-2 border-default">
-              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[108px]"></th>
+              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[108px] min-w-[108px]"></th>
               <th className="sticky left-[108px] z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center min-w-[56px] w-[56px]"><EditableColHeaderLight label="Rank" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="sticky left-[164px] z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[190px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[164px] z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[250px] min-w-[250px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[80px]"><EditableColHeaderLight label="DOB" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="Pos" onRename={()=>{}} onRemove={()=>{}} /></th>
               <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[110px]"><EditableColHeaderLight label="Team" onRename={()=>{}} onRemove={()=>{}} /></th>
@@ -1518,23 +1518,23 @@ const ShortListTable = ({
                       <tr key={player.id} id={`row-${player.id}`}
                         className={`border-b border-default last:border-0 group transition-colors ${isArchived ? 'opacity-50' : isMonitor ? 'border-l-4 border-l-[#E8A838] hover:bg-surface-accent' : 'hover:bg-surface-accent'}${highlightId === player.id ? ' ring-2 ring-brand-primary ring-inset bg-brand-primary/5' : ''}`}>
                         {/* Action */}
-                        <td className="sticky left-0 z-20 bg-surface-card group-hover:bg-inherit px-1 py-2 w-[108px] text-center">
+                        <td className="sticky left-0 z-20 bg-surface-card group-hover:bg-inherit px-1 py-2 w-[108px] min-w-[108px] text-center">
                           <ActionButtons items={slItems} />
                         </td>
                         {/* Rank — muted 1/2/3, height matches the action pill */}
                         <td className="sticky left-[108px] z-20 bg-surface-card group-hover:bg-inherit px-1 py-2 min-w-[56px] w-[56px] text-center">
                           <CellSelect value={rankMap.get(player.id) || ''} options={['', '1', '2', '3']} menuWidth={96}
                             onChange={v => setRankMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
-                            triggerClass="h-8 mx-auto"
+                            triggerClass="h-6 mx-auto"
                             renderValue={v => v
                               ? <span style={tintStyle(RANK_TINT[v])} className="inline-flex items-center justify-center w-6 h-6 rounded-full border font-body text-[10px] font-black">{v}</span>
                               : <span className="font-body text-[12px] font-bold text-body">–</span>} />
                         </td>
                         {/* Player name + monitor pill */}
-                        <td className="sticky left-[164px] z-20 bg-surface-card group-hover:bg-inherit px-2 py-2 border-r-2 border-default w-[190px]">
+                        <td className="sticky left-[164px] z-20 bg-surface-card group-hover:bg-inherit px-2 py-2 border-r-2 border-default w-[250px] min-w-[250px]">
                           <div className="flex items-center gap-2 min-w-0">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-default">{player.initials}</div>
-                            <div className="flex flex-col min-w-0">
+                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">{player.initials}</div>
+                            <div className="flex items-center gap-2 min-w-0">
                             <div className="flex items-center gap-1">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                               {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
@@ -1547,7 +1547,7 @@ const ShortListTable = ({
                                 return null;
                               })()}
                             </div>
-                            <div className="flex items-center gap-1 mt-0.5">
+                            <div className="flex items-center gap-1">
                               <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
                               <FlagBadge code={natCode} label={player.nationality} />
                             </div>
@@ -1814,7 +1814,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         {/* Name with initials avatar */}
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-xl bg-surface-card text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-default">
+                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">
                               {p.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
                             </div>
                             <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout'}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team, matchVideos: p.matchVideos, highlightVideos: p.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: 'Signed List', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })}

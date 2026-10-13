@@ -457,13 +457,19 @@ body {
    Add `rtable` to a <table>: cell padding tightens per tier so scouts keep a real
    spreadsheet on small screens (denser rows, existing horizontal-scroll + frozen
    first column stay intact). Column widths + sticky offsets are handled per-table.
-   Values below are MOBILE (tightest); desktop matches the current px-2 py-3. */
+   COMPACT is the default (2026-10-13): users asked for the old Qaza table's density,
+   ~36px rows. Only its spacing is borrowed — vertical padding is 4px at every tier and
+   in-row controls (action buttons, rank pill, initials) are 24px.
+   --tbl-head-h / --tbl-group-h drive the sticky offsets of the group strips; keep them
+   equal to the rendered thead and position-strip heights or the strips will overlap. */
 :root {
   --tbl-px: 4px;
-  --tbl-py: 6px;
+  --tbl-py: 4px;
+  --tbl-head-h: 50px;
+  --tbl-group-h: 33px;
 }
-@media (min-width: 768px) { :root { --tbl-px: 6px; --tbl-py: 9px; } }
-@media (min-width: 1024px) { :root { --tbl-px: 8px; --tbl-py: 12px; } }
+@media (min-width: 768px) { :root { --tbl-px: 5px; } }
+@media (min-width: 1024px) { :root { --tbl-px: 6px; } }
 .rtable td, .rtable th {
   padding-left: var(--tbl-px);
   padding-right: var(--tbl-px);
