@@ -4,6 +4,13 @@ _Last updated: 2026-10-14. Resume by reading this file._
 
 ## OPEN CHECKLIST (2026-10-14) — agreed with Vanessa; work top-down, tick as done
 
+**NEXT UP (agreed 2026-10-14, after restart) — Lead Scout first; order 1 → 3 → 2:**
+1. Lead Scout Players screens in Figma (Database, Long, Short, Target, Signed, Reports, Settings) at 1440/834/390, placed in the existing device sections on page `1449:2` (Desktop `1461:31091`, Tablet `1461:31095`, Mobile `1461:31099`), with the approved compact table spacing. Capture localhost references first.
+3. Token download for devs: build step → `tokens.css`, `tokens.json` (DTCG), Tailwind preset, `_tokens.scss`; downloadable from a "Tokens" page on the live site with per-framework instructions; regenerated when a token change is approved.
+2. Pipeline test on Lead Scout: change one variable in Figma → send → PR → app + downloads update → revert.
+- NOT ours: video roles (Vanessa edits them in the live app herself); Figma component cleanup (another chat does it — don't move/delete components).
+- After any Figma edit: re-verify snapshot (fingerprint 3122798713) + `--stamp-verified` before pushing, or CI freshness goes red.
+
 **Needs Vanessa (credentials / decisions)**
 - [ ] Cloudflare API token: add *Workers Scripts: Edit* → then deploy the webhook Worker (step 6).
 - [ ] Fine-grained GitHub token for the NXUS Token Export plugin (one repo, Contents: read+write).
