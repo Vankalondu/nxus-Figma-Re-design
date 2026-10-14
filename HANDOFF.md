@@ -14,7 +14,7 @@ _Last updated: 2026-10-14. Resume by reading this file._
 **Needs Vanessa (credentials / decisions)**
 - [ ] Cloudflare API token: add *Workers Scripts: Edit* → then deploy the webhook Worker (step 6).
 - [ ] Fine-grained GitHub token for the NXUS Token Export plugin (one repo, Contents: read+write).
-- [ ] Approve cleanup group A → move 11 zero-use components to an `Archive` page; delete empty `Dashboard Page` (`289:8`).
+- [x] Cleanup group A (done 2026-10-14). Usage re-counted with `getInstancesAsync`; Vanessa chose to archive 7 and keep 4 icons. Moved to new page `🗄️ Archive` (`1482:2`): Table Cell/Flag `639:378`, Grade Pill `974:8918`, Color Swatch/Green `974:8921` (from Atoms), Month Picker `1071:8963` (Molecules), Card/Section Headers `1172:815` (Organisms), Icon/Dot `399:263`, Icon/Notes `508:271` (Foundations › Icons Group). **Kept** Icon/Shortlist, Icon/Signed, Icon/Database2, Icon/LongList (0 uses, but they're the Players-tab icons we need next). Empty `Dashboard Page` deleted. Variables untouched; snapshot re-verified (fingerprint 3122798713). Not counted as unused: 54 flags (a complete set), Doc Header (documentation).
 - [ ] Send the fixes list (Lead Scout screens).
 - [ ] Say "make it live" for the compact tables (pushed `9b4210f`, approved on localhost, NOT deployed).
 
