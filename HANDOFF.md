@@ -1,6 +1,39 @@
 # HANDOFF — NXUS Responsive System v1
 
-_Last updated: 2026-09-30. Resume by reading this file._
+_Last updated: 2026-10-14. Resume by reading this file._
+
+## OPEN CHECKLIST (2026-10-14) — agreed with Vanessa; work top-down, tick as done
+
+**Needs Vanessa (credentials / decisions)**
+- [ ] Cloudflare API token: add *Workers Scripts: Edit* → then deploy the webhook Worker (step 6).
+- [ ] Fine-grained GitHub token for the NXUS Token Export plugin (one repo, Contents: read+write).
+- [ ] Approve cleanup group A → move 11 zero-use components to an `Archive` page; delete empty `Dashboard Page` (`289:8`).
+- [ ] Send the fixes list (Lead Scout screens).
+- [ ] Say "make it live" for the compact tables (pushed `9b4210f`, approved on localhost, NOT deployed).
+
+**Tables**
+- [ ] Bring compact density (35px rows, 4px cell padding, 24px in-row controls) into the Figma tables.
+
+**Figma — role pages (layout: Desktop | Tablet | Mobile sections in ONE row, tabs left→right inside each)**
+- [ ] Lead Scout: add the Players screens (Database, Long, Short, Target, Signed, Reports, Settings) at 3 sizes.
+- [ ] Video roles: Video Manager, Package Uploader, Full Match Uploader (app + Figma).
+- [ ] Then Senior, Head, Country scout pages.
+- [ ] Settings screens (will use cleanup group B: Form Field, Date Field, Month Dropdown, Tag Input Row, Classification Row, Colour Swatch Palette, Dropdown List).
+- [ ] Cleanup: inspect Button, Nav Item, 2× Row Divider by eye (API errors); decide Org V3 tables when Head/Country pages are built.
+
+**Token distribution (new — any framework)**
+- [ ] Write the plan; build the token step: one source → CSS variables, DTCG JSON, Tailwind v3 preset, SCSS, optional PrimeVue preset; publish as a versioned package.
+- [ ] Tell the devs: `nxus-ui` (React, Aug 14) has 80 of our 217 tokens, 72 retired names, older values.
+- Findings 2026-10-14: the Vue app is `LightHouseSports/VueFE` (Vue 3.4, Tailwind 3, Flowbite, SCSS; **no PrimeVue** — only `primeicons`; `tailwind.config.js` theme is empty). `Qaza_FE` is React (Lovable/shadcn), dormant since Dec 2025 — looked at once with Vanessa's explicit permission; stays off-limits.
+
+**App bugs found while copying screens**
+- [ ] 390: Signed Pipeline grid squeezes until names vanish (code intends 120px+ scrolling columns).
+- [ ] Tasks table: headers don't hide with their cells below lg/md/xl → misaligned on tablet/mobile.
+- [ ] Colour debt: Report Champion teal `#3fb4c0` has no token; 12 bracketed hex remain (L-G1).
+
+**Housekeeping**
+- [ ] Freshness check fires on ANY Figma edit, not only variables → re-verify by hand after Figma sessions (or improve the check).
+- [ ] Optional: one-page PM brief of the pipeline.
 
 > **Correction to everything below.** The "DONE, NOT pushed / NOT deployed" banners in the
 > older sections are historical. Everything is pushed (`main` == `origin/main`) and the app
