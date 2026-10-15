@@ -12,6 +12,10 @@ const SCREENS = [
   ['lead-overview', '/lead-scout'],
   ['lead-players-database', '/lead-scout/players?section=database'],
   ['lead-players-target', '/lead-scout/players?section=target-list'],
+  // Video roles (the developer's first task, see docs/how-we-work.md)
+  ['video-manager', '/video-manager'],
+  ['package-uploader', '/package-uploader'],
+  ['full-match-uploader', '/full-match-uploader'],
 ];
 const WIDTHS = [390, 834, 1440];
 

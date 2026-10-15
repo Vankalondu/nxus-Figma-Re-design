@@ -45,7 +45,7 @@ There are two ways a change starts. Both end in the same place.
              Automated checks run on the pull request:
                · Build & E2E tests       does the app build and work?
                · Token lint + Figma drift are the design rules kept? do tokens match Figma?
-               · Visual check            screenshots of 143 components/screens vs. approved ones,
+               · Visual check            screenshots of 152 components/screens vs. approved ones,
                                          posted as ONE summary comment with before/after images
                                                    │
                                                    ▼

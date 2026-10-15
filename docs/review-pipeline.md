@@ -26,7 +26,8 @@ copied into the real app.
 
 ## The Visual check
 
-Every pull request gets screenshots of all Storybook components (131) and four key screens
+Every pull request gets screenshots of all Storybook components (131) and seven key screens
+(Lead Scout and the three video roles)
 at 390 / 834 / 1440, compared pixel for pixel with the approved images in
 `tests-visual/__screenshots__`. One comment on the pull request, updated on every push:
 
