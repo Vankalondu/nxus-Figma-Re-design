@@ -129,7 +129,21 @@ wrong as a steady state.
 
 ---
 
-## What the PR contains — measured 7 Oct 2026, and it is less than this said
+## What the PR contains — UPDATED 15 Oct 2026
+
+**Since 15 Oct the PR also edits `src/styles/globals.css`** (decided with Vanessa).
+`scripts/figma-apply-css.mjs` runs right after the merge and writes Figma's values into
+the stylesheet: colour primitives, the Mapped roles (light in `:root`, dark in `.dark`,
+re-pointed at whichever primitive now holds the value, a literal hex only if none does)
+and the responsive type ramp. It never adds or deletes a token — that stays a human call.
+Merging the PR therefore changes what the app renders, and the next release rebuilds the
+`/tokens` downloads (`scripts/build-tokens.mjs`, on prebuild). Limit: the export carries
+resolved colours, not aliases, so when two primitives share a value the script picks one;
+the reviewer sees which in the diff.
+
+The section below is the record from before that change.
+
+### Before 15 Oct — measured 7 Oct 2026
 
 A single commit touching **one file**:
 

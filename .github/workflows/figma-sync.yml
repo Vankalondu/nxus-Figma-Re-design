@@ -109,6 +109,13 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         run: node scripts/figma-merge.mjs figma-export.json --stamp-verified "exported from Figma by the NXUS Token Export plugin and merged by the figma-sync workflow" | tee merge.log
 
+      # Write the new values into the stylesheet too, so merging the PR changes
+      # what the app renders (and, on the next release, the /tokens downloads).
+      # Decided with Vanessa on 15 Oct 2026; the reviewer still accepts or rejects it.
+      - name: Apply the values to globals.css
+        if: steps.changed.outputs.changed == 'true'
+        run: node scripts/figma-apply-css.mjs | tee apply.log
+
       # Run the checks HERE rather than relying on the PR to trigger them: a PR
       # opened with GITHUB_TOKEN deliberately does not start further workflows,
       # so without this the reviewer would see an unchecked diff. Never fails
@@ -134,7 +141,9 @@ jobs:
           # the compare page, so the reviewer sees the drift report before they
           # have created anything.
           {
-            echo "Figma token export: snapshot changed"
+            echo "Figma token export: snapshot and stylesheet changed"
+            echo
+            cat apply.log
             echo
             node scripts/figma-pr-body.mjs merge.log diff.log lint.log
           } > commit-message.txt
@@ -142,7 +151,7 @@ jobs:
           git config user.name  "figma-sync[bot]"
           git config user.email "figma-sync@users.noreply.github.com"
           git checkout -B "$BRANCH"
-          git add scripts/figma-tokens.json
+          git add scripts/figma-tokens.json src/styles/globals.css
           git commit -F commit-message.txt
           git push --force origin "$BRANCH"
 
