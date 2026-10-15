@@ -1,0 +1,180 @@
+name: Visual check
+
+# Every pull request gets screenshots of all Storybook components and the key screens
+# (390 / 834 / 1440), compared against the approved images in tests-visual/__screenshots__.
+# The result is ONE comment on the pull request that updates itself: a verdict, a table,
+# and before / after / difference images for anything that changed. The PM decides from it.
+#
+#   check   (default)  compare and report; the job fails while there are unaccepted changes
+#   update  accept: overwrite the approved images with this branch's, commit them, re-check
+#
+# How "accept" happens: someone adds the label `accept-visuals` to the pull request (or runs
+# this workflow by hand with mode=update). Approved images are only ever made here, on
+# GitHub's Linux runner — fonts render differently on other systems.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'check = compare and report · update = accept the current screenshots as approved'
+        type: choice
+        options: [check, update]
+        default: check
+
+permissions:
+  contents: write       # commit accepted images; push difference images to the visual-diffs branch
+  pull-requests: write  # the summary comment, the label, the reviewer request
+  actions: write        # re-run this check after accepting (a GITHUB_TOKEN push triggers nothing)
+
+concurrency:
+  group: visual-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  visual:
+    name: Visual check
+    # Labels other than accept-visuals must not start a run.
+    if: github.event.action != 'labeled' || github.event.label.name == 'accept-visuals'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BRANCH: ${{ github.head_ref || github.ref_name }}
+      MODE: ${{ (github.event.label.name == 'accept-visuals' || inputs.mode == 'update') && 'update' || 'check' }}
+      GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      PM_USERNAME: ${{ vars.PM_USERNAME }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Find the pull request
+        id: pr
+        run: |
+          NUM=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          echo "number=$NUM" >> "$GITHUB_OUTPUT"
+          echo "Pull request: ${NUM:-none} · mode: $MODE"
+
+      # Ask the PM to review as soon as a pull request opens. Skips until the
+      # PM_USERNAME repository variable is set (Settings > Secrets and variables > Variables).
+      - name: Request the PM's review
+        if: github.event.action == 'opened' && env.PM_USERNAME != ''
+        continue-on-error: true
+        run: gh pr edit "${{ steps.pr.outputs.number }}" --add-reviewer "$PM_USERNAME"
+
+      - name: Build the app and Storybook
+        run: npm run build && npm run build-storybook
+
+      - name: Take and compare screenshots
+        id: run
+        run: |
+          set +e
+          if [ "$MODE" = update ]; then
+            npx playwright test -c tests-visual/visual.config.ts --update-snapshots
+          else
+            npx playwright test -c tests-visual/visual.config.ts
+          fi
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+
+      # ---- update: accept the screenshots, then re-run the check on the new commit ----
+      - name: Accept the screenshots
+        if: env.MODE == 'update'
+        run: |
+          git config user.name  "nxus-visual[bot]"
+          git config user.email "nxus-visual@users.noreply.github.com"
+          git add tests-visual/__screenshots__
+          if git diff --cached --quiet; then
+            echo "Approved images already match — nothing to commit."
+          else
+            git commit -m "Accept visual changes" -m "Approved images updated by the Visual check workflow (label accept-visuals or mode=update)."
+            git push origin "HEAD:$BRANCH"
+          fi
+          if [ -n "${{ steps.pr.outputs.number }}" ]; then
+            gh pr edit "${{ steps.pr.outputs.number }}" --remove-label accept-visuals || true
+          fi
+          # A push made with GITHUB_TOKEN starts no workflows, so start the check explicitly.
+          gh workflow run visual.yml --ref "$BRANCH" -f mode=check
+
+      # ---- check: summary comment, images, Google Chat, pass/fail ----
+      - name: Rule checks for the summary
+        if: env.MODE == 'check'
+        run: |
+          node scripts/lint-tokens.mjs > lint.log 2>&1 || true
+          node scripts/figma-css-diff.mjs > drift.log 2>&1 || true
+
+      - name: Write the summary
+        if: env.MODE == 'check'
+        id: summary
+        run: |
+          FOLDER="pr-${{ steps.pr.outputs.number || 'none' }}/${{ github.run_id }}"
+          echo "folder=$FOLDER" >> "$GITHUB_OUTPUT"
+          BASE="https://raw.githubusercontent.com/${{ github.repository }}/visual-diffs/$FOLDER"
+          node scripts/visual-summary.mjs tests-visual/visual-results/results.json visual-out "$BASE" lint.log drift.log
+          cat visual-out/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish the difference images
+        if: env.MODE == 'check' && hashFiles('visual-out/img/*.png') != ''
+        run: |
+          FOLDER="${{ steps.summary.outputs.folder }}"
+          TMP=$(mktemp -d)
+          git -C "$TMP" init -q
+          git -C "$TMP" config user.name  "nxus-visual[bot]"
+          git -C "$TMP" config user.email "nxus-visual@users.noreply.github.com"
+          git -C "$TMP" remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          if git -C "$TMP" fetch -q --depth 1 origin visual-diffs; then git -C "$TMP" checkout -q -b visual-diffs FETCH_HEAD; else git -C "$TMP" checkout -q --orphan visual-diffs; fi
+          mkdir -p "$TMP/$FOLDER" && cp visual-out/img/*.png "$TMP/$FOLDER/"
+          git -C "$TMP" add -A && git -C "$TMP" commit -q -m "Difference images for $FOLDER"
+          git -C "$TMP" push -q origin visual-diffs
+
+      - name: Post or update the pull request comment
+        if: env.MODE == 'check' && steps.pr.outputs.number != ''
+        run: |
+          N=${{ steps.pr.outputs.number }}
+          ID=$(gh api "repos/${{ github.repository }}/issues/$N/comments" --paginate --jq '.[] | select(.body | startswith("<!-- nxus-visual-summary -->")) | .id' | tail -1)
+          if [ -n "$ID" ]; then gh api -X PATCH "repos/${{ github.repository }}/issues/comments/$ID" -F body=@visual-out/summary.md >/dev/null
+          else gh pr comment "$N" --body-file visual-out/summary.md; fi
+
+      - name: Tell Google Chat
+        if: env.MODE == 'check' && steps.pr.outputs.number != ''
+        run: |
+          N=${{ steps.pr.outputs.number }}
+          TITLE=$(gh pr view "$N" --json title --jq .title)
+          URL="${{ github.server_url }}/${{ github.repository }}/pull/$N"
+          C=visual-out/counts.json
+          if [ "$(node -p "require('./$C').clean && require('./$C').lintOk !== false && require('./$C').driftOk !== false")" = true ]; then
+            node scripts/notify-chat.mjs "*Ready for PM approval:* <$URL|#$N $TITLE> — visual check passed, nothing changed, all design rules pass."
+          else
+            node scripts/notify-chat.mjs "*PM decision needed:* <$URL|#$N $TITLE> — $(node -p "const c=require('./$C'); c.changed+' changed, '+c.added+' new, '+c.broken+' failed to render'"). Before/after images are in the pull request."
+          fi
+
+      - name: Upload the full report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-report
+          path: tests-visual/visual-results/html
+          retention-days: 14
+
+      - name: Pass only when nothing is waiting for a decision
+        if: env.MODE == 'check'
+        run: |
+          if [ "${{ steps.run.outputs.status }}" != 0 ]; then
+            echo "::error::There are visual changes or new screens waiting for a decision. See the pull request comment."
+            exit 1
+          fi

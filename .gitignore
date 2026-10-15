@@ -60,3 +60,7 @@ public/downloads/tokens/
 packages/nxus-tokens/*
 !packages/nxus-tokens/package.json
 !packages/nxus-tokens/README.md
+
+# Visual test output (approved images in tests-visual/__screenshots__ ARE committed, by CI only)
+tests-visual/visual-results/
+visual-out/
