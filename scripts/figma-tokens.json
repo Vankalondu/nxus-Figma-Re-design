@@ -229,7 +229,7 @@
   },
   "Color/Border/default": [
    "#b4d7f6",
-   "#145b99"
+   "#596774"
   ],
   "Color/Border/focus": [
    "#1e88e5",
@@ -237,23 +237,23 @@
   ],
   "Color/Border/input": [
    "#061b2e00",
-   "#0f4472"
+   "#596774"
   ],
   "Color/Border/strong": [
    "#8ec4f2",
-   "#1971bf"
+   "#828d96"
   ],
   "Color/Border/subtle": [
    "#d2e7fa",
-   "#0f4472"
+   "#2f4151"
   ],
   "Color/Brand/primary": [
    "#1e88e5",
-   "#449ce9"
+   "#1e88e5"
   ],
   "Color/Brand/primary-hover": [
    "#1971bf",
-   "#69b0ee"
+   "#449ce9"
   ],
   "Color/Button/danger-bg": [
    "#e05c4b",
@@ -353,23 +353,23 @@
   ],
   "Color/Surface/accent": [
    "#d2e7fa",
-   "#0f4472"
+   "#0a2d4c"
   ],
   "Color/Surface/canvas": [
    "#e8f3fc",
-   "#0f4472"
+   "#051626"
   ],
   "Color/Surface/card": [
    "#f6fafe",
-   "#0a2d4c"
+   "#061b2e"
   ],
   "Color/Surface/elevated": [
    "#f6fafe",
-   "#0a2d4c"
+   "#061b2e"
   ],
   "Color/Surface/input": [
    "#f0f7fd",
-   "#0f4472"
+   "#061b2e"
   ],
   "Color/Surface/inverse": [
    "#061b2e",
@@ -389,11 +389,11 @@
   ],
   "Color/Surface/sidebar": [
    "#f6fafe",
-   "#030e17"
+   "#061b2e"
   ],
   "Color/Surface/sidebar-accent": [
    "#e8f3fc",
-   "#0f4472"
+   "#0a2d4c"
   ],
   "Color/Surface/switch": [
    "#b4d7f6",
@@ -401,15 +401,15 @@
   ],
   "Color/Text/body": [
    "#2f4151",
-   "#afc0d0"
+   "#cdd1d5"
   ],
   "Color/Text/disabled": [
    "#acb3b9",
-   "#464d53"
+   "#596774"
   ],
   "Color/Text/heading": [
    "#061b2e",
-   "#d2e7fa"
+   "#f6fafe"
   ],
   "Color/Text/inverse": [
    "#f6fafe",
@@ -417,11 +417,11 @@
   ],
   "Color/Text/link": [
    "#1e88e5",
-   "#449ce9"
+   "#1e88e5"
   ],
   "Color/Text/muted": [
    "#596774",
-   "#8c9aa7"
+   "#acb3b9"
   ],
   "Color/Text/on-brand": [
    "#d2e7fa",
@@ -433,15 +433,15 @@
   ],
   "Color/Text/placeholder": [
    "#828d96",
-   "#69747d"
+   "#828d96"
   ],
   "Color/Text/sidebar-muted": [
    "#596774",
-   "#8c9aa7"
+   "#acb3b9"
   ],
   "Color/Text/strong": [
    "#061b2e",
-   "#d2e7fa"
+   "#f6fafe"
   ]
  },
  "Responsive": {
@@ -721,5 +721,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-15 — re-read every Qaza/Mapped/Responsive variable from QAZA_FE after building the Lead Scout Players screens and making the shared table/label/card components compact. All 197 values match this snapshot (hash-compared; Border/input keeps its 00 alpha). No variables touched. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-10-15 — Vanessa's new dark mode: 21 Mapped dark values re-aliased in QAZA_FE to Qaza primitives (surfaces to Dark Blue, text to Light/Dark Blue, borders to Dark Blue, brand to Blue/Base), each read back from Figma after the change and matching globals.css. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }

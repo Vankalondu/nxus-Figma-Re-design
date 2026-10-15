@@ -304,37 +304,37 @@
   --status-error-fg:   var(--red-200);
 
   /* ── Dark values for the new roles. ── */
-  --text-muted: var(--light-700);
-  --text-placeholder: var(--light-800);
-  --text-disabled: var(--light-900);
-  --text-link: var(--blue-400);
+  --text-muted: var(--navy-100);
+  --text-placeholder: var(--navy-200);
+  --text-disabled: var(--navy-300);
+  --text-link: var(--blue-500);
   --surface-inverse: var(--light-500);
   --surface-overlay: var(--navy-500);
-  --border-subtle: var(--blue-800);
-  --border-strong: var(--blue-600);
+  --border-subtle: var(--navy-400);
+  --border-strong: var(--navy-200);
   --status-success-tint: var(--green-800);
   --status-warning-tint: var(--amber-800);
   --status-error-tint: var(--red-800);
-  --surface-page: var(--blue-950);
-  --surface-card: var(--blue-900);
-  --surface-elevated: var(--blue-900);
-  --surface-canvas: var(--blue-800);
-  --surface-accent: var(--blue-800);
-  --surface-input: var(--blue-800);
-  --surface-sidebar: var(--navy-800);
+  --surface-page: var(--navy-500);
+  --surface-card: var(--navy-500);
+  --surface-elevated: var(--navy-500);
+  --surface-canvas: var(--navy-600);
+  --surface-accent: var(--blue-900);
+  --surface-input: var(--navy-500);
+  --surface-sidebar: var(--navy-500);
   --surface-midtone: var(--blue-600);
   --surface-switch: var(--blue-600);
-  --surface-sidebar-accent: var(--blue-800);
-  --text-heading: var(--light-500);
-  --text-strong: var(--light-500);
-  --text-body: var(--light-600);
+  --surface-sidebar-accent: var(--blue-900);
+  --text-heading: var(--light-50);
+  --text-strong: var(--light-50);
+  --text-body: var(--navy-50);
   --text-inverse: var(--navy-500);
-  --text-sidebar-muted: var(--light-700);
-  --border-default: var(--blue-700);
+  --text-sidebar-muted: var(--navy-100);
+  --border-default: var(--navy-300);
   --border-focus: var(--blue-400);
-  --border-input: var(--blue-800);
-  --brand-primary: var(--blue-400);
-  --brand-primary-hover: var(--blue-300);
+  --border-input: var(--navy-300);
+  --brand-primary: var(--blue-500);
+  --brand-primary-hover: var(--blue-400);
 }
 
 @theme inline {
