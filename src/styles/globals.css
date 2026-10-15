@@ -18,7 +18,7 @@
   --chart-5: var(--red-500);
 
   /* ── Border radius ── */
-  --radius: 0.75rem;
+  --radius: 0.25rem;
 
   /* ── Spacing system — multiples of 4 ── */
   --space-1: 4px;
