@@ -30,7 +30,8 @@ permissions:
   actions: write        # re-run this check after accepting (a GITHUB_TOKEN push triggers nothing)
 
 concurrency:
-  group: visual-${{ github.head_ref || github.ref_name }}
+  # Per mode, so the check an accept run starts does not cancel that accept run.
+  group: visual-${{ github.head_ref || github.ref_name }}-${{ inputs.mode || github.event.label.name || 'check' }}
   cancel-in-progress: true
 
 defaults:

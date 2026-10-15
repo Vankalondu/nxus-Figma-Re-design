@@ -5,7 +5,9 @@ import type { Page } from '@playwright/test';
  * means the design changed — never the clock, the dice or a slow font.
  *   - Math.random is replaced by a seeded generator (generated players, stats).
  *   - The clock is frozen ("today", "3 days ago", calendars).
- *   - Screenshots wait for web fonts (Figtree / Plus Jakarta Sans come from Google).
+ *   - Screenshots wait for web fonts (Figtree / Plus Jakarta Sans come from Google), and the
+ *     page is loaded twice: some components measure their text once, at first render, so a
+ *     font that arrives a moment late shifts the layout. The second load has the fonts cached.
  */
 export async function stabilise(page: Page) {
   await page.addInitScript(() => {
@@ -16,6 +18,9 @@ export async function stabilise(page: Page) {
 }
 
 export async function settle(page: Page) {
+  await page.waitForLoadState('networkidle');
+  await page.evaluate(() => document.fonts.ready);
+  await page.reload();
   await page.waitForLoadState('networkidle');
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(250);
