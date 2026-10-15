@@ -17,13 +17,15 @@ on:
         required: true
         type: string
 
-# contents only. The workflow pushes a branch and stops there — opening the
-# pull request is a click for a human, which keeps "Allow GitHub Actions to
-# create and approve pull requests" switched OFF for the whole repo. The review
-# step was always going to be human anyway, so nothing is lost by not
-# automating the button.
+# Since 15 Oct (Vanessa): the workflow OPENS the pull request, asks the PM to review,
+# starts the visual check and posts to Google Chat. Opening it needs the repo setting
+# Settings > Actions > General > "Allow GitHub Actions to create and approve pull
+# requests". Without it the branch is still pushed and the Chat message carries the
+# link to open it by hand, so nothing is lost. The review stays human either way.
 permissions:
   contents: write
+  pull-requests: write
+  actions: write
 
 concurrency:
   # Two publishes in quick succession should not race to write the same branch.
@@ -167,6 +169,34 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
           echo "Branch pushed. Open the PR: $REPO_URL/compare/main...$BRANCH?expand=1"
+
+      - name: Open the pull request, ask the PM, start the visual check, tell Google Chat
+        if: steps.changed.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          PM_USERNAME: ${{ vars.PM_USERNAME }}
+        run: |
+          BRANCH=figma-sync
+          REPO_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
+          gh label create figma-sync --color 7C5CFC --description "Token change exported from Figma" 2>/dev/null || true
+          NUM=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$NUM" ]; then
+            { echo "Vanessa changed design tokens in Figma. This pull request carries the new values into the app."; echo; echo "**PM:** review the visual check comment below, then approve or request changes. Once merged, the developers are notified, and the next release updates Storybook and the nxus-tokens package."; echo; cat commit-message.txt; } > pr-body.md
+            if gh pr create --base main --head "$BRANCH" --title "Figma token update" --body-file pr-body.md --label figma-sync; then
+              NUM=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+            else
+              echo "::warning::Could not open the pull request (repo setting off?). The Chat message links to the branch instead."
+            fi
+          fi
+          if [ -n "$NUM" ]; then
+            if [ -n "$PM_USERNAME" ]; then gh pr edit "$NUM" --add-reviewer "$PM_USERNAME" || true; fi
+            # A pull request opened with GITHUB_TOKEN starts no workflows, so start the visual check here.
+            gh workflow run visual.yml --ref "$BRANCH" -f mode=check
+            node scripts/notify-chat.mjs "*PM review needed:* Vanessa changed design tokens in Figma. <$REPO_URL/pull/$NUM|Figma token update #$NUM> — the visual check summary will appear in the pull request in a few minutes."
+          else
+            node scripts/notify-chat.mjs "*Figma token change ready:* <$REPO_URL/compare/main...$BRANCH?expand=1|open the pull request> (it could not be opened automatically)."
+          fi
 
       - name: Nothing to do
         if: steps.changed.outputs.changed == 'false'

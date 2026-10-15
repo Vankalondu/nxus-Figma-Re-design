@@ -1,0 +1,53 @@
+name: Tell the team about a merge
+
+# When the PM approves and a pull request is merged:
+#   - a Figma token update (label figma-sync): tag the developers on GitHub and post to
+#     Google Chat, so they know the tokens changed and what to do next;
+#   - any other pull request: a short Google Chat note.
+# Nothing goes live here. Going live stays a deliberate "make it live" (CI & Deploy).
+#
+# Settings it reads (all optional; each part skips quietly until set):
+#   vars.DEV_USERNAMES         GitHub usernames to tag, space-separated (no @)
+#   secrets.GOOGLE_CHAT_WEBHOOK the Google Chat space's incoming-webhook URL
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  notify:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+      DEV_USERNAMES: ${{ vars.DEV_USERNAMES }}
+      NUM: ${{ github.event.pull_request.number }}
+      TITLE: ${{ github.event.pull_request.title }}
+      URL: ${{ github.event.pull_request.html_url }}
+      MERGED_BY: ${{ github.event.pull_request.merged_by.login }}
+      IS_FIGMA: ${{ contains(github.event.pull_request.labels.*.name, 'figma-sync') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - name: Tag the developers on the pull request
+        if: env.IS_FIGMA == 'true' && env.DEV_USERNAMES != ''
+        run: |
+          TAGS=$(for u in $DEV_USERNAMES; do printf '@%s ' "$u"; done)
+          gh pr comment "$NUM" --body "$TAGS— the design tokens changed in Figma and @$MERGED_BY approved it. The app's stylesheet is updated on \`main\`. After the next release, run \`npm update nxus-tokens\` and see **Guides → Design Tokens** in Storybook."
+
+      - name: Tell Google Chat
+        run: |
+          if [ "$IS_FIGMA" = true ]; then
+            MSG="*Design tokens changed (approved by $MERGED_BY):* <$URL|#$NUM $TITLE>. Developers: the stylesheet is updated on main; after the next release run \`npm update nxus-tokens\`."
+          else
+            MSG="*Merged:* <$URL|#$NUM $TITLE> (approved and merged by $MERGED_BY). It goes live on the next \"make it live\"."
+          fi
+          node scripts/notify-chat.mjs "$MSG"
