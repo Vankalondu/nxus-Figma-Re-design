@@ -16,7 +16,11 @@ export default defineConfig({
   testMatch: /.*\.visual\.ts/,
   fullyParallel: true,
   workers: process.env.CI ? 4 : undefined,
-  retries: 0, // a retry would hide flakiness, and flakiness is exactly what must not exist here
+  // A mismatch is re-taken (fresh page load) up to twice. Tiny text can still jitter by a
+  // few edge pixels about once in 143 screenshots, which is above the smallest real change
+  // measured (8 px), so a looser comparison would let real changes through. Noise is random
+  // and does not repeat; a real change fails every attempt. Re-takes are counted in the summary.
+  retries: 2,
   reporter: [['json', { outputFile: 'visual-results/results.json' }], ['html', { open: 'never', outputFolder: 'visual-results/html' }], ['list']],
   outputDir: 'visual-results/artifacts',
   snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}',
