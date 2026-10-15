@@ -25,10 +25,12 @@ export default defineConfig({
       animations: 'disabled',
       caret: 'hide',
       scale: 'css',
-      // Anti-aliasing noise only. A real change (a colour, a 1px shift, a moved label)
-      // is far above this.
-      maxDiffPixelRatio: 0.001,
-      threshold: 0.15,
+      // Zero changed pixels. Rendering on the CI runner is deterministic (proven by repeat
+      // runs on unchanged main), and anything looser lets real design changes through:
+      // 0.1% of the screen let a corner-radius change on every button pass as "unchanged".
+      // threshold is per-pixel colour tolerance (0-1); 0.05 ignores only invisible noise.
+      maxDiffPixels: 0,
+      threshold: 0.05,
     },
   },
   use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } },
