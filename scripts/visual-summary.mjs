@@ -21,12 +21,12 @@ const r = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
 fs.mkdirSync(path.join(outDir, 'img'), { recursive: true });
 const strip = (s) => String(s ?? '').replace(/\u001b\[[0-9;]*m/g, '');
 
-const unchanged = [], changed = [], added = [], broken = [];
+const unchanged = [], changed = [], added = [], broken = [], retaken = [];
 (function walk(suite) {
   for (const spec of suite.specs ?? []) {
     const res = spec.tests[0]?.results.at(-1); if (!res) continue;
     const title = spec.title.replace(/^(story|screen) /, '');
-    if (res.status === 'passed') { unchanged.push(title); continue; }
+    if (res.status === 'passed') { unchanged.push(title); if (spec.tests[0].results.length > 1) retaken.push(title); continue; }
     const msg = strip(res.error?.message);
     const att = Object.fromEntries((res.attachments ?? []).filter((a) => a.path).map((a) => [a.name.replace(/.*-(expected|actual|diff)\.png$/, '$1'), a.path]));
     if (/doesn't exist|writing actual/i.test(msg)) { added.push({ title, att }); continue; }
@@ -60,7 +60,7 @@ const verdict = clean && lintOk !== false && driftOk !== false
 let md = `<!-- nxus-visual-summary -->\n## Visual check\n\n${verdict}\n\n`;
 md += `| Check | Result |\n|---|---|\n`;
 md += `| Screenshots compared | ${total} (Storybook components + key screens at 390 / 834 / 1440) |\n`;
-md += `| Unchanged | ${unchanged.length} |\n| Changed | ${changed.length ? '**' + changed.length + '**' : 0} |\n| New (no approved image yet) | ${added.length} |\n| Failed to render | ${broken.length} |\n`;
+md += `| Unchanged | ${unchanged.length}${retaken.length ? ` (${retaken.length} re-taken after a one-off rendering blip)` : ''} |\n| Changed | ${changed.length ? '**' + changed.length + '**' : 0} |\n| New (no approved image yet) | ${added.length} |\n| Failed to render | ${broken.length} |\n`;
 md += `| Design rules (token lint) | ${mark(lintOk)} |\n| Matches Figma tokens | ${mark(driftOk)} |\n\n`;
 
 const SHOW = 12;
@@ -82,6 +82,6 @@ if (!clean) {
 md += `<sub>Full report with zoomable images: the \`visual-report\` artifact of this run. Screenshots are taken on GitHub's Linux runner with fonts loaded, the clock frozen and random data seeded, so a difference is a real difference.</sub>\n`;
 
 fs.writeFileSync(path.join(outDir, 'summary.md'), md);
-const counts = { total, unchanged: unchanged.length, changed: changed.length, added: added.length, broken: broken.length, lintOk, driftOk, clean };
+const counts = { total, retaken: retaken.length, unchanged: unchanged.length, changed: changed.length, added: added.length, broken: broken.length, lintOk, driftOk, clean };
 fs.writeFileSync(path.join(outDir, 'counts.json'), JSON.stringify(counts));
 console.log(JSON.stringify(counts));

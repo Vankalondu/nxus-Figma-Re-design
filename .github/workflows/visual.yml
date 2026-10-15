@@ -28,6 +28,7 @@ permissions:
   contents: write       # commit accepted images; push difference images to the visual-diffs branch
   pull-requests: write  # the summary comment, the label, the reviewer request
   actions: write        # re-run this check after accepting (a GITHUB_TOKEN push triggers nothing)
+  statuses: write       # stamp the result on the commit, so a re-check started by accept shows on the PR
 
 concurrency:
   # Per mode, so the check an accept run starts does not cancel that accept run.
@@ -171,6 +172,18 @@ jobs:
           name: visual-report
           path: tests-visual/visual-results/html
           retention-days: 14
+
+      # A run started by workflow_dispatch (after accept, or by the Figma sync) is not
+      # linked to the pull request page. A commit status always is, and it can be made a
+      # required check under the name "Visual status".
+      - name: Stamp the result on the commit
+        if: env.MODE == 'check' && always()
+        run: |
+          if [ "${{ steps.run.outputs.status }}" = 0 ]; then STATE=success; else STATE=failure; fi
+          DESC=$(node -p "try { const c = require('./visual-out/counts.json'); c.changed + ' changed, ' + c.added + ' new, ' + c.broken + ' failed, of ' + c.total } catch { 'did not finish' }")
+          gh api "repos/${{ github.repository }}/statuses/$(git rev-parse HEAD)" \
+            -f state="$STATE" -f context="Visual status" -f description="$DESC" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >/dev/null
 
       - name: Pass only when nothing is waiting for a decision
         if: env.MODE == 'check'
