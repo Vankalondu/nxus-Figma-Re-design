@@ -10,6 +10,7 @@ import VideoManagerDashboard from './pages/VideoManagerDashboard';
 import UploaderDashboard from './pages/UploaderDashboard';
 import PlayerProfile from './pages/PlayerProfile';
 import AdminPage from './pages/AdminPage';
+import TokensPage from './pages/TokensPage';
 import { Toaster } from './components/ui/sonner';
 
 function RootLayout() {
@@ -71,6 +72,7 @@ const router = createBrowserRouter([
       { path: 'login',         Component: LoginCredentials          },
       { path: 'choose-mode',   element: <Navigate to="/login-success" replace /> },
       { path: 'login-success', Component: LoginSuccess              },
+      { path: 'tokens',        Component: TokensPage                },
 
       // Country Scout
       { path: 'country-scout',         Component: CountryScoutDashboardPage },

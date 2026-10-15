@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "prebuild": "node scripts/build-tokens.mjs",
     "build": "vite build",
+    "predev": "node scripts/build-tokens.mjs",
     "dev": "vite",
     "preview": "vite preview",
     "test:e2e": "playwright test",
@@ -15,7 +17,8 @@
     "verify:figma": "node scripts/figma-css-diff.mjs",
     "verify:figma-fresh": "node scripts/figma-freshness.mjs",
     "figma:merge": "node scripts/figma-merge.mjs",
-    "figma:webhook": "node scripts/figma-webhook-register.mjs"
+    "figma:webhook": "node scripts/figma-webhook-register.mjs",
+    "tokens:build": "node scripts/build-tokens.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
