@@ -2,6 +2,13 @@
 
 _Last updated: 2026-10-14. Resume by reading this file._
 
+## UPDATE (2026-10-16) — video role screens in Figma
+- **Video Manager page** (`1515:26217`): Dashboard row Overview · Packages · Full Matches · Approval · Analytics · Tasks; Players row Video Analyst Tracker · Target · Short · Long · Database · Signed — 36 frames at 1440/834/390. Lists cloned from Lead Scout (Reports/Settings tabs removed, tracker tab added).
+- **Uploaders page** (`1515:26233`): Package + Full Match rows, Overview · Packages|Full Matches · Tasks (no chart) · Players (tracker) — 24 frames.
+- New shared components: Card/Header `1527:2325`, Card/List Row `1527:2383` (Request/Match/Activity/Task/Upload), Card/Approval Row `1527:2384`, Video Cell `1532:9311`, Table Row/Header Video Tracker `1532:9312`/`1532:9347`, Video Coverage `1532:9376`/`1532:9405` (actions cell fills).
+- Task Status + Priority Pill fixed: 15%-opacity bound fills rendered solid → now Status/*-tint tokens (fixes every Tasks screen).
+- Known small gaps: title video icon slightly small; sidebar highlights Players instead of Dashboard on cloned shells (same as Lead Scout).
+
 ## UPDATE (2026-10-16 early) — dark mode + live
 - Vanessa's **new dark mode** committed (`e5910f8`): surfaces Dark Blue/Base, text Light Blue/100 + Dark Blue scale, borders Dark Blue, brand Blue/Base. Figma Mapped dark mode updated to the same 21 values (aliases, read back), snapshot re-stamped, drift 0.
 - **LIVE** (deploy run 38805596481): app + Storybook (Guides: Design Tokens, How We Work) + token downloads (version 863fefdc). Compact tables are live too.

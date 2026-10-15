@@ -721,5 +721,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-15 — Vanessa's new dark mode: 21 Mapped dark values re-aliased in QAZA_FE to Qaza primitives (surfaces to Dark Blue, text to Light/Dark Blue, borders to Dark Blue, brand to Blue/Base), each read back from Figma after the change and matching globals.css. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-10-16 — Figma edited (Video Manager + Uploaders pages: 60 screens; new components Card/Header, Card/List Row, Card/Approval Row, Video Cell, Video Tracker/Coverage tables; Task Status + Priority Pill moved to Status/*-tint tokens). No variables changed since the 2026-10-15 dark-mode read-back, so token values are as recorded. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }
