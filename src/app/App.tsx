@@ -10,7 +10,6 @@ import VideoManagerDashboard from './pages/VideoManagerDashboard';
 import UploaderDashboard from './pages/UploaderDashboard';
 import PlayerProfile from './pages/PlayerProfile';
 import AdminPage from './pages/AdminPage';
-import TokensPage from './pages/TokensPage';
 import { Toaster } from './components/ui/sonner';
 
 function RootLayout() {
@@ -40,6 +39,12 @@ function NotFound() {
       </button>
     </div>
   );
+}
+
+function TokensRedirect() {
+  // A full page load, not a router navigation: Storybook is a separate static site.
+  window.location.replace('/storybook/?path=/docs/guides-design-tokens--docs');
+  return null;
 }
 
 function ErrorBoundaryPage() {
@@ -72,7 +77,9 @@ const router = createBrowserRouter([
       { path: 'login',         Component: LoginCredentials          },
       { path: 'choose-mode',   element: <Navigate to="/login-success" replace /> },
       { path: 'login-success', Component: LoginSuccess              },
-      { path: 'tokens',        Component: TokensPage                },
+      // Token downloads moved into Storybook (Guides/Design Tokens). Kept as a redirect
+      // because /tokens was already shared as the address.
+      { path: 'tokens',        Component: TokensRedirect            },
 
       // Country Scout
       { path: 'country-scout',         Component: CountryScoutDashboardPage },

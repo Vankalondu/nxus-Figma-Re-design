@@ -89,6 +89,9 @@ jobs:
     name: Deploy to Cloudflare Pages
     needs: test
     if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+      id-token: write # npm provenance for nxus-tokens
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -122,3 +125,27 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=qaza --branch=main
+
+      # The package follows the same go-live rule as the site: it publishes here,
+      # and only when a token value changed since the last published version.
+      # Skips with a notice until the NPM_TOKEN secret exists.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Publish nxus-tokens (only if a token changed)
+        id: tokens
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: node scripts/publish-tokens.mjs
+
+      - name: Tell Google Chat it is live
+        env:
+          GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          PUBLISHED: ${{ steps.tokens.outputs.published }}
+        run: |
+          MSG="*NXUS is live* — the app and Storybook were just released. <https://qaza-2so.pages.dev/storybook/|Open Storybook>"
+          if [ -n "$PUBLISHED" ]; then MSG="$MSG
+          *Tokens changed:* nxus-tokens@$PUBLISHED is published. Developers: run \`npm update nxus-tokens\`."; fi
+          node scripts/notify-chat.mjs "$MSG"

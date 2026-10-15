@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Download, FileCode2, Braces, Wind, Palette } from 'lucide-react';
 
-// Public page: developers download the design tokens here without logging in.
+// Storybook page (Guides/Design Tokens): how developers get the design tokens.
 // The files are generated from src/styles/globals.css by scripts/build-tokens.mjs on
 // every dev/build run, so what is offered here is always what the app renders.
-const BASE = '/downloads/tokens';
+// Relative: Storybook ships at /storybook/ on the live site and at / locally, and
+// staticDirs serves public/ beside iframe.html in both.
+const BASE = './downloads/tokens';
 
 type Manifest = { version: string; generated: string; count: number; colours: number };
 type Leaf = { $value: string; $type?: string; $extensions?: { 'com.nxus'?: { dark?: string; cssVar?: string } } };
@@ -21,17 +23,16 @@ const SETUPS = [
   {
     title: 'Vue 3 + Tailwind 3',
     note: 'Fits the VueFE app as it is today: Tailwind 3 with an empty theme.',
-    code: `// 1. Copy tokens.css and tailwind.preset.cjs into src/styles/
-// 2. main.ts
-import './styles/tokens.css'
+    code: `// main.ts
+import 'nxus-tokens/tokens.css'
 
-// 3. tailwind.config.js
+// tailwind.config.js
 module.exports = {
-  presets: [require('./src/styles/tailwind.preset.cjs')],
+  presets: [require('nxus-tokens/tailwind-preset')],
   content: ['./index.html', './src/**/*.{vue,js,ts}'],
 }
 
-// 4. Use the classes
+// Use the classes
 <div class="bg-surface-card text-heading border border-default rounded">
 // Dark mode: add class="dark" to <html>`,
   },
@@ -39,17 +40,17 @@ module.exports = {
     title: 'React or Next + Tailwind 3',
     note: 'Same preset. Import the CSS once at the root.',
     code: `// app/layout.tsx (or main.tsx)
-import './tokens.css'
+import 'nxus-tokens/tokens.css'
 
 // tailwind.config.js
 module.exports = {
-  presets: [require('./tailwind.preset.cjs')],
+  presets: [require('nxus-tokens/tailwind-preset')],
   content: ['./src/**/*.{ts,tsx}'],
 }`,
   },
   {
     title: 'Plain CSS, any framework',
-    note: 'No build step. Link the file, then use the variables.',
+    note: 'No build step: download tokens.css below, link it, then use the variables.',
     code: `<link rel="stylesheet" href="tokens.css">
 
 .card {
@@ -61,7 +62,7 @@ module.exports = {
   {
     title: 'SCSS',
     note: 'Values are fixed when Sass compiles. For dark mode, prefer the CSS variables.',
-    code: `@use 'tokens' as t;
+    code: `@use 'nxus-tokens/tokens' as t;
 @use 'sass:map';
 
 .card { background: t.$nxus-surface-card; }
@@ -80,7 +81,7 @@ function collectSwatches(node: Record<string, unknown>, out: Swatch[]) {
   }
 }
 
-export default function TokensPage() {
+export default function TokensDoc() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [swatches, setSwatches] = useState<Swatch[]>([]);
 
@@ -93,7 +94,8 @@ export default function TokensPage() {
   const palette = swatches.filter(s => !roles.includes(s) && !/^--chart-/.test(s.cssVar));
 
   return (
-    <div className="min-h-screen bg-surface-page">
+    // sb-unstyled: opt out of Storybook docs typography so the page renders like the app.
+    <div className="sb-unstyled min-h-screen bg-surface-page">
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-8 md:py-12 flex flex-col gap-8 md:gap-10">
         <header className="flex flex-col gap-3">
           <h1 className="font-heading font-bold text-heading text-[32px] md:text-[40px] lg:text-[48px] leading-tight">NXUS design tokens</h1>
@@ -108,8 +110,17 @@ export default function TokensPage() {
           )}
         </header>
 
+        <section className="bg-surface-card border border-default rounded-[20px] p-5 flex flex-col gap-3">
+          <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Install</h2>
+          <p className="font-body text-body text-[14px]">
+            The recommended way. One command, and <code className="font-mono">npm update nxus-tokens</code> brings in
+            each approved change. The version only moves when a token value changes.
+          </p>
+          <pre className="bg-surface-inverse text-inverse rounded-[12px] p-4 overflow-x-auto font-mono text-[12px] leading-[18px]"><code>npm install nxus-tokens</code></pre>
+        </section>
+
         <section className="flex flex-col gap-4">
-          <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Download</h2>
+          <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Or download the files</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {FILES.map(({ file, icon: Icon, title, body }) => (
               <div key={file} className="bg-surface-card border border-default rounded-[20px] p-5 flex flex-col gap-3">
@@ -151,9 +162,9 @@ export default function TokensPage() {
         <section className="bg-surface-card border border-default rounded-[20px] p-5 flex flex-col gap-2">
           <h2 className="font-heading font-bold text-heading text-[20px]">When do these change?</h2>
           <p className="font-body text-body text-[14px]">
-            Only when a token change is approved and released. A designer changes a variable in Figma, that becomes a pull request,
-            a person approves it and applies it to the app, and the next release rebuilds these files. The version number above stays
-            the same until a value actually changes, so you can tell at a glance whether you need to download again.
+            Only when a token change is approved and released. A designer changes a variable in Figma, which opens a
+            pull request; the PM reviews it (with a visual summary of what changed) and approves it; the developers are
+            notified; and the next release updates this page, the downloads and the nxus-tokens package together.
           </p>
         </section>
 

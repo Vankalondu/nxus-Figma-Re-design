@@ -1,23 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { trackPageErrors } from './helpers';
 
 /**
- * The public Tokens page: developers download the design tokens here without
- * logging in. Guards the page and every file it links to, so a broken build step
- * shows up in CI instead of as a 404 for the devs.
+ * Token downloads. The page lives in Storybook (Guides/Design Tokens); the files are
+ * generated into public/downloads/tokens and served by the app at /downloads/tokens.
+ * Guards every file, so a broken build step shows up in CI instead of as a 404 for
+ * the devs, and keeps the old /tokens address pointing at the Storybook page.
  */
 const FILES = ['tokens.css', 'tailwind.preset.cjs', '_tokens.scss', 'tokens.json', 'manifest.json'];
 
-test('tokens page loads without login and lists the downloads', async ({ page }) => {
-  const errors = trackPageErrors(page);
+test('/tokens redirects to the Storybook Design Tokens page', async ({ page }) => {
   await page.goto('/tokens');
-
-  await expect(page.getByRole('heading', { name: 'NXUS design tokens' })).toBeVisible();
-  await expect(page.getByRole('link', { name: /download/i })).toHaveCount(4);
-  await expect(page.getByText(/^Version [0-9a-f]{8}/)).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Colour roles' })).toBeVisible();
-
-  expect(errors, 'no uncaught exceptions on the tokens page').toHaveLength(0);
+  await expect(page).toHaveURL(/\/storybook\/\?path=\/docs\/guides-design-tokens--docs$/);
 });
 
 for (const file of FILES) {

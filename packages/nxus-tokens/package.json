@@ -1,0 +1,32 @@
+{
+  "name": "nxus-tokens",
+  "version": "0.0.0",
+  "description": "NXUS design tokens: CSS variables, a Tailwind v3 preset, SCSS and W3C JSON. Generated from the NXUS reference app; do not edit by hand.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vankalondu/nxus-Figma-Re-design.git",
+    "directory": "packages/nxus-tokens"
+  },
+  "files": [
+    "tokens.css",
+    "tokens.json",
+    "tailwind.preset.cjs",
+    "_tokens.scss",
+    "README.md"
+  ],
+  "exports": {
+    "./tokens.css": "./tokens.css",
+    "./tokens.json": "./tokens.json",
+    "./tailwind-preset": "./tailwind.preset.cjs",
+    "./scss": "./_tokens.scss",
+    "./_tokens.scss": "./_tokens.scss",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "nxus": {
+    "hash": ""
+  }
+}

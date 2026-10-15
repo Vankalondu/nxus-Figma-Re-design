@@ -8,6 +8,11 @@ const config: StorybookConfig = {
     '../src/**/*.stories.@(ts|tsx)',
   ],
 
+  // public/ holds the generated token downloads (public/downloads/tokens), linked from
+  // Guides/Design Tokens. Served beside iframe.html, so relative links work both locally
+  // and under /storybook/ on the live site.
+  staticDirs: ['../public'],
+
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-a11y',
