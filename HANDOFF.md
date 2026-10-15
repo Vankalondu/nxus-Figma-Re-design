@@ -5,7 +5,13 @@ _Last updated: 2026-10-14. Resume by reading this file._
 ## OPEN CHECKLIST (2026-10-14) — agreed with Vanessa; work top-down, tick as done
 
 **NEXT UP (agreed 2026-10-14, after restart) — Lead Scout first; order 1 → 3 → 2:**
-1. Lead Scout Players screens in Figma (Database, Long, Short, Target, Signed, Reports, Settings) at 1440/834/390, placed in the existing device sections on page `1449:2` (Desktop `1461:31091`, Tablet `1461:31095`, Mobile `1461:31099`), with the approved compact table spacing. Capture localhost references first.
+1. ~~Lead Scout Players screens~~ **DONE 2026-10-15.** All 7 tabs × 3 sizes (21 frames) on page `1449:2`, in Vanessa's layout: each device section has a "Dashboard" row on top and a "Players Page" row below, Players row in app tab order (Target, Short, Long, Database, Signed, Reports, Settings). Desktop Database `1488:3227`. Built on the shared components:
+   - **Shared tables rebuilt to the app's columns at compact density** (35px rows, 4px cell padding): `Table Row/Database|Long List|Short List|Target List` (+ header variants in `Table Header` `639:582`); sections now hold 5 rows (hide extras per instance); tables hug width. **New**: `Table Row/Signed` `1498:8330`, `Table Section/Signed` `1498:8377`, `Table/Signed` `1498:8632`. Cells are named by column key for overrides.
+   - Cell atoms (`Table Cell/Data|Stat|Label|Identity`) set to 35px / 4px padding.
+   - `Table Label` Profile variants restyled to the app's tint (13% fill / 33% border layers, token-bound to Primary/Violet/Cyan Base; app hexes #8B5CF6/#06B6D4 have no token). Text stays bound to the `Label#511:0` property — set wording via setProperties.
+   - New `Card/Form Template` `1502:2393` (Active/Archived, text props) for Reports; Settings uses `Settings Card` + `Tag Manager Panel` (both made responsive; Settings Card title was bound to Text/inverse — fixed to heading).
+   - Icon fix: `Icon/Back` + `Icon/Archive` artwork re-centred, 19 icons' inner frame set to scale. Tell the cleanup chat.
+   - Gotcha: binding a paint with a `{r:0,g:0,b:0}` placeholder colour sometimes renders black — always pass the resolved colour. Paint-level opacity on bound paints renders solid; use a layer with layer opacity instead.
 3. Token download for devs: build step → `tokens.css`, `tokens.json` (DTCG), Tailwind preset, `_tokens.scss`; downloadable from a "Tokens" page on the live site with per-framework instructions; regenerated when a token change is approved.
 2. Pipeline test on Lead Scout: change one variable in Figma → send → PR → app + downloads update → revert.
 - NOT ours: video roles (Vanessa edits them in the live app herself); Figma component cleanup (another chat does it — don't move/delete components).
@@ -19,10 +25,10 @@ _Last updated: 2026-10-14. Resume by reading this file._
 - [ ] Say "make it live" for the compact tables (pushed `9b4210f`, approved on localhost, NOT deployed).
 
 **Tables**
-- [ ] Bring compact density (35px rows, 4px cell padding, 24px in-row controls) into the Figma tables.
+- [x] Bring compact density (35px rows, 4px cell padding, 24px in-row controls) into the Figma tables (2026-10-15).
 
 **Figma — role pages (layout: Desktop | Tablet | Mobile sections in ONE row, tabs left→right inside each)**
-- [ ] Lead Scout: add the Players screens (Database, Long, Short, Target, Signed, Reports, Settings) at 3 sizes.
+- [x] Lead Scout: add the Players screens (Database, Long, Short, Target, Signed, Reports, Settings) at 3 sizes (2026-10-15).
 - [ ] Video roles: Video Manager, Package Uploader, Full Match Uploader (app + Figma).
 - [ ] Then Senior, Head, Country scout pages.
 - [ ] Settings screens (will use cleanup group B: Form Field, Date Field, Month Dropdown, Tag Input Row, Classification Row, Colour Swatch Palette, Dropdown List).

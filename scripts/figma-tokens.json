@@ -721,5 +721,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-14 — re-extracted from QAZA_FE after cleanup group A (7 unused components moved to an Archive page, empty Dashboard Page deleted; no variables touched). The fresh extract fingerprints identical to the committed Qaza/Mapped/Responsive sections. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-10-15 — re-read every Qaza/Mapped/Responsive variable from QAZA_FE after building the Lead Scout Players screens and making the shared table/label/card components compact. All 197 values match this snapshot (hash-compared; Border/input keeps its 00 alpha). No variables touched. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }
