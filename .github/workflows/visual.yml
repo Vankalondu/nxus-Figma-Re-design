@@ -89,6 +89,13 @@ jobs:
           set +e
           if [ "$MODE" = update ]; then
             npx playwright test -c tests-visual/visual.config.ts --update-snapshots
+            # Verify the new approved images: a one-off rendering blip during the update
+            # would otherwise BECOME the approved image and fail every later check. Any image
+            # that does not hold up on a fresh render is re-taken (up to twice).
+            for i in 1 2; do
+              npx playwright test -c tests-visual/visual.config.ts && break
+              npx playwright test -c tests-visual/visual.config.ts --last-failed --update-snapshots
+            done
           else
             npx playwright test -c tests-visual/visual.config.ts
           fi
