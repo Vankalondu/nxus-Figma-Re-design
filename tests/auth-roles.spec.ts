@@ -13,6 +13,10 @@ const roleCases = [
   { email: 'head@nxus.test', expectUrl: /\/head-scout$/, role: 'Head Scout' },
   { email: 'country@nxus.test', expectUrl: /\/country-scout$/, role: 'Country Scout' },
   { email: 'someone@nxus.test', expectUrl: /\/country-scout$/, role: 'Country Scout (default)' },
+  // Video roles: the logins docs/how-we-work.md gives the developer.
+  { email: 'manager@nxus.test', expectUrl: /\/video-manager$/, role: 'Video Manager' },
+  { email: 'package@nxus.test', expectUrl: /\/package-uploader$/, role: 'Package Uploader' },
+  { email: 'fullmatch@nxus.test', expectUrl: /\/full-match-uploader$/, role: 'Full Match Uploader' },
 ];
 
 for (const { email, expectUrl, role } of roleCases) {

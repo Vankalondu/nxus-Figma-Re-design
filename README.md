@@ -6,6 +6,10 @@ management, reporting, and an admin interface.
 
 Original design: https://qaza-2so.pages.dev/
 
+> **New here? Start with [docs/how-we-work.md](docs/how-we-work.md)**: how a design goes from
+> Figma to code to Storybook, who approves what, and what to do in every common situation.
+> Also in Storybook under **Guides → How We Work**: https://qaza-2so.pages.dev/storybook/
+
 ## Tech stack
 
 - **React 18** + **React Router 7** (SPA)
@@ -39,6 +43,9 @@ accepted, and the **role is derived from the email prefix**:
 | `lead@…`          | Lead Scout dashboard |
 | `head@…`          | Head Scout dashboard |
 | `country@…` / anything else | Country Scout dashboard |
+| `manager@…`       | Video Manager |
+| `package@…`       | Package Uploader |
+| `fullmatch@…`     | Full Match Uploader |
 
 ## QA — automated end-to-end tests
 

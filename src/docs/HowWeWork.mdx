@@ -1,0 +1,11 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks'
+
+{/*
+  The developer guide is not duplicated here: it is imported raw from
+  docs/how-we-work.md, the same file the repo shows, so the two can never drift.
+*/}
+import guide from '../../docs/how-we-work.md?raw'
+
+<Meta title="Guides/How We Work" parameters={{ docs: { toc: true } }} />
+
+<Markdown>{guide}</Markdown>

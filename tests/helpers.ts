@@ -24,7 +24,7 @@ export async function login(page: Page, email: string, password = 'password123')
   await page.getByRole('button', { name: /sign in/i }).click();
 
   // LoginSuccess shows the interstitial, then navigates on a 2500ms timer.
-  await expect(page).toHaveURL(/\/(country|head|lead|senior)-scout|\/matches/, {
+  await expect(page).toHaveURL(/\/(country|head|lead|senior)-scout|\/matches|\/video-manager|\/(package|full-match)-uploader/, {
     timeout: 15_000,
   });
 }
