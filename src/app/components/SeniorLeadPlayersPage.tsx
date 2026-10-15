@@ -173,6 +173,14 @@ const FlagBadge = ({ code, label }: { code: string; label: string }) => (
   </span>
 );
 
+// Player avatar — tall enough to span the name line and the age/status/flag line under it
+// (Figma 728:16521). The player photo replaces the initials once players have one.
+const PlayerAvatar = ({ initials, photo }: { initials: string; photo?: string }) => (
+  <div className="w-9 h-9 rounded-xl bg-surface-accent border border-default text-strong flex items-center justify-center font-body font-bold text-[12px] shrink-0 overflow-hidden">
+    {photo ? <img src={photo} alt="" className="w-full h-full object-cover" /> : initials}
+  </div>
+);
+
 // Ladder method icon — lucide has no clean stairs glyph
 const StairsIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -907,8 +915,8 @@ const PlayerTable = ({
                         {/* Identity — vertical divider after (Player ID group end) */}
                         <td className={`sticky z-20 bg-surface-card group-hover:bg-surface-accent pl-3 pr-2 py-2 border-r-2 border-default ${idLeftCls}`}>
                           <div className="flex items-center gap-2 min-w-[190px]">
-                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">{player.initials}</div>
-                            <div className="flex items-center gap-2 min-w-0">
+                            <PlayerAvatar initials={player.initials} />
+                            <div className="flex flex-col items-start min-w-0">
                               <div className="flex items-center gap-1">
                                 <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                                 {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
@@ -1200,12 +1208,12 @@ const TargetSuperTable = ({
                         {/* Player */}
                         <td className="sticky left-[76px] z-20 bg-surface-card group-hover:bg-surface-accent pl-2 pr-1 py-2 border-r-2 border-default">
                           <div className="flex items-center gap-2 min-w-[160px]">
-                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">{player.initials}</div>
-                            <div className="flex items-center gap-2 min-w-0">
+                            <PlayerAvatar initials={player.initials} />
+                            <div className="flex flex-col items-start min-w-0">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1">
                                 <span className="font-body text-[12px] text-muted">{player.age}</span>
-                                <div className={`w-1.5 h-1.5 rounded-full ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
+                                <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
                                 <FlagBadge code={natCode} label={player.nationality} />
                                 {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
@@ -1533,8 +1541,8 @@ const ShortListTable = ({
                         {/* Player name + monitor pill */}
                         <td className="sticky left-[164px] z-20 bg-surface-card group-hover:bg-inherit px-2 py-2 border-r-2 border-default w-[250px] min-w-[250px]">
                           <div className="flex items-center gap-2 min-w-0">
-                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">{player.initials}</div>
-                            <div className="flex items-center gap-2 min-w-0">
+                            <PlayerAvatar initials={player.initials} />
+                            <div className="flex flex-col items-start min-w-0">
                             <div className="flex items-center gap-1">
                               <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                               {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
@@ -1548,7 +1556,7 @@ const ShortListTable = ({
                               })()}
                             </div>
                             <div className="flex items-center gap-1">
-                              <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
+                              <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
                               <FlagBadge code={natCode} label={player.nationality} />
                             </div>
                           </div>
@@ -1814,12 +1822,12 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         {/* Name with initials avatar */}
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-lg bg-surface-card text-body flex items-center justify-center font-body font-bold text-[10px] shadow-sm shrink-0 border border-default">
-                              {p.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
-                            </div>
+                            <PlayerAvatar initials={p.name.split(' ').map(n => n[0]).join('').substring(0, 2)} />
+                            <div className="flex flex-col items-start">
                             <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout'}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team, matchVideos: p.matchVideos, highlightVideos: p.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: 'Signed List', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })}
                               className="font-body font-bold text-[14px] text-brand-primary hover:underline cursor-pointer whitespace-nowrap">{p.name}</span>
                             <FlagBadge code={flagCode} label={p.nation} />
+                            </div>
                           </div>
                         </td>
                         {/* DOB */}
@@ -2941,6 +2949,16 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   const [showFilters, setShowFilters] = useState(true);        // desktop: inline filters toggle (visible by default)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false); // mobile: bottom-sheet
   const [tabsMenuOpen, setTabsMenuOpen] = useState(false);     // mobile: 'More ▾' tab dropdown
+  // Focus mode: once the table scrolls, the page title folds away so the view starts at the tabs row.
+  // On past 40px, off only back at 0 — the gap stops it flickering at the edge.
+  const [focused, setFocused] = useState(false);
+  const onCardScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const top = (e.target as HTMLElement).scrollTop;
+    if (top > 40) setFocused(true);
+    else if (top === 0) setFocused(false);
+  };
+  // A new tab or view starts at its top, so bring the title back.
+  useEffect(() => { setFocused(false); }, [activeTab, viewMode]);
   // User-arrangeable tab order (drag on desktop / up-down on mobile), persisted per role
   const [tabOrder, setTabOrder] = useState<SeniorTab[]>(() => loadTabOrder(loggedInRole));
   const [dragTabId, setDragTabId] = useState<SeniorTab | null>(null);
@@ -3156,18 +3174,23 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   return (
     <div className="flex flex-col w-full min-w-0">
       <EditColumnsModal open={colsModalOpen} columns={PLAYER_COLUMNS} visible={visibleColIds} onApply={setVisibleColIds} onClose={() => setColsModalOpen(false)} />
-      <div className="pt-6 mb-3">
-        <h1 className="font-heading font-semibold text-[32px] tracking-tight text-heading flex items-center gap-4 leading-none">
-          {PAGE_TITLES[activeTab].first}
-          <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
-            {PAGE_ICON_NODES[activeTab]}
+      <div className={`grid transition-[grid-template-rows,opacity] duration-200 motion-reduce:transition-none ${focused && isListTab ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr]'}`} aria-hidden={focused && isListTab}>
+        <div className="overflow-hidden">
+          <div className="pt-2 pb-3">
+            <h1 className="font-heading font-semibold text-[32px] tracking-tight text-heading flex items-center gap-4 leading-none">
+              {PAGE_TITLES[activeTab].first}
+              <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
+                {PAGE_ICON_NODES[activeTab]}
+              </div>
+              {PAGE_TITLES[activeTab].rest}
+            </h1>
+            <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{TAB_SUBTITLES[activeTab]}</p>
           </div>
-          {PAGE_TITLES[activeTab].rest}
-        </h1>
-        <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{TAB_SUBTITLES[activeTab]}</p>
+        </div>
       </div>
 
-      <div className={`bg-surface-card border border-default rounded-[24px] mb-6 ${isListTab ? 'h-[calc(100vh-210px)] flex flex-col overflow-hidden' : ''}`}>
+      <div onScrollCapture={onCardScroll}
+        className={`bg-surface-card border border-default rounded-[24px] ${isListTab ? `${focused ? 'h-[calc(100vh-114px)]' : 'h-[calc(100vh-204px)]'} transition-[height] duration-200 motion-reduce:transition-none flex flex-col overflow-hidden` : 'mb-6'}`}>
       <div className="flex items-center gap-2 flex-wrap px-4 py-3 border-b border-default rounded-t-[24px] bg-surface-card">
         {/* Tabs — desktop: all inline, drag to reorder */}
         <div className="hidden md:flex items-center gap-1 flex-wrap">
