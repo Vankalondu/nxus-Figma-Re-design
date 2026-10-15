@@ -31,7 +31,8 @@ jobs:
       TITLE: ${{ github.event.pull_request.title }}
       URL: ${{ github.event.pull_request.html_url }}
       MERGED_BY: ${{ github.event.pull_request.merged_by.login }}
-      IS_FIGMA: ${{ contains(github.event.pull_request.labels.*.name, 'figma-sync') }}
+      # Label when the workflow opened it; branch name when a person did (the repo switch is off).
+      IS_FIGMA: ${{ contains(github.event.pull_request.labels.*.name, 'figma-sync') || github.event.pull_request.head.ref == 'figma-sync' }}
     steps:
       - uses: actions/checkout@v4
         with:
