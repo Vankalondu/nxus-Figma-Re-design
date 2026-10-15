@@ -2,6 +2,31 @@
 
 _Last updated: 2026-10-14. Resume by reading this file._
 
+## LATEST (2026-10-15) — review pipeline built (see `docs/review-pipeline.md`)
+
+Vanessa's process (memory `nxus-review-pipeline`): Figma is the source of truth; token changes
+start with her plugin Send → auto PR → **PM approves** → devs notified → next make-it-live
+updates Storybook + the `nxus-tokens` package. Dev PRs get a **Visual check** summary; the PM
+decides. Notifications go to **Google Chat (not Slack)**. Make-it-live stays her manual step.
+- **Visual check** (`.github/workflows/visual.yml`, `tests-visual/`, `scripts/visual-summary.mjs`):
+  131 stories + 4 screens × 3 widths = 143 screenshots, zero-pixel tolerance, Chrome rendering
+  flags, seeded random/frozen clock/fonts, double load, a mismatch re-taken up to 2× (rare
+  text jitter). One sticky PR comment with before/after/diff images (pushed to the `visual-diffs`
+  branch). Label `accept-visuals` = approve new images (commits, then re-checks via dispatch).
+  Result also stamped as commit status **"Visual status"** (dispatch runs don't show on the PR).
+  Baselines made only on CI (`mode=update`). Proof: 4 clean runs on unchanged main; demo PR #3
+  (radius 0.75→0.25rem) caught 51 changes, accept worked. PR #3 closed.
+- **nxus-tokens package** (`packages/nxus-tokens`, `scripts/publish-tokens.mjs`): publishes in
+  make-it-live only when the token hash changes; skips until `NPM_TOKEN` secret exists.
+- Token docs moved to Storybook **Guides → Design Tokens** (`src/docs/DesignTokens.mdx`); `/tokens`
+  redirects there. `staticDirs: ['../public']` serves the downloads.
+- figma-sync opens the PR itself (needs repo switch "Allow GitHub Actions to create and approve
+  pull requests"; falls back to a Chat link), requests PM, dispatches the visual check.
+  `notify-merged.yml` tags `DEV_USERNAMES` + Chat on merge.
+- **Waiting on Vanessa:** repo variables `PM_USERNAME`, `DEV_USERNAMES`; secrets
+  `GOOGLE_CHAT_WEBHOOK`, `NPM_TOKEN`; the Actions PR switch; branch protection only AFTER the
+  PM is a collaborator. Nothing from today is deployed yet (needs "make it live").
+
 ## OPEN CHECKLIST (2026-10-14) — agreed with Vanessa; work top-down, tick as done
 
 **NEXT UP (agreed 2026-10-14, after restart) — Lead Scout first; order 1 → 3 → 2:**
