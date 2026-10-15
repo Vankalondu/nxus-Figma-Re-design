@@ -2,6 +2,13 @@
 
 _Last updated: 2026-10-14. Resume by reading this file._
 
+## UPDATE (2026-10-16 early) — dark mode + live
+- Vanessa's **new dark mode** committed (`e5910f8`): surfaces Dark Blue/Base, text Light Blue/100 + Dark Blue scale, borders Dark Blue, brand Blue/Base. Figma Mapped dark mode updated to the same 21 values (aliases, read back), snapshot re-stamped, drift 0.
+- **LIVE** (deploy run 38805596481): app + Storybook (Guides: Design Tokens, How We Work) + token downloads (version 863fefdc). Compact tables are live too.
+- **nxus-tokens publish FAILED: npm E404 on PUT** = NPM_TOKEN cannot create a new package. Vanessa must make a granular token with Read+write on **All packages** (or a classic Automation token), replace the secret, then make it live again (publish runs only if tokens changed vs npm — first publish will run).
+- Video Manager + Uploaders Figma pages created (`1515:26217`, `1515:26233`). Developer guide `docs/how-we-work.md` (+ Storybook). Visual check now 152 shots incl. video dashboards; update mode verifies its own images.
+- PM Whitelash invite still pending; TriadSyndicate also has a pending invite (flagged to Vanessa).
+
 ## LATEST (2026-10-15) — review pipeline built (see `docs/review-pipeline.md`)
 
 Vanessa's process (memory `nxus-review-pipeline`): Figma is the source of truth; token changes
