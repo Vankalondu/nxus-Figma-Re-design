@@ -27,13 +27,21 @@ export default defineConfig({
       scale: 'css',
       // Zero changed pixels. Rendering on the CI runner is deterministic (proven by repeat
       // runs on unchanged main), and anything looser lets real design changes through:
-      // 0.1% of the screen let a corner-radius change on every button pass as "unchanged".
+      // 0.1% of the screen let a corner-radius change pass as "unchanged".
       // threshold is per-pixel colour tolerance (0-1); 0.05 ignores only invisible noise.
       maxDiffPixels: 0,
       threshold: 0.05,
     },
   },
-  use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } },
+  use: {
+    ...devices['Desktop Chrome'],
+    viewport: { width: 1280, height: 800 },
+    // Render text and shapes the same way every time. Without these, sub-pixel text
+    // smoothing left ~20 stray pixels on truncated labels between identical runs, more than
+    // the smallest real change measured (8 pixels: a corner radius on one small element).
+    launchOptions: { args: ['--font-render-hinting=none', '--disable-lcd-text', '--disable-gpu', '--disable-gpu-rasterization',
+      '--force-color-profile=srgb', '--disable-partial-raster', '--disable-skia-runtime-opts', '--disable-font-subpixel-positioning'] },
+  },
   webServer: [
     { command: 'node scripts/serve-static.mjs storybook-static 6007', url: 'http://localhost:6007/index.json', cwd: '..', reuseExistingServer: !process.env.CI, timeout: 60_000 },
     { command: 'npm run preview -- --port 4174 --strictPort', url: 'http://localhost:4174', cwd: '..', reuseExistingServer: !process.env.CI, timeout: 60_000 },
