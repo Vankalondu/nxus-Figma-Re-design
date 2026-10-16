@@ -1,3 +1,4 @@
+import { DATA } from '../lib/dataColors';
 import { TrendingUp, Users, Video, FileCheck, Target, Activity } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell } from 'recharts';
 
@@ -13,7 +14,7 @@ export function GlobalPulseDashboard() {
   // Department efficiency comparison
   const departmentEfficiency = [
     { name: 'Scouting Dept', value: 84, color: '#43A047' },
-    { name: 'Video Dept', value: 78, color: '#1E88E5' },
+    { name: 'Video Dept', value: 78, color: DATA.blue },
     { name: 'Data Entry', value: 72, color: '#F9A825' },
   ];
 
@@ -24,7 +25,7 @@ export function GlobalPulseDashboard() {
     { department: 'Data Entry', completed: 490, pending: 110 },
   ];
 
-  const COLORS = ['#43A047', '#1E88E5', '#F9A825'];
+  const COLORS = [DATA.green, DATA.blue, DATA.amber];
 
   return (
     <div className="space-y-6">
@@ -169,10 +170,10 @@ export function GlobalPulseDashboard() {
               <Line 
                 type="monotone" 
                 dataKey="video" 
-                stroke="#1E88E5" 
+                stroke={DATA.blue} 
                 strokeWidth={3}
                 name="Video Dept"
-                dot={{ fill: '#1E88E5', r: 4 }}
+                dot={{ fill: DATA.blue, r: 4 }}
               />
               <Line 
                 type="monotone" 

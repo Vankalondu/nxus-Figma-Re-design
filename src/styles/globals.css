@@ -274,6 +274,10 @@
   }
 }
 
+/* Data tag text (P-CO18): tagTint() supplies a readable shade of the tag colour for each theme. */
+.data-tint { color: var(--tint-fg-light); }
+.dark .data-tint { color: var(--tint-fg-dark); }
+
 .dark {
   /* ── Font weights ── */
   --font-weight-medium: 500;

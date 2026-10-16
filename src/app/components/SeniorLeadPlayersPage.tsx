@@ -18,6 +18,7 @@ import { PLAYER_COLUMNS, DEFAULT_VISIBLE_IDS, type PlayerColumn } from './player
 import { PlayerVideoWorkspace } from './PlayerVideoWorkspace';
 import { Submission } from '../data/reports';
 import { useTierMap, setTier, seedTiers } from '../state/playerStore';
+import { DATA, DATA_SWATCHES, tagTint } from '../lib/dataColors';
 // Lazy import breaks the SeniorLeadPlayersPage → VideoTrackerGrid → videoStore →
 // SeniorLeadPlayersPage cycle (videoStore's seed reads ALL_GENERATED_PLAYERS at init).
 const VideoTrackerGrid = React.lazy(() => import('./VideoTrackerGrid').then(m => ({ default: m.VideoTrackerGrid })));
@@ -431,11 +432,9 @@ const ActionButtons = ({ items }: { items: ActionItem[] }) => {
 // ─── Muted tint — any non-palette colour renders as a soft tonal chip ──────────────
 // System rule: fill = hue@~13% (#hex22), text = full hue, border = hue@~30% (#hex55).
 // Never a solid saturated fill; keeps semantic colours blended with the palette.
-const tintStyle = (hex?: string): React.CSSProperties => {
-  const h = hex && /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : '#1E88E5';
-  return { backgroundColor: `${h}22`, color: h, borderColor: `${h}55` };
-};
-const RANK_TINT: Record<string, string> = { '1': '#22C55E', '2': '#E8A838', '3': '#E05C4B' };
+// Data tag tint: fill/border from the tag colour, text shifted per theme until it reads (P-CO18).
+const tintStyle = tagTint;
+const RANK_TINT: Record<string, string> = { '1': DATA.green, '2': DATA.amber, '3': DATA.red };
 
 // ─── Cell Select — on-brand dropdown for table cells (portalled so it isn't clipped) ─
 const CellSelect = ({ value, options, onChange, placeholder = '–', renderValue, menuWidth = 140, triggerClass = '' }: {
@@ -1053,7 +1052,7 @@ const TargetSuperTable = ({
 
   const getTD = (id: string): TargetData => targetDataMap.get(id) || DEFAULT_TARGET;
   const upd = (id: string, field: keyof TargetData) => (v: string) => onUpdateTarget(id, field, v);
-  const profileColor = (name: string) => profileTypes?.find(p => p.name === name)?.color || '#1E88E5';
+  const profileColor = (name: string) => profileTypes?.find(p => p.name === name)?.color || DATA.blue;
   const TOTAL_COLS = 23 + extraCols.length;
 
   const grouped = useMemo(() => {
@@ -1195,7 +1194,7 @@ const TargetSuperTable = ({
                         <CellSelect value={(td as any)[field] || ''} options={opts} menuWidth={tint ? 140 : 88}
                           onChange={upd(player.id, field)}
                           renderValue={tint
-                            ? (v => v ? <span style={tintStyle(profileColor(v))} className="inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v}</span> : <span className="font-body text-[12px] font-bold text-body">–</span>)
+                            ? (v => v ? <span style={tintStyle(profileColor(v))} className="data-tint inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v}</span> : <span className="font-body text-[12px] font-bold text-body">–</span>)
                             : (v => <span className="font-body text-[12px] font-bold text-body">{v || '–'}</span>)} />
                       </td>
                     );
@@ -1375,7 +1374,7 @@ const ShortListTable = ({
     SL_PLAYERS.forEach(p => m.set(p.id, ((p as any).profile === 'Journeyman' ? 'Prospect' : (p as any).profile) || 'Prospect'));
     return m;
   });
-  const profileColor = (name: string) => profileTypes?.find(p => p.name === name)?.color || '#1E88E5';
+  const profileColor = (name: string) => profileTypes?.find(p => p.name === name)?.color || DATA.blue;
 
   const getSD = (id: string, scout: string) => scoutData.get(id)?.[scout] || { plg:'', pog:'', nxt:'' };
   const updSD = (id: string, scout: string, field: 'plg'|'pog'|'nxt', val: string) => {
@@ -1535,7 +1534,7 @@ const ShortListTable = ({
                             onChange={v => setRankMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
                             triggerClass="h-6 mx-auto"
                             renderValue={v => v
-                              ? <span style={tintStyle(RANK_TINT[v])} className="inline-flex items-center justify-center w-6 h-6 rounded-full border font-body text-[10px] font-black">{v}</span>
+                              ? <span style={tintStyle(RANK_TINT[v])} className="data-tint inline-flex items-center justify-center w-6 h-6 rounded-full border font-body text-[10px] font-black">{v}</span>
                               : <span className="font-body text-[12px] font-bold text-body">–</span>} />
                         </td>
                         {/* Player name + monitor pill */}
@@ -1581,7 +1580,7 @@ const ShortListTable = ({
                             return (
                               <CellSelect value={pv} options={PROFILE_OPTS} menuWidth={140}
                                 onChange={v => setProfileMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
-                                renderValue={val => <span style={tintStyle(profileColor(val))} className="inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{val}</span>} />
+                                renderValue={val => <span style={tintStyle(profileColor(val))} className="data-tint inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{val}</span>} />
                             );
                           })()}
                         </td>
@@ -1745,10 +1744,10 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
     return result;
   }, [players]);
 
-  const STATUS_TINT: Record<string, string> = { 'Success': '#22C55E', 'Unsuccessful': '#E05C4B', 'Pending': '#E8A838' };
+  const STATUS_TINT: Record<string, string> = { 'Success': DATA.green, 'Unsuccessful': DATA.red, 'Pending': DATA.amber };
   const StatusPill = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => (
     <CellSelect value={value} options={['Success', 'Unsuccessful', 'Pending']} menuWidth={140} onChange={onChange}
-      renderValue={v => <span style={tintStyle(STATUS_TINT[v])} className="inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v || '–'}</span>} />
+      renderValue={v => <span style={tintStyle(STATUS_TINT[v])} className="data-tint inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v || '–'}</span>} />
   );
 
   const TOTAL_COLS = 14 + extraCols.length;
@@ -1959,7 +1958,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
 };
 
 // ─── Scope Settings Panel — 2-Card Split-Grid ────────────────────────────────────
-const COLOR_SWATCHES = ['#1E88E5', '#449CE9', '#22C55E', '#E8A838', '#E05C4B', '#8B5CF6', '#06B6D4', '#304151'];
+const COLOR_SWATCHES = DATA_SWATCHES;
 const ALL_POSITIONS = ['ST','LW','RW','CAM','CM','CDM','CB','LB','RB','LWB','RWB','DM','FB','GK','AM'];
 const AVAILABLE_SCOPES = ['West Africa U19 Cycle 2026', 'East Africa U17 Cycle 2025', 'Southern Africa U20 Cycle 2026'];
 
@@ -2161,7 +2160,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
   const [classView, setClassView] = useState<'tags' | 'grades' | 'nxt' | 'pathways'>('grades');
   const [classDropOpen, setClassDropOpen] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
-  const [newProfileColor, setNewProfileColor] = useState('#1E88E5');
+  const [newProfileColor, setNewProfileColor] = useState<string>(DATA.blue);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [editColor, setEditColor] = useState('');
@@ -2258,7 +2257,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
         </>
       ) : (
         <>
-          <span className="flex-1 font-body font-bold text-[12px] text-body truncate">{pt.name}</span>
+          <span className="flex-1 min-w-0"><span style={tintStyle(pt.color)} className="data-tint inline-block max-w-full truncate border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{pt.name}</span></span>
           <div className="relative shrink-0">
             <button onClick={() => setActiveSwatchId(activeSwatchId === pt.id ? null : pt.id)}
               className="w-5 h-5 rounded-full border-2 border-surface-card shadow-[0_0_0_1px_var(--border-default)] hover:scale-110 transition-transform"
@@ -2407,7 +2406,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                 className={`w-4 h-4 rounded-full hover:scale-110 transition-transform ${newProfileColor === c ? 'ring-2 ring-text-heading ring-offset-1' : ''}`}
                 style={{ backgroundColor: c }} />
             ))}</div>
-            <button onClick={() => { if (newProfileName.trim()) { onAddProfile(newProfileName.trim(), newProfileColor); setNewProfileName(''); setNewProfileColor('#1E88E5'); } }}
+            <button onClick={() => { if (newProfileName.trim()) { onAddProfile(newProfileName.trim(), newProfileColor); setNewProfileName(''); setNewProfileColor(DATA.blue); } }}
               disabled={!newProfileName.trim()}
               className="w-7 h-7 rounded-lg bg-brand-primary flex items-center justify-center text-on-brand hover:bg-brand-primary/80 transition-colors disabled:opacity-40 shrink-0">
               <Plus size={13} />
@@ -3070,9 +3069,9 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
 
   // Profile types — managed in Settings, used as dropdown in tables
   const DEFAULT_PROFILES: ProfileType[] = [
-    { id: 'wk',  name: 'Wonderkid',    color: '#8B5CF6' },
-    { id: 'pr',  name: 'Prospect',     color: '#1E88E5' },
-    { id: 'pe',  name: 'Performance',  color: '#06B6D4' },
+    { id: 'wk',  name: 'Wonderkid',    color: DATA.violet },
+    { id: 'pr',  name: 'Prospect',     color: DATA.blue },
+    { id: 'pe',  name: 'Performance',  color: DATA.cyan },
   ];
   const [profileTypes, setProfileTypes] = useState<ProfileType[]>(DEFAULT_PROFILES);
   const addProfile = (name: string, color: string) =>
@@ -3377,7 +3376,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 flagMap={flagMap} openDropdownId={openDropdownId} setOpenDropdownId={setOpenDropdownId}
                 onArchive={archivePlayer} onRestore={restorePlayer} targetDataMap={targetDataMap} onUpdateTarget={updateTarget}
                 openNotesId={openNotesId} setOpenNotesId={setOpenNotesId}
-                onOpenVideos={setVideoPlayer} extraCols={extraCols} highlightId={highlightId} />
+                onOpenVideos={setVideoPlayer} extraCols={extraCols} highlightId={highlightId} profileTypes={profileTypes} />
             ) : activeTab === 'short-list' ? (
               <ShortListTable players={currentPoolPlayers} archivedSet={currentArchivedSet} archiveView={archiveView}
                 currentTab={activeTab as Exclude<SeniorTab, 'settings'>}

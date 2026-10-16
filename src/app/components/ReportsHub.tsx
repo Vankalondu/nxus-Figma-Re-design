@@ -1,3 +1,4 @@
+import { DATA } from '../lib/dataColors';
 import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -409,7 +410,7 @@ const AnalyticsTab = () => {
   }, []);
 
   const statusDist = [
-    { name: 'Completed', value: 312, color: '#1E88E5' },
+    { name: 'Completed', value: 312, color: DATA.blue },
     { name: 'Submitted', value: 156, color: '#69B0EE' },
     { name: 'Draft', value: 89, color: '#B4D7F6' },
   ];

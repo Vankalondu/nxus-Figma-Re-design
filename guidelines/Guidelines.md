@@ -390,8 +390,8 @@ no future role named `caption`, `micro` or `h3` can collide either.
 | Names, values, chips, button labels — emphatic but not a title | `text-strong` |
 | Body copy, secondary labels, metadata | `text-body` |
 | Genuinely de-emphasised, still AA | `text-muted` |
-| On primary surfaces | `text-on-brand` / `text-inverse` |
-| Interactive / link | `text-brand-primary` |
+| On primary surfaces (anything painted `bg-brand-primary`) | `text-on-brand` — never `text-inverse`, which turns navy in dark mode |
+| Interactive / link, blue text and icons | `text-link` (Blue/600 light · Blue/400 dark) |
 | Destructive | `text-status-error` |
 | Warning | `text-status-warning` |
 | Success | `text-status-success` |
@@ -608,7 +608,7 @@ Container  bg-surface-card rounded-[32px] border border-default p-6
            shadow-[var(--shadow-lg)] min-h-[190px]
            hover:-translate-y-1 hover:shadow-xl transition-all
            rendered as <button> — keyboard focusable
-Icon chip  circular, bg-brand-primary/10 text-brand-primary
+Icon chip  circular, bg-brand-primary/10 text-link
 Heading    short, uppercase, .type-micro tracked, text-body
 Value      font-heading font-extrabold text-4xl tabular-nums leading-none
 Descriptor beside the value, muted
@@ -626,7 +626,7 @@ same value** — the tint comes from the status colour, the text from a darker s
 bg-status-success/15 text-status-success-fg    success / done
 bg-status-warning/15 text-status-warning-fg    pending / in progress
 bg-status-error/15   text-status-error-fg      attention / overdue
-bg-brand-primary/15     text-brand-primary              assigned
+bg-brand-primary/15     text-link                       assigned
 ```
 
 **Why the tint:** solid status fills compete with `bg-brand-primary` structural anchors.
@@ -668,7 +668,7 @@ Left to right: player search · role pill · notification bell with unread count
 Add Report · Add Player · theme toggle · avatar (`w-12 h-12 rounded-full`).
 
 ### P-CO8 — Sidebar
-Surface `bg-surface-sidebar`. Active item `bg-brand-primary/10 text-brand-primary border-l-[3px] border-brand-primary`.
+Surface `bg-surface-sidebar`. Active item `bg-brand-primary/10 text-link border-l-[3px] border-brand-primary`.
 Inactive `text-body hover:text-strong hover:bg-surface-accent transition-colors`.
 
 ### P-CO9 — Data tables
@@ -750,7 +750,7 @@ Replaces browser-default date inputs. Popup `bg-surface-card border border-defau
 shadow-[var(--shadow-2xl)] w-[260px]`. Month and year as separate dropdown buttons; month
 opens a 3-column grid, year a scrollable ±10-year list, chevrons step one month. 7-column
 day grid; selected `bg-brand-primary text-inverse rounded-full shadow-sm`; today
-`bg-brand-primary/10 text-brand-primary`; footer "Clear" and "Today" as primary text links.
+`bg-brand-primary/10 text-link`; footer "Clear" and "Today" as primary text links.
 
 ### P-CO17 — Editable columns
 Every player data table lets the user choose which columns are visible, via an Edit Columns
@@ -764,6 +764,29 @@ committing. Named presets can be saved and recalled.
 **Why:** scouts work different competitions with different relevant stats. A fixed column set
 either buries what one scout needs or shows everyone everything, and density is the first
 value of this system.
+
+### P-CO18 — Data tags (profile, rank, outcome)
+Tags whose colour is **data** (L-G2) — profile types, Short List rank, Signed List outcome, and
+any colour a user picks in Settings — follow the same tint-and-different-text rule as **P-CO5**,
+but the text step is computed rather than looked up, because the colour can be anything.
+
+- **Fill** = the tag colour at ~13% (`#hex22`). **Border** = the tag colour at ~33% (`#hex55`).
+- **Text** = the tag colour moved toward `--midnight` in light mode and toward `--chalk` in
+  dark mode, only as far as needed to read at **4.8:1** on its own tint (4.5:1 plus headroom for
+  hover and accent rows).
+- Implementation: `tagTint(hex)` + the `data-tint` class, in `src/app/lib/dataColors.ts`.
+  Never set the tag text to the raw colour.
+
+**Why:** measured on a light card, raw-colour text on its own tint scored 1.8:1 (amber) to
+3.4:1 (violet) — every tag failed. In dark mode blue, violet and red failed too. No single
+shade passes in both modes, so the text has to move per theme.
+
+**Data colours come from the palette's base steps** (`DATA` in the same file): blue
+`#1E88E5` (Blue/Base), violet `#7C5CFC`, cyan `#22D3EE`, green `#22C55E`, amber `#E8A838`,
+red `#E05C4B`, neutral `#596774`. These are also the Settings swatches. Chart series use the
+same values. Data blue is deliberately **not** the brand primary, so restyling buttons never
+repaints a chart. Chart marks are graphics, not text: they need 3:1 against the card
+(`#1E88E5` is 3.5 light · 4.7 dark).
 
 ---
 
@@ -1084,6 +1107,14 @@ L-C10.
 `Primary/100` and `Light Mode/Base`; `#061b2e` is both `Primary/1000` and `Dark Mode/Base`. The
 rendered colour is the same either way, so this is purely a naming question — and naming is
 Figma's to decide. Page surfaces take the Primary ramp, body text the Dark Mode ramp.
+
+**D-15 · Primary moved to Blue/600 `#1971BF` (16 Oct 2026).** Light-blue text on the old
+primary `#1E88E5` scored 2.9:1 (`#D2E7FA`) and 3.5:1 (`#F6FAFE`) — every filled button
+failed. No single blue can carry light text in light mode and dark text in dark mode, so one
+primary with one text colour was chosen: `Brand/primary` → `Primary/600` in both modes,
+`Text/on-brand` → `Light Mode/100` `#F6FAFE` in both (4.8:1). Blue text on the navy dark
+background uses `Text/link` = Blue/400 `#449CE9` (6.0:1), because `#1971BF` reads at only
+3.5:1 there. `#1E88E5` is now the data blue (P-CO18).
 
 **D-14 · `Ink/midnight` lives in Allias, not Mapped.** It is theme-invariant, which makes it a
 named alias for a raw value rather than a role with per-mode values. Mapped stays at six groups

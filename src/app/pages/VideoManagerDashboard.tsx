@@ -1,3 +1,4 @@
+import { DATA } from '../lib/dataColors';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import {
@@ -479,11 +480,11 @@ const VmAnalyticsTab = () => {
   const X = (i: number) => pL + (i / (months.length - 1)) * plotW;
   const Y = (v: number) => pB - (v / 100) * plotH;
   const path = (arr: number[]) => arr.map((v, i) => `${i === 0 ? 'M' : 'L'} ${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
-  const series = [{ label: 'Packages %', data: hSeries, color: '#1E88E5' }, { label: 'Full Matches %', data: fSeries, color: '#E8A838' }];
+  const series = [{ label: 'Packages %', data: hSeries, color: DATA.blue }, { label: 'Full Matches %', data: fSeries, color: DATA.amber }];
   const editors = TEAM.filter(t => t.role === 'Editor').sort((a, b) => b.submitted - a.submitted);
   const uploaders = TEAM.filter(t => t.role === 'Uploader').sort((a, b) => b.submitted - a.submitted);
   const maxEd = Math.max(...editors.map(e => e.submitted), 1), maxUp = Math.max(...uploaders.map(u => u.submitted), 1);
-  const demand = [{ label: 'Packages requested', v: 24, color: '#1E88E5' }, { label: 'Full matches requested', v: 15, color: '#E8A838' }];
+  const demand = [{ label: 'Packages requested', v: 24, color: DATA.blue }, { label: 'Full matches requested', v: 15, color: DATA.amber }];
   const maxDemand = Math.max(...demand.map(d => d.v));
   const Board = ({ title, rows, max }: { title: string; rows: TeamMember[]; max: number }) => (
     <div className="flex-1 min-w-0">

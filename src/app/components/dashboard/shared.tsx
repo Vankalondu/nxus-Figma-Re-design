@@ -1,3 +1,4 @@
+import { DATA } from '../../lib/dataColors';
 import React from 'react';
 import { Crown, Smile, ChevronDown, Check } from 'lucide-react';
 
@@ -92,7 +93,7 @@ export const WEEK_HOURS: Record<string, [number, number, number]> = {
 export const TASK_STATUS = [
   { key: 'Completed', color: '#22C55E' },
   { key: 'Pending',   color: '#E8A838' },
-  { key: 'Assigned',  color: '#1e88e5' },
+  { key: 'Assigned',  color: DATA.blue },
 ];
 
 // Priority pill: high = red (needs attention), medium = amber, low = muted. Soft tints, no shout.
