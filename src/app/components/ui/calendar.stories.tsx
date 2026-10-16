@@ -12,8 +12,8 @@ const meta = {
           'Date picker built on `react-day-picker`. NXUS also ships a bespoke date picker ' +
           '(**P-CO16**) for Scope Settings, which replaces the browser default with month and ' +
           'year dropdowns, a ±10-year list and Clear / Today actions.\n\n' +
-          'Selected day is `bg-brand-primary text-inverse rounded-full`; today is ' +
-          '`bg-brand-primary/10 text-brand-primary`.\n\n' +
+          'Selected day is `bg-brand-primary text-on-brand rounded-full`; today is ' +
+          '`bg-brand-primary/10 text-link`.\n\n' +
           'Note this imports `react-day-picker@8.10.1` — a version-suffixed Figma Make specifier ' +
           'that the shared Vite alias layer maps back to the bare package.',
       },

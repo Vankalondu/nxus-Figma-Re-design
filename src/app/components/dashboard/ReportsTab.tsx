@@ -76,7 +76,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
             <div key={stat.label} className="lg:col-span-1 min-w-0 bg-surface-card border border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl transition-all">
               <div className="flex items-center justify-between gap-2">
                 <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted truncate">{stat.label}</span>
-                <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
+                <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-link" /></div>
               </div>
               <div className="font-heading font-extrabold text-[32px] text-strong leading-none">{stat.value}</div>
               <span className="font-body text-[12px] text-muted font-medium">{stat.sub}</span>
@@ -101,7 +101,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
         <InlineSel value={fGrade} onChange={setFGrade} opts={gradeOpts} allLabel="All grades" />
         <InlineSel value={fPos} onChange={setFPos} opts={posOpts} allLabel="All positions" />
         <InlineSel value={fRecency === 'all' ? 'All' : fRecency === 'month' ? 'This month' : 'This week'} onChange={v => setFRecency(v === 'This week' ? 'week' : v === 'This month' ? 'month' : 'all')} opts={['All', 'This month', 'This week']} allLabel="All time" />
-        {activeFilters > 0 && <button onClick={clearFilters} className="font-body text-[12px] font-bold text-brand-primary hover:underline px-1 shrink-0">Clear</button>}
+        {activeFilters > 0 && <button onClick={clearFilters} className="font-body text-[12px] font-bold text-link hover:underline px-1 shrink-0">Clear</button>}
 
         <button onClick={() => { setRefreshing(true); setTimeout(() => setRefreshing(false), 600); }}
           className="ml-auto shrink-0 flex items-center gap-2 bg-transparent border border-brand-primary text-body px-4 py-2 rounded-full font-body font-bold text-[13px] hover:bg-brand-primary/10 transition-colors">
@@ -124,7 +124,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
             {/* Header */}
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-11 h-11 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[14px] shrink-0">{r.initials}</div>
+                <div className="w-11 h-11 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black text-[14px] shrink-0">{r.initials}</div>
                 <div className="min-w-0">
                   <div className="font-heading font-bold text-[15px] text-strong truncate">{r.player}</div>
                   <div className="flex items-center gap-1.5 font-body text-[12px] text-muted">
@@ -158,7 +158,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
             </div>
             {/* Footer */}
             <div className="flex items-center gap-2 pt-1">
-              <button onClick={() => openReport(r)} className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-inverse rounded-full py-2 transition-colors"><Eye size={14} />View</button>
+              <button onClick={() => openReport(r)} className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-brand-primary text-link hover:bg-brand-primary hover:text-on-brand rounded-full py-2 transition-colors"><Eye size={14} />View</button>
               <button className="flex-1 flex items-center justify-center gap-1.5 font-body font-bold text-[13px] border border-default text-body hover:bg-surface-accent hover:text-body hover:border-brand-primary rounded-full py-2 transition-colors"><Download size={14} />Export</button>
             </div>
           </div>

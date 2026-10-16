@@ -91,25 +91,8 @@ export default function UploaderDashboard() {
       <main className="flex-1 flex flex-col min-w-0">
         <TopNav
           responsive
-          rolePill={(
-            <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-[32px]">
-              <span className="w-2 h-2 rounded-full shrink-0 bg-brand-primary" />
-              <span className="hidden md:inline font-body text-[14px] font-bold text-body whitespace-nowrap">{role || 'Uploader'} Dashboard</span>
-            </div>
-          )}
-          avatarImg={avatar}
+          profile={{ name: myName, role: role || 'Uploader', avatar }}
           onUploadVideo={() => setShowUpload(true)}
-          profileOpen={showProfile}
-          onProfileToggle={() => setShowProfile(p => !p)}
-          profileMenu={(
-            <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-default z-50 overflow-hidden">
-              <div className="px-5 py-4 border-b border-default flex items-center gap-3">
-                <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div><div className="font-body font-bold text-[14px] text-body">{myName}</div><div className="font-body text-[12px] text-muted font-medium">{role}</div></div>
-              </div>
-              <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
-            </div>
-          )}
         />
 
         <div className="flex-1 px-[var(--pad-page)] pb-20 md:pb-12">
@@ -176,7 +159,7 @@ export default function UploaderDashboard() {
                       <div className="px-5 py-4 border-b border-default flex items-center gap-3">
                         <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><ListChecks size={16} className="text-strong" /></div>
                         <div className="min-w-0 flex-1"><h3 className="font-heading font-bold text-[16px] text-heading">My tasks</h3><p className="font-body text-[12px] text-body font-medium">{activeTasks.length} open</p></div>
-                        <button onClick={() => setActiveTab('tasks')} className="font-body font-bold text-[12px] text-brand-primary hover:underline shrink-0">View all</button>
+                        <button onClick={() => setActiveTab('tasks')} className="font-body font-bold text-[12px] text-link hover:underline shrink-0">View all</button>
                       </div>
                       <div className="divide-y divide-border-default">
                         {activeTasks.slice(0, 4).map(t => (
@@ -199,7 +182,7 @@ export default function UploaderDashboard() {
                       <div className="divide-y divide-border-default">
                         {[...pending, ...approved].slice(0, 4).map(item => (
                           <div key={item.id} className="px-5 py-3 flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-xl bg-brand-primary/10 flex items-center justify-center shrink-0"><Play size={13} className="text-brand-primary" /></span>
+                            <span className="w-8 h-8 rounded-xl bg-brand-primary/10 flex items-center justify-center shrink-0"><Play size={13} className="text-link" /></span>
                             <span className="font-body font-bold text-[13px] text-body truncate flex-1">{item.videoName}</span>
                           </div>
                         ))}
@@ -255,7 +238,7 @@ export default function UploaderDashboard() {
                         {myHighlights.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-body">No highlights uploaded yet.</div>}
                         {myHighlights.map(h => (
                           <div key={h.id} className="px-5 py-3 flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-xl bg-brand-primary/10 flex items-center justify-center shrink-0"><Play size={13} className="text-brand-primary" /></span>
+                            <span className="w-8 h-8 rounded-xl bg-brand-primary/10 flex items-center justify-center shrink-0"><Play size={13} className="text-link" /></span>
                             <div className="min-w-0 flex-1"><span className="font-body font-bold text-[14px] text-body truncate">{h.title}</span><p className="font-body text-[12px] text-body mt-0.5">{h.dateLabel}</p></div>
                             <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-brand-primary/15 text-body shrink-0">External</span>
                           </div>

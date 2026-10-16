@@ -72,7 +72,7 @@ export default function LoginDepartment() {
                   }`}
                 >
                   <div className={`w-14 h-14 rounded-[18px] flex items-center justify-center mr-5 transition-colors duration-300 ${
-                    selectedDepartment === mode.id ? 'bg-brand-primary text-inverse shadow-md' : 'bg-surface-accent text-body group-hover:text-strong group-hover:bg-surface-accent'
+                    selectedDepartment === mode.id ? 'bg-brand-primary text-on-brand shadow-md' : 'bg-surface-accent text-body group-hover:text-strong group-hover:bg-surface-accent'
                   }`}>
                     <mode.icon size={24} />
                   </div>
@@ -96,7 +96,7 @@ export default function LoginDepartment() {
               disabled={!selectedDepartment}
               className={`w-full py-4 rounded-[20px] font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] ${
                 selectedDepartment 
-                  ? 'bg-brand-primary hover:bg-brand-primary/80 text-inverse hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1' 
+                  ? 'bg-brand-primary hover:bg-brand-primary/80 text-on-brand hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1' 
                   : 'bg-surface-accent text-body cursor-not-allowed'
               }`}
             >

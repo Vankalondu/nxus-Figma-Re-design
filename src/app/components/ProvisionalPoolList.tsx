@@ -132,12 +132,12 @@ export function ProvisionalPoolList() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--light-200)]">
         <div className="flex items-center gap-2">
-          <Award className="w-5 h-5 text-brand-primary" />
+          <Award className="w-5 h-5 text-link" />
           <h3 className="text-[var(--navy-800)] font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Top 10 Provisional Pool
           </h3>
         </div>
-        <button className="text-brand-primary text-sm hover:underline font-medium flex items-center gap-1"
+        <button className="text-link text-sm hover:underline font-medium flex items-center gap-1"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -175,7 +175,7 @@ export function ProvisionalPoolList() {
                 <span className={`px-2 py-0.5 rounded-md text-xs font-semibold shrink-0 ${
                   player.grade === 'A' 
                     ? 'bg-[var(--green-50)] text-[var(--green-700)]' 
-                    : 'bg-[var(--light-300)] text-brand-primary-hover'
+                    : 'bg-[var(--light-300)] text-link-hover'
                 }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Grade {player.grade}
                 </span>
@@ -190,7 +190,7 @@ export function ProvisionalPoolList() {
             </div>
 
             {/* Action Arrow */}
-            <ArrowRight className="w-5 h-5 text-muted group-hover:text-brand-primary transition-colors shrink-0" />
+            <ArrowRight className="w-5 h-5 text-muted group-hover:text-link transition-colors shrink-0" />
           </div>
         ))}
       </div>

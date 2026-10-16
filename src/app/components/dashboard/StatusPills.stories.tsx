@@ -94,7 +94,7 @@ export const SemanticMeanings: Story = {
         ['bg-status-success/15 text-status-success-fg', 'Green', 'success · complete · scouted · approved'],
         ['bg-status-warning/15 text-status-warning-fg', 'Amber', 'pending · in progress · warning · monitor'],
         ['bg-status-error/15 text-status-error-fg', 'Red', 'late · flagged · unscouted · destructive'],
-        ['bg-brand-primary/15 text-brand-primary', 'Blue', 'assigned'],
+        ['bg-brand-primary/15 text-link', 'Blue', 'assigned'],
       ].map(([cls, label, meaning]) => (
         <div key={label} className="flex items-center gap-4">
           <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black w-16 text-center ${cls}`}>

@@ -251,11 +251,11 @@ export default function PlayerProfile() {
   const videoCard = (vid: any, i: number) => (
     <div key={vid.title} className="w-full bg-surface-card border border-default rounded-[20px] overflow-hidden shadow-[var(--shadow-lg)] group hover:shadow-[var(--shadow-xl)] transition-all cursor-pointer">
       <div className="relative aspect-[16/9] bg-gradient-to-br from-surface-midtone/70 via-[var(--blue-50)]/50 to-surface-accent flex items-center justify-center overflow-hidden">
-        <Video size={36} strokeWidth={1.5} className="text-brand-primary/50" />
+        <Video size={36} strokeWidth={1.5} className="text-link/50" />
         <span className="absolute top-3 left-3 bg-surface-card/90 backdrop-blur-md text-strong font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-1 rounded-lg shadow-sm">{(vid.type === 'Match' ? 'F' : 'H') + (i + 1)}</span>
       </div>
       <div className="p-4">
-        <h4 className="font-heading font-black text-[14px] text-heading group-hover:text-brand-primary transition-colors truncate">{vid.title}</h4>
+        <h4 className="font-heading font-black text-[14px] text-heading group-hover:text-link transition-colors truncate">{vid.title}</h4>
         <div className="font-body font-medium text-[12px] text-muted mt-1">{vid.date}</div>
         <div className="flex items-center gap-4 mt-2 font-mono font-bold text-[14px] text-strong">
           {vid.type === 'Match' ? (<><span>Mins: {vid.mins}</span><span>Goals: {vid.goals}</span></>) : (<span>{vid.dur}</span>)}
@@ -387,7 +387,7 @@ export default function PlayerProfile() {
                       {isEditing(si, entry.id, null) ? (
                         <div className="flex items-center gap-1 mt-0.5">
                           <input value={editText} onChange={e => setEditText(e.target.value)} className="bg-surface-card border border-default rounded-lg px-2 py-1 text-[12px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
-                          <button onClick={saveEdit} className="text-brand-primary"><Check size={14} strokeWidth={3} /></button>
+                          <button onClick={saveEdit} className="text-link"><Check size={14} strokeWidth={3} /></button>
                         </div>
                       ) : (
                         <div className="flex items-center gap-2">
@@ -397,8 +397,8 @@ export default function PlayerProfile() {
                       )}
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <button title="Add loan" onClick={() => addLoan(si, entry.id)} className="text-body hover:text-brand-primary transition-colors"><CornerDownRight size={14} /></button>
-                      <button title="Edit" onClick={() => startEdit(si, entry.id, null, entry.o)} className="text-body hover:text-brand-primary transition-colors"><Edit2 size={13} /></button>
+                      <button title="Add loan" onClick={() => addLoan(si, entry.id)} className="text-body hover:text-link transition-colors"><CornerDownRight size={14} /></button>
+                      <button title="Edit" onClick={() => startEdit(si, entry.id, null, entry.o)} className="text-body hover:text-link transition-colors"><Edit2 size={13} /></button>
                       <button title="Delete" onClick={() => deleteEntry(si, entry.id)} className="text-body hover:text-status-error transition-colors"><Trash2 size={13} /></button>
                     </div>
                   </div>
@@ -409,13 +409,13 @@ export default function PlayerProfile() {
                           {isEditing(si, entry.id, loan.id) ? (
                             <div className="flex items-center gap-1">
                               <input value={editText} onChange={e => setEditText(e.target.value)} className="bg-surface-card border border-default rounded-lg px-2 py-1 text-[12px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
-                              <button onClick={saveEdit} className="text-brand-primary"><Check size={13} strokeWidth={3} /></button>
+                              <button onClick={saveEdit} className="text-link"><Check size={13} strokeWidth={3} /></button>
                             </div>
                           ) : (
                             <span className="font-body font-medium text-[12px] text-muted truncate">{loan.label}</span>
                           )}
                           <div className="flex items-center gap-2 shrink-0">
-                            <button onClick={() => startEdit(si, entry.id, loan.id, loan.label)} className="text-body hover:text-brand-primary transition-colors"><Edit2 size={12} /></button>
+                            <button onClick={() => startEdit(si, entry.id, loan.id, loan.label)} className="text-body hover:text-link transition-colors"><Edit2 size={12} /></button>
                             <button onClick={() => deleteLoan(si, entry.id, loan.id)} className="text-body hover:text-status-error transition-colors"><Trash2 size={12} /></button>
                           </div>
                         </div>
@@ -425,7 +425,7 @@ export default function PlayerProfile() {
                 </div>
               ))}
             </div>
-            <button onClick={() => addEntry(si)} className="mt-2 shrink-0 flex items-center justify-center gap-2 border-2 border-dashed border-default hover:border-brand-primary text-body hover:text-brand-primary rounded-[14px] py-2 font-body font-bold text-[12px] transition-colors">
+            <button onClick={() => addEntry(si)} className="mt-2 shrink-0 flex items-center justify-center gap-2 border-2 border-dashed border-default hover:border-brand-primary text-body hover:text-link rounded-[14px] py-2 font-body font-bold text-[12px] transition-colors">
               <Plus size={13} /> Add New
             </button>
           </div>
@@ -456,7 +456,7 @@ export default function PlayerProfile() {
             {filtered.map(note => (
               <div key={note.id} className="bg-surface-card border border-default rounded-[24px] p-4 shadow-[var(--shadow-lg)] hover:shadow-[var(--shadow-xl)] transition-all flex flex-col">
                 <div className="flex items-center gap-2 min-w-0">
-                  <div className="w-9 h-9 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[12px] shrink-0">{note.initials}</div>
+                  <div className="w-9 h-9 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black text-[12px] shrink-0">{note.initials}</div>
                   <div className="min-w-0 flex-1">
                     <div className="font-body font-bold text-[14px] text-body truncate">{note.author}</div>
                     <div className="font-heading text-[10px] font-bold text-muted uppercase tracking-widest">{note.date}</div>
@@ -471,14 +471,14 @@ export default function PlayerProfile() {
                     <textarea value={editNoteText} onChange={e => setEditNoteText(e.target.value)} rows={3} className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-medium text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 resize-none" />
                     <div className="flex justify-end gap-3 mt-1">
                       <button onClick={() => setEditNoteId(null)} className="text-[12px] font-bold text-body hover:text-strong">Cancel</button>
-                      <button onClick={saveNoteEdit} className="text-[12px] font-black text-brand-primary">Save</button>
+                      <button onClick={saveNoteEdit} className="text-[12px] font-black text-link">Save</button>
                     </div>
                   </div>
                 ) : (
                   <p className="font-body font-medium text-[14px] text-body leading-relaxed mt-3 line-clamp-3">{note.text}</p>
                 )}
                 {note.replies.length > 0 && (
-                  <button onClick={() => setOpenReplies(prev => ({ ...prev, [note.id]: !prev[note.id] }))} className="flex items-center gap-2 mt-3 font-body font-bold text-[12px] text-brand-primary hover:underline">
+                  <button onClick={() => setOpenReplies(prev => ({ ...prev, [note.id]: !prev[note.id] }))} className="flex items-center gap-2 mt-3 font-body font-bold text-[12px] text-link hover:underline">
                     <MessageSquare size={13} /> {note.replies.length} {note.replies.length === 1 ? 'reply' : 'replies'}
                   </button>
                 )}
@@ -496,14 +496,14 @@ export default function PlayerProfile() {
                   </div>
                 )}
                 <div className="flex items-center gap-4 mt-4 pt-3 border-t border-default/60">
-                  <button onClick={() => { setReplyTarget(replyTarget === note.id ? null : note.id); setReplyText(''); }} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-brand-primary transition-colors"><MessageSquare size={13} /> Reply</button>
-                  <button onClick={() => { setEditNoteId(note.id); setEditNoteText(note.text); }} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-brand-primary transition-colors"><Edit2 size={13} /> Edit</button>
+                  <button onClick={() => { setReplyTarget(replyTarget === note.id ? null : note.id); setReplyText(''); }} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-link transition-colors"><MessageSquare size={13} /> Reply</button>
+                  <button onClick={() => { setEditNoteId(note.id); setEditNoteText(note.text); }} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-link transition-colors"><Edit2 size={13} /> Edit</button>
                   <button onClick={() => deleteNote(note.id)} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-status-error transition-colors"><Trash2 size={13} /> Delete</button>
                 </div>
                 {replyTarget === note.id && (
                   <div className="flex items-center gap-2 mt-3">
                     <input value={replyText} onChange={e => setReplyText(e.target.value)} placeholder="Write a reply..." className="flex-1 bg-surface-card border border-default rounded-full px-4 py-2 text-[12px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
-                    <button onClick={() => postReply(note.id)} className="bg-brand-primary text-inverse rounded-full px-4 py-2 text-[12px] font-black">Post</button>
+                    <button onClick={() => postReply(note.id)} className="bg-brand-primary text-on-brand rounded-full px-4 py-2 text-[12px] font-black">Post</button>
                   </div>
                 )}
               </div>
@@ -515,12 +515,6 @@ export default function PlayerProfile() {
     );
   };
 
-  const rolePill = (
-    <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-full shrink-0">
-      <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-      <span className="hidden md:inline font-body text-[14px] font-bold text-body whitespace-nowrap">{roleLabel} Dashboard</span>
-    </div>
-  );
 
   return (
     <div className="flex lg:h-screen bg-surface-page font-body text-strong lg:overflow-hidden">
@@ -530,14 +524,12 @@ export default function PlayerProfile() {
         <TopNav
           responsive
           sticky={false}
-          rolePill={rolePill}
+          profile={{ name: 'Tom', role: roleLabel, avatar: AVATAR }}
           unreadCount={3}
           onNotifToggle={() => toast('Notifications - coming soon')}
           onThisWeek={() => toast('This Week - coming soon')}
           onAddReport={() => toast('Add Report - coming soon')}
           onAddPlayer={() => toast('Add Player - coming soon')}
-          avatarImg={AVATAR}
-          onProfileToggle={() => toast('Profile menu - coming soon')}
         />
 
         {/* Breadcrumb only */}
@@ -545,7 +537,7 @@ export default function PlayerProfile() {
           <div className="flex items-center gap-2 flex-wrap">
             {trail.map((c: any, i: number) => (
               <div key={i} className="flex items-center gap-2">
-                <button onClick={() => navigate(c.path)} className="font-body font-bold text-[14px] text-body hover:text-brand-primary transition-colors">{c.label}</button>
+                <button onClick={() => navigate(c.path)} className="font-body font-bold text-[14px] text-body hover:text-link transition-colors">{c.label}</button>
                 <ChevronRight size={14} className="text-body" />
               </div>
             ))}
@@ -562,7 +554,7 @@ export default function PlayerProfile() {
                 {player.image && !imgError ? (
                   <img src={player.image} alt={player.name} onError={() => setImgError(true)} className="w-full h-full object-cover" />
                 ) : (
-                  <span className="font-heading font-black text-3xl text-brand-primary">{player.initials}</span>
+                  <span className="font-heading font-black text-3xl text-link">{player.initials}</span>
                 )}
               </div>
               <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-brand-primary text-on-brand font-body font-black text-[10px] px-2 py-0.5 rounded-full shadow-sm border-2 border-surface-card">{player.primaryPos}</span>
@@ -582,13 +574,13 @@ export default function PlayerProfile() {
               {bio.map(row => (
                 <div key={row.l} className="flex items-center justify-between py-2 border-b border-default/40 last:border-0">
                   <span className="flex items-center gap-2 font-heading text-[10px] font-bold text-muted uppercase tracking-widest">
-                    <row.icon size={13} className="text-brand-primary" /> {row.l}
+                    <row.icon size={13} className="text-link" /> {row.l}
                   </span>
                   <span className="font-body font-bold text-[12px] text-body text-right">{row.v}</span>
                 </div>
               ))}
             </div>
-            <button onClick={() => setIsEditModalOpen(true)} className="mt-5 shrink-0 w-full flex items-center justify-center gap-2 border-2 border-brand-primary text-brand-primary hover:bg-brand-primary/10 rounded-full py-2 font-body font-bold text-[14px] transition-colors">
+            <button onClick={() => setIsEditModalOpen(true)} className="mt-5 shrink-0 w-full flex items-center justify-center gap-2 border-2 border-brand-primary text-link hover:bg-brand-primary/10 rounded-full py-2 font-body font-bold text-[14px] transition-colors">
               <Edit2 size={15} /> Edit Player
             </button>
           </aside>
@@ -598,13 +590,13 @@ export default function PlayerProfile() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
               <div className="flex items-center gap-1 bg-surface-card/50 backdrop-blur-xl border border-default/60 rounded-full p-1 shadow-sm overflow-x-auto hide-scrollbar max-w-full">
                 {tabs.map(t => (
-                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-inverse shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold text-[14px] transition-colors'}>{t}</button>
+                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold text-[14px] transition-colors'}>{t}</button>
                 ))}
               </div>
               {activeTab === 'Videos & Highlights' && (
                 <div className="flex items-center gap-1 bg-surface-card/50 backdrop-blur-xl border border-default/60 rounded-full p-1 shadow-sm shrink-0 overflow-x-auto hide-scrollbar max-w-full">
                   {[['All', 'All Videos'], ['Highlights', 'Only Highlights'], ['Matches', 'Only Matches']].map(opt => (
-                    <button key={opt[0]} onClick={() => setVideoFilter(opt[0])} className={(videoFilter === opt[0] ? 'bg-brand-primary text-inverse shadow-sm ' : 'text-body hover:text-strong hover:bg-surface-accent ') + 'px-4 py-2 rounded-full font-body font-bold text-[14px] transition-all'}>{opt[1]}</button>
+                    <button key={opt[0]} onClick={() => setVideoFilter(opt[0])} className={(videoFilter === opt[0] ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong hover:bg-surface-accent ') + 'px-4 py-2 rounded-full font-body font-bold text-[14px] transition-all'}>{opt[1]}</button>
                   ))}
                 </div>
               )}
@@ -652,7 +644,7 @@ export default function PlayerProfile() {
             </div>
             <div className="px-8 py-6 border-t border-default flex justify-end gap-3 shrink-0">
               <button onClick={() => setShowAddNote(false)} className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors">Cancel</button>
-              <button onClick={postNote} className="bg-brand-primary text-inverse hover:bg-brand-primary/80 px-8 py-2 rounded-full font-body font-black text-[14px] transition-all shadow-[var(--shadow-md)]">Post Note</button>
+              <button onClick={postNote} className="bg-brand-primary text-on-brand hover:bg-brand-primary/80 px-8 py-2 rounded-full font-body font-black text-[14px] transition-all shadow-[var(--shadow-md)]">Post Note</button>
             </div>
           </div>
         </div>

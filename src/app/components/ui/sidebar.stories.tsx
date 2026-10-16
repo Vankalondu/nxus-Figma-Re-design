@@ -18,7 +18,7 @@ const meta = {
           'and documented here so nobody imports it by mistake — an undocumented duplicate is ' +
           'how a stale component gets picked up months later.\n\n' +
           'The real sidebar’s specification is **P-CO8**: `bg-surface-sidebar` surface, active item ' +
-          '`bg-brand-primary/10 text-brand-primary border-l-[3px] border-brand-primary`.',
+          '`bg-brand-primary/10 text-link border-l-[3px] border-brand-primary`.',
       },
     },
   },

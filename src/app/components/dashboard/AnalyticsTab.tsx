@@ -144,7 +144,7 @@ export const AnalyticsTab = () => {
             <div className="flex items-center bg-surface-card border border-default rounded-full p-1 gap-1 mb-3">
               {([['scouts','Scouts'],['players','Top players']] as const).map(([key,label]) => (
                 <button key={key} type="button" onClick={() => setBoard(key)}
-                  className={`flex-1 px-3 py-1.5 rounded-full font-body font-bold text-[12px] ${board === key ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>
+                  className={`flex-1 px-3 py-1.5 rounded-full font-body font-bold text-[12px] ${board === key ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
                   {label}
                 </button>
               ))}
@@ -153,7 +153,7 @@ export const AnalyticsTab = () => {
             <div className="flex flex-col">
               {leaders.map((p,i) => (
                 <div key={p.n} className="flex items-center gap-3 py-2 border-b border-default last:border-0">
-                  <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-inverse' : 'bg-surface-accent text-body'}`}>{i+1}</span>
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-on-brand' : 'bg-surface-accent text-body'}`}>{i+1}</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-body font-bold text-[14px] text-body truncate">{p.n}</div>
                     {board === 'scouts' && <div className="font-body text-[11px] text-muted truncate">{(p as any).role}</div>}
@@ -241,7 +241,7 @@ export const AnalyticsTab = () => {
                 <div className="absolute right-0 mt-2 z-20 min-w-[160px] bg-surface-card border border-default rounded-[12px] shadow-[var(--shadow-lg)] overflow-hidden py-1">
                   {COUNTRIES.map(c => (
                     <button key={c} type="button" onClick={() => { setCountry(c); setCountryOpen(false); }}
-                      className={`w-full text-left px-3 py-2 font-body font-bold text-[12px] hover:bg-surface-accent ${c === country ? 'text-brand-primary' : 'text-strong'}`}>
+                      className={`w-full text-left px-3 py-2 font-body font-bold text-[12px] hover:bg-surface-accent ${c === country ? 'text-link' : 'text-strong'}`}>
                       {c}
                     </button>
                   ))}

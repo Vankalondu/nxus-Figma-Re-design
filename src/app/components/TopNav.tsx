@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Search, Bell, Calendar, FileText, Plus, Menu, X, Moon, Sun, UploadCloud } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { PlayerSearch } from './PlayerSearch';
+import { ProfileMenu, type ProfileInfo } from './ProfileMenu';
 
 // Shared top navigation bar. The parts that differ between dashboards
-// (role pill / toggle, notification panel, profile menu) are passed as
-// slots so each caller keeps its own state and behaviour; the common
-// shell (search, dividers, bell, action buttons, avatar) lives here.
+// (notification panel, actions, who is signed in) are passed in; the common
+// shell (search, divider, bell, action buttons, profile menu) lives here.
+// The role shows inside the profile menu, not as a pill in the bar.
 interface TopNavProps {
-  rolePill: React.ReactNode;
   searchPlaceholder?: string;
   unreadCount?: number;
   notifOpen?: boolean;
@@ -19,16 +19,12 @@ interface TopNavProps {
   onAddPlayer?: () => void;
   onUploadVideo?: () => void; // uploader roles (primary); Video Manager (secondary)
   uploadVideoVariant?: 'primary' | 'secondary';
-  avatarImg: string;
-  profileOpen?: boolean;
-  onProfileToggle?: () => void;
-  profileMenu?: React.ReactNode;
+  profile: ProfileInfo;
   responsive?: boolean; // Country Scout uses md: breakpoints
   sticky?: boolean; // dashboards stick; the profile does not
 }
 
 export function TopNav({
-  rolePill,
   searchPlaceholder = 'Search...',
   unreadCount = 0,
   notifOpen,
@@ -39,10 +35,7 @@ export function TopNav({
   onAddPlayer,
   onUploadVideo,
   uploadVideoVariant = 'primary',
-  avatarImg,
-  profileOpen,
-  onProfileToggle,
-  profileMenu,
+  profile,
   responsive = false,
   sticky = true,
 }: TopNavProps) {
@@ -82,9 +75,7 @@ export function TopNav({
         </button>
       )}
 
-      <div className={'w-px h-8 bg-surface-canvas ' + divCls} />
-      {rolePill}
-      <div className={'w-px h-8 bg-surface-canvas ' + divCls} />
+      <div className={'flex-1 ' + divCls} />
 
       <div className={'flex items-center shrink-0 ' + actionsGap}>
         <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme"
@@ -124,12 +115,7 @@ export function TopNav({
           </button>
         )}
 
-        <div className="relative">
-          <button onClick={onProfileToggle} className="w-11 h-11 rounded-full overflow-hidden border-2 border-default cursor-pointer hover:ring-2 hover:ring-brand-primary transition-all shrink-0">
-            <img src={avatarImg} alt="User" className="w-full h-full object-cover" />
-          </button>
-          {profileOpen && profileMenu}
-        </div>
+        <ProfileMenu profile={profile} />
       </div>
 
       {/* Mobile expanded search overlay */}

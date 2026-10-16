@@ -33,7 +33,7 @@ export const Default: Story = {
         <p className="font-body text-[12px] text-body">Three fixtures this week.</p>
       </CardContent>
       <CardFooter>
-        <span className="font-body font-bold text-[12px] text-brand-primary">View all</span>
+        <span className="font-body font-bold text-[12px] text-link">View all</span>
       </CardFooter>
     </Card>
   ),

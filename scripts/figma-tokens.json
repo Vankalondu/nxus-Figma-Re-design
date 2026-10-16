@@ -248,12 +248,12 @@
    "#2f4151"
   ],
   "Color/Brand/primary": [
-   "#1e88e5",
-   "#1e88e5"
+   "#1971bf",
+   "#1971bf"
   ],
   "Color/Brand/primary-hover": [
-   "#1971bf",
-   "#449ce9"
+   "#145b99",
+   "#145b99"
   ],
   "Color/Button/danger-bg": [
    "#e05c4b",
@@ -416,16 +416,16 @@
    "#061b2e"
   ],
   "Color/Text/link": [
-   "#1e88e5",
-   "#1e88e5"
+   "#1971bf",
+   "#449ce9"
   ],
   "Color/Text/muted": [
    "#596774",
    "#acb3b9"
   ],
   "Color/Text/on-brand": [
-   "#d2e7fa",
-   "#d2e7fa"
+   "#f6fafe",
+   "#f6fafe"
   ],
   "Color/Text/on-status": [
    "#f6fafe",
@@ -721,5 +721,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-16 — Figma edited (Video Manager + Uploaders pages: 60 screens; new components Card/Header, Card/List Row, Card/Approval Row, Video Cell, Video Tracker/Coverage tables; Task Status + Priority Pill moved to Status/*-tint tokens). No variables changed since the 2026-10-15 dark-mode read-back, so token values are as recorded. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-10-16 — Mapped variables changed and read back: Brand/primary -> Primary/600 #1971bf (both modes), primary-hover -> Primary/700 #145b99, Text/on-brand -> Light Mode/100 #f6fafe (both modes), Text/link -> #1971bf light / #449ce9 dark. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }

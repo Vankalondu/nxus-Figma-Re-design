@@ -12,11 +12,7 @@ const AVATAR =
      </svg>`,
   )
 
-const RolePill = ({ label }: { label: string }) => (
-  <span className="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary font-body font-bold text-[12px] whitespace-nowrap">
-    {label}
-  </span>
-)
+const who = (name: string, role: string) => ({ name, role, avatar: AVATAR })
 
 const meta = {
   title: 'NXUS/Navigation/TopNav',
@@ -29,8 +25,9 @@ const meta = {
           'The top navigation bar, identical on every page (**P-CO7**): `sticky top-6`, ' +
           '`bg-surface-card/90` with a backdrop blur, `rounded-[24px]`, `--shadow-lg`.\n\n' +
           'It holds search and actions rather than links — navigation is the sidebar plus tabs ' +
-          '(**P-L2**). Contents run left to right: player search, role pill, notification bell ' +
-          'with unread count, This Week, Add Report, Add Player, theme toggle, avatar.\n\n' +
+          '(**P-L2**). Contents run left to right: player search, theme toggle, notification bell ' +
+          'with unread count, This Week, Add Report, Add Player, profile menu. The signed-in ' +
+          'role lives in the profile menu ("Signed in as …"), not as a pill in the bar.\n\n' +
           'Action buttons are **gated on their handlers**: pass `onAddReport` and the button ' +
           'appears, omit it and it does not. That is how one component serves every role without ' +
           'a role prop — a Country Scout has no Add Report, a Video Manager has no This Week, and ' +
@@ -39,16 +36,15 @@ const meta = {
     },
   },
   argTypes: {
-    rolePill: { control: false, description: 'Role indicator node.' },
+    profile: { control: false, description: 'Who is signed in: name, role, avatar, optional view switch.' },
     unreadCount: { control: 'number', description: 'Bell badge. Derived live from the approval queue for the Video Manager.' },
     onThisWeek: { action: 'this week' },
     onAddReport: { action: 'add report', description: 'Omit to hide the button.' },
     onAddPlayer: { action: 'add player', description: 'Omit to hide the button.' },
     onUploadVideo: { action: 'upload video', description: 'Uploader roles. Omit to hide.' },
     uploadVideoVariant: { control: 'radio', options: ['primary', 'secondary'] },
-    avatarImg: { control: false },
   },
-  args: { avatarImg: AVATAR, unreadCount: 4 },
+  args: { profile: who('Tom', 'Lead Scout'), unreadCount: 4 },
 } satisfies Meta<typeof TopNav>
 
 export default meta
@@ -56,7 +52,7 @@ type Story = StoryObj<typeof meta>
 
 export const LeadScout: Story = {
   args: {
-    rolePill: <RolePill label="Lead Scout" />,
+    profile: who('Tom', 'Lead Scout'),
     onThisWeek: () => {},
     onAddReport: () => {},
     onAddPlayer: () => {},
@@ -69,7 +65,7 @@ export const CountryScout: Story = {
     docs: { description: { story: 'No `onAddReport`, so no Add Report button — nothing else changes.' } },
   },
   args: {
-    rolePill: <RolePill label="Country Scout" />,
+    profile: who('Vanessa Kalondu', 'Country Scout'),
     onAddPlayer: () => {},
     responsive: true,
   },
@@ -87,7 +83,7 @@ export const VideoManager: Story = {
     },
   },
   args: {
-    rolePill: <RolePill label="Video Manager" />,
+    profile: who('Marcus', 'Video Manager'),
     onAddPlayer: () => {},
     onUploadVideo: () => {},
     uploadVideoVariant: 'secondary',
@@ -101,10 +97,22 @@ export const Uploader: Story = {
     docs: { description: { story: 'Upload Video as the primary action; no scout-side buttons at all.' } },
   },
   args: {
-    rolePill: <RolePill label="Package Uploader" />,
+    profile: who('Ama Serwaa', 'Package Uploader'),
     onUploadVideo: () => {},
     uploadVideoVariant: 'primary',
     unreadCount: 0,
+  },
+  render: (a) => <div className="p-6"><TopNav {...a} /></div>,
+}
+
+export const SeniorScoutWithViewSwitch: Story = {
+  parameters: {
+    docs: { description: { story: 'A Senior Scout can view as Head Scout. The switch sits inside the profile menu.' } },
+  },
+  args: {
+    profile: { ...who('David', 'Senior Scout'), viewSwitch: { options: ['Senior Scout', 'Head Scout'], value: 'Senior Scout', onChange: () => {} } },
+    onThisWeek: () => {},
+    onAddPlayer: () => {},
   },
   render: (a) => <div className="p-6"><TopNav {...a} /></div>,
 }

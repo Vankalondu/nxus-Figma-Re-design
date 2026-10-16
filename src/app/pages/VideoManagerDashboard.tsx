@@ -41,7 +41,7 @@ const CARD = 'bg-surface-card rounded-[20px] border border-default shadow-[var(-
 // ── semantic status pill ──
 const STATUS_META: Record<CoverageStatus, { label: string; cls: string }> = {
   'unassigned':    { label: 'Unassigned',    cls: 'bg-status-error/15 text-status-error-fg' },
-  'assigned':      { label: 'Assigned',      cls: 'bg-brand-primary/15 text-brand-primary' },
+  'assigned':      { label: 'Assigned',      cls: 'bg-brand-primary/15 text-link' },
   'in-progress':   { label: 'In progress',   cls: 'bg-status-warning/15 text-status-warning-fg' },
   'has-video':     { label: 'Has video',     cls: 'bg-status-success/15 text-status-success-fg' },
   'not-available': { label: 'Not available', cls: 'bg-surface-accent text-body' },
@@ -134,7 +134,7 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
             {vstate.approvals.length === 0 && <div className="px-5 py-8 text-center font-body text-[13px] text-body">Queue is clear.</div>}
             {[...vstate.approvals].sort((a, b) => b.daysAgo - a.daysAgo).slice(0, 6).map(r => (
               <div key={r.id} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors">
-                <div className="w-9 h-9 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[12px] shrink-0">{(r.playerName || r.videoName).split(' ').map(w => w[0]).join('').slice(0, 2)}</div>
+                <div className="w-9 h-9 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black text-[12px] shrink-0">{(r.playerName || r.videoName).split(' ').map(w => w[0]).join('').slice(0, 2)}</div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <span className="font-body font-bold text-[14px] text-body truncate">{r.playerName || r.videoName}</span>
@@ -196,7 +196,7 @@ const KpiTile = ({ icon: Icon, label, value, sub, onClick }: { icon: any; label:
     className={`min-w-0 bg-surface-card border border-default rounded-[20px] p-4 h-[135px] shadow-[var(--shadow-lg)] flex flex-col justify-between transition-all text-left ${onClick ? 'hover:-translate-y-1 hover:shadow-xl cursor-pointer' : 'cursor-default'}`}>
     <div className="flex items-center justify-between gap-2">
       <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted truncate">{label}</span>
-      <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-brand-primary" /></div>
+      <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><Icon size={16} className="text-link" /></div>
     </div>
     <div className="font-heading font-extrabold text-[32px] text-strong leading-none">{value}</div>
     <span className="font-body text-[12px] text-muted font-medium">{sub}</span>
@@ -260,7 +260,7 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
         <div className="px-4 sm:px-5 py-4 border-b border-default flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-1 p-1 bg-surface-card border border-default rounded-full shrink-0">
             {TIERS.map(t => (
-              <button key={t.id} onClick={() => setTier(t.id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === t.id ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>{t.label}</button>
+              <button key={t.id} onClick={() => setTier(t.id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === t.id ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>{t.label}</button>
             ))}
           </div>
           <div className="relative flex-1 min-w-[160px]">
@@ -321,7 +321,7 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
           <div className="border-t border-default flex items-center justify-center gap-1 px-4 py-3">
             <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="w-8 h-8 rounded-full border border-default flex items-center justify-center text-body hover:text-strong disabled:opacity-30 disabled:cursor-not-allowed"><ChevronLeft size={15} /></button>
             {Array.from({ length: pageCount }).slice(0, 6).map((_, i) => (
-              <button key={i} onClick={() => setPage(i)} className={`w-8 h-8 rounded-full font-body font-bold text-[12px] transition-colors ${page === i ? 'bg-brand-primary text-inverse' : 'text-body hover:bg-surface-accent'}`}>{i + 1}</button>
+              <button key={i} onClick={() => setPage(i)} className={`w-8 h-8 rounded-full font-body font-bold text-[12px] transition-colors ${page === i ? 'bg-brand-primary text-on-brand' : 'text-body hover:bg-surface-accent'}`}>{i + 1}</button>
             ))}
             {pageCount > 6 && <span className="px-1 text-body">…</span>}
             <button onClick={() => setPage(p => Math.min(pageCount - 1, p + 1))} disabled={page >= pageCount - 1} className="ml-1 inline-flex items-center gap-1 px-3 h-8 rounded-full border border-default font-body font-bold text-[12px] text-body hover:text-body disabled:opacity-30 disabled:cursor-not-allowed">Next <ChevronRight size={13} /></button>
@@ -380,7 +380,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
           </div>
           <div className="flex items-center gap-1 p-1 bg-surface-card border border-default rounded-full shrink-0">
             {([['all', 'All'], ['package', 'Packages'], ['full-match', 'Full Matches']] as const).map(([id, l]) => (
-              <button key={id} onClick={() => setTypeFilter(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${typeFilter === id ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>{l}<span className="ml-1 tabular-nums opacity-80">{counts[id]}</span></button>
+              <button key={id} onClick={() => setTypeFilter(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${typeFilter === id ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>{l}<span className="ml-1 tabular-nums opacity-80">{counts[id]}</span></button>
             ))}
           </div>
         </div>
@@ -391,7 +391,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
             <div key={item.id} className="px-5 py-4 flex items-center gap-4">
               {/* thumbnail + play */}
               <button onClick={() => setPlaying(item)} className="relative w-24 h-14 rounded-[12px] bg-gradient-to-br from-surface-midtone/70 to-surface-accent flex items-center justify-center shrink-0 group">
-                <span className="w-8 h-8 rounded-full bg-surface-card/90 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"><Play size={14} className="text-brand-primary ml-0.5" /></span>
+                <span className="w-8 h-8 rounded-full bg-surface-card/90 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"><Play size={14} className="text-link ml-0.5" /></span>
               </button>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
@@ -424,7 +424,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
           <button onClick={() => setShowReviewed(s => !s)} className="w-full px-5 py-4 flex items-center gap-3 text-left">
             <div className="w-10 h-10 rounded-[12px] bg-surface-accent flex items-center justify-center shrink-0"><Clock size={16} className="text-body" /></div>
             <div className="flex-1"><h3 className="font-heading font-bold text-[16px] text-heading">Recently reviewed</h3><p className="font-body text-[12px] text-body font-medium">{vstate.reviewed.length} decisions</p></div>
-            <span className="font-body font-bold text-[12px] text-brand-primary">{showReviewed ? 'Hide' : 'Show'}</span>
+            <span className="font-body font-bold text-[12px] text-link">{showReviewed ? 'Hide' : 'Show'}</span>
           </button>
           {showReviewed && (
             <div className="divide-y divide-border-default border-t border-default">
@@ -447,7 +447,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => { setPlaying(null); setRedoFor(null); }}>
           <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-default overflow-hidden" onClick={e => e.stopPropagation()}>
             <div className="relative aspect-video bg-gradient-to-br from-ink-midnight to-[var(--blue-900)] flex items-center justify-center">
-              <span className="w-16 h-16 rounded-full bg-surface-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-brand-primary ml-1" /></span>
+              <span className="w-16 h-16 rounded-full bg-surface-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-link ml-1" /></span>
               <button onClick={() => { setPlaying(null); setRedoFor(null); }} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/20 text-on-brand flex items-center justify-center hover:bg-surface-card/40"><X size={18} /></button>
             </div>
             <div className="p-6">
@@ -491,7 +491,7 @@ const VmAnalyticsTab = () => {
       <div className="flex flex-col gap-3">
         {rows.map((r, i) => (
           <div key={r.name} className="flex items-center gap-3">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-inverse' : 'bg-surface-accent text-body'}`}>{i + 1}</span>
+            <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-on-brand' : 'bg-surface-accent text-body'}`}>{i + 1}</span>
             <div className="flex-1 min-w-0"><div className="font-body font-bold text-[13px] text-body truncate">{r.name}</div><div className="h-2 bg-surface-accent rounded-full overflow-hidden mt-1"><div className="h-full bg-brand-primary rounded-full" style={{ width: `${(r.submitted / max) * 100}%` }} /></div></div>
             <span className="font-heading font-black text-[14px] text-strong tabular-nums shrink-0">{r.submitted}</span>
           </div>
@@ -598,12 +598,7 @@ export default function VideoManagerDashboard() {
       <main className="flex-1 flex flex-col min-w-0">
         <TopNav
           responsive
-          rolePill={(
-            <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-[32px]">
-              <span className="w-2 h-2 rounded-full shrink-0 bg-brand-primary" />
-              <span className="hidden md:inline font-body text-[14px] font-bold text-body whitespace-nowrap">Video Manager Dashboard</span>
-            </div>
-          )}
+          profile={{ name: 'Marcus', role: 'Video Manager', avatar }}
           unreadCount={pendingApprovals}
           notifOpen={showNotif}
           onNotifToggle={() => setShowNotif(p => !p)}
@@ -630,18 +625,6 @@ export default function VideoManagerDashboard() {
           onAddPlayer={() => setShowAddPlayer(true)}
           onUploadVideo={() => setShowUpload(true)}
           uploadVideoVariant="secondary"
-          avatarImg={avatar}
-          profileOpen={showProfile}
-          onProfileToggle={() => setShowProfile(p => !p)}
-          profileMenu={(
-            <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-default z-50 overflow-hidden">
-              <div className="px-5 py-4 border-b border-default flex items-center gap-3">
-                <img src={avatar} alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div><div className="font-body font-bold text-[14px] text-body">Marcus</div><div className="font-body text-[12px] text-muted font-medium">Video Manager</div></div>
-              </div>
-              <div className="p-2"><button onClick={() => setShowProfile(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors"><LogOut size={16} className="mr-3" />Log out</button></div>
-            </div>
-          )}
         />
 
         <div className="flex-1 px-[var(--pad-page)] pb-20 md:pb-12">

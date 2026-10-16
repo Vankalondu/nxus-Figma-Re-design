@@ -58,7 +58,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
         <div className="flex-1 overflow-y-auto p-8 space-y-10 no-scrollbar">
           {/* Central Avatar Selector */}
           <div className="flex justify-center">
-            <div className="w-28 h-28 rounded-full bg-surface-accent border-4 border-default/50 flex items-center justify-center text-brand-primary font-heading font-black text-3xl relative group cursor-pointer overflow-hidden shadow-inner">
+            <div className="w-28 h-28 rounded-full bg-surface-accent border-4 border-default/50 flex items-center justify-center text-link font-heading font-black text-3xl relative group cursor-pointer overflow-hidden shadow-inner">
               {formData.initials}
               <div className="absolute inset-0 bg-ink-midnight/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                  <Camera size={24} className="text-on-brand mb-1" />
@@ -88,7 +88,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                   readOnly
                   className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[15px] font-bold text-strong focus:outline-none transition-all cursor-pointer group-hover:border-brand-primary shadow-sm"
                 />
-                <Calendar size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body group-hover:text-brand-primary transition-colors" />
+                <Calendar size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body group-hover:text-link transition-colors" />
               </div>
             </div>
 
@@ -104,7 +104,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                   <option value="" disabled>Select Country</option>
                   {countries.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
-                <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
+                <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-link transition-colors" />
               </div>
               <div className="flex flex-wrap gap-2 pt-1">
                 {formData.nationality.map(country => (
@@ -138,7 +138,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                         <option value="">None</option>
                         {positions.map(p => <option key={p} value={p}>{p}</option>)}
                       </select>
-                      <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
+                      <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-link transition-colors" />
                     </div>
                   </div>
                 ))}
@@ -159,7 +159,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
                     <option value="Right">Right</option>
                     <option value="Ambidextrous">Ambidextrous</option>
                   </select>
-                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-brand-primary transition-colors" />
+                  <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none group-hover:text-link transition-colors" />
                 </div>
               </div>
 
@@ -194,7 +194,7 @@ export const EditPlayerModal: React.FC<EditPlayerModalProps> = ({ player, onClos
               onUpdate(formData);
               onClose();
             }}
-            className="bg-brand-primary text-inverse hover:bg-[var(--blue-900)] px-12 py-4 rounded-xl font-heading font-black text-sm transition-all shadow-lg shadow-brand-primary/20 uppercase tracking-widest flex items-center gap-2"
+            className="bg-brand-primary text-on-brand hover:bg-[var(--blue-900)] px-12 py-4 rounded-xl font-heading font-black text-sm transition-all shadow-lg shadow-brand-primary/20 uppercase tracking-widest flex items-center gap-2"
           >
             Update
           </button>

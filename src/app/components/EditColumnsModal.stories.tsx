@@ -87,7 +87,7 @@ export const DraftIsDiscardedOnClose: Story = {
         </span>
         <button
           onClick={() => setOpen(true)}
-          className="bg-brand-primary border-2 border-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors shadow-md"
+          className="bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors shadow-md"
         >
           Edit columns
         </button>

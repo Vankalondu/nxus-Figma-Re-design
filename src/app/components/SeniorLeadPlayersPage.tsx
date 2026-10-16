@@ -289,7 +289,7 @@ const EditableColHeaderLight = ({ label, onRename, onRemove, onHide, onMove }: {
         <span>{label}</span>
       )}
       <button onClick={(e) => { e.stopPropagation(); setOpen(o => !o); }}
-        className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-body hover:text-strong">
+        className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-current">
         <ChevronDown size={8} />
       </button>
       {open && (
@@ -418,7 +418,7 @@ const ActionButtons = ({ items }: { items: ActionItem[] }) => {
             className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors shrink-0 ${
               item.label === 'Restore'
                 ? 'text-status-success hover:bg-status-success hover:text-on-brand'
-                : 'text-strong hover:bg-brand-primary hover:text-inverse'
+                : 'text-strong hover:bg-brand-primary hover:text-on-brand'
             }`}>
             {item.icon}
           </button>
@@ -477,7 +477,7 @@ const CellSelect = ({ value, options, onChange, placeholder = '–', renderValue
         const selected = opt === value;
         return (
           <button key={opt || '__blank'} type="button" onClick={(e) => { e.stopPropagation(); onChange(opt); setOpen(false); }}
-            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors ${selected ? 'bg-surface-accent text-brand-primary' : 'text-strong hover:bg-surface-accent'}`}>
+            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors ${selected ? 'bg-surface-accent text-link' : 'text-strong hover:bg-surface-accent'}`}>
             {renderValue ? renderValue(opt) : <span>{opt || placeholder}</span>}
           </button>
         );
@@ -545,7 +545,7 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
               <input type="date" value={newDue} onChange={e => setNewDue(e.target.value)}
                 className="w-28 bg-surface-card border border-default rounded-xl px-2 py-2 font-body text-[12px] font-bold text-body focus:outline-none" />
               <button onClick={() => { if (newTask.trim()) { setTasks(p => [...p, { id: `t${Date.now()}`, text: newTask, dueDate: newDue || 'TBD', done: false }]); setNewTask(''); setNewDue(''); }}}
-                className="w-8 h-8 bg-brand-primary text-inverse rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
+                className="w-8 h-8 bg-brand-primary text-on-brand rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
             </div>
           </div>
           <div className="h-px bg-border-default" />
@@ -569,7 +569,7 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
               <input value={newNote} onChange={e => setNewNote(e.target.value)} placeholder="Add a note..."
                 className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[12px] font-bold text-body focus:outline-none focus:border-focus" />
               <button onClick={() => { if (newNote.trim()) { setNotes(p => [...p, { id: `n${Date.now()}`, author: 'You', text: newNote, date: 'Now' }]); setNewNote(''); }}}
-                className="w-8 h-8 bg-brand-primary text-inverse rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
+                className="w-8 h-8 bg-brand-primary text-on-brand rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
             </div>
           </div>
         </div>
@@ -717,7 +717,7 @@ const PosHeader = ({ pos, count, colSpan }: { pos: string; count: number; colSpa
 const YobHeader = ({ yob, colSpan }: { yob: number; colSpan: number }) => (
   <tr className="border-t border-default">
     <td colSpan={colSpan} className="py-2 px-4 bg-surface-accent sticky top-[calc(var(--tbl-head-h)+var(--tbl-group-h))] z-30">
-      <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-brand-primary">{yob}</span>
+      <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-link">{yob}</span>
     </td>
   </tr>
 );
@@ -918,7 +918,7 @@ const PlayerTable = ({
                             <PlayerAvatar initials={player.initials} />
                             <div className="flex flex-col items-start min-w-0">
                               <div className="flex items-center gap-1">
-                                <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
+                                <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                                 {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
                               <div className="flex items-center gap-2">
@@ -943,7 +943,7 @@ const PlayerTable = ({
                                 ? <span title="Direct — added directly to the Long List"><UserRoundCheck size={15} className="text-status-warning" /></span>
                                 : <span title="Ladder — reached via the scouting process"><StairsIcon className="w-[15px] h-[15px] text-status-ladder" /></span>}
                               <button onClick={() => onOpenVideos?.(player)} title="Watch videos"
-                                className="w-6 h-6 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors">
+                                className="w-6 h-6 rounded-full bg-brand-primary/10 text-link hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors">
                                 <Play size={11} className="ml-0.5" />
                               </button>
                             </div>
@@ -1016,7 +1016,7 @@ const PlayerTable = ({
       </div>
       {showTop && (
         <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-inverse shadow-lg font-body font-bold text-[13px] hover:bg-brand-primary/90 transition-colors">
+          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold text-[13px] hover:bg-brand-primary/90 transition-colors">
           <ArrowUp size={14} /> Top
         </button>
       )}
@@ -1210,7 +1210,7 @@ const TargetSuperTable = ({
                           <div className="flex items-center gap-2 min-w-[160px]">
                             <PlayerAvatar initials={player.initials} />
                             <div className="flex flex-col items-start min-w-0">
-                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
+                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1">
                                 <span className="font-body text-[12px] text-muted">{player.age}</span>
                                 <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
@@ -1230,7 +1230,7 @@ const TargetSuperTable = ({
                             <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-inverse text-strong flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
                             {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
                             {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
-                            <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
+                            <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-link hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
                           </div>
                         </td>
                         <ECSel field="profile" opts={['', ...(profileTypes?.map((pt:any)=>pt.name) || ['Performance','Prospect','Wonderkid'])]} tint />
@@ -1286,7 +1286,7 @@ const TargetSuperTable = ({
       )}
       {showTop && (
         <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-inverse shadow-lg font-body font-bold text-[14px] hover:bg-brand-primary/90 transition-colors">
+          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold text-[14px] hover:bg-brand-primary/90 transition-colors">
           <ArrowUp size={14} /> Top
         </button>
       )}
@@ -1544,7 +1544,7 @@ const ShortListTable = ({
                             <PlayerAvatar initials={player.initials} />
                             <div className="flex flex-col items-start min-w-0">
                             <div className="flex items-center gap-1">
-                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-brand-primary text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
+                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
                               {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               {(() => {
                                 const nxtVals = Object.values(scoutData.get(player.id) || {});
@@ -1598,7 +1598,7 @@ const ShortListTable = ({
                             <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-inverse text-strong flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
                             {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
                             {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
-                            <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
+                            <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-link hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
                           </div>
                         </td>
                         {/* Scout columns: PLG / POG / NXT each */}
@@ -1638,7 +1638,7 @@ const ShortListTable = ({
       </div>
       {showTop && (
         <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-inverse shadow-lg font-body font-bold text-[14px] hover:bg-brand-primary/90 transition-colors">
+          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold text-[14px] hover:bg-brand-primary/90 transition-colors">
           <ArrowUp size={14} /> Top
         </button>
       )}
@@ -1825,7 +1825,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                             <PlayerAvatar initials={p.name.split(' ').map(n => n[0]).join('').substring(0, 2)} />
                             <div className="flex flex-col items-start">
                             <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout'}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team, matchVideos: p.matchVideos, highlightVideos: p.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: 'Signed List', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })}
-                              className="font-body font-bold text-[14px] text-brand-primary hover:underline cursor-pointer whitespace-nowrap">{p.name}</span>
+                              className="font-body font-bold text-[14px] text-link hover:underline cursor-pointer whitespace-nowrap">{p.name}</span>
                             <FlagBadge code={flagCode} label={p.nation} />
                             </div>
                           </div>
@@ -2032,19 +2032,19 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
         <div className="absolute mt-1 bg-surface-card border border-default/50 rounded-xl shadow-[var(--shadow-2xl)] p-3 z-50 w-[260px] animate-fade-in">
           {/* Month/Year nav */}
           <div className="flex items-center justify-between mb-2">
-            <button onClick={prevMonth} className="w-7 h-7 rounded-lg bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-inverse transition-colors">
+            <button onClick={prevMonth} className="w-7 h-7 rounded-lg bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-on-brand transition-colors">
               <ChevronDown size={14} className="rotate-90" />
             </button>
             <div className="flex items-center gap-1 relative">
               {/* Month dropdown trigger */}
               <button onClick={() => { setShowMonthGrid(!showMonthGrid); setShowYearList(false); }}
-                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-strong hover:text-brand-primary transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
+                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-strong hover:text-link transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
                 {MONTH_NAMES[viewMonth]}
                 <ChevronDown size={9} className="text-body" />
               </button>
               {/* Year dropdown trigger */}
               <button onClick={() => { setShowYearList(!showYearList); setShowMonthGrid(false); }}
-                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-strong hover:text-brand-primary transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
+                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-strong hover:text-link transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
                 {viewYear}
                 <ChevronDown size={9} className="text-body" />
               </button>
@@ -2056,7 +2056,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
                     {MONTH_SHORT.map((m, i) => (
                       <button key={m} onClick={() => { setViewMonth(i); setShowMonthGrid(false); }}
                         className={`py-2 rounded-lg font-body font-bold text-[12px] text-center transition-all ${
-                          i === viewMonth ? 'bg-brand-primary text-inverse shadow-sm' : 'text-strong hover:bg-surface-accent'
+                          i === viewMonth ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-strong hover:bg-surface-accent'
                         }`}>{m}</button>
                     ))}
                   </div>
@@ -2069,13 +2069,13 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
                   {Array.from({ length: 21 }, (_, i) => viewYear - 10 + i).map(y => (
                     <button key={y} onClick={() => { setViewYear(y); setShowYearList(false); }}
                       className={`w-full py-2 rounded-lg font-heading font-bold text-[12px] text-center transition-all ${
-                        y === viewYear ? 'bg-brand-primary text-inverse shadow-sm' : 'text-strong hover:bg-surface-accent'
+                        y === viewYear ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-strong hover:bg-surface-accent'
                       }`}>{y}</button>
                   ))}
                 </div>
               )}
             </div>
-            <button onClick={nextMonth} className="w-7 h-7 rounded-lg bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-inverse transition-colors">
+            <button onClick={nextMonth} className="w-7 h-7 rounded-lg bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-on-brand transition-colors">
               <ChevronDown size={14} className="-rotate-90" />
             </button>
           </div>
@@ -2091,8 +2091,8 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
             {days.map(d => (
               <button key={d} onClick={() => selectDay(d)}
                 className={`w-full aspect-square flex items-center justify-center font-body font-bold text-[12px] rounded-full transition-all ${
-                  isSelected(d) ? 'bg-brand-primary text-inverse shadow-sm'
-                    : isToday(d) ? 'bg-brand-primary/10 text-brand-primary font-black'
+                  isSelected(d) ? 'bg-brand-primary text-on-brand shadow-sm'
+                    : isToday(d) ? 'bg-brand-primary/10 text-link font-black'
                     : 'text-strong hover:bg-surface-accent'
                 }`}>
                 {d}
@@ -2102,9 +2102,9 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
           {/* Footer actions */}
           <div className="flex items-center justify-between mt-2 pt-2 border-t border-default/40">
             <button onClick={() => { onChange(''); setOpen(false); }}
-              className="font-body font-bold text-[12px] text-body hover:text-brand-primary transition-colors">Clear</button>
+              className="font-body font-bold text-[12px] text-body hover:text-link transition-colors">Clear</button>
             <button onClick={() => { const t = new Date(); selectDay(t.getDate()); setViewYear(t.getFullYear()); setViewMonth(t.getMonth()); }}
-              className="font-body font-bold text-[12px] text-brand-primary hover:text-brand-primary/80 transition-colors">Today</button>
+              className="font-body font-bold text-[12px] text-link hover:text-link/80 transition-colors">Today</button>
           </div>
         </div>
       )}
@@ -2131,7 +2131,7 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
         onKeyDown={e => e.key === 'Enter' && onAdd()}
         className="font-body text-[12px] font-semibold text-body border-none outline-none px-2 py-1 flex-1 min-w-0 bg-transparent placeholder:text-placeholder" />
       <button onClick={onAdd}
-        className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-2 py-1 hover:bg-brand-primary hover:text-inverse transition-colors shrink-0">+</button>
+        className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-2 py-1 hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0">+</button>
     </div>
   </div>
 );
@@ -2296,11 +2296,11 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <h3 className="font-heading font-semibold text-[16px] text-heading shrink-0">Scope Settings</h3>
           <div className="flex-1" />
           <button onClick={handleSaveCard1}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard1 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-inverse hover:bg-brand-primary/80'}`}>
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard1 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'}`}>
             {savedCard1 ? <><Check size={11} /> Saved</> : <><Save size={11} /> Update</>}
           </button>
           <button onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1 px-3 py-2 rounded-full border border-default bg-surface-card font-body font-bold text-[12px] text-body hover:border-brand-primary hover:text-brand-primary transition-all">
+            className="flex items-center gap-1 px-3 py-2 rounded-full border border-default bg-surface-card font-body font-bold text-[12px] text-body hover:border-brand-primary hover:text-link transition-all">
             <Plus size={11} /> Add Scope
           </button>
         </div>
@@ -2350,7 +2350,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             {yearBadges.map(y => (
               <button key={y} onClick={() => handleYearClick(y)}
                 className={`px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all ${
-                  activeYearBadge === y ? 'bg-brand-primary text-inverse shadow-sm'
+                  activeYearBadge === y ? 'bg-brand-primary text-on-brand shadow-sm'
                     : 'text-body hover:text-strong'
                 }`}>{y}</button>
             ))}
@@ -2366,8 +2366,8 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                   return (
                     <button key={pos} onClick={() => injectPosition(activeYearBadge, pos)}
                       className={`px-5 py-3 rounded-full font-heading font-bold text-[14px] border transition-all ${
-                        active ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm'
-                          : 'bg-surface-accent text-strong border-default hover:bg-brand-primary/10 hover:border-brand-primary hover:text-brand-primary'
+                        active ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm'
+                          : 'bg-surface-accent text-strong border-default hover:bg-brand-primary/10 hover:border-brand-primary hover:text-link'
                       }`}>{pos}</button>
                   );
                 })}
@@ -2392,7 +2392,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <h3 className="font-heading font-semibold text-[16px] text-heading">Profile Tags</h3>
           <div className="flex-1" />
           <button onClick={handleSaveCard2}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard2 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-inverse hover:bg-brand-primary/80'}`}>
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard2 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'}`}>
             {savedCard2 ? <><Check size={11} /> Saved</> : <><Save size={11} /> Update</>}
           </button>
         </div>
@@ -2409,7 +2409,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             ))}</div>
             <button onClick={() => { if (newProfileName.trim()) { onAddProfile(newProfileName.trim(), newProfileColor); setNewProfileName(''); setNewProfileColor('#1E88E5'); } }}
               disabled={!newProfileName.trim()}
-              className="w-7 h-7 rounded-lg bg-brand-primary flex items-center justify-center text-inverse hover:bg-brand-primary/80 transition-colors disabled:opacity-40 shrink-0">
+              className="w-7 h-7 rounded-lg bg-brand-primary flex items-center justify-center text-on-brand hover:bg-brand-primary/80 transition-colors disabled:opacity-40 shrink-0">
               <Plus size={13} />
             </button>
           </div>
@@ -2435,8 +2435,8 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                   { id: 'pathways' as const, label: 'Pathways' },
                 ]).map(opt => (
                   <button key={opt.id} onClick={() => { setClassView(opt.id); setClassDropOpen(false); }}
-                    className={`flex items-center gap-2 w-full px-4 py-2 font-body font-bold text-[12px] transition-colors text-left ${classView === opt.id ? 'bg-brand-primary/10 text-brand-primary' : 'text-strong hover:bg-surface-accent'}`}>
-                    {classView === opt.id && <Check size={11} className="text-brand-primary" />}
+                    className={`flex items-center gap-2 w-full px-4 py-2 font-body font-bold text-[12px] transition-colors text-left ${classView === opt.id ? 'bg-brand-primary/10 text-link' : 'text-strong hover:bg-surface-accent'}`}>
+                    {classView === opt.id && <Check size={11} className="text-link" />}
                     {opt.label}
                   </button>
                 ))}
@@ -2464,7 +2464,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                   onKeyDown={e => e.key === 'Enter' && newGrade.trim() && (setCustomGrades(p => [...p, newGrade.trim()]), setNewGrade(''))}
                   className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newGrade.trim()) { setCustomGrades(p => [...p, newGrade.trim()]); setNewGrade(''); }}}
-                  className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-inverse transition-colors">+</button>
+                  className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
               </div>
             </div>
           )}
@@ -2485,7 +2485,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                   onKeyDown={e => e.key === 'Enter' && newNxtVal.trim() && (setCustomNxt(p => [...p, newNxtVal.trim()]), setNewNxtVal(''))}
                   className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newNxtVal.trim()) { setCustomNxt(p => [...p, newNxtVal.trim()]); setNewNxtVal(''); }}}
-                  className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-inverse transition-colors">+</button>
+                  className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
               </div>
             </div>
           )}
@@ -2506,7 +2506,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                   onKeyDown={e => e.key === 'Enter' && newPathway.trim() && (setCustomPathways(p => [...p, newPathway.trim()]), setNewPathway(''))}
                   className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newPathway.trim()) { setCustomPathways(p => [...p, newPathway.trim()]); setNewPathway(''); }}}
-                  className="bg-surface-accent border-l border-default text-brand-primary font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-inverse transition-colors">+</button>
+                  className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
               </div>
             </div>
           )}
@@ -2715,7 +2715,7 @@ const DatabaseToolbar = ({
         <span className={label}>DOB range</span>
         <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default">
           <span className="font-body font-bold text-[12px] text-body">01/01/{scopeYearMin} – 31/12/{scopeYearMax}</span>
-          <span title={dobTooltip} className="flex items-center text-brand-primary cursor-help"><Info size={13} /></span>
+          <span title={dobTooltip} className="flex items-center text-link cursor-help"><Info size={13} /></span>
         </div>
       </div>
       {/* Position — label above */}
@@ -2814,7 +2814,7 @@ const LongListToolbar = ({ methodFilter, setMethodFilter, filters, search, setSe
   }, []);
   const segBtn = (val: 'all'|'ladder'|'direct'|'archive', text: string) => (
     <button onClick={() => setMethodFilter(val)}
-      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${methodFilter === val ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>
+      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${methodFilter === val ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
       {text}
     </button>
   );
@@ -2885,7 +2885,7 @@ const ListFilterToolbar = ({
   );
   const segBtn = (val: ArchiveView, text: string) => (
     <button onClick={() => setArchiveView(val)}
-      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${archiveView === val ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>
+      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${archiveView === val ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
       {text}
     </button>
   );
@@ -3206,7 +3206,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 onDrop={e => { e.preventDefault(); setDragTabId(null); }}
                 onDragEnd={() => setDragTabId(null)}
                 title="Drag to reorder"
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''} ${isActive ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''} ${isActive ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
                 {tab.label}
                 {count !== null && count > 0 && (
                   <span className={`font-body type-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-surface-card/20 text-on-brand' : 'bg-brand-primary/15 text-strong'}`}>{count}</span>
@@ -3224,7 +3224,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {/* Tabs — mobile: active label + 'More ▾' dropdown */}
         <div className="md:hidden relative">
           <button onClick={() => setTabsMenuOpen(o => !o)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-inverse font-body font-bold type-body-sm">
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand font-body font-bold type-body-sm">
             <span className="truncate max-w-[160px]">{TABS.find(t => t.id === activeTab)?.label ?? 'Select'}</span>
             <ChevronDown size={14} className={`shrink-0 transition-transform ${tabsMenuOpen ? 'rotate-180' : ''}`} />
           </button>
@@ -3236,7 +3236,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 return (
                   <div key={tab.id} className="flex items-center gap-1 pl-2 pr-1">
                     <button onClick={() => { setActiveTab(tab.id); setTabsMenuOpen(false); }}
-                      className={`flex-1 flex items-center justify-between gap-2 px-2 py-2 rounded-lg font-body font-bold type-body-sm ${isActive ? 'text-brand-primary bg-brand-primary/10' : 'text-body hover:bg-surface-accent'}`}>
+                      className={`flex-1 flex items-center justify-between gap-2 px-2 py-2 rounded-lg font-body font-bold type-body-sm ${isActive ? 'text-link bg-brand-primary/10' : 'text-body hover:bg-surface-accent'}`}>
                       {tab.label}
                       {count !== null && count > 0 && <span className="font-body type-micro font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-body">{count}</span>}
                     </button>
@@ -3264,7 +3264,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
               <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
             </button>
             <button onClick={() => setSignedAddOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-default bg-surface-card text-brand-primary hover:border-brand-primary hover:bg-surface-accent shrink-0 transition-colors">
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-default bg-surface-card text-link hover:border-brand-primary hover:bg-surface-accent shrink-0 transition-colors">
               <Plus size={14} /> Add Signed Player
             </button>
           </>
@@ -3272,11 +3272,11 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {isListTab && (
           <div className="flex items-center bg-surface-accent rounded-full p-1 gap-1 shrink-0">
             <button onClick={() => setViewMode('table')} title="Table View"
-              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'table' ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>
+              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'table' ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
               <List size={14} />
             </button>
             <button onClick={() => setViewMode('card')} title="Card View"
-              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'card' ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>
+              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'card' ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
               <LayoutGrid size={14} />
             </button>
           </div>
@@ -3285,7 +3285,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
         {isListTab && (
           <>
             <button onClick={() => setShowFilters(s => !s)}
-              className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border shrink-0 transition-colors ${showFilters ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
+              className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border shrink-0 transition-colors ${showFilters ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
               <SlidersHorizontal size={14} /> Filters
             </button>
             {activeTab !== 'database' && (

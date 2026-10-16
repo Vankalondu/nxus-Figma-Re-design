@@ -181,7 +181,7 @@ function KitColorsModal({
           active ? 'border-brand-primary bg-brand-primary/5' : 'border-default hover:border-brand-primary'
         }`}
       >
-        <span className={`flex items-center gap-2 ${active ? 'text-brand-primary' : 'text-body'}`}>
+        <span className={`flex items-center gap-2 ${active ? 'text-link' : 'text-body'}`}>
           {icon}
           <span className="font-heading font-semibold text-[14px] text-strong">{label}</span>
         </span>
@@ -194,7 +194,7 @@ function KitColorsModal({
             {colorName(value, palette)}
           </span>
           {active && (
-            <span className="ml-auto inline-flex items-center gap-1 font-heading font-bold text-[10px] uppercase tracking-widest text-brand-primary shrink-0">
+            <span className="ml-auto inline-flex items-center gap-1 font-heading font-bold text-[10px] uppercase tracking-widest text-link shrink-0">
               <Check size={12} className="shrink-0" />
               Selected
             </span>
@@ -315,14 +315,14 @@ function KitColorsModal({
             {step === 1 ? (
               <button
                 onClick={() => setStep(2)}
-                className="bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
+                className="bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
               >
                 Next
               </button>
             ) : (
               <button
                 onClick={() => onSave({ jersey, shorts })}
-                className="inline-flex items-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
               >
                 <Check size={14} className="shrink-0" />
                 Save Kit
@@ -428,7 +428,7 @@ function TeamCard({
         <span
           className={`inline-flex items-center px-3 py-1 rounded-full border font-heading font-bold text-[10px] uppercase tracking-widest shrink-0 ${
             side === 'home'
-              ? 'bg-brand-primary/10 text-brand-primary border-brand-primary/20'
+              ? 'bg-brand-primary/10 text-link border-brand-primary/20'
               : 'bg-status-success/10 text-status-success border-status-success/20'
           }`}
         >
@@ -527,12 +527,12 @@ const PHASES: { id: string; label: string }[] = [
 ];
 
 const EVENT_TYPES: { id: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; chipClass: string }[] = [
-  { id: 'goal', label: 'Goal', icon: Target, chipClass: 'bg-brand-primary/10 text-brand-primary' },
-  { id: 'assist', label: 'Assist', icon: Zap, chipClass: 'bg-brand-primary/10 text-brand-primary' },
+  { id: 'goal', label: 'Goal', icon: Target, chipClass: 'bg-brand-primary/10 text-link' },
+  { id: 'assist', label: 'Assist', icon: Zap, chipClass: 'bg-brand-primary/10 text-link' },
   { id: 'yellow-card', label: 'Yellow Card', icon: Square, chipClass: 'bg-status-warning/10 text-status-warning' },
   { id: 'red-card', label: 'Red Card', icon: Square, chipClass: 'bg-status-error/10 text-status-error' },
   { id: 'substitution', label: 'Substitution', icon: ArrowRightLeft, chipClass: 'bg-surface-accent text-body' },
-  { id: 'chance', label: 'Chance', icon: Sparkles, chipClass: 'bg-brand-primary/10 text-brand-primary' },
+  { id: 'chance', label: 'Chance', icon: Sparkles, chipClass: 'bg-brand-primary/10 text-link' },
   { id: 'save', label: 'Save', icon: Shield, chipClass: 'bg-status-success/10 text-status-success' },
   { id: 'foul', label: 'Foul', icon: AlertTriangle, chipClass: 'bg-status-error/10 text-status-error' },
 ];
@@ -658,7 +658,7 @@ function MatchEventsTab({
       >
         <span className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-2 min-w-0">
-            <Timer size={14} className={`shrink-0 ${active ? 'text-brand-primary' : 'text-body'}`} />
+            <Timer size={14} className={`shrink-0 ${active ? 'text-link' : 'text-body'}`} />
             <span className="font-heading font-semibold text-[14px] text-strong truncate">
               {target === 'regular' ? 'Regular Time' : 'Extra Time'}
             </span>
@@ -714,7 +714,7 @@ function MatchEventsTab({
             <span className="font-mono font-bold text-[12px] text-body">{match.date}</span>
             <button
               onClick={onViewLineups}
-              className="inline-flex items-center gap-1 font-body font-bold text-[12px] text-brand-primary hover:underline"
+              className="inline-flex items-center gap-1 font-body font-bold text-[12px] text-link hover:underline"
             >
               <ClipboardList size={12} className="shrink-0" />
               View Basic Entry
@@ -767,7 +767,7 @@ function MatchEventsTab({
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <h4 className="font-heading font-semibold text-[16px] text-heading">Match Duration</h4>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20 font-body font-bold text-[12px]">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-body font-bold text-[12px]">
               <Timer size={12} className="shrink-0" />
               Current: {duration === 'extra' ? '120' : '90'} min
             </span>
@@ -905,7 +905,7 @@ function MatchEventsTab({
                     ) : (
                       <button
                         onClick={() => capturePhase(ph.id)}
-                        className="inline-flex items-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-1 font-body font-bold text-[12px] transition-colors shadow-sm shrink-0"
+                        className="inline-flex items-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-1 font-body font-bold text-[12px] transition-colors shadow-sm shrink-0"
                       >
                         <Clock size={12} className="shrink-0" />
                         Capture
@@ -975,7 +975,7 @@ function MatchEventsTab({
               disabled={!canAdd}
               className={`inline-flex items-center gap-2 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm ${
                 canAdd
-                  ? 'bg-brand-primary text-inverse hover:bg-brand-primary/80'
+                  ? 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'
                   : 'bg-surface-accent text-body cursor-not-allowed'
               }`}
             >
@@ -1063,7 +1063,7 @@ function MatchEventsTab({
               <span className="font-heading font-semibold text-[16px] text-strong truncate" title={teamName(railSide)}>
                 {teamName(railSide)}
               </span>
-              <span className="inline-flex items-center self-start px-3 py-0.5 rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20 font-heading font-bold text-[10px] uppercase tracking-widest">
+              <span className="inline-flex items-center self-start px-3 py-0.5 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-heading font-bold text-[10px] uppercase tracking-widest">
                 Senior Team
               </span>
             </div>
@@ -1214,15 +1214,15 @@ export function MatchEntry({
             <ArrowLeft size={14} />
           </button>
           <nav className="flex items-center gap-2 font-body font-bold text-[14px] min-w-0 flex-wrap">
-            <button onClick={onBackToCompetitions} className="text-brand-primary hover:underline shrink-0">
+            <button onClick={onBackToCompetitions} className="text-link hover:underline shrink-0">
               Competitions
             </button>
             <ChevronRight size={14} className="text-body shrink-0" />
-            <button onClick={onBackToCompetition} className="text-brand-primary hover:underline truncate max-w-[240px]">
+            <button onClick={onBackToCompetition} className="text-link hover:underline truncate max-w-[240px]">
               {competitionName}
             </button>
             <ChevronRight size={14} className="text-body shrink-0" />
-            <button onClick={onBackToCompetition} className="text-brand-primary hover:underline truncate max-w-[200px]">
+            <button onClick={onBackToCompetition} className="text-link hover:underline truncate max-w-[200px]">
               {roundName}
             </button>
             <ChevronRight size={14} className="text-body shrink-0" />
@@ -1261,7 +1261,7 @@ export function MatchEntry({
               key={t.id}
               onClick={() => setTab(t.id)}
               className={`flex items-center gap-2 pb-2 -mb-px border-b-2 font-body font-bold text-[14px] whitespace-nowrap transition-colors ${
-                tab === t.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-body hover:text-strong'
+                tab === t.id ? 'border-brand-primary text-link' : 'border-transparent text-body hover:text-strong'
               }`}
             >
               <t.icon size={14} />
@@ -1348,7 +1348,7 @@ export function MatchEntry({
             <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={handleSave}
-                className="inline-flex items-center justify-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors shadow-sm"
+                className="inline-flex items-center justify-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors shadow-sm"
               >
                 <Save size={14} className="shrink-0" />
                 Save Submission

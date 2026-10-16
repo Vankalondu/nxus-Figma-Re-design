@@ -97,10 +97,10 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
                 onClick={() => openPlayer(p)} onMouseEnter={() => setActive(i)}
                 className={`relative flex items-center gap-3 pl-2.5 pr-2 py-2 rounded-[14px] cursor-pointer transition-colors group ${i === active ? 'bg-surface-accent' : 'hover:bg-surface-accent'}`}>
                 {/* avatar (initials chip) */}
-                <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-black text-[12px] shrink-0">{p.initials}</div>
+                <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black text-[12px] shrink-0">{p.initials}</div>
                 {/* name + meta */}
                 <div className="min-w-0 flex-1">
-                  <div className={`font-body font-bold text-[14px] truncate transition-colors ${i === active ? 'text-brand-primary' : 'text-strong group-hover:text-brand-primary'}`}>{p.name}</div>
+                  <div className={`font-body font-bold text-[14px] truncate transition-colors ${i === active ? 'text-link' : 'text-strong group-hover:text-link'}`}>{p.name}</div>
                   <div className="flex items-center gap-1.5 font-body text-[12px] text-muted min-w-0">
                     {flag && <img src={`https://flagcdn.com/w40/${flag}.png`} alt={p.country} className="w-4 h-3 rounded-[2px] object-cover shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />}
                     <span className="truncate">{p.team}</span>
@@ -119,15 +119,15 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
                     <div className="absolute right-0 top-full mt-1 z-50 w-48 bg-surface-card border border-default rounded-[14px] shadow-2xl py-1.5" onClick={e => e.stopPropagation()}>
                       <button type="button" onClick={() => addTo(p, 'short-list')}
                         className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-body hover:bg-surface-accent transition-colors">
-                        <Bookmark size={14} className="text-brand-primary" /> Add to shortlist
+                        <Bookmark size={14} className="text-link" /> Add to shortlist
                       </button>
                       <button type="button" onClick={() => addTo(p, 'target-list')}
                         className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-body hover:bg-surface-accent transition-colors">
-                        <Crosshair size={14} className="text-brand-primary" /> Add to target
+                        <Crosshair size={14} className="text-link" /> Add to target
                       </button>
                       <button type="button" onClick={() => startUpload(p)}
                         className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-body hover:bg-surface-accent transition-colors">
-                        <Film size={14} className="text-brand-primary" /> Upload highlight
+                        <Film size={14} className="text-link" /> Upload highlight
                       </button>
                     </div>
                   )}

@@ -36,7 +36,7 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
       <div className="hidden md:flex items-center gap-2 overflow-x-auto hide-scrollbar flex-nowrap pb-1">
         {tabs.map(tab => (
           <button key={tab.id} onClick={() => onSelect(tab.id)}
-            className={`shrink-0 inline-flex items-center px-6 py-2 rounded-full font-body font-bold type-body-sm transition-colors border ${activeId === tab.id ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
+            className={`shrink-0 inline-flex items-center px-6 py-2 rounded-full font-body font-bold type-body-sm transition-colors border ${activeId === tab.id ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
             {tab.label}{badge(tab, activeId === tab.id)}
           </button>
         ))}
@@ -44,7 +44,7 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
       {/* Mobile: active label + dropdown */}
       <div className="md:hidden relative">
         <button onClick={() => setOpen(o => !o)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-inverse font-body font-bold type-body-sm">
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand font-body font-bold type-body-sm">
           <span className="truncate max-w-[180px]">{active?.label ?? 'Select'}</span>
           {active && badge(active, true)}
           <ChevronDown size={14} className={`shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
@@ -53,7 +53,7 @@ export function ResponsiveTabs({ tabs, activeId, onSelect, className = '' }: {
           <div className="absolute left-0 top-full mt-1 z-50 bg-surface-card border border-default rounded-[16px] shadow-2xl overflow-hidden min-w-[200px] py-1">
             {tabs.map(tab => (
               <button key={tab.id} onClick={() => { onSelect(tab.id); setOpen(false); }}
-                className={`w-full text-left px-4 py-2 font-body font-bold type-body-sm inline-flex items-center ${activeId === tab.id ? 'text-brand-primary bg-brand-primary/10' : 'text-body hover:bg-surface-accent'}`}>
+                className={`w-full text-left px-4 py-2 font-body font-bold type-body-sm inline-flex items-center ${activeId === tab.id ? 'text-link bg-brand-primary/10' : 'text-body hover:bg-surface-accent'}`}>
                 {tab.label}{badge(tab, false)}
               </button>
             ))}

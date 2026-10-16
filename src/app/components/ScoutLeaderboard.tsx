@@ -73,7 +73,7 @@ export function ScoutLeaderboard() {
   const getBadgeIcon = (badge: string | null) => {
     switch (badge) {
       case 'hot':
-        return <Flame className="w-4 h-4 text-brand-primary" />;
+        return <Flame className="w-4 h-4 text-link" />;
       case 'star':
         return <Star className="w-4 h-4 text-status-warning" />;
       case 'rising':
@@ -110,7 +110,7 @@ export function ScoutLeaderboard() {
                   <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
                     scout.rank === 1 ? 'bg-status-warning/20 text-status-warning-fg' :
                     scout.rank === 2 ? 'bg-text-body/20 text-body' :
-                    'bg-brand-primary/20 text-brand-primary'
+                    'bg-brand-primary/20 text-link'
                   } font-bold`}>
                     {scout.rank}
                   </div>
@@ -154,10 +154,10 @@ export function ScoutLeaderboard() {
 
       <div className="mt-6 p-4 bg-brand-primary/10 border border-brand-primary/30 rounded-lg">
         <div className="flex items-start gap-3">
-          <Award className="w-5 h-5 text-brand-primary mt-0.5" />
+          <Award className="w-5 h-5 text-link mt-0.5" />
           <div>
-            <p className="text-brand-primary text-sm font-medium">Keep up the momentum!</p>
-            <p className="text-brand-primary/70 text-xs mt-1">
+            <p className="text-link text-sm font-medium">Keep up the momentum!</p>
+            <p className="text-link/70 text-xs mt-1">
               Complete your pending tasks to climb the leaderboard. Every video and match report counts! 💪
             </p>
           </div>

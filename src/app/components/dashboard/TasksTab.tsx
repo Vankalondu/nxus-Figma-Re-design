@@ -67,13 +67,13 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
     setForm({ text: '', description: '', assignedTo: 'Me', deadline: '', priority: 'Medium' });
     setShowAssign(false);
   };
-  const seg = (active: boolean) => `font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${active ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`;
+  const seg = (active: boolean) => `font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${active ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`;
 
   const Pager = () => pageCount <= 1 ? null : (
     <div className="flex items-center justify-center gap-1 px-4 py-3">
       <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="w-8 h-8 rounded-full border border-default flex items-center justify-center text-body hover:text-strong disabled:opacity-30 disabled:cursor-not-allowed"><ChevronLeft size={15} /></button>
       {Array.from({ length: pageCount }).slice(0, 6).map((_, i) => (
-        <button key={i} onClick={() => setPage(i)} className={`w-8 h-8 rounded-full font-body font-bold text-[12px] transition-colors ${page === i ? 'bg-brand-primary text-inverse' : 'text-body hover:bg-surface-accent'}`}>{i + 1}</button>
+        <button key={i} onClick={() => setPage(i)} className={`w-8 h-8 rounded-full font-body font-bold text-[12px] transition-colors ${page === i ? 'bg-brand-primary text-on-brand' : 'text-body hover:bg-surface-accent'}`}>{i + 1}</button>
       ))}
       {pageCount > 6 && <span className="px-1 text-body">…</span>}
       <button onClick={() => setPage(p => Math.min(pageCount - 1, p + 1))} disabled={page >= pageCount - 1} className="ml-1 inline-flex items-center gap-1 px-3 h-8 rounded-full border border-default font-body font-bold text-[12px] text-body hover:text-body disabled:opacity-30 disabled:cursor-not-allowed">Next <ChevronRight size={13} /></button>
@@ -216,7 +216,7 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
                 <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Assignee</label><select value={form.assignedTo} onChange={e => setForm(f => ({ ...f, assignedTo: e.target.value }))} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none cursor-pointer">{TASK_ASSIGNEES.map(a => <option key={a}>{a}</option>)}</select></div>
                 <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Deadline</label><input type="date" value={form.deadline} onChange={e => setForm(f => ({ ...f, deadline: e.target.value }))} className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
               </div>
-              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Priority</label><div className="flex gap-2">{(['High', 'Medium', 'Low'] as const).map(pp => (<button key={pp} onClick={() => setForm(f => ({ ...f, priority: pp }))} className={`px-4 py-2 rounded-full font-body text-[12px] font-black border transition-all ${form.priority === pp ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary'}`}>{pp}</button>))}</div></div>
+              <div><label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Priority</label><div className="flex gap-2">{(['High', 'Medium', 'Low'] as const).map(pp => (<button key={pp} onClick={() => setForm(f => ({ ...f, priority: pp }))} className={`px-4 py-2 rounded-full font-body text-[12px] font-black border transition-all ${form.priority === pp ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary'}`}>{pp}</button>))}</div></div>
               <button onClick={submitAssign} disabled={!form.text.trim()} className="w-full bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full py-3 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">Assign Task</button>
             </div>
           </div>

@@ -152,7 +152,7 @@ const AddSignedModal = ({ onClose, onAdd }: { onClose: () => void; onAdd: (p: Om
               <div className="flex gap-2 flex-wrap">
                 {['A+','A','B+','B'].map(g => (
                   <button key={g} onClick={() => setGrade(g)}
-                    className={`px-3 py-2 rounded-full font-body text-[12px] font-black border transition-all ${grade===g?'bg-brand-primary text-inverse border-brand-primary':'bg-surface-card text-body border-default hover:border-brand-primary/50'}`}>{g}</button>
+                    className={`px-3 py-2 rounded-full font-body text-[12px] font-black border transition-all ${grade===g?'bg-brand-primary text-on-brand border-brand-primary':'bg-surface-card text-body border-default hover:border-brand-primary/50'}`}>{g}</button>
                 ))}
               </div>
             </div>
@@ -274,7 +274,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
   const GradeBtn = ({ g, val, set }: { g: string; val: string; set: (v:string)=>void }) => (
     <button onClick={() => set(g)}
       className={`px-3 py-2 rounded-full font-body text-[12px] font-black transition-all border ${
-        val === g ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary/50'
+        val === g ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary/50'
       }`}>{g}</button>
   );
 
@@ -283,7 +283,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
   }) => (
     <button onClick={onClick}
       className={`w-full px-4 py-3 rounded-[20px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
-        selected ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
+        selected ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
       }`}>
       {icon && <span className={selected ? 'text-on-brand' : 'text-strong'}>{icon}</span>}
       {label}
@@ -365,7 +365,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                   <div className="mt-3 p-4 bg-surface-card rounded-xl border border-default">
                     <p className="font-body text-[14px] font-bold text-body mb-3">Player not found in database.</p>
                     <button onClick={() => setShowNewPlayer(true)}
-                      className="w-full bg-brand-primary text-inverse rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
+                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
                       + Create New Player
                     </button>
                   </div>
@@ -387,7 +387,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                       </div>
                     </div>
                     <button onClick={() => { setSelectedPlayer(playerSearch); setShowNewPlayer(false); }}
-                      className="w-full bg-brand-primary text-inverse rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
+                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
                       Create & Select
                     </button>
                   </div>
@@ -415,7 +415,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
               <div className="space-y-3 pt-1">
                 <button onClick={() => setReportLength('full')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'full' ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
+                    reportLength === 'full' ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Full Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-on-brand/60' : 'text-body'}`}>
@@ -424,7 +424,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 </button>
                 <button onClick={() => setReportLength('short')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'short' ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
+                    reportLength === 'short' ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Short Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-on-brand/60' : 'text-body'}`}>
@@ -467,7 +467,7 @@ const AddReportModal = ({ onClose, scoutName = 'Tom' }: { onClose: () => void; s
                 ))}
                 <button onClick={() => { setAddingManually(true); setSelectedSource(''); }}
                   className={`w-full px-4 py-3 rounded-[20px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-2 ${
-                    addingManually ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-dashed border-default hover:border-brand-primary/50'
+                    addingManually ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-dashed border-default hover:border-brand-primary/50'
                   }`}>
                   <Plus size={14} /> Not on platform — add manually
                 </button>
@@ -748,7 +748,7 @@ const PipelineTab = () => {
                 onMouseEnter={() => setHoveredStage(i)} onMouseLeave={() => setHoveredStage(null)}
                 className={`flex items-center gap-2.5 group text-left rounded-lg px-2 py-1.5 -mx-2 transition-colors ${hoveredStage === i ? 'bg-surface-accent' : 'hover:bg-surface-accent'}`}>
                 <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: s.color }} />
-                <span className="font-body font-bold text-[13px] text-body flex-1 min-w-0 truncate group-hover:text-brand-primary">{s.label}</span>
+                <span className="font-body font-bold text-[13px] text-body flex-1 min-w-0 truncate group-hover:text-link">{s.label}</span>
                 <span className="font-mono font-black text-[13px] text-strong tabular-nums shrink-0">{s.count}</span>
               </button>
             ))}
@@ -855,7 +855,7 @@ const PipelineTab = () => {
                   <div className="flex gap-2 flex-wrap">
                     {['A+','A','B+','B'].map(g => (
                       <button key={g} onClick={() => setNewSigned(p => ({ ...p, grade: g }))}
-                        className={`px-3 py-2 rounded-full font-body text-[12px] font-black border transition-all ${newSigned.grade === g ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-body border-default'}`}>{g}</button>
+                        className={`px-3 py-2 rounded-full font-body text-[12px] font-black border transition-all ${newSigned.grade === g ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-body border-default'}`}>{g}</button>
                     ))}
                   </div>
                 </div>
@@ -1013,7 +1013,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                   {RECENT_RESULTS.map(r => (
                     <button key={r.id} onClick={() => navigate('/lead-scout/matches')}
                       className="w-full px-3 sm:px-4 py-2.5 hover:bg-surface-accent transition-colors text-left block min-w-0">
-                      <span className="font-body font-bold text-[12px] text-body block truncate">{r.home} <span className="text-brand-primary tabular-nums">{r.hs}–{r.as}</span> {r.away}</span>
+                      <span className="font-body font-bold text-[12px] text-body block truncate">{r.home} <span className="text-link tabular-nums">{r.hs}–{r.as}</span> {r.away}</span>
                       <span className="font-body text-[11px] text-muted font-medium block">{r.date}</span>
                     </button>
                   ))}
@@ -1057,7 +1057,7 @@ const PackagesTab = ({ onNudge }: { onNudge: (name: string) => void }) => {
         <div className="flex items-center bg-surface-accent rounded-full p-1 gap-1">
           {([['all','All'],['short','Short List'],['target','Target List']] as const).map(([val,label]) => (
             <button key={val} onClick={() => setFilter(val)}
-              className={`px-5 py-2 rounded-full font-body text-[14px] font-bold transition-all ${filter===val?'bg-brand-primary text-inverse shadow-sm':'text-body hover:text-strong'}`}>
+              className={`px-5 py-2 rounded-full font-body text-[14px] font-bold transition-all ${filter===val?'bg-brand-primary text-on-brand shadow-sm':'text-body hover:text-strong'}`}>
               {label}
             </button>
           ))}
@@ -1114,7 +1114,6 @@ export default function LeadScoutDashboard() {
   const [showThisWeek, setShowThisWeek] = useState(false);
   const [showAddReport, setShowAddReport] = useState(false);
   const [showAddPlayer, setShowAddPlayer] = useState(false);
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const toggleTask = (id: string) => setTasks(prev => prev.map(t => t.id===id ? { ...t, completed:!t.completed } : t));
@@ -1269,12 +1268,7 @@ export default function LeadScoutDashboard() {
         {/* Top Nav */}
         <TopNav
           responsive
-          rolePill={(
-            <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-full shrink-0">
-              <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-              <span className="hidden md:inline font-body text-[14px] font-bold text-body whitespace-nowrap">Lead Scout Dashboard</span>
-            </div>
-          )}
+          profile={{ name: 'Tom', role: 'Lead Scout', avatar: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=faces&q=80' }}
           unreadCount={unreadCount}
           notifOpen={showNotifPanel}
           onNotifToggle={() => setShowNotifPanel(p => !p)}
@@ -1303,25 +1297,6 @@ export default function LeadScoutDashboard() {
           onThisWeek={() => setShowThisWeek(true)}
           onAddReport={() => setShowAddReport(true)}
           onAddPlayer={() => setShowAddPlayer(true)}
-          avatarImg="https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=faces&q=80"
-          profileOpen={showProfileMenu}
-          onProfileToggle={() => setShowProfileMenu(p => !p)}
-          profileMenu={(
-            <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[20px] shadow-xl border border-default z-50 overflow-hidden">
-              <div className="px-5 py-4 border-b border-default flex items-center gap-3 bg-surface-card">
-                <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&h=100&fit=crop&crop=faces&q=80" alt="Tom" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div>
-                  <div className="font-body font-bold text-[14px] text-body">Tom</div>
-                  <div className="font-body text-[12px] text-muted font-medium">Lead Scout</div>
-                </div>
-              </div>
-              <div className="p-2">
-                <button onClick={() => { setShowProfileMenu(false); sessionStorage.clear(); navigate('/login'); }} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[20px] transition-colors">
-                  <LogOut size={16} className="mr-3" />Log out
-                </button>
-              </div>
-            </div>
-          )}
         />
 
         {/* Page content */}

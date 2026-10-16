@@ -12,7 +12,7 @@ const jersey = (id: string) => (hash(id) % 30) + 1;
 const TIER_PRIO: Record<PipelineTier, { n: number; cls: string; label: string }> = {
   'target-list': { n: 1, cls: 'bg-status-error/15 text-status-error-fg',   label: 'Target' },
   'short-list':  { n: 2, cls: 'bg-status-warning/15 text-status-warning-fg', label: 'Short' },
-  'long-list':   { n: 3, cls: 'bg-brand-primary/15 text-brand-primary',       label: 'Long' },
+  'long-list':   { n: 3, cls: 'bg-brand-primary/15 text-link',       label: 'Long' },
 };
 
 // coverage status → slot appearance
@@ -62,10 +62,10 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex items-center gap-1 p-1 bg-surface-card border border-default rounded-full shrink-0">
           {([['all', 'All'], ['target-list', 'Target'], ['short-list', 'Short'], ['long-list', 'Long']] as const).map(([id, l]) => (
-            <button key={id} onClick={() => setTier(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === id ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>{l}</button>
+            <button key={id} onClick={() => setTier(id)} className={`font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${tier === id ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>{l}</button>
           ))}
         </div>
-        <button onClick={() => setOnlyMissing(m => !m)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-body font-bold text-[12px] border transition-colors ${onlyMissing ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card border-default text-body hover:text-strong'}`}>Needs video only</button>
+        <button onClick={() => setOnlyMissing(m => !m)} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-body font-bold text-[12px] border transition-colors ${onlyMissing ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card border-default text-body hover:text-strong'}`}>Needs video only</button>
         <div className="relative flex-1 min-w-[180px] max-w-xs ml-auto">
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search player or team…"
             className="w-full bg-surface-card/60 border border-brand-primary/40 rounded-full px-4 py-2 font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors" />
@@ -130,7 +130,7 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[300] p-4" onClick={() => setPlaying(null)}>
           <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-2xl border border-default overflow-hidden" onClick={e => e.stopPropagation()}>
             <div className="relative aspect-video bg-gradient-to-br from-ink-midnight to-[var(--blue-900)] flex items-center justify-center">
-              <span className="w-16 h-16 rounded-full bg-surface-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-brand-primary ml-1" /></span>
+              <span className="w-16 h-16 rounded-full bg-surface-card/90 flex items-center justify-center shadow-lg"><Play size={28} className="text-link ml-1" /></span>
               <button onClick={() => setPlaying(null)} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-card/20 text-on-brand flex items-center justify-center hover:bg-surface-card/40"><X size={18} /></button>
             </div>
             <div className="p-6">

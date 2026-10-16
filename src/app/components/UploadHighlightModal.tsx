@@ -59,7 +59,7 @@ export function UploadHighlightModal({ playerId, playerName, onClose }: { player
           <div className="flex items-center gap-1 p-1 bg-surface-card border border-default rounded-full w-full">
             {([['link', 'Paste link', Link2], ['file', 'Upload file', UploadCloud]] as const).map(([id, label, Icon]) => (
               <button key={id} onClick={() => setMode(id)}
-                className={`flex-1 inline-flex items-center justify-center gap-1.5 font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${mode === id ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>
+                className={`flex-1 inline-flex items-center justify-center gap-1.5 font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${mode === id ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
                 <Icon size={13} /> {label}
               </button>
             ))}
@@ -83,7 +83,7 @@ export function UploadHighlightModal({ playerId, playerName, onClose }: { player
                 onChange={e => setFile(e.target.files?.[0] ?? null)} />
               {file ? (
                 <div className="flex items-center gap-2 font-body font-bold text-[13px] text-body">
-                  <Check size={15} className="text-brand-primary" /> {file.name}
+                  <Check size={15} className="text-link" /> {file.name}
                 </div>
               ) : (
                 <>

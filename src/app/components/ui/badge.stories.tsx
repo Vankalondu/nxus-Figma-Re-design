@@ -45,7 +45,7 @@ export const NxusGradePills: Story = {
   },
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
-      <span className="px-2 py-0.5 rounded-full bg-brand-primary text-inverse font-body font-black text-[10px]">A+</span>
+      <span className="px-2 py-0.5 rounded-full bg-brand-primary text-on-brand font-body font-black text-[10px]">A+</span>
       <span className="px-2 py-0.5 rounded-full bg-brand-primary/12 text-body font-body font-black text-[10px]">A</span>
       <span className="px-2 py-0.5 rounded-full bg-text-body/10 text-body font-body font-black text-[10px]">B</span>
       <span className="px-2 py-0.5 rounded-full bg-surface-accent text-body font-body font-black text-[10px]">C</span>

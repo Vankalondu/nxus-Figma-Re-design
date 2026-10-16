@@ -71,7 +71,7 @@ export const NxusModal: Story = {
             className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
             placeholder="https://…"
           />
-          <button className="w-full bg-brand-primary text-inverse rounded-full py-3 font-body font-bold text-[14px]">
+          <button className="w-full bg-brand-primary text-on-brand rounded-full py-3 font-body font-bold text-[14px]">
             Upload
           </button>
         </div>

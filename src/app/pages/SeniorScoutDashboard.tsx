@@ -131,7 +131,7 @@ const POS_COLORS: Record<string, string> = {
 // unifying them is an information-hierarchy decision, not a styling one.
 // B+ now binds the scout-amber token instead of bracketed hex (L-C4).
 const GRADE_COLORS: Record<string, string> = {
-  'A+': 'bg-brand-primary text-inverse', 'A': 'bg-brand-primary/15 text-strong',
+  'A+': 'bg-brand-primary text-on-brand', 'A': 'bg-brand-primary/15 text-strong',
   'B+': 'bg-status-warning/15 text-status-warning-fg', 'B': 'bg-text-body/10 text-body',
   'C+': 'bg-surface-accent text-body', 'C': 'bg-surface-accent text-body',
 };
@@ -419,7 +419,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
   const GradeBtn = ({ g, val, set }: { g: string; val: string; set: (v:string)=>void }) => (
     <button onClick={() => set(g)}
       className={`px-3 py-2 rounded-full font-body text-[12px] font-black transition-all border ${
-        val === g ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary/50'
+        val === g ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary/50'
       }`}>{g}</button>
   );
 
@@ -428,7 +428,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
   }) => (
     <button onClick={onClick}
       className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
-        selected ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
+        selected ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
       }`}>
       {icon && <span className={selected ? 'text-on-brand' : 'text-strong'}>{icon}</span>}
       {label}
@@ -510,7 +510,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                   <div className="mt-3 p-4 bg-surface-card rounded-xl border border-default">
                     <p className="font-body text-[14px] font-bold text-body mb-3">Player not found in database.</p>
                     <button onClick={() => setShowNewPlayer(true)}
-                      className="w-full bg-brand-primary text-inverse rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
+                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
                       + Create New Player
                     </button>
                   </div>
@@ -532,7 +532,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                       </div>
                     </div>
                     <button onClick={() => { setSelectedPlayer(playerSearch); setShowNewPlayer(false); }}
-                      className="w-full bg-brand-primary text-inverse rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
+                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
                       Create & Select
                     </button>
                   </div>
@@ -560,7 +560,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
               <div className="space-y-3 pt-1">
                 <button onClick={() => setReportLength('full')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'full' ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
+                    reportLength === 'full' ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Full Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-on-brand/60' : 'text-body'}`}>
@@ -569,7 +569,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 </button>
                 <button onClick={() => setReportLength('short')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
-                    reportLength === 'short' ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
+                    reportLength === 'short' ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
                   }`}>
                   <div className="font-heading font-black text-[14px]">Short Report</div>
                   <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-on-brand/60' : 'text-body'}`}>
@@ -612,7 +612,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 ))}
                 <button onClick={() => { setAddingManually(true); setSelectedSource(''); }}
                   className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-2 ${
-                    addingManually ? 'bg-brand-primary text-inverse border-brand-primary' : 'bg-surface-card text-strong border-dashed border-default hover:border-brand-primary/50'
+                    addingManually ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-dashed border-default hover:border-brand-primary/50'
                   }`}>
                   <Plus size={14} /> Not on platform — add manually
                 </button>
@@ -834,7 +834,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
               onKeyDown={e => { if (e.key === 'Enter' && newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
               className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus" />
             <button onClick={() => { if (newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
-              className="w-9 h-9 bg-brand-primary text-inverse rounded-xl flex items-center justify-center shrink-0"><Plus size={14} /></button>
+              className="w-9 h-9 bg-brand-primary text-on-brand rounded-xl flex items-center justify-center shrink-0"><Plus size={14} /></button>
           </div>
           <div className="flex-1 overflow-y-auto pb-4 divide-y divide-border-default" style={{ maxHeight: 380 }}>
             {incomplete.map(t => (
@@ -1021,7 +1021,6 @@ export default function SeniorScoutDashboard() {
   const [showThisWeek, setShowThisWeek]     = useState(false);
   const [showAddReport, setShowAddReport]   = useState(false);
   const [showAddPlayer, setShowAddPlayer]   = useState(false);
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   // Notifications
   const [notifications, setNotifications] = useState<AppNotification[]>(INITIAL_NOTIFICATIONS);
@@ -1146,19 +1145,14 @@ export default function SeniorScoutDashboard() {
         {/* ── Top Navigation — matches existing dashboard exactly ── */}
         <TopNav
           responsive
-          rolePill={(
-            <div className="hidden md:flex items-center bg-surface-accent rounded-full p-1 h-[44px] relative shrink-0">
-              <div className={`absolute inset-y-1 w-[114px] bg-brand-primary rounded-full shadow-sm transition-all duration-300 z-0 ${activeRole === 'Head Scout' ? 'left-[118px]' : 'left-1'}`} />
-              <button onClick={() => { sessionStorage.removeItem('userRole'); sessionStorage.setItem('loginRole', 'Senior Scout'); setActiveRole('Senior Scout'); }}
-                className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${activeRole === 'Senior Scout' ? 'text-on-brand' : 'text-body hover:text-strong'}`}>
-                Senior Scout
-              </button>
-              <button onClick={() => { sessionStorage.setItem('userRole', 'Head Scout'); setActiveRole('Head Scout'); }}
-                className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${activeRole === 'Head Scout' ? 'text-on-brand' : 'text-body hover:text-strong'}`}>
-                Head Scout
-              </button>
-            </div>
-          )}
+          profile={{
+            name: 'David', role: 'Senior Scout',
+            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80',
+            viewSwitch: { options: ['Senior Scout', 'Head Scout'], value: activeRole, onChange: (v: string) => {
+              if (v === 'Senior Scout') { sessionStorage.removeItem('userRole'); sessionStorage.setItem('loginRole', 'Senior Scout'); setActiveRole('Senior Scout'); }
+              else { sessionStorage.setItem('userRole', 'Head Scout'); setActiveRole('Head Scout'); }
+            } },
+          }}
           unreadCount={unreadCount}
           notifOpen={showNotifPanel}
           onNotifToggle={() => setShowNotifPanel(p => !p)}
@@ -1187,25 +1181,6 @@ export default function SeniorScoutDashboard() {
           onThisWeek={() => setShowThisWeek(true)}
           onAddReport={() => setShowAddReport(true)}
           onAddPlayer={() => setShowAddPlayer(true)}
-          avatarImg="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80"
-          profileOpen={showProfileMenu}
-          onProfileToggle={() => setShowProfileMenu(p => !p)}
-          profileMenu={(
-            <div className="absolute right-0 mt-3 w-64 bg-surface-card rounded-[24px] shadow-xl border border-default z-50 overflow-hidden">
-              <div className="px-5 py-4 border-b border-default flex items-center gap-3 bg-surface-card">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80" alt="Profile" className="w-10 h-10 rounded-full object-cover shrink-0" />
-                <div>
-                  <div className="font-body font-bold text-[14px] text-body">David</div>
-                  <div className="font-body text-[12px] text-muted font-medium">Senior Scout</div>
-                </div>
-              </div>
-              <div className="p-2">
-                <button onClick={() => setShowProfileMenu(false)} className="w-full flex items-center px-4 py-3 font-body text-[14px] font-bold text-status-error hover:bg-status-error/5 rounded-[16px] transition-colors">
-                  <LogOut size={16} className="mr-3" />Log out
-                </button>
-              </div>
-            </div>
-          )}
         />
 
         {/* ── Page content ── */}

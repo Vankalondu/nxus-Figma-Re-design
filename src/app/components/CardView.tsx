@@ -130,7 +130,7 @@ export const CardView = ({
                         <span className="font-heading font-bold text-[13px] text-[var(--navy-400)] tracking-wider">
                           {yob}
                         </span>
-                        <span className="text-[var(--navy-400)]/40 font-body font-bold text-[11px] group-hover:text-brand-primary transition-colors uppercase">
+                        <span className="text-[var(--navy-400)]/40 font-body font-bold text-[11px] group-hover:text-link transition-colors uppercase">
                           {isCollapsed ? `Show ${grpPlayers.length}` : 'Hide'}
                         </span>
                       </button>

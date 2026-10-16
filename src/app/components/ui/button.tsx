@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-brand-primary text-inverse hover:bg-brand-primary/90",
+        default: "bg-brand-primary text-on-brand hover:bg-brand-primary/90",
         destructive:
           "bg-status-error text-on-brand hover:bg-status-error/90 focus-visible:ring-status-error/20 dark:focus-visible:ring-status-error/40 dark:bg-status-error/60",
         outline:
@@ -18,7 +18,7 @@ const buttonVariants = cva(
           "bg-surface-canvas text-strong hover:bg-surface-canvas/80",
         ghost:
           "hover:bg-surface-accent hover:text-strong dark:hover:bg-surface-accent/50",
-        link: "text-brand-primary underline-offset-4 hover:underline",
+        link: "text-link underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

@@ -204,7 +204,7 @@ export function VideoDepartmentDashboard() {
               Avg. Turnaround Time
             </p>
             <div className="p-2 rounded-xl bg-[var(--light-300)] shrink-0 ml-3">
-              <Clock className="w-5 h-5 text-brand-primary" strokeWidth={2.5} />
+              <Clock className="w-5 h-5 text-link" strokeWidth={2.5} />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mb-2">
@@ -406,7 +406,7 @@ export function VideoDepartmentDashboard() {
           </div>
 
           <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
-            <button className="text-brand-primary text-sm hover:underline font-medium"
+            <button className="text-link text-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View Full Editor Performance Details →
             </button>
@@ -457,7 +457,7 @@ export function VideoDepartmentDashboard() {
                   </div>
                   <div className="mt-1">
                     <span className={`text-xs font-medium ${
-                      player.status === 'In Progress' ? 'text-brand-primary' :
+                      player.status === 'In Progress' ? 'text-link' :
                       player.status === 'Not Started' ? 'text-status-error' :
                       'text-status-warning'
                     }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -470,7 +470,7 @@ export function VideoDepartmentDashboard() {
           </div>
 
           <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
-            <button className="text-brand-primary text-sm hover:underline font-medium"
+            <button className="text-link text-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View All Pending Videos ({awaitingVideoPlayers.length + 120}) →
             </button>

@@ -250,7 +250,7 @@ function ProgressPill({ progress }: { progress: number }) {
       ? 'bg-status-success/10 text-status-success border-status-success/20'
       : progress === 0
         ? 'bg-surface-accent text-body border-default'
-        : 'bg-brand-primary/10 text-brand-primary border-brand-primary/20';
+        : 'bg-brand-primary/10 text-link border-brand-primary/20';
   return (
     <span
       title="Match upload progress"
@@ -337,13 +337,13 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
         <div className="flex items-center gap-2 shrink-0">
           <button
             title="Edit Date/Venue"
-            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-body hover:text-brand-primary transition-colors"
+            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-body hover:text-link transition-colors"
           >
             <Pencil size={13} />
           </button>
           <button
             title="Move Match"
-            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-body hover:text-brand-primary transition-colors"
+            className="w-8 h-8 rounded-full bg-surface-accent hover:bg-brand-primary/10 flex items-center justify-center text-body hover:text-link transition-colors"
           >
             <ArrowLeftRight size={13} />
           </button>
@@ -383,7 +383,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
 
       {/* Status chips */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary border border-brand-primary/20 font-body font-bold text-[12px]">
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-body font-bold text-[12px]">
           <Briefcase size={12} className="shrink-0" />
           {match.raised} Raised
         </span>
@@ -397,7 +397,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       <div className="flex items-center gap-2 mt-auto">
         <button
           onClick={() => onEntry(match)}
-          className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
+          className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
         >
           <ClipboardList size={14} className="shrink-0" />
           Match Entry
@@ -515,7 +515,7 @@ export function MatchesView() {
               <ArrowLeft size={14} />
             </button>
             <nav className="flex items-center gap-2 font-body font-bold text-[14px]">
-              <button onClick={backToList} className="text-brand-primary hover:underline">
+              <button onClick={backToList} className="text-link hover:underline">
                 Competitions
               </button>
               <ChevronRight size={14} className="text-body shrink-0" />

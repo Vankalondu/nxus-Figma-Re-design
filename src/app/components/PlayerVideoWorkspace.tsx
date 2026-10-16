@@ -169,9 +169,9 @@ const FilmThumb = ({ video, active, onClick }: { video: PlayerVideo; active: boo
 // current playback position (currentSec); clicking a logged tag seeks to it.
 // Event-type set + icons/colors mirror MatchEntry's Match Events for consistency.
 const TAG_EVENT_TYPES: { id: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; chipClass: string }[] = [
-  { id: 'goal', label: 'Goal', icon: Target, chipClass: 'bg-brand-primary/10 text-brand-primary' },
-  { id: 'assist', label: 'Assist', icon: Zap, chipClass: 'bg-brand-primary/10 text-brand-primary' },
-  { id: 'chance', label: 'Chance', icon: Sparkles, chipClass: 'bg-brand-primary/10 text-brand-primary' },
+  { id: 'goal', label: 'Goal', icon: Target, chipClass: 'bg-brand-primary/10 text-link' },
+  { id: 'assist', label: 'Assist', icon: Zap, chipClass: 'bg-brand-primary/10 text-link' },
+  { id: 'chance', label: 'Chance', icon: Sparkles, chipClass: 'bg-brand-primary/10 text-link' },
   { id: 'save', label: 'Save', icon: Shield, chipClass: 'bg-status-success/10 text-status-success' },
   { id: 'foul', label: 'Foul', icon: AlertTriangle, chipClass: 'bg-status-error/10 text-status-error' },
   { id: 'yellow-card', label: 'Yellow Card', icon: Square, chipClass: 'bg-status-warning/10 text-status-warning' },
@@ -223,7 +223,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
       <div className="p-5 pb-4 flex items-center justify-between gap-2 shrink-0 border-b border-default">
         <div className="flex items-center gap-2 min-w-0">
           <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">Tagging</span>
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full shrink-0">
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-brand-primary/10 text-link px-2 py-0.5 rounded-full shrink-0">
             {tags.length} {tags.length === 1 ? 'tag' : 'tags'}
           </span>
         </div>
@@ -270,7 +270,7 @@ const TaggingPanel = ({ currentSec, onSeek }: { currentSec: number; onSeek: (sec
               className="flex-1 min-w-0 rounded-[10px] border border-default bg-surface-accent/30 px-3 py-2 font-body font-medium text-[12px] text-body placeholder:text-placeholder focus:outline-none focus:border-brand-primary transition-colors" />
           </div>
           <button onClick={addDraftTag} title={`Add tag at ${fmtTime(currentSec)}`}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary text-inverse py-2 font-body font-semibold text-[12px] hover:bg-brand-primary/80 transition-colors shadow-sm">
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary text-on-brand py-2 font-body font-semibold text-[12px] hover:bg-brand-primary/80 transition-colors shadow-sm">
             <Plus size={12} className="shrink-0" />
             Add at {fmtTime(currentSec)}
           </button>
@@ -369,7 +369,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
       <div className="p-5 pb-4 flex flex-col gap-3 shrink-0 border-b border-default">
         <div className="flex items-center justify-between gap-2">
           <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">Short Report</span>
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full">New</span>
+          <span className="font-heading font-bold text-[10px] uppercase tracking-widest bg-brand-primary/10 text-link px-2 py-0.5 rounded-full">New</span>
         </div>
         <p className="font-body font-medium text-[12px] text-body">Creating new report</p>
         <div className="flex items-center gap-3">
@@ -425,7 +425,7 @@ const ReportsPanel = ({ onSave }: { onSave: (progressPct: number) => void }) => 
         )}
         <div className="flex items-center gap-2">
           <button onClick={handleSave} disabled={requiredLeft > 0}
-            className="flex-1 bg-brand-primary text-inverse rounded-full py-2 font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">
+            className="flex-1 bg-brand-primary text-on-brand rounded-full py-2 font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">
             Save Report
           </button>
           <button onClick={() => setGrades({})} disabled={graded === 0}
@@ -611,7 +611,7 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
                 <div className="flex items-center gap-3 shrink-0">
                   <span className="font-body font-medium text-[12px] text-muted">{selectedVideo.date}</span>
                   <button title="Flag video"
-                    className="w-10 h-10 rounded-[12px] bg-brand-primary/10 text-brand-primary flex items-center justify-center hover:bg-brand-primary/20 transition-colors">
+                    className="w-10 h-10 rounded-[12px] bg-brand-primary/10 text-link flex items-center justify-center hover:bg-brand-primary/20 transition-colors">
                     <Flag size={16} />
                   </button>
                 </div>
@@ -661,7 +661,7 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
             {/* Empty prompt panel */}
             <aside className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-8 flex flex-col items-center justify-center text-center gap-4 xl:sticky xl:top-8 min-h-[280px]">
               <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center">
-                <MousePointerClick size={20} className="text-brand-primary" />
+                <MousePointerClick size={20} className="text-link" />
               </div>
               <p className="font-body font-medium text-[14px] text-body max-w-[220px]">
                 Select a video to start tagging or reporting.

@@ -82,7 +82,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return (
     <div className="bg-surface-card border border-default rounded-xl shadow-[var(--shadow-md)] px-3 py-2">
       <p className="font-heading font-bold text-[12px] text-strong">{label}</p>
-      <p className="font-body text-[12px] text-brand-primary font-bold">{payload[0].value} submissions</p>
+      <p className="font-body text-[12px] text-link font-bold">{payload[0].value} submissions</p>
     </div>
   );
 };
@@ -123,11 +123,11 @@ const TemplateCard = ({ tpl, onAction }: {
       <div className="p-5 flex flex-col gap-4 flex-1">
         {/* Header: icon left + icon actions top-right */}
         <div className="flex items-start justify-between gap-3">
-          <div className="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0"><FileText size={18} /></div>
+          <div className="w-10 h-10 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center shrink-0"><FileText size={18} /></div>
           <div className="flex items-center gap-2">
-            <button title="View Submissions" onClick={() => onAction('view-submissions', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors"><Eye size={14} /></button>
-            <button title="Assign" onClick={() => onAction('assign', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors"><Users size={14} /></button>
-            <button title={tpl.archived ? 'Restore' : 'Archive'} onClick={() => onAction(tpl.archived ? 'restore' : 'archive', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors"><Archive size={14} /></button>
+            <button title="View Submissions" onClick={() => onAction('view-submissions', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors"><Eye size={14} /></button>
+            <button title="Assign" onClick={() => onAction('assign', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors"><Users size={14} /></button>
+            <button title={tpl.archived ? 'Restore' : 'Archive'} onClick={() => onAction(tpl.archived ? 'restore' : 'archive', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors"><Archive size={14} /></button>
             <button title="Delete" onClick={() => onAction('delete', tpl)} className="w-8 h-8 shrink-0 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-status-error transition-colors"><Trash2 size={14} /></button>
           </div>
         </div>
@@ -150,7 +150,7 @@ const TemplateCard = ({ tpl, onAction }: {
       </div>
       {/* Footer: full-width Edit Form */}
       <div className="border-t border-default px-4 py-3">
-        <button onClick={() => onAction('edit', tpl)} className="w-full flex items-center justify-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-[var(--shadow-sm)]">
+        <button onClick={() => onAction('edit', tpl)} className="w-full flex items-center justify-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-[var(--shadow-sm)]">
           <Edit2 size={14} /> Edit Form
         </button>
       </div>
@@ -216,7 +216,7 @@ const RatingToggle = ({ value, onChange }: { value: number; onChange: (v: number
     {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (
       <button key={n} onClick={() => onChange(n)}
         className={`w-8 h-8 rounded-lg font-heading font-bold text-[12px] border transition-all ${
-          value === n ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm' : 'bg-surface-accent text-strong border-default hover:border-brand-primary'
+          value === n ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm' : 'bg-surface-accent text-strong border-default hover:border-brand-primary'
         }`}>{n}</button>
     ))}
   </div>
@@ -226,7 +226,7 @@ const NxtToggle = ({ value, onChange }: { value: string; onChange: (v: string) =
   <div className="flex gap-1">
     {['Target', 'Monitor', 'Discard'].map(opt => {
       const cls = value === opt
-        ? opt === 'Target' ? 'bg-brand-primary text-inverse border-brand-primary' : opt === 'Monitor' ? 'bg-status-warning/15 text-status-warning border-status-warning' : 'bg-status-error/10 text-status-error border-status-error'
+        ? opt === 'Target' ? 'bg-brand-primary text-on-brand border-brand-primary' : opt === 'Monitor' ? 'bg-status-warning/15 text-status-warning border-status-warning' : 'bg-status-error/10 text-status-error border-status-error'
         : 'bg-surface-accent text-body border-default';
       return <button key={opt} onClick={() => onChange(opt)} className={`px-4 py-2 rounded-full font-body font-bold text-[12px] border transition-all ${cls}`}>{opt}</button>;
     })}
@@ -294,7 +294,7 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
               ))}
             </div>
             <div className="flex-1" />
-            <button className="w-full bg-brand-primary text-inverse rounded-full py-2 font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-md flex items-center justify-center gap-2"><Send size={12} /> Submit Report</button>
+            <button className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-md flex items-center justify-center gap-2"><Send size={12} /> Submit Report</button>
             <button className="w-full bg-surface-card border border-default text-body rounded-full py-2 font-body font-bold text-[12px] hover:border-brand-primary hover:text-body transition-all">Save as Draft</button>
           </div>
         </div>
@@ -321,7 +321,7 @@ const Pagination = ({ page, totalPages, onPage }: { page: number; totalPages: nu
         ? <span key={n + i} className="px-1 text-body">…</span>
         : <button key={n} onClick={() => onPage(n)} className={pill + (n === page ? ' bg-brand-primary text-on-brand' : ' bg-surface-card border border-default text-strong hover:border-brand-primary')}>{n}</button>
       )}
-      <button onClick={() => onPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className={pill + ' bg-surface-card border border-default text-brand-primary hover:bg-surface-accent disabled:opacity-40 disabled:cursor-not-allowed'}>Next</button>
+      <button onClick={() => onPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className={pill + ' bg-surface-card border border-default text-link hover:bg-surface-accent disabled:opacity-40 disabled:cursor-not-allowed'}>Next</button>
     </div>
   );
 };
@@ -379,7 +379,7 @@ const SubmissionsTab = ({ statusFilter, dateFilter, extraSubmissions = [] }: { s
                   <td className="px-4 py-3 text-center"><StatusBadge status={s.status} /></td>
                   <td className="px-4 py-3 font-mono font-bold text-[12px] text-body">{s.timestamp}</td>
                   <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="flex-1 h-1.5 bg-border-default rounded-full overflow-hidden"><div className={`h-full rounded-full ${s.progress === 100 ? 'bg-status-success' : s.progress > 60 ? 'bg-status-success/70' : 'bg-status-warning'}`} style={{ width: `${s.progress}%` }} /></div><span className="font-mono font-bold text-[10px] text-body w-8 text-right">{s.progress}%</span></div></td>
-                  <td className="px-4 py-3 text-center"><div className="flex items-center justify-center gap-1"><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-inverse transition-colors"><Eye size={10} /></button><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-status-error hover:text-on-brand transition-colors"><Trash2 size={10} /></button></div></td>
+                  <td className="px-4 py-3 text-center"><div className="flex items-center justify-center gap-1"><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-brand-primary hover:text-on-brand transition-colors"><Eye size={10} /></button><button className="w-6 h-6 rounded-md bg-surface-accent flex items-center justify-center text-body hover:bg-status-error hover:text-on-brand transition-colors"><Trash2 size={10} /></button></div></td>
                 </tr>
               ))}
             </tbody>
@@ -430,7 +430,7 @@ const AnalyticsTab = () => {
     return (
       <div className="bg-surface-card border border-default rounded-xl shadow-[var(--shadow-md)] px-3 py-2">
         <p className="font-heading font-bold text-[12px] text-strong">{payload[0].name}</p>
-        <p className="font-body text-[12px] text-brand-primary font-bold">{payload[0].value} reports</p>
+        <p className="font-body text-[12px] text-link font-bold">{payload[0].value} reports</p>
       </div>
     );
   };
@@ -587,9 +587,9 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h3 className="font-heading font-semibold text-[20px] text-heading">{tier}</h3>
-              <span className="bg-brand-primary/10 text-brand-primary font-heading font-bold text-[12px] px-2 py-0.5 rounded-full">{assignments[tier].length}</span>
+              <span className="bg-brand-primary/10 text-link font-heading font-bold text-[12px] px-2 py-0.5 rounded-full">{assignments[tier].length}</span>
             </div>
-            <button onClick={() => handleRemoveAll(tier)} className="font-body font-bold text-[12px] text-brand-primary hover:underline transition-colors">Remove all</button>
+            <button onClick={() => handleRemoveAll(tier)} className="font-body font-bold text-[12px] text-link hover:underline transition-colors">Remove all</button>
           </div>
 
           {/* Intake Selection Bar */}
@@ -612,7 +612,7 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
                return (
                <div key={scout.id} className="flex items-center justify-between py-2 border-b border-default/40 last:border-0">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-bold text-[12px] shrink-0">{initials}</div>
+                    <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-bold text-[12px] shrink-0">{initials}</div>
                     <div className="min-w-0">
                       <div className="font-body text-[14px] font-bold text-body truncate">{scout.name}</div>
                       <div className="font-body text-[12px] text-muted font-medium">{scout.role}</div>
@@ -640,7 +640,7 @@ const ReviewGradesTab = ({ search, tierFilter }: { search: string; tierFilter: s
 
 const FilterToggleBtn = ({ open, onClick }: { open: boolean; onClick: () => void }) => (
   <button onClick={onClick}
-    className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[14px] border shrink-0 transition-colors ${open ? 'bg-brand-primary text-inverse border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
+    className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[14px] border shrink-0 transition-colors ${open ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
     <SlidersHorizontal size={14} /> Filters
   </button>
 );
@@ -733,7 +733,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
         ]).map(tab => (
           <button key={tab.id} onClick={() => setSubTab(tab.id)}
             className={`flex items-center gap-2 pb-2 -mb-px border-b-2 font-body font-bold text-[14px] whitespace-nowrap shrink-0 transition-colors ${
-              subTab === tab.id ? 'border-brand-primary text-brand-primary' : 'border-transparent text-body hover:text-strong'
+              subTab === tab.id ? 'border-brand-primary text-link' : 'border-transparent text-body hover:text-strong'
             }`}>
             <tab.icon size={14} />{tab.label}
           </button>
@@ -752,7 +752,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
             <FilterToggleBtn open={rhFiltersOpen} onClick={() => setRhFiltersOpen(o => !o)} />
             <div className="flex items-center gap-2 flex-wrap sm:ml-auto shrink-0">
               <button className="flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] shadow-sm whitespace-nowrap transition-colors">Manage Forms</button>
-              <button onClick={() => setShowNewForm(true)} className="flex items-center gap-2 bg-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] shadow-sm whitespace-nowrap transition-colors"><Plus size={15} strokeWidth={3} /> Add New Template</button>
+              <button onClick={() => setShowNewForm(true)} className="flex items-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] shadow-sm whitespace-nowrap transition-colors"><Plus size={15} strokeWidth={3} /> Add New Template</button>
             </div>
           </div>
           {rhFiltersOpen && (
@@ -850,12 +850,12 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
           </div>
           <div className="p-6 grid grid-cols-2 gap-4">
             <button onClick={createBlankForm} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
-              <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Edit2 size={18} className="text-brand-primary" /></div>
+              <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Edit2 size={18} className="text-link" /></div>
               <span className="font-heading font-semibold text-[14px] text-strong">Create with a scout</span>
               <span className="font-body font-medium text-[12px] text-muted">Build a new form from scratch in the editor.</span>
             </button>
             <button onClick={() => { setShowNewForm(false); setShowImport(true); }} className="flex flex-col items-start gap-2 p-5 rounded-[20px] border-2 border-default hover:border-brand-primary hover:bg-brand-primary/5 transition-colors text-left">
-              <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Download size={18} className="text-brand-primary" /></div>
+              <div className="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center"><Download size={18} className="text-link" /></div>
               <span className="font-heading font-semibold text-[14px] text-strong">Import a form</span>
               <span className="font-body font-medium text-[12px] text-muted">Bring in an existing form from a file or another source.</span>
             </button>
@@ -884,7 +884,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
           </div>
           <div className="px-6 py-4 border-t border-default flex justify-end gap-2">
             <button onClick={() => setShowImport(false)} className="px-5 py-2 rounded-full border border-default bg-surface-card text-body font-body font-bold text-[14px] hover:border-brand-primary hover:text-body transition-all">Cancel</button>
-            <button onClick={importForm} className="px-6 py-2 rounded-full bg-brand-primary text-inverse font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-[var(--shadow-md)]">Import</button>
+            <button onClick={importForm} className="px-6 py-2 rounded-full bg-brand-primary text-on-brand font-body font-semibold text-[14px] hover:bg-brand-primary/80 transition-colors shadow-[var(--shadow-md)]">Import</button>
           </div>
         </div>
       </div>
@@ -911,7 +911,7 @@ export const ReportsHub = ({ extraSubmissions }: { extraSubmissions?: Submission
                 <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{row.label}</label>
                 <div className="flex flex-wrap gap-2 min-h-[44px] items-center bg-surface-card border border-default rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-border-focus/20 focus-within:border-focus transition-all">
                   {row.options.slice(0, 2).map(o => (
-                    <span key={o} className="inline-flex items-center gap-2 bg-brand-primary/10 text-brand-primary rounded-full px-3 py-1 font-body font-bold text-[12px]">
+                    <span key={o} className="inline-flex items-center gap-2 bg-brand-primary/10 text-link rounded-full px-3 py-1 font-body font-bold text-[12px]">
                       {o} <button className="hover:text-status-error transition-colors"><X size={12} /></button>
                     </span>
                   ))}

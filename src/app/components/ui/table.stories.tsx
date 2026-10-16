@@ -70,10 +70,10 @@ export const NxusTable: Story = {
   },
   render: () => (
     <div className="w-full max-w-none bg-surface-card rounded-[32px] shadow-[var(--shadow-lg)] border border-default overflow-hidden">
-      <div className="bg-brand-primary text-inverse font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-3 text-center">
+      <div className="bg-brand-primary text-on-brand font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-3 text-center">
         Bio Data
       </div>
-      <div className="bg-brand-primary text-inverse font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-2">
+      <div className="bg-brand-primary text-on-brand font-heading font-bold text-[10px] uppercase tracking-widest px-4 py-2">
         Strikers (2)
       </div>
       {[

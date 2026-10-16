@@ -64,7 +64,7 @@ export function AdminView() {
 
   const ActionMenu = ({ id }: { id: string }) => (
     <div className="flex items-center justify-end gap-2">
-      <button title="Edit" className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors">
+      <button title="Edit" className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors">
         <Edit2 size={14} />
       </button>
       <button title="Delete" className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-status-error transition-colors">
@@ -127,7 +127,7 @@ export function AdminView() {
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-6 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
               activeTab === tab.id
-                ? 'bg-brand-primary text-inverse shadow-sm border border-brand-primary'
+                ? 'bg-brand-primary text-on-brand shadow-sm border border-brand-primary'
                 : 'bg-surface-card text-body border border-text-on-brand hover:border-brand-primary hover:text-strong'
             }`}
           >
@@ -173,7 +173,7 @@ export function AdminView() {
       {activeTab === 'transfers' && (
         <div className="flex-1 flex flex-col min-h-0">
           <div className="flex items-center gap-2 mb-4 text-body">
-            <ArrowLeftRight size={14} className="text-brand-primary shrink-0" />
+            <ArrowLeftRight size={14} className="text-link shrink-0" />
             <p className="font-body text-[12px] font-medium">Click the arrow to transfer a player to the selected team; click the X on the roster to remove one.</p>
           </div>
 
@@ -216,7 +216,7 @@ export function AdminView() {
             >
               <div className="px-4 py-3 border-b border-default flex items-center gap-2 shrink-0">
                 <h3 className="font-heading font-semibold text-[16px] text-heading">Available Players</h3>
-                <span className="bg-brand-primary/10 text-brand-primary font-heading font-bold text-[12px] px-2 py-0.5 rounded-full">{availablePlayers.length}</span>
+                <span className="bg-brand-primary/10 text-link font-heading font-bold text-[12px] px-2 py-0.5 rounded-full">{availablePlayers.length}</span>
               </div>
               <div className="flex-1 overflow-auto hide-scrollbar p-3 flex flex-col gap-2">
                 {availablePlayers.map((player) => (
@@ -226,7 +226,7 @@ export function AdminView() {
                       <div className="font-body font-bold text-[14px] text-body truncate">{player.name}</div>
                       <div className="font-body font-medium text-[12px] text-muted">{player.position}</div>
                     </div>
-                    <button onClick={() => handleTransferToTeam(player)} title="Transfer to Team" className="w-8 h-8 rounded-full bg-brand-primary/10 text-brand-primary inline-flex items-center justify-center hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0"><ArrowRight size={14} /></button>
+                    <button onClick={() => handleTransferToTeam(player)} title="Transfer to Team" className="w-8 h-8 rounded-full bg-brand-primary/10 text-link inline-flex items-center justify-center hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0"><ArrowRight size={14} /></button>
                   </div>
                 ))}
                 {availablePlayers.length === 0 && (
@@ -244,7 +244,7 @@ export function AdminView() {
             >
               <div className="px-4 py-3 border-b border-default flex items-center gap-2 shrink-0">
                 <h3 className="font-heading font-semibold text-[16px] text-heading truncate">{transferParentTeam} {transferSpecificTeam} Roster</h3>
-                <span className="bg-brand-primary/10 text-brand-primary font-heading font-bold text-[12px] px-2 py-0.5 rounded-full shrink-0">{teamRoster.length}</span>
+                <span className="bg-brand-primary/10 text-link font-heading font-bold text-[12px] px-2 py-0.5 rounded-full shrink-0">{teamRoster.length}</span>
               </div>
               <div className="flex-1 overflow-auto hide-scrollbar p-3 flex flex-col gap-2">
                 {teamRoster.map((player) => (

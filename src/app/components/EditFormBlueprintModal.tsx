@@ -213,7 +213,7 @@
                 return (
                   <button key={tab} onClick={() => setActiveTab(tab)}
                     className={`rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors border ${isActive ?
-  `bg-brand-primary text-inverse border-brand-primary shadow-sm` : `bg-surface-card text-body border-default
+  `bg-brand-primary text-on-brand border-brand-primary shadow-sm` : `bg-surface-card text-body border-default
   hover:border-brand-primary hover:text-strong`}`}>
                     {tab}
                   </button>
@@ -225,7 +225,7 @@
   bg-status-success/10 text-status-success`}>
                 <Check size={11} /> Template ready
               </span>
-              <span className={`font-body font-bold text-[12px] px-2 py-1 rounded-full bg-brand-primary/10 text-brand-primary`}>
+              <span className={`font-body font-bold text-[12px] px-2 py-1 rounded-full bg-brand-primary/10 text-link`}>
                 {questions.length} questions
               </span>
             </div>
@@ -289,7 +289,7 @@
                       return (
                         <button key={c} type="button" onClick={() => toggleCategory(c)}
                           className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px]
-  transition-all cursor-pointer border ${active ? `bg-brand-primary/10 text-brand-primary border-brand-primary/20 shadow-sm` : `bg-surface-card
+  transition-all cursor-pointer border ${active ? `bg-brand-primary/10 text-link border-brand-primary/20 shadow-sm` : `bg-surface-card
   text-body border-default hover:border-brand-primary/50 hover:text-strong`}`}>
                           <div className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center transition-all
   ${active ? `bg-brand-primary border-brand-primary` : `border-default`}`}>
@@ -306,7 +306,7 @@
                   <FieldLabel>Role Permission Visibility</FieldLabel>
                   <div className={`flex gap-2 flex-wrap`}>
                     <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-brand-primary/10
-  text-brand-primary`}>SUPERVISOR</span>
+  text-link`}>SUPERVISOR</span>
                     <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-status-warning/10
   text-status-warning`}>DIRECTOR</span>
                   </div>
@@ -322,7 +322,7 @@
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                     <button type="button" onClick={fillFromTitle}
-                      className={`bg-brand-primary border-2 border-brand-primary text-inverse hover:bg-brand-primary/80
+                      className={`bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80
   rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm shrink-0`}>
                       Fill from title
                     </button>
@@ -339,7 +339,7 @@
   shadow-[var(--shadow-surface-sidebar)] z-10`}>
                   <div className={`p-4 border-b border-default bg-surface-card`}>
                     <button onClick={addQuestion}
-                      className={`w-full py-3 bg-brand-primary border-2 border-brand-primary text-inverse font-body font-bold
+                      className={`w-full py-3 bg-brand-primary border-2 border-brand-primary text-on-brand font-body font-bold
   text-[14px] rounded-full shadow-md hover:bg-brand-primary/80 transition-colors flex items-center justify-center gap-2`}>
                       <Plus size={16} /> Add Question
                     </button>
@@ -352,9 +352,9 @@
                           className={`w-full flex flex-col gap-2 p-3 rounded-xl transition-colors text-left border
   ${isActive ? `bg-brand-primary/5 border-brand-primary/30 shadow-sm` : `bg-transparent border-transparent hover:bg-surface-accent/50`}`}>
                           <div className={`flex items-center gap-2 w-full`}>
-                            <span className={`font-mono text-[12px] font-black shrink-0 ${isActive ? `text-brand-primary` :
+                            <span className={`font-mono text-[12px] font-black shrink-0 ${isActive ? `text-link` :
   `text-body`}`}>{String(idx + 1).padStart(2, '0')}</span>
-                            <span className={`font-body font-bold text-[14px] truncate flex-1 ${isActive ? `text-brand-primary` :
+                            <span className={`font-body font-bold text-[14px] truncate flex-1 ${isActive ? `text-link` :
   `text-strong`}`}>{q.text || 'Untitled question'}</span>
                             {q.linkStart && <span className={`shrink-0 font-body font-black text-[10px] px-2 py-0.5
   rounded-full bg-status-success/10 text-status-success`}>Linked 1a</span>}
@@ -484,7 +484,7 @@
   text-strong hover:bg-surface-accent/40 transition-colors`}>
                         <span className={`flex items-center gap-3`}>
                           <span className={`w-6 h-6 rounded-full flex items-center justify-center transition-all
-  ${positionsExpanded ? `bg-brand-primary text-inverse` : `bg-surface-accent text-body`}`}>
+  ${positionsExpanded ? `bg-brand-primary text-on-brand` : `bg-surface-accent text-body`}`}>
                             <ChevronRight size={14} className={`transition-transform duration-200 ${positionsExpanded ?
   `rotate-90` : ``}`} />
                           </span>
@@ -501,7 +501,7 @@
                               return (
                                 <button key={pos} type="button" onClick={() => togglePosition(pos)}
                                   className={`flex items-center justify-center px-3 py-2 rounded-lg font-body font-bold
-  text-[12px] transition-colors border ${on ? `bg-brand-primary text-inverse border-brand-primary` : `bg-surface-accent/50
+  text-[12px] transition-colors border ${on ? `bg-brand-primary text-on-brand border-brand-primary` : `bg-surface-accent/50
   border-transparent text-strong hover:bg-surface-accent`}`}>
                                   {pos}
                                 </button>
@@ -667,7 +667,7 @@
                         className={`w-full px-5 py-4 bg-surface-accent/40 flex items-center gap-3 font-heading font-bold text-[14px]
   text-strong hover:bg-surface-accent/60 transition-colors`}>
                         <span className={`w-6 h-6 rounded-full flex items-center justify-center transition-all
-  ${advancedExpanded ? `bg-brand-primary text-inverse` : `bg-surface-card text-body`}`}>
+  ${advancedExpanded ? `bg-brand-primary text-on-brand` : `bg-surface-card text-body`}`}>
                           <ChevronRight size={14} className={`transition-transform duration-200 ${advancedExpanded ?
   `rotate-90` : ``}`} />
                         </span>
@@ -713,7 +713,7 @@
                 Cancel
               </button>
               <button onClick={onClose}
-                className={`bg-brand-primary border-2 border-brand-primary text-inverse hover:bg-brand-primary/80 rounded-full px-6
+                className={`bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6
   py-3 font-body font-bold text-[14px] transition-colors shadow-md`}>
                 Update Template
               </button>

@@ -330,18 +330,11 @@ export default function CountryScoutDashboardPage() {
           {/* Top Navigation */}
           <TopNav
             responsive
-            rolePill={loggedInRole==='Senior Scout' ? (
-              <div className="hidden md:flex p-1 bg-surface-accent rounded-[32px] relative items-center h-[44px] min-w-[240px]">
-                <div className={`absolute inset-y-1 w-[114px] bg-brand-primary rounded-[32px] shadow-sm transition-all duration-300 z-0 ${userRoleState==='Head Scout'?'left-[122px]':'left-1'}`} />
-                <button onClick={()=>handleSeniorViewSwitch('Senior Scout')} className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${userRoleState!=='Head Scout'?'text-on-brand':'text-body hover:text-strong'}`}>Senior Scout</button>
-                <button onClick={()=>handleSeniorViewSwitch('Head Scout')} className={`relative z-10 w-[114px] h-full flex items-center justify-center font-body text-[14px] font-bold rounded-full transition-colors ${userRoleState==='Head Scout'?'text-on-brand':'text-body hover:text-strong'}`}>Head Scout</button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 px-3 md:px-5 h-[44px] bg-surface-accent rounded-[32px]">
-                <span className="w-2 h-2 rounded-full shrink-0 bg-brand-primary" />
-                <span className="hidden md:inline font-body text-[14px] font-bold text-body whitespace-nowrap">{loggedInRole} Dashboard</span>
-              </div>
-            )}
+            profile={{
+              name: 'Vanessa Kalondu', role: loggedInRole,
+              avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80',
+              ...(loggedInRole === 'Senior Scout' ? { viewSwitch: { options: ['Senior Scout', 'Head Scout'], value: userRoleState, onChange: handleSeniorViewSwitch } } : {}),
+            }}
             unreadCount={raiseNotifications.length}
             notifOpen={showNotifPanel}
             onNotifToggle={()=>setShowNotifPanel(p=>!p)}
@@ -370,25 +363,6 @@ export default function CountryScoutDashboardPage() {
             )}
             onThisWeek={()=>setIsTaskModalOpen(true)}
             onAddPlayer={()=>setIsAddPlayerModalOpen(true)}
-            avatarImg="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80"
-            profileOpen={isProfileOpen}
-            onProfileToggle={()=>setIsProfileOpen(!isProfileOpen)}
-            profileMenu={(
-              <div className="absolute right-0 mt-3 w-64 bg-surface-card text-strong rounded-[24px] shadow-xl overflow-visible z-50 border border-default font-body">
-                <div className="p-4 border-b border-default flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-brand-primary text-on-brand flex items-center justify-center font-body font-bold text-[14px] shadow-sm">V</div>
-                  <div>
-                    <div className="font-body font-bold text-[14px] leading-tight">Vanessa Kalondu</div>
-                    <div className="font-body text-[12px] text-muted font-medium">{loggedInRole}</div>
-                  </div>
-                </div>
-                <div className="border-t border-default p-2 mt-2">
-                  <button onClick={handleLogout} className="w-full flex items-center px-4 py-3 font-body text-[14px] text-status-error font-bold hover:bg-status-error/5 rounded-[16px] transition-colors">
-                    <LogOut size={16} className="mr-3" /><span>Log out</span>
-                  </button>
-                </div>
-              </div>
-            )}
           />
 
           {/* Content */}
@@ -428,7 +402,7 @@ export default function CountryScoutDashboardPage() {
                         <div className="col-span-6">Scout Name</div><div className="col-span-3">Total Grade A</div><div className="col-span-3 text-right">Country</div>
                       </div>
                       <div className="flex-1 overflow-y-auto hide-scrollbar">
-                        {[{name:'Kwame Asante',init:'KA',val:'38 players',country:'Ghana 🇬🇭',color:'bg-brand-primary text-inverse'},{name:'Chidi Obinna',init:'CO',val:'24 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-inverse'},{name:'Wekesa Omondi',init:'WO',val:'18 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-inverse'},{name:'Emeka Okafor',init:'EO',val:'14 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-inverse'},{name:'Joseph Njoroge',init:'JN',val:'11 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-inverse'},{name:'Amani Mushi',init:'AM',val:'8 players',country:'Tanzania 🇹🇿',color:'bg-brand-primary text-inverse'}].map((scout,i)=>(
+                        {[{name:'Kwame Asante',init:'KA',val:'38 players',country:'Ghana 🇬🇭',color:'bg-brand-primary text-on-brand'},{name:'Chidi Obinna',init:'CO',val:'24 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-on-brand'},{name:'Wekesa Omondi',init:'WO',val:'18 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-on-brand'},{name:'Emeka Okafor',init:'EO',val:'14 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-on-brand'},{name:'Joseph Njoroge',init:'JN',val:'11 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-on-brand'},{name:'Amani Mushi',init:'AM',val:'8 players',country:'Tanzania 🇹🇿',color:'bg-brand-primary text-on-brand'}].map((scout,i)=>(
                           <div key={i} className="grid grid-cols-12 px-2 py-5 items-center border-b border-default last:border-0 hover:bg-surface-accent/50 transition-colors cursor-pointer">
                             <div className="col-span-6 flex items-center space-x-4"><div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-[14px] ${scout.color}`}>{scout.init}</div><span className="font-body font-bold text-body text-[14px]">{scout.name}</span></div>
                             <div className="col-span-3 font-body text-[14px] font-medium text-body">{scout.val}</div>
@@ -455,7 +429,7 @@ export default function CountryScoutDashboardPage() {
                             </div>
                           ))}
                         </div>
-                        <button onClick={()=>navigate('/matches')} className="bg-brand-primary text-inverse hover:bg-ink-midnight w-fit font-bold text-[14px] px-6 py-3 rounded-full transition-colors mt-auto">View Matches</button>
+                        <button onClick={()=>navigate('/matches')} className="bg-brand-primary text-on-brand hover:bg-ink-midnight w-fit font-bold text-[14px] px-6 py-3 rounded-full transition-colors mt-auto">View Matches</button>
                       </div>
                     </div>
                   </div>
@@ -493,8 +467,8 @@ export default function CountryScoutDashboardPage() {
                         <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
                       </button>
                       <div className="hidden md:flex items-center space-x-1 bg-surface-card border border-default p-2 rounded-full shadow-sm shrink-0">
-                        <button onClick={()=>setViewMode('table')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='table'?'bg-brand-primary text-inverse shadow-sm':'text-body hover:text-strong hover:bg-surface-accent'}`} title="Table View"><List size={16} /></button>
-                        <button onClick={()=>setViewMode('card')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='card'?'bg-brand-primary text-inverse shadow-sm':'text-body hover:text-strong hover:bg-surface-accent'}`} title="Card View"><LayoutGrid size={16} /></button>
+                        <button onClick={()=>setViewMode('table')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='table'?'bg-brand-primary text-on-brand shadow-sm':'text-body hover:text-strong hover:bg-surface-accent'}`} title="Table View"><List size={16} /></button>
+                        <button onClick={()=>setViewMode('card')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='card'?'bg-brand-primary text-on-brand shadow-sm':'text-body hover:text-strong hover:bg-surface-accent'}`} title="Card View"><LayoutGrid size={16} /></button>
                       </div>
                     </div>
                   )}
@@ -505,7 +479,7 @@ export default function CountryScoutDashboardPage() {
                 <div className="flex items-center gap-2 mb-6 overflow-x-auto hide-scrollbar flex-nowrap">
                   {([{id:'players-in-scope',label:'Players in Scope'},{id:'top-10',label:'Top 10'},{id:'reserve-list',label:'Reserve List'},{id:'combined-top-10',label:'Combined Top 10'}] as {id:typeof activeTab;label:string}[]).map(tab=>(
                     <button key={tab.id} onClick={()=>handleTabChange(tab.id)}
-                      className={`relative shrink-0 px-6 py-2 rounded-full font-body font-bold text-[14px] transition-all flex items-center gap-2 border ${activeTab===tab.id?'bg-brand-primary text-inverse border-brand-primary shadow-sm':'bg-surface-card text-body border-text-on-brand hover:border-brand-primary hover:text-strong'}`}>
+                      className={`relative shrink-0 px-6 py-2 rounded-full font-body font-bold text-[14px] transition-all flex items-center gap-2 border ${activeTab===tab.id?'bg-brand-primary text-on-brand border-brand-primary shadow-sm':'bg-surface-card text-body border-text-on-brand hover:border-brand-primary hover:text-strong'}`}>
                       <span>{tab.label}</span>
                       {tab.id==='top-10'&&top10PlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='top-10'?'bg-surface-card/20 text-on-brand':'bg-brand-primary/15 text-strong'}`}>{top10PlayerIds.length}</span>}
                       {tab.id==='reserve-list'&&reservePlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='reserve-list'?'bg-surface-card/20 text-on-brand':'bg-surface-accent text-strong'}`}>{reservePlayerIds.length}</span>}
@@ -565,7 +539,7 @@ export default function CountryScoutDashboardPage() {
                       <div className="ml-auto flex items-center gap-3 shrink-0">
                         <div className="flex items-center bg-surface-card/5 border border-text-on-brand/10 rounded-full p-1">
                           {['Active','Audit'].map((mode,i)=>(
-                            <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-inverse':'text-body hover:text-inverse'}`}>{mode}</button>
+                            <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-on-brand':'text-body hover:text-strong'}`}>{mode}</button>
                           ))}
                         </div>
                         <button className="px-6 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full font-body text-[14px] font-bold transition-colors">Apply</button>
@@ -573,10 +547,10 @@ export default function CountryScoutDashboardPage() {
                     </div>
                     {/* Mobile filter bar */}
                     <div className="flex md:hidden items-center gap-3 mb-4">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-brand-primary text-inverse rounded-full font-body text-[14px] font-bold"><ChevronDown size={14} />Filters</button>
+                      <button className="flex items-center gap-2 px-4 py-2 bg-brand-primary text-on-brand rounded-full font-body text-[14px] font-bold"><ChevronDown size={14} />Filters</button>
                       <div className="flex items-center bg-surface-card border border-default rounded-full p-1 ml-auto">
                         {['Active','Audit'].map((mode,i)=>(
-                          <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-inverse':'text-body hover:text-strong'}`}>{mode}</button>
+                          <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-on-brand':'text-body hover:text-strong'}`}>{mode}</button>
                         ))}
                       </div>
                     </div>
@@ -597,7 +571,7 @@ export default function CountryScoutDashboardPage() {
                         <span className="font-heading font-semibold text-[16px] text-strong leading-none">{prospectCount}/10</span>
                       </div>
                     </div>
-                    <button className="ml-auto bg-brand-primary text-inverse px-6 py-2 rounded-full font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm"
+                    <button className="ml-auto bg-brand-primary text-on-brand px-6 py-2 rounded-full font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm"
                       onClick={()=>{if(perfCount<10)setPerfCount(p=>p+1);else if(prospectCount<10)setProspectCount(p=>p+1);}}>
                       Submit Shortlist
                     </button>
@@ -806,7 +780,7 @@ export default function CountryScoutDashboardPage() {
                               <div className="flex items-center w-full">
                                 <div className="flex-1 h-px bg-border-default" />
                                 <div className="px-6 py-2 rounded-full border border-default bg-surface-card shadow-sm">
-                                  <span className="font-heading font-black text-[12px] uppercase tracking-[0.2em] text-brand-primary">
+                                  <span className="font-heading font-black text-[12px] uppercase tracking-[0.2em] text-link">
                                     {posGroup}
                                   </span>
                                 </div>
@@ -977,7 +951,7 @@ export default function CountryScoutDashboardPage() {
               <div className="space-y-3">
                 {tasks.map(task=>(
                   <div key={task.id} className="group flex items-start gap-4 p-4 rounded-xl border border-default hover:border-default bg-surface-card transition-all shadow-sm">
-                    <button onClick={()=>setTasks(tasks.map(t=>t.id===task.id?{...t,completed:!t.completed}:t))} className={`mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors ${task.completed?'bg-brand-primary text-inverse border-brand-primary':'border-2 border-default hover:border-brand-primary'}`}>
+                    <button onClick={()=>setTasks(tasks.map(t=>t.id===task.id?{...t,completed:!t.completed}:t))} className={`mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors ${task.completed?'bg-brand-primary text-on-brand border-brand-primary':'border-2 border-default hover:border-brand-primary'}`}>
                       {task.completed&&<ShieldCheck size={14} strokeWidth={3} />}
                     </button>
                     <span className={`flex-1 font-body text-[14px] font-medium leading-relaxed ${task.completed?'text-body line-through':'text-strong'}`}>{task.text}</span>
@@ -1050,7 +1024,7 @@ export default function CountryScoutDashboardPage() {
               </div>
             </div>
             <div className="px-8 py-5 border-t border-default bg-surface-card shrink-0 flex justify-end">
-              <button onClick={()=>setIsAddPlayerModalOpen(false)} className="px-8 py-3 bg-brand-primary hover:bg-brand-primary text-inverse rounded-full font-body font-bold text-[14px] shadow-sm transition-all uppercase tracking-wide">Add Player</button>
+              <button onClick={()=>setIsAddPlayerModalOpen(false)} className="px-8 py-3 bg-brand-primary hover:bg-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] shadow-sm transition-all uppercase tracking-wide">Add Player</button>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ export function Header() {
         <div className="flex items-center gap-8">
           <div className="text-2xl">NXUS</div>
           <nav className="flex gap-6">
-            <a href="#" className="text-brand-primary">Review</a>
+            <a href="#" className="text-link">Review</a>
             <a href="#" className="text-body hover:text-strong">Raise</a>
             <a href="#" className="text-body hover:text-strong">Insights</a>
             <a href="#" className="text-body hover:text-strong">Matches</a>

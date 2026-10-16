@@ -11,7 +11,7 @@ const meta = {
       description: {
         component:
           'The primary navigation (**P-CO8**). Surface is `bg-surface-sidebar`; the active item is ' +
-          '`bg-brand-primary/10 text-brand-primary` with a `border-l-[3px] border-brand-primary`, so the current ' +
+          '`bg-brand-primary/10 text-link` with a `border-l-[3px] border-brand-primary`, so the current ' +
           'section is legible from the left edge alone.\n\n' +
           'It derives its own base path from the logged-in role, which is how one component ' +
           'serves every dashboard without a role prop — a Video Manager’s links point at ' +

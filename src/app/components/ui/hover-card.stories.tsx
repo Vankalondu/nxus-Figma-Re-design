@@ -25,7 +25,7 @@ export const PlayerPeek: Story = {
   render: () => (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <span className="font-body font-bold text-[13px] text-brand-primary hover:underline cursor-pointer">
+        <span className="font-body font-bold text-[13px] text-link hover:underline cursor-pointer">
           Kofi Mensah
         </span>
       </HoverCardTrigger>

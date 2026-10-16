@@ -75,7 +75,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 mb-8 w-[232px]">
           <div className="w-9 h-9 flex items-center justify-center rounded-[12px] bg-surface-accent shadow-sm shrink-0">
-            <Zap size={18} className="text-brand-primary" fill="currentColor" />
+            <Zap size={18} className="text-link" fill="currentColor" />
           </div>
           <span className="font-heading font-bold text-strong text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
         </div>
@@ -90,14 +90,14 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                 onClick={() => navigate(item.path)}
                 className={`w-full h-11 flex items-center rounded-[14px] transition-all px-2 ${
                   active
-                    ? 'border-l-[3px] border-brand-primary bg-brand-primary/10 text-brand-primary'
+                    ? 'border-l-[3px] border-brand-primary bg-brand-primary/10 text-link'
                     : 'text-body hover:text-strong hover:bg-surface-accent'
                 }`}
               >
                 <div className="shrink-0 flex items-center justify-center w-6 ml-0.5">
                   <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
                 </div>
-                <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${active ? 'text-brand-primary' : 'text-body group-hover:text-strong'}`}>
+                <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${active ? 'text-link' : 'text-body group-hover:text-strong'}`}>
                   {item.label}
                 </span>
               </button>
@@ -115,7 +115,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
             <div className="flex items-center justify-between px-6 mb-10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-surface-accent shadow-sm">
-                  <Zap size={20} className="text-brand-primary" fill="currentColor" />
+                  <Zap size={20} className="text-link" fill="currentColor" />
                 </div>
                 <span className="font-heading font-extrabold text-strong text-xl">NXUS</span>
               </div>
@@ -130,7 +130,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                   <button key={i} onClick={() => handleNav(item.path)}
                     className={`w-full h-11 flex items-center rounded-[14px] transition-all px-3 gap-4 ${
                       active
-                        ? 'border-l-[3px] border-brand-primary bg-brand-primary/10 text-brand-primary'
+                        ? 'border-l-[3px] border-brand-primary bg-brand-primary/10 text-link'
                         : 'text-body hover:text-strong hover:bg-surface-accent'
                     }`}
                   >

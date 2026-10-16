@@ -204,7 +204,7 @@
   --text-strong: var(--navy-500);
   --text-body: var(--navy-400);
   --text-inverse: var(--light-50);
-  --text-on-brand: var(--light-500);
+  --text-on-brand: var(--light-50);
   --text-on-status: var(--light-50);
   --text-sidebar-muted: var(--navy-300);
 
@@ -221,8 +221,8 @@
   --status-uploaded: var(--cyan-500);
   --status-ladder: var(--violet-500);
 
-  --brand-primary: var(--blue-500);
-  --brand-primary-hover: var(--blue-600);
+  --brand-primary: var(--blue-600);
+  --brand-primary-hover: var(--blue-700);
 
   --ink-midnight: var(--navy-500);
 
@@ -230,7 +230,7 @@
   --text-muted: var(--navy-300);        /* Dark Blue/400 — genuinely secondary, 5.54:1 */
   --text-placeholder: var(--navy-200);  /* Dark Blue/300 — AA-large only, placeholders */
   --text-disabled: var(--navy-100);     /* Dark Blue/200 — below AA; disabled is exempt */
-  --text-link: var(--blue-500);
+  --text-link: var(--blue-600);
   --surface-inverse: var(--navy-500);
   --surface-overlay: var(--navy-500);   /* modal scrims apply the opacity (P-CO14) */
   --border-subtle: var(--blue-50);
@@ -307,7 +307,7 @@
   --text-muted: var(--navy-100);
   --text-placeholder: var(--navy-200);
   --text-disabled: var(--navy-300);
-  --text-link: var(--blue-500);
+  --text-link: var(--blue-400);
   --surface-inverse: var(--light-500);
   --surface-overlay: var(--navy-500);
   --border-subtle: var(--navy-400);
@@ -333,8 +333,8 @@
   --border-default: var(--navy-300);
   --border-focus: var(--blue-400);
   --border-input: var(--navy-300);
-  --brand-primary: var(--blue-500);
-  --brand-primary-hover: var(--blue-400);
+  --brand-primary: var(--blue-600);
+  --brand-primary-hover: var(--blue-700);
 }
 
 @theme inline {

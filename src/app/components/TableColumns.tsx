@@ -157,7 +157,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
             <button className="w-full text-left px-4 py-2 hover:bg-status-error/10 flex items-center text-status-error font-semibold transition-colors" onClick={deleteColumn}>
               <Trash2 size={14} className="mr-2" /> Delete column
             </button>
-            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-brand-primary font-semibold transition-colors" onClick={clearColumn}>
+            <button className="w-full text-left px-4 py-2 hover:bg-surface-accent flex items-center text-link font-semibold transition-colors" onClick={clearColumn}>
               <X size={14} className="mr-2" /> Clear column
             </button>
             <div className="h-px bg-surface-accent my-1"></div>
@@ -175,7 +175,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
             </div>
             <button 
               onClick={undoDelete}
-              className="px-3 py-2 bg-brand-primary text-inverse rounded-lg text-sm font-bold shadow hover:bg-brand-primary-hover transition-colors flex items-center"
+              className="px-3 py-2 bg-brand-primary text-on-brand rounded-lg text-sm font-bold shadow hover:bg-brand-primary-hover transition-colors flex items-center"
             >
               <Undo size={14} className="mr-1" /> Undo
             </button>

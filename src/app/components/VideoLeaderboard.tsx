@@ -95,7 +95,7 @@ export function VideoLeaderboard() {
         <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Video Uploader/Editor Leaderboard
         </h2>
-        <button className="flex items-center gap-1 text-muted hover:text-brand-primary transition-colors text-sm"
+        <button className="flex items-center gap-1 text-muted hover:text-link transition-colors text-sm"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />

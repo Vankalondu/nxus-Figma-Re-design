@@ -246,7 +246,7 @@ export function ScoutQualityLeaderboard() {
       {/* Left Pane - Countries */}
       <div className="w-full md:w-1/3 xl:w-[35%] border-b md:border-b-0 md:border-r border-default bg-[var(--light-50)] flex flex-col shrink-0">
         <div className="p-5 border-b border-default flex items-center gap-2 bg-surface-card">
-          <Globe className="w-5 h-5 text-brand-primary" />
+          <Globe className="w-5 h-5 text-link" />
           <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Regions
           </h2>
@@ -299,7 +299,7 @@ export function ScoutQualityLeaderboard() {
               {activeData.name} Rankings
             </h2>
           </div>
-          <button className="text-brand-primary text-sm hover:underline font-medium flex items-center gap-1 transition-all"
+          <button className="text-link text-sm hover:underline font-medium flex items-center gap-1 transition-all"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             <span>View All</span>
             <ArrowRight className="w-4 h-4" />
@@ -323,7 +323,7 @@ export function ScoutQualityLeaderboard() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-brand-primary" />
+                <MapPin className="w-4 h-4 text-link" />
                 <h3 className="text-xs uppercase tracking-wider text-muted font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Country Scouts
                 </h3>

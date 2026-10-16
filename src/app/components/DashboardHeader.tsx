@@ -31,7 +31,7 @@ export function DashboardHeader() {
             <span>Add Player</span>
           </button>
 
-          <button className="relative p-2 text-body hover:text-brand-primary transition-colors">
+          <button className="relative p-2 text-body hover:text-link transition-colors">
             <Bell className="w-6 h-6" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-brand-primary rounded-full" />
           </button>

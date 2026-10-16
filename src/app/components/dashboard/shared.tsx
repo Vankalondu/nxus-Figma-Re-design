@@ -24,7 +24,7 @@ export const fmtDate = (iso?: string) => {
 };
 export const TASK_STATE_META: Record<'pending' | 'in-progress' | 'done' | 'overdue', { label: string; cls: string }> = {
   'pending':     { label: 'Pending',     cls: 'bg-status-warning/15 text-status-warning-fg' },
-  'in-progress': { label: 'In progress', cls: 'bg-brand-primary/15 text-brand-primary' },
+  'in-progress': { label: 'In progress', cls: 'bg-brand-primary/15 text-link' },
   'done':        { label: 'Done',        cls: 'bg-status-success/15 text-status-success-fg' },
   'overdue':     { label: 'Overdue',     cls: 'bg-status-error/15 text-status-error-fg' },
 };
@@ -134,7 +134,7 @@ export const ChampionPodium = ({ scouts }: { scouts: { name: string; role: strin
     return (
       <div className="flex flex-col items-center gap-1 flex-1 min-w-0">
         <div className="relative mb-1.5">
-          {rank === 1 && <Crown size={15} className="champ-float absolute -top-4 left-1/2 -translate-x-1/2 text-brand-primary" fill="currentColor" />}
+          {rank === 1 && <Crown size={15} className="champ-float absolute -top-4 left-1/2 -translate-x-1/2 text-link" fill="currentColor" />}
           <div className={`rounded-full bg-surface-card flex items-center justify-center border-2 shadow-sm ${cfg.av}`} style={{ borderColor: cfg.ring }}>
             <Smile size={cfg.smile} style={{ color: 'var(--status-success)' }} />
           </div>
@@ -182,7 +182,7 @@ export const InlineSel = ({ value, onChange, opts, allLabel }: { value: string; 
   return (
     <div className="relative shrink-0" ref={ref}>
       <button type="button" onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-brand-primary text-inverse border-transparent' : 'bg-surface-card/60 border-brand-primary/40 text-strong hover:bg-surface-card'}`}>
+        className={`flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap ${active ? 'bg-brand-primary text-on-brand border-transparent' : 'bg-surface-card/60 border-brand-primary/40 text-strong hover:bg-surface-card'}`}>
         {label(value)}
         <ChevronDown size={12} className={`transition-transform ${open ? 'rotate-180' : ''} ${active ? 'text-inverse' : 'text-body'}`} />
       </button>
@@ -194,7 +194,7 @@ export const InlineSel = ({ value, onChange, opts, allLabel }: { value: string; 
               <button key={o} type="button" onClick={() => { onChange(o); setOpen(false); }}
                 className={`flex items-center justify-between gap-3 px-4 py-1.5 font-body font-bold text-[12px] text-left transition-colors ${sel ? 'bg-surface-accent text-strong' : 'text-strong hover:bg-surface-accent'}`}>
                 {label(o)}
-                {sel && <Check size={13} className="text-brand-primary shrink-0" />}
+                {sel && <Check size={13} className="text-link shrink-0" />}
               </button>
             );
           })}

@@ -55,7 +55,7 @@ export function UploadVideoModal({ allowedTypes = ['highlight', 'package', 'full
           {allowedTypes.length > 1 && (
             <div className="flex items-center gap-1 p-1 bg-surface-card border border-default rounded-full w-full">
               {allowedTypes.map(t => (
-                <button key={t} onClick={() => pickType(t)} className={`flex-1 inline-flex items-center justify-center font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${type === t ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}>{TYPE_LABEL[t]}</button>
+                <button key={t} onClick={() => pickType(t)} className={`flex-1 inline-flex items-center justify-center font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${type === t ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>{TYPE_LABEL[t]}</button>
               ))}
             </div>
           )}
@@ -69,7 +69,7 @@ export function UploadVideoModal({ allowedTypes = ['highlight', 'package', 'full
           {allowsLink(type) ? (
             <div className="flex items-center gap-1 p-1 bg-surface-card border border-default rounded-full w-full">
               {([['link', 'Paste link', Link2], ['file', 'Upload file', UploadCloud]] as const).map(([id, label, Icon]) => (
-                <button key={id} onClick={() => setMode(id)} className={`flex-1 inline-flex items-center justify-center gap-1.5 font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${mode === id ? 'bg-brand-primary text-inverse shadow-sm' : 'text-body hover:text-strong'}`}><Icon size={13} /> {label}</button>
+                <button key={id} onClick={() => setMode(id)} className={`flex-1 inline-flex items-center justify-center gap-1.5 font-body font-bold text-[12px] px-3 py-1.5 rounded-full transition-colors ${mode === id ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}><Icon size={13} /> {label}</button>
               ))}
             </div>
           ) : (
@@ -85,7 +85,7 @@ export function UploadVideoModal({ allowedTypes = ['highlight', 'package', 'full
             <div onDragOver={e => { e.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={onDrop} onClick={() => inputRef.current?.click()}
               className={`rounded-[16px] border-2 border-dashed p-6 flex flex-col items-center justify-center gap-2 text-center cursor-pointer transition-colors ${drag ? 'border-brand-primary bg-brand-primary/5' : 'border-default hover:border-brand-primary/60'}`}>
               <input ref={inputRef} type="file" accept="video/*" className="hidden" onChange={e => setFile(e.target.files?.[0] ?? null)} />
-              {file ? <div className="flex items-center gap-2 font-body font-bold text-[13px] text-body"><Check size={15} className="text-brand-primary" /> {file.name}</div>
+              {file ? <div className="flex items-center gap-2 font-body font-bold text-[13px] text-body"><Check size={15} className="text-link" /> {file.name}</div>
                 : <><UploadCloud size={22} className="text-body" /><div className="font-body font-bold text-[13px] text-body">Drop a video here, or click to choose</div><div className="font-body text-[11px] text-muted">MP4, MOV — from your device</div></>}
             </div>
           )}

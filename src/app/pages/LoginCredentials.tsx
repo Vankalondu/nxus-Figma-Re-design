@@ -127,7 +127,7 @@ export default function LoginCredentials() {
 
               <button 
                 type="submit"
-                className="w-full mt-10 py-4 rounded-[20px] font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] bg-brand-primary hover:bg-brand-primary/80 text-inverse hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1"
+                className="w-full mt-10 py-4 rounded-[20px] font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] bg-brand-primary hover:bg-brand-primary/80 text-on-brand hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1"
               >
                 Sign In securely
               </button>

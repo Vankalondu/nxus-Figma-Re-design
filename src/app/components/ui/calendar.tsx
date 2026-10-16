@@ -45,11 +45,11 @@ function Calendar({
           "size-8 p-0 font-normal aria-selected:opacity-100",
         ),
         day_range_start:
-          "day-range-start aria-selected:bg-brand-primary aria-selected:text-inverse",
+          "day-range-start aria-selected:bg-brand-primary aria-selected:text-on-brand",
         day_range_end:
-          "day-range-end aria-selected:bg-brand-primary aria-selected:text-inverse",
+          "day-range-end aria-selected:bg-brand-primary aria-selected:text-on-brand",
         day_selected:
-          "bg-brand-primary text-inverse hover:bg-brand-primary hover:text-inverse focus:bg-brand-primary focus:text-inverse",
+          "bg-brand-primary text-on-brand hover:bg-brand-primary hover:text-on-brand focus:bg-brand-primary focus:text-on-brand",
         day_today: "bg-surface-accent text-strong",
         day_outside:
           "day-outside text-body aria-selected:text-body",

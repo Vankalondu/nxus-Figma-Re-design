@@ -116,7 +116,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
         <div className="shrink-0 flex items-center justify-between gap-4 px-6 py-5 border-b border-default">
           <h2 className="font-heading font-black text-[20px] text-heading">Edit Columns</h2>
           <button onClick={onClose} aria-label="Close"
-            className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors">
+            className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors">
             <X size={16} />
           </button>
         </div>
@@ -151,7 +151,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                         <button
                           onClick={() => deletePreset(preset.name)}
                           aria-label={`Delete preset ${preset.name}`}
-                          className="shrink-0 w-6 h-6 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-brand-primary transition-colors"
+                          className="shrink-0 w-6 h-6 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors"
                         >
                           <X size={13} />
                         </button>
@@ -170,7 +170,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                     className="w-full rounded-full bg-surface-card border border-default pl-4 pr-11 py-2 text-[14px] font-body font-medium text-body placeholder:text-placeholder focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
                   />
                   <button aria-label="Save preset" onClick={saveCurrentPreset}
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-brand-primary text-inverse flex items-center justify-center hover:bg-brand-primary/80 transition-colors">
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-brand-primary text-on-brand flex items-center justify-center hover:bg-brand-primary/80 transition-colors">
                     <Plus size={14} strokeWidth={3} />
                   </button>
                 </div>
@@ -197,7 +197,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                             aria-pressed={selected}
                             className={`w-full rounded-[12px] px-4 py-2 text-[14px] font-bold text-left transition-colors ${
                               selected
-                                ? 'bg-brand-primary text-inverse'
+                                ? 'bg-brand-primary text-on-brand'
                                 : 'bg-surface-card border border-default text-strong hover:border-brand-primary'
                             }`}
                           >
@@ -217,7 +217,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
         <div className="shrink-0 flex items-center justify-between gap-4 px-6 py-4 border-t border-default">
           <span className="text-body text-[14px] font-bold font-body">{draft.size} columns selected</span>
           <button onClick={apply}
-            className="bg-brand-primary text-inverse rounded-full px-6 py-3 font-body font-bold hover:bg-brand-primary/80 transition-colors shadow-[var(--shadow-sm)]">
+            className="bg-brand-primary text-on-brand rounded-full px-6 py-3 font-body font-bold hover:bg-brand-primary/80 transition-colors shadow-[var(--shadow-sm)]">
             Apply Column Selection
           </button>
         </div>

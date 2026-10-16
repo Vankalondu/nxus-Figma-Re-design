@@ -60,7 +60,7 @@ export const InTopNavContext: Story = {
         <PlayerSearch {...args} />
       </div>
       <div className="flex items-center gap-2">
-        <span className="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary font-body font-bold text-[12px]">
+        <span className="px-3 py-1 rounded-full bg-brand-primary/10 text-link font-body font-bold text-[12px]">
           Lead Scout
         </span>
         <div className="w-12 h-12 rounded-full bg-brand-primary/15" />

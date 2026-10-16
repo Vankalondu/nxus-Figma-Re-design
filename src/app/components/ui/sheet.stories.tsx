@@ -39,7 +39,7 @@ export const Default: Story = {
               key={item}
               className={
                 i === 0
-                  ? 'bg-brand-primary/10 text-brand-primary border-l-[3px] border-brand-primary px-3 py-2 font-body font-bold text-[12px]'
+                  ? 'bg-brand-primary/10 text-link border-l-[3px] border-brand-primary px-3 py-2 font-body font-bold text-[12px]'
                   : 'text-body hover:text-body hover:bg-surface-accent transition-colors px-3 py-2 font-body font-bold text-[12px]'
               }
             >
