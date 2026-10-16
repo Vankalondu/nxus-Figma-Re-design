@@ -182,7 +182,7 @@
  },
  "Mapped": {
   "_role": "Gives variables specific functions. References Allias, which references Qaza. Light/Dark modes.",
-  "_updated": "2026-09-04 — 7 added so every code colour role has a Mapped counterpart: Surface/midtone|switch|sidebar-accent, Text/strong|on-status|sidebar-muted, Border/input. Border/input light is a raw #061b2e at 0 alpha, not an alias — an alias cannot carry an alpha override, and #00000000 would break L-C1. Mapped is now 52 variables. 2026-09-07: Status/uploaded and Status/ladder added, theme-invariant per L-C3, each aliasing a new single-value Qaza accent through Allias. Mapped is now 54 variables.",
+  "_updated": "2026-09-04 — 7 added so every code colour role has a Mapped counterpart: Surface/midtone|switch|sidebar-accent, Text/strong|on-status|sidebar-muted, Border/input. Border/input light is a raw #061b2e at 0 alpha, not an alias — an alias cannot carry an alpha override, and #00000000 would break L-C1. Mapped is now 52 variables. 2026-09-07: Status/uploaded and Status/ladder added, theme-invariant per L-C3, each aliasing a new single-value Qaza accent through Allias. Mapped is now 54 variables. 2026-10-16: Color/Data/* added (7 theme-invariant data colours aliasing Allias bases + 7 per-mode -text shades, raw values computed by tagTint(), P-CO18); Button/primary-bg|hover|text repointed to Brand/primary and paired with CSS so the check covers them. Mapped is now 68 variables.",
   "_format": "[Light, Dark] resolved hex",
   "_cssPair": {
    "Color/Surface/page": "--surface-page",
@@ -225,7 +225,24 @@
    "Color/Status/warning-tint": "--status-warning-tint",
    "Color/Status/error-tint": "--status-error-tint",
    "Color/Status/uploaded": "--status-uploaded",
-   "Color/Status/ladder": "--status-ladder"
+   "Color/Status/ladder": "--status-ladder",
+   "Color/Data/blue": "--data-blue",
+   "Color/Data/blue-text": "--data-blue-text",
+   "Color/Data/violet": "--data-violet",
+   "Color/Data/violet-text": "--data-violet-text",
+   "Color/Data/cyan": "--data-cyan",
+   "Color/Data/cyan-text": "--data-cyan-text",
+   "Color/Data/green": "--data-green",
+   "Color/Data/green-text": "--data-green-text",
+   "Color/Data/amber": "--data-amber",
+   "Color/Data/amber-text": "--data-amber-text",
+   "Color/Data/red": "--data-red",
+   "Color/Data/red-text": "--data-red-text",
+   "Color/Data/neutral": "--data-neutral",
+   "Color/Data/neutral-text": "--data-neutral-text",
+   "Color/Button/primary-bg": "--brand-primary",
+   "Color/Button/primary-hover": "--brand-primary-hover",
+   "Color/Button/primary-text": "--text-on-brand"
   },
   "Color/Border/default": [
    "#b4d7f6",
@@ -272,16 +289,16 @@
    "#464d53"
   ],
   "Color/Button/primary-bg": [
-   "#1e88e5",
-   "#449ce9"
+   "#1971bf",
+   "#1971bf"
   ],
   "Color/Button/primary-hover": [
-   "#1971bf",
-   "#69b0ee"
+   "#145b99",
+   "#145b99"
   ],
   "Color/Button/primary-text": [
-   "#d2e7fa",
-   "#d2e7fa"
+   "#f6fafe",
+   "#f6fafe"
   ],
   "Color/Button/secondary-bg": [
    "#f6fafe",
@@ -442,6 +459,62 @@
   "Color/Text/strong": [
    "#061b2e",
    "#f6fafe"
+  ],
+  "Color/Data/blue": [
+   "#1e88e5",
+   "#1e88e5"
+  ],
+  "Color/Data/blue-text": [
+   "#1662a5",
+   "#3e99e9"
+  ],
+  "Color/Data/violet": [
+   "#7c5cfc",
+   "#7c5cfc"
+  ],
+  "Color/Data/violet-text": [
+   "#5f4cc9",
+   "#9b84fd"
+  ],
+  "Color/Data/cyan": [
+   "#22d3ee",
+   "#22d3ee"
+  ],
+  "Color/Data/cyan-text": [
+   "#136e84",
+   "#22d3ee"
+  ],
+  "Color/Data/green": [
+   "#22c55e",
+   "#22c55e"
+  ],
+  "Color/Data/green-text": [
+   "#147046",
+   "#22c55e"
+  ],
+  "Color/Data/amber": [
+   "#e8a838",
+   "#e8a838"
+  ],
+  "Color/Data/amber-text": [
+   "#776233",
+   "#e8a838"
+  ],
+  "Color/Data/red": [
+   "#e05c4b",
+   "#e05c4b"
+  ],
+  "Color/Data/red-text": [
+   "#9f4842",
+   "#e37466"
+  ],
+  "Color/Data/neutral": [
+   "#596774",
+   "#596774"
+  ],
+  "Color/Data/neutral-text": [
+   "#556370",
+   "#88939d"
   ]
  },
  "Responsive": {
@@ -721,5 +794,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-16 — Mapped variables changed and read back: Brand/primary -> Primary/600 #1971bf (both modes), primary-hover -> Primary/700 #145b99, Text/on-brand -> Light Mode/100 #f6fafe (both modes), Text/link -> #1971bf light / #449ce9 dark. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-10-16 — Figma Mapped read back after: Brand/primary -> Primary/600 #1971bf, Text/on-brand -> #f6fafe, Text/link #1971bf/#449ce9, Button/primary-* repointed, Color/Data/* (14) created. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }

@@ -238,6 +238,24 @@
   --status-success-tint: var(--green-50);
   --status-warning-tint: var(--amber-50);
   --status-error-tint: var(--red-50);
+
+  /* ── Data colours (L-G2, P-CO18): charts and data tags. Theme-invariant base; the
+     -text shade is what tagTint() computes for that colour (4.8:1 on its own tint).
+     Mirrors DATA in src/app/lib/dataColors.ts and Figma Mapped Color/Data/*. ── */
+  --data-blue: var(--blue-500);
+  --data-blue-text: #1662a5;
+  --data-violet: var(--violet-500);
+  --data-violet-text: #5f4cc9;
+  --data-cyan: var(--cyan-500);
+  --data-cyan-text: #136e84;
+  --data-green: var(--green-500);
+  --data-green-text: #147046;
+  --data-amber: var(--amber-500);
+  --data-amber-text: #776233;
+  --data-red: var(--red-500);
+  --data-red-text: #9f4842;
+  --data-neutral: var(--navy-300);
+  --data-neutral-text: #556370;
 }
 
 /* ── Tablet (768–1023): headings step up one notch; jumper gaps widen. ── */
@@ -339,9 +357,32 @@
   --border-input: var(--navy-300);
   --brand-primary: var(--blue-600);
   --brand-primary-hover: var(--blue-700);
+
+  /* Data tag text, dark */
+  --data-blue-text: #3e99e9;
+  --data-violet-text: #9b84fd;
+  --data-cyan-text: #22d3ee;
+  --data-green-text: #22c55e;
+  --data-amber-text: #e8a838;
+  --data-red-text: #e37466;
+  --data-neutral-text: #88939d;
 }
 
 @theme inline {
+  --color-data-blue: var(--data-blue);
+  --color-data-blue-text: var(--data-blue-text);
+  --color-data-violet: var(--data-violet);
+  --color-data-violet-text: var(--data-violet-text);
+  --color-data-cyan: var(--data-cyan);
+  --color-data-cyan-text: var(--data-cyan-text);
+  --color-data-green: var(--data-green);
+  --color-data-green-text: var(--data-green-text);
+  --color-data-amber: var(--data-amber);
+  --color-data-amber-text: var(--data-amber-text);
+  --color-data-red: var(--data-red);
+  --color-data-red-text: var(--data-red-text);
+  --color-data-neutral: var(--data-neutral);
+  --color-data-neutral-text: var(--data-neutral-text);
   /* Semantic status/priority colors — enable text-scout-green, bg-scout-amber/15, etc. */
   --color-status-success-fg: var(--status-success-fg);
   --color-status-warning-fg: var(--status-warning-fg);

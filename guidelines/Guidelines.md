@@ -776,6 +776,12 @@ but the text step is computed rather than looked up, because the colour can be a
   hover and accent rows).
 - Implementation: `tagTint(hex)` + the `data-tint` class, in `src/app/lib/dataColors.ts`.
   Never set the tag text to the raw colour.
+- Tokens: `--data-<colour>` and `--data-<colour>-text` (Tailwind `bg-data-blue`,
+  `text-data-blue-text`, …) mirror Figma **Mapped › Color/Data/*** and are in the drift check.
+  The `-text` values are what `tagTint()` computes; `tests/data-colors.spec.ts` fails if the two
+  ever disagree.
+- Figma: **Data Tag** component set on 🧩 Atoms (`1555:358`), one variant per data colour, with
+  a Light/Dark preview frame beside it.
 
 **Why:** measured on a light card, raw-colour text on its own tint scored 1.8:1 (amber) to
 3.4:1 (violet) — every tag failed. In dark mode blue, violet and red failed too. No single
