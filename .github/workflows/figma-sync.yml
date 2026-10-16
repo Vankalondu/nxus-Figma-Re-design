@@ -170,30 +170,35 @@ jobs:
 
           echo "Branch pushed. Open the PR: $REPO_URL/compare/main...$BRANCH?expand=1"
 
-      - name: Open the pull request, ask the PM, start the visual check, tell Google Chat
+      # Vanessa's token changes do NOT go to the PM (decided 16 Oct 2026: design decisions
+      # are already agreed outside GitHub). The pull request is opened with SYNC_PR_TOKEN —
+      # Vanessa's own fine-grained token — so it starts the Visual check like any normal
+      # pull request. The Visual check then records the before/after images, accepts them,
+      # and merges if the app still builds and its tests pass; the merge tags the devs.
+      - name: Open the pull request and tell Google Chat
         if: steps.changed.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.SYNC_PR_TOKEN || github.token }}
+          USING_PAT: ${{ secrets.SYNC_PR_TOKEN != '' }}
           GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          PM_USERNAME: ${{ vars.PM_USERNAME }}
         run: |
           BRANCH=figma-sync
           REPO_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
           gh label create figma-sync --color 7C5CFC --description "Token change exported from Figma" 2>/dev/null || true
           NUM=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
           if [ -z "$NUM" ]; then
-            { echo "Vanessa changed design tokens in Figma. This pull request carries the new values into the app."; echo; echo "**PM:** review the visual check comment below, then approve or request changes. Once merged, the developers are notified, and the next release updates Storybook and the nxus-tokens package."; echo; cat commit-message.txt; } > pr-body.md
+            { echo "Vanessa changed design tokens in Figma. This pull request carries the new values into the app's stylesheet."; echo; echo "No review needed: the Visual check records what changed, and the pull request merges itself once the app builds and its tests pass. The developers are then tagged. Going live is still \"make it live\"."; echo; cat commit-message.txt; } > pr-body.md
             if gh pr create --base main --head "$BRANCH" --title "Figma token update" --body-file pr-body.md --label figma-sync; then
               NUM=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
             else
-              echo "::warning::Could not open the pull request (repo setting off?). The Chat message links to the branch instead."
+              echo "::warning::Could not open the pull request. The Chat message links to the branch instead."
             fi
           fi
           if [ -n "$NUM" ]; then
-            if [ -n "$PM_USERNAME" ]; then gh pr edit "$NUM" --add-reviewer "$PM_USERNAME" || true; fi
-            # A pull request opened with GITHUB_TOKEN starts no workflows, so start the visual check here.
-            gh workflow run visual.yml --ref "$BRANCH" -f mode=check
-            node scripts/notify-chat.mjs "*PM review needed:* Vanessa changed design tokens in Figma. <$REPO_URL/pull/$NUM|Figma token update #$NUM> — the visual check summary will appear in the pull request in a few minutes."
+            # With SYNC_PR_TOKEN the pull request starts the Visual check itself; with the
+            # built-in token it would not, so start it explicitly.
+            if [ "$USING_PAT" != true ]; then gh workflow run visual.yml --ref "$BRANCH" -f mode=check; fi
+            node scripts/notify-chat.mjs "*Design tokens changed in Figma:* <$REPO_URL/pull/$NUM|Figma token update #$NUM>. The visual check is recording what changed; it merges itself if everything builds, then the developers are tagged."
           else
             node scripts/notify-chat.mjs "*Figma token change ready:* <$REPO_URL/compare/main...$BRANCH?expand=1|open the pull request> (it could not be opened automatically)."
           fi

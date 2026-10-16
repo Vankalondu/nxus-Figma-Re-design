@@ -49,10 +49,14 @@ There are two ways a change starts. Both end in the same place.
                                          posted as ONE summary comment with before/after images
                                                    │
                                                    ▼
-             The PM (@Whitelash) reads the summary and approves, or asks for changes
+             A (Vanessa's token change): no review — already agreed with the PM. If the app
+               builds and tests pass, it merges itself.
+             B (your change): the PM (@Whitelash) reads the summary and approves, or asks
+               for changes
                                                    │
                                                    ▼
-             Merged into main ──> you are tagged on GitHub + Google Chat gets a message
+             Merged into main ──> A: you are tagged on GitHub + Google Chat gets a message
+                                  B: Google Chat gets a message
                                                    │
                                                    ▼
              Vanessa presses "make it live" ──> app + Storybook update at qaza-2so.pages.dev,

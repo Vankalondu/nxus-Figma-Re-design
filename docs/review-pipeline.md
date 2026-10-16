@@ -11,10 +11,13 @@ copied into the real app.
 1. Vanessa changes a variable in Figma and presses **Send** in the NXUS Token Export plugin.
 2. GitHub opens a pull request, **Figma token update** (label `figma-sync`). It carries the
    new values into the record of Figma *and* into the app's stylesheet (`globals.css`).
-3. The PM is asked to review, and Google Chat says so.
-4. The **Visual check** posts its summary on the pull request (see below).
-5. The PM approves and merges.
-6. The developers are tagged on GitHub and told in Google Chat.
+   It is opened with Vanessa's own token (`SYNC_PR_TOKEN`), and Google Chat is told.
+3. The **Visual check** posts its summary on the pull request (see below): the record of
+   exactly what the change did to every screen.
+4. **No PM review** (decided 16 Oct 2026): design decisions are agreed with the PM outside
+   GitHub. If the app still builds and its tests pass, the new screenshots are accepted and
+   the pull request merges itself. If anything fails, it stays open and Google Chat says why.
+5. The developers are tagged on GitHub and told in Google Chat.
 7. On the next **make it live**, the app, Storybook and the `nxus-tokens` package update.
 
 **2. Everything else starts with a developer.**

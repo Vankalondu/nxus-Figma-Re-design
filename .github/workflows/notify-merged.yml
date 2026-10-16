@@ -42,12 +42,12 @@ jobs:
         if: env.IS_FIGMA == 'true' && env.DEV_USERNAMES != ''
         run: |
           TAGS=$(for u in $DEV_USERNAMES; do printf '@%s ' "$u"; done)
-          gh pr comment "$NUM" --body "$TAGS— the design tokens changed in Figma and @$MERGED_BY approved it. The app's stylesheet is updated on \`main\`. After the next release, run \`npm update nxus-tokens\` and see **Guides → Design Tokens** in Storybook."
+          gh pr comment "$NUM" --body "$TAGS— Vanessa changed the design tokens in Figma. The before/after images are in the Visual check comment above, and the app's stylesheet is updated on \`main\`. After the next release, run \`npm update nxus-tokens\` and see **Guides → Design Tokens** in Storybook."
 
       - name: Tell Google Chat
         run: |
           if [ "$IS_FIGMA" = true ]; then
-            MSG="*Design tokens changed (approved by $MERGED_BY):* <$URL|#$NUM $TITLE>. Developers: the stylesheet is updated on main; after the next release run \`npm update nxus-tokens\`."
+            MSG="*Design tokens changed in Figma by Vanessa:* <$URL|#$NUM $TITLE> (before/after images inside). Developers: the stylesheet is updated on main; after the next release run \`npm update nxus-tokens\`."
           else
             MSG="*Merged:* <$URL|#$NUM $TITLE> (approved and merged by $MERGED_BY). It goes live on the next \"make it live\"."
           fi

@@ -52,6 +52,8 @@ jobs:
       MODE: ${{ (github.event.label.name == 'accept-visuals' || inputs.mode == 'update') && 'update' || 'check' }}
       GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
       PM_USERNAME: ${{ vars.PM_USERNAME }}
+      # Vanessa's Figma token updates skip the PM: recorded, accepted and merged automatically.
+      IS_FIGMA: ${{ (github.head_ref || github.ref_name) == 'figma-sync' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,7 +78,7 @@ jobs:
       # Ask the PM to review as soon as a pull request opens. Skips until the
       # PM_USERNAME repository variable is set (Settings > Secrets and variables > Variables).
       - name: Request the PM's review
-        if: github.event.action == 'opened' && env.PM_USERNAME != ''
+        if: github.event.action == 'opened' && env.PM_USERNAME != '' && env.IS_FIGMA != 'true'
         continue-on-error: true
         run: gh pr edit "${{ steps.pr.outputs.number }}" --add-reviewer "$PM_USERNAME"
 
@@ -135,6 +137,10 @@ jobs:
           echo "folder=$FOLDER" >> "$GITHUB_OUTPUT"
           BASE="https://raw.githubusercontent.com/${{ github.repository }}/visual-diffs/$FOLDER"
           node scripts/visual-summary.mjs tests-visual/visual-results/results.json visual-out "$BASE" lint.log drift.log
+          if [ "$IS_FIGMA" = true ]; then
+            NOTE='> **Design change from Figma (Vanessa).** These changes are intended. They are accepted and merged automatically once the app builds and its tests pass; no PM review.'
+            { head -1 visual-out/summary.md; echo; echo "$NOTE"; tail -n +2 visual-out/summary.md; } > visual-out/s.md && mv visual-out/s.md visual-out/summary.md
+          fi
           cat visual-out/summary.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish the difference images
@@ -160,7 +166,7 @@ jobs:
           else gh pr comment "$N" --body-file visual-out/summary.md; fi
 
       - name: Tell Google Chat
-        if: env.MODE == 'check' && steps.pr.outputs.number != ''
+        if: env.MODE == 'check' && steps.pr.outputs.number != '' && env.IS_FIGMA != 'true'
         run: |
           N=${{ steps.pr.outputs.number }}
           TITLE=$(gh pr view "$N" --json title --jq .title)
@@ -184,7 +190,7 @@ jobs:
       # linked to the pull request page. A commit status always is, and it can be made a
       # required check under the name "Visual status".
       - name: Stamp the result on the commit
-        if: env.MODE == 'check' && always()
+        if: env.MODE == 'check' && env.IS_FIGMA != 'true' && always()
         run: |
           if [ "${{ steps.run.outputs.status }}" = 0 ]; then STATE=success; else STATE=failure; fi
           DESC=$(node -p "try { const c = require('./visual-out/counts.json'); c.changed + ' changed, ' + c.added + ' new, ' + c.broken + ' failed, of ' + c.total } catch { 'did not finish' }")
@@ -192,8 +198,32 @@ jobs:
             -f state="$STATE" -f context="Visual status" -f description="$DESC" \
             -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >/dev/null
 
+      # ---- Figma token updates: run the app tests, then accept and merge with Vanessa's token ----
+      - name: Accept and merge the Figma token update
+        if: env.MODE == 'check' && env.IS_FIGMA == 'true' && steps.pr.outputs.number != ''
+        env:
+          MERGE_TOKEN: ${{ secrets.SYNC_PR_TOKEN }}
+        run: |
+          N=${{ steps.pr.outputs.number }}; URL="${{ github.server_url }}/${{ github.repository }}/pull/$N"
+          fail() { node scripts/notify-chat.mjs "*Figma token update needs attention:* <$URL|#$N> — $1. It was not merged."; echo "::error::$1"; exit 1; }
+          [ "$(node -p "require('./visual-out/counts.json').broken")" = 0 ] || fail 'some screens failed to render'
+          npx playwright test || fail 'the app tests failed'
+          # Accept the new screenshots, verifying them so a one-off blip cannot become the approved image.
+          npx playwright test -c tests-visual/visual.config.ts --update-snapshots > /dev/null || true
+          for i in 1 2; do
+            npx playwright test -c tests-visual/visual.config.ts > /dev/null && break
+            npx playwright test -c tests-visual/visual.config.ts --last-failed --update-snapshots > /dev/null || true
+          done
+          git config user.name  "nxus-visual[bot]"
+          git config user.email "nxus-visual@users.noreply.github.com"
+          git add tests-visual/__screenshots__
+          if ! git diff --cached --quiet; then git commit -q -m "Accept visual changes from the Figma token update"; git push -q origin "HEAD:$BRANCH"; fi
+          [ -n "$MERGE_TOKEN" ] || fail 'SYNC_PR_TOKEN is not set, so it cannot merge itself'
+          # Merged with Vanessa's token, so the merge counts as hers and notify-merged tags the devs.
+          GH_TOKEN="$MERGE_TOKEN" gh pr merge "$N" --squash --delete-branch || fail 'GitHub refused the merge'
+
       - name: Pass only when nothing is waiting for a decision
-        if: env.MODE == 'check'
+        if: env.MODE == 'check' && env.IS_FIGMA != 'true'
         run: |
           if [ "${{ steps.run.outputs.status }}" != 0 ]; then
             echo "::error::There are visual changes or new screens waiting for a decision. See the pull request comment."
