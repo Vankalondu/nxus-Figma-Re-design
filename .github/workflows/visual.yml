@@ -16,6 +16,14 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, labeled]
+  # A change saved straight to main (Vanessa's own sessions) is already decided, so main
+  # refreshes its approved images itself. Without this, every later pull request is
+  # compared against stale pictures and shows changes it did not make (16 Oct 2026:
+  # 87 false "changes" on a Figma token update). The commit it makes uses GITHUB_TOKEN,
+  # so it does not trigger itself again.
+  push:
+    branches: [main]
+    paths: ['src/**', '.storybook/**', 'tests-visual/*.ts', 'package-lock.json', 'public/**']
   workflow_dispatch:
     inputs:
       mode:
@@ -32,7 +40,7 @@ permissions:
 
 concurrency:
   # Per mode, so the check an accept run starts does not cancel that accept run.
-  group: visual-${{ github.head_ref || github.ref_name }}-${{ inputs.mode || github.event.label.name || 'check' }}
+  group: visual-${{ github.head_ref || github.ref_name }}-${{ github.event_name == 'push' && 'update' || inputs.mode || github.event.label.name || 'check' }}
   cancel-in-progress: true
 
 defaults:
@@ -49,7 +57,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       BRANCH: ${{ github.head_ref || github.ref_name }}
-      MODE: ${{ (github.event.label.name == 'accept-visuals' || inputs.mode == 'update') && 'update' || 'check' }}
+      MODE: ${{ (github.event_name == 'push' || github.event.label.name == 'accept-visuals' || inputs.mode == 'update') && 'update' || 'check' }}
       GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
       PM_USERNAME: ${{ vars.PM_USERNAME }}
       # Vanessa's Figma token updates skip the PM: recorded, accepted and merged automatically.
