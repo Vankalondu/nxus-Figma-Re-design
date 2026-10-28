@@ -108,10 +108,10 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
     <div className="flex flex-col gap-6 pb-8">
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-6">
         <KpiCard icon={ClipboardCheck} heading="Approvals" value={pending}
-          descriptor={pending > 0 ? <span className="text-status-error font-black">awaiting your review</span> : 'all clear'}
+          descriptor={pending > 0 ? 'awaiting your review' : 'all clear'}
           action="Open Approvals" onClick={() => onNavigate('approval')} />
         <KpiCard icon={ListChecks} heading="Tasks" value={activeTasksCount}
-          descriptor={overdueCount > 0 ? <><span className="text-status-error font-black">{overdueCount} overdue</span> · open</> : 'open · none overdue'}
+          descriptor={overdueCount > 0 ? `${overdueCount} overdue · open` : 'open · none overdue'}
           action="Open Tasks" onClick={() => onNavigate('tasks')} />
         <KpiCard icon={Film} heading="Missing Packages" value={missPkg}
           descriptor="across Target + Short" action="Review Packages" onClick={() => onMissing('package')} />

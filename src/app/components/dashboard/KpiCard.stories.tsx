@@ -9,11 +9,13 @@ const meta = {
     docs: {
       description: {
         component:
-          'The KPI card used across the Lead, Senior and Video Manager dashboards. ' +
-          'One source of truth, so the three can never visually drift.\n\n' +
-          'Anatomy (**P-CO4**): circular icon chip + short uppercase heading, then a large ' +
-          'number with a short descriptor beside it, and a named action link carrying an ' +
-          'up-right arrow. It renders as a `<button>`, so it is keyboard focusable.\n\n' +
+          'The KPI card used on every dashboard. One source of truth, so no dashboard can ' +
+          'visually drift.\n\n' +
+          'Anatomy (**P-CO4**, **D-17**): circular icon chip + short uppercase heading, then the ' +
+          'large number, the descriptor on its own line under it, and a named action link with an ' +
+          'up-right arrow under that, on the left. The rows always stack, so every card has the ' +
+          'same shape whatever the text length. The descriptor is plain text: no status colours. ' +
+          'It renders as a `<button>`, so it is keyboard focusable.\n\n' +
           'The value uses `tabular-nums` (**L-TY4**) — proportional digits change width as ' +
           'the number changes, which makes the count-up animation visibly jitter.',
       },
@@ -26,7 +28,7 @@ const meta = {
     },
     heading: { control: 'text', description: 'Short uppercase label.' },
     value: { control: 'text', description: 'The figure. Rendered `tabular-nums`.' },
-    descriptor: { control: 'text', description: 'Short qualifier beside the value.' },
+    descriptor: { control: 'text', description: 'Short qualifier, on its own line under the value. Plain text only.' },
     action: { control: 'text', description: 'Named link — say where it goes, not "View".' },
     onClick: { action: 'clicked', description: 'Fires on card click.' },
   },
@@ -53,7 +55,7 @@ export const LongHeading: Story = {
     action: 'Opens Reports',
   },
   parameters: {
-    docs: { description: { story: 'Headings wrap rather than truncate; the bottom row stays put.' } },
+    docs: { description: { story: 'Headings wrap rather than truncate; the number, descriptor and link stay in place.' } },
   },
 }
 
@@ -68,6 +70,20 @@ export const LargeValue: Story = {
   parameters: {
     docs: { description: { story: 'Thousands separators stay aligned because the value is `tabular-nums`.' } },
   },
+}
+
+export const LongText: Story = {
+  args: {
+    icon: Video,
+    heading: 'Missing Full Matches',
+    value: '65',
+    descriptor: 'across Target + Short',
+    action: 'Review Full Matches',
+  },
+  parameters: {
+    docs: { description: { story: 'Long descriptor and long link in a narrow column: each wraps on its own line and nothing overlaps (**D-17**).' } },
+  },
+  render: (args) => <div className="w-[220px]"><KpiCard {...args} /></div>,
 }
 
 export const Grid: Story = {

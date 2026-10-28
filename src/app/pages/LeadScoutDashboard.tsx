@@ -921,10 +921,10 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
       </div>
 
       {/* Below KPIs — Target breakdown (left) + right column (Latest Videos + combined Matches) */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
 
         {/* Target breakdown (wide) */}
-        <div className="lg:col-span-3 portrait-tablet:col-span-full min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
+        <div className="lg:col-span-2 portrait-tablet:col-span-full min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
           <div className="px-4 sm:px-6 py-4 border-b border-default flex items-center justify-between gap-2 shrink-0">
             <h3 className="font-heading font-bold text-[16px] text-heading">Target breakdown</h3>
             <span className="font-heading font-bold type-micro bg-surface-accent text-body rounded-full px-2">Derivable</span>
@@ -962,7 +962,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
         </div>
 
         {/* Right column — Latest Videos (top) + combined Matches (bottom) */}
-        <div className="lg:col-span-2 portrait-tablet:col-span-full min-w-0 flex flex-col gap-6">
+        <div className="lg:col-span-1 portrait-tablet:col-span-full min-w-0 flex flex-col gap-6">
 
           {/* Latest Videos */}
           <div className="min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">

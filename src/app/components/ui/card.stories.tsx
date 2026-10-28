@@ -9,11 +9,11 @@ const meta = {
       description: {
         component:
           'Surface container. NXUS card styling is specified in **P-CO3**: `bg-surface-card`, ' +
-          '`rounded-[40px]`, `border-default`, `shadow-[var(--shadow-lg)]`, lifting on hover.\n\n' +
-          'Radius carries meaning here (**R-R1**) — 40px for dashboard and KPI cards, 32px for ' +
-          'tables and modals, 20px for forms. A card at the wrong radius reads as belonging to a ' +
-          'different layer of the interface.\n\n' +
-          'Remember **L-C7**: at most one card per view may use `bg-brand-primary` as its background.',
+          '`rounded-[20px]`, `border-default`, `shadow-[var(--shadow-lg)]`.\n\n' +
+          'Radius carries meaning here (**R-R1**) — 32px for KPI cards and modals, 24px for the ' +
+          'Players-page card, 20px for dashboard content cards and forms. A card at the wrong ' +
+          'radius reads as belonging to a different layer of the interface.\n\n' +
+          'There is no accent (solid-blue) card any more — retired 28 Oct 2026 (**P-C2**, **D-16**).',
       },
     },
   },
@@ -41,33 +41,11 @@ export const Default: Story = {
 
 export const NxusCard: Story = {
   name: 'NXUS card (P-CO3)',
-  parameters: { docs: { description: { story: 'The specified styling, including the hover lift.' } } },
+  parameters: { docs: { description: { story: 'The dashboard content card as specified in P-CO3: 20px corners, neutral surface.' } } },
   render: () => (
-    <div className="bg-surface-card rounded-[40px] border border-default shadow-[var(--shadow-lg)] hover:-translate-y-1 hover:shadow-xl transition-all p-8 w-[380px]">
+    <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-6 w-[380px]">
       <h3 className="font-heading font-semibold text-[20px] text-heading mb-2">Scout Leaderboard</h3>
       <p className="font-body text-[14px] text-body">Reports filed this cycle, by scout.</p>
-    </div>
-  ),
-}
-
-export const AccentCard: Story = {
-  name: 'Accent card (P-C2, L-C7)',
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'The one primary-background card permitted per view. All text is `text-on-brand` ' +
-          '(**L-C6**) and internal borders are `border-text-on-brand/10`.',
-      },
-    },
-  },
-  render: () => (
-    <div className="bg-brand-primary rounded-[40px] p-8 w-[380px]">
-      <h3 className="font-heading font-semibold text-[20px] text-on-brand mb-2">Latest Packages</h3>
-      <p className="font-body text-[14px] text-on-brand/80">Four packages uploaded since Monday.</p>
-      <div className="mt-4 pt-4 border-t border-text-on-brand/10">
-        <span className="font-body font-bold text-[12px] text-on-brand">Open Packages</span>
-      </div>
     </div>
   ),
 }

@@ -102,6 +102,12 @@ const generatePlayers = (count: number) => {
       gc90: (random()*90).toFixed(1), mpg: Math.floor(30+random()*60),
       matchVideos: Math.floor(random()*8), highlightVideos: Math.floor(random()*12),
       potMins: Math.floor(20+random()*80)+'%', notesCount: random()>0.6?Math.floor(random()*5)+1:0,
+      // Filter fields — derived from the index, not random(), so the seeded values above stay the same
+      foot: (['Right','Left','Right','Both','Right','Left'] as const)[i%6],
+      height: 165 + (i*37)%30,
+      profile: (['Wonderkid','Prospect','Performance','Journeyman'] as const)[(i*3)%4],
+      scouted: (i*5)%7 < 4,
+      archived: i%11 === 5,
     };
   });
 };
@@ -206,6 +212,11 @@ const TAB_SUBTITLE: Record<CountryTab, string> = {
   'combined-top-10':  'Track regional scout submissions and pipeline status.',
 };
 const POS_GROUPS = ['Strikers','Wingers','Midfielders','Full Backs','Centre Backs'];
+// Stats filter sorts high → low by the column the table shows under that name
+const STAT_SORT: Record<string, keyof ReturnType<typeof generatePlayers>[number]> = {
+  Goals: 'starts', Assists: 'goals', Mins: 'app', xG: 'ass', xA: 'pens', Shots: 'gcMins', SOT: 'm90',
+  'Pass%': 'g90', Tackles: 'a90', Interceptions: 'gc90', Clearances: 'mpg',
+};
 // Table header cells — same classes as the Lead/Senior tables (SeniorLeadPlayersPage)
 const GROUP_TH = 'font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15';
 const GROUP_DIVIDER = 'border-l border-l-text-on-brand/15';
@@ -261,8 +272,8 @@ export default function CountryScoutDashboardPage() {
     const tab = new URLSearchParams(location.search).get('tab');
     if (tab && COUNTRY_TABS.some(t => t.id === tab)) setActiveTab(tab as CountryTab);
   }, [location.search]);
-  // Phones open on cards (field use); the Table/Card toggle is available at every width.
-  const [viewMode, setViewMode] = useState<'table'|'card'>(() => typeof window !== 'undefined' && window.innerWidth < 768 ? 'card' : 'table');
+  // Opens on cards at every width (Vanessa, 28 Oct); the Table/Card toggle switches to the table.
+  const [viewMode, setViewMode] = useState<'table'|'card'>('card');
   const [collapsedPositions, setCollapsedPositions] = useState<Record<string, boolean>>({});
   const togglePosition = (pos: string) => setCollapsedPositions(prev => ({ ...prev, [pos]: !prev[pos] }));
   // Filters — same light, label-above toolbar as the Lead/Senior tables
@@ -338,14 +349,22 @@ export default function CountryScoutDashboardPage() {
     const ids = activeTab==='players-in-scope'?scopePlayerIds:activeTab==='top-10'?top10PlayerIds:activeTab==='reserve-list'?reservePlayerIds:[];
     const playerMap = new Map(allPlayersData.map(p=>[p.id,p]));
     let list = ids.map(id=>playerMap.get(id)).filter(Boolean) as typeof allPlayersData;
+    list = list.filter(p=>listView==='audit' ? p.archived : !p.archived);
     if (positionFilter!=='All') list = list.filter(p=>p.pos===positionFilter);
+    if (footFilter!=='All') list = list.filter(p=>p.foot===footFilter);
+    if (profileFilter!=='All') list = list.filter(p=>p.profile===profileFilter);
+    if (scoutFilter!=='All') list = list.filter(p=>scoutFilter==='Scouted' ? p.scouted : !p.scouted);
+    if (htMin) list = list.filter(p=>p.height>=parseInt(htMin));
+    if (htMax) list = list.filter(p=>p.height<=parseInt(htMax));
     if (ageMin) list = list.filter(p=>p.age>=parseInt(ageMin));
     if (ageMax) list = list.filter(p=>p.age<=parseInt(ageMax));
     if (showFilter==='Raised') list = list.filter(p=>raisedPlayerIds.has(p.id));
     else if (showFilter==='Can add') list = list.filter(p=>!raisedPlayerIds.has(p.id));
     if (search.trim()) list = list.filter(p=>p.name.toLowerCase().includes(search.trim().toLowerCase()));
+    const statKey = STAT_SORT[statFilter];
+    if (statKey) list = [...list].sort((a,b)=>parseFloat(String(b[statKey]))-parseFloat(String(a[statKey])));
     return list;
-  }, [activeTab, scopePlayerIds, top10PlayerIds, reservePlayerIds, positionFilter, ageMin, ageMax, showFilter, raisedPlayerIds, search, allPlayersData]);
+  }, [activeTab, scopePlayerIds, top10PlayerIds, reservePlayerIds, listView, positionFilter, footFilter, profileFilter, scoutFilter, htMin, htMax, ageMin, ageMax, showFilter, statFilter, raisedPlayerIds, search, allPlayersData]);
   const showTop = useShowBackToTop(scrollBoxRef, currentPlayersData.length);
   const tabCounts: Record<CountryTab, number | null> = {
     'players-in-scope': scopePlayerIds.length, 'top-10': top10PlayerIds.length,
@@ -373,7 +392,7 @@ export default function CountryScoutDashboardPage() {
   const renderFilterToolbar = () => (
     <div data-filter-root className="flex items-end gap-4 flex-wrap w-full">
       <SegmentedToggle<'active'|'audit'> value={listView} onChange={setListView}
-        options={[{ value: 'active', label: 'Active' }, { value: 'audit', label: 'Audit' }]} />
+        options={[{ value: 'active', label: 'Active' }, { value: 'audit', label: 'Archive' }]} />
       <LLSelect label="Foot" value={footFilter} setValue={setFootFilter} options={['Right','Left','Both']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
       <RangePair label="Age" minV={ageMin} setMin={setAgeMin} maxV={ageMax} setMax={setAgeMax} />
       <RangePair label="Height" minV={htMin} setMin={setHtMin} maxV={htMax} setMax={setHtMax} />
@@ -381,7 +400,7 @@ export default function CountryScoutDashboardPage() {
       <LLSelect label="Profile" value={profileFilter} setValue={setProfileFilter} options={['Wonderkid','Prospect','Performance','Journeyman']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
       <LLSelect label="Scout" value={scoutFilter} setValue={setScoutFilter} options={['Scouted','Unscouted']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
       <LLSelect label="Show" value={showFilter} setValue={setShowFilter} options={['Raised','Can add']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
-      <LLSelect label="Stats" value={statFilter} setValue={setStatFilter} options={['Goals','Assists','Mins','xG','xA','Shots','SOT','Pass%','Tackles','Interceptions','Clearances','Starts']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
+      <LLSelect label="Stats" value={statFilter} setValue={setStatFilter} options={Object.keys(STAT_SORT)} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
       <div className="ml-auto shrink-0"><PlayerSearchBox value={search} onChange={setSearch} /></div>
     </div>
   );
@@ -504,7 +523,7 @@ export default function CountryScoutDashboardPage() {
                         <KpiCard icon={TrendingUp} heading="Top Ten" value={10}
                           descriptor="pending prospects" action="Open Top 10" onClick={()=>navigate('/players?tab=combined-top-10')} />
                         <KpiCard icon={Crown} heading="Grade A raised" value="37%"
-                          descriptor={<><span className="text-status-success-fg font-black">+8%</span> raised</>} action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
+                          descriptor="+8% raised" action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
                       </>
                     ) : (
                       <>
@@ -515,7 +534,7 @@ export default function CountryScoutDashboardPage() {
                         <KpiCard icon={FileText} heading="Ready Reports" value={14}
                           descriptor="for review" action="Review" onClick={()=>navigate('/players?tab=combined-top-10')} />
                         <KpiCard icon={Crown} heading="Grade A" value="46%"
-                          descriptor={<><span className="text-status-error-fg font-black">down</span> of players</>} action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
+                          descriptor="down of players" action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
                       </>
                     )}
                   </div>
@@ -668,7 +687,7 @@ export default function CountryScoutDashboardPage() {
                   {activeTab==='combined-top-10' && (
                     <div className="p-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 portrait-tablet:grid-cols-1 gap-8 h-full min-h-[500px]">
-                        <div className="bg-surface-card border border-default rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
+                        <div className="bg-surface-card border border-default rounded-[20px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
                           <div className="absolute top-0 left-0 w-2 h-full bg-brand-primary" />
                           <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-4">
@@ -679,7 +698,7 @@ export default function CountryScoutDashboardPage() {
                           </div>
                           <div className="flex-1 overflow-y-auto pr-4 space-y-4">
                             {[{name:'Kofi Mensah',role:'Country Scout',region:'Ghana',date:'Today, 10:45 AM'},{name:'Ngozi Eze',role:'Country Scout',region:'Nigeria',date:'Yesterday, 4:20 PM'},{name:'Pape Sarr',role:'Country Scout',region:'Senegal',date:'Yesterday, 1:15 PM'},{name:'Emeka Okafor',role:'Country Scout',region:'Nigeria',date:'Monday, 9:00 AM'}].map((scout,i)=>(
-                              <div key={i} className="bg-surface-card border border-default rounded-[24px] p-5 flex items-center justify-between hover:bg-surface-accent transition-colors">
+                              <div key={i} className="bg-surface-card border border-default rounded-[12px] p-5 flex items-center justify-between hover:bg-surface-accent transition-colors">
                                 <div className="flex items-center gap-4">
                                   <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
                                   <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>
@@ -692,7 +711,7 @@ export default function CountryScoutDashboardPage() {
                             ))}
                           </div>
                         </div>
-                        <div className="bg-surface-card border border-default rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
+                        <div className="bg-surface-card border border-default rounded-[20px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
                           <div className="absolute top-0 left-0 w-2 h-full bg-status-error" />
                           <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-4">
@@ -703,7 +722,7 @@ export default function CountryScoutDashboardPage() {
                           </div>
                           <div className="flex-1 overflow-y-auto pr-4 space-y-4">
                             {[{name:'Fatou Mensah',role:'Country Scout',region:'Ghana',status:'7/10 Profiles'},{name:'Aliou Cisse',role:'Country Scout',region:'Senegal',status:'2/10 Profiles'},{name:'Kwame Asante',role:'Head Scout',region:'Ghana',status:'Reviewing'},{name:'Moussa Sow',role:'Head Scout',region:'Senegal',status:'Reviewing'}].map((scout,i)=>(
-                              <div key={i} className="bg-status-error/5 border border-status-error/10 rounded-[24px] p-5 flex items-center justify-between hover:bg-status-error/10 transition-colors">
+                              <div key={i} className="bg-status-error/5 border border-status-error/10 rounded-[12px] p-5 flex items-center justify-between hover:bg-status-error/10 transition-colors">
                                 <div className="flex items-center gap-4">
                                   <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
                                   <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>

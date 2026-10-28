@@ -123,7 +123,7 @@ export default function UploaderDashboard() {
                 <div className="flex flex-col gap-6 pb-8">
                   <div className={`grid grid-cols-2 ${isPackage ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-6`}>
                     <KpiCard icon={ClipboardCheck} heading="Pending" value={pending.length}
-                      descriptor={pending.length > 0 ? <span className="text-status-warning font-black">awaiting approval</span> : 'all clear'}
+                      descriptor={pending.length > 0 ? 'awaiting approval' : 'all clear'}
                       action={`Open ${middleLabel}`} onClick={() => setActiveTab('middle')} />
                     <KpiCard icon={CheckCircle} heading="Approved" value={approved.length}
                       descriptor="live for scouts" action={`Open ${middleLabel}`} onClick={() => setActiveTab('middle')} />

@@ -570,103 +570,6 @@ const buildActionItems = (
   return [];
 };
 
-// ─── Filter Bar — improved spacing and text size to match Country/Head ────────────
-const FilterBar = ({
-  filterFoot, setFilterFoot, filterHeightMin, setFilterHeightMin,
-  filterHeightMax, setFilterHeightMax, filterAgeMin, setFilterAgeMin,
-  filterAgeMax, setFilterAgeMax, filterPos, setFilterPos,
-  filterProfile, setFilterProfile, filterScout, setFilterScout,
-  filterGrade, setFilterGrade,
-  archiveView, setArchiveView,
-}: {
-  filterFoot: string; setFilterFoot: (v: string) => void;
-  filterHeightMin: string; setFilterHeightMin: (v: string) => void;
-  filterHeightMax: string; setFilterHeightMax: (v: string) => void;
-  filterAgeMin: string; setFilterAgeMin: (v: string) => void;
-  filterAgeMax: string; setFilterAgeMax: (v: string) => void;
-  filterPos: string; setFilterPos: (v: string) => void;
-  filterProfile: string; setFilterProfile: (v: string) => void;
-  filterScout: string; setFilterScout: (v: string) => void;
-  filterGrade: string; setFilterGrade: (v: string) => void;
-  archiveView: ArchiveView; setArchiveView: (v: ArchiveView) => void;
-}) => {
-  // ── Sel: same visual as Country/Head filter dropdowns ──
-  const Sel = ({ value, onChange, opts }: { value: string; onChange: (v: string) => void; opts: string[] }) => (
-    <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-      <select value={value} onChange={e => onChange(e.target.value)}
-        className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5">
-        {opts.map(o => <option key={o} value={o} className="bg-surface-card text-strong">{o}</option>)}
-      </select>
-      <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
-    </div>
-  );
-
-  // ── NumIn: sized to match ──
-  const NumIn = ({ value, onChange, ph }: { value: string; onChange: (v: string) => void; ph: string }) => (
-    <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={ph}
-      className="w-14 bg-surface-card border border-default rounded-full px-3 py-2 text-body font-body text-[14px] font-bold focus:outline-none placeholder:text-placeholder" />
-  );
-
-  return (
-    <div className="bg-brand-primary rounded-[24px] px-[var(--pad-card)] py-4 flex flex-col md:flex-row md:items-center md:flex-wrap gap-3 md:gap-4 border border-text-on-brand/5 w-full">
-      {/* BIO section */}
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">BIO</span>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Foot:</span>
-        <Sel value={filterFoot} onChange={setFilterFoot} opts={['All','Left','Right','Both']} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Ht:</span>
-        <NumIn value={filterHeightMin} onChange={setFilterHeightMin} ph="min" />
-        <span className="text-on-brand/20 font-body text-[14px]">–</span>
-        <NumIn value={filterHeightMax} onChange={setFilterHeightMax} ph="max" />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Age:</span>
-        <NumIn value={filterAgeMin} onChange={setFilterAgeMin} ph="min" />
-        <span className="text-on-brand/20 font-body text-[14px]">–</span>
-        <NumIn value={filterAgeMax} onChange={setFilterAgeMax} ph="max" />
-      </div>
-
-      {/* Divider */}
-      <div className="w-px h-6 bg-surface-card/10 mx-1 shrink-0" />
-
-      {/* TECH section */}
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">TECH</span>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Pos:</span>
-        <Sel value={filterPos} onChange={setFilterPos} opts={['All','ST','LW','RW','CM','CDM','CAM','FB','CB']} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Profile:</span>
-        <Sel value={filterProfile} onChange={setFilterProfile} opts={['All','Performance','Prospect','Wonderkid']} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Scout:</span>
-        <Sel value={filterScout} onChange={setFilterScout} opts={['All', ...SCOUTS]} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Grade:</span>
-        <Sel value={filterGrade} onChange={setFilterGrade} opts={GRADE_FILTER_OPTS} />
-      </div>
-
-      {/* Active/Audit toggle — right-aligned */}
-      <div className="ml-auto flex items-center shrink-0">
-        <div className="flex items-center bg-surface-card/5 border border-text-on-brand/10 rounded-full p-1">
-          <button onClick={() => setArchiveView('active')}
-            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'active' ? 'bg-surface-card text-strong shadow-sm' : 'text-on-brand/40 hover:text-on-brand'}`}>
-            Active
-          </button>
-          <button onClick={() => setArchiveView('audit')}
-            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'audit' ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-on-brand/40 hover:text-on-brand'}`}>
-            Archive
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // ─── Standard Player Table ────────────────────────────────────────────────────────
 const PlayerTable = ({
   players, archivedSet, archiveView, currentTab, flagMap,
@@ -2585,7 +2488,7 @@ export const HIGHLIGHTS_FEED: {
   return [...shorts, ...targets].sort((a, b) => a.hoursAgo - b.hoursAgo);
 })();
 
-// ─── Database Toolbar — light replacement for the blue FilterBar on the Database tab ──
+// ─── Database Toolbar — light filter toolbar for the Database tab ──
 const DB_STAT_OPTIONS = [
   { key: 'app', label: 'App' }, { key: 'gls', label: 'Gls' },
   { key: 'pen', label: 'Pen' }, { key: 'ast', label: 'Ast' },
@@ -2675,7 +2578,7 @@ const DatabaseToolbar = ({
   );
 };
 
-// ─── Long List Toolbar — light replacement for the blue FilterBar on the Long List tab ──
+// ─── Long List Toolbar — light filter toolbar for the Long List tab ──
 const LongListToolbar = ({ methodFilter, setMethodFilter, filters, search, setSearch }: {
   methodFilter: 'all'|'ladder'|'direct'|'archive'; setMethodFilter: (v: 'all'|'ladder'|'direct'|'archive') => void;
   filters: { label: string; value: string; setValue: (v: string) => void; options: string[] }[];
@@ -3097,7 +3000,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
 
       {isListTab && (
         <>
-          {/* Database: light toolbar replaces the blue FilterBar */}
+          {/* Database: light filter toolbar */}
           {activeTab === 'database' && showFilters && (
             <PlayersCardZone>
               <DatabaseToolbar scopeYearMin={scopeYearMin} scopeYearMax={scopeYearMax}
@@ -3106,7 +3009,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                 dbSearch={dbSearch} setDbSearch={setDbSearch} />
             </PlayersCardZone>
           )}
-          {/* Long List: light toolbar replaces the blue FilterBar */}
+          {/* Long List: light filter toolbar */}
           {activeTab === 'long-list' && showFilters && (
             <PlayersCardZone>
               <LongListToolbar methodFilter={methodFilter} setMethodFilter={setMethodFilter}
@@ -3132,7 +3035,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
           )}
           {/* Mobile: filters as a bottom-sheet that slides up */}
           <MobileFilterSheet open={activeTab !== 'database' && activeTab !== 'long-list' && mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
-            <FilterBar {...filterBarProps} />
+            <ListFilterToolbar {...filterBarProps} search={listSearch} setSearch={setListSearch} />
           </MobileFilterSheet>
           <div className={`w-full ${viewMode === 'card' ? 'flex-1 min-h-0 overflow-auto hide-scrollbar px-4 pb-4' : 'flex-1 min-h-0 flex flex-col'}`}>
             {viewMode === 'card' ? (

@@ -616,12 +616,15 @@ Container  bg-surface-card rounded-[32px] border border-default p-6
 Icon chip  circular, bg-brand-primary/10 text-link
 Heading    short, uppercase, .type-micro tracked, text-body
 Value      font-heading font-extrabold text-4xl tabular-nums leading-none
-Descriptor beside the value, muted
-Action     named link with an ArrowUpRight
+Descriptor own line under the value, font-heading font-bold text-sm text-strong, plain
+           text only (a string prop: no status colours, no red)
+Action     own line under the descriptor, left-aligned, text-xs text-link + ArrowUpRight
 ```
 
-Format: icon chip + short heading, then a big number with a short descriptor beside it, and
-an actionable link. One source of truth so dashboards cannot visually drift.
+Format: icon chip + short heading, then the big number, the descriptor under it, and the
+action link under that on the left. The three rows always stack, whatever the text length
+or column count, so every card has the same shape (D-17). One source of truth so dashboards
+cannot visually drift.
 
 ### P-CO5 — Status pills
 Soft translucent tint, never a heavy solid fill. **The tint and the text are not the
@@ -848,7 +851,7 @@ Senior, Head, Country, Video Manager, Package Uploader, Full Match Uploader — 
 ```
 No solid-primary accent card and no photo KPI card (D-16). Measured identical across all
 seven dashboards at 1440 / 834 / 390: title, subtitle, tab row and KPI row land on the same
-x, y and size. Lead's below-KPI grid is still `lg:grid-cols-5` (3 + 2) — see §13.
+x, y and size. Every below-KPI grid, Lead included, is the 2 + 1 (67/33) split (D-17).
 
 ---
 
@@ -1088,7 +1091,7 @@ still enforced on the machine; whatever combination caused that failure no longe
 So the gap is open by choice, not by obstruction: the unreachable files have no stories, and
 writing them is the work that would let the snapshot see those components. Not started.
 
-**OR-10 · OPEN 28 Oct 2026 — leftovers from the D-16 alignment.**
+**OR-10 · CLOSED 28 Oct 2026 by D-17 — leftovers from the D-16 alignment.**
 - Lead's below-KPI grid is `lg:grid-cols-5` (3 + 2); the other six dashboards use
   `lg:grid-cols-3` (2 + 1), so Lead's main card is 780px wide at 1440 against 869px. Both are
   "the reference" — pick one split.
@@ -1177,6 +1180,14 @@ cards (P-CO3, R-R1). This retires the solid-blue accent card (P-C2 — tombstone
 photo KPI card (supersedes D-4) and moves dashboard cards from 40px to 20px corners. The
 Country/Head Players page moved onto the same Players-page kit as Lead/Senior (P-CO9).
 Remaining choices are listed in OR-10.
+
+**D-17 · Follow-up rulings on the D-16 alignment (28 Oct 2026).** Vanessa: (1) every KPI card
+looks like the Country Scout cards: number, descriptor under it, link under that on the left,
+no coloured descriptor text (P-CO4); (2) every dashboard uses the 67/33 split, so Lead moved
+from `lg:grid-cols-5` (3 + 2) to `lg:grid-cols-3` (2 + 1); (3) the Country/Head Players page
+offers cards and table and opens on cards; (4) Combined Top 10 cards take the 20px dashboard
+corner (rows 12px); (5) the light, label-above filter toolbar is the one in use — the dark
+blue `FilterBar` is retired everywhere, including the Lead/Senior mobile filter sheet.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was
