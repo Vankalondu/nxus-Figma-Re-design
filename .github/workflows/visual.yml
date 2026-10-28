@@ -61,8 +61,7 @@ jobs:
       GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
       PM_USERNAME: ${{ vars.PM_USERNAME }}
       # Vanessa's Figma token updates skip the PM: recorded, accepted and merged automatically.
-      # Repo variable FIGMA_PM_REVIEW=true sends them to the PM like any pull request instead.
-      IS_FIGMA: ${{ (github.head_ref || github.ref_name) == 'figma-sync' && vars.FIGMA_PM_REVIEW != 'true' }}
+      IS_FIGMA: ${{ (github.head_ref || github.ref_name) == 'figma-sync' }}
     steps:
       - uses: actions/checkout@v4
         with:

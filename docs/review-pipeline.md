@@ -14,7 +14,7 @@ copied into the real app.
    It is opened with Vanessa's own token (`SYNC_PR_TOKEN`), and Google Chat is told.
 3. The **Visual check** posts its summary on the pull request (see below): the record of
    exactly what the change did to every screen.
-4. **No PM review** (decided 16 Oct 2026; set the repo variable `FIGMA_PM_REVIEW` to `true` to send one to the PM instead): design decisions are agreed with the PM outside
+4. **No PM review** (decided 16 Oct 2026; the PM review switch was removed 28 Oct 2026): design decisions are agreed with the PM outside
    GitHub. If the app still builds and its tests pass, the new screenshots are accepted and
    the pull request merges itself. If anything fails, it stays open and Google Chat says why.
 5. The developers are tagged on GitHub and told in Google Chat.

@@ -181,17 +181,12 @@ jobs:
           GH_TOKEN: ${{ secrets.SYNC_PR_TOKEN || github.token }}
           USING_PAT: ${{ secrets.SYNC_PR_TOKEN != '' }}
           GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          PM_REVIEW: ${{ vars.FIGMA_PM_REVIEW == 'true' }}
         run: |
           BRANCH=figma-sync
           REPO_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
           gh label create figma-sync --color 7C5CFC --description "Token change exported from Figma" 2>/dev/null || true
           NUM=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
-          if [ "$PM_REVIEW" = true ]; then
-            HOW="**PM review requested** (FIGMA_PM_REVIEW is on): read the Visual check comment, then approve or request changes. If the visual changes are intended, add the label \`accept-visuals\` so the check goes green, then merge. The developers are tagged on merge."
-          else
-            HOW="No review needed: the Visual check records what changed, and the pull request merges itself once the app builds and its tests pass. The developers are then tagged."
-          fi
+          HOW="No review needed: the Visual check records what changed, and the pull request merges itself once the app builds and its tests pass. The developers are then tagged."
           if [ -z "$NUM" ]; then
             { echo "Vanessa changed design tokens in Figma. This pull request carries the new values into the app's stylesheet."; echo; echo "$HOW Going live is still \"make it live\"."; echo; cat commit-message.txt; } > pr-body.md
             if gh pr create --base main --head "$BRANCH" --title "Figma token update" --body-file pr-body.md --label figma-sync; then
@@ -204,11 +199,7 @@ jobs:
             # With SYNC_PR_TOKEN the pull request starts the Visual check itself; with the
             # built-in token it would not, so start it explicitly.
             if [ "$USING_PAT" != true ]; then gh workflow run visual.yml --ref "$BRANCH" -f mode=check; fi
-            if [ "$PM_REVIEW" = true ]; then
-              node scripts/notify-chat.mjs "*PM review needed — design tokens changed in Figma:* <$REPO_URL/pull/$NUM|Figma token update #$NUM>. The visual check summary (before/after images) will appear in the pull request in a few minutes."
-            else
-              node scripts/notify-chat.mjs "*Design tokens changed in Figma:* <$REPO_URL/pull/$NUM|Figma token update #$NUM>. The visual check is recording what changed; it merges itself if everything builds, then the developers are tagged."
-            fi
+            node scripts/notify-chat.mjs "*Design tokens changed in Figma:* <$REPO_URL/pull/$NUM|Figma token update #$NUM>. The visual check is recording what changed; it merges itself if everything builds, then the developers are tagged."
           else
             node scripts/notify-chat.mjs "*Figma token change ready:* <$REPO_URL/compare/main...$BRANCH?expand=1|open the pull request> (it could not be opened automatically)."
           fi
