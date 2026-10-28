@@ -2,8 +2,8 @@ import React, { useState, useMemo, useEffect, useRef, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 import {
   Search, Calendar, Plus, Bell, LogOut, ChevronDown,
-  LayoutGrid, List, Video, Archive, Moon, Sun,
-  TrendingUp, ShieldCheck, ArrowUpRight, ArrowRight, ClipboardCheck, FileText, Crown, Users, X, Star, Bookmark, Trash2, Columns3
+  Video, Archive, Moon, Sun,
+  TrendingUp, ShieldCheck, ArrowUpRight, ArrowRight, ClipboardCheck, FileText, Crown, Users, X, Star, Bookmark, Trash2
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router';
 import { useTheme } from 'next-themes';
@@ -18,6 +18,12 @@ import { PLAYER_COLUMNS, DEFAULT_VISIBLE_IDS, type PlayerColumn } from '../compo
 import { KpiCard } from '../components/dashboard/KpiCard';
 import { SeniorLeadPlayersPage } from '../components/SeniorLeadPlayersPage';
 import { ResponsiveTabs } from '../components/ResponsiveTabs';
+import {
+  PlayersPageTitle, useFocusMode, PlayersCard, PlayersCardHeader, PlayersCardZone, TabPill, MobileTabMenu,
+  ViewModeToggle, FiltersButton, MobileFiltersButton, ColumnsButton, LLSelect, RangePair, SegmentedToggle,
+  PlayerSearchBox, MobileFilterSheet, PosHeader, YobHeader, FlagBadge, PlayerAvatar, ActionButtons,
+  useShowBackToTop, BackToTopButton,
+} from '../components/PlayersTableKit';
 
 const FlagCircle = ({ code, label }: { code: string; label: string }) => (
   <div className="w-5 h-5 rounded-full overflow-hidden border border-default bg-surface-accent shrink-0 mx-auto">
@@ -29,24 +35,30 @@ const FlagCircle = ({ code, label }: { code: string; label: string }) => (
 const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnDef[] => [
   {
     id: 'details', group: 'PLAYER IDENTIFICATION', label: 'Player Details',
-    isSticky: 'left-[160px]', minWidth: 'min-w-[240px]', borderRight: true,
+    // Sticky; its `left` offset is set inline to the Actions column width (it varies per tab).
+    isSticky: 'true', width: 'w-[200px]', borderRight: true,
+    // Same identity cell as the Lead/Senior tables: avatar · linked name · age + flag
     renderCell: (p) => (
-      <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}>
-        <div className="w-8 h-8 rounded-xl bg-surface-input text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-default">{p.initials}</div>
-        <div className="flex flex-col">
-          <span className="font-body font-bold text-body text-[14px] hover:underline">{p.name}</span>
-          <span className="font-body text-muted text-[12px]">Age {p.age}</span>
+      <div className="flex items-center gap-2 min-w-[190px]">
+        <PlayerAvatar initials={p.initials} />
+        <div className="flex flex-col items-start min-w-0">
+          <span onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}
+            className="font-body font-bold text-link text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{p.name}</span>
+          <div className="flex items-center gap-2">
+            <span className="font-body text-[12px] text-muted shrink-0">{p.age}</span>
+            <FlagBadge code={flagMap[p.nationality] || 'un'} label={p.nationality} />
+          </div>
         </div>
       </div>
     )
   },
-  { id: 'dob', group: 'BIO DATA', label: 'DOB', renderCell: (p) => <span className="font-body font-medium text-body text-[14px]">{p.dob}</span> },
+  { id: 'dob', group: 'BIO DATA', label: 'DOB', align: 'center', renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.dob}</span> },
   { id: 'nat', group: 'BIO DATA', label: 'Nat', align: 'center', renderCell: (p) => <FlagCircle code={flagMap[p.nationality] || 'un'} label={p.nationality} /> },
   { id: 'country', group: 'BIO DATA', label: 'Ctry', align: 'center', renderCell: (p) => <FlagCircle code={flagMap[p.country] || 'un'} label={p.country} /> },
-  { id: 'pos', group: 'BIO DATA', label: 'Pos', renderCell: (p) => <span className="font-body font-bold text-body text-[14px]">{p.pos}</span> },
-  { id: 'pteam', group: 'BIO DATA', label: 'P.Team', renderCell: (p) => <span className="font-body font-medium text-body text-[14px]">{p.pTeam}</span> },
-  { id: 'lvl', group: 'BIO DATA', label: 'Lvl', renderCell: (p) => <span className="font-body font-medium text-body text-[14px]">{p.pCountry}</span> },
-  { id: 'match', group: 'BIO DATA', label: 'Match', borderRight: true, renderCell: (p) => <span className="font-body font-medium text-body text-[14px]">{p.cTeam}</span> },
+  { id: 'pos', group: 'BIO DATA', label: 'Pos', renderCell: (p) => <span className="font-body text-[12px] font-bold text-body">{p.pos}</span> },
+  { id: 'pteam', group: 'BIO DATA', label: 'P.Team', renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.pTeam}</span> },
+  { id: 'lvl', group: 'BIO DATA', label: 'Lvl', renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.pCountry}</span> },
+  { id: 'match', group: 'BIO DATA', label: 'Match', borderRight: true, renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.cTeam}</span> },
   { id: 'mins',  group: 'GAME STATS', label: 'Mins',  bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.app}</span> },
   { id: 'gls',   group: 'GAME STATS', label: 'Gls',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.starts}</span> },
   { id: 'ast',   group: 'GAME STATS', label: 'Ast',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-strong text-[14px]">{p.goals}</span> },
@@ -59,9 +71,9 @@ const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnD
   { id: 'int',   group: 'GAME STATS', label: 'Int',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.gc90}</span> },
   { id: 'clr',   group: 'GAME STATS', label: 'Clr',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.mpg}</span> },
   { id: 'aer',   group: 'GAME STATS', label: 'Aer',   fontMono: true, borderRight: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-strong text-[14px]">{p.potMins}</span> },
-  { id: 'match_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center space-x-1"><Video size={14} /><span>Match</span></div>, fontMono: true, align: 'center',
+  { id: 'match_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center gap-1"><Video size={10} /><span>Match</span></div>, fontMono: true, align: 'center',
     renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/20 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">F{p.matchVideos}</span></div>) },
-  { id: 'high_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center space-x-1"><Video size={14} /><span>High</span></div>, fontMono: true, align: 'center',
+  { id: 'high_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center gap-1"><Video size={10} /><span>High</span></div>, fontMono: true, align: 'center',
     renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">H{p.highlightVideos}</span></div>) },
 ];
 
@@ -179,6 +191,26 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId }: {
 
 const CARD = 'bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden';
 
+// ─── Country/Head Players page ──────────────────────────────────────────────────
+type CountryTab = 'players-in-scope'|'top-10'|'reserve-list'|'combined-top-10';
+const COUNTRY_TABS: { id: CountryTab; label: string }[] = [
+  { id: 'players-in-scope', label: 'Players in Scope' },
+  { id: 'top-10',           label: 'Top 10' },
+  { id: 'reserve-list',     label: 'Reserve List' },
+  { id: 'combined-top-10',  label: 'Combined Top 10' },
+];
+const TAB_SUBTITLE: Record<CountryTab, string> = {
+  'players-in-scope': 'All players within your active scouting scope.',
+  'top-10':           'Your current top ten performance and prospect selections.',
+  'reserve-list':     'Players held in reserve for future consideration.',
+  'combined-top-10':  'Track regional scout submissions and pipeline status.',
+};
+const POS_GROUPS = ['Strikers','Wingers','Midfielders','Full Backs','Centre Backs'];
+// Table header cells — same classes as the Lead/Senior tables (SeniorLeadPlayersPage)
+const GROUP_TH = 'font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15';
+const GROUP_DIVIDER = 'border-l border-l-text-on-brand/15';
+const SUB_TH = 'font-heading font-bold text-[12px] text-muted uppercase tracking-widest';
+
 export default function CountryScoutDashboardPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -223,15 +255,41 @@ export default function CountryScoutDashboardPage() {
     return greetings[Math.floor(Math.random() * greetings.length)];
   });
 
-  const [activeTab, setActiveTab] = useState<'players-in-scope'|'top-10'|'reserve-list'|'combined-top-10'>('players-in-scope');
-  const [viewMode, setViewMode] = useState<'table'|'card'>('table');
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const effectiveViewMode: 'table'|'card' = isMobile ? 'card' : viewMode;
+  const [activeTab, setActiveTab] = useState<CountryTab>('players-in-scope');
+  // Deep-link: dashboard KPI cards open /players?tab=<tab id>
+  useEffect(() => {
+    const tab = new URLSearchParams(location.search).get('tab');
+    if (tab && COUNTRY_TABS.some(t => t.id === tab)) setActiveTab(tab as CountryTab);
+  }, [location.search]);
+  // Phones open on cards (field use); the Table/Card toggle is available at every width.
+  const [viewMode, setViewMode] = useState<'table'|'card'>(() => typeof window !== 'undefined' && window.innerWidth < 768 ? 'card' : 'table');
   const [collapsedPositions, setCollapsedPositions] = useState<Record<string, boolean>>({});
   const togglePosition = (pos: string) => setCollapsedPositions(prev => ({ ...prev, [pos]: !prev[pos] }));
+  // Filters — same light, label-above toolbar as the Lead/Senior tables
   const [positionFilter, setPositionFilter] = useState<string>('All');
-  const [showFilter, setShowFilter] = useState<string>('All players');
-  const [statFilter, setStatFilter] = useState<string>('All Stats');
+  const [showFilter, setShowFilter] = useState<string>('All');
+  const [statFilter, setStatFilter] = useState<string>('All');
+  const [footFilter, setFootFilter] = useState('All');
+  const [profileFilter, setProfileFilter] = useState('All');
+  const [scoutFilter, setScoutFilter] = useState('All');
+  const [ageMin, setAgeMin] = useState('');
+  const [ageMax, setAgeMax] = useState('');
+  const [htMin, setHtMin] = useState('');
+  const [htMax, setHtMax] = useState('');
+  const [search, setSearch] = useState('');
+  const [listView, setListView] = useState<'active'|'audit'>('active');
+  const [filterOpenKey, setFilterOpenKey] = useState<string | null>(null);
+  useEffect(() => {
+    const onDown = (e: MouseEvent) => { if (!(e.target as HTMLElement).closest?.('[data-filter-root]')) setFilterOpenKey(null); };
+    document.addEventListener('mousedown', onDown);
+    return () => document.removeEventListener('mousedown', onDown);
+  }, []);
+  const [showFilters, setShowFilters] = useState(true);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [tabsMenuOpen, setTabsMenuOpen] = useState(false);
+  const isListTab = activeTab !== 'combined-top-10';
+  const { focused, onScroll: onCardScroll } = useFocusMode([activeTab, viewMode]);
+  const scrollBoxRef = useRef<HTMLDivElement>(null);
   const [perfCount, setPerfCount] = useState(0);
   const [prospectCount, setProspectCount] = useState(0);
 
@@ -279,8 +337,54 @@ export default function CountryScoutDashboardPage() {
   const currentPlayersData = useMemo(() => {
     const ids = activeTab==='players-in-scope'?scopePlayerIds:activeTab==='top-10'?top10PlayerIds:activeTab==='reserve-list'?reservePlayerIds:[];
     const playerMap = new Map(allPlayersData.map(p=>[p.id,p]));
-    return ids.map(id=>playerMap.get(id)).filter(Boolean).filter(p=>positionFilter==='All'||p!.pos===positionFilter) as typeof allPlayersData;
-  }, [activeTab, scopePlayerIds, top10PlayerIds, reservePlayerIds, positionFilter, allPlayersData]);
+    let list = ids.map(id=>playerMap.get(id)).filter(Boolean) as typeof allPlayersData;
+    if (positionFilter!=='All') list = list.filter(p=>p.pos===positionFilter);
+    if (ageMin) list = list.filter(p=>p.age>=parseInt(ageMin));
+    if (ageMax) list = list.filter(p=>p.age<=parseInt(ageMax));
+    if (showFilter==='Raised') list = list.filter(p=>raisedPlayerIds.has(p.id));
+    else if (showFilter==='Can add') list = list.filter(p=>!raisedPlayerIds.has(p.id));
+    if (search.trim()) list = list.filter(p=>p.name.toLowerCase().includes(search.trim().toLowerCase()));
+    return list;
+  }, [activeTab, scopePlayerIds, top10PlayerIds, reservePlayerIds, positionFilter, ageMin, ageMax, showFilter, raisedPlayerIds, search, allPlayersData]);
+  const showTop = useShowBackToTop(scrollBoxRef, currentPlayersData.length);
+  const tabCounts: Record<CountryTab, number | null> = {
+    'players-in-scope': scopePlayerIds.length, 'top-10': top10PlayerIds.length,
+    'reserve-list': reservePlayerIds.length, 'combined-top-10': null,
+  };
+
+  // Row actions per tab — shown inline as one icon pill (ActionButtons), like the Lead/Senior tables
+  const rowActions = (id: string, name: string): ActionItem[] =>
+    activeTab==='players-in-scope' ? [
+      { label: 'Add to Top 10', action: () => handleScopeToTop10(id), icon: <Star size={12} /> },
+      { label: 'Add to Reserve', action: () => handleScopeToReserve(id), icon: <Bookmark size={12} /> },
+      { label: 'Raise to Pipeline', action: () => handleRaise(id, name), icon: <ArrowUpRight size={12} /> },
+    ] : activeTab==='top-10' ? [
+      { label: 'Raise to Pipeline', action: () => handleRaise(id, name), icon: <ArrowUpRight size={12} /> },
+      { label: 'Move to Reserve', action: () => handleTop10ToReserve(id), icon: <Bookmark size={12} /> },
+      { label: 'Remove', action: () => handleTop10ToScope(id), icon: <Trash2 size={12} />, danger: true },
+    ] : activeTab==='reserve-list' ? [
+      { label: 'Move to Top 10', action: () => handleReserveToTop10(id), icon: <Star size={12} /> },
+      { label: 'Remove', action: () => handleReserveToScope(id), icon: <Trash2 size={12} />, danger: true },
+    ] : [];
+  // Frozen Actions column: pill width (24px per icon + dividers + border) + cell padding
+  const actW = activeTab==='reserve-list' ? 64 : 88;
+
+  // Filter toolbar — rendered inline on desktop and inside the mobile bottom-sheet
+  const renderFilterToolbar = () => (
+    <div data-filter-root className="flex items-end gap-4 flex-wrap w-full">
+      <SegmentedToggle<'active'|'audit'> value={listView} onChange={setListView}
+        options={[{ value: 'active', label: 'Active' }, { value: 'audit', label: 'Audit' }]} />
+      <LLSelect label="Foot" value={footFilter} setValue={setFootFilter} options={['Right','Left','Both']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
+      <RangePair label="Age" minV={ageMin} setMin={setAgeMin} maxV={ageMax} setMax={setAgeMax} />
+      <RangePair label="Height" minV={htMin} setMin={setHtMin} maxV={htMax} setMax={setHtMax} />
+      <LLSelect label="Position" value={positionFilter} setValue={setPositionFilter} options={POS_GROUPS} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
+      <LLSelect label="Profile" value={profileFilter} setValue={setProfileFilter} options={['Wonderkid','Prospect','Performance','Journeyman']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
+      <LLSelect label="Scout" value={scoutFilter} setValue={setScoutFilter} options={['Scouted','Unscouted']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
+      <LLSelect label="Show" value={showFilter} setValue={setShowFilter} options={['Raised','Can add']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
+      <LLSelect label="Stats" value={statFilter} setValue={setStatFilter} options={['Goals','Assists','Mins','xG','xA','Shots','SOT','Pass%','Tackles','Interceptions','Clearances','Starts']} openKey={filterOpenKey} setOpenKey={setFilterOpenKey} />
+      <div className="ml-auto shrink-0"><PlayerSearchBox value={search} onChange={setSearch} /></div>
+    </div>
+  );
 
   const flagMap: Record<string,string> = {
     "GAM":"gm","CMR":"cm","MLI":"ml","SEN":"sn","BDI":"bi","NGA":"ng","GHA":"gh","CIV":"ci","ENG":"gb-eng",
@@ -313,6 +417,7 @@ export default function CountryScoutDashboardPage() {
     'players-in-scope':'Players in Scope','top-10':'Top 10',
     'reserve-list':'Reserve List','combined-top-10':'Combined Top 10',
   };
+  const totalCols = columns.length + 1 + extraCols.length;
 
   return (
     <div className="flex min-h-screen bg-surface-page font-body text-strong">
@@ -470,333 +575,259 @@ export default function CountryScoutDashboardPage() {
 
             {/* SENIOR/LEAD PLAYERS */}
             {activePage==='players' && isSeniorOrLead && (
-              <div className="flex flex-col w-full min-w-0 pt-4">
+              <div className="flex flex-col w-full min-w-0">
                 <SeniorLeadPlayersPage allPlayersData={allPlayersData} loggedInRole={loggedInRole} flagMap={flagMap} />
               </div>
             )}
 
-            {/* COUNTRY/HEAD PLAYERS — no left sidebar, full width */}
+            {/* COUNTRY/HEAD PLAYERS — same page shell, card, toolbar and table kit as Lead/Senior (PlayersTableKit) */}
             {activePage==='players' && !isSeniorOrLead && (
-              <div className="flex flex-col w-full mt-4">
+              <div className="flex flex-col w-full min-w-0">
+                <EditColumnsModal open={colsModalOpen} columns={PLAYER_COLUMNS} visible={visibleColIds} onApply={setVisibleColIds} onClose={() => setColsModalOpen(false)} />
 
-                {/* Page title */}
-                <div className="mb-6 flex flex-wrap gap-4 justify-between items-end">
-                  <div>
-                    <h1 className="font-heading font-semibold text-[24px] md:text-[32px] tracking-tight text-heading flex items-center gap-4 leading-[1]">
-                      NXUS
-                      <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0"><Users size={28} className="text-on-brand" /></span>
-                      Players
-                    </h1>
-                    <p className="font-body text-body text-[16px] mt-4 font-medium">
-                      {activeTab==='players-in-scope'?'All players within your active scouting scope.':activeTab==='top-10'?'Your current top ten performance and prospect selections.':activeTab==='reserve-list'?'Players held in reserve for future consideration.':'Track regional scout submissions and pipeline status.'}
-                    </p>
-                  </div>
-                  {activeTab!=='combined-top-10' && (
-                    <div className="flex items-center gap-3 shrink-0">
-                      <button onClick={()=>setColsModalOpen(true)} aria-label="Columns"
-                        className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[14px] border border-default bg-surface-card text-body hover:border-brand-primary hover:text-body shrink-0 transition-colors">
-                        <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
-                      </button>
-                      <div className="hidden md:flex items-center space-x-1 bg-surface-card border border-default p-2 rounded-full shadow-sm shrink-0">
-                        <button onClick={()=>setViewMode('table')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='table'?'bg-brand-primary text-on-brand shadow-sm':'text-body hover:text-strong hover:bg-surface-accent'}`} title="Table View"><List size={16} /></button>
-                        <button onClick={()=>setViewMode('card')} className={`p-2 rounded-full flex items-center transition-all ${viewMode==='card'?'bg-brand-primary text-on-brand shadow-sm':'text-body hover:text-strong hover:bg-surface-accent'}`} title="Card View"><LayoutGrid size={16} /></button>
+                <PlayersPageTitle first="NXUS" icon={<Users size={28} className="text-on-brand" />} rest="Players"
+                  subtitle={TAB_SUBTITLE[activeTab]} folded={focused && isListTab} />
+
+                <PlayersCard bounded={isListTab} focused={focused} onScrollCapture={onCardScroll}>
+                  <PlayersCardHeader>
+                    {/* Tabs — desktop: all inline */}
+                    <div className="hidden md:flex items-center gap-1 flex-wrap">
+                      {COUNTRY_TABS.map(tab => (
+                        <TabPill key={tab.id} active={activeTab===tab.id} count={tabCounts[tab.id]} onClick={()=>handleTabChange(tab.id)}>
+                          {tab.label}
+                        </TabPill>
+                      ))}
+                    </div>
+                    {/* Tabs — mobile: active label + dropdown */}
+                    <MobileTabMenu label={tabLabel[activeTab]} open={tabsMenuOpen} onToggle={()=>setTabsMenuOpen(o=>!o)}>
+                      {COUNTRY_TABS.map(tab => {
+                        const count = tabCounts[tab.id];
+                        const isActive = activeTab===tab.id;
+                        return (
+                          <div key={tab.id} className="flex items-center gap-1 px-2">
+                            <button onClick={()=>{handleTabChange(tab.id);setTabsMenuOpen(false);}}
+                              className={`flex-1 flex items-center justify-between gap-2 px-2 py-2 rounded-lg font-body font-bold type-body-sm ${isActive?'text-link bg-brand-primary/10':'text-body hover:bg-surface-accent'}`}>
+                              {tab.label}
+                              {count!=null && count>0 && <span className="font-body type-micro font-black px-2 py-0.5 rounded-full bg-brand-primary/15 text-body">{count}</span>}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </MobileTabMenu>
+                    <div className="flex-1" />
+                    {isListTab && (
+                      <>
+                        <ViewModeToggle value={viewMode} onChange={setViewMode} />
+                        <FiltersButton active={showFilters} onClick={()=>setShowFilters(s=>!s)} />
+                        <MobileFiltersButton onClick={()=>setMobileFiltersOpen(true)} />
+                        <ColumnsButton onClick={()=>setColsModalOpen(true)} />
+                      </>
+                    )}
+                  </PlayersCardHeader>
+
+                  {/* Desktop: inline filter toolbar, toggled by the Filters button (visible by default) */}
+                  {isListTab && showFilters && (
+                    <PlayersCardZone className="hidden md:block">{renderFilterToolbar()}</PlayersCardZone>
+                  )}
+                  {/* Mobile: the same filters in a bottom-sheet */}
+                  <MobileFilterSheet open={isListTab && mobileFiltersOpen} onClose={()=>setMobileFiltersOpen(false)}>
+                    {renderFilterToolbar()}
+                  </MobileFilterSheet>
+
+                  {/* Top 10 submit counter */}
+                  {activeTab==='top-10' && (
+                    <PlayersCardZone>
+                      <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-4">
+                          <div className="flex flex-col">
+                            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Performance</span>
+                            <span className="font-heading font-semibold text-[16px] text-strong leading-none">{perfCount}/10</span>
+                          </div>
+                          <div className="w-px h-8 bg-surface-canvas" />
+                          <div className="flex flex-col">
+                            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Prospects</span>
+                            <span className="font-heading font-semibold text-[16px] text-strong leading-none">{prospectCount}/10</span>
+                          </div>
+                        </div>
+                        <button className="ml-auto bg-brand-primary text-on-brand px-6 py-2 rounded-full font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm"
+                          onClick={()=>{if(perfCount<10)setPerfCount(p=>p+1);else if(prospectCount<10)setProspectCount(p=>p+1);}}>
+                          Submit Shortlist
+                        </button>
+                      </div>
+                    </PlayersCardZone>
+                  )}
+
+                  {/* Reserve List info bar */}
+                  {activeTab==='reserve-list' && (
+                    <PlayersCardZone className="bg-surface-accent">
+                      <p className="font-body text-[14px] text-body font-semibold">Players in Reserve can be promoted to Top 10 or returned to Players in Scope.</p>
+                    </PlayersCardZone>
+                  )}
+
+                  {/* COMBINED TOP 10 */}
+                  {activeTab==='combined-top-10' && (
+                    <div className="p-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 portrait-tablet:grid-cols-1 gap-8 h-full min-h-[500px]">
+                        <div className="bg-surface-card border border-default rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
+                          <div className="absolute top-0 left-0 w-2 h-full bg-brand-primary" />
+                          <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 rounded-[16px] bg-brand-primary/10 flex items-center justify-center text-strong"><ShieldCheck size={24} strokeWidth={2.5} /></div>
+                              <div><h3 className="font-heading font-bold text-[24px] text-heading">Submitted</h3><p className="font-body font-bold text-[14px] text-body">Action Required: None</p></div>
+                            </div>
+                            <div className="font-heading font-black text-[44px] tracking-tight text-strong">12</div>
+                          </div>
+                          <div className="flex-1 overflow-y-auto pr-4 space-y-4">
+                            {[{name:'Kofi Mensah',role:'Country Scout',region:'Ghana',date:'Today, 10:45 AM'},{name:'Ngozi Eze',role:'Country Scout',region:'Nigeria',date:'Yesterday, 4:20 PM'},{name:'Pape Sarr',role:'Country Scout',region:'Senegal',date:'Yesterday, 1:15 PM'},{name:'Emeka Okafor',role:'Country Scout',region:'Nigeria',date:'Monday, 9:00 AM'}].map((scout,i)=>(
+                              <div key={i} className="bg-surface-card border border-default rounded-[24px] p-5 flex items-center justify-between hover:bg-surface-accent transition-colors">
+                                <div className="flex items-center gap-4">
+                                  <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
+                                  <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>
+                                </div>
+                                <div className="text-right">
+                                  <div className="text-muted bg-brand-primary/10 px-3 py-1 rounded-full font-body text-[10px] font-bold uppercase tracking-wider mb-1 inline-block">Complete</div>
+                                  <div className="font-body text-[12px] font-medium text-muted block">{scout.date}</div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="bg-surface-card border border-default rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
+                          <div className="absolute top-0 left-0 w-2 h-full bg-status-error" />
+                          <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 rounded-[16px] bg-status-error/10 flex items-center justify-center text-status-error"><TrendingUp size={24} strokeWidth={2.5} /></div>
+                              <div><h3 className="font-heading font-bold text-[24px] text-heading">Not Submitted</h3><p className="font-body font-bold text-[14px] text-status-error">Action Required: Follow up</p></div>
+                            </div>
+                            <div className="font-heading font-black text-[44px] tracking-tight text-status-error">4</div>
+                          </div>
+                          <div className="flex-1 overflow-y-auto pr-4 space-y-4">
+                            {[{name:'Fatou Mensah',role:'Country Scout',region:'Ghana',status:'7/10 Profiles'},{name:'Aliou Cisse',role:'Country Scout',region:'Senegal',status:'2/10 Profiles'},{name:'Kwame Asante',role:'Head Scout',region:'Ghana',status:'Reviewing'},{name:'Moussa Sow',role:'Head Scout',region:'Senegal',status:'Reviewing'}].map((scout,i)=>(
+                              <div key={i} className="bg-status-error/5 border border-status-error/10 rounded-[24px] p-5 flex items-center justify-between hover:bg-status-error/10 transition-colors">
+                                <div className="flex items-center gap-4">
+                                  <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
+                                  <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>
+                                </div>
+                                <div className="flex flex-col items-end gap-2">
+                                  <div className="font-body font-bold text-[14px] text-status-error">{scout.status}</div>
+                                  <button className="font-body text-[10px] font-black tracking-wider uppercase text-status-error bg-status-error/20 px-3 py-1 rounded-md hover:bg-status-error/30 transition-colors">Nudge</button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
-                </div>
-                <EditColumnsModal open={colsModalOpen} columns={PLAYER_COLUMNS} visible={visibleColIds} onApply={setVisibleColIds} onClose={() => setColsModalOpen(false)} />
 
-                {/* Tab row */}
-                <div className="flex items-center gap-2 mb-6 overflow-x-auto hide-scrollbar flex-nowrap">
-                  {([{id:'players-in-scope',label:'Players in Scope'},{id:'top-10',label:'Top 10'},{id:'reserve-list',label:'Reserve List'},{id:'combined-top-10',label:'Combined Top 10'}] as {id:typeof activeTab;label:string}[]).map(tab=>(
-                    <button key={tab.id} onClick={()=>handleTabChange(tab.id)}
-                      className={`relative shrink-0 px-6 py-2 rounded-full font-body font-bold text-[14px] transition-all flex items-center gap-2 border ${activeTab===tab.id?'bg-brand-primary text-on-brand border-brand-primary shadow-sm':'bg-surface-card text-body border-text-on-brand hover:border-brand-primary hover:text-strong'}`}>
-                      <span>{tab.label}</span>
-                      {tab.id==='top-10'&&top10PlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='top-10'?'bg-surface-card/20 text-on-brand':'bg-brand-primary/15 text-strong'}`}>{top10PlayerIds.length}</span>}
-                      {tab.id==='reserve-list'&&reservePlayerIds.length>0&&<span className={`text-[12px] font-black px-2 py-0.5 rounded-full ${activeTab==='reserve-list'?'bg-surface-card/20 text-on-brand':'bg-surface-accent text-strong'}`}>{reservePlayerIds.length}</span>}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Dark filter bar — BIO + TECH + SHOW + STATS + Active/Audit + Apply */}
-                {activeTab!=='combined-top-10' && (
-                  <>
-                    {/* Desktop */}
-                    <div className="hidden md:flex bg-brand-primary rounded-[24px] px-6 py-4 items-center gap-4 flex-wrap mb-4">
-                      {/* BIO */}
-                      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">BIO</span>
-                      {[{label:'Foot',opts:['Any','Right','Left','Both']},{label:'Ht',opts:['Any','<170','170–180','180–190','>190']},{label:'Age',opts:['Any','U18','U21','U23','U25','25+']}].map(f=>(
-                        <div key={f.label} className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-                          <span className="font-body text-[14px] font-bold text-body">{f.label}:</span>
-                          <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5">
-                            {f.opts.map(o=><option key={o} className="text-ink-midnight">{o}</option>)}
-                          </select>
-                          <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
+                  {/* TABLE VIEW — compact `rtable`, bounded inner scroll, sticky thead + frozen Actions/Player columns */}
+                  {isListTab && viewMode==='table' && (
+                    <div className="w-full flex-1 min-h-0 flex flex-col relative">
+                      {renderContextMenu()}
+                      {currentPlayersData.length===0 ? (
+                        <div className="flex-1 flex flex-col items-center justify-center py-16 text-center">
+                          <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Users size={16} className="text-body" /></div>
+                          <div className="font-heading font-semibold text-[16px] text-strong mt-4">No players here</div>
+                          <p className="font-body text-[12px] text-body font-medium max-w-xs">
+                            {activeTab==='top-10'&&'Move players from Players in Scope using the Top Ten button.'}
+                            {activeTab==='reserve-list'&&'Move players from Players in Scope or Top 10 using the Reserve button.'}
+                            {activeTab==='players-in-scope'&&'No players match the current filters.'}
+                          </p>
                         </div>
-                      ))}
-                      <div className="w-px h-6 bg-surface-card/10 mx-1 shrink-0" />
-                      {/* TECH */}
-                      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">TECH</span>
-                      {[{label:'Pos',opts:['All','ST','LW','RW','CM','FB','CB'],state:positionFilter,set:setPositionFilter},{label:'Profile',opts:['All','Wonderkid','Prospect','Performance','Journeyman'],state:'All',set:()=>{}},{label:'Scout',opts:['All','Scouted','Unscouted'],state:'All',set:()=>{}}].map(f=>(
-                        <div key={f.label} className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-                          <span className="font-body text-[14px] font-bold text-body">{f.label}:</span>
-                          <select value={f.state} onChange={e=>f.set(e.target.value)} className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5">
-                            {f.opts.map(o=><option key={o} className="text-ink-midnight">{o}</option>)}
-                          </select>
-                          <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
+                      ) : (
+                        <div ref={scrollBoxRef} className="overflow-auto w-full flex-1 min-h-0 hide-scrollbar rounded-b-[24px]">
+                          <table className="rtable w-full text-left whitespace-nowrap border-separate border-spacing-0">
+                            <thead className="sticky top-0 z-30">
+                              {/* Group header row — blue band, group names */}
+                              <tr className="bg-brand-primary">
+                                {groupHeaders.map((grp,idx)=>(
+                                  <th key={idx} colSpan={grp.count}
+                                    className={`${GROUP_TH} ${idx===0?'sticky left-0 z-40 bg-brand-primary':GROUP_DIVIDER}`}>
+                                    {grp.group}
+                                  </th>
+                                ))}
+                                {extraCols.length>0 && (
+                                  <th colSpan={extraCols.length} className={`${GROUP_TH} ${GROUP_DIVIDER}`}>Custom</th>
+                                )}
+                              </tr>
+                              {/* Column sub-header row — light, muted labels; right-click a label to rename/insert/remove */}
+                              <tr className="bg-surface-card border-b-2 border-default">
+                                <th className={`${SUB_TH} sticky left-0 z-40 bg-surface-card text-center`} style={{ width: actW, minWidth: actW }}></th>
+                                {columns.map((col,idx)=>(
+                                  <th key={col.id} style={col.isSticky ? { left: actW } : undefined}
+                                    className={`${SUB_TH} ${col.isSticky?'sticky z-40':''} ${col.width||''} ${col.minWidth||''} ${col.borderRight?'border-r-2 border-default':''} ${col.bgHeader||'bg-surface-card'} ${col.align==='center'?'text-center':'text-left'} cursor-context-menu`}
+                                    onContextMenu={e=>handleContextMenu(e,idx,col.group)}>
+                                    {editingColumn?.index===idx
+                                      ? <input autoFocus type="text" defaultValue={editingColumn.label} onBlur={e=>finishEditColumn(e.target.value)} onKeyDown={e=>e.key==='Enter'&&finishEditColumn(e.currentTarget.value)} className="bg-surface-accent px-2 py-1 rounded text-strong font-bold text-[12px] outline-none w-full" />
+                                      : col.label}
+                                  </th>
+                                ))}
+                                {extraCols.map(c=>(
+                                  <th key={c.id} className={`${SUB_TH} text-center w-[64px]`}>{c.label}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {POS_GROUPS.map(posGroup=>{
+                                const posPlayers = currentPlayersData.filter(p=>p.pos===posGroup);
+                                if (!posPlayers.length) return null;
+                                const collapsed = !!collapsedPositions[posGroup];
+                                const yobs = Array.from(new Set(posPlayers.map(p=>2026-p.age))).sort((a,b)=>b-a);
+                                return (
+                                  <Fragment key={posGroup}>
+                                    <PosHeader pos={posGroup} count={posPlayers.length} colSpan={totalCols} collapsed={collapsed} onToggle={()=>togglePosition(posGroup)} />
+                                    {!collapsed && yobs.map(yob=>(
+                                      <Fragment key={yob}>
+                                        <YobHeader yob={yob} colSpan={totalCols} />
+                                        {posPlayers.filter(p=>2026-p.age===yob).map((player,rowIndex)=>{
+                                          const isRaised = raisedPlayerIds.has(player.id);
+                                          return (
+                                            <tr key={player.id} id={`row-${player.id}`} className={`group transition-colors hover:bg-surface-accent ${isRaised?'bg-brand-primary/5':''}`}>
+                                              <td className="sticky left-0 z-20 bg-surface-card group-hover:bg-surface-accent text-center" style={{ width: actW, minWidth: actW }}>
+                                                {isRaised&&activeTab==='players-in-scope'&&<div className="absolute left-0 top-0 h-full w-1 bg-brand-primary" />}
+                                                <ActionButtons items={rowActions(player.id, player.name)} />
+                                              </td>
+                                              {columns.map(col=>{
+                                                const customVal = customData?.[player.id]?.[col.id]||'';
+                                                return (
+                                                  <td key={col.id} style={col.isSticky ? { left: actW } : undefined}
+                                                    className={`${col.isSticky?'sticky z-20 bg-surface-card group-hover:bg-surface-accent':''} ${col.borderRight?'border-r-2 border-default':''} ${col.bgCell||''} ${col.align==='center'?'text-center':''}`}>
+                                                    {col.renderCell?col.renderCell(player,rowIndex,customVal,(val:string)=>handleCellChange(player.id,col.id,val)):(player as any)[col.id]}
+                                                  </td>
+                                                );
+                                              })}
+                                              {extraCols.map(c=>(
+                                                <td key={c.id} className="text-center w-[64px]">
+                                                  <span className={`text-[12px] font-medium text-muted whitespace-nowrap ${c.mono?'font-mono':'font-body'}`}>{c.value(player,rowIndex)}</span>
+                                                </td>
+                                              ))}
+                                            </tr>
+                                          );
+                                        })}
+                                      </Fragment>
+                                    ))}
+                                  </Fragment>
+                                );
+                              })}
+                            </tbody>
+                          </table>
                         </div>
-                      ))}
-                      <div className="w-px h-6 bg-surface-card/10 mx-1 shrink-0" />
-                      {/* SHOW */}
-                      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">Show</span>
-                      <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-                        <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5" value={showFilter} onChange={e=>setShowFilter(e.target.value)}>
-                          <option value="All players" className="text-ink-midnight">All Players</option>
-                          <option value="Raised" className="text-ink-midnight">Raised</option>
-                          <option value="Can add" className="text-ink-midnight">Can add</option>
-                        </select>
-                        <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
-                      </div>
-                      <div className="w-px h-6 bg-surface-card/10 mx-1 shrink-0" />
-                      {/* STATS */}
-                      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">Stats</span>
-                      <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-                        <select className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5" value={statFilter} onChange={e=>setStatFilter(e.target.value)}>
-                          {['All Stats','Goals','Assists','Mins','xG','xA','Shots','SOT','Pass%','Tackles','Interceptions','Clearances','Starts'].map(s=><option key={s} className="text-ink-midnight">{s}</option>)}
-                        </select>
-                        <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
-                      </div>
-                      {/* Active/Audit + Apply */}
-                      <div className="ml-auto flex items-center gap-3 shrink-0">
-                        <div className="flex items-center bg-surface-card/5 border border-text-on-brand/10 rounded-full p-1">
-                          {['Active','Audit'].map((mode,i)=>(
-                            <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-on-brand':'text-body hover:text-strong'}`}>{mode}</button>
-                          ))}
-                        </div>
-                        <button className="px-6 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full font-body text-[14px] font-bold transition-colors">Apply</button>
-                      </div>
+                      )}
+                      <BackToTopButton show={showTop} onClick={()=>scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })} />
                     </div>
-                    {/* Mobile filter bar */}
-                    <div className="flex md:hidden items-center gap-3 mb-4">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-brand-primary text-on-brand rounded-full font-body text-[14px] font-bold"><ChevronDown size={14} />Filters</button>
-                      <div className="flex items-center bg-surface-card border border-default rounded-full p-1 ml-auto">
-                        {['Active','Audit'].map((mode,i)=>(
-                          <button key={mode} className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${i===0?'bg-brand-primary text-on-brand':'text-body hover:text-strong'}`}>{mode}</button>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                )}
+                  )}
 
-                {/* Top 10 submit counter */}
-                {activeTab==='top-10' && (
-                  <div className="flex items-center gap-6 mb-4 px-4 py-3 bg-surface-card border border-default rounded-[16px] shadow-sm">
-                    <div className="flex items-center gap-4">
-                      <div className="flex flex-col">
-                        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Performance</span>
-                        <span className="font-heading font-semibold text-[16px] text-strong leading-none">{perfCount}/10</span>
-                      </div>
-                      <div className="w-px h-8 bg-surface-canvas" />
-                      <div className="flex flex-col">
-                        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Prospects</span>
-                        <span className="font-heading font-semibold text-[16px] text-strong leading-none">{prospectCount}/10</span>
-                      </div>
-                    </div>
-                    <button className="ml-auto bg-brand-primary text-on-brand px-6 py-2 rounded-full font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm"
-                      onClick={()=>{if(perfCount<10)setPerfCount(p=>p+1);else if(prospectCount<10)setProspectCount(p=>p+1);}}>
-                      Submit Shortlist
-                    </button>
-                  </div>
-                )}
-
-                {/* Reserve List info bar */}
-                {activeTab==='reserve-list' && (
-                  <div className="mb-4 px-4 py-3 bg-surface-accent border border-default rounded-[16px]">
-                    <p className="font-body text-[14px] text-body font-semibold">Players in Reserve can be promoted to Top 10 or returned to Players in Scope.</p>
-                  </div>
-                )}
-
-                {/* COMBINED TOP 10 */}
-                {activeTab==='combined-top-10' && (
-                  <div className="flex-1 space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 portrait-tablet:grid-cols-1 gap-8 h-full min-h-[500px]">
-                      <div className="bg-surface-card border border-default rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-2 h-full bg-brand-primary" />
-                        <div className="flex items-center justify-between mb-8">
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-[16px] bg-brand-primary/10 flex items-center justify-center text-strong"><ShieldCheck size={24} strokeWidth={2.5} /></div>
-                            <div><h3 className="font-heading font-bold text-[24px] text-heading">Submitted</h3><p className="font-body font-bold text-[14px] text-body">Action Required: None</p></div>
-                          </div>
-                          <div className="font-heading font-black text-[44px] tracking-tight text-strong">12</div>
+                  {/* CARD VIEW */}
+                  {isListTab && viewMode==='card' && (
+                    <div className="w-full flex-1 min-h-0 overflow-auto hide-scrollbar px-4 pb-4">
+                      {currentPlayersData.length===0 && (
+                        <div className="flex flex-col items-center justify-center py-16 text-center">
+                          <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Users size={16} className="text-body" /></div>
+                          <div className="font-heading font-semibold text-[16px] text-strong mt-4">No players here</div>
+                          <p className="font-body text-[12px] text-body font-medium">Move players from Players in Scope to see them here.</p>
                         </div>
-                        <div className="flex-1 overflow-y-auto pr-4 space-y-4">
-                          {[{name:'Kofi Mensah',role:'Country Scout',region:'Ghana',date:'Today, 10:45 AM'},{name:'Ngozi Eze',role:'Country Scout',region:'Nigeria',date:'Yesterday, 4:20 PM'},{name:'Pape Sarr',role:'Country Scout',region:'Senegal',date:'Yesterday, 1:15 PM'},{name:'Emeka Okafor',role:'Country Scout',region:'Nigeria',date:'Monday, 9:00 AM'}].map((scout,i)=>(
-                            <div key={i} className="bg-surface-card border border-default rounded-[24px] p-5 flex items-center justify-between hover:bg-surface-accent transition-colors">
-                              <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
-                                <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>
-                              </div>
-                              <div className="text-right">
-                                <div className="text-muted bg-brand-primary/10 px-3 py-1 rounded-full font-body text-[10px] font-bold uppercase tracking-wider mb-1 inline-block">Complete</div>
-                                <div className="font-body text-[12px] font-medium text-muted block">{scout.date}</div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="bg-surface-card border border-default rounded-[40px] p-8 shadow-[var(--shadow-lg)] flex flex-col h-full relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-2 h-full bg-status-error" />
-                        <div className="flex items-center justify-between mb-8">
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-[16px] bg-status-error/10 flex items-center justify-center text-status-error"><TrendingUp size={24} strokeWidth={2.5} /></div>
-                            <div><h3 className="font-heading font-bold text-[24px] text-heading">Not Submitted</h3><p className="font-body font-bold text-[14px] text-status-error">Action Required: Follow up</p></div>
-                          </div>
-                          <div className="font-heading font-black text-[44px] tracking-tight text-status-error">4</div>
-                        </div>
-                        <div className="flex-1 overflow-y-auto pr-4 space-y-4">
-                          {[{name:'Fatou Mensah',role:'Country Scout',region:'Ghana',status:'7/10 Profiles'},{name:'Aliou Cisse',role:'Country Scout',region:'Senegal',status:'2/10 Profiles'},{name:'Kwame Asante',role:'Head Scout',region:'Ghana',status:'Reviewing'},{name:'Moussa Sow',role:'Head Scout',region:'Senegal',status:'Reviewing'}].map((scout,i)=>(
-                            <div key={i} className="bg-status-error/5 border border-status-error/10 rounded-[24px] p-5 flex items-center justify-between hover:bg-status-error/10 transition-colors">
-                              <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
-                                <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>
-                              </div>
-                              <div className="flex flex-col items-end gap-2">
-                                <div className="font-body font-bold text-[14px] text-status-error">{scout.status}</div>
-                                <button className="font-body text-[10px] font-black tracking-wider uppercase text-status-error bg-status-error/20 px-3 py-1 rounded-md hover:bg-status-error/30 transition-colors">Nudge</button>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* TABLE VIEW */}
-                {activeTab!=='combined-top-10' && effectiveViewMode==='table' && (
-                  <div className="bg-surface-card rounded-[32px] shadow-[var(--shadow-lg)] border border-default flex-1 overflow-hidden flex flex-col relative">
-                    {renderContextMenu()}
-                    {currentPlayersData.length===0 && (
-                      <div className="flex-1 flex flex-col items-center justify-center py-24 text-center">
-                        <div className="w-16 h-16 rounded-full bg-surface-accent flex items-center justify-center mb-4"><Users size={28} className="text-body" /></div>
-                        <div className="font-heading font-semibold text-[16px] text-strong mb-2">No players here</div>
-                        <div className="font-body text-[14px] text-body font-medium max-w-xs">
-                          {activeTab==='top-10'&&'Move players from Players in Scope using the Top Ten button.'}
-                          {activeTab==='reserve-list'&&'Move players from Players in Scope or Top 10 using the Reserve button.'}
-                          {activeTab==='players-in-scope'&&'No players match the current filters.'}
-                        </div>
-                      </div>
-                    )}
-                    {currentPlayersData.length>0 && (
-                      <div className="flex-1 overflow-auto hide-scrollbar rounded-[32px]">
-                        <table className="w-full text-left whitespace-nowrap border-separate border-spacing-0 min-w-max">
-                          <thead className="sticky top-0 z-[50]">
-                            <tr>
-                              {groupHeaders.map((grp,idx)=>(
-                                <th key={idx} colSpan={grp.count}
-                                  className={`px-4 py-3 text-center font-heading font-bold text-[10px] text-on-brand uppercase tracking-widest bg-brand-primary border-b border-text-on-brand/10 ${grp.group==='PLAYER IDENTIFICATION'?'sticky left-0 z-[60] bg-brand-primary':''} ${grp.group==='GAME STATS'||grp.group==='VIDEOS'?'text-strong':'text-on-brand/60'}`}>
-                                  {grp.group}
-                                </th>
-                              ))}
-                              {extraCols.length>0 && (
-                                <th colSpan={extraCols.length} className="px-4 py-3 text-center font-heading font-bold text-[10px] text-on-brand/60 uppercase tracking-widest bg-brand-primary border-b border-text-on-brand/10 border-l border-l-white/10">
-                                  CUSTOM
-                                </th>
-                              )}
-                            </tr>
-                            <tr className="font-heading font-bold text-[12px] text-muted uppercase tracking-wider border-b-2 border-default bg-surface-card">
-                              <th className="sticky left-0 z-[60] bg-surface-card px-4 py-4 w-40 text-left">Actions</th>
-                              {columns.map((col,idx)=>(
-                                <th key={col.id} className={`px-4 py-4 ${col.isSticky?`sticky ${col.isSticky} z-[60] bg-surface-card shadow-right`:''} ${col.width||''} ${col.minWidth||''} ${col.borderRight?'border-r border-default':''} ${col.bgHeader||'bg-surface-card'} ${col.align==='center'?'text-center':'text-left'} cursor-context-menu hover:bg-surface-canvas`}
-                                  onContextMenu={e=>handleContextMenu(e,idx,col.group)}>
-                                  {editingColumn?.index===idx
-                                    ? <input autoFocus type="text" defaultValue={editingColumn.label} onBlur={e=>finishEditColumn(e.target.value)} onKeyDown={e=>e.key==='Enter'&&finishEditColumn(e.currentTarget.value)} className="bg-surface-accent px-2 py-1 rounded text-strong font-bold text-[12px] outline-none w-full" />
-                                    : col.label}
-                                </th>
-                              ))}
-                              {extraCols.map(c=>(
-                                <th key={c.id} className="px-4 py-4 bg-surface-card text-center whitespace-nowrap border-l border-default">{c.label}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody className="bg-surface-card font-body">
-                            {['Strikers','Wingers','Midfielders','Full Backs','Centre Backs'].map(posGroup=>{
-                              const posPlayers = currentPlayersData.filter(p=>p.pos===posGroup);
-                              if (!posPlayers.length) return null;
-                              return (
-                                <Fragment key={posGroup}>
-                                  <tr className="bg-brand-primary border-b border-ink-midnight sticky top-[87px] z-[40] cursor-pointer hover:bg-[var(--blue-900)] transition-colors" onClick={()=>togglePosition(posGroup)}>
-                                    <td colSpan={columns.length+1+extraCols.length} className="bg-brand-primary p-0">
-                                      <div className="sticky left-0 z-[40] px-6 py-3 font-heading font-bold text-[10px] text-on-brand uppercase tracking-widest flex items-center gap-2 w-max bg-brand-primary">
-                                        <ChevronDown size={16} className={`transition-transform ${collapsedPositions[posGroup]?'-rotate-90':''}`} />
-                                        {posGroup} <span className="text-body">({posPlayers.length})</span>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  {!collapsedPositions[posGroup] && posPlayers.map((player,rowIndex)=>(
-                                    <tr key={player.id} className={`border-b border-default hover:bg-surface-accent transition-colors group ${raisedPlayerIds.has(player.id)?'bg-brand-primary/5':''}`}>
-                                      <td className="px-3 py-3 sticky left-0 z-[20] bg-surface-card group-hover:bg-surface-accent w-40">
-                                        {raisedPlayerIds.has(player.id)&&activeTab==='players-in-scope'&&<div className="absolute left-0 top-0 h-full w-1 bg-brand-primary" />}
-                                        {activeTab==='players-in-scope' && (
-                                          <ActionDropdown playerId={player.id} openId={openDropdownId} setOpenId={setOpenDropdownId}
-                                            items={[
-                                              { label: 'Add to Top 10', action: () => handleScopeToTop10(player.id), icon: <Star size={12} /> },
-                                              { label: 'Add to Reserve', action: () => handleScopeToReserve(player.id), icon: <Bookmark size={12} /> },
-                                              { label: 'Raise to Pipeline', action: () => handleRaise(player.id, player.name), icon: <ArrowUpRight size={12} /> },
-                                            ]} />
-                                        )}
-                                        {activeTab==='top-10' && (
-                                          <ActionDropdown playerId={player.id} openId={openDropdownId} setOpenId={setOpenDropdownId}
-                                            items={[
-                                              { label: 'Raise to Pipeline', action: () => handleRaise(player.id, player.name), icon: <ArrowUpRight size={12} /> },
-                                              { label: 'Move to Reserve', action: () => handleTop10ToReserve(player.id), icon: <Bookmark size={12} /> },
-                                              { label: 'Remove', action: () => handleTop10ToScope(player.id), icon: <Trash2 size={12} />, danger: true },
-                                            ]} />
-                                        )}
-                                        {activeTab==='reserve-list' && (
-                                          <ActionDropdown playerId={player.id} openId={openDropdownId} setOpenId={setOpenDropdownId}
-                                            items={[
-                                              { label: 'Move to Top 10', action: () => handleReserveToTop10(player.id), icon: <Star size={12} /> },
-                                              { label: 'Remove', action: () => handleReserveToScope(player.id), icon: <Trash2 size={12} />, danger: true },
-                                            ]} />
-                                        )}
-                                      </td>
-                                      {columns.map(col=>{
-                                        const customVal = customData?.[player.id]?.[col.id]||'';
-                                        return (
-                                          <td key={col.id} className={`px-4 py-3 ${col.isSticky?`sticky ${col.isSticky} z-[20] bg-surface-card group-hover:bg-surface-accent shadow-right`:''} ${col.borderRight?'border-r border-default':''} ${col.bgCell||''} ${col.fontMono?'font-mono text-[14px]':''} ${col.align==='center'?'text-center':''}`}>
-                                            {col.renderCell?col.renderCell(player,rowIndex,customVal,(val:string)=>handleCellChange(player.id,col.id,val)):(player as any)[col.id]}
-                                          </td>
-                                        );
-                                      })}
-                                      {extraCols.map(c=>(
-                                        <td key={c.id} className="px-4 py-3 text-center border-l border-default">
-                                          <span className={`text-[14px] font-medium text-body whitespace-nowrap ${c.mono?'font-mono':'font-body'}`}>{c.value(player,rowIndex)}</span>
-                                        </td>
-                                      ))}
-                                    </tr>
-                                  ))}
-                                </Fragment>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* CARD VIEW */}
-                {activeTab!=='combined-top-10' && effectiveViewMode==='card' && (
-                  <div className="flex-1 overflow-auto">
-                    {currentPlayersData.length===0 && (
-                      <div className="flex flex-col items-center justify-center py-24 text-center">
-                        <div className="w-16 h-16 rounded-full bg-surface-accent flex items-center justify-center mb-4"><Users size={28} className="text-body" /></div>
-                        <div className="font-heading font-semibold text-[16px] text-strong mb-2">No players here</div>
-                        <div className="font-body text-[14px] text-body font-medium">Move players from Players in Scope to see them here.</div>
-                      </div>
-                    )}
-                    <div className="flex flex-col gap-0 pb-10">
+                      )}
+                      <div className="flex flex-col gap-0 pb-10">
                       {['Strikers','Wingers','Midfielders','Full Backs','Centre Backs'].map(posGroup => {
                         const posPlayers = currentPlayersData.filter(p => p.pos === posGroup);
                         if (!posPlayers.length) return null;
@@ -807,7 +838,7 @@ export default function CountryScoutDashboardPage() {
                         return (
                           <div key={posGroup} className="flex flex-col">
                             {/* Primary Header (Position) */}
-                            <div className="sticky top-0 z-20 bg-surface-page py-6">
+                            <div className="sticky top-0 z-20 bg-surface-card py-6">
                               <div className="flex items-center w-full">
                                 <div className="flex-1 h-px bg-border-default" />
                                 <div className="px-6 py-2 rounded-full border border-default bg-surface-card shadow-sm">
@@ -819,7 +850,7 @@ export default function CountryScoutDashboardPage() {
                               </div>
                             </div>
 
-                            <div className="flex flex-col gap-8 px-4 md:px-0">
+                            <div className="flex flex-col gap-8">
                               {yobs.map(yob => {
                                 const yobPlayers = posPlayers.filter(p => (2026 - p.age) === yob);
                                 const groupKey = `${posGroup}-${yob}`;
@@ -946,6 +977,7 @@ export default function CountryScoutDashboardPage() {
                     </div>
                   </div>
                 )}
+                </PlayersCard>
               </div>
             )}
 
