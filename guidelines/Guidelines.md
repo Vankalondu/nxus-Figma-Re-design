@@ -100,7 +100,7 @@ translucent white scrim has the same problem in miniature, because it drifts the
 beneath it toward a grey the palette never contains. A chalk scrim lightens *along the
 palette* instead.
 
-**Do:** `text-on-brand` on primary · `border-text-on-brand/15` inside an accent card · `bg-ink-midnight/60`
+**Do:** `text-on-brand` on primary · `border-text-on-brand/15` inside a primary surface (table group header, modal header) · `bg-ink-midnight/60`
 for a modal overlay · `bg-surface-card` for the brightest ordinary surface
 **Don't:** `text-white`, `bg-white/10`, `bg-black/60`, `color: '#fff'` in an inline style
 **Exception:** an attribute selector that *matches* a third-party library's own hardcoded
@@ -170,18 +170,14 @@ read as "this one matters".
 |---|---|---|---|
 | 60% | Background | `bg-surface-page` | Page background, layout canvas |
 | 30% | Surface | `bg-surface-card` | Cards, KPIs, panels, modals, dropdowns, sidebar |
-| 10% | Primary | `bg-brand-primary` | Buttons, CTAs, active tabs, structural headers, filter bars, modal headers |
+| 10% | Primary | `bg-brand-primary` | Buttons, CTAs, active tabs, structural headers (table group rows, position bands), modal headers |
 
 A guiding proportion, not a pixel ratio. Aesthetics may bend it — deviation should be
 intentional, and L-C7 still binds.
 
-### P-C2 · Pattern — The accent card
-In a dashboard's below-KPI section, the right-hand sidebar column carries the one primary
-card permitted by L-C7. It uses `text-on-brand` for all text, `border-text-on-brand/15` for internal
-borders and `bg-text-on-brand/10` for internal fills. All other cards use `bg-surface-card`.
-
-(Earlier revisions said `border-white/10`. Superseded by L-C1 on 31 Aug 2026 — translucent
-white drifts toward grey; chalk lightens along the palette.)
+### P-C2 · Pattern — The accent card *(retired 28 Oct 2026 — see Tombstones and D-16)*
+Dashboards no longer carry a solid-primary accent card. Every dashboard card is
+`bg-surface-card` (P-CO3). L-C7 still caps any view at one primary card.
 
 ### R-C1 · Reference — Palette scales
 Every custom tint or gradient derives from these. Defined in `src/styles/globals.css`.
@@ -433,14 +429,15 @@ not apply.
 ### R-S2 · Reference — Layout spacing
 | Element | Value |
 |---|---|
-| Page horizontal padding — standard | `px-16` |
-| Page horizontal padding — full-width tables | `px-8` |
+| Page horizontal padding — every page, tables included | `px-[var(--pad-page)]` (L-S2) |
+| Page bottom padding | `pb-20 md:pb-12` |
 | KPI card grid gap | `gap-6` |
 | Below-KPI section gap | `gap-6` |
 | Large card padding | `p-8` |
 | Standard card padding | `p-6` |
-| Sidebar card padding | `p-5` |
-| Table cell padding | `px-2 py-3` |
+| Dashboard card header strip | `px-5 py-4 border-b border-default` |
+| Dashboard card list rows | `px-5 py-3` |
+| Table cell padding | the `rtable` density tokens (`--tbl-px` 4/5/6, `--tbl-py` 4) — P-CO9 |
 | Modal padding | `p-8` |
 | Tab pill gap | `gap-2` |
 | Button padding — pills | `px-6 py-2` |
@@ -463,9 +460,9 @@ tiers.
 | `--pad-card` | 12 | 16 | 20 |
 | `--gap-stack` | 8 | 12 | 12 |
 
-**Migration in progress.** Page code currently still uses the fixed values in R-S2
-(`px-16` / `px-8`). Those are the desktop-equivalent legacy usage; new page-level work uses
-the tokens above, and existing pages migrate when next touched.
+**Page padding migrated (28 Oct 2026).** All seven dashboards and every Players page use
+`px-[var(--pad-page)]`. Dashboard grids use a fixed `gap-6`, not `--gap-grid` (D-16); other
+pages migrate when next touched.
 
 ---
 
@@ -501,9 +498,9 @@ Navy-tinted in light mode, black in dark. All defined in `globals.css`.
 ### R-R1 · Reference — Radius by element
 | Element | Radius |
 |---|---|
-| KPI cards, dashboard content cards, sidebar cards | `rounded-[40px]` |
-| Report summary cards, table containers, modals | `rounded-[32px]` |
-| Form and settings cards, standard tables, small report cards | `rounded-[20px]` |
+| KPI cards (P-CO4), report summary cards, modals | `rounded-[32px]` |
+| Players-page card (tab strip + filters + table, P-CO9), top navigation | `rounded-[24px]` |
+| Dashboard content cards, sidebar cards, form and settings cards, small report cards | `rounded-[20px]` |
 | Icon squares | `rounded-[16px]` |
 | Dropdown menus, input fields | `rounded-xl` |
 | Buttons, badges, tab pills, avatars, icon circles | `rounded-full` |
@@ -591,14 +588,22 @@ Inactive  bg-surface-card text-body border-default
           rounded-full px-6 py-2 font-body font-bold .type-body-sm transition-colors
 Container flex items-center gap-2
 ```
+Dashboards render these through `ResponsiveTabs` (`mt-4 mb-6`; collapses to a dropdown pill
+below `md`). On Players pages the tabs sit in the card's header strip as the compact variant —
+`px-4 py-2`, `gap-1`, with a count badge — via `TabPill` in `PlayersTableKit.tsx`.
 
 ### P-CO3 — Cards
 ```
-Standard  bg-surface-card rounded-[40px] border border-default shadow-[var(--shadow-lg)]
-          hover:-translate-y-1 hover:shadow-xl transition-all
-Accent    bg-brand-primary rounded-[40px]; text text-on-brand;
-          internal borders border-text-on-brand/15; internal fills bg-text-on-brand/10
+Standard  bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)]
+          overflow-hidden
+Header    px-5 py-4 border-b border-default flex items-center gap-3
+          icon tile w-10 h-10 rounded-[12px] bg-brand-primary/10 (icon 16, text-strong)
+          title font-heading font-bold text-[16px] text-heading
+          subtitle font-body text-[12px] font-medium text-body
+Rows      divide-y divide-border-default; each row px-5 py-3 hover:bg-surface-accent
 ```
+There is no accent (primary-background) card variant any more — see the P-C2 tombstone.
+Only KPI cards (P-CO4) lift on hover.
 
 ### P-CO4 — KPI stat card
 Canonical implementation: `src/app/components/dashboard/KpiCard.tsx`.
@@ -672,29 +677,42 @@ Surface `bg-surface-sidebar`. Active item `bg-brand-primary/10 text-link border-
 Inactive `text-body hover:text-strong hover:bg-surface-accent transition-colors`.
 
 ### P-CO9 — Data tables
+Every Players page (Lead, Senior, Video Manager, Head, Country) uses one shared kit —
+`src/app/components/PlayersTableKit.tsx` — so the tables cannot drift.
 ```
-Container   w-full max-w-none bg-surface-card rounded-[32px]
-            shadow-[var(--shadow-lg)] border border-default overflow-hidden
-Group header (row 1)   bg-brand-primary text-inverse
-            font-heading font-bold .type-micro uppercase tracking-widest px-4 py-3 text-center
-Sub-header (row 2)     bg-surface-card text-body
-            font-heading font-bold uppercase tracking-widest px-3 py-3
-Data rows   border-b border-default/40 hover:bg-surface-accent transition-colors
-            py-3 px-2 font-body .type-caption font-bold
-Position group rows    bg-brand-primary text-inverse — e.g. STRIKERS (9)
-Year separator rows    bg-surface-card text-body — year only, no prefix
+Page title  pt-2 pb-3, 32px h1 + icon circle, 15px subtitle mt-2 (P-L1); folds away once
+            the table scrolls past 40px ("focus mode")
+Card        ONE bg-surface-card border border-default rounded-[24px] holding the tab
+            strip, the filter toolbar and the table; height calc(100vh - 204px)
+            (114px in focus mode); the table scrolls inside it
+Header strip px-4 py-3 border-b — tab pills (P-CO2 compact) · Table/Card toggle ·
+            Filters (desktop: shows/hides the toolbar) · Columns
+Filter bar  light, label-above: 9px uppercase label over a px-3 py-2 text-[12px] pill;
+            Active/Archive segmented toggle first, "Look for a player" search far right.
+            Mobile: a Filters button opens the same filters in a bottom-sheet
+Table       class rtable — cell padding from --tbl-px (4/5/6) and --tbl-py (4)
+Group header (row 1)   bg-brand-primary text-on-brand font-heading font-bold text-[10px]
+            uppercase tracking-widest text-center; groups divided by border-text-on-brand/15
+Sub-header (row 2)     bg-surface-card text-muted font-heading font-bold text-[12px]
+            uppercase tracking-widest
+Position band          bg-brand-primary text-on-brand 11px tracked + count pill, sticky under
+            the thead (top: --tbl-head-h)
+Year band              bg-surface-accent text-link 11px tracked, sticky under the position
+            band (top: --tbl-head-h + --tbl-group-h)
+Data rows   hover:bg-surface-accent; full-width 1px divider on the cells; body text
+            text-[12px], stats font-mono text-[14px]
+Measured    thead 50px · bands 33px · player rows 45px, at 1440, 834 and 390
 ```
-Rows alternate `bg-surface-card` / `bg-surface-accent` at 30%, resetting at every position group header — the
-first player row after a header always starts on `bg-surface-card`. Table pages use `w-full
-max-w-none` with no max-width, and `px-8` page padding.
-
-An `rtable` class provides responsive cell density so small screens keep a real spreadsheet.
+The Actions and Player columns are frozen left. Stat columns alternate a
+`bg-surface-accent/30` shade. A back-to-top button appears after 400px of scroll. Keep
+`--tbl-head-h` / `--tbl-group-h` equal to the rendered heights or the bands overlap.
 
 ### P-CO10 — Identity cluster
-The sticky left column of every player table: initials circle (`w-8 h-8 rounded-full
-bg-brand-primary text-on-brand`) · player name (bold, hover underline, navigates to profile) · age
-(muted) · scout dot (`w-2 h-2 rounded-full`, `--scout-green` scouted / `--scout-red` not) ·
-flag circle (`w-5 h-5 rounded-full border border-default`).
+The sticky left column of every player table (`PlayerAvatar` + `FlagBadge` in the kit):
+avatar (`w-9 h-9 rounded-xl bg-surface-accent border border-default`, initials until a photo
+exists) · player name (`text-link` bold 14px, hover underline, navigates to profile) · under it
+the age (muted 12px) · scout dot where the data has one (`w-2 h-2 rounded-full`,
+`--scout-green` scouted / `--scout-red` not) · flag (`w-4 h-4 rounded-full border border-default`).
 
 ### P-CO11 — Videos cluster
 Present on all table views across all tiers. Never removed.
@@ -702,6 +720,10 @@ Present on all table views across all tiers. Never removed.
 px-2 py-0.5 rounded .type-caption`.
 
 ### P-CO12 — Split button (action column)
+**In tables, row actions are now an inline pill** (`ActionButtons`): every action is its own
+24px icon button inside one `rounded-full bg-surface-accent border` pill, separated by 1px
+rules — nothing hidden in a menu. The split button below remains for player cards.
+
 One pill divided by a 1px vertical rule. Left zone executes the current action on click;
 right zone opens the dropdown.
 
@@ -808,16 +830,25 @@ Every page title carries a relevant icon in a primary-filled circle placed betwe
 word and the rest of the title. Every page has a subtitle directly below.
 
 ### P-L2 — Dashboard structure
+Reference: the Lead Scout and Video Manager dashboards (D-16). All seven dashboards — Lead,
+Senior, Head, Country, Video Manager, Package Uploader, Full Match Uploader — follow it.
 ```
-1. Welcome header — h1 with icon circle + name
-2. Tab pills row — horizontal, gap-2
-3. KPI cards row — grid grid-cols-2 lg:grid-cols-4 gap-6
-4. Below-KPI section — grid grid-cols-1 lg:grid-cols-3 gap-6
-   Left  (col-span-2): main content card, bg-surface-card
-   Right (col-span-1): stacked sidebar cards
-       top    neutral (bg-surface-card)
-       bottom accent  (bg-brand-primary, text-on-brand) — the one primary card, per L-C7
+0. Page   px-[var(--pad-page)] pb-20 md:pb-12
+1. Welcome header — pt-6 mb-3
+     h1  font-heading font-semibold type-h3 tracking-tight leading-none, gap-4,
+         "Welcome" + w-10 h-10 primary icon circle (icon 26) + first name
+     p   font-body font-medium text-[15px] text-body mt-2 (hidden on short screens)
+2. Tab row — ResponsiveTabs, mt-4 mb-6
+3. Tab content — flex flex-col gap-6 pb-8
+4. KPI cards row — grid grid-cols-2 lg:grid-cols-4 gap-6 (lg:grid-cols-5 when a role has
+   five KPIs); every KPI is the shared KpiCard (P-CO4)
+5. Below-KPI section — grid grid-cols-1 lg:grid-cols-3 gap-6
+   Left  (col-span-2): main content card (P-CO3)
+   Right (col-span-1): stacked neutral cards (P-CO3), gap-6
 ```
+No solid-primary accent card and no photo KPI card (D-16). Measured identical across all
+seven dashboards at 1440 / 834 / 390: title, subtitle, tab row and KPI row land on the same
+x, y and size. Lead's below-KPI grid is still `lg:grid-cols-5` (3 + 2) — see §13.
 
 ---
 
@@ -831,7 +862,7 @@ adapt it — not copy it literally.
 | Page | Icon | Title | Subtitle |
 |---|---|---|---|
 | Dashboard | Sun | Welcome ☀️ [First Name] | Rotating football subtitle |
-| Players — Country/Head | Users | Qaza 👥 Players | All players within your active scouting scope. |
+| Players — Country/Head | Users | NXUS 👥 Players | All players within your active scouting scope. |
 | Players — Senior/Lead | Database | Players 🗄 Database | All players within your active scouting scope. |
 | Long List | List | Long 📋 List | Players flagged for closer evaluation. |
 | Short List | Star | Short ⭐ List | Prioritised candidates for your current cycle. |
@@ -1057,6 +1088,17 @@ still enforced on the machine; whatever combination caused that failure no longe
 So the gap is open by choice, not by obstruction: the unreachable files have no stories, and
 writing them is the work that would let the snapshot see those components. Not started.
 
+**OR-10 · OPEN 28 Oct 2026 — leftovers from the D-16 alignment.**
+- Lead's below-KPI grid is `lg:grid-cols-5` (3 + 2); the other six dashboards use
+  `lg:grid-cols-3` (2 + 1), so Lead's main card is 780px wide at 1440 against 869px. Both are
+  "the reference" — pick one split.
+- Combined Top 10 (Country/Head Players) still uses `rounded-[40px]` cards, now nested inside
+  the 24px Players card.
+- `card.stories.tsx` still renders the 40px card and the accent card (P-C2). Changing them
+  moves Storybook visual baselines, so it waits for approval.
+- The Lead/Senior mobile filter sheet still shows the dark blue `FilterBar`; desktop and the
+  Country/Head sheet use the light toolbar.
+
 ---
 
 ## Decision log
@@ -1097,7 +1139,8 @@ and the forbidden-size list that barred 28/40/48 is replaced by L-TY3, since the
 ramp uses those sizes at tablet and desktop.
 
 **D-4 · Image KPI card.** One per dashboard, sharing the same runners image, with a dark
-gradient overlay and a primary CTA.
+gradient overlay and a primary CTA. *Superseded 28 Oct 2026 by D-16 — dashboards carry no
+photo KPI card.*
 
 **D-10 · The type ramp is `type-*`, not `text-*`.** Renamed so the size vocabulary and the
 colour vocabulary stop sharing a prefix. Chosen over leaving the colour roles stuttering as
@@ -1126,6 +1169,15 @@ background uses `Text/link` = Blue/400 `#449CE9` (6.0:1), because `#1971BF` read
 named alias for a raw value rather than a role with per-mode values. Mapped stays at six groups
 (Surface, Text, Border, Brand, Status, Button).
 
+**D-16 · Lead Scout + Video accounts are the reference style (28 Oct 2026).** Vanessa chose
+the Lead Scout and Video Manager / Uploader accounts as the look every account follows. All
+seven dashboards now share one shell (P-L2): `--pad-page` padding, `type-h3` welcome title,
+`ResponsiveTabs` `mt-4 mb-6`, `gap-6` grids, the shared KpiCard, and 20px neutral content
+cards (P-CO3, R-R1). This retires the solid-blue accent card (P-C2 — tombstoned), drops the
+photo KPI card (supersedes D-4) and moves dashboard cards from 40px to 20px corners. The
+Country/Head Players page moved onto the same Players-page kit as Lead/Senior (P-CO9).
+Remaining choices are listed in OR-10.
+
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was
 verified as 1,506 leaf elements with exactly two colour transitions and **zero** elements
@@ -1135,4 +1187,10 @@ falling below 4.5:1.
 
 ## Tombstones
 
-Retired rule IDs are never reused. None yet — this numbering begins with this revision.
+Retired rule IDs are never reused.
+
+**P-C2 · The accent card — retired 28 Oct 2026 (D-16).** Said: the right-hand column of a
+dashboard's below-KPI section carries the one solid `bg-brand-primary` card permitted by
+L-C7, with `text-on-brand` text, `border-text-on-brand/15` borders and `bg-text-on-brand/10`
+fills. Retired because the reference dashboards (Lead Scout, Video Manager) have no accent
+card; every dashboard card is now neutral (P-CO3).
