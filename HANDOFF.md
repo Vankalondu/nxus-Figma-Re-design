@@ -2,6 +2,14 @@
 
 _Last updated: 2026-10-14. Resume by reading this file._
 
+## UPDATE (2026-10-28, later) — mobile prototype done on all 3 pages; PM switch removed
+- FIGMA_PM_REVIEW variable deleted and the switch removed from figma-sync.yml / visual.yml (b90af2e): Figma token PRs ALWAYS auto-merge; Whitelash is never asked.
+- Figma sidebar now uses the app names: Dashboard / Players / Matches / Admin (Sidebar 609:639, layers Nav/Players|Matches|Admin). Fixed: expanded variants all said "Dashboard".
+- Mobile prototype wired on Lead Scout, Video Manager, Package + Full Match Uploader: Menu frame (hamburger), Dashboard Tabs frame (Tab Select), Players Tabs frame (the blue toolbar pill already existed on mobile Players screens — it just was not clickable). Backdrop / X / open pill = BACK.
+  New frames: LS Players Tabs 1597:26385; VM Menu 1599:26218, Dashboard Tabs 1599:26368, Players Tabs 1599:26394; PU Menu 1599:31252, Tabs 1599:31327; FMU Menu 1599:31351, Tabs 1599:31426.
+- Account visual consistency (Senior/Head/Country -> Lead+Video style) running on branch feature/account-consistency (own worktree). Not merged, not live.
+- Next: build Senior/Head/Country pages in Figma (after the app pass is approved).
+
 ## UPDATE (2026-10-28) — Figma prototype (clickable) work started
 - Plan agreed with Vanessa: Figma becomes the prototype + documentation devs use. Order: link existing
   screens (Lead Scout → Video Manager → Uploaders) → then build Senior/Head/Country in the Lead+Video style.
@@ -11,9 +19,6 @@ _Last updated: 2026-10-14. Resume by reading this file._
   Expanded instance + backdrop) and `Lead Scout / Dashboard Tabs — Mobile 390` (`1592:26351`). Hamburger on
   all 12 mobile screens → Menu; Tab Select on 5 dashboard screens → Tab list; backdrop/X/pill → BACK.
   Overlay position props are READ-ONLY in the plugin API, hence full-screen "menu open" frames + BACK.
-- Waiting on Vanessa: click-test Lead Scout mobile; OK to add the Players tab pill to mobile Players
-  screens (app has it, Figma doesn't); sidebar naming drift (Figma Database/Report/Settings vs app
-  Players/Matches/Admin); FIGMA_PM_REVIEW=true contradicts "her token changes auto-merge".
 - PR #4 closed (stale; merging would have reverted the data colours). Snapshot re-verified 10-28, 0 changes.
 - Uncommitted `src/app/workflow/*` changes are NOT from this session — leave them.
 
