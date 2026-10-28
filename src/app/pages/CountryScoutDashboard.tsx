@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import {
   Search, Calendar, Plus, Bell, LogOut, ChevronDown,
   LayoutGrid, List, Video, Archive, Moon, Sun,
-  TrendingUp, ShieldCheck, ArrowUpRight, Users, X, Star, Bookmark, Trash2, Columns3
+  TrendingUp, ShieldCheck, ArrowUpRight, ArrowRight, ClipboardCheck, FileText, Crown, Users, X, Star, Bookmark, Trash2, Columns3
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router';
 import { useTheme } from 'next-themes';
@@ -15,7 +15,7 @@ import { AdminView } from './AdminView';
 import { useDynamicColumns, ColumnDef } from '../components/TableColumns';
 import { EditColumnsModal } from '../components/EditColumnsModal';
 import { PLAYER_COLUMNS, DEFAULT_VISIBLE_IDS, type PlayerColumn } from '../components/playerColumns';
-import { StatsCards, HeadScoutStatsCards } from '../components/DashboardWidgets';
+import { KpiCard } from '../components/dashboard/KpiCard';
 import { SeniorLeadPlayersPage } from '../components/SeniorLeadPlayersPage';
 import { ResponsiveTabs } from '../components/ResponsiveTabs';
 
@@ -176,6 +176,8 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId }: {
     </div>
   );
 };
+
+const CARD = 'bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden';
 
 export default function CountryScoutDashboardPage() {
   const location = useLocation();
@@ -366,75 +368,104 @@ export default function CountryScoutDashboardPage() {
           />
 
           {/* Content */}
-          <div className="pb-12 md:pb-6 px-[var(--pad-page)]">
+          <div className="flex-1 px-[var(--pad-page)] pb-20 md:pb-12">
 
-            {/* DASHBOARD */}
+            {/* DASHBOARD — same shell, KPI and card patterns as the Lead / Video dashboards */}
             {activePage==='dashboard' && (
-              <div className="flex flex-col w-full">
-                <div className="pt-6 mb-3 flex flex-col justify-center shrink-0">
-                  <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4">
+              <>
+                <div className="pt-6 mb-3">
+                  <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
                     Welcome
-                    <span className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
-                      <Sun size={28} className="text-on-brand" />
+                    <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
+                      <Sun size={26} className="text-on-brand" />
                     </span>
                     Oluniyi
                   </h1>
-                  <p className="font-body text-body type-body mt-2 font-medium max-w-xl short:hidden">{funSubtitle}</p>
-                  <ResponsiveTabs className="mt-4" activeId={dashTab} onSelect={setDashTab}
-                    tabs={['Overview','Active Players','Pending Reports','Analytics','Reports'].map(t=>({id:t,label:t}))} />
+                  <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{funSubtitle}</p>
                 </div>
-                <div className="md:contents">{userRoleState==='Head Scout'?<HeadScoutStatsCards/>:<StatsCards/>}</div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-[var(--gap-grid)] w-full mt-4 pb-4">
-                  <div className="lg:col-span-2 portrait-tablet:col-span-full bg-surface-accent border border-default rounded-[40px] p-[var(--pad-card)] shadow-[0_4px_24px_rgba(6,27,46,0.12),0_1px_4px_rgba(6,27,46,0.10)] h-[550px] flex flex-col">
-                    <div className="flex items-center gap-4 mb-6 shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-surface-card flex items-center justify-center text-strong"><Users size={20} /></div>
-                      <h2 className="font-heading font-bold type-h5 text-heading flex items-center">
-                        Scout Leaderboard
-                        <span className="inline-flex items-center gap-2 px-3 py-1 bg-surface-card text-strong border border-default rounded-full text-[14px] font-bold shadow-sm ml-4">Ghana 🇬🇭</span>
-                      </h2>
-                    </div>
-                    <div className="flex-1 flex flex-col min-h-0">
-                      {/* text-body, not text-muted, deliberately. This header sits on
-                          bg-surface-accent rather than the card surface, and --text-muted is
-                          calibrated against the card: on the dark accent (#0f4472) it measures
-                          3.49:1, below AA. text-body holds 5.39:1 there. */}
-                      <div className="grid grid-cols-12 px-2 py-4 font-heading font-bold type-micro uppercase tracking-widest text-body border-b border-default shrink-0">
-                        <div className="col-span-6">Scout Name</div><div className="col-span-3">Total Grade A</div><div className="col-span-3 text-right">Country</div>
+
+                <ResponsiveTabs className="mt-4 mb-6" activeId={dashTab} onSelect={setDashTab}
+                  tabs={['Overview','Active Players','Pending Reports','Analytics','Reports'].map(t=>({id:t,label:t}))} />
+
+                <div className="flex flex-col gap-6 pb-8">
+                  {/* KPI cards — shared KpiCard (P-CO4) */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                    {userRoleState==='Head Scout' ? (
+                      <>
+                        <KpiCard icon={ClipboardCheck} heading="Shortlists" value={<>6<span className="text-body">/10</span></>}
+                          descriptor="submitted for review" action="Review" onClick={()=>navigate('/players?tab=review')} />
+                        <KpiCard icon={FileText} heading="Reports ready" value={<>18<span className="text-body">/26</span></>}
+                          descriptor="ready for review" action="Review" onClick={()=>navigate('/players?tab=review')} />
+                        <KpiCard icon={TrendingUp} heading="Top Ten" value={10}
+                          descriptor="pending prospects" action="Open Top 10" onClick={()=>navigate('/players?tab=combined-top-10')} />
+                        <KpiCard icon={Crown} heading="Grade A raised" value="37%"
+                          descriptor={<><span className="text-status-success-fg font-black">+8%</span> raised</>} action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
+                      </>
+                    ) : (
+                      <>
+                        <KpiCard icon={Video} heading="Missing Videos" value={<>29<span className="text-body">/35</span></>}
+                          descriptor="players · 82%" action="View Players" onClick={()=>navigate('/players?tab=players-in-scope&filter=Missing+Video')} />
+                        <KpiCard icon={Calendar} heading="Missing Match Data" value={<>18<span className="text-body">/26</span></>}
+                          descriptor="matches · 68%" action="Open Matches" onClick={()=>navigate('/matches?filter=Incomplete+Match+Data')} />
+                        <KpiCard icon={FileText} heading="Ready Reports" value={14}
+                          descriptor="for review" action="Review" onClick={()=>navigate('/players?tab=combined-top-10')} />
+                        <KpiCard icon={Crown} heading="Grade A" value="46%"
+                          descriptor={<><span className="text-status-error-fg font-black">down</span> of players</>} action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
+                      </>
+                    )}
+                  </div>
+
+                  {/* Below KPIs — leaderboard (wide) + stacked cards */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
+                    <div className={`${CARD} lg:col-span-2 portrait-tablet:col-span-full flex flex-col`}>
+                      <div className="px-5 py-4 border-b border-default flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Users size={16} className="text-strong" /></div>
+                        <div className="min-w-0 flex-1"><h3 className="font-heading font-bold text-[16px] text-heading">Scout Leaderboard</h3><p className="font-body text-[12px] text-body font-medium">Total grade A players by scout</p></div>
+                        <span className="font-body font-bold text-[12px] px-3 py-1 rounded-full bg-surface-accent text-strong shrink-0">Ghana 🇬🇭</span>
                       </div>
-                      <div className="flex-1 overflow-y-auto hide-scrollbar">
-                        {[{name:'Kwame Asante',init:'KA',val:'38 players',country:'Ghana 🇬🇭',color:'bg-brand-primary text-on-brand'},{name:'Chidi Obinna',init:'CO',val:'24 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-on-brand'},{name:'Wekesa Omondi',init:'WO',val:'18 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-on-brand'},{name:'Emeka Okafor',init:'EO',val:'14 players',country:'Nigeria 🇳🇬',color:'bg-brand-primary text-on-brand'},{name:'Joseph Njoroge',init:'JN',val:'11 players',country:'Kenya 🇰🇪',color:'bg-brand-primary text-on-brand'},{name:'Amani Mushi',init:'AM',val:'8 players',country:'Tanzania 🇹🇿',color:'bg-brand-primary text-on-brand'}].map((scout,i)=>(
-                          <div key={i} className="grid grid-cols-12 px-2 py-5 items-center border-b border-default last:border-0 hover:bg-surface-accent/50 transition-colors cursor-pointer">
-                            <div className="col-span-6 flex items-center space-x-4"><div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-[14px] ${scout.color}`}>{scout.init}</div><span className="font-body font-bold text-body text-[14px]">{scout.name}</span></div>
-                            <div className="col-span-3 font-body text-[14px] font-medium text-body">{scout.val}</div>
-                            <div className="col-span-3 text-right font-bold text-strong text-[14px]">{scout.country}</div>
+                      <div className="divide-y divide-border-default">
+                        {[{name:'Kwame Asante',init:'KA',val:'38 players',country:'Ghana 🇬🇭'},{name:'Chidi Obinna',init:'CO',val:'24 players',country:'Nigeria 🇳🇬'},{name:'Wekesa Omondi',init:'WO',val:'18 players',country:'Kenya 🇰🇪'},{name:'Emeka Okafor',init:'EO',val:'14 players',country:'Nigeria 🇳🇬'},{name:'Joseph Njoroge',init:'JN',val:'11 players',country:'Kenya 🇰🇪'},{name:'Amani Mushi',init:'AM',val:'8 players',country:'Tanzania 🇹🇿'}].map(scout=>(
+                          <div key={scout.name} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
+                            <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{scout.init}</span>
+                            <div className="flex-1 min-w-0">
+                              <span className="font-body font-bold text-[14px] text-body truncate block">{scout.name}</span>
+                              <p className="sm:hidden font-body text-[12px] text-body tabular-nums mt-0.5">{scout.val}</p>
+                            </div>
+                            <span className="hidden sm:block font-body text-[13px] font-medium text-body tabular-nums shrink-0 w-24">{scout.val}</span>
+                            <span className="font-body font-bold text-[13px] text-strong shrink-0 w-24 sm:w-28 text-right">{scout.country}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-                  </div>
-                  <div className="lg:col-span-1 flex flex-col gap-[var(--gap-grid)] h-[550px]">
-                    <div className="bg-surface-card border border-default rounded-[40px] p-[var(--pad-card)] shadow-[var(--shadow-lg)] flex flex-col flex-1 relative overflow-hidden group cursor-pointer h-1/2">
-                      <div className="w-12 h-12 rounded-full bg-surface-card/10 flex items-center justify-center text-strong mb-auto shrink-0 border border-text-on-brand/5"><TrendingUp size={18} strokeWidth={2.5} /></div>
-                      <div className="mt-8"><h4 className="font-heading font-bold type-body text-heading mb-1">Top Prospect</h4><p className="font-body type-caption text-body font-medium mb-3">Based on scout rating</p><div className="font-heading font-bold type-h5 tracking-tight text-heading leading-tight">Kofi Mensah</div></div>
-                    </div>
-                    <div className="bg-brand-primary rounded-[40px] p-[var(--pad-card)] shadow-sm flex flex-col flex-1 relative overflow-hidden group h-1/2">
-                      <div className="w-12 h-12 rounded-full bg-surface-card/20 flex items-center justify-center text-on-brand mb-auto shrink-0"><Calendar size={18} strokeWidth={2.5} /></div>
-                      <div className="mt-6 flex flex-col">
-                        <h4 className="font-heading font-bold type-body text-on-brand mb-1">Upcoming Matches</h4>
-                        <div className="space-y-3 mb-6 flex-1">
-                          {['Gor Mahia vs Kariobangi','Enyimba FC vs Kano Pillars'].map((m,i)=>(
-                            <div key={i} className="flex justify-between items-center font-body text-[14px] font-bold text-on-brand bg-surface-card/20 px-3 py-2 rounded-[16px]">
-                              <span className="truncate pr-4">{m}</span>
-                              <span className="shrink-0 bg-surface-card/50 px-2 py-1 rounded-full font-body text-[12px] font-bold uppercase text-muted">Dec {15+i}</span>
-                            </div>
+
+                    <div className="portrait-tablet:col-span-full flex flex-col gap-6 min-w-0">
+                      <div className={`${CARD} flex flex-col`}>
+                        <div className="px-5 py-4 border-b border-default flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-strong" /></div>
+                          <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-heading">Top Prospect</h3><p className="font-body text-[12px] text-body font-medium">Based on scout rating</p></div>
+                        </div>
+                        <div className="px-5 py-4 font-heading font-bold type-h5 tracking-tight text-heading">Kofi Mensah</div>
+                      </div>
+
+                      <div className={`${CARD} flex flex-col`}>
+                        <div className="px-5 py-4 border-b border-default flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-strong" /></div>
+                          <div className="min-w-0 flex-1"><h3 className="font-heading font-bold text-[16px] text-heading">Upcoming Matches</h3><p className="font-body text-[12px] text-body font-medium">Capture opportunities</p></div>
+                          <button onClick={()=>navigate('/matches')} className="font-body font-bold text-[12px] text-link hover:underline shrink-0">View Matches</button>
+                        </div>
+                        <div className="divide-y divide-border-default">
+                          {[{m:'Gor Mahia vs Kariobangi',d:'Dec 15'},{m:'Enyimba FC vs Kano Pillars',d:'Dec 16'}].map(x=>(
+                            <button key={x.m} onClick={()=>navigate('/matches')} className="w-full text-left px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors">
+                              <div className="min-w-0 flex-1"><div className="font-body font-bold text-[14px] text-body truncate">{x.m}</div><p className="font-body text-[12px] text-body mt-0.5">{x.d}</p></div>
+                              <ArrowRight size={14} className="text-body shrink-0" />
+                            </button>
                           ))}
                         </div>
-                        <button onClick={()=>navigate('/matches')} className="bg-brand-primary text-on-brand hover:bg-ink-midnight w-fit font-bold text-[14px] px-6 py-3 rounded-full transition-colors mt-auto">View Matches</button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </>
             )}
 
             {/* SENIOR/LEAD PLAYERS */}
