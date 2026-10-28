@@ -1,6 +1,6 @@
 {
  "_comment": "Snapshot of every variable in QAZA_FE, extracted via the Figma MCP plugin bridge. The extract needs the MCP (an agent runs it); this file is the committed result so scripts/figma-css-diff.mjs can run standalone and the diff is reviewable in a PR. Refresh by re-running the extract and replacing this file.",
- "extractedAt": "2026-10-14",
+ "extractedAt": "2026-10-28",
  "fileKey": "qefpAyr3MEEklQRV96YlSv",
  "scaleSteps": "Figma colour families run 100,200,300,400,500,Base,600,700,800,900,1000 — 11 steps with Base in the middle (the tonal anchor). CSS runs 50,100,...,900,950. So Figma/100 = CSS/-50, Figma/Base = CSS/-500, Figma/1000 = CSS/-950.",
  "Qaza": {
@@ -316,6 +316,62 @@
    "#22c55e",
    "#22c55e"
   ],
+  "Color/Data/amber": [
+   "#e8a838",
+   "#e8a838"
+  ],
+  "Color/Data/amber-text": [
+   "#776233",
+   "#e8a838"
+  ],
+  "Color/Data/blue": [
+   "#1e88e5",
+   "#1e88e5"
+  ],
+  "Color/Data/blue-text": [
+   "#1662a5",
+   "#3e99e9"
+  ],
+  "Color/Data/cyan": [
+   "#22d3ee",
+   "#22d3ee"
+  ],
+  "Color/Data/cyan-text": [
+   "#136e84",
+   "#22d3ee"
+  ],
+  "Color/Data/green": [
+   "#22c55e",
+   "#22c55e"
+  ],
+  "Color/Data/green-text": [
+   "#147046",
+   "#22c55e"
+  ],
+  "Color/Data/neutral": [
+   "#596774",
+   "#596774"
+  ],
+  "Color/Data/neutral-text": [
+   "#556370",
+   "#88939d"
+  ],
+  "Color/Data/red": [
+   "#e05c4b",
+   "#e05c4b"
+  ],
+  "Color/Data/red-text": [
+   "#9f4842",
+   "#e37466"
+  ],
+  "Color/Data/violet": [
+   "#7c5cfc",
+   "#7c5cfc"
+  ],
+  "Color/Data/violet-text": [
+   "#5f4cc9",
+   "#9b84fd"
+  ],
   "Color/Status/error": [
    "#e05c4b",
    "#e05c4b"
@@ -459,62 +515,6 @@
   "Color/Text/strong": [
    "#061b2e",
    "#f6fafe"
-  ],
-  "Color/Data/blue": [
-   "#1e88e5",
-   "#1e88e5"
-  ],
-  "Color/Data/blue-text": [
-   "#1662a5",
-   "#3e99e9"
-  ],
-  "Color/Data/violet": [
-   "#7c5cfc",
-   "#7c5cfc"
-  ],
-  "Color/Data/violet-text": [
-   "#5f4cc9",
-   "#9b84fd"
-  ],
-  "Color/Data/cyan": [
-   "#22d3ee",
-   "#22d3ee"
-  ],
-  "Color/Data/cyan-text": [
-   "#136e84",
-   "#22d3ee"
-  ],
-  "Color/Data/green": [
-   "#22c55e",
-   "#22c55e"
-  ],
-  "Color/Data/green-text": [
-   "#147046",
-   "#22c55e"
-  ],
-  "Color/Data/amber": [
-   "#e8a838",
-   "#e8a838"
-  ],
-  "Color/Data/amber-text": [
-   "#776233",
-   "#e8a838"
-  ],
-  "Color/Data/red": [
-   "#e05c4b",
-   "#e05c4b"
-  ],
-  "Color/Data/red-text": [
-   "#9f4842",
-   "#e37466"
-  ],
-  "Color/Data/neutral": [
-   "#596774",
-   "#596774"
-  ],
-  "Color/Data/neutral-text": [
-   "#556370",
-   "#88939d"
   ]
  },
  "Responsive": {
@@ -794,5 +794,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-16 — Figma Mapped read back after: Brand/primary -> Primary/600 #1971bf, Text/on-brand -> #f6fafe, Text/link #1971bf/#449ce9, Button/primary-* repointed, Color/Data/* (14) created. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-10-28 — 2026-10-28 — variables re-read via MCP (plugin extract logic), 0 value changes; Figma edits since 10-16 were screens/prototype links only. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }

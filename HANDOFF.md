@@ -2,6 +2,21 @@
 
 _Last updated: 2026-10-14. Resume by reading this file._
 
+## UPDATE (2026-10-28) — Figma prototype (clickable) work started
+- Plan agreed with Vanessa: Figma becomes the prototype + documentation devs use. Order: link existing
+  screens (Lead Scout → Video Manager → Uploaders) → then build Senior/Head/Country in the Lead+Video style.
+- Desktop/tablet were already linked (204 links on Lead Scout). Remaining unlinked items have no
+  destination screen (sidebar Report/Settings = app Matches/Admin; report "View"; Manage Forms).
+- **Lead Scout mobile linked**: new frames `Lead Scout / Menu — Mobile 390` (`1592:26217`, Sidebar
+  Expanded instance + backdrop) and `Lead Scout / Dashboard Tabs — Mobile 390` (`1592:26351`). Hamburger on
+  all 12 mobile screens → Menu; Tab Select on 5 dashboard screens → Tab list; backdrop/X/pill → BACK.
+  Overlay position props are READ-ONLY in the plugin API, hence full-screen "menu open" frames + BACK.
+- Waiting on Vanessa: click-test Lead Scout mobile; OK to add the Players tab pill to mobile Players
+  screens (app has it, Figma doesn't); sidebar naming drift (Figma Database/Report/Settings vs app
+  Players/Matches/Admin); FIGMA_PM_REVIEW=true contradicts "her token changes auto-merge".
+- PR #4 closed (stale; merging would have reverted the data colours). Snapshot re-verified 10-28, 0 changes.
+- Uncommitted `src/app/workflow/*` changes are NOT from this session — leave them.
+
 ## UPDATE (2026-10-16) — video role screens in Figma
 - **Video Manager page** (`1515:26217`): Dashboard row Overview · Packages · Full Matches · Approval · Analytics · Tasks; Players row Video Analyst Tracker · Target · Short · Long · Database · Signed — 36 frames at 1440/834/390. Lists cloned from Lead Scout (Reports/Settings tabs removed, tracker tab added).
 - **Uploaders page** (`1515:26233`): Package + Full Match rows, Overview · Packages|Full Matches · Tasks (no chart) · Players (tracker) — 24 frames.
@@ -34,12 +49,11 @@ decides. Notifications go to **Google Chat (not Slack)**. Make-it-live stays her
   make-it-live only when the token hash changes; skips until `NPM_TOKEN` secret exists.
 - Token docs moved to Storybook **Guides → Design Tokens** (`src/docs/DesignTokens.mdx`); `/tokens`
   redirects there. `staticDirs: ['../public']` serves the downloads.
-- figma-sync opens the PR itself (needs repo switch "Allow GitHub Actions to create and approve
-  pull requests"; falls back to a Chat link), requests PM, dispatches the visual check.
-  `notify-merged.yml` tags `DEV_USERNAMES` + Chat on merge.
-- **Waiting on Vanessa:** repo variables `PM_USERNAME`, `DEV_USERNAMES`; secrets
-  `GOOGLE_CHAT_WEBHOOK`, `NPM_TOKEN`; the Actions PR switch; branch protection only AFTER the
-  PM is a collaborator. Nothing from today is deployed yet (needs "make it live").
+- figma-sync opens the PR itself with Vanessa's `SYNC_PR_TOKEN`, requests PM, dispatches the
+  visual check. `notify-merged.yml` tags `DEV_USERNAMES` + Chat on merge.
+  **The repo switch "Allow GitHub Actions to create and approve pull requests" stays OFF —
+  decided; SYNC_PR_TOKEN replaces it. Do not suggest turning it on.**
+- (2026-10-21) Variables, secrets, collaborators all set; pipeline tested with the devs and works.
 
 ## OPEN CHECKLIST (2026-10-14) — agreed with Vanessa; work top-down, tick as done
 
