@@ -21,7 +21,7 @@ import { ResponsiveTabs } from '../components/ResponsiveTabs';
 import { MatchesView } from './MatchesView';
 import { AdminView } from './AdminView';
 import CountryScoutDashboardPage from './CountryScoutDashboard';
-import { MOCK_TASKS as SHARED_MOCK_TASKS, TaskInput } from '../components/dashboard/shared';
+import { MOCK_TASKS as SHARED_MOCK_TASKS, TaskInput, PriorityPill as SharedPriorityPill } from '../components/dashboard/shared';
 import { KpiCard } from '../components/dashboard/KpiCard';
 import { ReportsTab } from '../components/dashboard/ReportsTab';
 import { AnalyticsTab } from '../components/dashboard/AnalyticsTab';
@@ -784,6 +784,8 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
 
 
 // ─── OverviewTab — task list + at-a-glance stats ─────────────────────────────────
+const CARD = 'bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden';
+
 const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers }: {
   tasks: Task[];
   onToggleTask: (id: string) => void;
@@ -815,112 +817,108 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
           onClick={() => onOpenPlayers('target')} />
       </div>
 
-      {/* ── Below KPIs: 2-column layout ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6">
+      {/* ── Below KPIs — same card pattern as the Lead / Video dashboards ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
 
         {/* Left column — My Tasks (spans 2) */}
-        <div className="lg:col-span-2 portrait-tablet:col-span-full bg-surface-card rounded-[40px] border border-default shadow-[var(--shadow-lg)] flex flex-col overflow-hidden">
-          <div className="px-8 py-6 border-b border-default flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-[16px] bg-brand-primary flex items-center justify-center shrink-0"><CheckCircle size={20} className="text-on-brand" /></div>
-              <div>
-                <h2 className="font-heading font-semibold text-[24px] text-heading">My Tasks</h2>
-                <p className="font-body text-[12px] text-body font-medium">{complete.length}/{tasks.length} completed</p>
-              </div>
+        <div className={`${CARD} lg:col-span-2 portrait-tablet:col-span-full flex flex-col`}>
+          <div className="px-5 py-4 border-b border-default flex items-center gap-3 shrink-0">
+            <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><CheckCircle size={16} className="text-strong" /></div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-heading font-bold text-[16px] text-heading">My Tasks</h3>
+              <p className="font-body text-[12px] text-body font-medium">{complete.length}/{tasks.length} completed</p>
             </div>
           </div>
-          <div className="px-8 py-3 border-b border-default flex items-center gap-4">
+          <div className="px-5 py-3 border-b border-default flex items-center gap-3">
             <input value={newTask} onChange={e => setNewTask(e.target.value)} placeholder="Add a task..."
               onKeyDown={e => { if (e.key === 'Enter' && newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
-              className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus" />
+              className="flex-1 min-w-0 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus" />
             <button onClick={() => { if (newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
-              className="w-9 h-9 bg-brand-primary text-on-brand rounded-xl flex items-center justify-center shrink-0"><Plus size={14} /></button>
+              aria-label="Add task" className="w-9 h-9 bg-brand-primary text-on-brand rounded-full flex items-center justify-center shrink-0"><Plus size={14} /></button>
           </div>
-          <div className="flex-1 overflow-y-auto pb-4 divide-y divide-border-default" style={{ maxHeight: 380 }}>
+          <div className="flex-1 overflow-y-auto divide-y divide-border-default" style={{ maxHeight: 380 }}>
             {incomplete.map(t => (
-              <div key={t.id} className="px-8 py-4 flex items-start gap-4 group transition-colors hover:bg-surface-accent">
-                <button onClick={() => onToggleTask(t.id)} className="shrink-0 mt-0.5">
+              <div key={t.id} className="px-5 py-3 flex items-center gap-3 group transition-colors hover:bg-surface-accent">
+                <button onClick={() => onToggleTask(t.id)} className="shrink-0" aria-label="Mark done">
                   <div className="w-5 h-5 rounded-full border-2 border-default group-hover:border-brand-primary transition-colors" />
                 </button>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="font-body text-[14px] font-bold text-body">{t.text}</p>
-                    {t.priority === 'High' && <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-status-error/10 text-status-error">HIGH</span>}
-                  </div>
+                  <span className="font-body text-[13px] font-bold text-body truncate block">{t.text}</span>
                   <p className="font-body text-[12px] text-body mt-0.5">{t.assignedBy} • Due {t.dueDate}</p>
                 </div>
+                {t.priority === 'High' && <SharedPriorityPill p="High" />}
               </div>
             ))}
             {complete.length > 0 && complete.slice(0, 3).map(t => (
-              <div key={t.id} className="px-8 py-4 flex items-start gap-4 opacity-40">
-                <button onClick={() => onToggleTask(t.id)} className="shrink-0 mt-0.5">
+              <div key={t.id} className="px-5 py-3 flex items-center gap-3 opacity-40">
+                <button onClick={() => onToggleTask(t.id)} className="shrink-0" aria-label="Mark not done">
                   <div className="w-5 h-5 rounded-full bg-brand-primary flex items-center justify-center"><Check size={11} className="text-on-brand" /></div>
                 </button>
-                <p className="font-body text-[14px] font-bold text-body line-through">{t.text}</p>
+                <span className="font-body text-[13px] font-bold text-body line-through truncate">{t.text}</span>
               </div>
             ))}
             {tasks.length === 0 && (
-              <div className="py-8 text-center font-body text-[14px] text-body">No tasks yet — add one above.</div>
+              <div className="px-5 py-8 text-center font-body text-[13px] text-body">No tasks yet — add one above.</div>
             )}
           </div>
         </div>
 
-        {/* Right column — stacked sidebar */}
-        <div className="flex flex-col gap-6">
+        {/* Right column — stacked cards */}
+        <div className="portrait-tablet:col-span-full flex flex-col gap-6 min-w-0">
 
-          {/* Recent Reports — bg-surface-card */}
-          <div className="bg-surface-card rounded-[40px] border border-default shadow-[var(--shadow-lg)] flex flex-col overflow-hidden flex-1">
-            <div className="px-6 py-5 border-b border-default flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 rounded-[12px] bg-surface-accent flex items-center justify-center shrink-0"><FileText size={16} className="text-body" /></div>
-              <div>
-                <h3 className="font-heading font-semibold text-[16px] text-heading">Recent Reports</h3>
+          {/* Recent Reports */}
+          <div className={`${CARD} flex flex-col`}>
+            <div className="px-5 py-4 border-b border-default flex items-center gap-3 shrink-0">
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><FileText size={16} className="text-strong" /></div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-heading font-bold text-[16px] text-heading">Recent Reports</h3>
                 <p className="font-body text-[12px] text-body font-medium">From Lead & Head Scouts</p>
               </div>
+              <button onClick={() => onNavigate('reports')} className="font-body font-bold text-[12px] text-link hover:underline shrink-0">View all</button>
             </div>
-            <div className="flex-1 divide-y divide-border-default">
+            <div className="divide-y divide-border-default">
               {[
                 { name: 'Mbugua', role: 'Senior Scout', count: 3, unread: 2 },
                 { name: 'Tom', role: 'Lead Scout', count: 2, unread: 1 },
                 { name: 'Nene', role: 'Head Scout', count: 2, unread: 0 },
               ].map(scout => (
-                <div key={scout.name} className="px-6 py-4 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
-                  <div className="w-9 h-9 rounded-xl bg-brand-primary text-on-brand flex items-center justify-center font-body font-black text-[12px] shrink-0">{scout.name[0]}</div>
+                <div key={scout.name} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
+                  <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{scout.name[0]}</span>
                   <div className="flex-1 min-w-0">
-                    <span className="font-body font-bold text-[14px] text-body">{scout.name}</span>
-                    <p className="font-body text-[12px] text-body">{scout.role} · {scout.count} reports</p>
+                    <span className="font-body font-bold text-[14px] text-body truncate block">{scout.name}</span>
+                    <p className="font-body text-[12px] text-body mt-0.5">{scout.role} · {scout.count} reports</p>
                   </div>
                   {scout.unread > 0 && (
-                    <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-status-error/10 text-status-error">{scout.unread} unread</span>
+                    <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-error/15 text-status-error-fg shrink-0">{scout.unread} unread</span>
                   )}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Upcoming Packages — accent card (bg-brand-primary) */}
-          <div className="bg-brand-primary rounded-[40px] flex flex-col overflow-hidden flex-1">
-            <div className="px-6 py-5 border-b border-text-on-brand/10 flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 rounded-[12px] bg-text-on-brand/10 flex items-center justify-center shrink-0"><Package size={16} className="text-on-brand" /></div>
-              <div>
-                <h3 className="font-heading font-semibold text-[16px] text-on-brand">Upcoming Packages</h3>
-                <p className="font-body text-[12px] text-on-brand/60 font-medium">Awaiting review</p>
+          {/* Upcoming Packages */}
+          <div className={`${CARD} flex flex-col`}>
+            <div className="px-5 py-4 border-b border-default flex items-center gap-3 shrink-0">
+              <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Package size={16} className="text-strong" /></div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-heading font-bold text-[16px] text-heading">Upcoming Packages</h3>
+                <p className="font-body text-[12px] text-body font-medium">Awaiting review</p>
               </div>
+              <button onClick={() => onNavigate('packages')} className="font-body font-bold text-[12px] text-link hover:underline shrink-0">View all</button>
             </div>
-            <div className="flex-1 divide-y divide-text-on-brand/5">
+            <div className="divide-y divide-border-default">
               {[
                 { name: 'Kofi Mensah', list: 'Target', clips: 8 },
                 { name: 'David Conteh', list: 'Short', clips: 6 },
                 { name: 'Amadou Sarr', list: 'Target', clips: 5 },
               ].map(pkg => (
-                <div key={pkg.name} className="px-6 py-4 flex items-center gap-3 hover:bg-text-on-brand/5 transition-colors cursor-pointer">
-                  <div className="w-9 h-9 rounded-xl bg-text-on-brand/10 text-on-brand flex items-center justify-center font-body font-black text-[12px] shrink-0">{pkg.name.split(' ').map(n=>n[0]).join('')}</div>
+                <div key={pkg.name} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
+                  <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{pkg.name.split(' ').map(n=>n[0]).join('')}</span>
                   <div className="flex-1 min-w-0">
-                    <span className="font-body font-bold text-[14px] text-on-brand">{pkg.name}</span>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="font-body text-[10px] font-black px-2 py-0.5 rounded bg-text-on-brand/10 text-on-brand/80">{pkg.list}</span>
-                      <span className="font-body text-[10px] text-on-brand/60 font-medium">{pkg.clips} clips</span>
-                    </div>
+                    <span className="font-body font-bold text-[14px] text-body truncate block">{pkg.name}</span>
+                    <p className="font-body text-[12px] text-body mt-0.5">{pkg.clips} clips</p>
                   </div>
+                  <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-brand-primary/15 text-body shrink-0">{pkg.list}</span>
                 </div>
               ))}
             </div>
@@ -931,35 +929,35 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
   );
 };
 
-// ─── PackagesTab — video packages awaiting review ────────────────────────────────
+// ─── PackagesTab — video packages awaiting review (list-in-card, as on the Uploader dashboard) ──
 const PackagesTab = () => {
   return (
-    <div className="flex flex-col gap-4 pb-8">
-      <p className="font-body text-[14px] font-medium text-body">{MOCK_PACKAGES.length} packages</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {MOCK_PACKAGES.map(pkg => (
-          <div key={pkg.id}
-            className={`bg-surface-card rounded-[20px] border p-5 hover:shadow-md transition-all ${pkg.watched ? 'border-default opacity-60' : 'border-brand-primary shadow-sm'}`}>
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-xl bg-surface-accent text-strong flex items-center justify-center font-black text-[12px]">{pkg.initials}</div>
-                <div>
-                  <div className="font-body font-bold text-[14px] text-body">{pkg.playerName}</div>
-                  <div className="font-body text-[12px] text-muted">{pkg.uploadDate}</div>
-                </div>
+    <div className="flex flex-col gap-6 pb-8">
+      <div className={CARD}>
+        <div className="px-5 py-4 border-b border-default flex items-center gap-3">
+          <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Video size={16} className="text-strong" /></div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-heading font-bold text-[16px] text-heading">Packages</h3>
+            <p className="font-body text-[12px] text-body font-medium">{MOCK_PACKAGES.length} packages · newest first</p>
+          </div>
+        </div>
+        <div className="divide-y divide-border-default">
+          {MOCK_PACKAGES.map(pkg => (
+            <div key={pkg.id} className="px-5 py-3 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{pkg.initials}</span>
+              <div className="min-w-0 flex-1">
+                <span className="font-body font-bold text-[14px] text-body truncate block">{pkg.playerName}</span>
+                <p className="font-body text-[12px] text-body mt-0.5">{pkg.uploadDate} · {pkg.clipCount} clips</p>
               </div>
-              {pkg.watched ? <CheckCircle size={14} className="text-status-success" /> : <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-status-warning/15 text-status-warning">NEW</span>}
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="font-body text-[12px] font-bold text-body">
-                <Video size={12} className="inline -mt-0.5 mr-1" />{pkg.clipCount} clips
-              </span>
-              <button className="flex items-center gap-2 text-[12px] font-bold text-strong hover:underline">
+              {pkg.watched
+                ? <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-success/15 text-status-success-fg shrink-0">Watched</span>
+                : <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-warning/15 text-status-warning-fg shrink-0">New</span>}
+              <button className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-default font-body font-bold text-[12px] text-strong hover:border-brand-primary transition-colors shrink-0">
                 <Play size={12} />Watch
               </button>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
