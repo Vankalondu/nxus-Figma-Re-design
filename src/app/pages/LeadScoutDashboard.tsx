@@ -901,10 +901,10 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
   const maxStatus = Math.max(...BY_STATUS.map(s => s.count));
 
   return (
-    <div className="flex flex-col gap-[var(--gap-grid)]">
+    <div className="flex flex-col gap-6 pb-8">
 
       {/* KPI cards — full-width horizontal row (4-up desktop / 2-up mobile) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--gap-grid)]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         <KpiCard icon={FileText} heading="Reports" value="27"
           descriptor="by senior scouts" action="Opens Reports"
           onClick={() => onNavigate('reports')} />
@@ -921,7 +921,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
       </div>
 
       {/* Below KPIs — Target breakdown (left) + right column (Latest Videos + combined Matches) */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 portrait-tablet:grid-cols-1 gap-[var(--gap-grid)] lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-5 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
 
         {/* Target breakdown (wide) */}
         <div className="lg:col-span-3 portrait-tablet:col-span-full min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
@@ -962,7 +962,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
         </div>
 
         {/* Right column — Latest Videos (top) + combined Matches (bottom) */}
-        <div className="lg:col-span-2 portrait-tablet:col-span-full min-w-0 flex flex-col gap-[var(--gap-grid)]">
+        <div className="lg:col-span-2 portrait-tablet:col-span-full min-w-0 flex flex-col gap-6">
 
           {/* Latest Videos */}
           <div className="min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
@@ -1300,25 +1300,25 @@ export default function LeadScoutDashboard() {
         />
 
         {/* Page content */}
-        <div className="flex-1 px-4 md:px-8 pb-20 md:pb-6">
+        <div className="flex-1 px-[var(--pad-page)] pb-20 md:pb-12">
           {activePage==='players' && <SeniorLeadPlayersPage allPlayersData={[]} loggedInRole="Lead Scout" flagMap={FLAG_MAP} />}
           {activePage==='matches' && <MatchesView />}
           {activePage==='admin'   && <AdminView />}
 
           {activePage==='dashboard' && (
             <>
-              <div className="pt-8 short:pt-2 mb-3 short:mb-1">
-                <h1 className="font-heading font-semibold text-[24px] md:text-[32px] tracking-tight text-heading flex items-center gap-4 leading-none">
+              <div className="pt-6 mb-3">
+                <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
-                    <Star size={28} className="text-on-brand" />
+                    <Star size={26} className="text-on-brand" />
                   </span>
                   Tom
                 </h1>
-                <p className="font-body font-medium text-[15px] text-body mt-1 short:hidden">{subtitle}</p>
+                <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{subtitle}</p>
               </div>
 
-              <ResponsiveTabs className="mt-4 mb-4" tabs={tabs} activeId={activeTab} onSelect={(id) => setActiveTab(id as LeadTab)} />
+              <ResponsiveTabs className="mt-4 mb-6" tabs={tabs} activeId={activeTab} onSelect={(id) => setActiveTab(id as LeadTab)} />
 
               {activeTab==='overview'  && <OverviewTab tasks={tasks} onToggle={toggleTask} onAdd={addTask} onNavigate={setActiveTab} onNudge={handleNudge} />}
               {activeTab==='pipeline'  && <PipelineTab />}

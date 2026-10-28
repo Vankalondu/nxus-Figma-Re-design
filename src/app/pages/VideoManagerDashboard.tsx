@@ -106,7 +106,7 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
 
   return (
     <div className="flex flex-col gap-6 pb-8">
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-6">
         <KpiCard icon={ClipboardCheck} heading="Approvals" value={pending}
           descriptor={pending > 0 ? <span className="text-status-error font-black">awaiting your review</span> : 'all clear'}
           action="Open Approvals" onClick={() => onNavigate('approval')} />
