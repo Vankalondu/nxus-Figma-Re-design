@@ -5,6 +5,9 @@ import { EditPlayerModal } from '../components/EditPlayerModal';
 import { TopNav } from '../components/TopNav';
 import { toast } from 'sonner';
 import { useHighlightsFor } from '../state/playerStore';
+import { useProfilePhoto } from '../state/photoStore';
+import { PhotoLibrary } from '../components/profile/PhotoLibrary';
+import { ReportsPanel } from '../components/profile/ReportsPanel';
 import { Calendar, Trophy, Activity, ShieldCheck, Search, ChevronDown, ChevronRight, Edit2, Trash2, Plus, Play, Video, Check, TrendingUp, Footprints, Ruler, Scale, Flag, Clock, X, CornerDownRight, MessageSquare } from 'lucide-react';
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, BarChart, Bar, XAxis, ResponsiveContainer, Cell } from 'recharts';
 
@@ -174,9 +177,12 @@ export default function PlayerProfile() {
   const [editNoteText, setEditNoteText] = useState('');
   const [openReplies, setOpenReplies] = useState<Record<string, boolean>>({});
 
-  const tabs = ['Videos & Highlights', 'Statistics', 'Career History', 'Notes'];
+  // Same tabs for every account (P-L3).
+  const tabs = ['Videos & Highlights', 'Statistics', 'Career History', 'Notes', 'Reports', 'Photo Library'];
   const roleLabel = getRoleLabel();
   const uploadedHighlights = useHighlightsFor(player.id);
+  const profilePhoto = useProfilePhoto(player.id);
+  const avatarSrc = profilePhoto?.src || (!imgError ? player.image : '');
 
   const defaultTrail = [
     { label: 'Players', path: getRoleBasePath() + '/players' },
@@ -551,8 +557,8 @@ export default function PlayerProfile() {
           <aside className="w-full lg:w-80 lg:shrink-0 bg-surface-card border border-default rounded-[32px] shadow-[var(--shadow-lg)] p-6 flex flex-col">
             <div className="relative mx-auto shrink-0">
               <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-brand-primary/40 shadow-[var(--shadow-lg)] bg-surface-accent flex items-center justify-center">
-                {player.image && !imgError ? (
-                  <img src={player.image} alt={player.name} onError={() => setImgError(true)} className="w-full h-full object-cover" />
+                {avatarSrc ? (
+                  <img src={avatarSrc} alt={player.name} onError={() => !profilePhoto && setImgError(true)} className="w-full h-full object-cover" />
                 ) : (
                   <span className="font-heading font-black text-3xl text-link">{player.initials}</span>
                 )}
@@ -590,7 +596,7 @@ export default function PlayerProfile() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
               <div className="flex items-center gap-1 bg-surface-card/50 backdrop-blur-xl border border-default/60 rounded-full p-1 shadow-sm overflow-x-auto hide-scrollbar max-w-full">
                 {tabs.map(t => (
-                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold text-[14px] transition-colors'}>{t}</button>
+                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold text-[14px] transition-colors whitespace-nowrap shrink-0'}>{t}</button>
                 ))}
               </div>
               {activeTab === 'Videos & Highlights' && (
@@ -607,6 +613,13 @@ export default function PlayerProfile() {
               {activeTab === 'Statistics' && renderStatistics()}
               {activeTab === 'Career History' && renderCareer()}
               {activeTab === 'Notes' && renderNotes()}
+              {activeTab === 'Reports' && (
+                <ReportsPanel playerId={player.id} player={{
+                  name: player.name, initials: player.initials, team: player.currentTeam, age: player.age, nationality,
+                  positions: [player.primaryPos, player.secondaryPos, player.tertiaryPos].filter(Boolean).join(' / '),
+                }} />
+              )}
+              {activeTab === 'Photo Library' && <PhotoLibrary playerId={player.id} />}
             </div>
           </div>
         </div>

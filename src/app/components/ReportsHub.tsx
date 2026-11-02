@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { EditFormBlueprintModal } from './EditFormBlueprintModal';
 import { Submission, MOCK_SUBMISSIONS } from '../data/reports';
+import { Pagination } from './Pagination';
 
 // ─── Types ───────────────────────────────────────────────────────────────────────
 type ReportsSubTab = 'forms' | 'submissions' | 'analytics' | 'review-grades';
@@ -300,29 +301,6 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-// ─── Pagination control ─────────────────────────────────────────────────────────
-const Pagination = ({ page, totalPages, onPage }: { page: number; totalPages: number; onPage: (p: number) => void }) => {
-  if (totalPages <= 1) return null;
-  const nums: (number | string)[] = [];
-  const push = (n: number | string) => nums.push(n);
-  push(1);
-  if (page > 3) push('…l');
-  for (let p = Math.max(2, page - 1); p <= Math.min(totalPages - 1, page + 1); p++) push(p);
-  if (page < totalPages - 2) push('…r');
-  if (totalPages > 1) push(totalPages);
-  const pill = 'min-w-9 h-9 px-3 rounded-full font-body font-bold text-[14px] flex items-center justify-center transition-colors';
-  return (
-    <div className="flex items-center justify-center gap-2 pt-4 shrink-0">
-      <button onClick={() => onPage(Math.max(1, page - 1))} disabled={page === 1} className={pill + ' bg-surface-card border border-default text-body hover:text-strong disabled:opacity-40 disabled:cursor-not-allowed'}>Prev</button>
-      {nums.map((n, i) => typeof n === 'string'
-        ? <span key={n + i} className="px-1 text-body">…</span>
-        : <button key={n} onClick={() => onPage(n)} className={pill + (n === page ? ' bg-brand-primary text-on-brand' : ' bg-surface-card border border-default text-strong hover:border-brand-primary')}>{n}</button>
-      )}
-      <button onClick={() => onPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className={pill + ' bg-surface-card border border-default text-link hover:bg-surface-accent disabled:opacity-40 disabled:cursor-not-allowed'}>Next</button>
     </div>
   );
 };

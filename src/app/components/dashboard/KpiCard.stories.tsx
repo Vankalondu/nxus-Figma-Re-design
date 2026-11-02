@@ -15,11 +15,9 @@ const meta = {
           'large number with the descriptor on its own line under it (left), and the action link ' +
           'with an up-right arrow on its own row, pinned to the bottom right. The rows always stack, ' +
           'so every card has the same shape whatever the text length. The descriptor is plain text: ' +
-          'no status colours.
-
-' +
-          'Action copy: verb + object, sentence case, max 3 words, says where it goes ' +
-          '("Open reports", "See short list", "Approve uploads"). Never "Opens…" or a bare "View". ' +
+          'no status colours.\n\n' +
+          'Action copy: verb + object, sentence case, short (usually 3 words or fewer) and says exactly where it goes ' +
+          '("Open reports", "See short list", "Find missing packages"). Never "Opens…" or a bare "View". ' +
           'It renders as a `<button>`, so it is keyboard focusable.\n\n' +
           'The value uses `tabular-nums` (**L-TY4**) — proportional digits change width as ' +
           'the number changes, which makes the count-up animation visibly jitter.',
@@ -83,7 +81,7 @@ export const LongText: Story = {
     heading: 'Missing Full Matches',
     value: '65',
     descriptor: 'across Target + Short',
-    action: 'See players',
+    action: 'Find missing matches',
   },
   parameters: {
     docs: { description: { story: 'Long heading and descriptor in a narrow column: each wraps on its own line, the link stays bottom right and nothing overlaps (**D-18**).' } },

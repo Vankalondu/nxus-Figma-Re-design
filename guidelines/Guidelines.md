@@ -627,9 +627,10 @@ left, and the action link on its own row at the bottom right (D-18). The rows al
 whatever the text length or column count, so every card has the same shape. One source of
 truth so dashboards cannot visually drift.
 
-**Action copy.** Verb + object, sentence case, at most three words, and it says where the
-card goes: "Open reports", "See short list", "Review shortlists", "Approve uploads", "Open
-tracker". Never "Opens…", never a bare "View" or "Review". The descriptor is a short plain
+**Action copy.** Verb + object, sentence case, short (usually three words or fewer), and it
+says exactly where the card goes: "Open reports", "See short list", "Approve uploads", "Open
+tracker". Clarity beats the word count: "Find missing packages" is right because "See players"
+would not say where the link lands (D-19). Never "Opens…", never a bare "View" or "Review". The descriptor is a short plain
 qualifier of the number ("awaiting your review", "of all players") — not a second action.
 
 ### P-CO5 — Status pills
@@ -825,6 +826,68 @@ same values. Data blue is deliberately **not** the brand primary, so restyling b
 repaints a chart. Chart marks are graphics, not text: they need 3:1 against the card
 (`#1E88E5` is 3.5 light · 4.7 dark).
 
+
+### P-CO19 — Pagination
+Canonical implementation: `src/app/components/Pagination.tsx`, shared by the Lead Scout
+reports list and the profile Photo library.
+```
+Pills    min-w-9 h-9 px-3 rounded-full font-body font-bold text-[14px]
+Current  bg-brand-primary text-on-brand          Others  bg-surface-card border-default
+Order    Prev · 1 … n-1 n n+1 … last · Next · Last (Last is optional)
+```
+Hidden when everything fits on one page. Pair it with a plain count line above the content:
+"Showing 1–12 of 40 photos".
+
+### P-CO20 — Photo library (player profile)
+Canonical implementation: `src/app/components/profile/PhotoLibrary.tsx` (+ `PhotoGrid`,
+`PhotoLightbox`, `state/photoStore.ts`).
+```
+Tiles     square, rounded-[20px], bg-surface-accent, whole photo object-contain (never cropped)
+Size      bestTile(): the biggest square that fits the box for the photos on the page;
+          max 6 × 2 desktop · 4 × 2 tablet · 2 × 3 phone; a page never scrolls on desktop
+Pages     P-CO19 with Last; tiles keep one size across pages
+Toolbar   tag filter (All · Headshot · Full body · Action · Team, with counts) + primary
+          "Add photos"; drag-and-drop anywhere on the tab
+Per photo ⋯ menu: Set as profile photo · tag · Download · Delete (5-second Undo toast)
+Viewer    full-screen, uncropped, ← → Esc, swipe, "3 of 40", uploader + date, Download
+Uploads   JPG, PNG, WebP, HEIC · 10 MB max each · per-tile progress · a reason for each
+          refused file ("Too large — 10 MB max", "Format not supported")
+Empty     "No photos yet. Add headshots and match photos so scouts can identify this player."
+```
+**Why:** player photos come in every shape (tall headshots, wide match shots, posters).
+Cropping them to fill a square hides the part a scout needs; showing the whole photo on a
+soft square keeps the grid calm and still shows everything. Few photos get big tiles, so a
+player with two photos doesn't look empty.
+
+### P-CO21 — Grades picker (two panels)
+Canonical implementation: `src/app/components/profile/GradesPicker.tsx`.
+Report types on the left (name, "5 of 5 grades", show/hide eye, "Archived" tag); the selected
+type's grades on the right (checkbox, full name, short code, All / None). Search covers both.
+"Show all" resets. Saved per user. **One grades control:** the toolbar Grades button and each
+report section's "5 of 5 grades" chip open this same picker; the chip opens it on its type.
+Every grade has a short code — NXUS generates one when the template has none.
+
+**Why:** the old picker listed every report type and every grade in one column, so finding
+one grade meant scrolling past all the others, and there were two grade controls doing
+overlapping jobs.
+
+### P-CO22 — Reports tab and report panel (player profile)
+Canonical implementation: `src/app/components/profile/ReportsPanel.tsx` + `ReportSheet.tsx`;
+example templates in `src/app/data/profileReports.ts`.
+```
+Toolbar   segmented All · Long · Short · Target with counts · Show archived (count) ·
+          Grades (P-CO21) · primary "New report"
+Sections  one light card per report type (P-CO3) — never a solid brand bar; rows grouped by
+          what was watched (source · date), then one row per scout; grade chips P-CO15;
+          column codes show the full grade name on hover
+Panel     opens from the right (w-[520px], full width on phone), not a centred modal
+  View    question left, grade chip right — a report fits on one screen; Previous / Next
+  Edit    each grade is one row of buttons (A+ A B C · T M D); Save once every grade is given
+  New     choose the report type → the same panel in edit mode, player filled in
+```
+**Why:** the old pop-up gave every possible answer a full-width row, so a five-question
+report was several screens long, and it covered the table you came from. Reports change
+often, so they are built from templates: a new or changed template needs no new screen.
 ---
 
 ## 10. Page and dashboard layout
@@ -1221,6 +1284,18 @@ to the Figma Country/Head drawings: scout leaderboard rows carry the player coun
 name at every width, the "Ghana" scope label is plain link-colour text (no pill), the welcome
 title uses the H1 ramp, and the KPI link is 12px Bold; (4) what stays the same across
 accounts and what changes is fixed in P-L3.
+
+**D-19 · Player profile: Photo library, Reports tab, link wording (2 Nov 2026).** Vanessa:
+(1) the player profile gains **Reports** and **Photo library** tabs, identical for every
+account (P-L3); new features go live in the app first so the PM can try them, then Figma, then
+the devs; (2) photos sit in a square grid that shows the whole photo, adapts to how many
+there are (max 6 across, big when there are only two) and pages with "Next / Last" (P-CO20,
+P-CO19); (3) the grade picker is the two-panel "Option A" (P-CO21); (4) reports open in a
+right-side panel, with a **New report** button built alongside the viewing side, using example
+questions until the real templates are supplied (P-CO22); (5) KPI link copy may run past three
+words when that is what it takes to say where it goes — Video Manager now reads "Find missing
+packages" / "Find missing matches" (P-CO4); (6) in Players card view the player name opens
+the profile inside the current account.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

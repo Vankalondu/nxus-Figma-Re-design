@@ -179,7 +179,7 @@ export const RangePair = ({ label, minV, setMin, maxV, setMax }: {
 
 // Segmented pill toggle (Active / Archive, method filter, …).
 export function SegmentedToggle<T extends string>({ options, value, onChange }: {
-  options: { value: T; label: string }[]; value: T; onChange: (v: T) => void;
+  options: { value: T; label: React.ReactNode }[]; value: T; onChange: (v: T) => void;
 }) {
   return (
     <div className="flex items-center bg-surface-card border border-default rounded-full p-1 gap-1 shrink-0">

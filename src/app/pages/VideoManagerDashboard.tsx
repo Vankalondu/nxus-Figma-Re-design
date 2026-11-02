@@ -114,9 +114,9 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
           descriptor={overdueCount > 0 ? `${overdueCount} overdue` : 'none overdue'}
           action="Open tasks" onClick={() => onNavigate('tasks')} />
         <KpiCard icon={Film} heading="Missing Packages" value={missPkg}
-          descriptor="across Target + Short" action="See players" onClick={() => onMissing('package')} />
+          descriptor="across Target + Short" action="Find missing packages" onClick={() => onMissing('package')} />
         <KpiCard icon={Video} heading="Missing Full Matches" value={missFull}
-          descriptor="across Target + Short" action="See players" onClick={() => onMissing('full-match')} />
+          descriptor="across Target + Short" action="Find missing matches" onClick={() => onMissing('full-match')} />
         <KpiCard icon={Grid3x3} heading="Video Tracker" value={needTracker}
           descriptor="players need video" action="Open tracker" onClick={onTracker} />
       </div>
