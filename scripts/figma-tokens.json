@@ -1,6 +1,6 @@
 {
  "_comment": "Snapshot of every variable in QAZA_FE, extracted via the Figma MCP plugin bridge. The extract needs the MCP (an agent runs it); this file is the committed result so scripts/figma-css-diff.mjs can run standalone and the diff is reviewable in a PR. Refresh by re-running the extract and replacing this file.",
- "extractedAt": "2026-10-28",
+ "extractedAt": "2026-11-02",
  "fileKey": "qefpAyr3MEEklQRV96YlSv",
  "scaleSteps": "Figma colour families run 100,200,300,400,500,Base,600,700,800,900,1000 — 11 steps with Base in the middle (the tonal anchor). CSS runs 50,100,...,900,950. So Figma/100 = CSS/-50, Figma/Base = CSS/-500, Figma/1000 = CSS/-950.",
  "Qaza": {
@@ -794,5 +794,5 @@
   "Shadow/xl": "#061b2e @0.20"
  },
  "_openMigration": "Status/info + Status/info-tint exist in Figma with no code counterpart and nothing in the product renders an info state; --text-muted is the mirror image, defined in code and used zero times. Both logged as OR-8. Button/* (11 vars) is a component layer the code expresses as utilities rather than tokens — not drift.",
- "_verified": "2026-10-28 — 2026-10-28 — variables re-read via MCP (plugin extract logic), 0 value changes; Figma edits since 10-16 were screens/prototype links only. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
+ "_verified": "2026-11-02 — 2 Nov 2026: KPI Card component + Senior KPI copy; no token changes. Re-verify after any Figma edit: the diff script trusts this file and cannot detect its own staleness."
 }
