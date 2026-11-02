@@ -23,6 +23,7 @@ import { TasksTab } from '../components/dashboard/TasksTab';
 import { ReportsTab } from '../components/dashboard/ReportsTab';
 import { AnalyticsTab } from '../components/dashboard/AnalyticsTab';
 
+import { PlayerLink } from '../components/PlayerLink';
 type LeadTab = 'overview' | 'pipeline' | 'reports' | 'analytics' | 'target';
 type ActivePage = 'dashboard' | 'players' | 'matches' | 'admin';
 
@@ -798,7 +799,7 @@ const PipelineTab = () => {
                           <div className="flex flex-col gap-2">
                             {cell.map(player => (
                               <div key={player.id} className="flex items-center gap-2">
-                                <span title={player.name} className="font-body font-bold text-[14px] text-body truncate flex-1 min-w-0">{player.name}</span>
+                                <PlayerLink name={player.name} id={String(player.id)} title={player.name} className="font-body font-bold text-[14px] truncate flex-1 min-w-0" />
                                 <span className="font-mono text-[10px] font-bold text-body shrink-0">{player.birthYear}</span>
                                 {/* ring-text-heading/20 delineates the badge whatever the row is
                                     doing. Grade fills are fixed values while row surfaces flip,
@@ -975,12 +976,13 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
             </div>
             <div className="divide-y divide-border-default overflow-y-auto max-h-[240px]">
               {HIGHLIGHTS_FEED.map(h => (
-                <button key={h.id} onClick={() => setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym })}
-                  className="w-full px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors text-left">
+                <div key={h.id} role="button" tabIndex={0} onClick={() => setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym })}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym }); } }}
+                  className="w-full px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors text-left cursor-pointer focus-visible:outline-none focus-visible:bg-surface-accent">
                   <div className="w-8 h-8 rounded-xl bg-surface-card text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-default">{h.initials}</div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-body font-bold text-[14px] text-body truncate">{h.name}</span>
+                      <PlayerLink name={h.name} id={String(h.id)} player={{ primaryPos: h.posAcronym }} className="font-body font-bold text-[14px] truncate" />
                       <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-surface-page text-body border border-default">{h.list === 'short' ? 'Short' : 'Target'}</span>
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
@@ -989,7 +991,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                     </div>
                   </div>
                   <span className="font-body text-[12px] text-muted font-medium tabular-nums shrink-0">{h.hoursAgo}h ago</span>
-                </button>
+                </div>
               ))}
             </div>
           </div>
@@ -1069,7 +1071,7 @@ const PackagesTab = ({ onNudge }: { onNudge: (name: string) => void }) => {
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-[14px] bg-brand-primary text-on-brand flex items-center justify-center font-body font-black text-[14px] shrink-0">{pkg.initials}</div>
               <div className="flex-1">
-                <div className="font-body font-bold text-[16px] text-body">{pkg.playerName}</div>
+                <div className="font-body font-bold text-[16px] text-body"><PlayerLink name={pkg.playerName} tone="inherit" /></div>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className={`font-body text-[12px] font-black px-2 py-0.5 rounded-full ${pkg.list==='target'?'bg-brand-primary/15 text-strong':'bg-surface-accent text-body'}`}>
                     {pkg.list==='target'?'Target':'Short'}

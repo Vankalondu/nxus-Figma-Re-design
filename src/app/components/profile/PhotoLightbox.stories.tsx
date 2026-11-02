@@ -5,7 +5,7 @@ import { placeholderPhoto, PlayerPhoto } from '../../state/photoStore'
 
 const photos: PlayerPhoto[] = Array.from({ length: 6 }, (_, i) => {
   const p = placeholderPhoto(i)
-  return { id: 'p' + i, src: p.src, ratio: p.ratio, tag: p.tag, uploadedBy: 'Tom Legg', dateLabel: 'Sep 28, 2026', fileName: `photo-${i + 1}.svg` }
+  return { id: 'p' + i, src: p.src, ratio: p.ratio, tag: p.tag, uploadedBy: 'Tom Legg', dateLabel: 'Sep 28, 2026', fileName: `photo-${i + 1}.jpg` }
 })
 
 const meta = {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, Target, Plus, Check, X, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { PlayerLink } from '../PlayerLink';
 import {
   PriorityPill, WEEK_DAYS, WEEK_TASKS, TASK_STATUS, TASK_ASSIGNEES, TaskInput,
   TaskStatus, taskStatus, isOverdue, fmtDate, TASK_STATE_META,
@@ -129,7 +130,7 @@ export function TasksTab({ tasks, onToggle, onAdd, onSetStatus, showDistribution
                 const meta = od ? TASK_STATE_META.overdue : TASK_STATE_META[st];
                 return (
                   <tr key={t.id} className={`border-t border-default/70 hover:bg-surface-accent/50 transition-colors ${st === 'done' ? 'opacity-70' : ''}`}>
-                    <td className="px-3 py-3 min-w-0 max-w-[220px]"><div className={`font-body font-bold text-[13px] truncate ${st === 'done' ? 'text-body line-through' : 'text-strong'}`}>{t.text}</div>{t.playerName && <div className="font-body text-[11px] text-muted truncate">{t.playerName}</div>}</td>
+                    <td className="px-3 py-3 min-w-0 max-w-[220px]"><div className={`font-body font-bold text-[13px] truncate ${st === 'done' ? 'text-body line-through' : 'text-strong'}`}>{t.text}</div>{t.playerName && <div className="font-body text-[11px] text-muted truncate"><PlayerLink name={t.playerName} className="font-bold" /></div>}</td>
                     <td className="px-3 py-3"><PriorityPill p={t.priority} /></td>
                     <td className="px-3 py-3 max-w-[220px] hidden lg:table-cell"><span className="font-body text-[12px] text-muted line-clamp-1">{t.description || '—'}</span></td>
                     <td className="px-3 py-3 hidden md:table-cell"><span className="font-body text-[12px] text-muted whitespace-nowrap">{t.assignedTo}</span></td>

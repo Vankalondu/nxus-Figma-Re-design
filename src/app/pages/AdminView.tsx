@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, ChevronDown, MoreVertical, Edit2, Trash2, ArrowRight, ArrowLeft, Plus, X, ArrowLeftRight, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
+import { PlayerLink, accountBase } from '../components/PlayerLink';
 // MOCK DATA
 const mockBodies = [
   { id: 1, name: 'FIFA', competitionsCount: 12 },
@@ -223,7 +224,7 @@ export function AdminView() {
                   <div key={player.id} draggable onDragStart={(e) => e.dataTransfer.setData('text/plain', String(player.id))}
                     className="flex items-center justify-between gap-2 bg-surface-card border border-default rounded-[12px] px-3 py-2 shadow-sm cursor-grab active:cursor-grabbing hover:border-brand-primary/40 hover:shadow-md transition-all">
                     <div className="min-w-0">
-                      <div className="font-body font-bold text-[14px] text-body truncate">{player.name}</div>
+                      <div className="font-body font-bold text-[14px] text-body truncate"><PlayerLink name={player.name} id={String(player.id)} tone="inherit" player={{ primaryPos: player.position }} /></div>
                       <div className="font-body font-medium text-[12px] text-muted">{player.position}</div>
                     </div>
                     <button onClick={() => handleTransferToTeam(player)} title="Transfer to Team" className="w-8 h-8 rounded-full bg-brand-primary/10 text-link inline-flex items-center justify-center hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0"><ArrowRight size={14} /></button>
@@ -251,7 +252,7 @@ export function AdminView() {
                   <div key={player.id} draggable onDragStart={(e) => e.dataTransfer.setData('text/plain', String(player.id))}
                     className="flex items-center justify-between gap-2 bg-surface-card border border-default rounded-[12px] px-3 py-2 shadow-sm cursor-grab active:cursor-grabbing hover:border-brand-primary/40 hover:shadow-md transition-all">
                     <div className="min-w-0">
-                      <div className="font-body font-bold text-[14px] text-body truncate">{player.name}</div>
+                      <div className="font-body font-bold text-[14px] text-body truncate"><PlayerLink name={player.name} id={String(player.id)} tone="inherit" player={{ primaryPos: player.position }} /></div>
                       <div className="font-body font-medium text-[12px] text-muted">{player.position}</div>
                     </div>
                     <button onClick={() => handleRemoveFromTeam(player)} title="Remove from Team" className="w-8 h-8 rounded-full bg-status-error/10 text-status-error inline-flex items-center justify-center hover:bg-status-error hover:text-on-brand transition-colors shrink-0"><X size={14} /></button>
@@ -369,7 +370,7 @@ export function AdminView() {
                     <td className="px-6 py-3 font-mono font-bold text-[14px] text-body">{i + 1}</td>
                     <td className="px-6 py-3">
                       <button
-                        onClick={() => navigate(`/player/${player.id}`, { state: { fromAdmin: true, player: { id: player.id, name: player.name, initials: player.name.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase(), age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.position, currentTeam: player.currentTeam }, trail: [{ label: 'Admin', path: window.location.pathname }] } })}
+                        onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { fromAdmin: true, player: { id: player.id, name: player.name, initials: player.name.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase(), age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.position, currentTeam: player.currentTeam }, trail: [{ label: 'Admin', path: window.location.pathname }] } })}
                         className="font-body font-bold text-[14px] text-body hover:underline transition-all flex items-center gap-2 group/link"
                       >
                         {player.name}

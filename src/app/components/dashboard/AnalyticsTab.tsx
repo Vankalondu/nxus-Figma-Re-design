@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Trophy, TrendingUp, Target, Search, ChevronDown, X } from 'lucide-react';
 
+import { PlayerLink } from '../PlayerLink';
 export const AnalyticsTab = () => {
   const [board, setBoard] = useState<'scouts' | 'players'>('players');
   const [removedScouts, setRemovedScouts] = useState<string[]>([]);
@@ -155,7 +156,7 @@ export const AnalyticsTab = () => {
                 <div key={p.n} className="flex items-center gap-3 py-2 border-b border-default last:border-0">
                   <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-on-brand' : 'bg-surface-accent text-body'}`}>{i+1}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="font-body font-bold text-[14px] text-body truncate">{p.n}</div>
+                    <div className="font-body font-bold text-[14px] text-body truncate">{board === 'players' ? <PlayerLink name={p.n} /> : p.n}</div>
                     {board === 'scouts' && <div className="font-body text-[11px] text-muted truncate">{(p as any).role}</div>}
                   </div>
                   <span className="font-heading font-black text-[14px] text-strong tabular-nums">{p.c}</span>

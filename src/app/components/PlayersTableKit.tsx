@@ -6,6 +6,7 @@
 // Change a piece here and every Players page follows.
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, List, LayoutGrid, SlidersHorizontal, Columns3, Search, X, ArrowUp } from 'lucide-react';
+import { FILTER_SURFACE } from './controlStyles';
 
 // ─── Page title (folds away once the table scrolls — "focus mode") ───────────────
 export const PlayersPageTitle = ({ first, icon, rest, subtitle, folded = false }: {
@@ -178,11 +179,12 @@ export const RangePair = ({ label, minV, setMin, maxV, setMax }: {
 };
 
 // Segmented pill toggle (Active / Archive, method filter, …).
-export function SegmentedToggle<T extends string>({ options, value, onChange }: {
-  options: { value: T; label: React.ReactNode }[]; value: T; onChange: (v: T) => void;
+// tone 'filter' = the tinted Reports-filter fill (P-CO23) for toggles that sit on the page.
+export function SegmentedToggle<T extends string>({ options, value, onChange, tone = 'card' }: {
+  options: { value: T; label: React.ReactNode }[]; value: T; onChange: (v: T) => void; tone?: 'card' | 'filter';
 }) {
   return (
-    <div className="flex items-center bg-surface-card border border-default rounded-full p-1 gap-1 shrink-0">
+    <div className={`flex items-center rounded-full p-1 gap-1 shrink-0 ${tone === 'filter' ? FILTER_SURFACE : 'bg-surface-card border border-default'}`}>
       {options.map(o => (
         <button key={o.value} onClick={() => onChange(o.value)}
           className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${value === o.value ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>

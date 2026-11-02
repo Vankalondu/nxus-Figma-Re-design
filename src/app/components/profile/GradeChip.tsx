@@ -22,13 +22,3 @@ export const GradeChip = ({ value, nxt = false, title }: { value?: string; nxt?:
     <span title={title ?? label} className={`inline-flex items-center justify-center min-w-8 px-2 py-[2px] rounded font-body text-[12px] font-black tabular-nums ${cls}`}>{value}</span>
   );
 };
-
-/** One-line key for the chips, shown once per Reports tab. */
-export const GradeLegend = () => (
-  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-body font-medium text-[12px] text-body">
-    <span className="flex items-center gap-1">Grades {['A+', 'A', 'B', 'C'].map(g => <GradeChip key={g} value={g} />)}</span>
-    <span className="flex items-center gap-1">Next step {NXT_OPTIONS.map(o => (
-      <span key={o.value} className="flex items-center gap-1"><GradeChip value={o.value} nxt />{o.label}</span>
-    ))}</span>
-  </div>
-);

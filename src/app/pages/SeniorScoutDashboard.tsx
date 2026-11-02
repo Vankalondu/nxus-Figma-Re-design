@@ -27,6 +27,7 @@ import { ReportsTab } from '../components/dashboard/ReportsTab';
 import { AnalyticsTab } from '../components/dashboard/AnalyticsTab';
 import { TasksTab } from '../components/dashboard/TasksTab';
 
+import { PlayerLink } from '../components/PlayerLink';
 // ─── Types ────────────────────────────────────────────────────────────────────
 type DashTab = 'overview' | 'reports' | 'packages' | 'analytics' | 'tasks';
 type ActivePage = 'dashboard' | 'players' | 'matches' | 'admin';
@@ -195,7 +196,7 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
         <div className={`px-6 py-5 flex items-start justify-between shrink-0 ${isTom ? 'bg-brand-primary' : 'bg-surface-card border-b border-default'}`}>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className={`font-heading font-semibold text-[16px] ${isTom ? 'text-on-brand' : 'text-strong'}`}>{report.playerName}</span>
+              <PlayerLink name={report.playerName} tone="inherit" className={`font-heading font-semibold text-[16px] ${isTom ? 'text-on-brand' : 'text-strong'}`} />
               <PosPill pos={report.pos} />
               <GradePill grade={report.grade} />
             </div>
@@ -915,7 +916,7 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                 <div key={pkg.name} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
                   <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{pkg.name.split(' ').map(n=>n[0]).join('')}</span>
                   <div className="flex-1 min-w-0">
-                    <span className="font-body font-bold text-[14px] text-body truncate block">{pkg.name}</span>
+                    <PlayerLink name={pkg.name} className="font-body font-bold text-[14px] truncate block" />
                     <p className="font-body text-[12px] text-body mt-0.5">{pkg.clips} clips</p>
                   </div>
                   <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-brand-primary/15 text-body shrink-0">{pkg.list}</span>
@@ -946,7 +947,7 @@ const PackagesTab = () => {
             <div key={pkg.id} className="px-5 py-3 flex items-center gap-3">
               <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{pkg.initials}</span>
               <div className="min-w-0 flex-1">
-                <span className="font-body font-bold text-[14px] text-body truncate block">{pkg.playerName}</span>
+                <PlayerLink name={pkg.playerName} className="font-body font-bold text-[14px] truncate block" />
                 <p className="font-body text-[12px] text-body mt-0.5">{pkg.uploadDate} · {pkg.clipCount} clips</p>
               </div>
               {pkg.watched

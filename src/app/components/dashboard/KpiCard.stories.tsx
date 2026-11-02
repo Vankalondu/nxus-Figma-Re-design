@@ -11,10 +11,10 @@ const meta = {
         component:
           'The KPI card used on every dashboard. One source of truth, so no dashboard can ' +
           'visually drift.\n\n' +
-          'Anatomy (**P-CO4**, **D-18**): circular icon chip + short uppercase heading, then the ' +
-          'large number with the descriptor on its own line under it (left), and the action link ' +
-          'with an up-right arrow on its own row, pinned to the bottom right. The rows always stack, ' +
-          'so every card has the same shape whatever the text length. The descriptor is plain text: ' +
+          'Anatomy (**P-CO4**, **D-20**): circular icon chip + short uppercase heading, then the ' +
+          'large number, then one bottom row: the descriptor on the left and the action link (with an ' +
+          'up-right arrow) on the right, on the same line. When both do not fit, the link wraps to its ' +
+          'own line, still right-aligned — they never overlap. The descriptor is plain text: ' +
           'no status colours.\n\n' +
           'Action copy: verb + object, sentence case, short (usually 3 words or fewer) and says exactly where it goes ' +
           '("Open reports", "See short list", "Find missing packages"). Never "Opens…" or a bare "View". ' +
@@ -84,7 +84,7 @@ export const LongText: Story = {
     action: 'Find missing matches',
   },
   parameters: {
-    docs: { description: { story: 'Long heading and descriptor in a narrow column: each wraps on its own line, the link stays bottom right and nothing overlaps (**D-18**).' } },
+    docs: { description: { story: 'Long heading and descriptor in a narrow column: the link drops to its own line, still on the right, and nothing overlaps (**D-20**).' } },
   },
   render: (args) => <div className="w-[220px]"><KpiCard {...args} /></div>,
 }

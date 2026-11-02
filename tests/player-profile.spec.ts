@@ -2,8 +2,8 @@ import { test, expect, type Page } from '@playwright/test';
 import { trackPageErrors } from './helpers';
 
 /**
- * Player profile: Photo library and Reports tabs (P-CO20–22, D-19).
- * db-0 has 30 seeded photos (three pages), db-1 has 2.
+ * Player profile: Photo library and Reports tabs (P-CO20–22, D-19, D-20).
+ * db-0 has 30 seeded photos, db-1 has 2.
  */
 
 async function openProfile(page: Page, id: string, tab: string) {
@@ -19,40 +19,38 @@ async function openProfile(page: Page, id: string, tab: string) {
 test.describe('Photo library', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test('pages through photos and opens the viewer', async ({ page }) => {
+  test('one tile size, about ten in view, no pagination, viewer works', async ({ page }) => {
     const errors = trackPageErrors(page);
     await openProfile(page, 'db-0', 'Photo Library');
 
     const grid = page.getByRole('list', { name: 'Photos' });
-    await expect(page.getByText('Showing 1–12 of 30 photos')).toBeVisible();
-    await expect(grid.getByRole('listitem')).toHaveCount(12);
+    const tiles = grid.getByRole('listitem');
+    await expect(tiles).toHaveCount(30);
+    await expect(page.getByRole('navigation', { name: 'Pages' })).toHaveCount(0);
 
-    await page.getByRole('button', { name: 'Last', exact: true }).click();
-    await expect(page.getByText('Showing 25–30 of 30 photos')).toBeVisible();
-    await expect(grid.getByRole('listitem')).toHaveCount(6);
-
-    // The page of photos fits without scrolling at 1440 × 900.
-    const box = await grid.boundingBox();
-    expect(box!.y + box!.height).toBeLessThanOrEqual(900);
+    // 5 across and at least two full rows inside a 1440 × 900 screen.
+    const boxes = await Promise.all([0, 4, 5, 9].map(i => tiles.nth(i).boundingBox()));
+    expect(Math.round(boxes[0]!.y)).toBe(Math.round(boxes[1]!.y));
+    expect(boxes[2]!.y).toBeGreaterThan(boxes[0]!.y);
+    expect(boxes[3]!.y + boxes[3]!.height).toBeLessThanOrEqual(900);
 
     await grid.getByRole('button', { name: /^Open/ }).first().click();
-    const viewer = page.getByRole('dialog', { name: /Photo 25 of 30/ });
-    await expect(viewer).toBeVisible();
+    await expect(page.getByRole('dialog', { name: /Photo 1 of 30/ })).toBeVisible();
     await page.keyboard.press('ArrowRight');
-    await expect(page.getByRole('dialog', { name: /Photo 26 of 30/ })).toBeVisible();
+    await expect(page.getByRole('dialog', { name: /Photo 2 of 30/ })).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(page.getByRole('dialog')).toHaveCount(0);
 
     expect(errors).toHaveLength(0);
   });
 
-  test('two photos get big tiles and no pagination', async ({ page }) => {
+  test('two photos keep the standard tile size', async ({ page }) => {
     await openProfile(page, 'db-1', 'Photo Library');
     const tiles = page.getByRole('list', { name: 'Photos' }).getByRole('listitem');
     await expect(tiles).toHaveCount(2);
     const b = await tiles.first().boundingBox();
-    expect(b!.width).toBeGreaterThan(300);
-    await expect(page.getByRole('navigation', { name: 'Pages' })).toHaveCount(0);
+    expect(b!.width).toBeGreaterThan(140);
+    expect(b!.width).toBeLessThan(240);
   });
 
   test('rejects a file that is too large or the wrong format', async ({ page }) => {
@@ -60,7 +58,7 @@ test.describe('Photo library', () => {
     await page.getByTestId('photo-input').setInputFiles([
       { name: 'notes.pdf', mimeType: 'application/pdf', buffer: Buffer.from('x') },
     ]);
-    await expect(page.getByText(/notes\.pdf: Format not supported/)).toBeVisible();
+    await expect(page.getByText(/notes.pdf: Format not supported/)).toBeVisible();
     await page.getByTestId('photo-input').setInputFiles([
       { name: 'match.png', mimeType: 'image/png', buffer: Buffer.alloc(16) },
     ]);
@@ -71,27 +69,44 @@ test.describe('Photo library', () => {
 test.describe('Reports tab', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test('grades picker hides a grade column', async ({ page }) => {
+  test('grades picker hides a grade', async ({ page }) => {
     const errors = trackPageErrors(page);
     await openProfile(page, 'db-1', 'Reports');
     const short = page.getByRole('region', { name: 'Short report' });
-    await expect(short.getByRole('columnheader', { name: 'POG' })).toBeVisible();
+    await expect(short.getByRole('heading', { name: 'Short report (2)' })).toBeVisible();
+    await expect(short.getByText('POG', { exact: true }).first()).toBeVisible();
 
     await short.getByRole('button', { name: /5 of 5 grades/ }).click();
     const picker = page.getByRole('dialog', { name: 'Grades to show' });
+    await expect(picker.getByText('Saved in this browser.')).toBeVisible();
     await picker.getByRole('checkbox', { name: /Potential grade/ }).click();
     await page.keyboard.press('Escape');
 
-    await expect(short.getByRole('columnheader', { name: 'POG' })).toHaveCount(0);
+    await expect(short.getByText('POG', { exact: true })).toHaveCount(0);
     await expect(short.getByRole('button', { name: /4 of 5 grades/ })).toBeVisible();
     expect(errors).toHaveLength(0);
   });
 
-  test('new report is saved and listed', async ({ page }) => {
+  test('hiding a report says where to get it back, and Grades brings it back', async ({ page }) => {
     await openProfile(page, 'db-1', 'Reports');
-    await expect(page.getByRole('region', { name: 'Scout weekly report' }).getByRole('row')).toHaveCount(3);
+    const short = page.getByRole('region', { name: 'Short report' });
+    await short.getByRole('button', { name: 'Hide report' }).click();
+    await expect(page.getByText('Short report hidden. Show it again from Grades.')).toBeVisible();
+    await expect(short).toHaveCount(0);
 
-    await page.getByRole('button', { name: 'New report' }).click();
+    await page.getByRole('button', { name: /^Grades/ }).click();
+    const picker = page.getByRole('dialog', { name: 'Grades to show' });
+    await expect(picker.getByText(/Hidden reports stay here/)).toBeVisible();
+    await picker.getByRole('button', { name: 'Show Short report', exact: true }).click();
+    await expect(page.getByRole('region', { name: 'Short report' })).toBeVisible();
+  });
+
+  test('top-nav Add Report files a new report for this player', async ({ page }) => {
+    await openProfile(page, 'db-1', 'Reports');
+    await expect(page.getByRole('button', { name: 'New report' })).toHaveCount(0);
+    await expect(page.getByRole('region', { name: 'Scout weekly report' }).getByRole('listitem')).toHaveCount(1);
+
+    await page.getByRole('button', { name: 'Add Report' }).click();
     const panel = page.getByRole('dialog', { name: 'New report' });
     await panel.getByRole('button', { name: /Scout weekly report/ }).click();
 
@@ -104,7 +119,22 @@ test.describe('Reports tab', () => {
 
     await expect(sheet.getByText('Submitted', { exact: false })).toBeVisible();
     await sheet.getByRole('button', { name: 'Close report' }).click();
-    // header row + the existing group/scout rows + the new group/scout rows
-    await expect(page.getByRole('region', { name: 'Scout weekly report' }).getByRole('row')).toHaveCount(5);
+    await expect(page.getByRole('region', { name: 'Scout weekly report' }).getByRole('listitem')).toHaveCount(2);
+  });
+});
+
+test.describe('Player names', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
+  test('a player name on the Lead Scout dashboard opens the profile in the Lead account', async ({ page }) => {
+    await page.addInitScript(() => {
+      sessionStorage.setItem('loginRole', 'Lead Scout');
+      sessionStorage.setItem('userRole', 'Lead Scout');
+    });
+    await page.goto('/lead-scout');
+    await page.getByRole('button', { name: 'Reports', exact: true }).first().click();
+    await page.getByRole('link', { name: 'Kofi Mensah' }).first().click();
+    await expect(page).toHaveURL(/\/lead-scout\/player\//);
+    await expect(page.getByRole('heading', { level: 1, name: 'Kofi Mensah' })).toBeVisible();
   });
 });

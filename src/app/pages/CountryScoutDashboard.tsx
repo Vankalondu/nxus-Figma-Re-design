@@ -18,6 +18,7 @@ import { PLAYER_COLUMNS, DEFAULT_VISIBLE_IDS, type PlayerColumn } from '../compo
 import { KpiCard } from '../components/dashboard/KpiCard';
 import { SeniorLeadPlayersPage } from '../components/SeniorLeadPlayersPage';
 import { ResponsiveTabs } from '../components/ResponsiveTabs';
+import { PlayerLink, accountBase } from '../components/PlayerLink';
 import {
   PlayersPageTitle, useFocusMode, PlayersCard, PlayersCardHeader, PlayersCardZone, TabPill, MobileTabMenu,
   ViewModeToggle, FiltersButton, MobileFiltersButton, ColumnsButton, LLSelect, RangePair, SegmentedToggle,
@@ -42,7 +43,7 @@ const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnD
       <div className="flex items-center gap-2 min-w-[190px]">
         <PlayerAvatar initials={p.initials} />
         <div className="flex flex-col items-start min-w-0">
-          <span onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}
+          <span onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}
             className="font-body font-bold text-link text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{p.name}</span>
           <div className="flex items-center gap-2">
             <span className="font-body text-[12px] text-muted shrink-0">{p.age}</span>
@@ -72,9 +73,9 @@ const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnD
   { id: 'clr',   group: 'GAME STATS', label: 'Clr',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.mpg}</span> },
   { id: 'aer',   group: 'GAME STATS', label: 'Aer',   fontMono: true, borderRight: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-strong text-[14px]">{p.potMins}</span> },
   { id: 'match_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center gap-1"><Video size={10} /><span>Match</span></div>, fontMono: true, align: 'center',
-    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/20 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">F{p.matchVideos}</span></div>) },
+    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/20 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">F{p.matchVideos}</span></div>) },
   { id: 'high_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center gap-1"><Video size={10} /><span>High</span></div>, fontMono: true, align: 'center',
-    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">H{p.highlightVideos}</span></div>) },
+    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">H{p.highlightVideos}</span></div>) },
 ];
 
 let seed = 123;
@@ -272,8 +273,8 @@ export default function CountryScoutDashboardPage() {
     const tab = new URLSearchParams(location.search).get('tab');
     if (tab && COUNTRY_TABS.some(t => t.id === tab)) setActiveTab(tab as CountryTab);
   }, [location.search]);
-  // Opens on cards at every width (Vanessa, 28 Oct); the Table/Card toggle switches to the table.
-  const [viewMode, setViewMode] = useState<'table'|'card'>('card');
+  // Opens on the table (Vanessa, 2 Nov — table is the default everywhere, D-20); the Table/Card toggle switches to cards.
+  const [viewMode, setViewMode] = useState<'table'|'card'>('table');
   const [collapsedPositions, setCollapsedPositions] = useState<Record<string, boolean>>({});
   const togglePosition = (pos: string) => setCollapsedPositions(prev => ({ ...prev, [pos]: !prev[pos] }));
   // Filters — same light, label-above toolbar as the Lead/Senior tables
@@ -476,7 +477,7 @@ export default function CountryScoutDashboardPage() {
                     : raiseNotifications.map((n,i)=>(
                       <div key={i} className="px-5 py-3 border-b border-default last:border-0 flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><ArrowUpRight size={14} className="text-strong" /></div>
-                        <div><div className="font-body font-bold text-[14px] text-body">{n.name}</div><div className="font-body text-[12px] text-muted font-medium">Raised to Long List</div></div>
+                        <div><div className="font-body font-bold text-[14px]"><PlayerLink name={n.name} /></div><div className="font-body text-[12px] text-muted font-medium">Raised to Long List</div></div>
                       </div>
                     ))}
                 </div>
@@ -567,7 +568,7 @@ export default function CountryScoutDashboardPage() {
                           <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-strong" /></div>
                           <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-heading">Top Prospect</h3><p className="font-body text-[12px] text-body font-medium">Based on scout rating</p></div>
                         </div>
-                        <div className="px-5 py-4 font-heading font-bold type-h5 tracking-tight text-heading">Kofi Mensah</div>
+                        <div className="px-5 py-4 font-heading font-bold type-h5 tracking-tight text-heading"><PlayerLink name="Kofi Mensah" tone="inherit" /></div>
                       </div>
 
                       <div className={`${CARD} flex flex-col`}>
@@ -909,7 +910,7 @@ export default function CountryScoutDashboardPage() {
                                                     </div>
                                                     {/* Name and Tags */}
                                                     <div className="flex flex-col gap-[6px]">
-                                                      <h3 onClick={() => navigate(`/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[16px] hover:underline cursor-pointer truncate max-w-[140px] leading-tight">{player.name}</h3>
+                                                      <h3 onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[16px] hover:underline cursor-pointer truncate max-w-[140px] leading-tight">{player.name}</h3>
                                                       <div className="flex gap-[6px]">
                                                         <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
                                                           <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">{player.age}</p>

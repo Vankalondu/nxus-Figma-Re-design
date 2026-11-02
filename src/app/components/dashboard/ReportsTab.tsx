@@ -3,6 +3,7 @@ import { Search, RefreshCw, User, Calendar, FileText, Eye, Star, Download } from
 import { EditFormBlueprintModal } from '../EditFormBlueprintModal';
 import { ChampionPodium, InlineSel, gradeToScore } from './shared';
 
+import { PlayerLink } from '../PlayerLink';
 export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [search, setSearch] = React.useState('');
@@ -126,7 +127,7 @@ export const ReportsTab = ({ onAddReport }: { onAddReport?: () => void }) => {
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-11 h-11 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black text-[14px] shrink-0">{r.initials}</div>
                 <div className="min-w-0">
-                  <div className="font-heading font-bold text-[15px] text-strong truncate">{r.player}</div>
+                  <div className="font-heading font-bold text-[15px] text-strong truncate"><PlayerLink name={r.player} player={{ primaryPos: r.pos }} tone="inherit" /></div>
                   <div className="flex items-center gap-1.5 font-body text-[12px] text-muted">
                     <span className="font-bold text-strong">{r.pos}</span>
                     <span>·</span>

@@ -10,10 +10,11 @@ const meta = {
       description: {
         component:
           'The Reports tab on the player profile — identical for every account (**P-L3**, **P-CO22**, **D-19**).\n\n' +
-          'Toolbar: All / Long / Short / Target with counts, Show archived, Grades (the two-panel picker, **P-CO21**) ' +
-          'and the primary **New report**. One light card per report type (**P-CO3**) — not the old solid blue bar — ' +
-          'with rows grouped by what was watched, then by scout, and grade chips in **P-CO15** colours. Column codes ' +
-          'show the full grade name on hover. Clicking a row opens the report panel (**P-CO22**).',
+          'Toolbar in the filter colour (**P-CO23**): All / Long / Short / Target with counts, Show archived, Grades (the ' +
+          'two-panel picker, **P-CO21**). No legend and no New report button — the top-nav Add Report opens the flow ' +
+          '(`newReportRequest`). Each card reads "Short report (2)" with "3 of 5 grades ⌄" and an underlined "Hide report" ' +
+          'on the same line. Rows lead with the scout, then what was watched and when; grades sit in a grid of up to five ' +
+          '(**D-20**). Clicking a row opens the report panel (**P-CO22**).',
       },
     },
   },

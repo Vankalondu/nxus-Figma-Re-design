@@ -20,6 +20,7 @@ import { UploadVideoModal } from '../components/UploadVideoModal';
 import { TasksTab } from '../components/dashboard/TasksTab';
 import { MOCK_TASKS, TaskInput } from '../components/dashboard/shared';
 import { useTierMap, PipelineTier } from '../state/playerStore';
+import { PlayerLink } from '../components/PlayerLink';
 import {
   useVideoState, coverageStatus, assignVideo, approveVideo, redoVideo,
   VideoType, CoverageStatus, ApprovalItem,
@@ -297,7 +298,7 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2 min-w-0">
                       <Flag nat={p.nationality} country={p.country} />
-                      <span className="font-body font-bold text-[14px] text-body truncate">{p.name}</span>
+                      <PlayerLink name={p.name} id={String(p.id)} player={{ nationality: p.nationality, currentTeam: p.team, primaryPos: p.posAcronym }} className="font-body font-bold text-[14px] truncate" />
                     </div>
                   </td>
                   <td className="px-4 py-3 font-body font-bold text-[13px] text-body">{p.posAcronym}</td>
@@ -402,7 +403,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
                 <div className="flex items-center gap-2 font-body text-[12px] text-muted mt-0.5 flex-wrap">
                   <span className="inline-flex items-center gap-1"><Users size={11} /> {item.uploader} · {item.uploaderRole}</span>
                   <span>·</span>
-                  {item.playerId ? <span>{item.playerName}</span> : <span className="inline-flex items-center gap-1 text-status-warning font-bold"><AlertTriangle size={11} /> No player linked</span>}
+                  {item.playerId ? <PlayerLink name={item.playerName} id={String(item.playerId)} className="font-bold" /> : <span className="inline-flex items-center gap-1 text-status-warning font-bold"><AlertTriangle size={11} /> No player linked</span>}
                   <span>·</span>
                   <span>{item.dateLabel}</span>
                 </div>

@@ -616,16 +616,16 @@ Container  bg-surface-card rounded-[32px] border border-default p-6
 Icon chip  circular, bg-brand-primary/10 text-link
 Heading    short, uppercase, .type-micro tracked, text-body
 Value      font-heading font-extrabold text-4xl tabular-nums leading-none
-Descriptor own line under the value, font-heading font-bold text-sm text-strong, plain
-           text only (a string prop: no status colours, no red)
-Action     own row, pinned to the bottom right (mt-auto self-end), text-xs font-bold
-           text-link + ArrowUpRight after the last word
+Bottom row descriptor LEFT and action RIGHT on the same line (flex-wrap justify-between)
+Descriptor font-heading font-bold text-sm text-strong, plain text only (a string prop:
+           no status colours, no red)
+Action     text-xs font-bold text-link + ArrowUpRight after the last word, right-aligned;
+           when both don't fit, it wraps to its own line, still on the right — never overlaps
 ```
 
-Format: icon chip + short heading, then the big number with the descriptor under it on the
-left, and the action link on its own row at the bottom right (D-18). The rows always stack,
-whatever the text length or column count, so every card has the same shape. One source of
-truth so dashboards cannot visually drift.
+Format: icon chip + short heading, then the big number, then one bottom row with the
+descriptor on the left and the action link on the right, on the same line (D-20). One source
+of truth so dashboards cannot visually drift.
 
 **Action copy.** Verb + object, sentence case, short (usually three words or fewer), and it
 says exactly where the card goes: "Open reports", "See short list", "Approve uploads", "Open
@@ -828,8 +828,8 @@ repaints a chart. Chart marks are graphics, not text: they need 3:1 against the 
 
 
 ### P-CO19 — Pagination
-Canonical implementation: `src/app/components/Pagination.tsx`, shared by the Lead Scout
-reports list and the profile Photo library.
+Canonical implementation: `src/app/components/Pagination.tsx`, used by the Lead Scout
+reports list. (The Photo library no longer pages — it scrolls, D-20.)
 ```
 Pills    min-w-9 h-9 px-3 rounded-full font-body font-bold text-[14px]
 Current  bg-brand-primary text-on-brand          Others  bg-surface-card border-default
@@ -843,11 +843,12 @@ Canonical implementation: `src/app/components/profile/PhotoLibrary.tsx` (+ `Phot
 `PhotoLightbox`, `state/photoStore.ts`).
 ```
 Tiles     square, rounded-[20px], bg-surface-accent, whole photo object-contain (never cropped)
-Size      bestTile(): the biggest square that fits the box for the photos on the page;
-          max 6 × 2 desktop · 4 × 2 tablet · 2 × 3 phone; a page never scrolls on desktop
-Pages     P-CO19 with Last; tiles keep one size across pages
-Toolbar   tag filter (All · Headshot · Full body · Action · Team, with counts) + primary
-          "Add photos"; drag-and-drop anywhere on the tab
+Size      ONE tile size whatever the number of photos: 5 across desktop (about 10 in view at
+          1440 × 900) · 4 tablet · 2 phone (PHOTO_GRID_COLS)
+Pages     none — the grid scrolls (D-20)
+Toolbar   tag filter in the filter colour (P-CO23; All · Headshot · Full body · Action · Team,
+          with counts) + "Add photos" as the top-nav secondary button; drag-and-drop anywhere
+Mock data real football photos in public/mock/photos (Unsplash licence, ATTRIBUTIONS.md)
 Per photo ⋯ menu: Set as profile photo · tag · Download · Delete (5-second Undo toast)
 Viewer    full-screen, uncropped, ← → Esc, swipe, "3 of 40", uploader + date, Download
 Uploads   JPG, PNG, WebP, HEIC · 10 MB max each · per-tile progress · a reason for each
@@ -856,16 +857,19 @@ Empty     "No photos yet. Add headshots and match photos so scouts can identify 
 ```
 **Why:** player photos come in every shape (tall headshots, wide match shots, posters).
 Cropping them to fill a square hides the part a scout needs; showing the whole photo on a
-soft square keeps the grid calm and still shows everything. Few photos get big tiles, so a
-player with two photos doesn't look empty.
+soft square keeps the grid calm and still shows everything. One tile size everywhere keeps
+the page predictable (D-20).
 
 ### P-CO21 — Grades picker (two panels)
 Canonical implementation: `src/app/components/profile/GradesPicker.tsx`.
 Report types on the left (name, "5 of 5 grades", show/hide eye, "Archived" tag); the selected
 type's grades on the right (checkbox, full name, short code, All / None). Search covers both.
-"Show all" resets. Saved per user. **One grades control:** the toolbar Grades button and each
-report section's "5 of 5 grades" chip open this same picker; the chip opens it on its type.
-Every grade has a short code — NXUS generates one when the template has none.
+"Show all" resets. Saved per user (in the prototype: this browser). **One grades control:** the
+toolbar Grades button (GraduationCap icon) and each report card's "5 of 5 grades" text button
+open this same picker; the card button opens it on its type. Every grade has a short code —
+NXUS generates one when the template has none. **Hidden reports come back here:** a hidden
+type shows an eye-off and "Hidden"; the footer says "Hidden reports stay here — tap the eye to
+show them again."
 
 **Why:** the old picker listed every report type and every grade in one column, so finding
 one grade meant scrolling past all the others, and there were two grade controls doing
@@ -875,16 +879,43 @@ overlapping jobs.
 Canonical implementation: `src/app/components/profile/ReportsPanel.tsx` + `ReportSheet.tsx`;
 example templates in `src/app/data/profileReports.ts`.
 ```
-Toolbar   segmented All · Long · Short · Target with counts · Show archived (count) ·
-          Grades (P-CO21) · primary "New report"
-Sections  one light card per report type (P-CO3) — never a solid brand bar; rows grouped by
-          what was watched (source · date), then one row per scout; grade chips P-CO15;
-          column codes show the full grade name on hover
+Toolbar   filter colour (P-CO23): segmented All · Long · Short · Target with counts ·
+          Show archived (count) · Grades (P-CO21). No grade legend — scouts know the letters.
+          New reports come from the top-nav "Add Report" (opens the panel with this player).
+Card head "Short report (2)" — name + count only; on the same line, right: "3 of 5 grades ⌄"
+          (quiet text button) and "Hide report" (underlined text button). Hiding shows a
+          toast "Short report hidden. Show it again from Grades." with Undo
+Rows      scout name first (text-strong, the focus), then "Highlight 2 · 6 Jul 2025" in
+          12px text-muted; grades in a grid of max 5 per row (code label above each chip,
+          full grade name on hover); more than five wrap to a second grid row
 Panel     opens from the right (w-[520px], full width on phone), not a centred modal
   View    question left, grade chip right — a report fits on one screen; Previous / Next
   Edit    each grade is one row of buttons (A+ A B C · T M D); Save once every grade is given
   New     choose the report type → the same panel in edit mode, player filled in
 ```
+
+### P-CO23 — Shared control looks
+Canonical implementation: `src/app/components/controlStyles.ts`.
+```
+Filter colour     FILTER_SURFACE  bg-surface-card/60 border border-brand-primary/40 — the
+                  Lead Scout dashboard Reports filters. Every filter pill, search field and
+                  segmented toggle that sits on the page uses it (FILTER_PILL, FILTER_INPUT,
+                  SegmentedToggle tone="filter"); FILTER_PILL_ACTIVE when a filter is on
+Secondary button  SECONDARY_BUTTON — the top-nav "This Week" / "Add Report" look: transparent,
+                  2px brand border, rounded-full. "Add Note", "Add photos" use it
+In-card actions   CARD_TEXT_BUTTON — quiet text buttons (no pill) for actions inside a card
+                  header ("3 of 5 grades ⌄", underlined "Hide report")
+Tab bars          profile tab bar on the white card surface (bg-surface-card border-default
+                  shadow-lg), never tinted
+```
+
+### P-CO24 — Player names are links
+Canonical implementation: `src/app/components/PlayerLink.tsx`. Every player name, anywhere,
+opens that player's profile inside the current account (`/lead-scout/player/:id`, …;
+`accountBase()`). Names in lists and tables use the link colour; a name that is a card title
+keeps the heading colour (`tone="inherit"`). Both underline on hover and are keyboard
+focusable. The link stops the click reaching a row or card that has its own click. Scout,
+editor and uploader names are not player links.
 **Why:** the old pop-up gave every possible answer a full-width row, so a five-question
 report was several screens long, and it covered the table you came from. Reports change
 often, so they are built from templates: a new or changed template needs no new screen.
@@ -930,7 +961,7 @@ product. The **structure and visual style are fixed**; only the **content** chan
 Player profile   Identical for every account — same header, tabs, Photo library,
                  Reports and layout. No role gets its own profile design.
 Players page     Same structure everywhere: filter toolbar layout, cards + table toggle
-                 (opens on cards), card design, table styling, spacing. Content changes:
+                 (opens on the table, D-20), card design, table styling, spacing. Content changes:
                  which lists/tabs a role sees (e.g. Players in Scope vs Long List), which
                  columns and which filters are relevant.
 Dashboards       Same visual style everywhere: welcome header, tab row, KPI cards (P-CO4),
@@ -1296,6 +1327,21 @@ questions until the real templates are supplied (P-CO22); (5) KPI link copy may 
 words when that is what it takes to say where it goes — Video Manager now reads "Find missing
 packages" / "Find missing matches" (P-CO4); (6) in Players card view the player name opens
 the profile inside the current account.
+
+**D-20 · Profile polish, table default, player links (2 Nov 2026).** Vanessa: (1) the KPI
+descriptor and link share the bottom row — descriptor left, link right (P-CO4); (2) every
+Players page opens on the **table** view (reverses the D-17/D-18 card default; cards stay one
+toggle away); (3) shared control looks (P-CO23): the profile tab bar is white; the Videos
+filter (All videos · Only highlights · Only matches) moved out of the tab row to the top-left
+of the content, in the filter colour; Notes' type filter and search use the filter colour and
+"Add Note" the top-nav secondary button; (4) Reports tab: no grade legend; toolbar in the
+filter colour; Grades uses the GraduationCap icon; no "New report" button (top-nav Add Report
+opens the flow for this player); cards read "Short report (2)" with the grades and Hide report
+controls on the same line as quiet in-card text buttons; rows lead with the scout, then what
+was watched and when; grades sit in a grid of up to five; hidden reports come back from the
+Grades picker, with a toast and a helper line saying so (P-CO21, P-CO22); (5) Photo library:
+one tile size, 5 across on desktop, no pagination, real mock photos, "Add photos" as a
+secondary button (P-CO20); (6) every player name links to the profile (P-CO24).
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

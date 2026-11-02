@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router';
+import { accountBase } from './PlayerLink';
 import {
   ChevronDown, ArrowRight, ArrowLeft, Archive, UserCircle, Star, Bookmark, Trash2, ArrowUpRight
 } from 'lucide-react';
@@ -198,7 +199,7 @@ export const CardView = ({
                             </div>
                             <div className="flex flex-col gap-[6px] min-w-0">
                               <div className="flex items-center gap-[6px] min-w-0">
-                                <p onClick={() => navigate(`${(window.location.pathname.match(/^\/(lead-scout|senior-scout|video-manager)/) || [''])[0]}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[15px] hover:underline cursor-pointer leading-tight truncate min-w-0">{player.name}</p>
+                                <p onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[15px] hover:underline cursor-pointer leading-tight truncate min-w-0">{player.name}</p>
                                 <span className="size-[16px] rounded-full overflow-hidden border border-default shrink-0">
                                   <img src={`https://flagcdn.com/w40/${natCode}.png`} alt={player.nationality} className="size-full object-cover" />
                                 </span>

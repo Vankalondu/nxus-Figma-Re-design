@@ -14,6 +14,7 @@ import { EditFormBlueprintModal } from './EditFormBlueprintModal';
 import { Submission, MOCK_SUBMISSIONS } from '../data/reports';
 import { Pagination } from './Pagination';
 
+import { PlayerLink } from './PlayerLink';
 // ─── Types ───────────────────────────────────────────────────────────────────────
 type ReportsSubTab = 'forms' | 'submissions' | 'analytics' | 'review-grades';
 
@@ -354,7 +355,7 @@ const SubmissionsTab = ({ statusFilter, dateFilter, extraSubmissions = [] }: { s
                 <tr key={s.id} className={`border-b border-default/40 hover:bg-surface-accent transition-colors ${i % 2 === 0 ? 'bg-surface-card' : 'bg-surface-accent/30'}`}>
                   <td className="px-4 py-3"><span className="font-body font-bold text-[14px] text-body block">{s.formName}</span><span className="font-body text-[10px] text-body">{s.formType}</span></td>
                   <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="w-7 h-7 rounded-full bg-brand-primary text-on-brand flex items-center justify-center font-body font-black text-[10px] shrink-0">{s.scoutInitials}</div><span className="font-body font-bold text-[12px] text-body">{s.scoutName}</span></div></td>
-                  <td className="px-4 py-3 font-body font-bold text-[12px] text-body">{s.playerName}</td>
+                  <td className="px-4 py-3 font-body font-bold text-[12px]"><PlayerLink name={s.playerName} /></td>
                   <td className="px-4 py-3 text-center"><StatusBadge status={s.status} /></td>
                   <td className="px-4 py-3 font-mono font-bold text-[12px] text-body">{s.timestamp}</td>
                   <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="flex-1 h-1.5 bg-border-default rounded-full overflow-hidden"><div className={`h-full rounded-full ${s.progress === 100 ? 'bg-status-success' : s.progress > 60 ? 'bg-status-success/70' : 'bg-status-warning'}`} style={{ width: `${s.progress}%` }} /></div><span className="font-mono font-bold text-[10px] text-body w-8 text-right">{s.progress}%</span></div></td>

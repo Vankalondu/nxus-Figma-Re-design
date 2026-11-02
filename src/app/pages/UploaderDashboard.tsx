@@ -15,6 +15,7 @@ import { ALL_GENERATED_PLAYERS } from '../components/SeniorLeadPlayersPage';
 import { useTierMap, PipelineTier } from '../state/playerStore';
 import { useVideoState, uploaderItems, highlightsBy, coverageStatus, VideoType } from '../state/videoStore';
 
+import { PlayerLink } from '../components/PlayerLink';
 type UploaderTab = 'overview' | 'middle' | 'tasks';
 type ActivePage = 'dashboard' | 'players' | 'matches' | 'admin';
 
@@ -211,7 +212,7 @@ export default function UploaderDashboard() {
                         <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                           <div className="min-w-0 flex-1">
                             <span className="font-body font-bold text-[14px] text-body truncate">{item.videoName}</span>
-                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
+                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName && <> · <PlayerLink name={item.playerName} id={item.playerId ? String(item.playerId) : undefined} className="font-bold" /></>}</p>
                           </div>
                           <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-warning/15 text-status-warning-fg shrink-0">Pending</span>
                         </div>
@@ -220,7 +221,7 @@ export default function UploaderDashboard() {
                         <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                           <div className="min-w-0 flex-1">
                             <span className="font-body font-bold text-[14px] text-body truncate">{item.videoName}</span>
-                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
+                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName && <> · <PlayerLink name={item.playerName} id={item.playerId ? String(item.playerId) : undefined} className="font-bold" /></>}</p>
                           </div>
                           <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-success/15 text-status-success-fg shrink-0">Approved</span>
                         </div>

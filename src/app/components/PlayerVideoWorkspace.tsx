@@ -10,6 +10,7 @@ import {
 } from '../data/reports';
 import { getHighlightsFor } from '../state/playerStore';
 
+import { PlayerLink } from './PlayerLink';
 // ─── Types ───────────────────────────────────────────────────────────────────────
 export interface VideoWorkspacePlayer {
   id: string;
@@ -497,7 +498,7 @@ export function PlayerVideoWorkspace({ player, onClose, onSaveReport }: Props) {
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <h2 className="font-heading font-semibold text-[24px] text-heading leading-tight truncate">
-              {player.name}{player.posAcronym ? ` ${player.posAcronym}` : ''}
+              <PlayerLink name={player.name} id={String(player.id)} tone="inherit" player={{ primaryPos: player.posAcronym }} />{player.posAcronym ? ` ${player.posAcronym}` : ''}
             </h2>
             <p className="font-body font-medium text-[14px] text-body mt-1 truncate">
               {selectedVideo ? selectedVideo.title : 'Select a video to start'}

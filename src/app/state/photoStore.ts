@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
 // Session-scoped photo library per player (prototype — no backend). Seeded photos are
-// generated SVG placeholders; uploads are object URLs, so they last until the tab closes.
+// real mock photos from /public/mock/photos; uploads are object URLs, so they last until the tab closes.
 // The chosen profile photo is the only thing kept in localStorage, and only for seeded
 // photos (an object URL dies with the tab).
 
@@ -21,47 +21,39 @@ export interface PlayerPhoto {
   progress?: number;
 }
 
-// ── Placeholder images ────────────────────────────────────────────────────────────
-// Each is a simple SVG "photo" in one of the real-world shapes scouts upload: tall
-// headshots, wide match shots, square team crops. Colours are image content, not UI.
-const SCENES = [
-  { tag: 'Headshot' as PhotoTag, w: 3, h: 4, sky: '#1971BF', ground: '#0B3A66' },
-  { tag: 'Action' as PhotoTag, w: 16, h: 9, sky: '#7FB2E5', ground: '#2F8F4E' },
-  { tag: 'Full body' as PhotoTag, w: 4, h: 5, sky: '#C9DDF2', ground: '#3B7A57' },
-  { tag: 'Team' as PhotoTag, w: 3, h: 2, sky: '#E8A838', ground: '#2F6B45' },
-  { tag: 'Action' as PhotoTag, w: 4, h: 3, sky: '#5C9BD9', ground: '#2E7D4F' },
-  { tag: 'Headshot' as PhotoTag, w: 1, h: 1, sky: '#0F4C81', ground: '#061B2E' },
+// ── Mock photos ───────────────────────────────────────────────────────────────────
+// Real football photos (Unsplash licence, credited in ATTRIBUTIONS.md) in /public/mock/photos,
+// in the shapes scouts actually upload: tall headshots, tall full-body shots, wide action and
+// team shots. Each player gets ONE headshot face, then a cycle of action / full-body / team.
+const BASE = (import.meta as any).env?.BASE_URL ?? '/';
+const mock = (name: string, w: number, h: number, tag: PhotoTag) => ({ src: `${BASE}mock/photos/${name}.jpg`, ratio: w / h, tag });
+const HEADSHOTS = [
+  mock('headshot-1', 640, 960, 'Headshot'), mock('headshot-2', 640, 960, 'Headshot'),
+  mock('headshot-3', 640, 1081, 'Headshot'), mock('headshot-4', 640, 960, 'Headshot'),
 ];
-const KIT = ['#E05C4B', '#F6FAFE', '#1E88E5', '#22C55E', '#E8A838', '#7C5CFC'];
+const OTHERS = [
+  mock('action-1', 640, 427, 'Action'), mock('fullbody-1', 640, 962, 'Full body'), mock('team-1', 640, 427, 'Team'),
+  mock('action-2', 640, 427, 'Action'), mock('fullbody-2', 640, 828, 'Full body'), mock('action-3', 640, 358, 'Action'),
+  mock('action-4', 640, 427, 'Action'), mock('fullbody-3', 640, 853, 'Full body'), mock('team-2', 640, 427, 'Team'),
+  mock('action-5', 640, 640, 'Action'), mock('action-6', 640, 374, 'Action'), mock('action-7', 640, 427, 'Action'),
+  mock('action-8', 640, 427, 'Action'),
+];
 
-const figure = (cx: number, base: number, s: number, kit: string) =>
-  `<circle cx="${cx}" cy="${base - s * 1.7}" r="${s * 0.32}" fill="#8A5A3C"/>` +
-  `<rect x="${cx - s * 0.42}" y="${base - s * 1.35}" width="${s * 0.84}" height="${s * 0.85}" rx="${s * 0.2}" fill="${kit}"/>` +
-  `<rect x="${cx - s * 0.36}" y="${base - s * 0.55}" width="${s * 0.3}" height="${s * 0.55}" fill="#0B2239"/>` +
-  `<rect x="${cx + s * 0.06}" y="${base - s * 0.55}" width="${s * 0.3}" height="${s * 0.55}" fill="#0B2239"/>`;
+/**
+ * Stand-in for a HEIC upload: browsers can't draw HEIC, and the real upload converts it to
+ * JPG on the server. Neutral on purpose so it never passes for someone else's photo.
+ * (Colours are image content, not UI.)
+ */
+export function heicStandIn(): string {
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#DCE6F0"/>' +
+    '<text x="200" y="196" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="700" fill="#3D4F63">HEIC photo</text>' +
+    '<text x="200" y="232" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#3D4F63">Preview after upload</text></svg>';
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
 
-export function placeholderPhoto(index: number): { src: string; ratio: number; tag: PhotoTag } {
-  const sc = SCENES[index % SCENES.length];
-  const kit = KIT[index % KIT.length];
-  const W = sc.w * 100, H = sc.h * 100;
-  const horizon = H * 0.62;
-  let people = '';
-  if (sc.tag === 'Headshot') {
-    const s = Math.min(W, H) * 0.55;
-    people = `<circle cx="${W / 2}" cy="${H * 0.42}" r="${s * 0.36}" fill="#8A5A3C"/>` +
-      `<rect x="${W / 2 - s * 0.7}" y="${H * 0.68}" width="${s * 1.4}" height="${H * 0.4}" rx="${s * 0.35}" fill="${kit}"/>`;
-  } else if (sc.tag === 'Team') {
-    for (let i = 0; i < 6; i++) people += figure(W * (0.14 + i * 0.145), H * 0.9, H * 0.3, kit);
-  } else if (sc.tag === 'Full body') {
-    people = figure(W / 2, H * 0.92, H * 0.4, kit);
-  } else {
-    people = figure(W * 0.38, H * 0.9, H * 0.36, kit) + `<circle cx="${W * 0.62}" cy="${H * 0.84}" r="${H * 0.06}" fill="#F6FAFE"/>`;
-  }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">` +
-    `<rect width="${W}" height="${H}" fill="${sc.sky}"/>` +
-    `<rect y="${horizon}" width="${W}" height="${H - horizon}" fill="${sc.ground}"/>` +
-    people + `</svg>`;
-  return { src: 'data:image/svg+xml;utf8,' + encodeURIComponent(svg), ratio: sc.w / sc.h, tag: sc.tag };
+/** Mock photo for slot `index` of a player's library (slot 0 is their headshot). */
+export function placeholderPhoto(index: number, face = 0): { src: string; ratio: number; tag: PhotoTag } {
+  return index === 0 ? HEADSHOTS[face % HEADSHOTS.length] : OTHERS[(index - 1) % OTHERS.length];
 }
 
 // ── Seeding ───────────────────────────────────────────────────────────────────────
@@ -79,13 +71,14 @@ function seedCount(playerId: string) {
 }
 
 function seed(playerId: string): PlayerPhoto[] {
+  const face = [...playerId].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
   return Array.from({ length: seedCount(playerId) }, (_, i) => {
-    const p = placeholderPhoto(i);
+    const p = placeholderPhoto(i, face);
     return {
       id: `${playerId}-ph${i}`, src: p.src, ratio: p.ratio, tag: p.tag,
       uploadedBy: UPLOADERS[i % UPLOADERS.length],
       dateLabel: `${MONTHS[9 - (i % 10)]} ${1 + ((i * 7) % 27)}, 2026`,
-      fileName: `photo-${i + 1}.svg`,
+      fileName: p.src.split('/').pop() ?? `photo-${i + 1}.jpg`,
     };
   });
 }

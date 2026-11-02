@@ -2658,8 +2658,8 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   const [filterGrade, setFilterGrade] = useState('All');
   const [targetPlayerId, setTargetPlayerId] = useState<string | null>(null);
   const [highlightId, setHighlightId] = useState<string | null>(null);
-  // Opens on cards (Vanessa, 2 Nov — same as Country/Head); a ?player= deep link switches to the table so the row can be found.
-  const [viewMode,  setViewMode]  = useState<ViewMode>('card');
+  // Opens on the table (Vanessa, 2 Nov — table is the default everywhere, D-20); a ?player= deep link also needs the table so the row can be found.
+  const [viewMode,  setViewMode]  = useState<ViewMode>('table');
   const [searchParams] = useSearchParams();
   // Deep-link: honor ?section=<tab id> so the dashboard can link to a specific tab,
   // plus ?grade=<grade> (grade filter) and ?player=<id> (scroll + highlight a row).

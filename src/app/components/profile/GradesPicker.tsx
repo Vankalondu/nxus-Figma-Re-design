@@ -102,11 +102,11 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
                     <span className="font-body font-bold text-[14px] text-strong">{t.name}</span>
                     {t.archived && <span className="shrink-0 bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold text-[10px]">Archived</span>}
                   </span>
-                  <span className="font-body font-medium text-[12px] text-body tabular-nums">{on} of {total} grades</span>
+                  <span className="font-body font-medium text-[12px] text-body tabular-nums">{typeHidden(t.id) ? 'Hidden' : `${on} of ${total} grades`}</span>
                 </button>
                 <button onClick={() => toggleType(t.id)} aria-label={(typeHidden(t.id) ? 'Show ' : 'Hide ') + t.name} aria-pressed={!typeHidden(t.id)}
                   title={typeHidden(t.id) ? 'Hidden — show this report' : 'Hide this report'}
-                  className="w-8 h-8 mr-1 rounded-full flex items-center justify-center text-body hover:text-strong hover:bg-surface-card shrink-0">
+                  className={`w-8 h-8 mr-1 rounded-full flex items-center justify-center shrink-0 ${typeHidden(t.id) ? 'bg-brand-primary/10 text-link' : 'text-body hover:text-strong hover:bg-surface-card'}`}>
                   {typeHidden(t.id) ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </li>
@@ -147,7 +147,9 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
         </div>
       </div>
 
-      <p className="px-4 py-2.5 border-t border-default font-body font-medium text-[12px] text-body">Saved to your account. Follows you to other devices.</p>
+      <p className="px-4 py-2.5 border-t border-default font-body font-medium text-[12px] text-body">
+        Hidden reports stay here — tap the eye to show them again. <span className="text-muted">Saved in this browser.</span>
+      </p>
     </div>
   );
 };
