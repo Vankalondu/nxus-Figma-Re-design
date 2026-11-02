@@ -1,0 +1,29 @@
+# NXUS rule check — copy this ONE file into your repo as .github/workflows/nxus-rule-check.yml
+#
+# On every pull request it reads only the lines you added or changed and warns when one breaks
+# an NXUS rulebook rule (colours, type sizes, fonts, spacing). It never blocks a merge in warn
+# mode. Plain-language guide: https://github.com/Vankalondu/nxus-Figma-Re-design/blob/main/docs/dev-rule-check.md
+name: NXUS rule check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read        # read the code
+  pull-requests: write  # keep one summary comment on the pull request
+
+jobs:
+  nxus-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0  # needs the base branch to work out which lines changed
+
+      # Pinned to an exact commit of the NXUS repo, so the rules only change when you update this line.
+      - uses: Vankalondu/nxus-Figma-Re-design/.github/actions/nxus-rule-check@afc8a4af54594695445e0c8c7f200ec39a90735e
+        with:
+          mode: warn  # warn = report only · block = fail the check (only when the designer says so)
+          # Skip generated or third-party code (comma-separated path prefixes):
+          ignore: node_modules/,dist/,build/,coverage/,vendor/
