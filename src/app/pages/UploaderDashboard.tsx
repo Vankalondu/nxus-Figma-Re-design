@@ -109,7 +109,7 @@ export default function UploaderDashboard() {
           {activePage === 'dashboard' && (
             <>
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0"><Video size={26} className="text-on-brand" /></span>
                   {myName}
@@ -124,15 +124,15 @@ export default function UploaderDashboard() {
                   <div className={`grid grid-cols-2 ${isPackage ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-6`}>
                     <KpiCard icon={ClipboardCheck} heading="Pending" value={pending.length}
                       descriptor={pending.length > 0 ? 'awaiting approval' : 'all clear'}
-                      action={`Open ${middleLabel}`} onClick={() => setActiveTab('middle')} />
+                      action="Track uploads" onClick={() => setActiveTab('middle')} />
                     <KpiCard icon={CheckCircle} heading="Approved" value={approved.length}
-                      descriptor="live for scouts" action={`Open ${middleLabel}`} onClick={() => setActiveTab('middle')} />
+                      descriptor="live for scouts" action="See approved" onClick={() => setActiveTab('middle')} />
                     {isPackage && (
                       <KpiCard icon={Clapperboard} heading="Highlights" value={myHighlights.length}
-                        descriptor="external clips" action="Open Packages" onClick={() => setActiveTab('middle')} />
+                        descriptor="external clips" action="See highlights" onClick={() => setActiveTab('middle')} />
                     )}
                     <KpiCard icon={ListChecks} heading="Tasks due" value={activeTasks.length}
-                      descriptor="open tasks" action="Open Tasks" onClick={() => setActiveTab('tasks')} />
+                      descriptor="open tasks" action="Open tasks" onClick={() => setActiveTab('tasks')} />
                     <KpiCard icon={Grid3x3} heading="Video Tracker" value={needVideos}
                       descriptor="need your video" action="Open tracker" onClick={() => navigate(`${base}/players`)} />
                   </div>

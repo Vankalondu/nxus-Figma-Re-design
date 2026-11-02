@@ -804,16 +804,16 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         <KpiCard icon={FileText} heading="Reports"
           value={MOCK_REPORTS.filter(r => r.author === 'tom').length}
-          descriptor="made by Tom" action="Opens Reports"
+          descriptor="made by Tom" action="Open reports"
           onClick={() => onNavigate('reports')} />
         <KpiCard icon={Users} heading="Short List" value={14}
-          descriptor="on the short list" action="Opens Short List"
+          descriptor="on the short list" action="See short list"
           onClick={() => onOpenPlayers('short-list')} />
         <KpiCard icon={Video} heading="Packages" value={MOCK_PACKAGES.length}
-          descriptor="recently uploaded" action="View Packages"
+          descriptor="recently uploaded" action="Watch packages"
           onClick={() => onNavigate('packages')} />
         <KpiCard icon={Target} heading="Target List" value={6}
-          descriptor="on the target list" action="Opens Target List"
+          descriptor="on the target list" action="See target list"
           onClick={() => onOpenPlayers('target')} />
       </div>
 
@@ -1200,7 +1200,7 @@ export default function SeniorScoutDashboard() {
             <>
               {/* Page header — Qaza signature format per Section 5 */}
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
                     <Target size={28} className="text-on-brand" />

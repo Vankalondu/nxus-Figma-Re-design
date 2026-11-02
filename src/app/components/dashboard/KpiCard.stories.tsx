@@ -11,10 +11,15 @@ const meta = {
         component:
           'The KPI card used on every dashboard. One source of truth, so no dashboard can ' +
           'visually drift.\n\n' +
-          'Anatomy (**P-CO4**, **D-17**): circular icon chip + short uppercase heading, then the ' +
-          'large number, the descriptor on its own line under it, and a named action link with an ' +
-          'up-right arrow under that, on the left. The rows always stack, so every card has the ' +
-          'same shape whatever the text length. The descriptor is plain text: no status colours. ' +
+          'Anatomy (**P-CO4**, **D-18**): circular icon chip + short uppercase heading, then the ' +
+          'large number with the descriptor on its own line under it (left), and the action link ' +
+          'with an up-right arrow on its own row, pinned to the bottom right. The rows always stack, ' +
+          'so every card has the same shape whatever the text length. The descriptor is plain text: ' +
+          'no status colours.
+
+' +
+          'Action copy: verb + object, sentence case, max 3 words, says where it goes ' +
+          '("Open reports", "See short list", "Approve uploads"). Never "Opens…" or a bare "View". ' +
           'It renders as a `<button>`, so it is keyboard focusable.\n\n' +
           'The value uses `tabular-nums` (**L-TY4**) — proportional digits change width as ' +
           'the number changes, which makes the count-up animation visibly jitter.',
@@ -29,7 +34,7 @@ const meta = {
     heading: { control: 'text', description: 'Short uppercase label.' },
     value: { control: 'text', description: 'The figure. Rendered `tabular-nums`.' },
     descriptor: { control: 'text', description: 'Short qualifier, on its own line under the value. Plain text only.' },
-    action: { control: 'text', description: 'Named link — say where it goes, not "View".' },
+    action: { control: 'text', description: 'Verb + object, sentence case, max 3 words — e.g. "Open reports". Sits bottom right.' },
     onClick: { action: 'clicked', description: 'Fires on card click.' },
   },
   args: {
@@ -37,7 +42,7 @@ const meta = {
     heading: 'Tracked Players',
     value: '248',
     descriptor: 'in scope',
-    action: 'Opens Short List',
+    action: 'See players',
   },
 } satisfies Meta<typeof KpiCard>
 
@@ -52,7 +57,7 @@ export const LongHeading: Story = {
     heading: 'Reports Awaiting Review',
     value: '17',
     descriptor: 'this week',
-    action: 'Opens Reports',
+    action: 'Review reports',
   },
   parameters: {
     docs: { description: { story: 'Headings wrap rather than truncate; the number, descriptor and link stay in place.' } },
@@ -65,7 +70,7 @@ export const LargeValue: Story = {
     heading: 'Packages',
     value: '1,284',
     descriptor: 'uploaded',
-    action: 'View Packages',
+    action: 'Watch packages',
   },
   parameters: {
     docs: { description: { story: 'Thousands separators stay aligned because the value is `tabular-nums`.' } },
@@ -78,10 +83,10 @@ export const LongText: Story = {
     heading: 'Missing Full Matches',
     value: '65',
     descriptor: 'across Target + Short',
-    action: 'Review Full Matches',
+    action: 'See players',
   },
   parameters: {
-    docs: { description: { story: 'Long descriptor and long link in a narrow column: each wraps on its own line and nothing overlaps (**D-17**).' } },
+    docs: { description: { story: 'Long heading and descriptor in a narrow column: each wraps on its own line, the link stays bottom right and nothing overlaps (**D-18**).' } },
   },
   render: (args) => <div className="w-[220px]"><KpiCard {...args} /></div>,
 }
@@ -93,9 +98,9 @@ export const Grid: Story = {
   render: (args) => (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
       <KpiCard {...args} />
-      <KpiCard {...args} icon={ClipboardCheck} heading="New Reports" value="12" descriptor="unread" action="Opens Reports" />
-      <KpiCard {...args} icon={Video} heading="Packages" value="34" descriptor="to review" action="View Packages" />
-      <KpiCard {...args} icon={Target} heading="Target List" value="6" descriptor="players" action="Opens Target List" />
+      <KpiCard {...args} icon={ClipboardCheck} heading="New Reports" value="12" descriptor="unread" action="Open reports" />
+      <KpiCard {...args} icon={Video} heading="Packages" value="34" descriptor="to review" action="Watch packages" />
+      <KpiCard {...args} icon={Target} heading="Target List" value="6" descriptor="players" action="See target list" />
     </div>
   ),
 }

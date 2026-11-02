@@ -109,16 +109,16 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-6">
         <KpiCard icon={ClipboardCheck} heading="Approvals" value={pending}
           descriptor={pending > 0 ? 'awaiting your review' : 'all clear'}
-          action="Open Approvals" onClick={() => onNavigate('approval')} />
+          action="Approve uploads" onClick={() => onNavigate('approval')} />
         <KpiCard icon={ListChecks} heading="Tasks" value={activeTasksCount}
-          descriptor={overdueCount > 0 ? `${overdueCount} overdue · open` : 'open · none overdue'}
-          action="Open Tasks" onClick={() => onNavigate('tasks')} />
+          descriptor={overdueCount > 0 ? `${overdueCount} overdue` : 'none overdue'}
+          action="Open tasks" onClick={() => onNavigate('tasks')} />
         <KpiCard icon={Film} heading="Missing Packages" value={missPkg}
-          descriptor="across Target + Short" action="Review Packages" onClick={() => onMissing('package')} />
+          descriptor="across Target + Short" action="See players" onClick={() => onMissing('package')} />
         <KpiCard icon={Video} heading="Missing Full Matches" value={missFull}
-          descriptor="across Target + Short" action="Review Full Matches" onClick={() => onMissing('full-match')} />
+          descriptor="across Target + Short" action="See players" onClick={() => onMissing('full-match')} />
         <KpiCard icon={Grid3x3} heading="Video Tracker" value={needTracker}
-          descriptor="players need video" action="Open Tracker" onClick={onTracker} />
+          descriptor="players need video" action="Open tracker" onClick={onTracker} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
@@ -636,7 +636,7 @@ export default function VideoManagerDashboard() {
           {activePage === 'dashboard' && (
             <>
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0"><Video size={26} className="text-on-brand" /></span>
                   Marcus

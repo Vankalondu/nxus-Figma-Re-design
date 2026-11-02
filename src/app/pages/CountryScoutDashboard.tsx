@@ -498,7 +498,7 @@ export default function CountryScoutDashboardPage() {
             {activePage==='dashboard' && (
               <>
                 <div className="pt-6 mb-3">
-                  <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
+                  <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                     Welcome
                     <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
                       <Sun size={26} className="text-on-brand" />
@@ -517,24 +517,24 @@ export default function CountryScoutDashboardPage() {
                     {userRoleState==='Head Scout' ? (
                       <>
                         <KpiCard icon={ClipboardCheck} heading="Shortlists" value={<>6<span className="text-body">/10</span></>}
-                          descriptor="submitted for review" action="Review" onClick={()=>navigate('/players?tab=review')} />
+                          descriptor="submitted for review" action="Review shortlists" onClick={()=>navigate('/players?tab=review')} />
                         <KpiCard icon={FileText} heading="Reports ready" value={<>18<span className="text-body">/26</span></>}
-                          descriptor="ready for review" action="Review" onClick={()=>navigate('/players?tab=review')} />
+                          descriptor="awaiting your review" action="Review reports" onClick={()=>navigate('/players?tab=review')} />
                         <KpiCard icon={TrendingUp} heading="Top Ten" value={10}
-                          descriptor="pending prospects" action="Open Top 10" onClick={()=>navigate('/players?tab=combined-top-10')} />
+                          descriptor="pending prospects" action="See top 10" onClick={()=>navigate('/players?tab=combined-top-10')} />
                         <KpiCard icon={Crown} heading="Grade A raised" value="37%"
-                          descriptor="+8% raised" action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
+                          descriptor="up 8%" action="See Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
                       </>
                     ) : (
                       <>
                         <KpiCard icon={Video} heading="Missing Videos" value={<>29<span className="text-body">/35</span></>}
-                          descriptor="players · 82%" action="View Players" onClick={()=>navigate('/players?tab=players-in-scope&filter=Missing+Video')} />
+                          descriptor="players · 82%" action="See players" onClick={()=>navigate('/players?tab=players-in-scope&filter=Missing+Video')} />
                         <KpiCard icon={Calendar} heading="Missing Match Data" value={<>18<span className="text-body">/26</span></>}
-                          descriptor="matches · 68%" action="Open Matches" onClick={()=>navigate('/matches?filter=Incomplete+Match+Data')} />
+                          descriptor="matches · 68%" action="Open matches" onClick={()=>navigate('/matches?filter=Incomplete+Match+Data')} />
                         <KpiCard icon={FileText} heading="Ready Reports" value={14}
-                          descriptor="for review" action="Review" onClick={()=>navigate('/players?tab=combined-top-10')} />
+                          descriptor="ready to review" action="Review reports" onClick={()=>navigate('/players?tab=combined-top-10')} />
                         <KpiCard icon={Crown} heading="Grade A" value="46%"
-                          descriptor="down of players" action="View Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
+                          descriptor="of all players" action="See Grade A" onClick={()=>navigate('/players?tab=target&filter=Grade+A+players')} />
                       </>
                     )}
                   </div>
@@ -545,7 +545,7 @@ export default function CountryScoutDashboardPage() {
                       <div className="px-5 py-4 border-b border-default flex items-center gap-3">
                         <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Users size={16} className="text-strong" /></div>
                         <div className="min-w-0 flex-1"><h3 className="font-heading font-bold text-[16px] text-heading">Scout Leaderboard</h3><p className="font-body text-[12px] text-body font-medium">Total grade A players by scout</p></div>
-                        <span className="font-body font-bold text-[12px] px-3 py-1 rounded-full bg-surface-accent text-strong shrink-0">Ghana 🇬🇭</span>
+                        <span className="font-body font-bold text-[12px] text-link shrink-0">Ghana 🇬🇭</span>
                       </div>
                       <div className="divide-y divide-border-default">
                         {[{name:'Kwame Asante',init:'KA',val:'38 players',country:'Ghana 🇬🇭'},{name:'Chidi Obinna',init:'CO',val:'24 players',country:'Nigeria 🇳🇬'},{name:'Wekesa Omondi',init:'WO',val:'18 players',country:'Kenya 🇰🇪'},{name:'Emeka Okafor',init:'EO',val:'14 players',country:'Nigeria 🇳🇬'},{name:'Joseph Njoroge',init:'JN',val:'11 players',country:'Kenya 🇰🇪'},{name:'Amani Mushi',init:'AM',val:'8 players',country:'Tanzania 🇹🇿'}].map(scout=>(
@@ -553,9 +553,8 @@ export default function CountryScoutDashboardPage() {
                             <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{scout.init}</span>
                             <div className="flex-1 min-w-0">
                               <span className="font-body font-bold text-[14px] text-body truncate block">{scout.name}</span>
-                              <p className="sm:hidden font-body text-[12px] text-body tabular-nums mt-0.5">{scout.val}</p>
+                              <p className="font-body text-[12px] text-body tabular-nums mt-0.5">{scout.val}</p>
                             </div>
-                            <span className="hidden sm:block font-body text-[13px] font-medium text-body tabular-nums shrink-0 w-24">{scout.val}</span>
                             <span className="font-body font-bold text-[13px] text-strong shrink-0 w-24 sm:w-28 text-right">{scout.country}</span>
                           </div>
                         ))}

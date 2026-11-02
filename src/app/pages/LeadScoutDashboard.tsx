@@ -906,17 +906,17 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
       {/* KPI cards — full-width horizontal row (4-up desktop / 2-up mobile) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         <KpiCard icon={FileText} heading="Reports" value="27"
-          descriptor="by senior scouts" action="Opens Reports"
+          descriptor="by senior scouts" action="Open reports"
           onClick={() => onNavigate('reports')} />
         <KpiCard icon={Target} heading="Coverage"
           value={<>8<span className="text-body">/14</span></>}
-          descriptor="shortlist reported" action="View Coverage"
+          descriptor="shortlist reported" action="Check coverage"
           onClick={() => onNavigate('reports')} />
         <KpiCard icon={Users} heading="Pipeline" value="20"
-          descriptor="in Target + Short" action="Opens Short List"
+          descriptor="in Target + Short" action="See short list"
           onClick={() => goToSection('short-list')} />
         <KpiCard icon={Star} heading="Top Grade" value="33%"
-          descriptor="rated A+" action="View A+ Players"
+          descriptor="rated A+" action="See A+ players"
           onClick={() => navigate('/lead-scout/players?section=short-list&grade=A%2B')} />
       </div>
 
@@ -1308,7 +1308,7 @@ export default function LeadScoutDashboard() {
           {activePage==='dashboard' && (
             <>
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
                     <Star size={26} className="text-on-brand" />

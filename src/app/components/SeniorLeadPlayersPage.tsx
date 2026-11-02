@@ -2658,6 +2658,8 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   const [filterGrade, setFilterGrade] = useState('All');
   const [targetPlayerId, setTargetPlayerId] = useState<string | null>(null);
   const [highlightId, setHighlightId] = useState<string | null>(null);
+  // Opens on cards (Vanessa, 2 Nov — same as Country/Head); a ?player= deep link switches to the table so the row can be found.
+  const [viewMode,  setViewMode]  = useState<ViewMode>('card');
   const [searchParams] = useSearchParams();
   // Deep-link: honor ?section=<tab id> so the dashboard can link to a specific tab,
   // plus ?grade=<grade> (grade filter) and ?player=<id> (scroll + highlight a row).
@@ -2673,7 +2675,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
       if (GRADE_FILTER_OPTS.includes(decoded)) setFilterGrade(decoded);
     }
     const player = searchParams.get('player');
-    if (player) setTargetPlayerId(decodeURIComponent(player));
+    if (player) { setTargetPlayerId(decodeURIComponent(player)); setViewMode('table'); }
   }, [searchParams]);
   // Deep-link: scroll the targeted row into view and apply a transient highlight.
   useEffect(() => {
@@ -2685,7 +2687,6 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
     const clearT = setTimeout(() => setHighlightId(null), 2500);
     return () => { clearTimeout(scrollT); clearTimeout(clearT); };
   }, [targetPlayerId, activeTab]);
-  const [viewMode,  setViewMode]  = useState<ViewMode>('table');
   const [showFilters, setShowFilters] = useState(true);        // desktop: inline filters toggle (visible by default)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false); // mobile: bottom-sheet
   const [tabsMenuOpen, setTabsMenuOpen] = useState(false);     // mobile: 'More ▾' tab dropdown

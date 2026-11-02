@@ -618,13 +618,19 @@ Heading    short, uppercase, .type-micro tracked, text-body
 Value      font-heading font-extrabold text-4xl tabular-nums leading-none
 Descriptor own line under the value, font-heading font-bold text-sm text-strong, plain
            text only (a string prop: no status colours, no red)
-Action     own line under the descriptor, left-aligned, text-xs text-link + ArrowUpRight
+Action     own row, pinned to the bottom right (mt-auto self-end), text-xs font-bold
+           text-link + ArrowUpRight after the last word
 ```
 
-Format: icon chip + short heading, then the big number, the descriptor under it, and the
-action link under that on the left. The three rows always stack, whatever the text length
-or column count, so every card has the same shape (D-17). One source of truth so dashboards
-cannot visually drift.
+Format: icon chip + short heading, then the big number with the descriptor under it on the
+left, and the action link on its own row at the bottom right (D-18). The rows always stack,
+whatever the text length or column count, so every card has the same shape. One source of
+truth so dashboards cannot visually drift.
+
+**Action copy.** Verb + object, sentence case, at most three words, and it says where the
+card goes: "Open reports", "See short list", "Review shortlists", "Approve uploads", "Open
+tracker". Never "Opens…", never a bare "View" or "Review". The descriptor is a short plain
+qualifier of the number ("awaiting your review", "of all players") — not a second action.
 
 ### P-CO5 — Status pills
 Soft translucent tint, never a heavy solid fill. **The tint and the text are not the
@@ -838,7 +844,7 @@ Senior, Head, Country, Video Manager, Package Uploader, Full Match Uploader — 
 ```
 0. Page   px-[var(--pad-page)] pb-20 md:pb-12
 1. Welcome header — pt-6 mb-3
-     h1  font-heading font-semibold type-h3 tracking-tight leading-none, gap-4,
+     h1  font-heading font-semibold type-h1 tracking-tight leading-none, gap-4,
          "Welcome" + w-10 h-10 primary icon circle (icon 26) + first name
      p   font-body font-medium text-[15px] text-body mt-2 (hidden on short screens)
 2. Tab row — ResponsiveTabs, mt-4 mb-6
@@ -852,6 +858,24 @@ Senior, Head, Country, Video Manager, Package Uploader, Full Match Uploader — 
 No solid-primary accent card and no photo KPI card (D-16). Measured identical across all
 seven dashboards at 1440 / 834 / 390: title, subtitle, tab row and KPI row land on the same
 x, y and size. Every below-KPI grid, Lead included, is the 2 + 1 (67/33) split (D-17).
+The welcome title uses the H1 ramp (48px desktop / 32px phone), matching Figma (D-18).
+
+### P-L3 — What is shared across accounts, and what changes
+Every account (Lead, Senior, Head, Country, Video Manager, both Uploaders) is the same
+product. The **structure and visual style are fixed**; only the **content** changes per role.
+```
+Player profile   Identical for every account — same header, tabs, Photo library,
+                 Reports and layout. No role gets its own profile design.
+Players page     Same structure everywhere: filter toolbar layout, cards + table toggle
+                 (opens on cards), card design, table styling, spacing. Content changes:
+                 which lists/tabs a role sees (e.g. Players in Scope vs Long List), which
+                 columns and which filters are relevant.
+Dashboards       Same visual style everywhere: welcome header, tab row, KPI cards (P-CO4),
+                 67/33 below-KPI split (P-L2), card styles (P-CO3). Content changes: which
+                 KPIs, which cards, what they list.
+```
+If a screen for one account needs a different *shape* (not different content), it is a new
+decision for Vanessa — record it here, don't improvise it per account.
 
 ---
 
@@ -1188,6 +1212,15 @@ from `lg:grid-cols-5` (3 + 2) to `lg:grid-cols-3` (2 + 1); (3) the Country/Head 
 offers cards and table and opens on cards; (4) Combined Top 10 cards take the 20px dashboard
 corner (rows 12px); (5) the light, label-above filter toolbar is the one in use — the dark
 blue `FilterBar` is retired everywhere, including the Lead/Senior mobile filter sheet.
+
+**D-18 · KPI link, Players default and Figma match (2 Nov 2026).** Vanessa: (1) the KPI
+action link sits on its own row at the bottom right of the card, in short verb-first copy
+(P-CO4); (2) Lead and Senior Players pages open on cards, like Country/Head — a `?player=`
+deep link still switches to the table so the row can be highlighted; (3) the app was matched
+to the Figma Country/Head drawings: scout leaderboard rows carry the player count under the
+name at every width, the "Ghana" scope label is plain link-colour text (no pill), the welcome
+title uses the H1 ramp, and the KPI link is 12px Bold; (4) what stays the same across
+accounts and what changes is fixed in P-L3.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was
