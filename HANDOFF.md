@@ -1,6 +1,38 @@
 # HANDOFF — NXUS Responsive System v1
 
-_Last updated: 2026-10-14. Resume by reading this file._
+_Last updated: 2026-11-02. Resume by reading this file._
+
+## UPDATE (2026-11-02) — account consistency + Player profile merged to main and LIVE
+- Merged `feature/account-consistency` (D-17..D-20) and `feature/dev-rule-check` into main; deployed on Vanessa's go-ahead.
+- **D-17/D-18/D-20 (Guidelines.md):**
+  - One KPI card shape (KpiCard.tsx): number, then descriptor LEFT and the link RIGHT on the same row; the link wraps to its own right-aligned line when it doesn't fit.
+  - Link copy is verb-first and says where it goes (P-CO4).
+  - 67/33 dashboard split everywhere.
+  - Welcome title is H1.
+  - Players pages open on the TABLE view everywhere (reverses the 28 Oct cards default).
+  - P-L3: the player profile is identical for all accounts; Players page and dashboard structure is shared and only content changes.
+- **D-19/D-20, player profile (PlayerProfile.tsx, shared by all accounts):**
+  - Photo Library: fixed square tiles, whole photo visible, 5 per row on desktop, no pagination, lightbox, tags, set as profile photo, delete+undo.
+  - Mock photos are Unsplash images in public/mock/photos, credited in ATTRIBUTIONS.md.
+  - Reports tab: Option A two-panel Grades picker (GraduationCap icon); cards titled "Short report (n)" with "x of y grades" + underlined "Hide report"; scout name first, then the item and date; grades in a grid of up to 5 per row; side-panel report view/edit.
+  - The top-nav "Add Report" opens the new-report flow with the player prefilled.
+  - Example questions are in src/app/data/profileReports.ts.
+- **PlayerLink:** every player name links to its profile inside the current account route. Shared look/feel is in controlStyles.ts (filter colour, top-nav secondary button, in-card text button).
+- **Figma:**
+  - KPI Card component set 1630:1915 has a Link variant: Inline (default, desktop/tablet) and Below (phone, narrow cards). All Overview KPI cards on Country/Head/Lead/Senior/Video Manager/Uploaders are instances of it.
+  - Country/Head Overview frames: 1607:72021, 1607:72124, 1607:72226, 1608:28317, 1608:28363, 1608:28408.
+  - Pages: Country 1607:72018, Head 1608:28314, Lead 1449:2, Video Manager 1515:26217, Uploaders 1515:26233.
+  - Snapshot re-verified 2026-11-02, 0 token changes.
+- **Rule checker for the devs' repo:**
+  - It's in .github/actions/nxus-rule-check and runs in warn mode (never blocks).
+  - Plain-language guide: docs/dev-rule-check.md. Copyable workflow: docs/dev-rule-check/nxus-rule-check.yml, pinned to commit afc8a4a.
+  - Self-test: `npm run test:rule-check`.
+  - Not yet added to their repo.
+- **Next:**
+  - Vanessa's PM reviews the live profile.
+  - Then draw the player profile ONCE in Figma, on the Lead Scout page (1449:2), with components, variants and text styles.
+  - Optional: clean up about 1,700 fixed text sizes (L-TY3) in our own code, which the rule checker would flag.
+  - Feature order going forward: live app → PM confirms → Figma → devs (build from Figma, not the app link).
 
 ## UPDATE (2026-10-28, later) — mobile prototype done on all 3 pages; PM switch removed
 - FIGMA_PM_REVIEW variable deleted and the switch removed from figma-sync.yml / visual.yml (b90af2e): Figma token PRs ALWAYS auto-merge; Whitelash is never asked.
