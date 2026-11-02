@@ -12,7 +12,9 @@ import {
 } from 'lucide-react';
 import { EditFormBlueprintModal } from './EditFormBlueprintModal';
 import { Submission, MOCK_SUBMISSIONS } from '../data/reports';
+import { Pagination } from './Pagination';
 
+import { PlayerLink } from './PlayerLink';
 // ─── Types ───────────────────────────────────────────────────────────────────────
 type ReportsSubTab = 'forms' | 'submissions' | 'analytics' | 'review-grades';
 
@@ -304,29 +306,6 @@ const FillFormModal = ({ template, onClose }: { template: FormTemplate; onClose:
   );
 };
 
-// ─── Pagination control ─────────────────────────────────────────────────────────
-const Pagination = ({ page, totalPages, onPage }: { page: number; totalPages: number; onPage: (p: number) => void }) => {
-  if (totalPages <= 1) return null;
-  const nums: (number | string)[] = [];
-  const push = (n: number | string) => nums.push(n);
-  push(1);
-  if (page > 3) push('…l');
-  for (let p = Math.max(2, page - 1); p <= Math.min(totalPages - 1, page + 1); p++) push(p);
-  if (page < totalPages - 2) push('…r');
-  if (totalPages > 1) push(totalPages);
-  const pill = 'min-w-9 h-9 px-3 rounded-full font-body font-bold text-[14px] flex items-center justify-center transition-colors';
-  return (
-    <div className="flex items-center justify-center gap-2 pt-4 shrink-0">
-      <button onClick={() => onPage(Math.max(1, page - 1))} disabled={page === 1} className={pill + ' bg-surface-card border border-default text-body hover:text-strong disabled:opacity-40 disabled:cursor-not-allowed'}>Prev</button>
-      {nums.map((n, i) => typeof n === 'string'
-        ? <span key={n + i} className="px-1 text-body">…</span>
-        : <button key={n} onClick={() => onPage(n)} className={pill + (n === page ? ' bg-brand-primary text-on-brand' : ' bg-surface-card border border-default text-strong hover:border-brand-primary')}>{n}</button>
-      )}
-      <button onClick={() => onPage(Math.min(totalPages, page + 1))} disabled={page === totalPages} className={pill + ' bg-surface-card border border-default text-link hover:bg-surface-accent disabled:opacity-40 disabled:cursor-not-allowed'}>Next</button>
-    </div>
-  );
-};
-
 // ─── Submissions Tab ─────────────────────────────────────────────────────────────
 const PAGE_SIZE = 10;
 const SubmissionsTab = ({ statusFilter, dateFilter, extraSubmissions = [] }: { statusFilter: string; dateFilter: string; extraSubmissions?: Submission[] }) => {
@@ -376,7 +355,7 @@ const SubmissionsTab = ({ statusFilter, dateFilter, extraSubmissions = [] }: { s
                 <tr key={s.id} className={`border-b border-default/40 hover:bg-surface-accent transition-colors ${i % 2 === 0 ? 'bg-surface-card' : 'bg-surface-accent/30'}`}>
                   <td className="px-4 py-3"><span className="font-body font-bold text-[14px] text-body block">{s.formName}</span><span className="font-body text-[10px] text-body">{s.formType}</span></td>
                   <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="w-7 h-7 rounded-full bg-brand-primary text-on-brand flex items-center justify-center font-body font-black text-[10px] shrink-0">{s.scoutInitials}</div><span className="font-body font-bold text-[12px] text-body">{s.scoutName}</span></div></td>
-                  <td className="px-4 py-3 font-body font-bold text-[12px] text-body">{s.playerName}</td>
+                  <td className="px-4 py-3 font-body font-bold text-[12px]"><PlayerLink name={s.playerName} /></td>
                   <td className="px-4 py-3 text-center"><StatusBadge status={s.status} /></td>
                   <td className="px-4 py-3 font-mono font-bold text-[12px] text-body">{s.timestamp}</td>
                   <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="flex-1 h-1.5 bg-border-default rounded-full overflow-hidden"><div className={`h-full rounded-full ${s.progress === 100 ? 'bg-status-success' : s.progress > 60 ? 'bg-status-success/70' : 'bg-status-warning'}`} style={{ width: `${s.progress}%` }} /></div><span className="font-mono font-bold text-[10px] text-body w-8 text-right">{s.progress}%</span></div></td>

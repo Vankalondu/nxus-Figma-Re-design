@@ -20,6 +20,7 @@ import { UploadVideoModal } from '../components/UploadVideoModal';
 import { TasksTab } from '../components/dashboard/TasksTab';
 import { MOCK_TASKS, TaskInput } from '../components/dashboard/shared';
 import { useTierMap, PipelineTier } from '../state/playerStore';
+import { PlayerLink } from '../components/PlayerLink';
 import {
   useVideoState, coverageStatus, assignVideo, approveVideo, redoVideo,
   VideoType, CoverageStatus, ApprovalItem,
@@ -106,19 +107,19 @@ const OverviewTab = ({ onNavigate, onMissing, onTracker, onOpenMatch, activeTask
 
   return (
     <div className="flex flex-col gap-6 pb-8">
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-6">
         <KpiCard icon={ClipboardCheck} heading="Approvals" value={pending}
-          descriptor={pending > 0 ? <span className="text-status-error font-black">awaiting your review</span> : 'all clear'}
-          action="Open Approvals" onClick={() => onNavigate('approval')} />
+          descriptor={pending > 0 ? 'awaiting your review' : 'all clear'}
+          action="Approve uploads" onClick={() => onNavigate('approval')} />
         <KpiCard icon={ListChecks} heading="Tasks" value={activeTasksCount}
-          descriptor={overdueCount > 0 ? <><span className="text-status-error font-black">{overdueCount} overdue</span> · open</> : 'open · none overdue'}
-          action="Open Tasks" onClick={() => onNavigate('tasks')} />
+          descriptor={overdueCount > 0 ? `${overdueCount} overdue` : 'none overdue'}
+          action="Open tasks" onClick={() => onNavigate('tasks')} />
         <KpiCard icon={Film} heading="Missing Packages" value={missPkg}
-          descriptor="across Target + Short" action="Review Packages" onClick={() => onMissing('package')} />
+          descriptor="across Target + Short" action="Find missing packages" onClick={() => onMissing('package')} />
         <KpiCard icon={Video} heading="Missing Full Matches" value={missFull}
-          descriptor="across Target + Short" action="Review Full Matches" onClick={() => onMissing('full-match')} />
+          descriptor="across Target + Short" action="Find missing matches" onClick={() => onMissing('full-match')} />
         <KpiCard icon={Grid3x3} heading="Video Tracker" value={needTracker}
-          descriptor="players need video" action="Open Tracker" onClick={onTracker} />
+          descriptor="players need video" action="Open tracker" onClick={onTracker} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
@@ -297,7 +298,7 @@ const CoverageTab = ({ type, startNeeds, onView }: { type: VideoType; startNeeds
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2 min-w-0">
                       <Flag nat={p.nationality} country={p.country} />
-                      <span className="font-body font-bold text-[14px] text-body truncate">{p.name}</span>
+                      <PlayerLink name={p.name} id={String(p.id)} player={{ nationality: p.nationality, currentTeam: p.team, primaryPos: p.posAcronym }} className="font-body font-bold text-[14px] truncate" />
                     </div>
                   </td>
                   <td className="px-4 py-3 font-body font-bold text-[13px] text-body">{p.posAcronym}</td>
@@ -402,7 +403,7 @@ const ApprovalTab = ({ onApprove, onRedo }: { onApprove: (i: ApprovalItem) => vo
                 <div className="flex items-center gap-2 font-body text-[12px] text-muted mt-0.5 flex-wrap">
                   <span className="inline-flex items-center gap-1"><Users size={11} /> {item.uploader} · {item.uploaderRole}</span>
                   <span>·</span>
-                  {item.playerId ? <span>{item.playerName}</span> : <span className="inline-flex items-center gap-1 text-status-warning font-bold"><AlertTriangle size={11} /> No player linked</span>}
+                  {item.playerId ? <PlayerLink name={item.playerName} id={String(item.playerId)} className="font-bold" /> : <span className="inline-flex items-center gap-1 text-status-warning font-bold"><AlertTriangle size={11} /> No player linked</span>}
                   <span>·</span>
                   <span>{item.dateLabel}</span>
                 </div>
@@ -636,7 +637,7 @@ export default function VideoManagerDashboard() {
           {activePage === 'dashboard' && (
             <>
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0"><Video size={26} className="text-on-brand" /></span>
                   Marcus

@@ -5,6 +5,12 @@ import { EditPlayerModal } from '../components/EditPlayerModal';
 import { TopNav } from '../components/TopNav';
 import { toast } from 'sonner';
 import { useHighlightsFor } from '../state/playerStore';
+import { useProfilePhoto } from '../state/photoStore';
+import { PhotoLibrary } from '../components/profile/PhotoLibrary';
+import { ReportsPanel } from '../components/profile/ReportsPanel';
+import { SegmentedToggle } from '../components/PlayersTableKit';
+import { accountBase } from '../components/PlayerLink';
+import { FILTER_PILL, FILTER_INPUT, SECONDARY_BUTTON } from '../components/controlStyles';
 import { Calendar, Trophy, Activity, ShieldCheck, Search, ChevronDown, ChevronRight, Edit2, Trash2, Plus, Play, Video, Check, TrendingUp, Footprints, Ruler, Scale, Flag, Clock, X, CornerDownRight, MessageSquare } from 'lucide-react';
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, BarChart, Bar, XAxis, ResponsiveContainer, Cell } from 'recharts';
 
@@ -16,6 +22,9 @@ function getStoredRole() {
   return sessionStorage.getItem('loginRole') || sessionStorage.getItem('userRole') || '';
 }
 function getRoleBasePath() {
+  // The URL knows the account best (/head-scout/player/…); the stored role is the fallback.
+  const fromUrl = accountBase();
+  if (fromUrl) return fromUrl;
   const role = getStoredRole();
   if (role === 'Lead Scout') return '/lead-scout';
   if (role === 'Senior Scout') return '/senior-scout';
@@ -142,6 +151,8 @@ export default function PlayerProfile() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [videoFilter, setVideoFilter] = useState('All');
   const [imgError, setImgError] = useState(false);
+  // Top-nav "Add Report" on the profile opens the new-report flow for this player (D-20).
+  const [newReportRequest, setNewReportRequest] = useState(0);
 
   const passed = (location.state && (location.state as any).player) || null;
   const cleanPassed = passed ? Object.fromEntries(Object.entries(passed).filter(([, v]) => v !== undefined && v !== null && v !== '')) : {};
@@ -174,9 +185,12 @@ export default function PlayerProfile() {
   const [editNoteText, setEditNoteText] = useState('');
   const [openReplies, setOpenReplies] = useState<Record<string, boolean>>({});
 
-  const tabs = ['Videos & Highlights', 'Statistics', 'Career History', 'Notes'];
+  // Same tabs for every account (P-L3).
+  const tabs = ['Videos & Highlights', 'Statistics', 'Career History', 'Notes', 'Reports', 'Photo Library'];
   const roleLabel = getRoleLabel();
   const uploadedHighlights = useHighlightsFor(player.id);
+  const profilePhoto = useProfilePhoto(player.id);
+  const avatarSrc = profilePhoto?.src || (!imgError ? player.image : '');
 
   const defaultTrail = [
     { label: 'Players', path: getRoleBasePath() + '/players' },
@@ -286,9 +300,16 @@ export default function PlayerProfile() {
       </div>
     );
     return (
-      <div className={'h-full animate-fade-in ' + (both ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : 'block')}>
-        {showMatches && column('Full Matches', matches)}
-        {showHighlights && column('Highlights', highlights)}
+      <div className="h-full flex flex-col gap-4 animate-fade-in">
+        {/* Its own row, top-left of the content (like the Photo Library toggle), in the filter colour (D-20). */}
+        <div className="overflow-x-auto hide-scrollbar max-w-full shrink-0 self-start">
+          <SegmentedToggle<string> tone="filter" value={videoFilter} onChange={setVideoFilter}
+            options={[['All', 'All videos'], ['Highlights', 'Only highlights'], ['Matches', 'Only matches']].map(([value, label]) => ({ value, label }))} />
+        </div>
+        <div className={'flex-1 min-h-0 ' + (both ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : 'flex flex-col')}>
+          {showMatches && column('Full Matches', matches)}
+          {showHighlights && column('Highlights', highlights)}
+        </div>
       </div>
     );
   };
@@ -439,17 +460,17 @@ export default function PlayerProfile() {
     return (
       <div className="h-full flex flex-col gap-4 animate-fade-in">
         <div className="flex items-center gap-3 w-full shrink-0">
-          <div className="relative">
-            <select value={noteFilter} onChange={e => setNoteFilter(e.target.value)} className="bg-surface-card border border-default rounded-full px-5 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 appearance-none min-w-[150px]">
+          <div className="relative shrink-0">
+            <select value={noteFilter} onChange={e => setNoteFilter(e.target.value)} aria-label="Note type" className={FILTER_PILL + ' appearance-none pr-9 min-w-[140px] cursor-pointer focus:outline-none focus:border-brand-primary'}>
               {['All Types'].concat(NOTE_TYPES).map(t => <option key={t}>{t}</option>)}
             </select>
-            <ChevronDown size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
+            <ChevronDown size={12} className="absolute right-4 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           </div>
-          <div className="relative flex-1">
-            <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-body" />
-            <input value={noteSearch} onChange={e => setNoteSearch(e.target.value)} placeholder="Search notes..." className="w-full bg-surface-card border border-default rounded-full px-11 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
+          <div className="relative flex-1 min-w-0">
+            <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
+            <input value={noteSearch} onChange={e => setNoteSearch(e.target.value)} placeholder="Search notes…" aria-label="Search notes" className={FILTER_INPUT} />
           </div>
-          <button onClick={() => setShowAddNote(true)} className="flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body px-5 py-2 rounded-full font-body font-bold text-[14px] transition-colors shrink-0"><Plus size={15} strokeWidth={3} /> Add Note</button>
+          <button onClick={() => setShowAddNote(true)} className={SECONDARY_BUTTON}><Plus size={15} strokeWidth={2.5} /> Add Note</button>
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 content-start">
@@ -528,7 +549,7 @@ export default function PlayerProfile() {
           unreadCount={3}
           onNotifToggle={() => toast('Notifications - coming soon')}
           onThisWeek={() => toast('This Week - coming soon')}
-          onAddReport={() => toast('Add Report - coming soon')}
+          onAddReport={() => { setActiveTab('Reports'); setNewReportRequest(n => n + 1); }}
           onAddPlayer={() => toast('Add Player - coming soon')}
         />
 
@@ -551,8 +572,8 @@ export default function PlayerProfile() {
           <aside className="w-full lg:w-80 lg:shrink-0 bg-surface-card border border-default rounded-[32px] shadow-[var(--shadow-lg)] p-6 flex flex-col">
             <div className="relative mx-auto shrink-0">
               <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-brand-primary/40 shadow-[var(--shadow-lg)] bg-surface-accent flex items-center justify-center">
-                {player.image && !imgError ? (
-                  <img src={player.image} alt={player.name} onError={() => setImgError(true)} className="w-full h-full object-cover" />
+                {avatarSrc ? (
+                  <img src={avatarSrc} alt={player.name} onError={() => !profilePhoto && setImgError(true)} className="w-full h-full object-cover" />
                 ) : (
                   <span className="font-heading font-black text-3xl text-link">{player.initials}</span>
                 )}
@@ -587,19 +608,13 @@ export default function PlayerProfile() {
 
           {/* Right column */}
           <div className="flex-1 min-h-0 flex flex-col gap-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shrink-0">
-              <div className="flex items-center gap-1 bg-surface-card/50 backdrop-blur-xl border border-default/60 rounded-full p-1 shadow-sm overflow-x-auto hide-scrollbar max-w-full">
+            <div className="flex items-center shrink-0 min-w-0">
+              {/* White card surface (D-20) */}
+              <div className="flex items-center gap-1 bg-surface-card border border-default rounded-full p-1 shadow-[var(--shadow-lg)] overflow-x-auto hide-scrollbar max-w-full">
                 {tabs.map(t => (
-                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold text-[14px] transition-colors'}>{t}</button>
+                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold text-[14px] transition-colors whitespace-nowrap shrink-0'}>{t}</button>
                 ))}
               </div>
-              {activeTab === 'Videos & Highlights' && (
-                <div className="flex items-center gap-1 bg-surface-card/50 backdrop-blur-xl border border-default/60 rounded-full p-1 shadow-sm shrink-0 overflow-x-auto hide-scrollbar max-w-full">
-                  {[['All', 'All Videos'], ['Highlights', 'Only Highlights'], ['Matches', 'Only Matches']].map(opt => (
-                    <button key={opt[0]} onClick={() => setVideoFilter(opt[0])} className={(videoFilter === opt[0] ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong hover:bg-surface-accent ') + 'px-4 py-2 rounded-full font-body font-bold text-[14px] transition-all'}>{opt[1]}</button>
-                  ))}
-                </div>
-              )}
             </div>
 
             <div className="flex-1 min-h-0 max-lg:min-h-[70vh]">
@@ -607,6 +622,13 @@ export default function PlayerProfile() {
               {activeTab === 'Statistics' && renderStatistics()}
               {activeTab === 'Career History' && renderCareer()}
               {activeTab === 'Notes' && renderNotes()}
+              {activeTab === 'Reports' && (
+                <ReportsPanel playerId={player.id} newReportRequest={newReportRequest} player={{
+                  name: player.name, initials: player.initials, team: player.currentTeam, age: player.age, nationality,
+                  positions: [player.primaryPos, player.secondaryPos, player.tertiaryPos].filter(Boolean).join(' / '),
+                }} />
+              )}
+              {activeTab === 'Photo Library' && <PhotoLibrary playerId={player.id} />}
             </div>
           </div>
         </div>

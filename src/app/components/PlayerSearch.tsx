@@ -6,6 +6,7 @@ import { ALL_GENERATED_PLAYERS } from './SeniorLeadPlayersPage';
 import { setTier } from '../state/playerStore';
 import { UploadHighlightModal } from './UploadHighlightModal';
 
+import { accountBase } from './PlayerLink';
 // nationality codes on players are 3-letter; flagcdn uses 2-letter
 const FLAG3TO2: Record<string, string> = {
   GAM: 'gm', NGA: 'ng', GHA: 'gh', CMR: 'cm', SEN: 'sn', CIV: 'ci', MLI: 'ml', BDI: 'bi',
@@ -40,13 +41,7 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
     return () => document.removeEventListener('mousedown', onDoc);
   }, [showDropdown]);
 
-  const basePath = () => {
-    const p = window.location.pathname;
-    if (p.startsWith('/lead-scout')) return '/lead-scout';
-    if (p.startsWith('/senior-scout')) return '/senior-scout';
-    if (p.startsWith('/video-manager')) return '/video-manager';
-    return '';
-  };
+  const basePath = () => accountBase();
   const openPlayer = (p: typeof ALL_GENERATED_PLAYERS[number]) => {
     setOpen(false); setMenuId(null);
     navigate(`${basePath()}/player/${p.id}`, { state: { player: {

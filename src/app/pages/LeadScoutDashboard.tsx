@@ -23,6 +23,7 @@ import { TasksTab } from '../components/dashboard/TasksTab';
 import { ReportsTab } from '../components/dashboard/ReportsTab';
 import { AnalyticsTab } from '../components/dashboard/AnalyticsTab';
 
+import { PlayerLink } from '../components/PlayerLink';
 type LeadTab = 'overview' | 'pipeline' | 'reports' | 'analytics' | 'target';
 type ActivePage = 'dashboard' | 'players' | 'matches' | 'admin';
 
@@ -798,7 +799,7 @@ const PipelineTab = () => {
                           <div className="flex flex-col gap-2">
                             {cell.map(player => (
                               <div key={player.id} className="flex items-center gap-2">
-                                <span title={player.name} className="font-body font-bold text-[14px] text-body truncate flex-1 min-w-0">{player.name}</span>
+                                <PlayerLink name={player.name} id={String(player.id)} title={player.name} className="font-body font-bold text-[14px] truncate flex-1 min-w-0" />
                                 <span className="font-mono text-[10px] font-bold text-body shrink-0">{player.birthYear}</span>
                                 {/* ring-text-heading/20 delineates the badge whatever the row is
                                     doing. Grade fills are fixed values while row surfaces flip,
@@ -901,30 +902,30 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
   const maxStatus = Math.max(...BY_STATUS.map(s => s.count));
 
   return (
-    <div className="flex flex-col gap-[var(--gap-grid)]">
+    <div className="flex flex-col gap-6 pb-8">
 
       {/* KPI cards — full-width horizontal row (4-up desktop / 2-up mobile) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--gap-grid)]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         <KpiCard icon={FileText} heading="Reports" value="27"
-          descriptor="by senior scouts" action="Opens Reports"
+          descriptor="by senior scouts" action="Open reports"
           onClick={() => onNavigate('reports')} />
         <KpiCard icon={Target} heading="Coverage"
           value={<>8<span className="text-body">/14</span></>}
-          descriptor="shortlist reported" action="View Coverage"
+          descriptor="shortlist reported" action="Check coverage"
           onClick={() => onNavigate('reports')} />
         <KpiCard icon={Users} heading="Pipeline" value="20"
-          descriptor="in Target + Short" action="Opens Short List"
+          descriptor="in Target + Short" action="See short list"
           onClick={() => goToSection('short-list')} />
         <KpiCard icon={Star} heading="Top Grade" value="33%"
-          descriptor="rated A+" action="View A+ Players"
+          descriptor="rated A+" action="See A+ players"
           onClick={() => navigate('/lead-scout/players?section=short-list&grade=A%2B')} />
       </div>
 
       {/* Below KPIs — Target breakdown (left) + right column (Latest Videos + combined Matches) */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 portrait-tablet:grid-cols-1 gap-[var(--gap-grid)] lg:items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-3 portrait-tablet:grid-cols-1 gap-6 lg:items-stretch">
 
         {/* Target breakdown (wide) */}
-        <div className="lg:col-span-3 portrait-tablet:col-span-full min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
+        <div className="lg:col-span-2 portrait-tablet:col-span-full min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] overflow-hidden flex flex-col">
           <div className="px-4 sm:px-6 py-4 border-b border-default flex items-center justify-between gap-2 shrink-0">
             <h3 className="font-heading font-bold text-[16px] text-heading">Target breakdown</h3>
             <span className="font-heading font-bold type-micro bg-surface-accent text-body rounded-full px-2">Derivable</span>
@@ -962,7 +963,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
         </div>
 
         {/* Right column — Latest Videos (top) + combined Matches (bottom) */}
-        <div className="lg:col-span-2 portrait-tablet:col-span-full min-w-0 flex flex-col gap-[var(--gap-grid)]">
+        <div className="lg:col-span-1 portrait-tablet:col-span-full min-w-0 flex flex-col gap-6">
 
           {/* Latest Videos */}
           <div className="min-w-0 bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] flex flex-col overflow-hidden shrink-0">
@@ -975,12 +976,13 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
             </div>
             <div className="divide-y divide-border-default overflow-y-auto max-h-[240px]">
               {HIGHLIGHTS_FEED.map(h => (
-                <button key={h.id} onClick={() => setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym })}
-                  className="w-full px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors text-left">
+                <div key={h.id} role="button" tabIndex={0} onClick={() => setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym })}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setVideoPlayer({ id: h.id, name: h.name, posAcronym: h.posAcronym }); } }}
+                  className="w-full px-4 sm:px-6 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors text-left cursor-pointer focus-visible:outline-none focus-visible:bg-surface-accent">
                   <div className="w-8 h-8 rounded-xl bg-surface-card text-body flex items-center justify-center font-body font-bold text-[12px] shadow-sm shrink-0 border border-default">{h.initials}</div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-body font-bold text-[14px] text-body truncate">{h.name}</span>
+                      <PlayerLink name={h.name} id={String(h.id)} player={{ primaryPos: h.posAcronym }} className="font-body font-bold text-[14px] truncate" />
                       <span className="font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-surface-page text-body border border-default">{h.list === 'short' ? 'Short' : 'Target'}</span>
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
@@ -989,7 +991,7 @@ const OverviewTab = ({ tasks, onToggle, onAdd, onNavigate, onNudge }: {
                     </div>
                   </div>
                   <span className="font-body text-[12px] text-muted font-medium tabular-nums shrink-0">{h.hoursAgo}h ago</span>
-                </button>
+                </div>
               ))}
             </div>
           </div>
@@ -1069,7 +1071,7 @@ const PackagesTab = ({ onNudge }: { onNudge: (name: string) => void }) => {
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 rounded-[14px] bg-brand-primary text-on-brand flex items-center justify-center font-body font-black text-[14px] shrink-0">{pkg.initials}</div>
               <div className="flex-1">
-                <div className="font-body font-bold text-[16px] text-body">{pkg.playerName}</div>
+                <div className="font-body font-bold text-[16px] text-body"><PlayerLink name={pkg.playerName} tone="inherit" /></div>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className={`font-body text-[12px] font-black px-2 py-0.5 rounded-full ${pkg.list==='target'?'bg-brand-primary/15 text-strong':'bg-surface-accent text-body'}`}>
                     {pkg.list==='target'?'Target':'Short'}
@@ -1300,25 +1302,25 @@ export default function LeadScoutDashboard() {
         />
 
         {/* Page content */}
-        <div className="flex-1 px-4 md:px-8 pb-20 md:pb-6">
+        <div className="flex-1 px-[var(--pad-page)] pb-20 md:pb-12">
           {activePage==='players' && <SeniorLeadPlayersPage allPlayersData={[]} loggedInRole="Lead Scout" flagMap={FLAG_MAP} />}
           {activePage==='matches' && <MatchesView />}
           {activePage==='admin'   && <AdminView />}
 
           {activePage==='dashboard' && (
             <>
-              <div className="pt-8 short:pt-2 mb-3 short:mb-1">
-                <h1 className="font-heading font-semibold text-[24px] md:text-[32px] tracking-tight text-heading flex items-center gap-4 leading-none">
+              <div className="pt-6 mb-3">
+                <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
-                    <Star size={28} className="text-on-brand" />
+                    <Star size={26} className="text-on-brand" />
                   </span>
                   Tom
                 </h1>
-                <p className="font-body font-medium text-[15px] text-body mt-1 short:hidden">{subtitle}</p>
+                <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{subtitle}</p>
               </div>
 
-              <ResponsiveTabs className="mt-4 mb-4" tabs={tabs} activeId={activeTab} onSelect={(id) => setActiveTab(id as LeadTab)} />
+              <ResponsiveTabs className="mt-4 mb-6" tabs={tabs} activeId={activeTab} onSelect={(id) => setActiveTab(id as LeadTab)} />
 
               {activeTab==='overview'  && <OverviewTab tasks={tasks} onToggle={toggleTask} onAdd={addTask} onNavigate={setActiveTab} onNudge={handleNudge} />}
               {activeTab==='pipeline'  && <PipelineTab />}

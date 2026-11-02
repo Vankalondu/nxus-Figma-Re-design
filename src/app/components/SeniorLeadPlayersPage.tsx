@@ -3,17 +3,23 @@ import { createPortal } from 'react-dom';
 import {
   ChevronDown, Video, Archive, ArrowRight,
   Check, Save, Shield, Info, TrendingUp,
-  List, LayoutGrid, GripVertical, ToggleLeft,
+  List, GripVertical, ToggleLeft,
   ArrowUpRight, RotateCcw, Database, Star, Crosshair, Plus, X,
   Edit2, Trash2, UserCircle, AlertTriangle, MoreHorizontal,
   Send, FileText, StickyNote, Link, Trophy, Medal,
-  ArrowLeft, EyeOff, Eye, GripHorizontal, Play, SlidersHorizontal, Columns3, Search, UserRoundCheck, ArrowUp
+  ArrowLeft, EyeOff, Eye, GripHorizontal, Play, UserRoundCheck
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate, useSearchParams } from 'react-router';
 import { ReportsHub } from './ReportsHub';
 import { CardView } from './CardView';
 import { EditColumnsModal } from './EditColumnsModal';
+import {
+  PlayersPageTitle, useFocusMode, PlayersCard, PlayersCardHeader, PlayersCardZone, TabPill, MobileTabMenu,
+  ViewModeToggle, FiltersButton, MobileFiltersButton, ColumnsButton, LLSelect, RangePair, SegmentedToggle,
+  PlayerSearchBox, MobileFilterSheet, PosHeader, YobHeader, FlagBadge, PlayerAvatar, ActionButtons,
+  useShowBackToTop, BackToTopButton, type ActionItem,
+} from './PlayersTableKit';
 import { PLAYER_COLUMNS, DEFAULT_VISIBLE_IDS, type PlayerColumn } from './playerColumns';
 import { PlayerVideoWorkspace } from './PlayerVideoWorkspace';
 import { Submission } from '../data/reports';
@@ -166,22 +172,6 @@ const FlagCircle = ({ code, label }: { code: string; label: string }) => (
   </div>
 );
 
-// Small inline flag shown next to the scouted/video status in the Player ID cell
-const FlagBadge = ({ code, label }: { code: string; label: string }) => (
-  <span className="w-4 h-4 rounded-full overflow-hidden border border-default bg-surface-accent shrink-0">
-    <img src={`https://flagcdn.com/w40/${code}.png`} alt={label} className="w-full h-full object-cover"
-      onError={(e) => { (e.target as HTMLImageElement).style.opacity = '0'; }} />
-  </span>
-);
-
-// Player avatar — tall enough to span the name line and the age/status/flag line under it
-// (Figma 728:16521). The player photo replaces the initials once players have one.
-const PlayerAvatar = ({ initials, photo }: { initials: string; photo?: string }) => (
-  <div className="w-9 h-9 rounded-xl bg-surface-accent border border-default text-strong flex items-center justify-center font-body font-bold text-[12px] shrink-0 overflow-hidden">
-    {photo ? <img src={photo} alt="" className="w-full h-full object-cover" /> : initials}
-  </div>
-);
-
 // Ladder method icon — lucide has no clean stairs glyph
 const StairsIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -323,8 +313,6 @@ const EditableColHeaderLight = ({ label, onRename, onRemove, onHide, onMove }: {
 
 
 // ─── Action Dropdown — icon-only ──────────────────────────────────────────────────
-interface ActionItem { label: string; action: () => void; danger?: boolean; icon: React.ReactNode; }
-
 const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
   playerId: string; items: ActionItem[];
   openId: string | null; setOpenId: (id: string | null) => void;
@@ -403,28 +391,6 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
           {portal}
         </>
       )}
-    </div>
-  );
-};
-
-// Inline action icons — every action shown as its own round button (no dropdown)
-const ActionButtons = ({ items }: { items: ActionItem[] }) => {
-  if (!items.length) return null;
-  return (
-    <div className="inline-flex items-center justify-center rounded-full bg-surface-accent border border-default">
-      {items.map((item, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span className="w-px h-4 bg-border-default/70 self-center shrink-0" />}
-          <button onClick={(e) => { e.stopPropagation(); item.action(); }} title={item.label}
-            className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors shrink-0 ${
-              item.label === 'Restore'
-                ? 'text-status-success hover:bg-status-success hover:text-on-brand'
-                : 'text-strong hover:bg-brand-primary hover:text-on-brand'
-            }`}>
-            {item.icon}
-          </button>
-        </React.Fragment>
-      ))}
     </div>
   );
 };
@@ -604,123 +570,6 @@ const buildActionItems = (
   return [];
 };
 
-// ─── Filter Bar — improved spacing and text size to match Country/Head ────────────
-const FilterBar = ({
-  filterFoot, setFilterFoot, filterHeightMin, setFilterHeightMin,
-  filterHeightMax, setFilterHeightMax, filterAgeMin, setFilterAgeMin,
-  filterAgeMax, setFilterAgeMax, filterPos, setFilterPos,
-  filterProfile, setFilterProfile, filterScout, setFilterScout,
-  filterGrade, setFilterGrade,
-  archiveView, setArchiveView,
-}: {
-  filterFoot: string; setFilterFoot: (v: string) => void;
-  filterHeightMin: string; setFilterHeightMin: (v: string) => void;
-  filterHeightMax: string; setFilterHeightMax: (v: string) => void;
-  filterAgeMin: string; setFilterAgeMin: (v: string) => void;
-  filterAgeMax: string; setFilterAgeMax: (v: string) => void;
-  filterPos: string; setFilterPos: (v: string) => void;
-  filterProfile: string; setFilterProfile: (v: string) => void;
-  filterScout: string; setFilterScout: (v: string) => void;
-  filterGrade: string; setFilterGrade: (v: string) => void;
-  archiveView: ArchiveView; setArchiveView: (v: ArchiveView) => void;
-}) => {
-  // ── Sel: same visual as Country/Head filter dropdowns ──
-  const Sel = ({ value, onChange, opts }: { value: string; onChange: (v: string) => void; opts: string[] }) => (
-    <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors shadow-sm cursor-pointer">
-      <select value={value} onChange={e => onChange(e.target.value)}
-        className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5">
-        {opts.map(o => <option key={o} value={o} className="bg-surface-card text-strong">{o}</option>)}
-      </select>
-      <ChevronDown size={14} className="absolute right-4 text-body pointer-events-none" />
-    </div>
-  );
-
-  // ── NumIn: sized to match ──
-  const NumIn = ({ value, onChange, ph }: { value: string; onChange: (v: string) => void; ph: string }) => (
-    <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={ph}
-      className="w-14 bg-surface-card border border-default rounded-full px-3 py-2 text-body font-body text-[14px] font-bold focus:outline-none placeholder:text-placeholder" />
-  );
-
-  return (
-    <div className="bg-brand-primary rounded-[24px] px-[var(--pad-card)] py-4 flex flex-col md:flex-row md:items-center md:flex-wrap gap-3 md:gap-4 border border-text-on-brand/5 w-full">
-      {/* BIO section */}
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">BIO</span>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Foot:</span>
-        <Sel value={filterFoot} onChange={setFilterFoot} opts={['All','Left','Right','Both']} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Ht:</span>
-        <NumIn value={filterHeightMin} onChange={setFilterHeightMin} ph="min" />
-        <span className="text-on-brand/20 font-body text-[14px]">–</span>
-        <NumIn value={filterHeightMax} onChange={setFilterHeightMax} ph="max" />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Age:</span>
-        <NumIn value={filterAgeMin} onChange={setFilterAgeMin} ph="min" />
-        <span className="text-on-brand/20 font-body text-[14px]">–</span>
-        <NumIn value={filterAgeMax} onChange={setFilterAgeMax} ph="max" />
-      </div>
-
-      {/* Divider */}
-      <div className="w-px h-6 bg-surface-card/10 mx-1 shrink-0" />
-
-      {/* TECH section */}
-      <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">TECH</span>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Pos:</span>
-        <Sel value={filterPos} onChange={setFilterPos} opts={['All','ST','LW','RW','CM','CDM','CAM','FB','CB']} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Profile:</span>
-        <Sel value={filterProfile} onChange={setFilterProfile} opts={['All','Performance','Prospect','Wonderkid']} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Scout:</span>
-        <Sel value={filterScout} onChange={setFilterScout} opts={['All', ...SCOUTS]} />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-body text-[14px] font-bold text-body">Grade:</span>
-        <Sel value={filterGrade} onChange={setFilterGrade} opts={GRADE_FILTER_OPTS} />
-      </div>
-
-      {/* Active/Audit toggle — right-aligned */}
-      <div className="ml-auto flex items-center shrink-0">
-        <div className="flex items-center bg-surface-card/5 border border-text-on-brand/10 rounded-full p-1">
-          <button onClick={() => setArchiveView('active')}
-            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'active' ? 'bg-surface-card text-strong shadow-sm' : 'text-on-brand/40 hover:text-on-brand'}`}>
-            Active
-          </button>
-          <button onClick={() => setArchiveView('audit')}
-            className={`px-4 py-2 rounded-full font-body text-[14px] font-bold transition-all ${archiveView === 'audit' ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-on-brand/40 hover:text-on-brand'}`}>
-            Archive
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─── Group Header Rows ────────────────────────────────────────────────────────────
-const PosHeader = ({ pos, count, colSpan }: { pos: string; count: number; colSpan: number }) => (
-  <tr className="bg-brand-primary">
-    <td colSpan={colSpan} className="py-2 px-4 sticky top-[var(--tbl-head-h)] z-30 bg-brand-primary">
-      <span className="inline-flex items-center gap-2">
-        <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-on-brand">{pos}</span>
-        <span className="inline-flex items-center justify-center bg-text-on-brand/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-on-brand">{count}</span>
-      </span>
-    </td>
-  </tr>
-);
-
-const YobHeader = ({ yob, colSpan }: { yob: number; colSpan: number }) => (
-  <tr className="border-t border-default">
-    <td colSpan={colSpan} className="py-2 px-4 bg-surface-accent sticky top-[calc(var(--tbl-head-h)+var(--tbl-group-h))] z-30">
-      <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-link">{yob}</span>
-    </td>
-  </tr>
-);
-
 // ─── Standard Player Table ────────────────────────────────────────────────────────
 const PlayerTable = ({
   players, archivedSet, archiveView, currentTab, flagMap,
@@ -776,14 +625,7 @@ const PlayerTable = ({
   const idLeftCls = currentTab === 'long-list' ? 'left-[76px]' : 'left-[44px]';
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
-  const [showTop, setShowTop] = useState(false);
-  useEffect(() => {
-    const el = scrollBoxRef.current;
-    if (!el) return;
-    const onScroll = () => setShowTop(el.scrollTop > 400);
-    el.addEventListener('scroll', onScroll);
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [displayPlayers.length]);
+  const showTop = useShowBackToTop(scrollBoxRef, displayPlayers.length);
 
   if (displayPlayers.length === 0) return (
     <div className="bg-surface-card rounded-[20px] border border-default flex flex-col items-center justify-center py-16">
@@ -1013,12 +855,7 @@ const PlayerTable = ({
           </tbody>
         </table>
       </div>
-      {showTop && (
-        <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold text-[13px] hover:bg-brand-primary/90 transition-colors">
-          <ArrowUp size={14} /> Top
-        </button>
-      )}
+      <BackToTopButton show={showTop} onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })} />
     </div>
   );
 };
@@ -1076,14 +913,7 @@ const TargetSuperTable = ({
   }, [displayPlayers, targetDataMap]);
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
-  const [showTop, setShowTop] = useState(false);
-  useEffect(() => {
-    const el = scrollBoxRef.current;
-    if (!el) return;
-    const onScroll = () => setShowTop(el.scrollTop > 400);
-    el.addEventListener('scroll', onScroll);
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [displayPlayers.length]);
+  const showTop = useShowBackToTop(scrollBoxRef, displayPlayers.length);
 
   const ColHd = ({ label, cls = '' }: { label: string; cls?: string }) => (
     <th className={`px-2 py-2 font-heading font-bold text-[12px] text-on-brand uppercase tracking-widest text-center whitespace-nowrap ${cls}`}>{label}</th>
@@ -1283,12 +1113,7 @@ const TargetSuperTable = ({
           <span className="font-body text-[12px] font-bold text-body">{displayPlayers.filter(p => archivedSet.has(p.id)).length} archived</span>
         </div>
       )}
-      {showTop && (
-        <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold text-[14px] hover:bg-brand-primary/90 transition-colors">
-          <ArrowUp size={14} /> Top
-        </button>
-      )}
+      <BackToTopButton show={showTop} onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })} />
     </div>
   );
 };
@@ -1414,14 +1239,7 @@ const ShortListTable = ({
   }, [displayPlayers, archivedSet, archiveView]);
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
-  const [showTop, setShowTop] = useState(false);
-  useEffect(() => {
-    const el = scrollBoxRef.current;
-    if (!el) return;
-    const onScroll = () => setShowTop(el.scrollTop > 400);
-    el.addEventListener('scroll', onScroll);
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [displayPlayers.length]);
+  const showTop = useShowBackToTop(scrollBoxRef, displayPlayers.length);
 
   // Action(1) + Rank(1) + Player(1) + DOB,Pos,Team,Profile,Pathway(5) + Status(1) + 3 scouts × 3 (9) + 8 videos = 26
   const TOTAL_COLS = 26;
@@ -1635,12 +1453,7 @@ const ShortListTable = ({
           </tbody>
         </table>
       </div>
-      {showTop && (
-        <button onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold text-[14px] hover:bg-brand-primary/90 transition-colors">
-          <ArrowUp size={14} /> Top
-        </button>
-      )}
+      <BackToTopButton show={showTop} onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })} />
     </div>
   );
 };
@@ -2675,7 +2488,7 @@ export const HIGHLIGHTS_FEED: {
   return [...shorts, ...targets].sort((a, b) => a.hoursAgo - b.hoursAgo);
 })();
 
-// ─── Database Toolbar — light replacement for the blue FilterBar on the Database tab ──
+// ─── Database Toolbar — light filter toolbar for the Database tab ──
 const DB_STAT_OPTIONS = [
   { key: 'app', label: 'App' }, { key: 'gls', label: 'Gls' },
   { key: 'pen', label: 'Pen' }, { key: 'ast', label: 'Ast' },
@@ -2760,43 +2573,12 @@ const DatabaseToolbar = ({
       </div>
       <div className="flex-1" />
       {/* Player name search */}
-      <div className="relative shrink-0">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
-        <input value={dbSearch} onChange={e => setDbSearch(e.target.value)} placeholder="Look for a player"
-          className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
-      </div>
+      <div className="shrink-0"><PlayerSearchBox value={dbSearch} onChange={setDbSearch} /></div>
     </div>
   );
 };
 
-// ─── Long List Toolbar — light replacement for the blue FilterBar on the Long List tab ──
-const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey }: {
-  label: string; value: string; setValue: (v: string) => void; options: string[];
-  openKey: string | null; setOpenKey: (k: string | null) => void;
-}) => {
-  const open = openKey === label;
-  return (
-    <div className="flex flex-col gap-0.5 shrink-0" data-llselect>
-      <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-muted px-1">{label}</span>
-      <div className="relative">
-        <button onClick={() => setOpenKey(open ? null : label)}
-          className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body hover:border-brand-primary transition-colors whitespace-nowrap">
-          <span>{value === 'All' ? 'All' : value}</span>
-          <ChevronDown size={12} className={`text-body transition-transform ${open ? 'rotate-180' : ''}`} />
-        </button>
-        {open && (
-          <div className="absolute left-0 top-full mt-1 z-50 bg-surface-card border border-default rounded-[16px] shadow-2xl py-2 min-w-[150px] max-h-[280px] overflow-y-auto">
-            {['All', ...options].map(opt => (
-              <button key={opt} onClick={() => { setValue(opt); setOpenKey(null); }}
-                className={`w-full text-left px-4 py-1.5 font-body font-bold text-[12px] transition-colors ${value === opt ? 'bg-surface-accent text-strong' : 'text-strong hover:bg-surface-accent'}`}>{opt}</button>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
+// ─── Long List Toolbar — light filter toolbar for the Long List tab ──
 const LongListToolbar = ({ methodFilter, setMethodFilter, filters, search, setSearch }: {
   methodFilter: 'all'|'ladder'|'direct'|'archive'; setMethodFilter: (v: 'all'|'ladder'|'direct'|'archive') => void;
   filters: { label: string; value: string; setValue: (v: string) => void; options: string[] }[];
@@ -2811,34 +2593,18 @@ const LongListToolbar = ({ methodFilter, setMethodFilter, filters, search, setSe
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
   }, []);
-  const segBtn = (val: 'all'|'ladder'|'direct'|'archive', text: string) => (
-    <button onClick={() => setMethodFilter(val)}
-      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${methodFilter === val ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
-      {text}
-    </button>
-  );
   return (
     <div ref={containerRef} className="flex items-end gap-4 w-full">
-      {/* Method — 4-way segmented toggle, far left (glassmorphism) */}
-      <div className="flex items-center bg-surface-card border border-default rounded-full p-1 gap-1 shrink-0">
-        {segBtn('all', 'All Players')}
-        {segBtn('ladder', 'Ladder')}
-        {segBtn('direct', 'Direct')}
-        {segBtn('archive', 'Archive')}
-      </div>
+      {/* Method — 4-way segmented toggle, far left */}
+      <SegmentedToggle value={methodFilter} onChange={setMethodFilter}
+        options={[{ value: 'all', label: 'All Players' }, { value: 'ladder', label: 'Ladder' }, { value: 'direct', label: 'Direct' }, { value: 'archive', label: 'Archive' }]} />
       {/* Compact label-inside filter dropdowns */}
       {filters.map(f => (
         <LLSelect key={f.label} label={f.label} value={f.value} setValue={f.setValue} options={f.options}
           openKey={openKey} setOpenKey={setOpenKey} />
       ))}
       {/* Player name search — full form, far right */}
-      <div className="ml-auto shrink-0">
-        <div className="relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Look for a player"
-            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
-        </div>
-      </div>
+      <div className="ml-auto shrink-0"><PlayerSearchBox value={search} onChange={setSearch} /></div>
     </div>
   );
 };
@@ -2871,29 +2637,10 @@ const ListFilterToolbar = ({
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
   }, []);
-  const num = "w-16 px-2 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors";
-  const RangePair = ({ label, minV, setMin, maxV, setMax }: { label: string; minV: string; setMin: (v: string) => void; maxV: string; setMax: (v: string) => void }) => (
-    <div className="flex flex-col gap-0.5 shrink-0">
-      <span className="font-heading font-bold text-[9px] uppercase tracking-wider text-muted px-1">{label}</span>
-      <div className="flex items-center gap-1">
-        <input type="number" value={minV} onChange={e => setMin(e.target.value)} placeholder="min" className={num} />
-        <span className="text-muted text-[12px]">–</span>
-        <input type="number" value={maxV} onChange={e => setMax(e.target.value)} placeholder="max" className={num} />
-      </div>
-    </div>
-  );
-  const segBtn = (val: ArchiveView, text: string) => (
-    <button onClick={() => setArchiveView(val)}
-      className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${archiveView === val ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
-      {text}
-    </button>
-  );
   return (
     <div ref={containerRef} className="flex items-end gap-4 flex-wrap w-full">
-      <div className="flex items-center bg-surface-card border border-default rounded-full p-1 gap-1 shrink-0">
-        {segBtn('active', 'Active')}
-        {segBtn('audit', 'Archive')}
-      </div>
+      <SegmentedToggle value={archiveView} onChange={setArchiveView}
+        options={[{ value: 'active', label: 'Active' }, { value: 'audit', label: 'Archive' }]} />
       <LLSelect label="Foot" value={filterFoot} setValue={setFilterFoot} options={['Left', 'Right', 'Both']} openKey={openKey} setOpenKey={setOpenKey} />
       <RangePair label="Age" minV={filterAgeMin} setMin={setFilterAgeMin} maxV={filterAgeMax} setMax={setFilterAgeMax} />
       <RangePair label="Height" minV={filterHeightMin} setMin={setFilterHeightMin} maxV={filterHeightMax} setMax={setFilterHeightMax} />
@@ -2901,13 +2648,7 @@ const ListFilterToolbar = ({
       <LLSelect label="Profile" value={filterProfile} setValue={setFilterProfile} options={['Performance', 'Prospect', 'Wonderkid']} openKey={openKey} setOpenKey={setOpenKey} />
       <LLSelect label="Scout" value={filterScout} setValue={setFilterScout} options={SCOUTS} openKey={openKey} setOpenKey={setOpenKey} />
       <LLSelect label="Grade" value={filterGrade} setValue={setFilterGrade} options={GRADE_FILTER_OPTS.filter(o => o !== 'All')} openKey={openKey} setOpenKey={setOpenKey} />
-      <div className="ml-auto shrink-0">
-        <div className="relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Look for a player"
-            className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
-        </div>
-      </div>
+      <div className="ml-auto shrink-0"><PlayerSearchBox value={search} onChange={setSearch} /></div>
     </div>
   );
 };
@@ -2917,6 +2658,8 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   const [filterGrade, setFilterGrade] = useState('All');
   const [targetPlayerId, setTargetPlayerId] = useState<string | null>(null);
   const [highlightId, setHighlightId] = useState<string | null>(null);
+  // Opens on the table (Vanessa, 2 Nov — table is the default everywhere, D-20); a ?player= deep link also needs the table so the row can be found.
+  const [viewMode,  setViewMode]  = useState<ViewMode>('table');
   const [searchParams] = useSearchParams();
   // Deep-link: honor ?section=<tab id> so the dashboard can link to a specific tab,
   // plus ?grade=<grade> (grade filter) and ?player=<id> (scroll + highlight a row).
@@ -2932,7 +2675,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
       if (GRADE_FILTER_OPTS.includes(decoded)) setFilterGrade(decoded);
     }
     const player = searchParams.get('player');
-    if (player) setTargetPlayerId(decodeURIComponent(player));
+    if (player) { setTargetPlayerId(decodeURIComponent(player)); setViewMode('table'); }
   }, [searchParams]);
   // Deep-link: scroll the targeted row into view and apply a transient highlight.
   useEffect(() => {
@@ -2944,20 +2687,11 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
     const clearT = setTimeout(() => setHighlightId(null), 2500);
     return () => { clearTimeout(scrollT); clearTimeout(clearT); };
   }, [targetPlayerId, activeTab]);
-  const [viewMode,  setViewMode]  = useState<ViewMode>('table');
   const [showFilters, setShowFilters] = useState(true);        // desktop: inline filters toggle (visible by default)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false); // mobile: bottom-sheet
   const [tabsMenuOpen, setTabsMenuOpen] = useState(false);     // mobile: 'More ▾' tab dropdown
   // Focus mode: once the table scrolls, the page title folds away so the view starts at the tabs row.
-  // On past 40px, off only back at 0 — the gap stops it flickering at the edge.
-  const [focused, setFocused] = useState(false);
-  const onCardScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const top = (e.target as HTMLElement).scrollTop;
-    if (top > 40) setFocused(true);
-    else if (top === 0) setFocused(false);
-  };
-  // A new tab or view starts at its top, so bring the title back.
-  useEffect(() => { setFocused(false); }, [activeTab, viewMode]);
+  const { focused, onScroll: onCardScroll } = useFocusMode([activeTab, viewMode]);
   // User-arrangeable tab order (drag on desktop / up-down on mobile), persisted per role
   const [tabOrder, setTabOrder] = useState<SeniorTab[]>(() => loadTabOrder(loggedInRole));
   const [dragTabId, setDragTabId] = useState<SeniorTab | null>(null);
@@ -3173,24 +2907,11 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
   return (
     <div className="flex flex-col w-full min-w-0">
       <EditColumnsModal open={colsModalOpen} columns={PLAYER_COLUMNS} visible={visibleColIds} onApply={setVisibleColIds} onClose={() => setColsModalOpen(false)} />
-      <div className={`grid transition-[grid-template-rows,opacity] duration-200 motion-reduce:transition-none ${focused && isListTab ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr]'}`} aria-hidden={focused && isListTab}>
-        <div className="overflow-hidden">
-          <div className="pt-2 pb-3">
-            <h1 className="font-heading font-semibold text-[32px] tracking-tight text-heading flex items-center gap-4 leading-none">
-              {PAGE_TITLES[activeTab].first}
-              <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
-                {PAGE_ICON_NODES[activeTab]}
-              </div>
-              {PAGE_TITLES[activeTab].rest}
-            </h1>
-            <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{TAB_SUBTITLES[activeTab]}</p>
-          </div>
-        </div>
-      </div>
+      <PlayersPageTitle first={PAGE_TITLES[activeTab].first} icon={PAGE_ICON_NODES[activeTab]}
+        rest={PAGE_TITLES[activeTab].rest} subtitle={TAB_SUBTITLES[activeTab]} folded={focused && isListTab} />
 
-      <div onScrollCapture={onCardScroll}
-        className={`bg-surface-card border border-default rounded-[24px] ${isListTab ? `${focused ? 'h-[calc(100vh-114px)]' : 'h-[calc(100vh-204px)]'} transition-[height] duration-200 motion-reduce:transition-none flex flex-col overflow-hidden` : 'mb-6'}`}>
-      <div className="flex items-center gap-2 flex-wrap px-4 py-3 border-b border-default rounded-t-[24px] bg-surface-card">
+      <PlayersCard bounded={isListTab} focused={focused} onScrollCapture={onCardScroll}>
+      <PlayersCardHeader>
         {/* Tabs — desktop: all inline, drag to reorder */}
         <div className="hidden md:flex items-center gap-1 flex-wrap">
           {orderedTabs.map(tab => {
@@ -3198,19 +2919,16 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
             const isActive = activeTab === tab.id;
             const isDragging = dragTabId === tab.id;
             return (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+              <TabPill key={tab.id} active={isActive} count={count} onClick={() => setActiveTab(tab.id)}
                 draggable
                 onDragStart={e => { setDragTabId(tab.id); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', tab.id); }}
                 onDragOver={e => { e.preventDefault(); if (dragTabId) reorderTab(dragTabId, tab.id); }}
                 onDrop={e => { e.preventDefault(); setDragTabId(null); }}
                 onDragEnd={() => setDragTabId(null)}
                 title="Drag to reorder"
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors border whitespace-nowrap cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''} ${isActive ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
+                className={`cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-40 ring-2 ring-brand-primary' : ''}`}>
                 {tab.label}
-                {count !== null && count > 0 && (
-                  <span className={`font-body type-micro font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-surface-card/20 text-on-brand' : 'bg-brand-primary/15 text-strong'}`}>{count}</span>
-                )}
-              </button>
+              </TabPill>
             );
           })}
           {isCustomOrder && (
@@ -3221,14 +2939,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
           )}
         </div>
         {/* Tabs — mobile: active label + 'More ▾' dropdown */}
-        <div className="md:hidden relative">
-          <button onClick={() => setTabsMenuOpen(o => !o)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand font-body font-bold type-body-sm">
-            <span className="truncate max-w-[160px]">{TABS.find(t => t.id === activeTab)?.label ?? 'Select'}</span>
-            <ChevronDown size={14} className={`shrink-0 transition-transform ${tabsMenuOpen ? 'rotate-180' : ''}`} />
-          </button>
-          {tabsMenuOpen && (
-            <div className="absolute left-0 top-full mt-1 z-50 bg-surface-card border border-default rounded-[16px] shadow-2xl overflow-hidden min-w-[200px] py-1">
+        <MobileTabMenu label={TABS.find(t => t.id === activeTab)?.label ?? 'Select'} open={tabsMenuOpen} onToggle={() => setTabsMenuOpen(o => !o)}>
               {orderedTabs.map((tab, idx) => {
                 const count = counts[tab.id as keyof typeof counts];
                 const isActive = activeTab === tab.id;
@@ -3252,51 +2963,24 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                   <RotateCcw size={13} /> Reset order
                 </button>
               )}
-            </div>
-          )}
-        </div>
+        </MobileTabMenu>
         <div className="flex-1" />
         {activeTab === 'signed-list' && (
           <>
-            <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-default bg-surface-card text-body hover:border-brand-primary hover:text-body shrink-0 transition-colors">
-              <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
-            </button>
+            <ColumnsButton onClick={() => setColsModalOpen(true)} />
             <button onClick={() => setSignedAddOpen(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-default bg-surface-card text-link hover:border-brand-primary hover:bg-surface-accent shrink-0 transition-colors">
               <Plus size={14} /> Add Signed Player
             </button>
           </>
         )}
-        {isListTab && (
-          <div className="flex items-center bg-surface-accent rounded-full p-1 gap-1 shrink-0">
-            <button onClick={() => setViewMode('table')} title="Table View"
-              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'table' ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
-              <List size={14} />
-            </button>
-            <button onClick={() => setViewMode('card')} title="Card View"
-              className={`p-2 rounded-full flex items-center justify-center transition-colors ${viewMode === 'card' ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
-              <LayoutGrid size={14} />
-            </button>
-          </div>
-        )}
+        {isListTab && <ViewModeToggle value={viewMode} onChange={setViewMode} />}
         {/* Filters — desktop toggles the inline panel/toolbar; mobile opens a bottom-sheet (non-database only) */}
         {isListTab && (
           <>
-            <button onClick={() => setShowFilters(s => !s)}
-              className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border shrink-0 transition-colors ${showFilters ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm' : 'bg-surface-card text-body border-default hover:border-brand-primary hover:text-strong'}`}>
-              <SlidersHorizontal size={14} /> Filters
-            </button>
-            {activeTab !== 'database' && (
-              <button onClick={() => setMobileFiltersOpen(true)}
-                className="md:hidden flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-default bg-surface-card text-body shrink-0">
-                <SlidersHorizontal size={14} /> Filters
-              </button>
-            )}
-            <button onClick={() => setColsModalOpen(true)} aria-label="Columns"
-              className="flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-body-sm border border-default bg-surface-card text-body hover:border-brand-primary hover:text-body shrink-0 transition-colors">
-              <Columns3 size={14} /> <span className="hidden sm:inline">Columns</span>
-            </button>
+            <FiltersButton active={showFilters} onClick={() => setShowFilters(s => !s)} />
+            {activeTab !== 'database' && <MobileFiltersButton onClick={() => setMobileFiltersOpen(true)} />}
+            <ColumnsButton onClick={() => setColsModalOpen(true)} />
           </>
         )}
         {isListTab && (
@@ -3305,7 +2989,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
             <span className="flex items-center gap-1 font-body type-caption font-bold text-body"><span className="w-2 h-2 rounded-full bg-status-error inline-block" />Unscouted</span>
           </div>
         )}
-      </div>
+      </PlayersCardHeader>
 
       {activeTab === 'settings' && <div className="p-4"><ScopeSettingsPanel profileTypes={profileTypes} onAddProfile={addProfile} onEditProfile={editProfile} onDeleteProfile={deleteProfile} loggedInRole={loggedInRole} scopeYearMin={scopeYearMin} setScopeYearMin={setScopeYearMin} scopeYearMax={scopeYearMax} setScopeYearMax={setScopeYearMax} /></div>}
 
@@ -3317,18 +3001,18 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
 
       {isListTab && (
         <>
-          {/* Database: light toolbar replaces the blue FilterBar */}
+          {/* Database: light filter toolbar */}
           {activeTab === 'database' && showFilters && (
-            <div className="px-4 py-3 border-b border-default">
+            <PlayersCardZone>
               <DatabaseToolbar scopeYearMin={scopeYearMin} scopeYearMax={scopeYearMax}
                 filterPos={filterPos} setFilterPos={setFilterPos}
                 visibleStats={visibleStats} setVisibleStats={setVisibleStats}
                 dbSearch={dbSearch} setDbSearch={setDbSearch} />
-            </div>
+            </PlayersCardZone>
           )}
-          {/* Long List: light toolbar replaces the blue FilterBar */}
+          {/* Long List: light filter toolbar */}
           {activeTab === 'long-list' && showFilters && (
-            <div className="px-4 py-3 border-b border-default">
+            <PlayersCardZone>
               <LongListToolbar methodFilter={methodFilter} setMethodFilter={setMethodFilter}
                 filters={[
                   { label: 'Transfer', value: filterTransfer, setValue: setFilterTransfer, options: TRANSFER_OPTS },
@@ -3342,27 +3026,18 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
                   { label: 'Week', value: filterWeek, setValue: setFilterWeek, options: WEEK_OPTS },
                 ]}
                 search={llSearch} setSearch={setLlSearch} />
-            </div>
+            </PlayersCardZone>
           )}
           {/* Desktop: inline filter panel, toggled by the Filters button (visible by default) */}
           {activeTab !== 'database' && activeTab !== 'long-list' && showFilters && (
-            <div className="hidden md:block px-4 py-3 border-b border-default">
+            <PlayersCardZone className="hidden md:block">
               <ListFilterToolbar {...filterBarProps} search={listSearch} setSearch={setListSearch} />
-            </div>
+            </PlayersCardZone>
           )}
           {/* Mobile: filters as a bottom-sheet that slides up */}
-          {activeTab !== 'database' && activeTab !== 'long-list' && mobileFiltersOpen && (
-            <div className="md:hidden fixed inset-0 z-[200] flex flex-col justify-end">
-              <div className="absolute inset-0 bg-ink-midnight/60 backdrop-blur-sm" onClick={() => setMobileFiltersOpen(false)} />
-              <div className="relative z-10 bg-surface-page rounded-t-[24px] max-h-[80vh] overflow-y-auto p-4 pb-8 shadow-2xl">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-heading font-bold type-body-lg text-body">Filters</span>
-                  <button onClick={() => setMobileFiltersOpen(false)} className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-strong"><X size={16} /></button>
-                </div>
-                <FilterBar {...filterBarProps} />
-              </div>
-            </div>
-          )}
+          <MobileFilterSheet open={activeTab !== 'database' && activeTab !== 'long-list' && mobileFiltersOpen} onClose={() => setMobileFiltersOpen(false)}>
+            <ListFilterToolbar {...filterBarProps} search={listSearch} setSearch={setListSearch} />
+          </MobileFilterSheet>
           <div className={`w-full ${viewMode === 'card' ? 'flex-1 min-h-0 overflow-auto hide-scrollbar px-4 pb-4' : 'flex-1 min-h-0 flex flex-col'}`}>
             {viewMode === 'card' ? (
               <CardView players={currentPoolPlayers} archivedSet={currentArchivedSet} archiveView={archiveView}
@@ -3401,7 +3076,7 @@ export function SeniorLeadPlayersPage({ allPlayersData, loggedInRole, flagMap }:
           </div>
         </>
       )}
-      </div>
+      </PlayersCard>
 
       {videoPlayer && <PlayerVideoWorkspace player={videoPlayer} onClose={() => setVideoPlayer(null)} onSaveReport={fileSubmission} />}
     </div>

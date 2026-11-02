@@ -113,6 +113,11 @@ const router = createBrowserRouter([
       { path: 'senior-scout/matches',  Component: SeniorScoutDashboard },
       { path: 'senior-scout/admin',    Component: SeniorScoutDashboard },
       { path: 'senior-scout/player/:id', Component: PlayerProfile },
+      // Every account keeps its own route prefix on the profile (P-CO24, D-20).
+      { path: 'country-scout/player/:id', Component: PlayerProfile },
+      { path: 'head-scout/player/:id',    Component: PlayerProfile },
+      { path: 'package-uploader/player/:id',    Component: PlayerProfile },
+      { path: 'full-match-uploader/player/:id', Component: PlayerProfile },
       { path: 'lead-scout/player/:id',   Component: PlayerProfile },
 
       // Video Manager

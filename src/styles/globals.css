@@ -577,6 +577,20 @@ body {
   animation: fade-in 0.15s ease-out forwards;
 }
 
+/* Side panels (report sheet, P-CO22) slide in from the right. */
+@keyframes slide-in-right {
+  from { transform: translateX(24px); opacity: 0.6; }
+  to   { transform: translateX(0);    opacity: 1;   }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-in-right { animation: none; }
+}
+
 @keyframes pulse-dot {
   0%, 100% {
     opacity: 1;

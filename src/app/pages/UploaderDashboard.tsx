@@ -15,6 +15,7 @@ import { ALL_GENERATED_PLAYERS } from '../components/SeniorLeadPlayersPage';
 import { useTierMap, PipelineTier } from '../state/playerStore';
 import { useVideoState, uploaderItems, highlightsBy, coverageStatus, VideoType } from '../state/videoStore';
 
+import { PlayerLink } from '../components/PlayerLink';
 type UploaderTab = 'overview' | 'middle' | 'tasks';
 type ActivePage = 'dashboard' | 'players' | 'matches' | 'admin';
 
@@ -109,7 +110,7 @@ export default function UploaderDashboard() {
           {activePage === 'dashboard' && (
             <>
               <div className="pt-6 mb-3">
-                <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
+                <h1 className="font-heading font-semibold type-h1 tracking-tight text-heading flex items-center gap-4 leading-none">
                   Welcome
                   <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0"><Video size={26} className="text-on-brand" /></span>
                   {myName}
@@ -123,16 +124,16 @@ export default function UploaderDashboard() {
                 <div className="flex flex-col gap-6 pb-8">
                   <div className={`grid grid-cols-2 ${isPackage ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-6`}>
                     <KpiCard icon={ClipboardCheck} heading="Pending" value={pending.length}
-                      descriptor={pending.length > 0 ? <span className="text-status-warning font-black">awaiting approval</span> : 'all clear'}
-                      action={`Open ${middleLabel}`} onClick={() => setActiveTab('middle')} />
+                      descriptor={pending.length > 0 ? 'awaiting approval' : 'all clear'}
+                      action="Track uploads" onClick={() => setActiveTab('middle')} />
                     <KpiCard icon={CheckCircle} heading="Approved" value={approved.length}
-                      descriptor="live for scouts" action={`Open ${middleLabel}`} onClick={() => setActiveTab('middle')} />
+                      descriptor="live for scouts" action="See approved" onClick={() => setActiveTab('middle')} />
                     {isPackage && (
                       <KpiCard icon={Clapperboard} heading="Highlights" value={myHighlights.length}
-                        descriptor="external clips" action="Open Packages" onClick={() => setActiveTab('middle')} />
+                        descriptor="external clips" action="See highlights" onClick={() => setActiveTab('middle')} />
                     )}
                     <KpiCard icon={ListChecks} heading="Tasks due" value={activeTasks.length}
-                      descriptor="open tasks" action="Open Tasks" onClick={() => setActiveTab('tasks')} />
+                      descriptor="open tasks" action="Open tasks" onClick={() => setActiveTab('tasks')} />
                     <KpiCard icon={Grid3x3} heading="Video Tracker" value={needVideos}
                       descriptor="need your video" action="Open tracker" onClick={() => navigate(`${base}/players`)} />
                   </div>
@@ -211,7 +212,7 @@ export default function UploaderDashboard() {
                         <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                           <div className="min-w-0 flex-1">
                             <span className="font-body font-bold text-[14px] text-body truncate">{item.videoName}</span>
-                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
+                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName && <> · <PlayerLink name={item.playerName} id={item.playerId ? String(item.playerId) : undefined} className="font-bold" /></>}</p>
                           </div>
                           <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-warning/15 text-status-warning-fg shrink-0">Pending</span>
                         </div>
@@ -220,7 +221,7 @@ export default function UploaderDashboard() {
                         <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                           <div className="min-w-0 flex-1">
                             <span className="font-body font-bold text-[14px] text-body truncate">{item.videoName}</span>
-                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName ? ` · ${item.playerName}` : ''}</p>
+                            <p className="font-body text-[12px] text-body mt-0.5">{item.dateLabel}{item.playerName && <> · <PlayerLink name={item.playerName} id={item.playerId ? String(item.playerId) : undefined} className="font-bold" /></>}</p>
                           </div>
                           <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-success/15 text-status-success-fg shrink-0">Approved</span>
                         </div>

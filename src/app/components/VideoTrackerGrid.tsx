@@ -4,6 +4,7 @@ import { ALL_GENERATED_PLAYERS } from './SeniorLeadPlayersPage';
 import { useTierMap, PipelineTier } from '../state/playerStore';
 import { useVideoState, coverageStatus, setFullMatchAvailability } from '../state/videoStore';
 
+import { PlayerLink } from './PlayerLink';
 const FLAG_MAP: Record<string, string> = { GAM: 'gm', NGA: 'ng', GHA: 'gh', CMR: 'cm', SEN: 'sn', CIV: 'ci', MLI: 'ml', BDI: 'bi' };
 const hash = (s: string) => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; };
 const jersey = (id: string) => (hash(id) % 30) + 1;
@@ -92,7 +93,7 @@ export function VideoTrackerGrid({ mode, canPkg = false, canFm = false, onUpload
                 <tr key={p.id} className="border-t border-default hover:bg-surface-accent/50 transition-colors">
                   <td className="px-3 py-2.5"><span className={`w-6 h-6 rounded-full inline-flex items-center justify-center font-heading font-black text-[11px] ${prio.cls}`}>{prio.n}</span></td>
                   <td className="px-3 py-2.5"><span className={`inline-flex items-center px-2 py-0.5 rounded-full font-body font-black text-[10px] ${prio.cls}`}>{prio.label}</span></td>
-                  <td className="px-3 py-2.5 font-body font-bold text-[13px] text-body whitespace-nowrap">{p.name}</td>
+                  <td className="px-3 py-2.5 font-body font-bold text-[13px] whitespace-nowrap"><PlayerLink name={p.name} id={String(p.id)} player={{ nationality: p.nationality }} /></td>
                   <td className="px-3 py-2.5 font-body font-bold text-[12px] text-body">{p.posAcronym}</td>
                   <td className="px-3 py-2.5 font-body text-[12px] text-muted tabular-nums">{p.yob}</td>
                   <td className="px-3 py-2.5 font-body text-[12px] text-muted tabular-nums">{p.age}</td>
