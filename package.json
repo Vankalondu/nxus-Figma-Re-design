@@ -16,6 +16,7 @@
     "prebuild-storybook": "node scripts/build-tokens.mjs",
     "build-storybook": "storybook build",
     "lint:tokens": "node scripts/lint-tokens.mjs",
+    "test:rule-check": "node .github/actions/nxus-rule-check/test/run.mjs",
     "verify:figma": "node scripts/figma-css-diff.mjs",
     "verify:figma-fresh": "node scripts/figma-freshness.mjs",
     "figma:merge": "node scripts/figma-merge.mjs",

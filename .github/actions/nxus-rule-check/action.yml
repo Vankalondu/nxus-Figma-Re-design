@@ -1,0 +1,45 @@
+name: NXUS rule check
+description: >-
+  Checks the lines a pull request changes against the NXUS rulebook (colours, type, fonts,
+  spacing) and warns on each one, with one summary comment that updates itself.
+  Warn mode never blocks a merge.
+
+inputs:
+  mode:
+    description: "warn (default) = report only, never blocks · block = fail the check when something breaks a rule"
+    required: false
+    default: warn
+  ignore:
+    description: Comma-separated path prefixes to skip (generated or third-party code)
+    required: false
+    default: node_modules/,dist/,build/,coverage/,vendor/
+  comment:
+    description: Keep one summary comment on the pull request (true/false)
+    required: false
+    default: 'true'
+  figma-url:
+    description: Link shown in every warning — the design source of truth
+    required: false
+    default: https://www.figma.com/design/qefpAyr3MEEklQRV96YlSv
+  rulebook-url:
+    description: Link to the NXUS rulebook
+    required: false
+    default: https://github.com/Vankalondu/nxus-Figma-Re-design/blob/main/guidelines/Guidelines.md
+  github-token:
+    description: Token used only to post/update the summary comment
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Check changed lines against the NXUS rulebook
+      shell: bash
+      run: node "${{ github.action_path }}/check.mjs"
+      env:
+        NXUS_MODE: ${{ inputs.mode }}
+        NXUS_IGNORE: ${{ inputs.ignore }}
+        NXUS_COMMENT: ${{ inputs.comment }}
+        NXUS_FIGMA_URL: ${{ inputs.figma-url }}
+        NXUS_RULEBOOK_URL: ${{ inputs.rulebook-url }}
+        NXUS_GITHUB_TOKEN: ${{ inputs.github-token }}
