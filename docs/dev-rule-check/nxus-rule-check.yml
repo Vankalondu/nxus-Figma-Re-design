@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0  # needs the base branch to work out which lines changed
 
       # Pinned to an exact commit of the NXUS repo, so the rules only change when you update this line.
-      - uses: Vankalondu/nxus-Figma-Re-design/.github/actions/nxus-rule-check@afc8a4af54594695445e0c8c7f200ec39a90735e
+      - uses: Vankalondu/nxus-Figma-Re-design/.github/actions/nxus-rule-check@ca492882dc2a7ad6f769ba94b3a2381f0edb387c
         with:
           mode: warn  # warn = report only · block = fail the check (only when the designer says so)
           # Skip generated or third-party code (comma-separated path prefixes):

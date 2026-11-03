@@ -1,6 +1,16 @@
 # HANDOFF — NXUS Responsive System v1
 
-_Last updated: 2026-11-02. Resume by reading this file._
+_Last updated: 2026-11-03. Resume by reading this file._
+
+## UPDATE (2026-11-03) — release/nov-3 merged to main and LIVE
+- Merged `release/nov-3` (feature/type-scale D-22, feature/topnav-photos D-21, feature/reports-kanban D-23, plus D-24) into main; deployed on Vanessa's "make it live".
+- **D-21:** top nav reads Add Report, Add Player, theme, notifications, avatar (no "This Week"); all mock people imagery shows Black African players/staff (P-CO25).
+- **D-22:** type scale (L-TY3) is enforced in our lint as an error, 0 allowed; ~130 files swept.
+- **D-23/D-24, Reports tab:** Kanban with FOUR boards (Scout, Short, Long, Target report), 4 per row on desktop; reports grouped by scout; "what was reported on · date" on one line under the scout name, outside the grades card; headings have no count; All/Long/Short/Target filter by the list the player was on.
+- **PM link (no login):** https://qaza-2so.pages.dev/lead-scout/player/db-0?tab=reports — demo auto-role, so anyone with the link gets in.
+- **Devs' checker pin** moved from afc8a4a to ca49288 (includes the type-scale check). Still not added to their repo.
+- **Next:** after the PM confirms, draw the player profile ONCE in Figma on the Lead Scout page (components, variants, text styles), then hand off to the devs via the pipeline.
+
 
 ## UPDATE (2026-11-02) — account consistency + Player profile merged to main and LIVE
 - Merged `feature/account-consistency` (D-17..D-20) and `feature/dev-rule-check` into main; deployed on Vanessa's go-ahead.
@@ -25,7 +35,7 @@ _Last updated: 2026-11-02. Resume by reading this file._
   - Snapshot re-verified 2026-11-02, 0 token changes.
 - **Rule checker for the devs' repo:**
   - It's in .github/actions/nxus-rule-check and runs in warn mode (never blocks).
-  - Plain-language guide: docs/dev-rule-check.md. Copyable workflow: docs/dev-rule-check/nxus-rule-check.yml, pinned to commit afc8a4a.
+  - Plain-language guide: docs/dev-rule-check.md. Copyable workflow: docs/dev-rule-check/nxus-rule-check.yml, pinned to commit ca49288.
   - Self-test: `npm run test:rule-check`.
   - Not yet added to their repo.
 - **Next:**
