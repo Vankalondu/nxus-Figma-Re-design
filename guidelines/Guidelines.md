@@ -894,7 +894,8 @@ Board     Kanban layout (D-23, D-24, D-25): four boards, one per REPORT TYPE (Sc
           reports — not two, so nothing is squeezed (D-25). Not draggable:
           a report's type can't change. A type with nothing under the current list filter
           stays as a slim "No reports yet" column; archived types only with Show archived.
-Col head  "Short report" — name only, no count (D-24); beside it (wrapping under when narrow) the quiet
+Col head  "Short report" — name only, no count (D-24), in type-body (16px) EXTRABOLD so it
+          reads above the scout names (14px bold) (D-25); beside it (wrapping under when narrow) the quiet
           "3 of 5 grades ⌄" and the underlined "Hide report" — text buttons, because they sit
           inside a card. Hiding shows a toast "Short report hidden. Show it again from
           Grades." with Undo
@@ -1409,7 +1410,9 @@ grades; (3) column headings drop the "(3)" count.
 **D-25 · Three boards per row (3 Nov 2026).** Vanessa: three boards per row instead of four, so
 the type name, "5 of 5 grades" and Hide report sit on one line. Two columns of reports inside
 each board were tried the same day and dropped: the reports got squeezed (sources cut short,
-grades wrapping), so each board keeps one column of reports.
+grades wrapping), so each board keeps one column of reports. The type heading is 16px
+extrabold, bigger and bolder than the 14px bold scout names; 20px was tried and pushed the
+grades control and Hide report onto a second line.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

@@ -78,12 +78,12 @@ export const KanbanColumn = ({ tpl, reports, grades, totalGrades, pickerOpen, on
   return (
     <section aria-label={tpl.name}
       className="bg-surface-card border border-default rounded-[20px] shadow-[var(--shadow-lg)] min-w-0 flex flex-col">
-      <header className="px-3 pt-3 pb-2 border-b border-default flex flex-wrap items-center gap-x-3 gap-y-1">
-        <h3 className="type-body-sm font-heading font-semibold text-heading flex-1 min-w-0 flex flex-wrap items-center gap-x-2 gap-y-1">
+      <header className="px-3 pt-3 pb-2 border-b border-default flex flex-wrap items-center gap-x-2 gap-y-1">
+        <h3 className="type-body font-heading font-extrabold text-heading flex-1 min-w-0 flex flex-wrap items-center gap-x-2 gap-y-1">
           <span>{tpl.name}</span>
           {tpl.archived && <span className="type-micro bg-text-body/10 text-body rounded px-1 font-body font-bold">Archived</span>}
         </h3>
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <button data-grades-trigger onClick={onGrades} aria-haspopup="dialog" aria-expanded={!!pickerOpen}
             className={CARD_TEXT_BUTTON + ' tabular-nums'}>
             {grades.length} of {totalGrades} grades <ChevronDown size={13} className={pickerOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
