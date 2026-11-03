@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router';
 import { Sidebar } from '../components/Sidebar';
 import { EditPlayerModal } from '../components/EditPlayerModal';
@@ -169,6 +169,15 @@ export default function PlayerProfile() {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTabState] = useState(() => tabFromSlug(new URLSearchParams(location.search).get('tab')));
+  // On a narrow screen the player card stacks above the tabs, so a shared ?tab= link
+  // scrolls the tabs into view instead of landing on the card (D-23).
+  const tabsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (new URLSearchParams(location.search).has('tab') && window.matchMedia('(max-width: 1023px)').matches) {
+      tabsRef.current?.scrollIntoView({ block: 'start' });
+      tabsRef.current?.querySelector('[data-active]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+  }, []);
   const setActiveTab = (t: string) => {
     setActiveTabState(t);
     const params = new URLSearchParams(location.search);
@@ -635,11 +644,11 @@ export default function PlayerProfile() {
 
           {/* Right column */}
           <div className="flex-1 min-h-0 flex flex-col gap-6">
-            <div className="flex items-center shrink-0 min-w-0">
+            <div ref={tabsRef} className="scroll-mt-4 flex items-center shrink-0 min-w-0">
               {/* White card surface (D-20) */}
               <div className="flex items-center gap-1 bg-surface-card border border-default rounded-full p-1 shadow-[var(--shadow-lg)] overflow-x-auto hide-scrollbar max-w-full">
                 {tabs.map(t => (
-                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold type-body-sm transition-colors whitespace-nowrap shrink-0'}>{t}</button>
+                  <button key={t} data-active={activeTab === t || undefined} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold type-body-sm transition-colors whitespace-nowrap shrink-0'}>{t}</button>
                 ))}
               </div>
             </div>
