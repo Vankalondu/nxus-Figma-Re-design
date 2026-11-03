@@ -67,21 +67,6 @@ export const REPORT_TEMPLATES: ReportTemplate[] = [
     g('fit', 'First-team readiness'), g('val', 'Value for money'), g('cur', 'Current grade', 'CUR'),
     g('pot', 'Potential grade', 'POT'), nxt('nxt'), t('rec', 'Recommendation'),
   ] },
-  { id: 'weekly', name: 'Scout weekly report', list: 'Long', questions: [
-    g('ovr', 'Overall grade', 'GRD'), t('wk', 'Notes on the week'),
-  ] },
-  { id: 'match', name: 'Match report', list: 'Long', questions: [
-    g('inf', 'Influence on the game', 'INF'), g('dec', 'Decision-making', 'DEC'), g('wor', 'Work rate', 'WRK'),
-    g('cur', 'Current grade', 'CUR'), t('key', 'Key moments'),
-  ] },
-  { id: 'video', name: 'Video analysis report', list: 'Short', questions: [
-    g('fst', 'First touch', 'FTC'), g('mov', 'Movement off the ball', 'MOV'), g('fin', 'Finishing', 'FIN'),
-    g('pot', 'Potential grade', 'POT'), t('clips', 'Clips reviewed'),
-  ] },
-  { id: 'trial', name: 'Trial report', list: 'Target', questions: [
-    g('adp', 'Adaptation to the group', 'ADP'), g('lvl', 'Level vs first team', 'LVL'), g('att', 'Attitude', 'ATT'),
-    g('cur', 'Current grade', 'CUR'), g('pot', 'Potential grade', 'POT'), nxt('nxt'), t('ver', 'Verdict'),
-  ] },
   { id: 'short2', name: 'Short report 2', list: 'Short', archived: true, questions: [
     g('men', 'Ment – current', 'MEN'), g('pha', 'Phy 1 – current', 'PHA'), g('phb', 'Phy 2 – current', 'PHB'),
     g('po1', 'Pos 1 – current'), g('po2', 'Pos 2 – current'), g('plg', 'Player current grade', 'PLG'),
@@ -121,7 +106,7 @@ const pick = <T,>(arr: readonly T[], i: number) => arr[i % arr.length];
 
 /**
  * Example filed reports for a player — deterministic per player id. Even ids (db-0) get the
- * full set across eight report types so the Kanban wraps; odd ids (db-1) get a handful.
+ * full set across the four report types (D-24); odd ids (db-1) get a handful.
  */
 export function seedReports(playerId: string): FiledReport[] {
   const digits = playerId.replace(/\D/g, '');
@@ -145,7 +130,7 @@ export function seedReports(playerId: string): FiledReport[] {
     make(1, 'short', 'Short', 'vs AS Pikine', 'Oct 12, 2026', 'Oct 14, 2026'),
     make(2, 'long', 'Long', 'vs Diambars FC', 'Sep 28, 2026', 'Oct 2, 2026'),
     make(3, 'target', 'Target', 'vs Teungueth', 'Sep 14, 2026', 'Sep 20, 2026'),
-    make(4, 'weekly', 'Long', 'Week 41', 'Oct 10, 2026', 'Oct 11, 2026'),
+    make(4, 'scout', 'Long', 'vs Guédiawaye FC', 'Oct 10, 2026', 'Oct 11, 2026'),
     make(5, 'short2', 'Short', 'Highlight 1', 'Mar 3, 2025', 'Mar 9, 2025', true),
   ];
   if (n % 2 !== 0) return base;
@@ -157,12 +142,12 @@ export function seedReports(playerId: string): FiledReport[] {
     make(8, 'scout', 'Long', 'Highlight 4', 'Jun 2, 2026', 'Jun 4, 2026', false, 'Kwame Asante'),
     make(9, 'short', 'Short', 'Highlight 5', 'Oct 20, 2026', 'Oct 21, 2026', false, 'Tom Legg'),
     make(10, 'long', 'Short', 'vs Génération Foot B', 'Oct 5, 2026', 'Oct 7, 2026', false, 'David Mbugua'),
-    make(11, 'weekly', 'Long', 'Week 42', 'Oct 17, 2026', 'Oct 18, 2026', false, 'Sanoussy Sinare'),
-    make(12, 'weekly', 'Short', 'Week 43', 'Oct 24, 2026', 'Oct 25, 2026', false, 'Sanoussy Sinare'),
-    make(13, 'match', 'Long', 'vs Stade de Mbour', 'Sep 21, 2026', 'Sep 22, 2026', false, 'Kwame Asante'),
-    make(14, 'match', 'Target', 'vs Dakar Sacré-Cœur', 'Oct 26, 2026', 'Oct 27, 2026', false, 'David Mbugua'),
-    make(15, 'video', 'Short', 'Package F3', 'Oct 1, 2026', 'Oct 3, 2026', false, 'Sanoussy Sinare'),
-    make(16, 'video', 'Short', 'Package H2', 'Oct 15, 2026', 'Oct 16, 2026', false, 'Tom Legg'),
-    make(17, 'trial', 'Target', 'Trial week 1', 'Oct 28, 2026', 'Oct 30, 2026', false, 'Kwame Asante'),
+    make(11, 'scout', 'Long', 'vs Linguère', 'Oct 17, 2026', 'Oct 18, 2026', false, 'Sanoussy Sinare'),
+    make(12, 'short', 'Short', 'Highlight 6', 'Oct 24, 2026', 'Oct 25, 2026', false, 'Sanoussy Sinare'),
+    make(13, 'long', 'Long', 'vs Stade de Mbour', 'Sep 21, 2026', 'Sep 22, 2026', false, 'Kwame Asante'),
+    make(14, 'target', 'Target', 'vs Dakar Sacré-Cœur', 'Oct 26, 2026', 'Oct 27, 2026', false, 'David Mbugua'),
+    make(15, 'short', 'Short', 'Package F3', 'Oct 1, 2026', 'Oct 3, 2026', false, 'Sanoussy Sinare'),
+    make(16, 'long', 'Short', 'Package H2', 'Oct 15, 2026', 'Oct 16, 2026', false, 'Tom Legg'),
+    make(17, 'target', 'Target', 'Trial week 1', 'Oct 28, 2026', 'Oct 30, 2026', false, 'Kwame Asante'),
   ];
 }

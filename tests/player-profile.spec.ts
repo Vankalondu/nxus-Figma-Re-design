@@ -73,7 +73,7 @@ test.describe('Reports tab', () => {
     const errors = trackPageErrors(page);
     await openProfile(page, 'db-1', 'Reports');
     const short = page.getByRole('region', { name: 'Short report' });
-    await expect(short.getByRole('heading', { name: 'Short report (2)' })).toBeVisible();
+    await expect(short.getByRole('heading', { name: 'Short report', exact: true })).toBeVisible();
     await expect(short.getByText('POG', { exact: true }).first()).toBeVisible();
 
     await short.getByRole('button', { name: /5 of 5 grades/ }).click();
@@ -104,22 +104,24 @@ test.describe('Reports tab', () => {
   test('top-nav Add Report files a new report for this player', async ({ page }) => {
     await openProfile(page, 'db-1', 'Reports');
     await expect(page.getByRole('button', { name: 'New report' })).toHaveCount(0);
-    await expect(page.getByRole('region', { name: 'Scout weekly report' }).getByRole('listitem')).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Scout report' }).getByRole('listitem')).toHaveCount(1);
 
     await page.getByRole('button', { name: 'Add Report' }).click();
     const panel = page.getByRole('dialog', { name: 'New report' });
-    await panel.getByRole('button', { name: /Scout weekly report/ }).click();
+    await panel.getByRole('button', { name: /^Scout report/ }).click();
 
-    const sheet = page.getByRole('dialog', { name: 'Scout weekly report' });
+    const sheet = page.getByRole('dialog', { name: 'Scout report' });
     const save = sheet.getByRole('button', { name: 'Save report' });
     await expect(save).toBeDisabled();
-    await sheet.getByRole('radio', { name: 'A+' }).click();
+    for (const r of await sheet.getByRole('radio', { name: 'A+' }).all()) await r.click();
+    await expect(save).toBeDisabled(); // Next step still to give
+    await sheet.getByRole('radio', { name: /Monitor/ }).click();
     await expect(save).toBeEnabled();
     await save.click();
 
     await expect(sheet.getByText('Submitted', { exact: false })).toBeVisible();
     await sheet.getByRole('button', { name: 'Close report' }).click();
-    await expect(page.getByRole('region', { name: 'Scout weekly report' }).getByRole('listitem')).toHaveCount(2);
+    await expect(page.getByRole('region', { name: 'Scout report' }).getByRole('listitem')).toHaveCount(2);
   });
 });
 
@@ -142,37 +144,41 @@ test.describe('Player names', () => {
 test.describe('Reports Kanban (D-23)', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test('one column per report type, wrapping after five', async ({ page }) => {
+  test('four boards in one row, no counts, source and date under the scout name', async ({ page }) => {
     const errors = trackPageErrors(page);
     await openProfile(page, 'db-0', 'Reports');
     const cols = page.getByTestId('reports-kanban').locator(':scope > section');
-    await expect(cols).toHaveCount(8);
+    await expect(cols).toHaveCount(4);
     const tops = await cols.evaluateAll(els => els.map(e => Math.round(e.getBoundingClientRect().top)));
-    expect(tops.slice(0, 5).every(t => t === tops[0])).toBe(true);
-    expect(tops[5]).toBeGreaterThan(tops[0]);
+    expect(tops.every(t => t === tops[0])).toBe(true);
+    await expect(page.getByRole('heading', { level: 3, name: 'Scout report', exact: true })).toBeVisible();
 
     // Grouped by scout, code above each chip.
     const scout = page.getByRole('region', { name: 'Scout report' });
     await expect(scout.getByRole('group', { name: 'Tom Legg' }).getByRole('listitem')).toHaveCount(2);
     await expect(scout.getByText('MEN', { exact: true }).first()).toBeVisible();
+    // Source · date is one line, above (not inside) the grades card.
+    const meta = scout.getByText('vs Casa Sports').locator('xpath=..');
+    const box = await meta.boundingBox();
+    expect(box!.height).toBeLessThan(24);
+    expect(await meta.evaluate(el => el.parentElement?.tagName)).toBe('LI');
     expect(errors).toHaveLength(0);
   });
 
   test('All / Long / Short / Target filter by the list the player was on', async ({ page }) => {
     await openProfile(page, 'db-0', 'Reports');
     await page.getByRole('button', { name: /^Target\s*3$/ }).click();
-    await expect(page.getByRole('region', { name: 'Trial report' }).getByRole('listitem')).toHaveCount(1);
-    await expect(page.getByRole('region', { name: 'Match report' }).getByRole('listitem')).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Target report' }).getByRole('listitem')).toHaveCount(3);
     await expect(page.getByRole('region', { name: 'Long report' }).getByText('No reports yet')).toBeVisible();
   });
 
   test('hide a column, then Undo brings it back', async ({ page }) => {
     await openProfile(page, 'db-0', 'Reports');
-    await page.getByRole('region', { name: 'Trial report' }).getByRole('button', { name: 'Hide report' }).click();
-    await expect(page.getByText('Trial report hidden. Show it again from Grades.')).toBeVisible();
-    await expect(page.getByRole('region', { name: 'Trial report' })).toHaveCount(0);
+    await page.getByRole('region', { name: 'Target report' }).getByRole('button', { name: 'Hide report' }).click();
+    await expect(page.getByText('Target report hidden. Show it again from Grades.')).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Target report' })).toHaveCount(0);
     await page.getByRole('button', { name: 'Undo' }).click();
-    await expect(page.getByRole('region', { name: 'Trial report' })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Target report' })).toBeVisible();
   });
 
   test('a shared link opens the Reports tab with no login, as the right player', async ({ page }) => {

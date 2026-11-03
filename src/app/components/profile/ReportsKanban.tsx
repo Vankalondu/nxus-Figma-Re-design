@@ -26,24 +26,27 @@ export function groupByScout(reports: FiledReport[]): ScoutGroup[] {
 }
 
 /**
- * The column grid (P-CO22, D-23): report types wrap into rows — up to five per row on a
- * desktop, two on a tablet, one on a phone — and never scroll sideways. The 176px floor keeps
- * four grade cells per row readable inside a card.
+ * The column grid (P-CO22, D-24): four boards per row on a desktop, two on a tablet, one on a
+ * phone — never sideways scrolling. A fifth report type would wrap into a new row below.
  */
 export const KANBAN_GRID =
-  'grid gap-3 items-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(max(176px,calc((100%_-_48px)/5)),1fr))]';
+  'grid gap-3 items-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(max(176px,calc((100%_-_36px)/4)),1fr))]';
 
-/** One report: what was watched and when, then its grades with the code above each chip. */
+/**
+ * One report (D-24): what was reported on and the date on ONE line under the scout name,
+ * outside the card; the card holds only the grades, code above each chip.
+ */
 export const KanbanReportCard = ({ report, typeName, grades, onOpen }: {
   report: FiledReport; typeName: string; grades: TemplateQuestion[]; onOpen: (r: FiledReport) => void;
 }) => (
   <li onClick={() => onOpen(report)} tabIndex={0} aria-label={`${typeName} by ${report.scout}, ${report.source}`}
     onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(report); } }}
-    className="cursor-pointer rounded-[12px] border border-default bg-surface-card px-2 py-2 flex flex-col gap-2 hover:bg-surface-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus transition-colors">
-    <p className="type-caption font-body font-medium text-muted flex flex-wrap items-center gap-x-1">
-      <span>{report.source} ·</span> <span className="whitespace-nowrap">{dayFirst(report.dateLabel)}</span>
-      {report.archived && <span className="type-micro bg-text-body/10 text-body rounded px-1 font-body font-bold">Archived</span>}
+    className="group/report cursor-pointer flex flex-col gap-1 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus">
+    <p className="px-1 type-caption font-body font-medium text-muted flex items-center gap-1 min-w-0 whitespace-nowrap">
+      <span className="truncate min-w-0" title={report.source}>{report.source}</span><span aria-hidden>·</span><span className="shrink-0">{dayFirst(report.dateLabel)}</span>
+      {report.archived && <span className="shrink-0 type-micro bg-text-body/10 text-body rounded px-1 font-body font-bold">Archived</span>}
     </p>
+    <div className="rounded-[12px] border border-default bg-surface-card px-2 py-2 group-hover/report:bg-surface-accent transition-colors">
     {grades.length > 0 ? (
       <dl className="grid gap-x-1 gap-y-2 grid-cols-[repeat(auto-fill,minmax(max(32px,calc((100%_-_16px)/5)),1fr))]">
         {grades.map(q => (
@@ -56,11 +59,12 @@ export const KanbanReportCard = ({ report, typeName, grades, onOpen }: {
         ))}
       </dl>
     ) : <p className="type-caption font-body font-medium text-body">All grades hidden</p>}
+    </div>
   </li>
 );
 
 /**
- * One report type as a column (P-CO22, D-23). Header: "Short report (2)" with the quiet
+ * One report type as a column (P-CO22, D-24). Header: the type name (no count) with the quiet
  * grades control and an underlined Hide report — both text buttons, because they sit inside
  * a card. Body: reports grouped by scout, the scout's name as the group heading. A type with
  * no reports under the current list filter stays as a slim "No reports yet" column.
@@ -75,7 +79,7 @@ export const KanbanColumn = ({ tpl, reports, grades, totalGrades, pickerOpen, on
       className="bg-surface-card border border-default rounded-[20px] shadow-[var(--shadow-lg)] min-w-0 flex flex-col">
       <header className="px-3 pt-3 pb-2 border-b border-default flex flex-wrap items-center gap-x-3 gap-y-1">
         <h3 className="type-body-sm font-heading font-semibold text-heading flex-1 min-w-[120px] flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span>{tpl.name} <span className="tabular-nums">({reports.length})</span></span>
+          <span>{tpl.name}</span>
           {tpl.archived && <span className="type-micro bg-text-body/10 text-body rounded px-1 font-body font-bold">Archived</span>}
         </h3>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -91,9 +95,9 @@ export const KanbanColumn = ({ tpl, reports, grades, totalGrades, pickerOpen, on
       ) : (
         <div className="p-2 flex flex-col gap-3">
           {groups.map(gp => (
-            <div key={gp.scout} role="group" aria-label={gp.scout} className="flex flex-col gap-2">
+            <div key={gp.scout} role="group" aria-label={gp.scout} className="flex flex-col gap-1">
               <h4 className="px-1 type-body-sm font-body font-bold text-strong truncate">{gp.scout}</h4>
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-3">
                 {gp.reports.map(r => <KanbanReportCard key={r.id} report={r} typeName={tpl.name} grades={grades} onOpen={onOpen} />)}
               </ul>
             </div>

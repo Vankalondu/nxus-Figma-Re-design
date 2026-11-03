@@ -888,20 +888,22 @@ Toolbar   filter colour (P-CO23): segmented All · Long · Short · Target with 
           the player was on when the report was filed, not the report type (D-23) ·
           Show archived (count) · Grades (P-CO21). No grade legend — scouts know the letters.
           New reports come from the top-nav "Add Report" (opens the panel with this player).
-Board     Kanban layout (D-23): one column per REPORT TYPE (Scout, Short, Long, Target,
-          Scout weekly, Match, …). Columns wrap into rows — up to 5 per row on desktop
-          (176px floor), 2 on tablet, 1 on phone — and never scroll sideways. Not draggable:
+Board     Kanban layout (D-23, D-24): four boards, one per REPORT TYPE (Scout, Short, Long,
+          Target) — 4 per row on desktop (176px floor), 2 on tablet, 1 on phone; a fifth
+          type would wrap below; never scrolls sideways. Not draggable:
           a report's type can't change. A type with nothing under the current list filter
           stays as a slim "No reports yet" column; archived types only with Show archived.
-Col head  "Short report (2)" — name + count; beside it (wrapping under when narrow) the quiet
+Col head  "Short report" — name only, no count (D-24); beside it (wrapping under when narrow) the quiet
           "3 of 5 grades ⌄" and the underlined "Hide report" — text buttons, because they sit
           inside a card. Hiding shows a toast "Short report hidden. Show it again from
           Grades." with Undo
 Groups    reports grouped by SCOUT: the scout name is the group heading (type-body-sm, bold,
           text-strong — the focus); the scout with the most recent report first, each
           scout's reports newest first
-Card      "Highlight 2 · 6 Jul 2025" in type-caption text-muted; grades as a grid of up to 5
-          per row with the CODE ABOVE each chip (full grade name on hover); more wrap
+Report    under the scout name, OUTSIDE the card: "Highlight 2 · 6 Jul 2025" on ONE line
+          (type-caption text-muted; a long source truncates, the date never wraps) (D-24)
+Card      grades only, as a grid of up to 5 per row with the CODE ABOVE each chip (full
+          grade name on hover); more wrap
 Panel     opens from the right (w-[520px], full width on phone), not a centred modal;
           Previous / Next follow the board order (column → scout → report)
   View    question left, grade chip right — a report fits on one screen
@@ -1396,6 +1398,12 @@ straight on a player's Reports tab with no login: profile tabs live in the addre
 (`?tab=reports`), and opening an account's address with no one signed in uses that account
 (prototype demo mode — a signed-in role is never overwritten); (4) direct profile links show
 the real player (looked up by id), not the placeholder.
+
+**D-24 · Four report boards (3 Nov 2026).** Vanessa: (1) the Reports board has four boards —
+Scout, Short, Long and Target report — four per row on desktop; the other example types
+(weekly, match, video, trial) were folded into these; (2) what was reported on and the date
+sit under the scout's name on one line, outside the grades card, so the card holds only
+grades; (3) column headings drop the "(3)" count.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was
