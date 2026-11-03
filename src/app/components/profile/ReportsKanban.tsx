@@ -26,11 +26,12 @@ export function groupByScout(reports: FiledReport[]): ScoutGroup[] {
 }
 
 /**
- * The column grid (P-CO22, D-24): four boards per row on a desktop, two on a tablet, one on a
- * phone — never sideways scrolling. A fifth report type would wrap into a new row below.
+ * The column grid (P-CO22, D-25): three boards per row on a desktop, two on a tablet, one on a
+ * phone — never sideways scrolling; the fourth wraps below. Three leaves room for the type
+ * name, the grades control and Hide report on one header line.
  */
 export const KANBAN_GRID =
-  'grid gap-3 items-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(max(176px,calc((100%_-_36px)/4)),1fr))]';
+  'grid gap-3 items-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(max(176px,calc((100%_-_24px)/3)),1fr))]';
 
 /**
  * One report (D-24): what was reported on and the date on ONE line under the scout name,
@@ -78,7 +79,7 @@ export const KanbanColumn = ({ tpl, reports, grades, totalGrades, pickerOpen, on
     <section aria-label={tpl.name}
       className="bg-surface-card border border-default rounded-[20px] shadow-[var(--shadow-lg)] min-w-0 flex flex-col">
       <header className="px-3 pt-3 pb-2 border-b border-default flex flex-wrap items-center gap-x-3 gap-y-1">
-        <h3 className="type-body-sm font-heading font-semibold text-heading flex-1 min-w-[120px] flex flex-wrap items-center gap-x-2 gap-y-1">
+        <h3 className="type-body-sm font-heading font-semibold text-heading flex-1 min-w-0 flex flex-wrap items-center gap-x-2 gap-y-1">
           <span>{tpl.name}</span>
           {tpl.archived && <span className="type-micro bg-text-body/10 text-body rounded px-1 font-body font-bold">Archived</span>}
         </h3>
@@ -93,9 +94,9 @@ export const KanbanColumn = ({ tpl, reports, grades, totalGrades, pickerOpen, on
       {groups.length === 0 ? (
         <p className="px-3 py-3 type-caption font-body font-medium text-muted">No reports yet</p>
       ) : (
-        <div className="p-2 flex flex-col gap-3">
+        <div className="p-2 columns-2 gap-2">
           {groups.map(gp => (
-            <div key={gp.scout} role="group" aria-label={gp.scout} className="flex flex-col gap-1">
+            <div key={gp.scout} role="group" aria-label={gp.scout} className="flex flex-col gap-1 break-inside-avoid mb-3">
               <h4 className="px-1 type-body-sm font-body font-bold text-strong truncate">{gp.scout}</h4>
               <ul className="flex flex-col gap-3">
                 {gp.reports.map(r => <KanbanReportCard key={r.id} report={r} typeName={tpl.name} grades={grades} onOpen={onOpen} />)}

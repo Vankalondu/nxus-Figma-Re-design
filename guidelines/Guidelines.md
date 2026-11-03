@@ -888,9 +888,10 @@ Toolbar   filter colour (P-CO23): segmented All · Long · Short · Target with 
           the player was on when the report was filed, not the report type (D-23) ·
           Show archived (count) · Grades (P-CO21). No grade legend — scouts know the letters.
           New reports come from the top-nav "Add Report" (opens the panel with this player).
-Board     Kanban layout (D-23, D-24): four boards, one per REPORT TYPE (Scout, Short, Long,
-          Target) — 4 per row on desktop (176px floor), 2 on tablet, 1 on phone; a fifth
-          type would wrap below; never scrolls sideways. Not draggable:
+Board     Kanban layout (D-23, D-24, D-25): four boards, one per REPORT TYPE (Scout, Short,
+          Long, Target) — 3 per row on desktop so the header fits one line, the fourth wraps
+          below; 2 on tablet, 1 on phone; never scrolls sideways. Inside a board the scout
+          groups flow in TWO columns (a scout's reports stay together) so no width is wasted. Not draggable:
           a report's type can't change. A type with nothing under the current list filter
           stays as a slim "No reports yet" column; archived types only with Show archived.
 Col head  "Short report" — name only, no count (D-24); beside it (wrapping under when narrow) the quiet
@@ -1404,6 +1405,11 @@ Scout, Short, Long and Target report — four per row on desktop; the other exam
 (weekly, match, video, trial) were folded into these; (2) what was reported on and the date
 sit under the scout's name on one line, outside the grades card, so the card holds only
 grades; (3) column headings drop the "(3)" count.
+
+**D-25 · Three boards per row (3 Nov 2026).** Vanessa: three boards per row instead of four, so
+the type name, "5 of 5 grades" and Hide report sit on one line; and two columns of reports
+inside each board so the horizontal space isn't wasted. Trade-off accepted: in the narrower
+report columns a long source is cut with "…" (full text on hover) and grades wrap three per row.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

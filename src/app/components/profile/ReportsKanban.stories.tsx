@@ -16,8 +16,8 @@ const meta = {
     docs: {
       description: {
         component:
-          'The Reports tab as a Kanban-style board (**P-CO22**, **D-24**). Four boards, one per report type; four per row on ' +
-          'desktop (176px floor), two on tablet, one on phone — never sideways scrolling. Not ' +
+          'The Reports tab as a Kanban-style board (**P-CO22**, **D-24**). Four boards, one per report type; three per row on ' +
+          'desktop (the fourth wraps), scout groups in two columns inside each board (176px floor), two on tablet, one on phone — never sideways scrolling. Not ' +
           'draggable: a report\'s type can\'t change.\n\n' +
           'Inside a column, reports are grouped by scout — the scout name is the group heading — newest first. Under the ' +
           'name, on one line, what was reported on and the date; the card below holds only the grades, with the ' +
@@ -27,14 +27,14 @@ const meta = {
     },
   },
   args: { ...col('scout'), onGrades: noop, onHide: noop, onOpen: noop },
-  render: (args) => <div className="w-[240px]"><KanbanColumn {...args} /></div>,
+  render: (args) => <div className="w-[320px]"><KanbanColumn {...args} /></div>,
 } satisfies Meta<typeof KanbanColumn>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Column: Story = {
-  parameters: { docs: { description: { story: 'One column at its desktop width (~236px).' } } },
+  parameters: { docs: { description: { story: 'One board at its desktop width (~320px): scout groups in two columns.' } } },
 }
 
 export const EmptyColumn: Story = {
@@ -57,7 +57,7 @@ export const Card: Story = {
 export const Board: Story = {
   parameters: {
     layout: 'fullscreen',
-    docs: { description: { story: 'The four report types in the profile content width: one row of four.' } },
+    docs: { description: { story: 'The four report types in the profile content width: three in the first row, the fourth below.' } },
   },
   render: () => (
     <div className="p-6 bg-surface-page w-[1018px]">

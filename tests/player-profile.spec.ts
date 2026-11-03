@@ -144,13 +144,17 @@ test.describe('Player names', () => {
 test.describe('Reports Kanban (D-23)', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test('four boards in one row, no counts, source and date under the scout name', async ({ page }) => {
+  test('three boards per row, header on one line, two report columns, source and date under the scout name', async ({ page }) => {
     const errors = trackPageErrors(page);
     await openProfile(page, 'db-0', 'Reports');
     const cols = page.getByTestId('reports-kanban').locator(':scope > section');
     await expect(cols).toHaveCount(4);
     const tops = await cols.evaluateAll(els => els.map(e => Math.round(e.getBoundingClientRect().top)));
-    expect(tops.every(t => t === tops[0])).toBe(true);
+    expect(tops.slice(0, 3).every(t => t === tops[0])).toBe(true);
+    expect(tops[3]).toBeGreaterThan(tops[0]);
+    // Name, "x of y grades" and Hide report share one header line.
+    const headH = await cols.locator(':scope > header').evaluateAll(hs => hs.map(h => h.getBoundingClientRect().height));
+    expect(Math.max(...headH)).toBeLessThan(44);
     await expect(page.getByRole('heading', { level: 3, name: 'Scout report', exact: true })).toBeVisible();
 
     // Grouped by scout, code above each chip.
