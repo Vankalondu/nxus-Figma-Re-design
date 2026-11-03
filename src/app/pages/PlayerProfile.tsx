@@ -10,6 +10,7 @@ import { PhotoLibrary } from '../components/profile/PhotoLibrary';
 import { ReportsPanel } from '../components/profile/ReportsPanel';
 import { SegmentedToggle } from '../components/PlayersTableKit';
 import { accountBase } from '../components/PlayerLink';
+import { ALL_GENERATED_PLAYERS } from '../components/SeniorLeadPlayersPage';
 import { FILTER_PILL, FILTER_INPUT, SECONDARY_BUTTON } from '../components/controlStyles';
 import { Calendar, Trophy, Activity, ShieldCheck, Search, ChevronDown, ChevronRight, Edit2, Trash2, Plus, Play, Video, Check, TrendingUp, Footprints, Ruler, Scale, Flag, Clock, X, CornerDownRight, MessageSquare } from 'lucide-react';
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, BarChart, Bar, XAxis, ResponsiveContainer, Cell } from 'recharts';
@@ -143,18 +144,45 @@ const Donut = ({ pct, center, label }: { pct: number; center: string; label: str
   );
 };
 
+// Tabs in the address (?tab=reports) so a shared link opens straight on a tab (D-23).
+const TAB_SLUGS: Record<string, string> = {
+  'Videos & Highlights': 'videos', 'Statistics': 'statistics', 'Career History': 'career',
+  'Notes': 'notes', 'Reports': 'reports', 'Photo Library': 'photos',
+};
+const tabFromSlug = (slug: string | null) =>
+  Object.keys(TAB_SLUGS).find(t => TAB_SLUGS[t] === (slug ?? '').toLowerCase()) ?? 'Videos & Highlights';
+
+// A direct link carries no navigation state, so look the player up by id in the mock
+// players — the same fields a click from the Players page passes.
+function lookupPlayer(id?: string) {
+  const p = id ? ALL_GENERATED_PLAYERS.find(x => x.id === id) : undefined;
+  if (!p) return null;
+  return {
+    id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality,
+    primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team,
+    matchVideos: p.matchVideos, highlightVideos: p.highlightVideos,
+  };
+}
+
 export default function PlayerProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState('Videos & Highlights');
+  const [activeTab, setActiveTabState] = useState(() => tabFromSlug(new URLSearchParams(location.search).get('tab')));
+  const setActiveTab = (t: string) => {
+    setActiveTabState(t);
+    const params = new URLSearchParams(location.search);
+    params.set('tab', TAB_SLUGS[t]);
+    // replace, not push, and keep the navigation state (the clicked player and the trail)
+    navigate({ search: `?${params}` }, { replace: true, state: location.state });
+  };
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [videoFilter, setVideoFilter] = useState('All');
   const [imgError, setImgError] = useState(false);
   // Top-nav "Add Report" on the profile opens the new-report flow for this player (D-20).
   const [newReportRequest, setNewReportRequest] = useState(0);
 
-  const passed = (location.state && (location.state as any).player) || null;
+  const passed = (location.state && (location.state as any).player) || lookupPlayer(id);
   const cleanPassed = passed ? Object.fromEntries(Object.entries(passed).filter(([, v]) => v !== undefined && v !== null && v !== '')) : {};
   const [player, setPlayer] = useState(() => {
     const merged: any = { ...MOCK_DEFAULTS, id: id || MOCK_DEFAULTS.id, ...cleanPassed };
@@ -541,7 +569,7 @@ export default function PlayerProfile() {
     <div className="flex lg:h-screen bg-surface-page font-body text-strong lg:overflow-hidden">
       <Sidebar />
 
-      <main className="flex-1 flex flex-col lg:overflow-hidden relative w-full lg:h-full pt-6">
+      <main className="flex-1 min-w-0 flex flex-col lg:overflow-hidden relative w-full lg:h-full pt-6">
         <TopNav
           responsive
           sticky={false}

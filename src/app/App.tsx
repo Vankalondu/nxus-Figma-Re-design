@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter, Outlet, Navigate } from 'react-router';
+import { RouterProvider, createBrowserRouter, Outlet, Navigate, useLocation } from 'react-router';
 import { ThemeProvider } from 'next-themes';
 import LoginCredentials from './pages/LoginCredentials';
 import LoginSuccess from './pages/LoginSuccess';
@@ -12,7 +12,30 @@ import PlayerProfile from './pages/PlayerProfile';
 import AdminPage from './pages/AdminPage';
 import { Toaster } from './components/ui/sonner';
 
+// Demo mode for shared links (D-23): someone who opens an account's address without signing
+// in (e.g. the PM following /lead-scout/player/db-0?tab=reports) is treated as that account,
+// so the page and the rest of the app work. A signed-in role is never overwritten.
+const ACCOUNT_ROLES: [prefix: string, role: string, userName?: string][] = [
+  ['/country-scout', 'Country Scout'], ['/head-scout', 'Head Scout'],
+  ['/lead-scout', 'Lead Scout'], ['/senior-scout', 'Senior Scout'],
+  ['/video-manager', 'Video Manager'],
+  ['/package-uploader', 'Package Uploader', 'Ama Serwaa'],
+  ['/full-match-uploader', 'Full Match Uploader', 'Zawadi Juma'],
+];
+function adoptRoleFromUrl(pathname: string) {
+  try {
+    if (sessionStorage.getItem('loginRole') || sessionStorage.getItem('userRole')) return;
+    const hit = ACCOUNT_ROLES.find(([p]) => pathname === p || pathname.startsWith(p + '/'));
+    if (!hit) return;
+    sessionStorage.setItem('userRole', hit[1]);
+    sessionStorage.setItem('loginRole', hit[1]);
+    if (hit[2]) sessionStorage.setItem('userName', hit[2]);
+  } catch { /* storage blocked: the page still renders as the default account */ }
+}
+
 function RootLayout() {
+  // Runs during render on purpose: the sidebar and dashboards read the role while rendering.
+  adoptRoleFromUrl(useLocation().pathname);
   return (
     <>
       <Outlet />
