@@ -881,22 +881,34 @@ one grade meant scrolling past all the others, and there were two grade controls
 overlapping jobs.
 
 ### P-CO22 — Reports tab and report panel (player profile)
-Canonical implementation: `src/app/components/profile/ReportsPanel.tsx` + `ReportSheet.tsx`;
-example templates in `src/app/data/profileReports.ts`.
+Canonical implementation: `src/app/components/profile/ReportsPanel.tsx` + `ReportsKanban.tsx`
++ `ReportSheet.tsx`; example templates in `src/app/data/profileReports.ts`.
 ```
-Toolbar   filter colour (P-CO23): segmented All · Long · Short · Target with counts ·
+Toolbar   filter colour (P-CO23): segmented All · Long · Short · Target with counts — the LIST
+          the player was on when the report was filed, not the report type (D-23) ·
           Show archived (count) · Grades (P-CO21). No grade legend — scouts know the letters.
           New reports come from the top-nav "Add Report" (opens the panel with this player).
-Card head "Short report (2)" — name + count only; on the same line, right: "3 of 5 grades ⌄"
-          (quiet text button) and "Hide report" (underlined text button). Hiding shows a
-          toast "Short report hidden. Show it again from Grades." with Undo
-Rows      scout name first (text-strong, the focus), then "Highlight 2 · 6 Jul 2025" in
-          12px text-muted; grades in a grid of max 5 per row (code label above each chip,
-          full grade name on hover); more than five wrap to a second grid row
-Panel     opens from the right (w-[520px], full width on phone), not a centred modal
-  View    question left, grade chip right — a report fits on one screen; Previous / Next
+Board     Kanban layout (D-23): one column per REPORT TYPE (Scout, Short, Long, Target,
+          Scout weekly, Match, …). Columns wrap into rows — up to 5 per row on desktop
+          (176px floor), 2 on tablet, 1 on phone — and never scroll sideways. Not draggable:
+          a report's type can't change. A type with nothing under the current list filter
+          stays as a slim "No reports yet" column; archived types only with Show archived.
+Col head  "Short report (2)" — name + count; beside it (wrapping under when narrow) the quiet
+          "3 of 5 grades ⌄" and the underlined "Hide report" — text buttons, because they sit
+          inside a card. Hiding shows a toast "Short report hidden. Show it again from
+          Grades." with Undo
+Groups    reports grouped by SCOUT: the scout name is the group heading (type-body-sm, bold,
+          text-strong — the focus); the scout with the most recent report first, each
+          scout's reports newest first
+Card      "Highlight 2 · 6 Jul 2025" in type-caption text-muted; grades as a grid of up to 5
+          per row with the CODE ABOVE each chip (full grade name on hover); more wrap
+Panel     opens from the right (w-[520px], full width on phone), not a centred modal;
+          Previous / Next follow the board order (column → scout → report)
+  View    question left, grade chip right — a report fits on one screen
   Edit    each grade is one row of buttons (A+ A B C · T M D); Save once every grade is given
   New     choose the report type → the same panel in edit mode, player filled in
+Link      the profile tab is in the address (?tab=reports|photos|notes|videos|statistics|
+          career), so a shared link opens straight on it
 ```
 
 ### P-CO23 — Shared control looks
@@ -1374,6 +1386,16 @@ little denser, because each step carries its own line height (12px text sits on 
 18px). The rule is shared with the devs' checker (`.github/actions/nxus-rule-check/rules.mjs`),
 so both read the scale the same way. A reviewed exception carries
 `nxus-ignore L-TY3: <reason>` on the line; today only text drawn inside images uses it.
+
+**D-23 · Reports Kanban and the share link (3 Nov 2026).** Vanessa: (1) the profile Reports
+tab becomes a Kanban-style board — one column per report type (there may be ~10), wrapping
+into rows of five ("5 columns above and 5 below"), reports grouped by scout inside each
+column, codes above the grade chips (P-CO22); (2) the All / Long / Short / Target buttons stay,
+and filter by the list the player was on, not by report type; (3) a link for the PM opens
+straight on a player's Reports tab with no login: profile tabs live in the address
+(`?tab=reports`), and opening an account's address with no one signed in uses that account
+(prototype demo mode — a signed-in role is never overwritten); (4) direct profile links show
+the real player (looked up by id), not the placeholder.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

@@ -1,28 +1,24 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { GraduationCap, Archive, ChevronDown } from 'lucide-react';
+import { GraduationCap, Archive } from 'lucide-react';
 import { toast } from 'sonner';
 import { SegmentedToggle } from '../PlayersTableKit';
-import { FILTER_PILL, FILTER_PILL_ACTIVE, CARD_TEXT_BUTTON } from '../controlStyles';
-import { GradeChip } from './GradeChip';
+import { FILTER_PILL, FILTER_PILL_ACTIVE } from '../controlStyles';
 import { GradesPicker, shownGrades, useGradeVisibility } from './GradesPicker';
 import { ReportSheet, SheetPlayer, SheetState } from './ReportSheet';
+import { KANBAN_GRID, KanbanColumn, groupByScout } from './ReportsKanban';
 import { FiledReport, ReportList, TEMPLATES, gradeQuestions, seedReports, templateById } from '../../data/profileReports';
 
 type Seg = 'All' | ReportList;
 const today = () => new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-/** "Jul 6, 2025" → "6 Jul 2025" (falls back to the label as given). */
-const dayFirst = (label: string) => {
-  const m = label.match(/^([A-Za-z]{3})\s+(\d{1,2}),\s*(\d{4})$/);
-  return m ? `${m[2]} ${m[1]} ${m[3]}` : label;
-};
 
 /**
- * Reports tab on the player profile (P-CO22, D-19, D-20). Same for every account (P-L3).
- * Toolbar (filter colour): list segments with counts, Show archived, Grades (two-panel
- * picker). New reports come from the top-nav "Add Report" (`newReportRequest`).
- * One light card per report type: "Short report (2)" with its grades control and Hide
- * report on the same line; each row leads with the scout, then what was watched and when,
- * then the grades in a grid of up to five.
+ * Reports tab on the player profile (P-CO22, D-19, D-20, D-23). Same for every account (P-L3).
+ * Toolbar (filter colour): list segments with counts — the list the player was on when the
+ * report was filed — Show archived, Grades (two-panel picker). New reports come from the
+ * top-nav "Add Report" (`newReportRequest`).
+ * Kanban layout: one column per report type, wrapping into rows of up to five; inside each,
+ * reports grouped by scout with the code above every grade chip. Not draggable — a report's
+ * type can't change.
  */
 export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
   playerId: string; player: SheetPlayer;
@@ -39,21 +35,24 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
   useEffect(() => { if (newReportRequest > 0) setSheet({ mode: 'choose' }); }, [newReportRequest]);
 
   const live = reports.filter(r => showArchived || !r.archived);
+  // All / Long / Short / Target filter by the list the player was on, not by report type (D-23).
   const counts = useMemo(() => {
     const c: Record<Seg, number> = { All: live.length, Long: 0, Short: 0, Target: 0 };
-    live.forEach(r => { c[templateById(r.templateId).list]++; });
+    live.forEach(r => { c[r.list]++; });
     return c;
   }, [live]);
   const archivedCount = reports.filter(r => r.archived).length;
-  const visible = live.filter(r => seg === 'All' || templateById(r.templateId).list === seg);
+  const visible = live.filter(r => seg === 'All' || r.list === seg);
 
-  // Sections in template order; hidden types drop out (they come back from the Grades picker).
-  const sections = TEMPLATES
-    .map(t => ({ tpl: t, rows: visible.filter(r => r.templateId === t.id) }))
-    .filter(s => s.rows.length > 0 && !vis.hiddenTypes.includes(s.tpl.id));
-  const hiddenWithReports = TEMPLATES.filter(t => vis.hiddenTypes.includes(t.id) && visible.some(r => r.templateId === t.id));
+  // One column per report type, in template order. A type with nothing under the current
+  // list stays as an empty column; archived types only appear with Show archived; hidden
+  // types drop out (they come back from the Grades picker).
+  const columns = TEMPLATES
+    .filter(t => !vis.hiddenTypes.includes(t.id) && (!t.archived || showArchived))
+    .map(t => ({ tpl: t, rows: visible.filter(r => r.templateId === t.id) }));
+  const hiddenTypes = TEMPLATES.filter(t => vis.hiddenTypes.includes(t.id) && (!t.archived || showArchived));
   // Previous / Next in the sheet walks the reports in the order they're shown.
-  const order = sections.flatMap(s => s.rows);
+  const order = columns.flatMap(c => groupByScout(c.rows).flatMap(gp => gp.reports));
 
   const openReport = (r: FiledReport) => setSheet({ mode: 'view', report: r });
   const pos = sheet && sheet.mode === 'view' ? order.findIndex(r => r.id === sheet.report.id) : -1;
@@ -67,8 +66,7 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
   const save = (r: FiledReport, isNew: boolean) => {
     setReports(prev => isNew ? [r, ...prev] : prev.map(x => x.id === r.id ? r : x));
     if (isNew) {
-      const list = templateById(r.templateId).list;
-      if (seg !== 'All' && seg !== list) setSeg('All');
+      if (seg !== 'All' && seg !== r.list) setSeg('All');
       if (vis.hiddenTypes.includes(r.templateId)) setVis({ ...vis, hiddenTypes: vis.hiddenTypes.filter(x => x !== r.templateId) });
     }
     setSheet({ mode: 'view', report: r });
@@ -106,72 +104,29 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
         </div>
       </div>
 
-      {/* Sections */}
-      <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar flex flex-col gap-4 pb-2">
-        {sections.map(({ tpl, rows }) => {
-          const cols = shownGrades(tpl, vis);
-          const total = gradeQuestions(tpl).length;
-          return (
-            <section key={tpl.id} className="bg-surface-card border border-default rounded-[20px] shadow-[var(--shadow-lg)]" aria-label={tpl.name}>
-              <header className="px-5 py-3 border-b border-default flex flex-wrap items-center gap-x-4 gap-y-1">
-                <h3 className="font-heading font-bold type-body text-heading flex items-center gap-2 min-w-0 flex-1">
-                  <span className="truncate">{tpl.name} <span className="tabular-nums">({rows.length})</span></span>
-                  {tpl.archived && <span className="bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold type-micro shrink-0">Archived</span>}
-                </h3>
-                <div className="flex items-center gap-4 shrink-0">
-                  <button data-grades-trigger onClick={() => setPicker(p => p && p.from === tpl.id ? null : { from: tpl.id, type: tpl.id })}
-                    aria-haspopup="dialog" aria-expanded={picker?.from === tpl.id} className={CARD_TEXT_BUTTON + ' tabular-nums'}>
-                    {cols.length} of {total} grades <ChevronDown size={13} className={picker?.from === tpl.id ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                  </button>
-                  <button onClick={() => hideType(tpl.id, tpl.name)} className={CARD_TEXT_BUTTON + ' underline underline-offset-2'}>Hide report</button>
-                </div>
-              </header>
-              <ul>
-                {rows.map(r => (
-                  <li key={r.id} onClick={() => openReport(r)} tabIndex={0} aria-label={`${tpl.name} by ${r.scout}`}
-                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReport(r); } }}
-                    className="cursor-pointer px-5 py-3 flex flex-col lg:flex-row lg:items-start gap-3 lg:gap-6 hover:bg-surface-accent focus-visible:outline-none focus-visible:bg-surface-accent border-b border-default/60 last:border-0 last:rounded-b-[20px]">
-                    {/* The scout is the focus; what was watched + when sits under it, smaller and lighter */}
-                    <div className="lg:w-[220px] lg:shrink-0 min-w-0">
-                      <div className="font-body font-bold type-body-sm text-strong flex items-center gap-2 min-w-0">
-                        <span className="truncate">{r.scout}</span>
-                        {r.archived && <span className="bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold type-micro shrink-0">Archived</span>}
-                      </div>
-                      <div className="font-body font-medium type-caption text-muted mt-0.5">{r.source} · {dayFirst(r.dateLabel)}</div>
-                    </div>
-                    {cols.length > 0 ? (
-                      <dl className="grid grid-cols-5 gap-x-3 gap-y-2 flex-1 min-w-0 max-w-[480px]">
-                        {cols.map(q => (
-                          <div key={q.id} className="flex flex-col items-start gap-1 min-w-0">
-                            <dt className="font-mono font-bold type-micro uppercase text-muted truncate max-w-full">
-                              <abbr title={q.label} className="no-underline cursor-help">{q.code}</abbr>
-                            </dt>
-                            <dd><GradeChip value={r.answers[q.id]} nxt={q.kind === 'nxt'} title={`${q.label}: ${r.answers[q.id] ?? '–'}`} /></dd>
-                          </div>
-                        ))}
-                      </dl>
-                    ) : <p className="font-body font-medium type-caption text-body">All grades hidden</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })}
-
-        {sections.length === 0 && (
-          <div className="flex flex-col items-center justify-center text-center gap-3 border-2 border-dashed border-default rounded-[20px] px-6 py-10">
-            <p className="font-body font-medium type-body-sm text-body">
-              {visible.length === 0 ? `No ${seg === 'All' ? '' : seg.toLowerCase() + ' list '}reports yet.` : 'Every report type with reports here is hidden.'}
-            </p>
-            {visible.length === 0
-              ? <button onClick={() => setSheet({ mode: 'choose' })} className="font-body font-bold type-body-sm text-link hover:underline">File the first report</button>
-              : <button onClick={() => setVis({ ...vis, hiddenTypes: [] })} className="font-body font-bold type-body-sm text-link hover:underline">Show all report types</button>}
+      {/* Kanban: one column per report type, wrapping into rows of up to five (D-23) */}
+      <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar flex flex-col gap-3 pb-2">
+        {columns.length > 0 && (
+          <div className={KANBAN_GRID} data-testid="reports-kanban">
+            {columns.map(({ tpl, rows }) => (
+              <KanbanColumn key={tpl.id} tpl={tpl} reports={rows} grades={shownGrades(tpl, vis)} totalGrades={gradeQuestions(tpl).length}
+                pickerOpen={picker?.from === tpl.id}
+                onGrades={() => setPicker(p => p && p.from === tpl.id ? null : { from: tpl.id, type: tpl.id })}
+                onHide={() => hideType(tpl.id, tpl.name)} onOpen={openReport} />
+            ))}
           </div>
         )}
-        {sections.length > 0 && hiddenWithReports.length > 0 && (
-          <p className="font-body font-medium type-caption text-body">
-            Hidden: {hiddenWithReports.map(t => t.name).join(', ')} ·{' '}
-            <button data-grades-trigger onClick={() => setPicker({ from: 'toolbar', type: hiddenWithReports[0].id })} className="font-bold text-link hover:underline">Show from Grades</button>
+
+        {columns.length === 0 && (
+          <div className="flex flex-col items-center justify-center text-center gap-3 border-2 border-dashed border-default rounded-[20px] px-6 py-10">
+            <p className="type-body-sm font-body font-medium text-body">Every report type is hidden.</p>
+            <button onClick={() => setVis({ ...vis, hiddenTypes: [] })} className="type-body-sm font-body font-bold text-link hover:underline">Show all report types</button>
+          </div>
+        )}
+        {columns.length > 0 && hiddenTypes.length > 0 && (
+          <p className="type-caption font-body font-medium text-body">
+            Hidden: {hiddenTypes.map(t => t.name).join(", ")} ·{" "}
+            <button data-grades-trigger onClick={() => setPicker({ from: "toolbar", type: hiddenTypes[0].id })} className="font-bold text-link hover:underline">Show from Grades</button>
           </p>
         )}
       </div>
@@ -183,7 +138,7 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
           onNext={pos >= 0 && pos < order.length - 1 ? () => openReport(order[pos + 1]) : undefined}
           onEdit={() => sheet.mode === 'view' && setSheet({ mode: 'edit', report: sheet.report, isNew: false })}
           onChoose={tid => setSheet({ mode: 'edit', isNew: true, report: {
-            id: `${playerId}-new${Date.now()}`, templateId: tid, scout: 'You', source: 'Profile', dateLabel: today(), submitted: today(), answers: {},
+            id: `${playerId}-new${Date.now()}`, templateId: tid, list: templateById(tid).list, scout: 'You', source: 'Profile', dateLabel: today(), submitted: today(), answers: {},
           } })}
           onSave={save}
           onCancelEdit={() => sheet.mode === 'edit' && (sheet.isNew ? setSheet({ mode: 'choose' }) : setSheet({ mode: 'view', report: sheet.report }))}

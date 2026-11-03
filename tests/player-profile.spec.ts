@@ -138,3 +138,49 @@ test.describe('Player names', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Kofi Mensah' })).toBeVisible();
   });
 });
+
+test.describe('Reports Kanban (D-23)', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
+  test('one column per report type, wrapping after five', async ({ page }) => {
+    const errors = trackPageErrors(page);
+    await openProfile(page, 'db-0', 'Reports');
+    const cols = page.getByTestId('reports-kanban').locator(':scope > section');
+    await expect(cols).toHaveCount(8);
+    const tops = await cols.evaluateAll(els => els.map(e => Math.round(e.getBoundingClientRect().top)));
+    expect(tops.slice(0, 5).every(t => t === tops[0])).toBe(true);
+    expect(tops[5]).toBeGreaterThan(tops[0]);
+
+    // Grouped by scout, code above each chip.
+    const scout = page.getByRole('region', { name: 'Scout report' });
+    await expect(scout.getByRole('group', { name: 'Tom Legg' }).getByRole('listitem')).toHaveCount(2);
+    await expect(scout.getByText('MEN', { exact: true }).first()).toBeVisible();
+    expect(errors).toHaveLength(0);
+  });
+
+  test('All / Long / Short / Target filter by the list the player was on', async ({ page }) => {
+    await openProfile(page, 'db-0', 'Reports');
+    await page.getByRole('button', { name: /^Target\s*3$/ }).click();
+    await expect(page.getByRole('region', { name: 'Trial report' }).getByRole('listitem')).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Match report' }).getByRole('listitem')).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Long report' }).getByText('No reports yet')).toBeVisible();
+  });
+
+  test('hide a column, then Undo brings it back', async ({ page }) => {
+    await openProfile(page, 'db-0', 'Reports');
+    await page.getByRole('region', { name: 'Trial report' }).getByRole('button', { name: 'Hide report' }).click();
+    await expect(page.getByText('Trial report hidden. Show it again from Grades.')).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Trial report' })).toHaveCount(0);
+    await page.getByRole('button', { name: 'Undo' }).click();
+    await expect(page.getByRole('region', { name: 'Trial report' })).toBeVisible();
+  });
+
+  test('a shared link opens the Reports tab with no login, as the right player', async ({ page }) => {
+    await page.goto('/lead-scout/player/db-0?tab=reports');
+    await expect(page.getByRole('heading', { level: 1, name: 'Emerson Lyors' })).toBeVisible();
+    await expect(page.getByTestId('reports-kanban')).toBeVisible();
+    expect(await page.evaluate(() => sessionStorage.getItem('loginRole'))).toBe('Lead Scout');
+    await page.getByRole('button', { name: 'Photo Library', exact: true }).click();
+    await expect(page).toHaveURL(/tab=photos/);
+  });
+});
