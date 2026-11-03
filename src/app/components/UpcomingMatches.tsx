@@ -34,7 +34,7 @@ export function UpcomingMatches() {
         <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Upcoming Matches
         </h2>
-        <button className="flex items-center gap-1 text-muted hover:text-link transition-colors text-sm"
+        <button className="flex items-center gap-1 text-muted hover:text-link transition-colors type-body-sm"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -48,28 +48,28 @@ export function UpcomingMatches() {
             className="border border-[var(--light-200)] rounded-xl p-4 hover:border-brand-primary/30 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <span className="text-muted type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 {match.league}
               </span>
-              <span className="text-link text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
+              <span className="text-link type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
                 {match.date}
               </span>
             </div>
             
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[var(--navy-800)] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-[var(--navy-800)] type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.homeTeam}
                 </span>
-                <span className="text-link text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
+                <span className="text-link type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 600 }}>
                   {match.homeLabel}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[var(--navy-800)] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-[var(--navy-800)] type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.awayTeam}
                 </span>
-                <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
+                <span className="text-muted type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
                   {match.awayLabel}
                 </span>
               </div>

@@ -77,7 +77,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
           <div className="w-9 h-9 flex items-center justify-center rounded-[12px] bg-surface-accent shadow-sm shrink-0">
             <Zap size={18} className="text-link" fill="currentColor" />
           </div>
-          <span className="font-heading font-bold text-strong text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
+          <span className="font-heading font-bold text-strong type-h6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
         </div>
 
         {/* Main Menu */}
@@ -97,7 +97,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                 <div className="shrink-0 flex items-center justify-center w-6 ml-0.5">
                   <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
                 </div>
-                <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${active ? 'text-link' : 'text-body group-hover:text-strong'}`}>
+                <span className={`ml-4 font-body font-bold type-body-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${active ? 'text-link' : 'text-body group-hover:text-strong'}`}>
                   {item.label}
                 </span>
               </button>
@@ -117,7 +117,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-surface-accent shadow-sm">
                   <Zap size={20} className="text-link" fill="currentColor" />
                 </div>
-                <span className="font-heading font-extrabold text-strong text-xl">NXUS</span>
+                <span className="font-heading font-extrabold text-strong type-h6">NXUS</span>
               </div>
               <button onClick={() => setMobileOpen(false)} className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-strong hover:bg-border-default transition-colors">
                 <X size={16} />
@@ -135,7 +135,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                     }`}
                   >
                     <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
-                    <span className="font-body font-bold text-[14px]">{item.label}</span>
+                    <span className="font-body font-bold type-body-sm">{item.label}</span>
                   </button>
                 );
               })}
@@ -146,7 +146,7 @@ export function Sidebar({ actions = [] }: SidebarProps) {
                     <button key={i} onClick={() => { a.onClick(); setMobileOpen(false); }}
                       className="w-full h-11 flex items-center rounded-[14px] px-3 gap-4 text-body hover:text-strong hover:bg-surface-accent transition-all">
                       <a.icon size={20} />
-                      <span className="font-body font-bold text-[14px]">{a.label}</span>
+                      <span className="font-body font-bold type-body-sm">{a.label}</span>
                     </button>
                   ))}
                 </div>

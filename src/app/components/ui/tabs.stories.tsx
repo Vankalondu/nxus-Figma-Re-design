@@ -30,13 +30,13 @@ export const Default: Story = {
         <TabsTrigger value="packages">Packages</TabsTrigger>
         <TabsTrigger value="tasks">Tasks</TabsTrigger>
       </TabsList>
-      <TabsContent value="overview" className="pt-4 font-body text-[12px] text-muted">
+      <TabsContent value="overview" className="pt-4 font-body type-caption text-muted">
         Four KPIs and the below-KPI section.
       </TabsContent>
-      <TabsContent value="packages" className="pt-4 font-body text-[12px] text-muted">
+      <TabsContent value="packages" className="pt-4 font-body type-caption text-muted">
         Coverage table, filtered by tier.
       </TabsContent>
-      <TabsContent value="tasks" className="pt-4 font-body text-[12px] text-muted">
+      <TabsContent value="tasks" className="pt-4 font-body type-caption text-muted">
         Task table with the distribution chart.
       </TabsContent>
     </Tabs>

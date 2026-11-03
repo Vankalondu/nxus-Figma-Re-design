@@ -63,7 +63,7 @@ export function MissingFootageMatches() {
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Matches with Missing Talent Footage
             </h3>
-            <p className="text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="type-caption text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Raised players without match video
             </p>
           </div>
@@ -84,13 +84,13 @@ export function MissingFootageMatches() {
                   <div className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {match.homeTeam} <span className="text-muted font-normal">vs</span> {match.awayTeam}
                   </div>
-                  <div className="text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <div className="type-caption text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {match.competition}
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-muted group-hover:text-link transition-colors shrink-0 mt-1" />
               </div>
-              <div className="text-xs text-muted flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="type-caption text-muted flex items-center gap-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <span>📅</span>
                 <span>{match.date}</span>
               </div>
@@ -100,10 +100,10 @@ export function MissingFootageMatches() {
             <div className="flex items-start gap-2 bg-[var(--amber-50)] border border-[var(--amber-300)]/30 rounded-lg p-3">
               <AlertCircle className="w-4 h-4 text-[var(--amber-600)] shrink-0 mt-0.5" />
               <div className="flex-1">
-                <div className="text-xs font-semibold text-[var(--amber-600)] mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="type-caption font-semibold text-[var(--amber-600)] mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.raisedPlayers.length} Raised Player{match.raisedPlayers.length > 1 ? 's' : ''}
                 </div>
-                <div className="text-xs text-[var(--amber-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="type-caption text-[var(--amber-800)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {match.raisedPlayers.join(', ')}
                 </div>
               </div>
@@ -114,7 +114,7 @@ export function MissingFootageMatches() {
 
       {/* Footer CTA */}
       <div className="pt-4 mt-4 border-t border-[var(--light-200)]">
-        <button className="text-link text-sm hover:underline font-medium flex items-center gap-1 w-full justify-center"
+        <button className="text-link type-body-sm hover:underline font-medium flex items-center gap-1 w-full justify-center"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All Missing Footage</span>
           <ArrowRight className="w-4 h-4" />

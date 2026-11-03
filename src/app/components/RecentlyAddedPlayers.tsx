@@ -47,9 +47,9 @@ export function RecentlyAddedPlayers() {
   return (
     <div className="bg-[var(--navy-800)] border border-default rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-on-brand text-xl font-semibold">Recently Added Players</h2>
+        <h2 className="text-on-brand type-body-lg font-semibold">Recently Added Players</h2>
         <button className="flex items-center gap-2 text-body hover:text-on-brand transition-colors">
-          <span className="text-sm">View All</span>
+          <span className="type-body-sm">View All</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -74,18 +74,18 @@ export function RecentlyAddedPlayers() {
               
               <div className="flex-1 min-w-0">
                 <h3 className="text-on-brand font-medium truncate">{player.name}</h3>
-                <p className="text-body text-sm truncate">{player.team}</p>
+                <p className="text-body type-body-sm truncate">{player.team}</p>
                 
                 <div className="flex items-center gap-4 mt-3">
                   <div className="flex items-center gap-2">
                     <span className={`px-2 py-0.5 ${
                       player.status === 'online' ? 'bg-status-success/10 text-status-success-fg' : 'bg-surface-canvas text-body'
-                    } rounded text-xs font-medium`}>
+                    } rounded type-caption font-medium`}>
                       {player.position}
                     </span>
                   </div>
-                  <span className="text-body text-sm">Age {player.age}</span>
-                  <span className="text-body text-sm">{player.country}</span>
+                  <span className="text-body type-body-sm">Age {player.age}</span>
+                  <span className="text-body type-body-sm">{player.country}</span>
                 </div>
               </div>
             </div>

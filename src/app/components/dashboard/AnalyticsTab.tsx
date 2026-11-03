@@ -136,8 +136,8 @@ export const AnalyticsTab = () => {
           <div className="px-5 py-4 border-b border-default flex items-center gap-3">
             <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Trophy size={16} className="text-status-warning" /></div>
             <div className="min-w-0">
-              <h3 className="font-heading font-bold text-[16px] text-heading">Leaderboards</h3>
-              <p className="font-body text-[12px] text-body font-medium">{board === 'scouts' ? 'Ranked by highest shortlist submissions' : "This cycle's standouts"}</p>
+              <h3 className="font-heading font-bold type-body text-heading">Leaderboards</h3>
+              <p className="font-body type-caption text-body font-medium">{board === 'scouts' ? 'Ranked by highest shortlist submissions' : "This cycle's standouts"}</p>
             </div>
           </div>
           <div className="px-5 py-4 flex-1 flex flex-col">
@@ -145,7 +145,7 @@ export const AnalyticsTab = () => {
             <div className="flex items-center bg-surface-card border border-default rounded-full p-1 gap-1 mb-3">
               {([['scouts','Scouts'],['players','Top players']] as const).map(([key,label]) => (
                 <button key={key} type="button" onClick={() => setBoard(key)}
-                  className={`flex-1 px-3 py-1.5 rounded-full font-body font-bold text-[12px] ${board === key ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
+                  className={`flex-1 px-3 py-1.5 rounded-full font-body font-bold type-caption ${board === key ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
                   {label}
                 </button>
               ))}
@@ -154,12 +154,12 @@ export const AnalyticsTab = () => {
             <div className="flex flex-col">
               {leaders.map((p,i) => (
                 <div key={p.n} className="flex items-center gap-3 py-2 border-b border-default last:border-0">
-                  <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black text-[12px] shrink-0 ${i === 0 ? 'bg-brand-primary text-on-brand' : 'bg-surface-accent text-body'}`}>{i+1}</span>
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-black type-caption shrink-0 ${i === 0 ? 'bg-brand-primary text-on-brand' : 'bg-surface-accent text-body'}`}>{i+1}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="font-body font-bold text-[14px] text-body truncate">{board === 'players' ? <PlayerLink name={p.n} /> : p.n}</div>
-                    {board === 'scouts' && <div className="font-body text-[11px] text-muted truncate">{(p as any).role}</div>}
+                    <div className="font-body font-bold type-body-sm text-body truncate">{board === 'players' ? <PlayerLink name={p.n} /> : p.n}</div>
+                    {board === 'scouts' && <div className="font-body type-caption text-muted truncate">{(p as any).role}</div>}
                   </div>
-                  <span className="font-heading font-black text-[14px] text-strong tabular-nums">{p.c}</span>
+                  <span className="font-heading font-black type-body-sm text-strong tabular-nums">{p.c}</span>
                   {board === 'scouts' && (p as any).removable && (
                     <button type="button" onClick={() => setRemovedScouts(prev => [...prev, p.n])}
                       title="Remove senior scout from list" aria-label={`Remove ${p.n}`}
@@ -179,10 +179,10 @@ export const AnalyticsTab = () => {
             <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-strong" /></div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-heading font-bold text-[16px] text-heading">Talent map</h3>
+                <h3 className="font-heading font-bold type-body text-heading">Talent map</h3>
                 <span className="font-heading font-bold type-micro bg-surface-accent text-body rounded-full px-2">Derivable</span>
               </div>
-              <p className="font-body text-[12px] text-body font-medium">Eyeball rating vs age — bubble = video coverage</p>
+              <p className="font-body type-caption text-body font-medium">Eyeball rating vs age — bubble = video coverage</p>
             </div>
           </div>
           <div className="px-3 sm:px-5 py-4">
@@ -190,19 +190,19 @@ export const AnalyticsTab = () => {
               {/* priority quadrant tint */}
               <rect x={zoneX} y={zoneY} width={zoneW} height={zoneH} fill="#061b2e" opacity="0.06" rx="8" />
               <rect x={zoneX} y={zoneY} width={zoneW} height={zoneH} fill="none" stroke="#061b2e" strokeOpacity="0.18" strokeDasharray="4 4" rx="8" />
-              <text x={pR-6} y={zoneY+16} textAnchor="end" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="800">PRIORITY</text>
+              <text x={pR-6} y={zoneY+16} textAnchor="end" className="type-micro" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="800">PRIORITY</text>
               {/* horizontal gridlines + Y labels (rating) */}
               {[6,7,8,9].map(g => (
                 <g key={g}>
                   <line x1={pL} y1={sy(g)} x2={pR} y2={sy(g)} stroke="#d2e7fa" strokeWidth="1" />
-                  <text x={pL-8} y={sy(g)+3} textAnchor="end" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{g.toFixed(1)}</text>
+                  <text x={pL-8} y={sy(g)+3} textAnchor="end" className="type-micro" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{g.toFixed(1)}</text>
                 </g>
               ))}
               {/* X axis ticks (age) — reversed, younger to the right */}
               {[22,20,18,16].map(a => (
-                <text key={a} x={sx(a)} y={pB+16} textAnchor="middle" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{a}</text>
+                <text key={a} x={sx(a)} y={pB+16} textAnchor="middle" className="type-micro" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{a}</text>
               ))}
-              <text x={(pL+pR)/2} y={H-3} textAnchor="middle" fontSize="9" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="800">AGE — younger →</text>
+              <text x={(pL+pR)/2} y={H-3} textAnchor="middle" className="type-micro" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="800">AGE — younger →</text>
               {/* dots */}
               {TALENT.map(d => {
                 const prio = isPriority(d.age, d.r);
@@ -227,13 +227,13 @@ export const AnalyticsTab = () => {
           <div className="px-5 py-4 border-b border-default flex items-center gap-3">
             <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-strong" /></div>
             <div className="min-w-0 flex-1">
-              <h3 className="font-heading font-bold text-[16px] text-heading">Conversion trend</h3>
-              <p className="font-body text-[12px] text-body font-medium">Active pipeline, monthly</p>
+              <h3 className="font-heading font-bold type-body text-heading">Conversion trend</h3>
+              <p className="font-body type-caption text-body font-medium">Active pipeline, monthly</p>
             </div>
             {/* Country pill dropdown — drives the chart + stat data */}
             <div className="relative shrink-0">
               <button type="button" onClick={() => setCountryOpen(o => !o)}
-                className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body hover:border-brand-primary">
+                className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold type-caption text-body hover:border-brand-primary">
                 <Search size={14} />
                 <span className="whitespace-nowrap">{country}</span>
                 <ChevronDown size={12} />
@@ -242,7 +242,7 @@ export const AnalyticsTab = () => {
                 <div className="absolute right-0 mt-2 z-20 min-w-[160px] bg-surface-card border border-default rounded-[12px] shadow-[var(--shadow-lg)] overflow-hidden py-1">
                   {COUNTRIES.map(c => (
                     <button key={c} type="button" onClick={() => { setCountry(c); setCountryOpen(false); }}
-                      className={`w-full text-left px-3 py-2 font-body font-bold text-[12px] hover:bg-surface-accent ${c === country ? 'text-link' : 'text-strong'}`}>
+                      className={`w-full text-left px-3 py-2 font-body font-bold type-caption hover:bg-surface-accent ${c === country ? 'text-link' : 'text-strong'}`}>
                       {c}
                     </button>
                   ))}
@@ -255,8 +255,8 @@ export const AnalyticsTab = () => {
           <div className="px-5 py-4 border-b border-default flex flex-wrap gap-x-8 gap-y-3">
             {convStats.map(([label,val]) => (
               <div key={label} className="flex flex-col gap-1">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted">{label}</span>
-                <span className="font-heading font-black text-[16px] text-strong">{val}</span>
+                <span className="font-heading font-bold type-micro uppercase tracking-wider text-muted">{label}</span>
+                <span className="font-heading font-black type-body text-strong">{val}</span>
               </div>
             ))}
           </div>
@@ -268,12 +268,12 @@ export const AnalyticsTab = () => {
               {cvGrid.map(g => (
                 <g key={g}>
                   <line x1={cvpL} y1={cvY(g)} x2={cvpR} y2={cvY(g)} stroke="#d2e7fa" strokeWidth="1" strokeDasharray="4 4" />
-                  <text x={cvpL-6} y={cvY(g)+3} textAnchor="end" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text>
+                  <text x={cvpL-6} y={cvY(g)+3} textAnchor="end" className="type-micro" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{g}</text>
                 </g>
               ))}
               {/* month labels */}
               {convMonths.map((m,i) => (
-                <text key={m} x={cvX(i)} y={cvpB+20} textAnchor="middle" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>
+                <text key={m} x={cvX(i)} y={cvpB+20} textAnchor="middle" className="type-micro" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{m}</text>
               ))}
               {/* series */}
               {cvSeries.map((s,si) => (
@@ -285,7 +285,7 @@ export const AnalyticsTab = () => {
                       <g key={i}>
                         <circle cx={cvX(i)} cy={cvY(v)} r={isH?6:3} fill={s.color} className="transition-all" />
                         {isH && (
-                          <text x={cvX(i)} y={cvY(v)-10} textAnchor="middle" fontSize="11" fontWeight="800" fill={s.color} fontFamily="Figtree, sans-serif">{v}</text>
+                          <text x={cvX(i)} y={cvY(v)-10} textAnchor="middle" className="type-caption" fontWeight="800" fill={s.color} fontFamily="Figtree, sans-serif">{v}</text>
                         )}
                         <circle cx={cvX(i)} cy={cvY(v)} r={11} fill="transparent" className="cursor-pointer"
                           onMouseEnter={()=>setHoverPt({s:si,i})} onMouseLeave={()=>setHoverPt(null)}>
@@ -302,11 +302,11 @@ export const AnalyticsTab = () => {
               {cvSeries.map(s => (
                 <div key={s.label} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background:s.color }} />
-                  <span className="font-heading font-bold text-[12px] text-strong">{s.label}</span>
+                  <span className="font-heading font-bold type-caption text-strong">{s.label}</span>
                 </div>
               ))}
             </div>
-            <p className="font-body text-[11px] text-body mt-2">Signed dates tracked from deployment onward.</p>
+            <p className="font-body type-caption text-body mt-2">Signed dates tracked from deployment onward.</p>
           </div>
         </div>
 
@@ -315,8 +315,8 @@ export const AnalyticsTab = () => {
           <div className="px-5 py-4 border-b border-default flex items-center gap-3">
             <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Target size={16} className="text-strong" /></div>
             <div className="min-w-0">
-              <h3 className="font-heading font-bold text-[16px] text-heading">Archived by stage</h3>
-              <p className="font-body text-[12px] text-body font-medium">Archived from the pipeline, monthly</p>
+              <h3 className="font-heading font-bold type-body text-heading">Archived by stage</h3>
+              <p className="font-body type-caption text-body font-medium">Archived from the pipeline, monthly</p>
             </div>
           </div>
 
@@ -324,8 +324,8 @@ export const AnalyticsTab = () => {
           <div className="px-5 py-4 border-b border-default flex flex-wrap gap-x-8 gap-y-3">
             {[['LONG','98'],['SHORT','402'],['TARGET','17']].map(([label,val]) => (
               <div key={label} className="flex flex-col gap-1">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-wider text-muted">{label}</span>
-                <span className="font-heading font-black text-[16px] text-strong">{val}</span>
+                <span className="font-heading font-bold type-micro uppercase tracking-wider text-muted">{label}</span>
+                <span className="font-heading font-black type-body text-strong">{val}</span>
               </div>
             ))}
           </div>
@@ -355,7 +355,7 @@ export const AnalyticsTab = () => {
                     <rect x={x} y={yTarget} width={arBarW} height={th} fill="#145b99" className="cursor-pointer transition-opacity hover:opacity-70">
                       <title>{`${archMonths[i]} · Target: ${a.target}`}</title>
                     </rect>
-                    <text x={cx} y={arpB+20} textAnchor="middle" fontSize="10" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{archMonths[i]}</text>
+                    <text x={cx} y={arpB+20} textAnchor="middle" className="type-micro" fill="var(--text-body)" fontFamily="Figtree, sans-serif" fontWeight="700">{archMonths[i]}</text>
                   </g>
                 );
               })}
@@ -365,7 +365,7 @@ export const AnalyticsTab = () => {
               {[['Long','#69b0ee'],['Short','#E8A838'],['Target','#145b99']].map(([label,color]) => (
                 <div key={label} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background:color }} />
-                  <span className="font-heading font-bold text-[12px] text-strong">{label}</span>
+                  <span className="font-heading font-bold type-caption text-strong">{label}</span>
                 </div>
               ))}
             </div>

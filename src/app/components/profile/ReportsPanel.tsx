@@ -89,14 +89,14 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
           <button onClick={() => setShowArchived(v => !v)} aria-pressed={showArchived}
             className={showArchived ? FILTER_PILL_ACTIVE : FILTER_PILL}>
             <Archive size={14} /> {showArchived ? 'Hide archived' : 'Show archived'}
-            <span className={`rounded-full px-2 py-0.5 font-body font-black text-[10px] tabular-nums ${showArchived ? 'bg-surface-card/20' : 'bg-brand-primary/15'}`}>{archivedCount}</span>
+            <span className={`rounded-full px-2 py-0.5 font-body font-black type-micro tabular-nums ${showArchived ? 'bg-surface-card/20' : 'bg-brand-primary/15'}`}>{archivedCount}</span>
           </button>
           <div className="relative">
             <button data-grades-trigger onClick={() => setPicker(p => p && p.from === 'toolbar' ? null : { from: 'toolbar' })}
               aria-expanded={!!picker && picker.from === 'toolbar'} aria-haspopup="dialog"
               className={FILTER_PILL + (picker ? ' ring-2 ring-brand-primary/30' : '')}>
               <GraduationCap size={15} /> Grades
-              {vis.hiddenTypes.length > 0 && <span className="bg-brand-primary/15 rounded-full px-2 py-0.5 font-body font-black text-[10px] tabular-nums" title="Hidden reports">{vis.hiddenTypes.length} hidden</span>}
+              {vis.hiddenTypes.length > 0 && <span className="bg-brand-primary/15 rounded-full px-2 py-0.5 font-body font-black type-micro tabular-nums" title="Hidden reports">{vis.hiddenTypes.length} hidden</span>}
             </button>
             {picker && (
               <GradesPicker key={picker.from} templates={TEMPLATES} value={vis} onChange={setVis} initialType={picker.type}
@@ -114,9 +114,9 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
           return (
             <section key={tpl.id} className="bg-surface-card border border-default rounded-[20px] shadow-[var(--shadow-lg)]" aria-label={tpl.name}>
               <header className="px-5 py-3 border-b border-default flex flex-wrap items-center gap-x-4 gap-y-1">
-                <h3 className="font-heading font-bold text-[16px] text-heading flex items-center gap-2 min-w-0 flex-1">
+                <h3 className="font-heading font-bold type-body text-heading flex items-center gap-2 min-w-0 flex-1">
                   <span className="truncate">{tpl.name} <span className="tabular-nums">({rows.length})</span></span>
-                  {tpl.archived && <span className="bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold text-[10px] shrink-0">Archived</span>}
+                  {tpl.archived && <span className="bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold type-micro shrink-0">Archived</span>}
                 </h3>
                 <div className="flex items-center gap-4 shrink-0">
                   <button data-grades-trigger onClick={() => setPicker(p => p && p.from === tpl.id ? null : { from: tpl.id, type: tpl.id })}
@@ -133,24 +133,24 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
                     className="cursor-pointer px-5 py-3 flex flex-col lg:flex-row lg:items-start gap-3 lg:gap-6 hover:bg-surface-accent focus-visible:outline-none focus-visible:bg-surface-accent border-b border-default/60 last:border-0 last:rounded-b-[20px]">
                     {/* The scout is the focus; what was watched + when sits under it, smaller and lighter */}
                     <div className="lg:w-[220px] lg:shrink-0 min-w-0">
-                      <div className="font-body font-bold text-[14px] text-strong flex items-center gap-2 min-w-0">
+                      <div className="font-body font-bold type-body-sm text-strong flex items-center gap-2 min-w-0">
                         <span className="truncate">{r.scout}</span>
-                        {r.archived && <span className="bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold text-[10px] shrink-0">Archived</span>}
+                        {r.archived && <span className="bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold type-micro shrink-0">Archived</span>}
                       </div>
-                      <div className="font-body font-medium text-[12px] text-muted mt-0.5">{r.source} · {dayFirst(r.dateLabel)}</div>
+                      <div className="font-body font-medium type-caption text-muted mt-0.5">{r.source} · {dayFirst(r.dateLabel)}</div>
                     </div>
                     {cols.length > 0 ? (
                       <dl className="grid grid-cols-5 gap-x-3 gap-y-2 flex-1 min-w-0 max-w-[480px]">
                         {cols.map(q => (
                           <div key={q.id} className="flex flex-col items-start gap-1 min-w-0">
-                            <dt className="font-mono font-bold text-[10px] uppercase text-muted truncate max-w-full">
+                            <dt className="font-mono font-bold type-micro uppercase text-muted truncate max-w-full">
                               <abbr title={q.label} className="no-underline cursor-help">{q.code}</abbr>
                             </dt>
                             <dd><GradeChip value={r.answers[q.id]} nxt={q.kind === 'nxt'} title={`${q.label}: ${r.answers[q.id] ?? '–'}`} /></dd>
                           </div>
                         ))}
                       </dl>
-                    ) : <p className="font-body font-medium text-[12px] text-body">All grades hidden</p>}
+                    ) : <p className="font-body font-medium type-caption text-body">All grades hidden</p>}
                   </li>
                 ))}
               </ul>
@@ -160,16 +160,16 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
 
         {sections.length === 0 && (
           <div className="flex flex-col items-center justify-center text-center gap-3 border-2 border-dashed border-default rounded-[20px] px-6 py-10">
-            <p className="font-body font-medium text-[14px] text-body">
+            <p className="font-body font-medium type-body-sm text-body">
               {visible.length === 0 ? `No ${seg === 'All' ? '' : seg.toLowerCase() + ' list '}reports yet.` : 'Every report type with reports here is hidden.'}
             </p>
             {visible.length === 0
-              ? <button onClick={() => setSheet({ mode: 'choose' })} className="font-body font-bold text-[14px] text-link hover:underline">File the first report</button>
-              : <button onClick={() => setVis({ ...vis, hiddenTypes: [] })} className="font-body font-bold text-[14px] text-link hover:underline">Show all report types</button>}
+              ? <button onClick={() => setSheet({ mode: 'choose' })} className="font-body font-bold type-body-sm text-link hover:underline">File the first report</button>
+              : <button onClick={() => setVis({ ...vis, hiddenTypes: [] })} className="font-body font-bold type-body-sm text-link hover:underline">Show all report types</button>}
           </div>
         )}
         {sections.length > 0 && hiddenWithReports.length > 0 && (
-          <p className="font-body font-medium text-[12px] text-body">
+          <p className="font-body font-medium type-caption text-body">
             Hidden: {hiddenWithReports.map(t => t.name).join(', ')} ·{' '}
             <button data-grades-trigger onClick={() => setPicker({ from: 'toolbar', type: hiddenWithReports[0].id })} className="font-bold text-link hover:underline">Show from Grades</button>
           </p>

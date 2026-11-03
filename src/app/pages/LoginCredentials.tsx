@@ -61,17 +61,17 @@ export default function LoginCredentials() {
         {/* Left Side - Form Area (No Logo) */}
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center bg-surface-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-text-on-brand/50 relative">
           <div className="max-w-md mx-auto w-full relative z-10">
-            <h1 className="font-heading font-extrabold text-[32px] text-heading mb-4 tracking-tight leading-tight">
+            <h1 className="font-heading font-extrabold type-h3 text-heading mb-4 tracking-tight leading-tight">
               Sign In
             </h1>
-            <p className="text-body text-[16px] mb-12 leading-relaxed font-medium">
+            <p className="text-body type-body mb-12 leading-relaxed font-medium">
               Enter your credentials to access your secure scouting workspace and player databases.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-6 mb-10">
 
               <div>
-                <label className="block text-[14px] font-extrabold text-strong mb-3">Email Address</label>
+                <label className="block type-body-sm font-extrabold text-strong mb-3">Email Address</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                     <Mail className="h-[22px] w-[22px] text-body" />
@@ -80,7 +80,7 @@ export default function LoginCredentials() {
                     type="email" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-[52px] pr-5 py-4 border-2 border-default rounded-[20px] text-[15px] focus:ring-4 focus:ring-border-focus/20 focus:border-focus transition-all bg-surface-card hover:border-default text-strong font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
+                    className="block w-full pl-[52px] pr-5 py-4 border-2 border-default rounded-[20px] type-body focus:ring-4 focus:ring-border-focus/20 focus:border-focus transition-all bg-surface-card hover:border-default text-strong font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
                     placeholder="Enter your email"
                     required
                   />
@@ -88,7 +88,7 @@ export default function LoginCredentials() {
               </div>
 
               <div>
-                <label className="block text-[14px] font-extrabold text-strong mb-3">Password</label>
+                <label className="block type-body-sm font-extrabold text-strong mb-3">Password</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                     <Lock className="h-[22px] w-[22px] text-body" />
@@ -97,7 +97,7 @@ export default function LoginCredentials() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-[52px] pr-[52px] py-4 border-2 border-default rounded-[20px] text-[15px] focus:ring-4 focus:ring-border-focus/20 focus:border-focus transition-all bg-surface-card hover:border-default text-strong font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
+                    className="block w-full pl-[52px] pr-[52px] py-4 border-2 border-default rounded-[20px] type-body focus:ring-4 focus:ring-border-focus/20 focus:border-focus transition-all bg-surface-card hover:border-default text-strong font-bold placeholder-text-body shadow-[0_4px_12px_rgba(0,0,0,0.02)]" 
                     placeholder="••••••••••••"
                     required
                   />
@@ -116,25 +116,25 @@ export default function LoginCredentials() {
               <div className="flex items-center justify-between mt-4">
                 <div className="flex items-center group cursor-pointer">
                   <input id="remember-me" name="remember-me" type="checkbox" className="h-5 w-5 text-strong focus:ring-brand-primary border-default rounded-[6px] cursor-pointer" />
-                  <label htmlFor="remember-me" className="ml-3 block text-[14px] text-body font-bold cursor-pointer group-hover:text-strong transition-colors">
+                  <label htmlFor="remember-me" className="ml-3 block type-body-sm text-body font-bold cursor-pointer group-hover:text-strong transition-colors">
                     Remember me
                   </label>
                 </div>
-                <div className="text-[14px]">
+                <div className="type-body-sm">
                   <a href="#" className="font-extrabold text-strong hover:text-strong hover:underline underline-offset-4 transition-all">Forgot your password?</a>
                 </div>
               </div>
 
               <button 
                 type="submit"
-                className="w-full mt-10 py-4 rounded-[20px] font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] bg-brand-primary hover:bg-brand-primary/80 text-on-brand hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1"
+                className="w-full mt-10 py-4 rounded-[20px] font-bold type-body transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] bg-brand-primary hover:bg-brand-primary/80 text-on-brand hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1"
               >
                 Sign In securely
               </button>
             </form>
 
             <div className="pt-8 border-t border-default text-center">
-              <div className="flex items-center justify-center space-x-2 text-[14px] text-body font-medium">
+              <div className="flex items-center justify-center space-x-2 type-body-sm text-body font-medium">
                 <ShieldCheck size={16} className="text-status-success" />
                 <span>Protected by NXUS Enterprise Security</span>
               </div>
@@ -149,10 +149,10 @@ export default function LoginCredentials() {
               Q
             </div>
             <div className="flex flex-col gap-1">
-              <span className="font-heading font-extrabold text-[36px] leading-none text-on-brand tracking-tight">NXUS</span>
-              <span className="font-heading font-bold text-[16px] tracking-[0.35em] text-on-brand/70">SPORTS</span>
+              <span className="font-heading font-extrabold text-4xl leading-none text-on-brand tracking-tight">NXUS</span>
+              <span className="font-heading font-bold type-body tracking-[0.35em] text-on-brand/70">SPORTS</span>
             </div>
-            <p className="font-body font-medium text-[15px] text-on-brand/70 max-w-[280px] leading-relaxed mt-2">
+            <p className="font-body font-medium type-body text-on-brand/70 max-w-[280px] leading-relaxed mt-2">
               The professional football scouting terminal.
             </p>
           </div>

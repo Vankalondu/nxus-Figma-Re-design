@@ -114,7 +114,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
       <div className="relative bg-surface-page rounded-[24px] max-w-5xl w-[92vw] max-h-[88vh] flex flex-col shadow-2xl border border-default overflow-hidden">
         {/* ── Header ── */}
         <div className="shrink-0 flex items-center justify-between gap-4 px-6 py-5 border-b border-default">
-          <h2 className="font-heading font-black text-[20px] text-heading">Edit Columns</h2>
+          <h2 className="font-heading font-black type-h6 text-heading">Edit Columns</h2>
           <button onClick={onClose} aria-label="Close"
             className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors">
             <X size={16} />
@@ -132,7 +132,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                 <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Custom Presets</span>
 
                 {presets.length === 0 ? (
-                  <p className="text-body text-[14px] font-body">None saved yet.</p>
+                  <p className="text-body type-body-sm font-body">None saved yet.</p>
                 ) : (
                   <div className="flex flex-col gap-2">
                     {presets.map(preset => (
@@ -142,7 +142,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                       >
                         <button
                           onClick={() => applyPreset(preset)}
-                          className="flex-1 min-w-0 text-left text-[14px] font-bold text-strong truncate"
+                          className="flex-1 min-w-0 text-left type-body-sm font-bold text-strong truncate"
                           title={`Load "${preset.name}" (${preset.ids.length} columns)`}
                         >
                           {preset.name}
@@ -167,7 +167,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                     onChange={e => setPresetName(e.target.value)}
                     onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); saveCurrentPreset(); } }}
                     placeholder="Save current as…"
-                    className="w-full rounded-full bg-surface-card border border-default pl-4 pr-11 py-2 text-[14px] font-body font-medium text-body placeholder:text-placeholder focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
+                    className="w-full rounded-full bg-surface-card border border-default pl-4 pr-11 py-2 type-body-sm font-body font-medium text-body placeholder:text-placeholder focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
                   />
                   <button aria-label="Save preset" onClick={saveCurrentPreset}
                     className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-brand-primary text-on-brand flex items-center justify-center hover:bg-brand-primary/80 transition-colors">
@@ -195,7 +195,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
                             key={col.id}
                             onClick={() => toggle(col.id)}
                             aria-pressed={selected}
-                            className={`w-full rounded-[12px] px-4 py-2 text-[14px] font-bold text-left transition-colors ${
+                            className={`w-full rounded-[12px] px-4 py-2 type-body-sm font-bold text-left transition-colors ${
                               selected
                                 ? 'bg-brand-primary text-on-brand'
                                 : 'bg-surface-card border border-default text-strong hover:border-brand-primary'
@@ -215,7 +215,7 @@ export function EditColumnsModal({ open, columns, visible, onApply, onClose }: {
 
         {/* ── Footer ── */}
         <div className="shrink-0 flex items-center justify-between gap-4 px-6 py-4 border-t border-default">
-          <span className="text-body text-[14px] font-bold font-body">{draft.size} columns selected</span>
+          <span className="text-body type-body-sm font-bold font-body">{draft.size} columns selected</span>
           <button onClick={apply}
             className="bg-brand-primary text-on-brand rounded-full px-6 py-3 font-body font-bold hover:bg-brand-primary/80 transition-colors shadow-[var(--shadow-sm)]">
             Apply Column Selection

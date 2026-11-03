@@ -59,7 +59,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-surface-page px-4 py-2 text-sm font-medium hover:bg-surface-accent hover:text-body focus:bg-surface-accent focus:text-body disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-surface-accent data-[state=open]:text-body data-[state=open]:focus:bg-surface-accent data-[state=open]:bg-surface-accent/50 focus-visible:ring-border-focus/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1",
+  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-surface-page px-4 py-2 type-body-sm font-medium hover:bg-surface-accent hover:text-body focus:bg-surface-accent focus:text-body disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-surface-accent data-[state=open]:text-body data-[state=open]:focus:bg-surface-accent data-[state=open]:bg-surface-accent/50 focus-visible:ring-border-focus/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1",
 );
 
 function NavigationMenuTrigger({
@@ -129,7 +129,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "data-[active=true]:focus:bg-surface-accent data-[active=true]:hover:bg-surface-accent data-[active=true]:bg-surface-accent/50 data-[active=true]:text-strong hover:bg-surface-accent hover:text-strong focus:bg-surface-accent focus:text-strong focus-visible:ring-border-focus/50 [&_svg:not([class*='text-'])]:text-body flex flex-col gap-1 rounded-sm p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+        "data-[active=true]:focus:bg-surface-accent data-[active=true]:hover:bg-surface-accent data-[active=true]:bg-surface-accent/50 data-[active=true]:text-strong hover:bg-surface-accent hover:text-strong focus:bg-surface-accent focus:text-strong focus-visible:ring-border-focus/50 [&_svg:not([class*='text-'])]:text-body flex flex-col gap-1 rounded-sm p-2 type-body-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}

@@ -56,7 +56,7 @@ export function JuniorScoutStatsCards() {
           className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all"
         >
           <div className="flex items-start justify-between mb-3">
-            <p className="text-body text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {stat.label}
             </p>
             <div className={`p-2 rounded-xl ${stat.iconBg} shrink-0 ml-3`}>
@@ -66,12 +66,12 @@ export function JuniorScoutStatsCards() {
           <div className="text-[var(--navy-800)] text-4xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
             {stat.value}
           </div>
-          <div className={`${stat.subtextColor} text-sm mb-3`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className={`${stat.subtextColor} type-body-sm mb-3`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             {stat.subtext}
           </div>
           <a
             href={stat.linkHref}
-            className="text-link hover:text-link-hover transition-colors text-sm hover:underline"
+            className="text-link hover:text-link-hover transition-colors type-body-sm hover:underline"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}
           >
             {stat.linkText} →

@@ -98,29 +98,29 @@ export default function TokensDoc() {
     <div className="sb-unstyled min-h-screen bg-surface-page">
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-8 md:py-12 flex flex-col gap-8 md:gap-10">
         <header className="flex flex-col gap-3">
-          <h1 className="font-heading font-bold text-heading text-[32px] md:text-[40px] lg:text-[48px] leading-tight">NXUS design tokens</h1>
-          <p className="font-body text-body text-[16px] max-w-[640px]">
+          <h1 className="font-heading font-bold text-heading type-h1 leading-tight">NXUS design tokens</h1>
+          <p className="font-body text-body type-body max-w-[640px]">
             The colours, spacing, type and shadows the NXUS app uses, ready for any framework.
             These files are rebuilt from the app's own stylesheet on every release, so they always match what is live.
           </p>
           {manifest && (
-            <p className="font-body text-muted text-[12px] font-semibold">
+            <p className="font-body text-muted type-caption font-semibold">
               Version {manifest.version} · {manifest.count} tokens ({manifest.colours} colours) · built {manifest.generated}
             </p>
           )}
         </header>
 
         <section className="bg-surface-card border border-default rounded-[20px] p-5 flex flex-col gap-3">
-          <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Install</h2>
-          <p className="font-body text-body text-[14px]">
+          <h2 className="font-heading font-bold text-heading type-h5">Install</h2>
+          <p className="font-body text-body type-body-sm">
             The recommended way. One command, and <code className="font-mono">npm update nxus-tokens</code> brings in
             each approved change. The version only moves when a token value changes.
           </p>
-          <pre className="bg-surface-inverse text-inverse rounded-[12px] p-4 overflow-x-auto font-mono text-[12px] leading-[18px]"><code>npm install nxus-tokens</code></pre>
+          <pre className="bg-surface-inverse text-inverse rounded-[12px] p-4 overflow-x-auto font-mono type-caption leading-[18px]"><code>npm install nxus-tokens</code></pre>
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Or download the files</h2>
+          <h2 className="font-heading font-bold text-heading type-h5">Or download the files</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {FILES.map(({ file, icon: Icon, title, body }) => (
               <div key={file} className="bg-surface-card border border-default rounded-[20px] p-5 flex flex-col gap-3">
@@ -128,14 +128,14 @@ export default function TokensDoc() {
                   <Icon className="w-5 h-5 text-link" />
                 </div>
                 <div className="flex flex-col gap-1 flex-1">
-                  <h3 className="font-heading font-bold text-heading text-[16px]">{title}</h3>
-                  <p className="font-body text-body text-[14px]">{body}</p>
-                  <code className="font-mono text-muted text-[12px] mt-1">{file}</code>
+                  <h3 className="font-heading font-bold text-heading type-body">{title}</h3>
+                  <p className="font-body text-body type-body-sm">{body}</p>
+                  <code className="font-mono text-muted type-caption mt-1">{file}</code>
                 </div>
                 <a
                   href={`${BASE}/${file}`}
                   download
-                  className="bg-brand-primary hover:bg-brand-primary-hover text-on-brand rounded-full h-[38px] px-4 flex items-center justify-center gap-2 font-body font-bold text-[14px] transition-colors"
+                  className="bg-brand-primary hover:bg-brand-primary-hover text-on-brand rounded-full h-[38px] px-4 flex items-center justify-center gap-2 font-body font-bold type-body-sm transition-colors"
                 >
                   <Download className="w-4 h-4" /> Download
                 </a>
@@ -145,23 +145,23 @@ export default function TokensDoc() {
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Set up</h2>
+          <h2 className="font-heading font-bold text-heading type-h5">Set up</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
             {SETUPS.map(s => (
               <div key={s.title} className="bg-surface-card border border-default rounded-[20px] p-5 flex flex-col gap-3 min-w-0">
                 <div>
-                  <h3 className="font-heading font-bold text-heading text-[16px]">{s.title}</h3>
-                  <p className="font-body text-body text-[14px] mt-1">{s.note}</p>
+                  <h3 className="font-heading font-bold text-heading type-body">{s.title}</h3>
+                  <p className="font-body text-body type-body-sm mt-1">{s.note}</p>
                 </div>
-                <pre className="bg-surface-inverse text-inverse rounded-[12px] p-4 overflow-x-auto font-mono text-[12px] leading-[18px]"><code>{s.code}</code></pre>
+                <pre className="bg-surface-inverse text-inverse rounded-[12px] p-4 overflow-x-auto font-mono type-caption leading-[18px]"><code>{s.code}</code></pre>
               </div>
             ))}
           </div>
         </section>
 
         <section className="bg-surface-card border border-default rounded-[20px] p-5 flex flex-col gap-2">
-          <h2 className="font-heading font-bold text-heading text-[20px]">When do these change?</h2>
-          <p className="font-body text-body text-[14px]">
+          <h2 className="font-heading font-bold text-heading type-h6">When do these change?</h2>
+          <p className="font-body text-body type-body-sm">
             Only when a token change is approved and released. A designer changes a variable in Figma, which opens a
             pull request; the PM reviews it (with a visual summary of what changed) and approves it; the developers are
             notified; and the next release updates this page, the downloads and the nxus-tokens package together.
@@ -170,13 +170,13 @@ export default function TokensDoc() {
 
         {roles.length > 0 && (
           <section className="flex flex-col gap-4">
-            <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Colour roles</h2>
+            <h2 className="font-heading font-bold text-heading type-h5">Colour roles</h2>
             <SwatchGrid items={roles} />
           </section>
         )}
         {palette.length > 0 && (
           <section className="flex flex-col gap-4">
-            <h2 className="font-heading font-bold text-heading text-[20px] md:text-[24px]">Palette</h2>
+            <h2 className="font-heading font-bold text-heading type-h5">Palette</h2>
             <SwatchGrid items={palette} />
           </section>
         )}
@@ -192,8 +192,8 @@ function SwatchGrid({ items }: { items: Swatch[] }) {
         <div key={s.cssVar} className="bg-surface-card border border-default rounded-[12px] overflow-hidden min-w-0">
           <div className="h-12 border-b border-default" style={{ background: `var(${s.cssVar})` }} />
           <div className="p-2 flex flex-col gap-0.5">
-            <code className="font-mono text-heading text-[11px] truncate">{s.cssVar}</code>
-            <span className="font-body text-muted text-[11px]">{s.light}{s.dark && s.dark !== s.light ? ` · dark ${s.dark}` : ''}</span>
+            <code className="font-mono text-heading type-caption truncate">{s.cssVar}</code>
+            <span className="font-body text-muted type-caption">{s.light}{s.dark && s.dark !== s.light ? ` · dark ${s.dark}` : ''}</span>
           </div>
         </div>
       ))}

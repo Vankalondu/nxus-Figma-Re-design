@@ -28,12 +28,12 @@ export default function LoginDepartment() {
         {/* Left Side: Light Blue Rounded Section (Logo and Mascot only) */}
         <div className="w-full md:w-1/2 bg-surface-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center justify-center p-10 relative overflow-hidden border border-text-on-brand/50">
           <div className="absolute top-10 flex items-center space-x-3 bg-surface-card/80 backdrop-blur-md p-4 rounded-3xl shadow-sm border border-text-on-brand/60">
-            <div className="w-12 h-12 rounded-[16px] bg-brand-primary text-on-brand flex items-center justify-center font-heading font-black text-2xl shadow-md">
+            <div className="w-12 h-12 rounded-[16px] bg-brand-primary text-on-brand flex items-center justify-center font-heading font-black type-h5 shadow-md">
               Q
             </div>
             <div className="flex flex-col pr-2 text-left">
-              <span className="font-heading font-extrabold text-[20px] leading-tight text-strong tracking-tight">NXUS</span>
-              <span className="font-heading font-bold text-[12px] tracking-[0.2em] text-strong">SPORTS</span>
+              <span className="font-heading font-extrabold type-h6 leading-tight text-strong tracking-tight">NXUS</span>
+              <span className="font-heading font-bold type-caption tracking-[0.2em] text-strong">SPORTS</span>
             </div>
           </div>
 
@@ -49,10 +49,10 @@ export default function LoginDepartment() {
         {/* Right Side: Form / Select Mode (White Section) */}
         <div className="w-full md:w-1/2 bg-surface-card rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-center p-10 relative border border-text-on-brand/50">
           <div className="max-w-md mx-auto w-full relative z-10">
-            <h1 className="font-heading font-extrabold text-[32px] text-heading mb-4 tracking-tight leading-tight">
+            <h1 className="font-heading font-extrabold type-h3 text-heading mb-4 tracking-tight leading-tight">
               Select your Primary Mode
             </h1>
-            <p className="text-body text-[16px] mb-12 leading-relaxed font-medium">
+            <p className="text-body type-body mb-12 leading-relaxed font-medium">
               This choice is for your first-time setup only. You can switch modes later in your dashboard.
             </p>
 
@@ -77,10 +77,10 @@ export default function LoginDepartment() {
                     <mode.icon size={24} />
                   </div>
                   <div className="flex-1">
-                    <h3 className={`font-semibold text-[16px] mb-1 transition-colors ${selectedDepartment === mode.id ? 'text-heading' : 'text-heading'}`}>
+                    <h3 className={`font-semibold type-body mb-1 transition-colors ${selectedDepartment === mode.id ? 'text-heading' : 'text-heading'}`}>
                       {mode.name}
                     </h3>
-                    <p className="text-[14px] text-body font-medium">{mode.desc}</p>
+                    <p className="type-body-sm text-body font-medium">{mode.desc}</p>
                   </div>
                   <div className={`w-6 h-6 rounded-full border-[2px] flex items-center justify-center transition-all duration-300 ${
                     selectedDepartment === mode.id ? 'border-brand-primary bg-brand-primary' : 'border-default bg-surface-card'
@@ -94,7 +94,7 @@ export default function LoginDepartment() {
             <button 
               onClick={handleContinue}
               disabled={!selectedDepartment}
-              className={`w-full py-4 rounded-[20px] font-bold text-[16px] transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] ${
+              className={`w-full py-4 rounded-[20px] font-bold type-body transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.08)] ${
                 selectedDepartment 
                   ? 'bg-brand-primary hover:bg-brand-primary/80 text-on-brand hover:shadow-[0_8px_30px_rgba(30,136,229,0.3)] transform hover:-translate-y-1' 
                   : 'bg-surface-accent text-body cursor-not-allowed'
@@ -104,7 +104,7 @@ export default function LoginDepartment() {
             </button>
 
             <div className="mt-10 pt-8 border-t border-default text-center">
-              <div className="flex items-center justify-center space-x-2 text-[14px] text-body font-medium">
+              <div className="flex items-center justify-center space-x-2 type-body-sm text-body font-medium">
                 <ShieldCheck size={16} className="text-status-success" />
                 <span>Secure access to NXUS Sports System</span>
               </div>

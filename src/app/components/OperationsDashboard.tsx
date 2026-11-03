@@ -28,7 +28,7 @@ export function OperationsDashboard() {
       <div className="max-w-[1800px] mx-auto px-6 py-8">
         {/* Page Title */}
         <div className="mb-6">
-          <h1 className="text-[var(--navy-800)] text-3xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+          <h1 className="text-[var(--navy-800)] type-h3 mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
             Dashboard
           </h1>
           <p className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -42,7 +42,7 @@ export function OperationsDashboard() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 rounded-xl text-sm font-bold tracking-wide transition-all ${
+              className={`px-6 py-3 rounded-xl type-body-sm font-bold tracking-wide transition-all ${
                 activeTab === tab.id
                   ? 'bg-brand-primary text-on-brand shadow-sm'
                   : 'text-body hover:text-[var(--navy-800)] hover:bg-[var(--light-50)]'
@@ -73,10 +73,10 @@ export function OperationsDashboard() {
             {/* Row 3: Country & Regional Performance Leaderboard */}
             <div>
               <div className="mb-4">
-                <h3 className="text-[var(--navy-800)] text-xl font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+                <h3 className="text-[var(--navy-800)] type-body-lg font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
                   Country & Regional Performance
                 </h3>
-                <p className="text-body text-sm mt-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-body type-body-sm mt-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Track scout performance and Grade A player submissions by region
                 </p>
               </div>
@@ -92,7 +92,7 @@ export function OperationsDashboard() {
 
         {activeTab === 'reviews' && (
           <div className="bg-surface-card border border-[var(--light-200)] rounded-2xl p-12 text-center">
-            <h3 className="text-[var(--navy-800)] text-xl mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
+            <h3 className="text-[var(--navy-800)] type-body-lg mb-2" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
               Final Reviews
             </h3>
             <p className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

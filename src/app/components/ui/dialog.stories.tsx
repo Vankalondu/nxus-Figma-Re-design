@@ -61,17 +61,17 @@ export const NxusModal: Story = {
       </DialogTrigger>
       <DialogContent className="p-0 overflow-hidden rounded-[32px] border border-default shadow-[var(--shadow-2xl)] sm:max-w-[520px]">
         <div className="px-8 py-6 bg-brand-primary text-on-brand">
-          <DialogTitle className="font-heading font-semibold text-[20px] text-on-brand">Upload highlight</DialogTitle>
-          <DialogDescription className="font-body text-[14px] text-on-brand/80 mt-1">
+          <DialogTitle className="font-heading font-semibold type-h6 text-on-brand">Upload highlight</DialogTitle>
+          <DialogDescription className="font-body type-body-sm text-on-brand/80 mt-1">
             Paste a link, or choose a file from your device.
           </DialogDescription>
         </div>
         <div className="p-8 space-y-4">
           <input
-            className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
+            className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
             placeholder="https://…"
           />
-          <button className="w-full bg-brand-primary text-on-brand rounded-full py-3 font-body font-bold text-[14px]">
+          <button className="w-full bg-brand-primary text-on-brand rounded-full py-3 font-body font-bold type-body-sm">
             Upload
           </button>
         </div>

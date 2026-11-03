@@ -41,7 +41,7 @@ export function TerritoriesTable() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl text-heading">Territories</h2>
+        <h2 className="type-h5 text-heading">Territories</h2>
       </div>
 
       <div className="flex items-center justify-between">
@@ -51,7 +51,7 @@ export function TerritoriesTable() {
           className="w-80"
         />
         <div className="flex items-center gap-2">
-          <span className="text-sm text-body">Number of rows:</span>
+          <span className="type-body-sm text-body">Number of rows:</span>
           <Select defaultValue="10">
             <SelectTrigger className="w-20">
               <SelectValue />
@@ -96,7 +96,7 @@ export function TerritoriesTable() {
       </div>
 
       <div className="flex items-center justify-between">
-        <div className="text-sm text-body">
+        <div className="type-body-sm text-body">
           Total results: {territories.length}
         </div>
         <div className="flex items-center gap-2">
@@ -106,7 +106,7 @@ export function TerritoriesTable() {
           <Button variant="outline" size="icon" disabled>
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          <span className="text-sm text-body px-3">
+          <span className="type-body-sm text-body px-3">
             Page 1 of 1
           </span>
           <Button variant="outline" size="icon" disabled>
@@ -116,7 +116,7 @@ export function TerritoriesTable() {
             <ChevronsRight className="w-4 h-4" />
           </Button>
           <div className="flex items-center gap-2 ml-4">
-            <span className="text-sm text-body">Go to page:</span>
+            <span className="type-body-sm text-body">Go to page:</span>
             <Input 
               type="number" 
               defaultValue="1" 

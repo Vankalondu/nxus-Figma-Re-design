@@ -30,10 +30,10 @@ export const Default: Story = {
         <CardDescription>Fixtures for players in your scope</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="font-body text-[12px] text-body">Three fixtures this week.</p>
+        <p className="font-body type-caption text-body">Three fixtures this week.</p>
       </CardContent>
       <CardFooter>
-        <span className="font-body font-bold text-[12px] text-link">View all</span>
+        <span className="font-body font-bold type-caption text-link">View all</span>
       </CardFooter>
     </Card>
   ),
@@ -44,8 +44,8 @@ export const NxusCard: Story = {
   parameters: { docs: { description: { story: 'The dashboard content card as specified in P-CO3: 20px corners, neutral surface.' } } },
   render: () => (
     <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-6 w-[380px]">
-      <h3 className="font-heading font-semibold text-[20px] text-heading mb-2">Scout Leaderboard</h3>
-      <p className="font-body text-[14px] text-body">Reports filed this cycle, by scout.</p>
+      <h3 className="font-heading font-semibold type-h6 text-heading mb-2">Scout Leaderboard</h3>
+      <p className="font-body type-body-sm text-body">Reports filed this cycle, by scout.</p>
     </div>
   ),
 }

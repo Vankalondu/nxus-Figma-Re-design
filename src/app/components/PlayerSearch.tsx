@@ -78,12 +78,12 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
         onKeyDown={onKeyDown}
         placeholder="Find a player"
         role="combobox" aria-expanded={showDropdown} aria-autocomplete="list"
-        className="w-full pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors" />
+        className="w-full pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium type-body-sm text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors" />
 
       {showDropdown && (
         <div className="absolute left-0 top-full mt-2 w-full min-w-[320px] sm:min-w-[360px] max-h-[400px] overflow-y-auto bg-surface-card border border-default rounded-[20px] shadow-2xl z-50 p-1.5" role="listbox">
           {shown.length === 0 && (
-            <div className="px-4 py-6 text-center font-body text-[13px] text-body">No players match “{query.trim()}”.</div>
+            <div className="px-4 py-6 text-center font-body type-body-sm text-body">No players match “{query.trim()}”.</div>
           )}
           {shown.map((p, i) => {
             const flag = FLAG3TO2[p.nationality];
@@ -92,11 +92,11 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
                 onClick={() => openPlayer(p)} onMouseEnter={() => setActive(i)}
                 className={`relative flex items-center gap-3 pl-2.5 pr-2 py-2 rounded-[14px] cursor-pointer transition-colors group ${i === active ? 'bg-surface-accent' : 'hover:bg-surface-accent'}`}>
                 {/* avatar (initials chip) */}
-                <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black text-[12px] shrink-0">{p.initials}</div>
+                <div className="w-8 h-8 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black type-caption shrink-0">{p.initials}</div>
                 {/* name + meta */}
                 <div className="min-w-0 flex-1">
-                  <div className={`font-body font-bold text-[14px] truncate transition-colors ${i === active ? 'text-link' : 'text-strong group-hover:text-link'}`}>{p.name}</div>
-                  <div className="flex items-center gap-1.5 font-body text-[12px] text-muted min-w-0">
+                  <div className={`font-body font-bold type-body-sm truncate transition-colors ${i === active ? 'text-link' : 'text-strong group-hover:text-link'}`}>{p.name}</div>
+                  <div className="flex items-center gap-1.5 font-body type-caption text-muted min-w-0">
                     {flag && <img src={`https://flagcdn.com/w40/${flag}.png`} alt={p.country} className="w-4 h-3 rounded-[2px] object-cover shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />}
                     <span className="truncate">{p.team}</span>
                     <span className="shrink-0">·</span>
@@ -113,15 +113,15 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
                   {menuId === p.id && (
                     <div className="absolute right-0 top-full mt-1 z-50 w-48 bg-surface-card border border-default rounded-[14px] shadow-2xl py-1.5" onClick={e => e.stopPropagation()}>
                       <button type="button" onClick={() => addTo(p, 'short-list')}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-body hover:bg-surface-accent transition-colors">
+                        className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold type-body-sm text-body hover:bg-surface-accent transition-colors">
                         <Bookmark size={14} className="text-link" /> Add to shortlist
                       </button>
                       <button type="button" onClick={() => addTo(p, 'target-list')}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-body hover:bg-surface-accent transition-colors">
+                        className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold type-body-sm text-body hover:bg-surface-accent transition-colors">
                         <Crosshair size={14} className="text-link" /> Add to target
                       </button>
                       <button type="button" onClick={() => startUpload(p)}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold text-[13px] text-body hover:bg-surface-accent transition-colors">
+                        className="w-full flex items-center gap-2.5 px-3 py-2 font-body font-bold type-body-sm text-body hover:bg-surface-accent transition-colors">
                         <Film size={14} className="text-link" /> Upload highlight
                       </button>
                     </div>
@@ -131,7 +131,7 @@ export function PlayerSearch({ className = '', autoFocus = false }: { className?
             );
           })}
           {results.length > shown.length && (
-            <div className="px-4 py-2 mt-0.5 border-t border-default font-body text-[12px] text-muted text-center">
+            <div className="px-4 py-2 mt-0.5 border-t border-default font-body type-caption text-muted text-center">
               Showing {shown.length} of {results.length} — keep typing to narrow
             </div>
           )}

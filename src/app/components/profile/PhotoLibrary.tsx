@@ -102,7 +102,7 @@ export const PhotoLibrary = ({ playerId, uploaderName = 'You' }: { playerId: str
             }))} />
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          {photos.length > 0 && <p className="font-body font-medium text-[12px] text-muted max-lg:hidden">or drag photos here</p>}
+          {photos.length > 0 && <p className="font-body font-medium type-caption text-muted max-lg:hidden">or drag photos here</p>}
           {AddButton}
         </div>
       </div>
@@ -110,14 +110,14 @@ export const PhotoLibrary = ({ playerId, uploaderName = 'You' }: { playerId: str
       {photos.length === 0 ? (
         <div className="flex-1 min-h-[320px] flex flex-col items-center justify-center text-center gap-4 border-2 border-dashed border-default rounded-[20px] px-6 py-10">
           <span className="w-14 h-14 rounded-full bg-brand-primary/10 text-link flex items-center justify-center"><ImagePlus size={24} /></span>
-          <p className="font-body font-medium text-[14px] text-body max-w-[360px]">No photos yet. Add headshots and match photos so scouts can identify this player.</p>
+          <p className="font-body font-medium type-body-sm text-body max-w-[360px]">No photos yet. Add headshots and match photos so scouts can identify this player.</p>
           {AddButton}
-          <p className="font-body font-medium text-[12px] text-muted">JPG, PNG, WebP or HEIC · up to 10 MB each · or drag photos here</p>
+          <p className="font-body font-medium type-caption text-muted">JPG, PNG, WebP or HEIC · up to 10 MB each · or drag photos here</p>
         </div>
       ) : (
         <div className="flex-1 min-h-0 overflow-y-auto no-scrollbar pb-2">
           {shown.length === 0
-            ? <p className="font-body font-medium text-[14px] text-body py-6" aria-live="polite">No {filter.toLowerCase()} photos yet.</p>
+            ? <p className="font-body font-medium type-body-sm text-body py-6" aria-live="polite">No {filter.toLowerCase()} photos yet.</p>
             : (
               <PhotoGrid photos={shown} profileId={profile?.id}
                 onOpen={p => setViewer(shown.indexOf(p))}
@@ -131,8 +131,8 @@ export const PhotoLibrary = ({ playerId, uploaderName = 'You' }: { playerId: str
       {dragging && (
         <div className="absolute inset-0 z-10 rounded-[20px] border-2 border-dashed border-brand-primary bg-surface-card/90 backdrop-blur-sm flex flex-col items-center justify-center gap-2 pointer-events-none">
           <Upload size={28} className="text-link" />
-          <p className="font-heading font-semibold text-[20px] text-heading">Drop photos to add them</p>
-          <p className="font-body font-medium text-[12px] text-body">JPG, PNG, WebP or HEIC · up to 10 MB each</p>
+          <p className="font-heading font-semibold type-h6 text-heading">Drop photos to add them</p>
+          <p className="font-body font-medium type-caption text-body">JPG, PNG, WebP or HEIC · up to 10 MB each</p>
         </div>
       )}
 

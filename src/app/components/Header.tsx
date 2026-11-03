@@ -6,7 +6,7 @@ export function Header() {
     <header className="border-b bg-surface-card px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <div className="text-2xl">NXUS</div>
+          <div className="type-h5">NXUS</div>
           <nav className="flex gap-6">
             <a href="#" className="text-link">Review</a>
             <a href="#" className="text-body hover:text-strong">Raise</a>
@@ -27,7 +27,7 @@ export function Header() {
           </button>
           <button className="p-2 hover:bg-surface-accent rounded-full relative">
             <User className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 bg-brand-primary text-on-brand text-xs rounded-full w-4 h-4 flex items-center justify-center">5</span>
+            <span className="absolute -top-1 -right-1 bg-brand-primary text-on-brand type-caption rounded-full w-4 h-4 flex items-center justify-center">5</span>
           </button>
         </div>
       </div>

@@ -14,7 +14,7 @@ export function TransferWindows() {
 
   return (
     <div>
-      <div className="mb-3 text-sm text-body">
+      <div className="mb-3 type-body-sm text-body">
         Next Available Transfer Window: <span className="font-medium text-strong">Winter 2026</span>
       </div>
       <div className="flex flex-wrap gap-2">

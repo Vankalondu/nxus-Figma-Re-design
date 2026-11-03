@@ -40,7 +40,7 @@ export function PlayerTable() {
         />
       </div>
       
-      <div className="text-sm text-body">
+      <div className="type-body-sm text-body">
         Selected Years: <span className="font-medium">None</span>
       </div>
 
@@ -48,14 +48,14 @@ export function PlayerTable() {
         <table className="w-full">
           <thead className="bg-brand-primary text-on-brand">
             <tr>
-              <th className="px-4 py-3 text-left uppercase text-xs">Actions</th>
-              <th className="px-4 py-3 text-left uppercase text-xs">Name</th>
-              <th className="px-4 py-3 text-left uppercase text-xs">Age</th>
-              <th className="px-4 py-3 text-left uppercase text-xs">DOB</th>
-              <th className="px-4 py-3 text-left uppercase text-xs">Nationality</th>
-              <th className="px-4 py-3 text-left uppercase text-xs">Country</th>
-              <th className="px-4 py-3 text-left uppercase text-xs">Position</th>
-              <th className="px-4 py-3 text-left uppercase text-xs">Team</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">Actions</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">Name</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">Age</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">DOB</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">Nationality</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">Country</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">Position</th>
+              <th className="px-4 py-3 text-left uppercase type-caption">Team</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
@@ -64,7 +64,7 @@ export function PlayerTable() {
               <td colSpan={9} className="px-4 py-2 font-medium">Strikers</td>
             </tr>
             <tr className="bg-surface-accent">
-              <td colSpan={9} className="px-4 py-2 text-sm text-body">2003</td>
+              <td colSpan={9} className="px-4 py-2 type-body-sm text-body">2003</td>
             </tr>
             {players.map((player) => (
               <tr key={player.id} className="border-b hover:bg-surface-accent">

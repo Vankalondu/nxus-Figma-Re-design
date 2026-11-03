@@ -44,38 +44,38 @@ const getBaseColumns = (navigate: any, flagMap: Record<string, string>): ColumnD
         <PlayerAvatar initials={p.initials} />
         <div className="flex flex-col items-start min-w-0">
           <span onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}
-            className="font-body font-bold text-link text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{p.name}</span>
+            className="font-body font-bold text-link type-body-sm leading-tight whitespace-nowrap hover:underline cursor-pointer">{p.name}</span>
           <div className="flex items-center gap-2">
-            <span className="font-body text-[12px] text-muted shrink-0">{p.age}</span>
+            <span className="font-body type-caption text-muted shrink-0">{p.age}</span>
             <FlagBadge code={flagMap[p.nationality] || 'un'} label={p.nationality} />
           </div>
         </div>
       </div>
     )
   },
-  { id: 'dob', group: 'BIO DATA', label: 'DOB', align: 'center', renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.dob}</span> },
+  { id: 'dob', group: 'BIO DATA', label: 'DOB', align: 'center', renderCell: (p) => <span className="font-body type-caption text-muted">{p.dob}</span> },
   { id: 'nat', group: 'BIO DATA', label: 'Nat', align: 'center', renderCell: (p) => <FlagCircle code={flagMap[p.nationality] || 'un'} label={p.nationality} /> },
   { id: 'country', group: 'BIO DATA', label: 'Ctry', align: 'center', renderCell: (p) => <FlagCircle code={flagMap[p.country] || 'un'} label={p.country} /> },
-  { id: 'pos', group: 'BIO DATA', label: 'Pos', renderCell: (p) => <span className="font-body text-[12px] font-bold text-body">{p.pos}</span> },
-  { id: 'pteam', group: 'BIO DATA', label: 'P.Team', renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.pTeam}</span> },
-  { id: 'lvl', group: 'BIO DATA', label: 'Lvl', renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.pCountry}</span> },
-  { id: 'match', group: 'BIO DATA', label: 'Match', borderRight: true, renderCell: (p) => <span className="font-body text-[12px] text-muted">{p.cTeam}</span> },
-  { id: 'mins',  group: 'GAME STATS', label: 'Mins',  bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.app}</span> },
-  { id: 'gls',   group: 'GAME STATS', label: 'Gls',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.starts}</span> },
-  { id: 'ast',   group: 'GAME STATS', label: 'Ast',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-strong text-[14px]">{p.goals}</span> },
-  { id: 'xg',    group: 'GAME STATS', label: 'xG',    fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.ass}</span> },
-  { id: 'xa',    group: 'GAME STATS', label: 'xA',    bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.pens}</span> },
-  { id: 'shots', group: 'GAME STATS', label: 'Shots', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.gcMins}</span> },
-  { id: 'sot',   group: 'GAME STATS', label: 'SOT',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.m90}</span> },
-  { id: 'pass',  group: 'GAME STATS', label: 'Pass%', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.g90}</span> },
-  { id: 'tckl',  group: 'GAME STATS', label: 'Tckl',  bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.a90}</span> },
-  { id: 'int',   group: 'GAME STATS', label: 'Int',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.gc90}</span> },
-  { id: 'clr',   group: 'GAME STATS', label: 'Clr',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body text-[14px]">{p.mpg}</span> },
-  { id: 'aer',   group: 'GAME STATS', label: 'Aer',   fontMono: true, borderRight: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-strong text-[14px]">{p.potMins}</span> },
+  { id: 'pos', group: 'BIO DATA', label: 'Pos', renderCell: (p) => <span className="font-body type-caption font-bold text-body">{p.pos}</span> },
+  { id: 'pteam', group: 'BIO DATA', label: 'P.Team', renderCell: (p) => <span className="font-body type-caption text-muted">{p.pTeam}</span> },
+  { id: 'lvl', group: 'BIO DATA', label: 'Lvl', renderCell: (p) => <span className="font-body type-caption text-muted">{p.pCountry}</span> },
+  { id: 'match', group: 'BIO DATA', label: 'Match', borderRight: true, renderCell: (p) => <span className="font-body type-caption text-muted">{p.cTeam}</span> },
+  { id: 'mins',  group: 'GAME STATS', label: 'Mins',  bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.app}</span> },
+  { id: 'gls',   group: 'GAME STATS', label: 'Gls',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.starts}</span> },
+  { id: 'ast',   group: 'GAME STATS', label: 'Ast',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-strong type-body-sm">{p.goals}</span> },
+  { id: 'xg',    group: 'GAME STATS', label: 'xG',    fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.ass}</span> },
+  { id: 'xa',    group: 'GAME STATS', label: 'xA',    bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.pens}</span> },
+  { id: 'shots', group: 'GAME STATS', label: 'Shots', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.gcMins}</span> },
+  { id: 'sot',   group: 'GAME STATS', label: 'SOT',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.m90}</span> },
+  { id: 'pass',  group: 'GAME STATS', label: 'Pass%', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.g90}</span> },
+  { id: 'tckl',  group: 'GAME STATS', label: 'Tckl',  bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.a90}</span> },
+  { id: 'int',   group: 'GAME STATS', label: 'Int',   fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.gc90}</span> },
+  { id: 'clr',   group: 'GAME STATS', label: 'Clr',   bgHeader: 'bg-surface-card', bgCell: 'bg-surface-accent/30 group-hover:bg-surface-accent', fontMono: true, align: 'center', renderCell: (p) => <span className="font-mono font-medium text-body type-body-sm">{p.mpg}</span> },
+  { id: 'aer',   group: 'GAME STATS', label: 'Aer',   fontMono: true, borderRight: true, align: 'center', renderCell: (p) => <span className="font-mono font-bold text-strong type-body-sm">{p.potMins}</span> },
   { id: 'match_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center gap-1"><Video size={10} /><span>Match</span></div>, fontMono: true, align: 'center',
-    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/20 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">F{p.matchVideos}</span></div>) },
+    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/20 text-body font-body font-bold px-2 py-0.5 rounded type-caption">F{p.matchVideos}</span></div>) },
   { id: 'high_videos', group: 'VIDEOS', label: <div className="flex justify-center items-center gap-1"><Video size={10} /><span>High</span></div>, fontMono: true, align: 'center',
-    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">H{p.highlightVideos}</span></div>) },
+    renderCell: (p) => (<div className="flex justify-center cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(`${accountBase()}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, dob: p.dob, nationality: p.nationality, primaryPos: p.pos, currentTeam: p.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })}><span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded type-caption">H{p.highlightVideos}</span></div>) },
 ];
 
 let seed = 123;
@@ -163,7 +163,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId }: {
         const fullIdx = items.indexOf(item);
         return (
           <button key={i} onClick={(e) => { e.stopPropagation(); setSelectedIdx(fullIdx); setOpenId(null); }}
-            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors
+            className={`w-full text-left px-3 py-2 font-body type-caption font-bold flex items-center gap-2 transition-colors
               ${item.danger ? 'text-status-error hover:bg-status-error/15' : 'text-strong hover:bg-surface-accent'}`}>
             {item.icon}{item.label}
           </button>
@@ -219,9 +219,9 @@ const STAT_SORT: Record<string, keyof ReturnType<typeof generatePlayers>[number]
   'Pass%': 'g90', Tackles: 'a90', Interceptions: 'gc90', Clearances: 'mpg',
 };
 // Table header cells — same classes as the Lead/Senior tables (SeniorLeadPlayersPage)
-const GROUP_TH = 'font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15';
+const GROUP_TH = 'font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15';
 const GROUP_DIVIDER = 'border-l border-l-text-on-brand/15';
-const SUB_TH = 'font-heading font-bold text-[12px] text-muted uppercase tracking-widest';
+const SUB_TH = 'font-heading font-bold type-caption text-muted uppercase tracking-widest';
 
 export default function CountryScoutDashboardPage() {
   const location = useLocation();
@@ -468,22 +468,22 @@ export default function CountryScoutDashboardPage() {
             notifPanel={(
               <div className="absolute right-0 mt-3 w-80 bg-surface-card rounded-[20px] shadow-2xl border border-default z-50 overflow-hidden">
                 <div className="px-5 py-4 border-b border-default flex items-center justify-between bg-brand-primary">
-                  <span className="font-heading font-black text-[14px] text-on-brand">Raised to Long List</span>
+                  <span className="font-heading font-black type-body-sm text-on-brand">Raised to Long List</span>
                   <button onClick={()=>setShowNotifPanel(false)} className="text-on-brand/60 hover:text-on-brand"><X size={16} /></button>
                 </div>
                 <div className="max-h-72 overflow-y-auto">
                   {raiseNotifications.length===0
-                    ? <div className="px-5 py-8 text-center font-body text-body text-[14px] font-medium">No raised players yet</div>
+                    ? <div className="px-5 py-8 text-center font-body text-body type-body-sm font-medium">No raised players yet</div>
                     : raiseNotifications.map((n,i)=>(
                       <div key={i} className="px-5 py-3 border-b border-default last:border-0 flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0"><ArrowUpRight size={14} className="text-strong" /></div>
-                        <div><div className="font-body font-bold text-[14px]"><PlayerLink name={n.name} /></div><div className="font-body text-[12px] text-muted font-medium">Raised to Long List</div></div>
+                        <div><div className="font-body font-bold type-body-sm"><PlayerLink name={n.name} /></div><div className="font-body type-caption text-muted font-medium">Raised to Long List</div></div>
                       </div>
                     ))}
                 </div>
                 {raiseNotifications.length>0 && (
                   <div className="px-5 py-3 border-t border-default">
-                    <button onClick={()=>{setRaiseNotifications([]);sessionStorage.removeItem('qazaRaiseNotifs');setShowNotifPanel(false);}} className="font-body text-[12px] font-bold text-status-error hover:text-status-error/80 transition-colors">Clear all</button>
+                    <button onClick={()=>{setRaiseNotifications([]);sessionStorage.removeItem('qazaRaiseNotifs');setShowNotifPanel(false);}} className="font-body type-caption font-bold text-status-error hover:text-status-error/80 transition-colors">Clear all</button>
                   </div>
                 )}
               </div>
@@ -506,7 +506,7 @@ export default function CountryScoutDashboardPage() {
                     </span>
                     Oluniyi
                   </h1>
-                  <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{funSubtitle}</p>
+                  <p className="font-body font-medium type-body text-body mt-2 short:hidden">{funSubtitle}</p>
                 </div>
 
                 <ResponsiveTabs className="mt-4 mb-6" activeId={dashTab} onSelect={setDashTab}
@@ -545,18 +545,18 @@ export default function CountryScoutDashboardPage() {
                     <div className={`${CARD} lg:col-span-2 portrait-tablet:col-span-full flex flex-col`}>
                       <div className="px-5 py-4 border-b border-default flex items-center gap-3">
                         <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Users size={16} className="text-strong" /></div>
-                        <div className="min-w-0 flex-1"><h3 className="font-heading font-bold text-[16px] text-heading">Scout Leaderboard</h3><p className="font-body text-[12px] text-body font-medium">Total grade A players by scout</p></div>
-                        <span className="font-body font-bold text-[12px] text-link shrink-0">Ghana 🇬🇭</span>
+                        <div className="min-w-0 flex-1"><h3 className="font-heading font-bold type-body text-heading">Scout Leaderboard</h3><p className="font-body type-caption text-body font-medium">Total grade A players by scout</p></div>
+                        <span className="font-body font-bold type-caption text-link shrink-0">Ghana 🇬🇭</span>
                       </div>
                       <div className="divide-y divide-border-default">
                         {[{name:'Kwame Asante',init:'KA',val:'38 players',country:'Ghana 🇬🇭'},{name:'Chidi Obinna',init:'CO',val:'24 players',country:'Nigeria 🇳🇬'},{name:'Wekesa Omondi',init:'WO',val:'18 players',country:'Kenya 🇰🇪'},{name:'Emeka Okafor',init:'EO',val:'14 players',country:'Nigeria 🇳🇬'},{name:'Joseph Njoroge',init:'JN',val:'11 players',country:'Kenya 🇰🇪'},{name:'Amani Mushi',init:'AM',val:'8 players',country:'Tanzania 🇹🇿'}].map(scout=>(
                           <div key={scout.name} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
-                            <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{scout.init}</span>
+                            <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold type-caption shrink-0">{scout.init}</span>
                             <div className="flex-1 min-w-0">
-                              <span className="font-body font-bold text-[14px] text-body truncate block">{scout.name}</span>
-                              <p className="font-body text-[12px] text-body tabular-nums mt-0.5">{scout.val}</p>
+                              <span className="font-body font-bold type-body-sm text-body truncate block">{scout.name}</span>
+                              <p className="font-body type-caption text-body tabular-nums mt-0.5">{scout.val}</p>
                             </div>
-                            <span className="font-body font-bold text-[13px] text-strong shrink-0 w-24 sm:w-28 text-right">{scout.country}</span>
+                            <span className="font-body font-bold type-body-sm text-strong shrink-0 w-24 sm:w-28 text-right">{scout.country}</span>
                           </div>
                         ))}
                       </div>
@@ -566,7 +566,7 @@ export default function CountryScoutDashboardPage() {
                       <div className={`${CARD} flex flex-col`}>
                         <div className="px-5 py-4 border-b border-default flex items-center gap-3">
                           <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><TrendingUp size={16} className="text-strong" /></div>
-                          <div className="min-w-0"><h3 className="font-heading font-bold text-[16px] text-heading">Top Prospect</h3><p className="font-body text-[12px] text-body font-medium">Based on scout rating</p></div>
+                          <div className="min-w-0"><h3 className="font-heading font-bold type-body text-heading">Top Prospect</h3><p className="font-body type-caption text-body font-medium">Based on scout rating</p></div>
                         </div>
                         <div className="px-5 py-4 font-heading font-bold type-h5 tracking-tight text-heading"><PlayerLink name="Kofi Mensah" tone="inherit" /></div>
                       </div>
@@ -574,13 +574,13 @@ export default function CountryScoutDashboardPage() {
                       <div className={`${CARD} flex flex-col`}>
                         <div className="px-5 py-4 border-b border-default flex items-center gap-3">
                           <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Calendar size={16} className="text-strong" /></div>
-                          <div className="min-w-0 flex-1"><h3 className="font-heading font-bold text-[16px] text-heading">Upcoming Matches</h3><p className="font-body text-[12px] text-body font-medium">Capture opportunities</p></div>
-                          <button onClick={()=>navigate('/matches')} className="font-body font-bold text-[12px] text-link hover:underline shrink-0">View Matches</button>
+                          <div className="min-w-0 flex-1"><h3 className="font-heading font-bold type-body text-heading">Upcoming Matches</h3><p className="font-body type-caption text-body font-medium">Capture opportunities</p></div>
+                          <button onClick={()=>navigate('/matches')} className="font-body font-bold type-caption text-link hover:underline shrink-0">View Matches</button>
                         </div>
                         <div className="divide-y divide-border-default">
                           {[{m:'Gor Mahia vs Kariobangi',d:'Dec 15'},{m:'Enyimba FC vs Kano Pillars',d:'Dec 16'}].map(x=>(
                             <button key={x.m} onClick={()=>navigate('/matches')} className="w-full text-left px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors">
-                              <div className="min-w-0 flex-1"><div className="font-body font-bold text-[14px] text-body truncate">{x.m}</div><p className="font-body text-[12px] text-body mt-0.5">{x.d}</p></div>
+                              <div className="min-w-0 flex-1"><div className="font-body font-bold type-body-sm text-body truncate">{x.m}</div><p className="font-body type-caption text-body mt-0.5">{x.d}</p></div>
                               <ArrowRight size={14} className="text-body shrink-0" />
                             </button>
                           ))}
@@ -659,16 +659,16 @@ export default function CountryScoutDashboardPage() {
                       <div className="flex items-center gap-6">
                         <div className="flex items-center gap-4">
                           <div className="flex flex-col">
-                            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Performance</span>
-                            <span className="font-heading font-semibold text-[16px] text-strong leading-none">{perfCount}/10</span>
+                            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Performance</span>
+                            <span className="font-heading font-semibold type-body text-strong leading-none">{perfCount}/10</span>
                           </div>
                           <div className="w-px h-8 bg-surface-canvas" />
                           <div className="flex flex-col">
-                            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Prospects</span>
-                            <span className="font-heading font-semibold text-[16px] text-strong leading-none">{prospectCount}/10</span>
+                            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Prospects</span>
+                            <span className="font-heading font-semibold type-body text-strong leading-none">{prospectCount}/10</span>
                           </div>
                         </div>
-                        <button className="ml-auto bg-brand-primary text-on-brand px-6 py-2 rounded-full font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors shadow-sm"
+                        <button className="ml-auto bg-brand-primary text-on-brand px-6 py-2 rounded-full font-body font-black type-body-sm hover:bg-brand-primary/80 transition-colors shadow-sm"
                           onClick={()=>{if(perfCount<10)setPerfCount(p=>p+1);else if(prospectCount<10)setProspectCount(p=>p+1);}}>
                           Submit Shortlist
                         </button>
@@ -679,7 +679,7 @@ export default function CountryScoutDashboardPage() {
                   {/* Reserve List info bar */}
                   {activeTab==='reserve-list' && (
                     <PlayersCardZone className="bg-surface-accent">
-                      <p className="font-body text-[14px] text-body font-semibold">Players in Reserve can be promoted to Top 10 or returned to Players in Scope.</p>
+                      <p className="font-body type-body-sm text-body font-semibold">Players in Reserve can be promoted to Top 10 or returned to Players in Scope.</p>
                     </PlayersCardZone>
                   )}
 
@@ -692,20 +692,20 @@ export default function CountryScoutDashboardPage() {
                           <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-4">
                               <div className="w-12 h-12 rounded-[16px] bg-brand-primary/10 flex items-center justify-center text-strong"><ShieldCheck size={24} strokeWidth={2.5} /></div>
-                              <div><h3 className="font-heading font-bold text-[24px] text-heading">Submitted</h3><p className="font-body font-bold text-[14px] text-body">Action Required: None</p></div>
+                              <div><h3 className="font-heading font-bold type-h5 text-heading">Submitted</h3><p className="font-body font-bold type-body-sm text-body">Action Required: None</p></div>
                             </div>
-                            <div className="font-heading font-black text-[44px] tracking-tight text-strong">12</div>
+                            <div className="font-heading font-black text-5xl tracking-tight text-strong">12</div>
                           </div>
                           <div className="flex-1 overflow-y-auto pr-4 space-y-4">
                             {[{name:'Kofi Mensah',role:'Country Scout',region:'Ghana',date:'Today, 10:45 AM'},{name:'Ngozi Eze',role:'Country Scout',region:'Nigeria',date:'Yesterday, 4:20 PM'},{name:'Pape Sarr',role:'Country Scout',region:'Senegal',date:'Yesterday, 1:15 PM'},{name:'Emeka Okafor',role:'Country Scout',region:'Nigeria',date:'Monday, 9:00 AM'}].map((scout,i)=>(
                               <div key={i} className="bg-surface-card border border-default rounded-[12px] p-5 flex items-center justify-between hover:bg-surface-accent transition-colors">
                                 <div className="flex items-center gap-4">
-                                  <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
-                                  <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>
+                                  <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold type-caption text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
+                                  <div><div className="font-body font-bold type-body-sm text-body">{scout.name}</div><div className="font-body type-caption font-medium text-muted">{scout.region} • {scout.role}</div></div>
                                 </div>
                                 <div className="text-right">
-                                  <div className="text-muted bg-brand-primary/10 px-3 py-1 rounded-full font-body text-[10px] font-bold uppercase tracking-wider mb-1 inline-block">Complete</div>
-                                  <div className="font-body text-[12px] font-medium text-muted block">{scout.date}</div>
+                                  <div className="text-muted bg-brand-primary/10 px-3 py-1 rounded-full font-body type-micro font-bold uppercase tracking-wider mb-1 inline-block">Complete</div>
+                                  <div className="font-body type-caption font-medium text-muted block">{scout.date}</div>
                                 </div>
                               </div>
                             ))}
@@ -716,20 +716,20 @@ export default function CountryScoutDashboardPage() {
                           <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-4">
                               <div className="w-12 h-12 rounded-[16px] bg-status-error/10 flex items-center justify-center text-status-error"><TrendingUp size={24} strokeWidth={2.5} /></div>
-                              <div><h3 className="font-heading font-bold text-[24px] text-heading">Not Submitted</h3><p className="font-body font-bold text-[14px] text-status-error">Action Required: Follow up</p></div>
+                              <div><h3 className="font-heading font-bold type-h5 text-heading">Not Submitted</h3><p className="font-body font-bold type-body-sm text-status-error">Action Required: Follow up</p></div>
                             </div>
-                            <div className="font-heading font-black text-[44px] tracking-tight text-status-error">4</div>
+                            <div className="font-heading font-black text-5xl tracking-tight text-status-error">4</div>
                           </div>
                           <div className="flex-1 overflow-y-auto pr-4 space-y-4">
                             {[{name:'Fatou Mensah',role:'Country Scout',region:'Ghana',status:'7/10 Profiles'},{name:'Aliou Cisse',role:'Country Scout',region:'Senegal',status:'2/10 Profiles'},{name:'Kwame Asante',role:'Head Scout',region:'Ghana',status:'Reviewing'},{name:'Moussa Sow',role:'Head Scout',region:'Senegal',status:'Reviewing'}].map((scout,i)=>(
                               <div key={i} className="bg-status-error/5 border border-status-error/10 rounded-[12px] p-5 flex items-center justify-between hover:bg-status-error/10 transition-colors">
                                 <div className="flex items-center gap-4">
-                                  <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold text-[12px] text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
-                                  <div><div className="font-body font-bold text-[14px] text-body">{scout.name}</div><div className="font-body text-[12px] font-medium text-muted">{scout.region} • {scout.role}</div></div>
+                                  <div className="w-10 h-10 rounded-full bg-surface-card shadow-sm border border-default flex items-center justify-center font-body font-bold type-caption text-body">{scout.name.split(' ').map(n=>n[0]).join('')}</div>
+                                  <div><div className="font-body font-bold type-body-sm text-body">{scout.name}</div><div className="font-body type-caption font-medium text-muted">{scout.region} • {scout.role}</div></div>
                                 </div>
                                 <div className="flex flex-col items-end gap-2">
-                                  <div className="font-body font-bold text-[14px] text-status-error">{scout.status}</div>
-                                  <button className="font-body text-[10px] font-black tracking-wider uppercase text-status-error bg-status-error/20 px-3 py-1 rounded-md hover:bg-status-error/30 transition-colors">Nudge</button>
+                                  <div className="font-body font-bold type-body-sm text-status-error">{scout.status}</div>
+                                  <button className="font-body type-micro font-black tracking-wider uppercase text-status-error bg-status-error/20 px-3 py-1 rounded-md hover:bg-status-error/30 transition-colors">Nudge</button>
                                 </div>
                               </div>
                             ))}
@@ -746,8 +746,8 @@ export default function CountryScoutDashboardPage() {
                       {currentPlayersData.length===0 ? (
                         <div className="flex-1 flex flex-col items-center justify-center py-16 text-center">
                           <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Users size={16} className="text-body" /></div>
-                          <div className="font-heading font-semibold text-[16px] text-strong mt-4">No players here</div>
-                          <p className="font-body text-[12px] text-body font-medium max-w-xs">
+                          <div className="font-heading font-semibold type-body text-strong mt-4">No players here</div>
+                          <p className="font-body type-caption text-body font-medium max-w-xs">
                             {activeTab==='top-10'&&'Move players from Players in Scope using the Top Ten button.'}
                             {activeTab==='reserve-list'&&'Move players from Players in Scope or Top 10 using the Reserve button.'}
                             {activeTab==='players-in-scope'&&'No players match the current filters.'}
@@ -777,7 +777,7 @@ export default function CountryScoutDashboardPage() {
                                     className={`${SUB_TH} ${col.isSticky?'sticky z-40':''} ${col.width||''} ${col.minWidth||''} ${col.borderRight?'border-r-2 border-default':''} ${col.bgHeader||'bg-surface-card'} ${col.align==='center'?'text-center':'text-left'} cursor-context-menu`}
                                     onContextMenu={e=>handleContextMenu(e,idx,col.group)}>
                                     {editingColumn?.index===idx
-                                      ? <input autoFocus type="text" defaultValue={editingColumn.label} onBlur={e=>finishEditColumn(e.target.value)} onKeyDown={e=>e.key==='Enter'&&finishEditColumn(e.currentTarget.value)} className="bg-surface-accent px-2 py-1 rounded text-strong font-bold text-[12px] outline-none w-full" />
+                                      ? <input autoFocus type="text" defaultValue={editingColumn.label} onBlur={e=>finishEditColumn(e.target.value)} onKeyDown={e=>e.key==='Enter'&&finishEditColumn(e.currentTarget.value)} className="bg-surface-accent px-2 py-1 rounded text-strong font-bold type-caption outline-none w-full" />
                                       : col.label}
                                   </th>
                                 ))}
@@ -817,7 +817,7 @@ export default function CountryScoutDashboardPage() {
                                               })}
                                               {extraCols.map(c=>(
                                                 <td key={c.id} className="text-center w-[64px]">
-                                                  <span className={`text-[12px] font-medium text-muted whitespace-nowrap ${c.mono?'font-mono':'font-body'}`}>{c.value(player,rowIndex)}</span>
+                                                  <span className={`type-caption font-medium text-muted whitespace-nowrap ${c.mono?'font-mono':'font-body'}`}>{c.value(player,rowIndex)}</span>
                                                 </td>
                                               ))}
                                             </tr>
@@ -842,8 +842,8 @@ export default function CountryScoutDashboardPage() {
                       {currentPlayersData.length===0 && (
                         <div className="flex flex-col items-center justify-center py-16 text-center">
                           <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Users size={16} className="text-body" /></div>
-                          <div className="font-heading font-semibold text-[16px] text-strong mt-4">No players here</div>
-                          <p className="font-body text-[12px] text-body font-medium">Move players from Players in Scope to see them here.</p>
+                          <div className="font-heading font-semibold type-body text-strong mt-4">No players here</div>
+                          <p className="font-body type-caption text-body font-medium">Move players from Players in Scope to see them here.</p>
                         </div>
                       )}
                       <div className="flex flex-col gap-0 pb-10">
@@ -861,7 +861,7 @@ export default function CountryScoutDashboardPage() {
                               <div className="flex items-center w-full">
                                 <div className="flex-1 h-px bg-border-default" />
                                 <div className="px-6 py-2 rounded-full border border-default bg-surface-card shadow-sm">
-                                  <span className="font-heading font-black text-[12px] uppercase tracking-[0.2em] text-link">
+                                  <span className="font-heading font-black type-caption uppercase tracking-[0.2em] text-link">
                                     {posGroup}
                                   </span>
                                 </div>
@@ -884,7 +884,7 @@ export default function CountryScoutDashboardPage() {
                                         className="flex items-center gap-2 w-fit hover:opacity-70 transition-opacity group"
                                       >
                                         <ChevronDown size={16} className={`text-[var(--blue-950)] transition-transform ${isCollapsed ? '-rotate-90' : ''}`} />
-                                        <span className="font-heading font-bold text-[14px] text-[var(--blue-950)]">
+                                        <span className="font-heading font-bold type-body-sm text-[var(--blue-950)]">
                                           {yob}
                                         </span>
                                       </button>
@@ -906,17 +906,17 @@ export default function CountryScoutDashboardPage() {
                                                   <div className="flex items-center gap-[12px]">
                                                     {/* Avatar */}
                                                     <div className="bg-surface-input drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[56px] rounded-full shrink-0 border border-default relative">
-                                                      <p className="font-heading font-bold text-[var(--blue-950)] text-[14px]">{player.initials}</p>
+                                                      <p className="font-heading font-bold text-[var(--blue-950)] type-body-sm">{player.initials}</p>
                                                     </div>
                                                     {/* Name and Tags */}
                                                     <div className="flex flex-col gap-[6px]">
-                                                      <h3 onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[16px] hover:underline cursor-pointer truncate max-w-[140px] leading-tight">{player.name}</h3>
+                                                      <h3 onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.cTeam }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] type-body hover:underline cursor-pointer truncate max-w-[140px] leading-tight">{player.name}</h3>
                                                       <div className="flex gap-[6px]">
                                                         <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
-                                                          <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">{player.age}</p>
+                                                          <p className="font-heading font-bold text-[var(--navy-400)] type-caption whitespace-nowrap">{player.age}</p>
                                                         </div>
                                                         <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
-                                                          <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">F{player.matchVideos + player.highlightVideos}</p>
+                                                          <p className="font-heading font-bold text-[var(--navy-400)] type-caption whitespace-nowrap">F{player.matchVideos + player.highlightVideos}</p>
                                                         </div>
                                                         <div className={`w-2 h-2 rounded-full mt-2 self-start ${player.dotColor}`} />
                                                       </div>
@@ -953,8 +953,8 @@ export default function CountryScoutDashboardPage() {
                                                 <div className="relative h-[81.6px] w-full">
                                                   {/* Team */}
                                                   <div className="absolute left-0 top-0 bg-[var(--light-50)] border border-default rounded-[16px] p-[12.8px] w-[138.2px] h-[65.6px] flex flex-col items-start">
-                                                    <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
-                                                    <p className="font-heading font-bold text-[var(--blue-950)] text-[14px] truncate leading-tight w-full">{player.pTeam}</p>
+                                                    <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[4px]">Team</p>
+                                                    <p className="font-heading font-bold text-[var(--blue-950)] type-body-sm truncate leading-tight w-full">{player.pTeam}</p>
                                                   </div>
                                                   {/* Flag */}
                                                   <div className="absolute left-[97.2px] top-[31px] size-[20px] rounded-full pointer-events-none z-10 overflow-hidden border border-default">
@@ -963,20 +963,20 @@ export default function CountryScoutDashboardPage() {
                                                   {/* Stats */}
                                                   <div className="absolute left-[149.2px] top-[12.2px] flex items-start gap-[20px]">
                                                     <div className="flex flex-col">
-                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">APP</p>
-                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">{player.app}</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">APP</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[24px]">{player.app}</p>
                                                     </div>
                                                     <div className="flex flex-col">
-                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">G</p>
-                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">{player.goals}</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">G</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[24px]">{player.goals}</p>
                                                     </div>
                                                     <div className="flex flex-col">
-                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">A</p>
-                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">{player.ass}</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">A</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[24px]">{player.ass}</p>
                                                     </div>
                                                     <div className="flex flex-col items-center">
-                                                      <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">SCOUTS</p>
-                                                      <p className="font-mono font-bold text-[var(--blue-950)] text-[16px] leading-[24px]">1</p>
+                                                      <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">SCOUTS</p>
+                                                      <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[24px]">1</p>
                                                     </div>
                                                   </div>
                                                 </div>
@@ -1010,7 +1010,7 @@ export default function CountryScoutDashboardPage() {
       {raiseToast && (
         <div className="fixed bottom-6 right-6 z-[200] bg-brand-primary text-on-brand px-6 py-4 rounded-[24px] shadow-2xl border border-text-on-brand/10 flex items-center gap-4 max-w-sm">
           <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shrink-0 shadow-sm"><ArrowUpRight size={18} className="text-on-brand" /></div>
-          <div><div className="font-heading font-black text-[14px]">{raiseToast}</div><div className="font-body text-[12px] text-on-brand/70 font-medium mt-0.5">Raised to Long List · Senior & Lead Scouts notified</div></div>
+          <div><div className="font-heading font-black type-body-sm">{raiseToast}</div><div className="font-body type-caption text-on-brand/70 font-medium mt-0.5">Raised to Long List · Senior & Lead Scouts notified</div></div>
           <button onClick={()=>setRaiseToast(null)} className="ml-2 text-on-brand/40 hover:text-on-brand/80 transition-colors"><X size={16} /></button>
         </div>
       )}
@@ -1020,14 +1020,14 @@ export default function CountryScoutDashboardPage() {
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={()=>setIsTaskModalOpen(false)}>
           <div className="bg-surface-card border border-default w-full max-w-md rounded-[32px] shadow-2xl flex flex-col max-h-[80vh] overflow-hidden" onClick={e=>e.stopPropagation()}>
             <div className="p-6 border-b border-default flex justify-between items-center bg-surface-accent/50 shrink-0">
-              <h2 className="font-heading font-extrabold text-2xl text-heading flex items-center gap-3"><Calendar className="text-strong" size={24} />Tasks for This Week</h2>
+              <h2 className="font-heading font-extrabold type-h5 text-heading flex items-center gap-3"><Calendar className="text-strong" size={24} />Tasks for This Week</h2>
               <button onClick={()=>setIsTaskModalOpen(false)} className="w-8 h-8 rounded-full bg-surface-card border border-default flex items-center justify-center text-body hover:text-status-error hover:bg-status-error/10 transition-colors shadow-sm"><X size={16} /></button>
             </div>
             <div className="p-6 flex-1 overflow-y-auto">
               <div className="flex items-center gap-3 mb-6">
                 <input type="text" placeholder="Add a new task..." value={newTaskText} onChange={e=>setNewTaskText(e.target.value)}
                   onKeyDown={e=>{if(e.key==='Enter'&&newTaskText.trim()){setTasks([...tasks,{id:Date.now(),text:newTaskText,completed:false}]);setNewTaskText('');}}}
-                  className="flex-1 bg-surface-card border border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                  className="flex-1 bg-surface-card border border-default rounded-xl px-4 py-3 font-body type-body-sm font-medium text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                 <button onClick={()=>{if(newTaskText.trim()){setTasks([...tasks,{id:Date.now(),text:newTaskText,completed:false}]);setNewTaskText('');}}} className="bg-brand-primary text-on-brand p-3 rounded-xl hover:bg-brand-primary/80 transition-colors shadow-sm shrink-0"><Plus size={20} /></button>
               </div>
               <div className="space-y-3">
@@ -1036,15 +1036,15 @@ export default function CountryScoutDashboardPage() {
                     <button onClick={()=>setTasks(tasks.map(t=>t.id===task.id?{...t,completed:!t.completed}:t))} className={`mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors ${task.completed?'bg-brand-primary text-on-brand border-brand-primary':'border-2 border-default hover:border-brand-primary'}`}>
                       {task.completed&&<ShieldCheck size={14} strokeWidth={3} />}
                     </button>
-                    <span className={`flex-1 font-body text-[14px] font-medium leading-relaxed ${task.completed?'text-body line-through':'text-strong'}`}>{task.text}</span>
+                    <span className={`flex-1 font-body type-body-sm font-medium leading-relaxed ${task.completed?'text-body line-through':'text-strong'}`}>{task.text}</span>
                     <button onClick={()=>setTasks(tasks.filter(t=>t.id!==task.id))} className="opacity-0 group-hover:opacity-100 p-2 text-body hover:text-status-error hover:bg-status-error/10 rounded-lg transition-all shrink-0"><Archive size={16} /></button>
                   </div>
                 ))}
               </div>
             </div>
             <div className="p-6 border-t border-default bg-surface-accent/50 flex justify-between items-center shrink-0">
-              <span className="font-body text-[14px] font-bold text-body">{tasks.filter(t=>t.completed).length}/{tasks.length} completed</span>
-              <button onClick={()=>setIsTaskModalOpen(false)} className="px-6 py-2 bg-surface-canvas text-body hover:bg-surface-canvas rounded-full font-body font-bold text-[14px] transition-colors">Close</button>
+              <span className="font-body type-body-sm font-bold text-body">{tasks.filter(t=>t.completed).length}/{tasks.length} completed</span>
+              <button onClick={()=>setIsTaskModalOpen(false)} className="px-6 py-2 bg-surface-canvas text-body hover:bg-surface-canvas rounded-full font-body font-bold type-body-sm transition-colors">Close</button>
             </div>
           </div>
         </div>
@@ -1055,43 +1055,43 @@ export default function CountryScoutDashboardPage() {
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
           <div className="bg-surface-card border border-default w-full max-w-2xl rounded-[32px] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden" onClick={e=>e.stopPropagation()}>
             <div className="px-8 py-6 border-b border-default flex justify-between items-center bg-surface-card shrink-0">
-              <h2 className="font-heading font-black text-2xl text-heading">Add New Player</h2>
+              <h2 className="font-heading font-black type-h5 text-heading">Add New Player</h2>
               <button onClick={()=>setIsAddPlayerModalOpen(false)} className="w-8 h-8 rounded-full bg-surface-card border border-default flex items-center justify-center text-body hover:text-status-error hover:bg-status-error/10 shadow-sm transition-colors"><X size={14} /></button>
             </div>
             <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
               <div className="flex flex-col items-center">
                 <div className="w-24 h-24 rounded-full border-2 border-dashed border-brand-primary/30 bg-surface-card flex items-center justify-center text-body hover:bg-brand-primary/5 cursor-pointer transition-colors group"><Plus size={24} className="group-hover:scale-110 transition-transform" /></div>
-                <span className="font-heading font-bold text-[10px] text-muted mt-3 uppercase tracking-widest">Upload Photo</span>
+                <span className="font-heading font-bold type-micro text-muted mt-3 uppercase tracking-widest">Upload Photo</span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 portrait-tablet:grid-cols-1 gap-8">
                 <div className="space-y-5">
-                  <h3 className="font-heading font-black text-[10px] uppercase tracking-widest text-heading pb-2 border-b border-default">Bio Data</h3>
+                  <h3 className="font-heading font-black type-micro uppercase tracking-widest text-heading pb-2 border-b border-default">Bio Data</h3>
                   <div className="space-y-4">
-                    <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Full Name</label><input type="text" placeholder="e.g. John Doe" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
+                    <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Full Name</label><input type="text" placeholder="e.g. John Doe" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" /></div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Parent Team</label><select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>Manchester United</option><option>Right to Dream</option></select></div>
-                      <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Current Team</label><select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>U21</option><option>Senior</option></select></div>
+                      <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Parent Team</label><select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>Manchester United</option><option>Right to Dream</option></select></div>
+                      <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Current Team</label><select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Team</option><option>U21</option><option>Senior</option></select></div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Date of Birth</label><input type="date" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all" /></div>
-                      <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Nationality</label><input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Date of Birth</label><input type="date" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Nationality</label><input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all" /></div>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-5">
-                  <h3 className="font-heading font-black text-[10px] uppercase tracking-widests text-heading pb-2 border-b border-default">Technical Data</h3>
+                  <h3 className="font-heading font-black type-micro uppercase tracking-widests text-heading pb-2 border-b border-default">Technical Data</h3>
                   <div className="space-y-4">
-                    <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Positions</label><div className="flex space-x-2">{['Primary','Secondary','Tertiary'].map(p=><select key={p} className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer text-center"><option>{p}</option><option>ST</option><option>LW</option><option>RW</option><option>CM</option></select>)}</div></div>
-                    <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Preferred Foot</label><select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Foot</option><option>Right</option><option>Left</option><option>Both</option></select></div>
+                    <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Positions</label><div className="flex space-x-2">{['Primary','Secondary','Tertiary'].map(p=><select key={p} className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer text-center"><option>{p}</option><option>ST</option><option>LW</option><option>RW</option><option>CM</option></select>)}</div></div>
+                    <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Preferred Foot</label><select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all appearance-none cursor-pointer"><option>Select Foot</option><option>Right</option><option>Left</option><option>Both</option></select></div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Height (cm)</label><input type="number" placeholder="185" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all" /></div>
-                      <div><label className="block font-heading font-bold text-[10px] text-muted mb-2 uppercase tracking-widest">Weight (kg)</label><input type="number" placeholder="78" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Height (cm)</label><input type="number" placeholder="185" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all" /></div>
+                      <div><label className="block font-heading font-bold type-micro text-muted mb-2 uppercase tracking-widest">Weight (kg)</label><input type="number" placeholder="78" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none transition-all" /></div>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="space-y-4 pt-4 border-t border-default">
-                <h3 className="font-heading font-black text-[10px] uppercase tracking-widest text-heading pb-2 border-b border-default">Pipeline Action</h3>
+                <h3 className="font-heading font-black type-micro uppercase tracking-widest text-heading pb-2 border-b border-default">Pipeline Action</h3>
                 <div className="flex flex-wrap items-center gap-6">
                   {['Reserve List','Top 10','Raise'].map(action=>(
                     <label key={action} className="flex items-center space-x-3 cursor-pointer group">
@@ -1099,14 +1099,14 @@ export default function CountryScoutDashboardPage() {
                         <input type="checkbox" className="peer appearance-none w-5 h-5 border-2 border-text-body rounded bg-transparent checked:bg-brand-primary checked:border-brand-primary transition-colors cursor-pointer" />
                         <svg className="absolute w-3.5 h-3.5 text-on-brand pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 14 14" fill="none"><path d="M3 8L6 11L11 3.5" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" stroke="currentColor" /></svg>
                       </div>
-                      <span className="font-body text-[14px] font-bold text-body group-hover:text-body transition-colors">Add to {action}</span>
+                      <span className="font-body type-body-sm font-bold text-body group-hover:text-body transition-colors">Add to {action}</span>
                     </label>
                   ))}
                 </div>
               </div>
             </div>
             <div className="px-8 py-5 border-t border-default bg-surface-card shrink-0 flex justify-end">
-              <button onClick={()=>setIsAddPlayerModalOpen(false)} className="px-8 py-3 bg-brand-primary hover:bg-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] shadow-sm transition-all uppercase tracking-wide">Add Player</button>
+              <button onClick={()=>setIsAddPlayerModalOpen(false)} className="px-8 py-3 bg-brand-primary hover:bg-brand-primary text-on-brand rounded-full font-body font-bold type-body-sm shadow-sm transition-all uppercase tracking-wide">Add Player</button>
             </div>
           </div>
         </div>

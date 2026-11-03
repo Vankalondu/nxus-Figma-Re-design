@@ -108,10 +108,10 @@ export const CardView = ({
               className="sticky top-0 z-20 bg-[var(--light-50)] -mx-4 px-4 py-2 flex items-center gap-3 w-full hover:opacity-70 transition-opacity group text-left"
             >
               <ChevronDown size={18} className={`text-[var(--blue-950)] transition-transform shrink-0 ${posCollapsed ? '-rotate-90' : ''}`} />
-              <span className="font-heading font-bold text-[16px] text-[var(--blue-950)] uppercase tracking-wider whitespace-nowrap">
+              <span className="font-heading font-bold type-body text-[var(--blue-950)] uppercase tracking-wider whitespace-nowrap">
                 {isArchiveGroup ? 'Archived Players' : pos}
               </span>
-              <span className="font-body font-bold text-[12px] text-[var(--navy-400)]/40 shrink-0">({count})</span>
+              <span className="font-body font-bold type-caption text-[var(--navy-400)]/40 shrink-0">({count})</span>
               <div className="h-px bg-[rgba(0,0,0,0.08)] flex-1 ml-2" />
             </button>
 
@@ -128,10 +128,10 @@ export const CardView = ({
                         className="flex items-center gap-2 w-fit hover:opacity-70 transition-opacity group text-left"
                       >
                         <ChevronDown size={14} className={`text-[var(--navy-400)] transition-transform ${isCollapsed ? '-rotate-90' : ''}`} />
-                        <span className="font-heading font-bold text-[13px] text-[var(--navy-400)] tracking-wider">
+                        <span className="font-heading font-bold type-body-sm text-[var(--navy-400)] tracking-wider">
                           {yob}
                         </span>
-                        <span className="text-[var(--navy-400)]/40 font-body font-bold text-[11px] group-hover:text-link transition-colors uppercase">
+                        <span className="text-[var(--navy-400)]/40 font-body font-bold type-caption group-hover:text-link transition-colors uppercase">
                           {isCollapsed ? `Show ${grpPlayers.length}` : 'Hide'}
                         </span>
                       </button>
@@ -187,19 +187,19 @@ export const CardView = ({
                     <div key={player.id} className={`bg-[var(--light-50)] relative rounded-[32px] overflow-hidden border border-default shadow-[0px_8px_30px_0px_rgba(6,27,46,0.08)] transition-all hover:shadow-xl group w-full max-w-none ${isArchived ? 'opacity-50' : ''}`}>
                       {isArchived && (
                         <div className="bg-text-body/80 py-2 px-4 text-center">
-                          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand">Archived – Not Visible to Scouts</span>
+                          <span className="font-heading font-bold type-micro uppercase tracking-widest text-on-brand">Archived – Not Visible to Scouts</span>
                         </div>
                       )}
                       <div className="p-[16px] flex flex-col gap-[10px]">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex items-center gap-[10px] min-w-0 flex-1">
                             <div className="bg-surface-input drop-shadow-[0px_1px_1.5px_rgba(0,0,0,0.1),0px_1px_1px_rgba(0,0,0,0.1)] flex items-center justify-center size-[44px] rounded-full shrink-0 border border-default relative">
-                              <p className="font-heading font-bold text-[var(--blue-950)] text-[12px]">{player.initials}</p>
+                              <p className="font-heading font-bold text-[var(--blue-950)] type-caption">{player.initials}</p>
                               <span className={`absolute bottom-0 right-0 w-[13px] h-[13px] rounded-full border-2 border-[var(--light-50)] ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                             </div>
                             <div className="flex flex-col gap-[6px] min-w-0">
                               <div className="flex items-center gap-[6px] min-w-0">
-                                <p onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] text-[15px] hover:underline cursor-pointer leading-tight truncate min-w-0">{player.name}</p>
+                                <p onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: window.location.pathname }] } })} className="font-heading font-bold text-[var(--blue-950)] type-body hover:underline cursor-pointer leading-tight truncate min-w-0">{player.name}</p>
                                 <span className="size-[16px] rounded-full overflow-hidden border border-default shrink-0">
                                   <img src={`https://flagcdn.com/w40/${natCode}.png`} alt={player.nationality} className="size-full object-cover" />
                                 </span>
@@ -207,16 +207,16 @@ export const CardView = ({
                               </div>
                               <div className="flex gap-[6px] items-center flex-wrap">
                                 <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
-                                  <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">{player.age}</p>
+                                  <p className="font-heading font-bold text-[var(--navy-400)] type-caption whitespace-nowrap">{player.age}</p>
                                 </div>
                                 <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
-                                  <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">F{player.matchVideos}</p>
+                                  <p className="font-heading font-bold text-[var(--navy-400)] type-caption whitespace-nowrap">F{player.matchVideos}</p>
                                 </div>
                                 <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
-                                  <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">H{player.highlightVideos || 0}</p>
+                                  <p className="font-heading font-bold text-[var(--navy-400)] type-caption whitespace-nowrap">H{player.highlightVideos || 0}</p>
                                 </div>
                                 <div className="bg-[var(--blue-50)] px-[8px] py-[2px] rounded-[4px]">
-                                  <p className="font-heading font-bold text-[var(--navy-400)] text-[12px] whitespace-nowrap">{player.foot === 'Left' ? 'LF' : player.foot === 'Right' ? 'RF' : 'LF/RF'}</p>
+                                  <p className="font-heading font-bold text-[var(--navy-400)] type-caption whitespace-nowrap">{player.foot === 'Left' ? 'LF' : player.foot === 'Right' ? 'RF' : 'LF/RF'}</p>
                                 </div>
                               </div>
                             </div>
@@ -227,32 +227,32 @@ export const CardView = ({
                         <div className="flex items-stretch gap-[10px] w-full">
                           <div className="relative bg-[var(--light-50)] border border-default rounded-[16px] px-[12px] py-[7px] flex-1 min-w-0 flex items-center gap-[10px]">
                             <div className="flex flex-col items-start min-w-0 flex-1">
-                              <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Team</p>
-                              <p className="font-heading font-bold text-[var(--blue-950)] text-[14px] leading-tight truncate w-full">{player.team || player.pTeam}</p>
+                              <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[4px]">Team</p>
+                              <p className="font-heading font-bold text-[var(--blue-950)] type-body-sm leading-tight truncate w-full">{player.team || player.pTeam}</p>
                             </div>
                             <div className="w-px self-stretch bg-surface-midtone shrink-0" />
                             <div className="flex flex-col items-center shrink-0">
-                              <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[4px]">Pos</p>
-                              <p className="font-heading font-bold text-[var(--blue-950)] text-[14px] leading-tight whitespace-nowrap">{player.posAcronym || player.pos}</p>
+                              <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[4px]">Pos</p>
+                              <p className="font-heading font-bold text-[var(--blue-950)] type-body-sm leading-tight whitespace-nowrap">{player.posAcronym || player.pos}</p>
                             </div>
                           </div>
 
                           <div className="flex items-center justify-end gap-[14px] shrink-0">
                             <div className="flex flex-col items-center">
-                              <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">APP</p>
-                              <p className="font-mono font-bold text-[var(--blue-950)] text-[15px] leading-[18px]">{player.app}</p>
+                              <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">APP</p>
+                              <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[18px]">{player.app}</p>
                             </div>
                             <div className="flex flex-col items-center">
-                              <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">G</p>
-                              <p className="font-mono font-bold text-[var(--blue-950)] text-[15px] leading-[18px]">{player.goals}</p>
+                              <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">G</p>
+                              <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[18px]">{player.goals}</p>
                             </div>
                             <div className="flex flex-col items-center">
-                              <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">A</p>
-                              <p className="font-mono font-bold text-[var(--blue-950)] text-[15px] leading-[18px]">{player.ass}</p>
+                              <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">A</p>
+                              <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[18px]">{player.ass}</p>
                             </div>
                             <div className="flex flex-col items-center">
-                              <p className="font-heading font-bold text-[var(--navy-400)] text-[10px] tracking-[0.5px] uppercase mb-[2px]">SCOUTS</p>
-                              <p className="font-mono font-bold text-[var(--blue-950)] text-[15px] leading-[18px]">1</p>
+                              <p className="font-heading font-bold text-[var(--navy-400)] type-micro tracking-[0.5px] uppercase mb-[2px]">SCOUTS</p>
+                              <p className="font-mono font-bold text-[var(--blue-950)] type-body leading-[18px]">1</p>
                             </div>
                           </div>
                         </div>

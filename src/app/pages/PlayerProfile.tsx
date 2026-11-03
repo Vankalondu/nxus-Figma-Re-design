@@ -123,7 +123,7 @@ const INITIAL_NOTES = [
 ];
 
 const NOTE_TYPES = ['General', 'Scouting', 'Performance', 'Personal', 'Other'];
-const LABEL = 'font-heading font-bold text-[10px] uppercase tracking-widest text-muted';
+const LABEL = 'font-heading font-bold type-micro uppercase tracking-widest text-muted';
 
 const Donut = ({ pct, center, label }: { pct: number; center: string; label: string }) => {
   const R = 30;
@@ -136,9 +136,9 @@ const Donut = ({ pct, center, label }: { pct: number; center: string; label: str
           <circle cx="36" cy="36" r={R} fill="none" stroke="var(--border-default)" strokeWidth="6" />
           <circle cx="36" cy="36" r={R} fill="none" stroke="var(--brand-primary)" strokeWidth="6" strokeLinecap="round" strokeDasharray={dash + ' ' + C} />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center font-heading font-semibold text-[16px] text-strong">{center}</div>
+        <div className="absolute inset-0 flex items-center justify-center font-heading font-semibold type-body text-strong">{center}</div>
       </div>
-      <div className="text-[10px] font-black uppercase tracking-widest text-muted text-center leading-tight">{label}</div>
+      <div className="type-micro font-black uppercase tracking-widest text-muted text-center leading-tight">{label}</div>
     </div>
   );
 };
@@ -266,15 +266,15 @@ export default function PlayerProfile() {
     <div key={vid.title} className="w-full bg-surface-card border border-default rounded-[20px] overflow-hidden shadow-[var(--shadow-lg)] group hover:shadow-[var(--shadow-xl)] transition-all cursor-pointer">
       <div className="relative aspect-[16/9] bg-gradient-to-br from-surface-midtone/70 via-[var(--blue-50)]/50 to-surface-accent flex items-center justify-center overflow-hidden">
         <Video size={36} strokeWidth={1.5} className="text-link/50" />
-        <span className="absolute top-3 left-3 bg-surface-card/90 backdrop-blur-md text-strong font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-1 rounded-lg shadow-sm">{(vid.type === 'Match' ? 'F' : 'H') + (i + 1)}</span>
+        <span className="absolute top-3 left-3 bg-surface-card/90 backdrop-blur-md text-strong font-heading font-bold type-micro uppercase tracking-widest px-2 py-1 rounded-lg shadow-sm">{(vid.type === 'Match' ? 'F' : 'H') + (i + 1)}</span>
       </div>
       <div className="p-4">
-        <h4 className="font-heading font-black text-[14px] text-heading group-hover:text-link transition-colors truncate">{vid.title}</h4>
-        <div className="font-body font-medium text-[12px] text-muted mt-1">{vid.date}</div>
-        <div className="flex items-center gap-4 mt-2 font-mono font-bold text-[14px] text-strong">
+        <h4 className="font-heading font-black type-body-sm text-heading group-hover:text-link transition-colors truncate">{vid.title}</h4>
+        <div className="font-body font-medium type-caption text-muted mt-1">{vid.date}</div>
+        <div className="flex items-center gap-4 mt-2 font-mono font-bold type-body-sm text-strong">
           {vid.type === 'Match' ? (<><span>Mins: {vid.mins}</span><span>Goals: {vid.goals}</span></>) : (<span>{vid.dur}</span>)}
         </div>
-        <div className="font-body font-medium text-[12px] text-muted mt-2">{vid.tags && vid.tags.length ? vid.tags.join(' • ') : 'No tags assigned'}</div>
+        <div className="font-body font-medium type-caption text-muted mt-2">{vid.tags && vid.tags.length ? vid.tags.join(' • ') : 'No tags assigned'}</div>
       </div>
     </div>
   );
@@ -322,7 +322,7 @@ export default function PlayerProfile() {
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart data={RADAR_DATA} outerRadius="72%">
               <PolarGrid stroke="var(--border-default)" />
-              <PolarAngleAxis dataKey="axis" tick={{ fill: 'var(--text-body)', fontSize: 11, fontWeight: 800 }} />
+              <PolarAngleAxis dataKey="axis" tick={{ fill: 'var(--text-body)', style: { fontSize: 'var(--fs-caption)' }, fontWeight: 800 }} />
               <Radar dataKey="value" stroke="var(--brand-primary)" fill="var(--brand-primary)" fillOpacity={0.35} strokeWidth={2} />
             </RadarChart>
           </ResponsiveContainer>
@@ -332,10 +332,10 @@ export default function PlayerProfile() {
         <div className="bg-surface-card border border-default rounded-[32px] p-6 shadow-[var(--shadow-lg)] flex flex-col min-h-0">
           <h3 className={LABEL}>Goals &amp; Assists</h3>
           <div className="mt-2 flex items-end gap-3">
-            <div className="font-heading font-extrabold text-[36px] leading-none text-strong tracking-tight">14</div>
+            <div className="font-heading font-extrabold text-4xl leading-none text-strong tracking-tight">14</div>
             <div className="pb-1.5">
               <div className={LABEL}>Goals</div>
-              <span className="inline-flex items-center gap-1 mt-1 bg-status-success/10 text-status-success text-[10px] font-black px-2 py-0.5 rounded-full">
+              <span className="inline-flex items-center gap-1 mt-1 bg-status-success/10 text-status-success type-micro font-black px-2 py-0.5 rounded-full">
                 <TrendingUp size={12} strokeWidth={3} /> +4 vs last
               </span>
             </div>
@@ -345,7 +345,7 @@ export default function PlayerProfile() {
               <div key={m.l}>
                 <div className="flex justify-between mb-1">
                   <span className={LABEL}>{m.l}</span>
-                  <span className="font-mono text-[14px] font-bold text-strong">{m.v}</span>
+                  <span className="font-mono type-body-sm font-bold text-strong">{m.v}</span>
                 </div>
                 <div className="h-2 bg-border-default rounded-full overflow-hidden">
                   <div className="h-full bg-brand-primary rounded-full" style={{ width: m.pct + '%' }} />
@@ -359,7 +359,7 @@ export default function PlayerProfile() {
           <div className="mt-1 flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={PLAYING_TIME_BARS} margin={{ top: 8, right: 0, bottom: 0, left: 0 }}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-body)', fontSize: 10, fontWeight: 800 }} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-body)', style: { fontSize: 'var(--fs-micro)' }, fontWeight: 800 }} />
                 <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={40}>
                   {PLAYING_TIME_BARS.map((_, i) => (<Cell key={i} fill="var(--brand-primary)" fillOpacity={i === 1 ? 1 : 0.55} />))}
                 </Bar>
@@ -369,8 +369,8 @@ export default function PlayerProfile() {
           <div className="grid grid-cols-2 gap-2 mt-2">
             {[{ l: 'Minutes', v: '1,842' }, { l: 'Min/Game', v: '76.8' }].map(s => (
               <div key={s.l} className="bg-surface-accent/40 rounded-[14px] px-3 py-2 border border-default/40">
-                <div className="font-mono font-bold text-[14px] text-strong leading-none">{s.v}</div>
-                <div className="text-[10px] font-black text-muted uppercase tracking-widest mt-1">{s.l}</div>
+                <div className="font-mono font-bold type-body-sm text-strong leading-none">{s.v}</div>
+                <div className="type-micro font-black text-muted uppercase tracking-widest mt-1">{s.l}</div>
               </div>
             ))}
           </div>
@@ -379,8 +379,8 @@ export default function PlayerProfile() {
             <div className="grid grid-cols-4 gap-2 mt-2">
               {DISCIPLINE_ITEMS.map(d => (
                 <div key={d.l} className="text-center">
-                  <div className="font-mono font-bold text-[14px] leading-none" style={{ color: d.c }}>{d.v}</div>
-                  <div className="text-[10px] font-black text-muted uppercase tracking-widest mt-1">{d.l}</div>
+                  <div className="font-mono font-bold type-body-sm leading-none" style={{ color: d.c }}>{d.v}</div>
+                  <div className="type-micro font-black text-muted uppercase tracking-widest mt-1">{d.l}</div>
                 </div>
               ))}
             </div>
@@ -399,20 +399,20 @@ export default function PlayerProfile() {
           <div key={sect.title} className="bg-surface-card border border-default rounded-[24px] p-4 shadow-[var(--shadow-lg)] flex flex-col min-h-0">
             <h3 className={LABEL + ' shrink-0'}>{sect.title}</h3>
             <div className="flex flex-col flex-1 min-h-0 overflow-y-auto no-scrollbar mt-2">
-              {sect.items.length === 0 && <div className="text-[12px] font-medium text-muted py-2">No entries yet.</div>}
+              {sect.items.length === 0 && <div className="type-caption font-medium text-muted py-2">No entries yet.</div>}
               {sect.items.map(entry => (
                 <div key={entry.id} className="py-2 border-b border-default/60 last:border-0">
                   <div className="flex items-center justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="font-body font-medium text-[12px] text-muted">{entry.d}</div>
+                      <div className="font-body font-medium type-caption text-muted">{entry.d}</div>
                       {isEditing(si, entry.id, null) ? (
                         <div className="flex items-center gap-1 mt-0.5">
-                          <input value={editText} onChange={e => setEditText(e.target.value)} className="bg-surface-card border border-default rounded-lg px-2 py-1 text-[12px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
+                          <input value={editText} onChange={e => setEditText(e.target.value)} className="bg-surface-card border border-default rounded-lg px-2 py-1 type-caption font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
                           <button onClick={saveEdit} className="text-link"><Check size={14} strokeWidth={3} /></button>
                         </div>
                       ) : (
                         <div className="flex items-center gap-2">
-                          <span className="font-body font-bold text-[14px] text-body truncate">{entry.o}</span>
+                          <span className="font-body font-bold type-body-sm text-body truncate">{entry.o}</span>
                           {entry.c && <span className="w-3.5 h-3.5 rounded-full bg-status-success text-on-brand flex items-center justify-center shrink-0"><Check size={9} strokeWidth={4} /></span>}
                         </div>
                       )}
@@ -429,11 +429,11 @@ export default function PlayerProfile() {
                         <div key={loan.id} className="flex items-center justify-between gap-2">
                           {isEditing(si, entry.id, loan.id) ? (
                             <div className="flex items-center gap-1">
-                              <input value={editText} onChange={e => setEditText(e.target.value)} className="bg-surface-card border border-default rounded-lg px-2 py-1 text-[12px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
+                              <input value={editText} onChange={e => setEditText(e.target.value)} className="bg-surface-card border border-default rounded-lg px-2 py-1 type-caption font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
                               <button onClick={saveEdit} className="text-link"><Check size={13} strokeWidth={3} /></button>
                             </div>
                           ) : (
-                            <span className="font-body font-medium text-[12px] text-muted truncate">{loan.label}</span>
+                            <span className="font-body font-medium type-caption text-muted truncate">{loan.label}</span>
                           )}
                           <div className="flex items-center gap-2 shrink-0">
                             <button onClick={() => startEdit(si, entry.id, loan.id, loan.label)} className="text-body hover:text-link transition-colors"><Edit2 size={12} /></button>
@@ -446,7 +446,7 @@ export default function PlayerProfile() {
                 </div>
               ))}
             </div>
-            <button onClick={() => addEntry(si)} className="mt-2 shrink-0 flex items-center justify-center gap-2 border-2 border-dashed border-default hover:border-brand-primary text-body hover:text-link rounded-[14px] py-2 font-body font-bold text-[12px] transition-colors">
+            <button onClick={() => addEntry(si)} className="mt-2 shrink-0 flex items-center justify-center gap-2 border-2 border-dashed border-default hover:border-brand-primary text-body hover:text-link rounded-[14px] py-2 font-body font-bold type-caption transition-colors">
               <Plus size={13} /> Add New
             </button>
           </div>
@@ -477,29 +477,29 @@ export default function PlayerProfile() {
             {filtered.map(note => (
               <div key={note.id} className="bg-surface-card border border-default rounded-[24px] p-4 shadow-[var(--shadow-lg)] hover:shadow-[var(--shadow-xl)] transition-all flex flex-col">
                 <div className="flex items-center gap-2 min-w-0">
-                  <div className="w-9 h-9 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black text-[12px] shrink-0">{note.initials}</div>
+                  <div className="w-9 h-9 rounded-full bg-brand-primary/10 text-link flex items-center justify-center font-heading font-black type-caption shrink-0">{note.initials}</div>
                   <div className="min-w-0 flex-1">
-                    <div className="font-body font-bold text-[14px] text-body truncate">{note.author}</div>
-                    <div className="font-heading text-[10px] font-bold text-muted uppercase tracking-widest">{note.date}</div>
+                    <div className="font-body font-bold type-body-sm text-body truncate">{note.author}</div>
+                    <div className="font-heading type-micro font-bold text-muted uppercase tracking-widest">{note.date}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 mt-3">
-                  <span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px]">{note.type}</span>
-                  <span className="font-heading text-[10px] font-black uppercase tracking-widest text-muted">{note.isPublic ? 'Public' : 'Private'}</span>
+                  <span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded type-caption">{note.type}</span>
+                  <span className="font-heading type-micro font-black uppercase tracking-widest text-muted">{note.isPublic ? 'Public' : 'Private'}</span>
                 </div>
                 {editNoteId === note.id ? (
                   <div className="mt-3">
-                    <textarea value={editNoteText} onChange={e => setEditNoteText(e.target.value)} rows={3} className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-medium text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 resize-none" />
+                    <textarea value={editNoteText} onChange={e => setEditNoteText(e.target.value)} rows={3} className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 type-body-sm font-medium text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 resize-none" />
                     <div className="flex justify-end gap-3 mt-1">
-                      <button onClick={() => setEditNoteId(null)} className="text-[12px] font-bold text-body hover:text-strong">Cancel</button>
-                      <button onClick={saveNoteEdit} className="text-[12px] font-black text-link">Save</button>
+                      <button onClick={() => setEditNoteId(null)} className="type-caption font-bold text-body hover:text-strong">Cancel</button>
+                      <button onClick={saveNoteEdit} className="type-caption font-black text-link">Save</button>
                     </div>
                   </div>
                 ) : (
-                  <p className="font-body font-medium text-[14px] text-body leading-relaxed mt-3 line-clamp-3">{note.text}</p>
+                  <p className="font-body font-medium type-body-sm text-body leading-relaxed mt-3 line-clamp-3">{note.text}</p>
                 )}
                 {note.replies.length > 0 && (
-                  <button onClick={() => setOpenReplies(prev => ({ ...prev, [note.id]: !prev[note.id] }))} className="flex items-center gap-2 mt-3 font-body font-bold text-[12px] text-link hover:underline">
+                  <button onClick={() => setOpenReplies(prev => ({ ...prev, [note.id]: !prev[note.id] }))} className="flex items-center gap-2 mt-3 font-body font-bold type-caption text-link hover:underline">
                     <MessageSquare size={13} /> {note.replies.length} {note.replies.length === 1 ? 'reply' : 'replies'}
                   </button>
                 )}
@@ -508,28 +508,28 @@ export default function PlayerProfile() {
                     {note.replies.map(r => (
                       <div key={r.id}>
                         <div className="flex items-center gap-2">
-                          <span className="font-body font-bold text-[12px] text-body">{r.author}</span>
-                          <span className="font-heading text-[10px] font-medium text-muted uppercase tracking-widest">{r.date}</span>
+                          <span className="font-body font-bold type-caption text-body">{r.author}</span>
+                          <span className="font-heading type-micro font-medium text-muted uppercase tracking-widest">{r.date}</span>
                         </div>
-                        <p className="font-body font-medium text-[12px] text-body leading-relaxed">{r.text}</p>
+                        <p className="font-body font-medium type-caption text-body leading-relaxed">{r.text}</p>
                       </div>
                     ))}
                   </div>
                 )}
                 <div className="flex items-center gap-4 mt-4 pt-3 border-t border-default/60">
-                  <button onClick={() => { setReplyTarget(replyTarget === note.id ? null : note.id); setReplyText(''); }} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-link transition-colors"><MessageSquare size={13} /> Reply</button>
-                  <button onClick={() => { setEditNoteId(note.id); setEditNoteText(note.text); }} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-link transition-colors"><Edit2 size={13} /> Edit</button>
-                  <button onClick={() => deleteNote(note.id)} className="flex items-center gap-2 font-body font-bold text-[12px] text-body hover:text-status-error transition-colors"><Trash2 size={13} /> Delete</button>
+                  <button onClick={() => { setReplyTarget(replyTarget === note.id ? null : note.id); setReplyText(''); }} className="flex items-center gap-2 font-body font-bold type-caption text-body hover:text-link transition-colors"><MessageSquare size={13} /> Reply</button>
+                  <button onClick={() => { setEditNoteId(note.id); setEditNoteText(note.text); }} className="flex items-center gap-2 font-body font-bold type-caption text-body hover:text-link transition-colors"><Edit2 size={13} /> Edit</button>
+                  <button onClick={() => deleteNote(note.id)} className="flex items-center gap-2 font-body font-bold type-caption text-body hover:text-status-error transition-colors"><Trash2 size={13} /> Delete</button>
                 </div>
                 {replyTarget === note.id && (
                   <div className="flex items-center gap-2 mt-3">
-                    <input value={replyText} onChange={e => setReplyText(e.target.value)} placeholder="Write a reply..." className="flex-1 bg-surface-card border border-default rounded-full px-4 py-2 text-[12px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
-                    <button onClick={() => postReply(note.id)} className="bg-brand-primary text-on-brand rounded-full px-4 py-2 text-[12px] font-black">Post</button>
+                    <input value={replyText} onChange={e => setReplyText(e.target.value)} placeholder="Write a reply..." className="flex-1 bg-surface-card border border-default rounded-full px-4 py-2 type-caption font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20" />
+                    <button onClick={() => postReply(note.id)} className="bg-brand-primary text-on-brand rounded-full px-4 py-2 type-caption font-black">Post</button>
                   </div>
                 )}
               </div>
             ))}
-            {filtered.length === 0 && <div className="text-[14px] font-bold text-body py-6">No notes match your filters.</div>}
+            {filtered.length === 0 && <div className="type-body-sm font-bold text-body py-6">No notes match your filters.</div>}
           </div>
         </div>
       </div>
@@ -558,11 +558,11 @@ export default function PlayerProfile() {
           <div className="flex items-center gap-2 flex-wrap">
             {trail.map((c: any, i: number) => (
               <div key={i} className="flex items-center gap-2">
-                <button onClick={() => navigate(c.path)} className="font-body font-bold text-[14px] text-body hover:text-link transition-colors">{c.label}</button>
+                <button onClick={() => navigate(c.path)} className="font-body font-bold type-body-sm text-body hover:text-link transition-colors">{c.label}</button>
                 <ChevronRight size={14} className="text-body" />
               </div>
             ))}
-            <span className="font-body font-black text-[14px] text-body">{player.name}</span>
+            <span className="font-body font-black type-body-sm text-body">{player.name}</span>
           </div>
         </div>
 
@@ -575,16 +575,16 @@ export default function PlayerProfile() {
                 {avatarSrc ? (
                   <img src={avatarSrc} alt={player.name} onError={() => !profilePhoto && setImgError(true)} className="w-full h-full object-cover" />
                 ) : (
-                  <span className="font-heading font-black text-3xl text-link">{player.initials}</span>
+                  <span className="font-heading font-black type-h3 text-link">{player.initials}</span>
                 )}
               </div>
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-brand-primary text-on-brand font-body font-black text-[10px] px-2 py-0.5 rounded-full shadow-sm border-2 border-surface-card">{player.primaryPos}</span>
+              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-brand-primary text-on-brand font-body font-black type-micro px-2 py-0.5 rounded-full shadow-sm border-2 border-surface-card">{player.primaryPos}</span>
             </div>
             <div className="text-center mt-5">
-              <h1 className="font-heading font-semibold text-[24px] text-heading tracking-tight leading-tight">{player.name}</h1>
+              <h1 className="font-heading font-semibold type-h5 text-heading tracking-tight leading-tight">{player.name}</h1>
               <div className="flex items-center justify-center gap-2 mt-2">
-                <span className="font-heading font-bold text-[12px] text-muted uppercase tracking-widest">{player.currentTeam}</span>
-                <span className="bg-surface-accent text-muted font-body font-black text-[10px] px-2 py-0.5 rounded uppercase">{(Array.isArray(player.nationality) ? player.nationality[0] : (player.nationality || '')).slice(0, 2).toUpperCase()}</span>
+                <span className="font-heading font-bold type-caption text-muted uppercase tracking-widest">{player.currentTeam}</span>
+                <span className="bg-surface-accent text-muted font-body font-black type-micro px-2 py-0.5 rounded uppercase">{(Array.isArray(player.nationality) ? player.nationality[0] : (player.nationality || '')).slice(0, 2).toUpperCase()}</span>
               </div>
             </div>
             <div className="flex items-start justify-center gap-8 mt-5">
@@ -594,14 +594,14 @@ export default function PlayerProfile() {
             <div className="mt-5 pt-5 border-t border-default flex-1">
               {bio.map(row => (
                 <div key={row.l} className="flex items-center justify-between py-2 border-b border-default/40 last:border-0">
-                  <span className="flex items-center gap-2 font-heading text-[10px] font-bold text-muted uppercase tracking-widest">
+                  <span className="flex items-center gap-2 font-heading type-micro font-bold text-muted uppercase tracking-widest">
                     <row.icon size={13} className="text-link" /> {row.l}
                   </span>
-                  <span className="font-body font-bold text-[12px] text-body text-right">{row.v}</span>
+                  <span className="font-body font-bold type-caption text-body text-right">{row.v}</span>
                 </div>
               ))}
             </div>
-            <button onClick={() => setIsEditModalOpen(true)} className="mt-5 shrink-0 w-full flex items-center justify-center gap-2 border-2 border-brand-primary text-link hover:bg-brand-primary/10 rounded-full py-2 font-body font-bold text-[14px] transition-colors">
+            <button onClick={() => setIsEditModalOpen(true)} className="mt-5 shrink-0 w-full flex items-center justify-center gap-2 border-2 border-brand-primary text-link hover:bg-brand-primary/10 rounded-full py-2 font-body font-bold type-body-sm transition-colors">
               <Edit2 size={15} /> Edit Player
             </button>
           </aside>
@@ -612,7 +612,7 @@ export default function PlayerProfile() {
               {/* White card surface (D-20) */}
               <div className="flex items-center gap-1 bg-surface-card border border-default rounded-full p-1 shadow-[var(--shadow-lg)] overflow-x-auto hide-scrollbar max-w-full">
                 {tabs.map(t => (
-                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold text-[14px] transition-colors whitespace-nowrap shrink-0'}>{t}</button>
+                  <button key={t} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold type-body-sm transition-colors whitespace-nowrap shrink-0'}>{t}</button>
                 ))}
               </div>
             </div>
@@ -642,31 +642,31 @@ export default function PlayerProfile() {
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[500] p-4">
           <div className="bg-surface-card w-full max-w-2xl rounded-[24px] shadow-[var(--shadow-2xl)] border border-default flex flex-col max-h-[90vh] overflow-hidden">
             <div className="px-8 py-6 border-b border-default flex items-center justify-between shrink-0">
-              <h3 className="font-heading font-semibold text-[24px] text-heading leading-none">Add Note</h3>
+              <h3 className="font-heading font-semibold type-h5 text-heading leading-none">Add Note</h3>
               <button onClick={() => setShowAddNote(false)} className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-strong transition-colors"><X size={18} /></button>
             </div>
             <div className="p-8 space-y-5 overflow-y-auto no-scrollbar">
               <div>
                 <label className={LABEL + ' block mb-2'}>Note</label>
-                <textarea value={newNoteText} onChange={e => setNewNoteText(e.target.value)} rows={5} placeholder="Enter your note..." className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-placeholder/40 shadow-sm resize-none" />
+                <textarea value={newNoteText} onChange={e => setNewNoteText(e.target.value)} rows={5} placeholder="Enter your note..." className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 type-body-sm font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-placeholder/40 shadow-sm resize-none" />
               </div>
               <div className="grid grid-cols-2 gap-4 items-end">
                 <div className="relative">
                   <label className={LABEL + ' block mb-2'}>Type</label>
-                  <select value={newNoteType} onChange={e => setNewNoteType(e.target.value)} className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 appearance-none shadow-sm">
+                  <select value={newNoteType} onChange={e => setNewNoteType(e.target.value)} className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 type-body-sm font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 appearance-none shadow-sm">
                     {NOTE_TYPES.map(t => <option key={t}>{t}</option>)}
                   </select>
                   <ChevronDown size={16} className="absolute right-4 top-[42px] text-body pointer-events-none" />
                 </div>
                 <label className="flex items-center gap-2 cursor-pointer pb-3">
                   <input type="checkbox" checked={newNotePublic} onChange={e => setNewNotePublic(e.target.checked)} className="w-4 h-4 rounded-sm" />
-                  <span className="font-body font-bold text-[14px] text-body">Make this note public</span>
+                  <span className="font-body font-bold type-body-sm text-body">Make this note public</span>
                 </label>
               </div>
             </div>
             <div className="px-8 py-6 border-t border-default flex justify-end gap-3 shrink-0">
-              <button onClick={() => setShowAddNote(false)} className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors">Cancel</button>
-              <button onClick={postNote} className="bg-brand-primary text-on-brand hover:bg-brand-primary/80 px-8 py-2 rounded-full font-body font-black text-[14px] transition-all shadow-[var(--shadow-md)]">Post Note</button>
+              <button onClick={() => setShowAddNote(false)} className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors">Cancel</button>
+              <button onClick={postNote} className="bg-brand-primary text-on-brand hover:bg-brand-primary/80 px-8 py-2 rounded-full font-body font-black type-body-sm transition-all shadow-[var(--shadow-md)]">Post Note</button>
             </div>
           </div>
         </div>

@@ -57,13 +57,13 @@ export const NxusShapes: Story = {
   },
   render: () => (
     <div className="flex flex-wrap items-center gap-3">
-      <button className="bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors shadow-md">
+      <button className="bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold type-body-sm transition-colors shadow-md">
         Primary
       </button>
-      <button className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors">
+      <button className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors">
         Secondary
       </button>
-      <button className="border-2 border-status-error text-status-error hover:bg-status-error/10 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors">
+      <button className="border-2 border-status-error text-status-error hover:bg-status-error/10 rounded-full px-6 py-3 font-body font-bold type-body-sm transition-colors">
         Destructive
       </button>
     </div>

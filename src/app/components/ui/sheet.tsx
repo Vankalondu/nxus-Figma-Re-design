@@ -121,7 +121,7 @@ function SheetDescription({
   return (
     <SheetPrimitive.Description
       data-slot="sheet-description"
-      className={cn("text-body text-sm", className)}
+      className={cn("text-body type-body-sm", className)}
       {...props}
     />
   );
