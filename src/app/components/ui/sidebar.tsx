@@ -112,7 +112,7 @@ export function Sidebar() {
           </button>
           <div className="cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-4">
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80"
+              src="https://images.unsplash.com/photo-1715005881129-266ccdd75e43?w=100&h=100&fit=crop&crop=faces&q=80"
               alt="Profile"
               className="w-10 h-10 rounded-full border-2 border-[#D0E8E3] object-cover shrink-0"
             />
@@ -169,7 +169,7 @@ export function Sidebar() {
               </button>
               <div className="flex items-center gap-3">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80"
+                  src="https://images.unsplash.com/photo-1715005881129-266ccdd75e43?w=100&h=100&fit=crop&crop=faces&q=80"
                   alt="Profile"
                   className="w-10 h-10 rounded-full border-2 border-[#D0E8E3] object-cover"
                 />

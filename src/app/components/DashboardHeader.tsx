@@ -1,4 +1,4 @@
-import { Search, Bell, Calendar, Plus } from 'lucide-react';
+import { Search, Bell, Plus } from 'lucide-react';
 
 export function DashboardHeader() {
   return (
@@ -19,11 +19,6 @@ export function DashboardHeader() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 px-4 py-2 bg-surface-card text-body rounded-lg hover:bg-[var(--light-100)] transition-colors border border-default"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            <Calendar className="w-4 h-4" />
-            <span>This Week</span>
-          </button>
           
           <button className="flex items-center gap-2 px-4 py-2 bg-brand-primary text-on-brand rounded-lg hover:bg-[var(--blue-600)] transition-colors"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

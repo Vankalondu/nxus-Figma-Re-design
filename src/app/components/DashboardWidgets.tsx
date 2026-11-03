@@ -90,7 +90,7 @@ export const StatsCards = () => {
         onClick={() => navigate('/players?tab=combined-top-10')}
       >
         <img
-          src="https://images.unsplash.com/photo-1776465960036-918a03931b03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHBsYXllciUyMGRhcmslMjBncmVlbiUyMGFic3RyYWN0fGVufDF8fHx8MTc3NzQwMTAwM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+          src="https://images.unsplash.com/photo-1787540944334-4eb7f5d3f82f?fit=max&fm=jpg&q=70&w=1080"
           alt="Ready Reports"
           className="hidden sm:block absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
         />
@@ -242,7 +242,7 @@ export const HeadScoutStatsCards = () => {
         onClick={() => navigate('/players?tab=combined-top-10')}
       >
         <img
-          src="https://images.unsplash.com/photo-1776465960036-918a03931b03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb290YmFsbCUyMHBsYXllciUyMGRhcmslMjBncmVlbiUyMGFic3RyYWN0fGVufDF8fHx8MTc3NzQwMTAwM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+          src="https://images.unsplash.com/photo-1787540944334-4eb7f5d3f82f?fit=max&fm=jpg&q=70&w=1080"
           alt="Top Ten Pending Prospects List"
           className="hidden sm:block absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
         />

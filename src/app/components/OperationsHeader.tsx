@@ -1,4 +1,4 @@
-import { Search, Calendar, Plus, Bell } from 'lucide-react';
+import { Search, Plus, Bell } from 'lucide-react';
 import { useState } from 'react';
 
 export function OperationsHeader() {
@@ -19,14 +19,6 @@ export function OperationsHeader() {
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           />
         </div>
-
-        {/* Date Picker */}
-        <button className="flex items-center gap-2 px-4 py-3 bg-[var(--light-50)] border border-[var(--light-200)] rounded-xl hover:bg-[var(--light-100)] transition-all">
-          <Calendar className="w-5 h-5 text-body" />
-          <span className="text-[var(--navy-800)] font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            This Week
-          </span>
-        </button>
 
         {/* Add Player Button */}
         <button className="flex items-center gap-2 px-5 py-3 bg-brand-primary text-on-brand rounded-xl hover:bg-[var(--blue-600)] transition-all shadow-sm hover:shadow-md font-semibold">

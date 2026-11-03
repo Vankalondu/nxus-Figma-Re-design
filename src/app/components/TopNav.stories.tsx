@@ -25,12 +25,13 @@ const meta = {
           'The top navigation bar, identical on every page (**P-CO7**): `sticky top-6`, ' +
           '`bg-surface-card/90` with a backdrop blur, `rounded-[24px]`, `--shadow-lg`.\n\n' +
           'It holds search and actions rather than links — navigation is the sidebar plus tabs ' +
-          '(**P-L2**). Contents run left to right: player search, theme toggle, notification bell ' +
-          'with unread count, This Week, Add Report, Add Player, profile menu. The signed-in ' +
+          '(**P-L2**). Contents run left to right (**D-21**): player search, then Add Report, Add Player, ' +
+          'the theme toggle and the notification bell (with unread count) beside the profile menu. ' +
+          'There is no This Week button. The signed-in ' +
           'role lives in the profile menu ("Signed in as …"), not as a pill in the bar.\n\n' +
           'Action buttons are **gated on their handlers**: pass `onAddReport` and the button ' +
           'appears, omit it and it does not. That is how one component serves every role without ' +
-          'a role prop — a Country Scout has no Add Report, a Video Manager has no This Week, and ' +
+          'a role prop — a Country Scout has no Add Report, uploader roles get Upload Video instead, and ' +
           'neither needs a conditional inside the nav.',
       },
     },
@@ -38,7 +39,6 @@ const meta = {
   argTypes: {
     profile: { control: false, description: 'Who is signed in: name, role, avatar, optional view switch.' },
     unreadCount: { control: 'number', description: 'Bell badge. Derived live from the approval queue for the Video Manager.' },
-    onThisWeek: { action: 'this week' },
     onAddReport: { action: 'add report', description: 'Omit to hide the button.' },
     onAddPlayer: { action: 'add player', description: 'Omit to hide the button.' },
     onUploadVideo: { action: 'upload video', description: 'Uploader roles. Omit to hide.' },
@@ -53,7 +53,6 @@ type Story = StoryObj<typeof meta>
 export const LeadScout: Story = {
   args: {
     profile: who('Tom', 'Lead Scout'),
-    onThisWeek: () => {},
     onAddReport: () => {},
     onAddPlayer: () => {},
   },
@@ -111,7 +110,6 @@ export const SeniorScoutWithViewSwitch: Story = {
   },
   args: {
     profile: { ...who('David', 'Senior Scout'), viewSwitch: { options: ['Senior Scout', 'Head Scout'], value: 'Senior Scout', onChange: () => {} } },
-    onThisWeek: () => {},
     onAddPlayer: () => {},
   },
   render: (a) => <div className="p-6"><TopNav {...a} /></div>,

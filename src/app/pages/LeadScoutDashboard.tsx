@@ -1113,7 +1113,6 @@ export default function LeadScoutDashboard() {
   const [tasks, setTasks] = useState<Task[]>(MOCK_TASKS);
   const [notifications, setNotifications] = useState<AppNotif[]>(INITIAL_NOTIFS);
   const [showNotifPanel, setShowNotifPanel] = useState(false);
-  const [showThisWeek, setShowThisWeek] = useState(false);
   const [showAddReport, setShowAddReport] = useState(false);
   const [showAddPlayer, setShowAddPlayer] = useState(false);
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -1161,55 +1160,6 @@ export default function LeadScoutDashboard() {
       `}} />
 
       {/* ── Modals ── */}
-      {showThisWeek && (
-        <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowThisWeek(false)}>
-          <div className="bg-surface-card rounded-[20px] shadow-2xl w-full max-w-md border border-default flex flex-col max-h-[80vh]" onClick={e => e.stopPropagation()}>
-            <div className="px-8 py-6 border-b border-default flex items-center justify-between bg-brand-primary rounded-t-[16px] shrink-0">
-              <div className="flex items-center gap-3">
-                <Calendar size={20} className="text-strong" />
-                <span className="font-heading font-semibold type-body text-on-brand">Tasks This Week</span>
-              </div>
-              <button onClick={() => setShowThisWeek(false)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={16} /></button>
-            </div>
-            <div className="px-6 py-4 border-b border-default shrink-0">
-              <div className="flex items-center gap-3">
-                <input type="text" placeholder="Add a task..." onKeyDown={e => { if (e.key === 'Enter' && e.currentTarget.value.trim()) { addTask(e.currentTarget.value.trim()); e.currentTarget.value = ''; } }}
-                  className="flex-1 bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
-                <div className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-on-brand shrink-0"><Plus size={18} /></div>
-              </div>
-            </div>
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
-              {tasks.filter(t => !t.completed).map(task => (
-                <div key={task.id} className="flex items-start gap-3 p-3 rounded-[20px] hover:bg-surface-accent cursor-pointer group" onClick={() => toggleTask(task.id)}>
-                  <div className="w-5 h-5 rounded-full border-2 border-default group-hover:border-brand-primary shrink-0 mt-0.5 transition-colors" />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-body font-bold type-body-sm text-body">{task.text}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className={`font-body type-micro font-black px-2 py-0.5 rounded-full ${task.priority === 'High' ? 'bg-brand-primary/15 text-strong' : 'bg-surface-accent text-body'}`}>{task.priority}</span>
-                      <span className="font-body type-caption text-muted font-medium">{task.dueDate}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {tasks.filter(t => t.completed).length > 0 && (
-                <>
-                  <div className="flex items-center gap-2 py-2">
-                    <div className="flex-1 h-px bg-surface-canvas" />
-                    <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">{tasks.filter(t => t.completed).length} completed</span>
-                    <div className="flex-1 h-px bg-surface-canvas" />
-                  </div>
-                  {tasks.filter(t => t.completed).map(task => (
-                    <div key={task.id} className="flex items-start gap-3 p-3 rounded-[20px] opacity-50 cursor-pointer" onClick={() => toggleTask(task.id)}>
-                      <div className="w-5 h-5 rounded-full bg-brand-primary flex items-center justify-center shrink-0 mt-0.5"><CheckCircle size={12} className="text-on-brand" /></div>
-                      <p className="font-body font-bold type-body-sm text-body line-through">{task.text}</p>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
 
       {showAddReport && <AddReportModal onClose={() => setShowAddReport(false)} scoutName="Tom" />}
 
@@ -1262,7 +1212,6 @@ export default function LeadScoutDashboard() {
       )}
 
       <Sidebar actions={[
-        { label: 'This Week', icon: Calendar, onClick: () => setShowThisWeek(true) },
         { label: 'Add Report', icon: FileText, onClick: () => setShowAddReport(true) },
       ]} />
 
@@ -1296,7 +1245,6 @@ export default function LeadScoutDashboard() {
               </div>
             </div>
           )}
-          onThisWeek={() => setShowThisWeek(true)}
           onAddReport={() => setShowAddReport(true)}
           onAddPlayer={() => setShowAddPlayer(true)}
         />

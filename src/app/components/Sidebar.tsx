@@ -26,7 +26,7 @@ function getRoleBasePath(): string {
 }
 
 interface SidebarProps {
-  // Quick actions shown in the mobile drawer (e.g. This Week, Add Report) —
+  // Quick actions shown in the mobile drawer (e.g. Add Report) —
   // on desktop these live in the top bar, so the drawer is mobile-only anyway.
   actions?: { label: string; icon: React.ElementType; onClick: () => void }[];
 }

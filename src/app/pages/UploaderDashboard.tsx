@@ -84,7 +84,7 @@ export default function UploaderDashboard() {
     { id: 'tasks', label: 'Tasks', count: activeTasks.length },
   ];
 
-  const avatar = 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&h=100&fit=crop&crop=faces&q=80';
+  const avatar = 'https://images.unsplash.com/photo-1601634134078-19284da781f7?w=100&h=100&fit=crop&crop=faces&q=80';
 
   return (
     <div className="flex min-h-screen bg-surface-page font-body text-strong">
