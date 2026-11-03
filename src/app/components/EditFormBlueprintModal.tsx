@@ -78,7 +78,7 @@
 
   // ── Reusable atoms (module scope, token-styled) ──
   const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-muted
+    <label className={`font-heading font-bold type-micro uppercase tracking-widest text-muted
   block`}>{children}</label>
   );
 
@@ -97,7 +97,7 @@
         {checked && <Check size={10} className={`text-inverse`} />}
       </div>
       <input type="checkbox" checked={checked} onChange={onChange} className={`hidden`} />
-      <span className={`font-body text-[14px] font-bold text-body`}>{label}</span>
+      <span className={`font-body type-body-sm font-bold text-body`}>{label}</span>
     </label>
   );
 
@@ -197,8 +197,8 @@
           {/* Header */}
           <div className={`px-8 py-6 bg-brand-primary flex items-center justify-between shrink-0`}>
             <div className={`flex flex-col gap-1`}>
-              <span className={`font-heading font-semibold text-[20px] text-on-brand`}>Edit Form Blueprint</span>
-              <span className={`font-body font-medium text-[12px] text-on-brand/60`}>Configure questions, scope and
+              <span className={`font-heading font-semibold type-h6 text-on-brand`}>Edit Form Blueprint</span>
+              <span className={`font-body font-medium type-caption text-on-brand/60`}>Configure questions, scope and
   behavior.</span>
             </div>
             <button onClick={onClose} className={`w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center
@@ -212,7 +212,7 @@
                 const isActive = activeTab === tab;
                 return (
                   <button key={tab} onClick={() => setActiveTab(tab)}
-                    className={`rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors border ${isActive ?
+                    className={`rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors border ${isActive ?
   `bg-brand-primary text-on-brand border-brand-primary shadow-sm` : `bg-surface-card text-body border-default
   hover:border-brand-primary hover:text-strong`}`}>
                     {tab}
@@ -221,11 +221,11 @@
               })}
             </div>
             <div className={`flex items-center gap-2 shrink-0`}>
-              <span className={`inline-flex items-center gap-1 font-body font-bold text-[12px] px-2 py-1 rounded-full
+              <span className={`inline-flex items-center gap-1 font-body font-bold type-caption px-2 py-1 rounded-full
   bg-status-success/10 text-status-success`}>
                 <Check size={11} /> Template ready
               </span>
-              <span className={`font-body font-bold text-[12px] px-2 py-1 rounded-full bg-brand-primary/10 text-link`}>
+              <span className={`font-body font-bold type-caption px-2 py-1 rounded-full bg-brand-primary/10 text-link`}>
                 {questions.length} questions
               </span>
             </div>
@@ -240,7 +240,7 @@
                 <div className={`flex flex-col gap-2`}>
                   <FieldLabel>Form Title</FieldLabel>
                   <input value={title} onChange={e => setTitle(e.target.value)}
-                    className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
+                    className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                 </div>
@@ -248,11 +248,11 @@
                 <div className={`flex flex-col gap-2`}>
                   <div className={`flex items-center justify-between`}>
                     <FieldLabel>Description</FieldLabel>
-                    <span className={`font-body font-medium text-[12px]
+                    <span className={`font-body font-medium type-caption
   text-muted`}>{description.length}/500</span>
                   </div>
                   <textarea value={description} maxLength={500} rows={3} onChange={e => setDescription(e.target.value)}
-                    className={`w-full bg-surface-card border border-default rounded-xl px-4 py-3 text-[14px] font-bold
+                    className={`w-full bg-surface-card border border-default rounded-xl px-4 py-3 type-body-sm font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder resize-none`} />
                 </div>
@@ -263,7 +263,7 @@
                     <div className={`relative bg-surface-card border border-default rounded-xl px-4 py-2 focus-within:ring-2
   focus-within:ring-border-focus/20 focus-within:border-focus transition-all`}>
                       <select value={formType} onChange={e => setFormType(e.target.value)}
-                        className={`w-full bg-transparent text-[14px] font-bold text-strong focus:outline-none
+                        className={`w-full bg-transparent type-body-sm font-bold text-strong focus:outline-none
   appearance-none cursor-pointer`}>
                         {['Scouting Report', 'Player Evaluation', 'Match Report', 'Training Session'].map(t => <option
   key={t} className={`bg-surface-card`}>{t}</option>)}
@@ -275,7 +275,7 @@
                   <div className={`flex flex-col gap-2`}>
                     <FieldLabel>Est. Time</FieldLabel>
                     <input value={estTime} onChange={e => setEstTime(e.target.value)} placeholder="e.g. 8m"
-                      className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
+                      className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                   </div>
@@ -288,7 +288,7 @@
                       const active = categories.includes(c);
                       return (
                         <button key={c} type="button" onClick={() => toggleCategory(c)}
-                          className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px]
+                          className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-caption
   transition-all cursor-pointer border ${active ? `bg-brand-primary/10 text-link border-brand-primary/20 shadow-sm` : `bg-surface-card
   text-body border-default hover:border-brand-primary/50 hover:text-strong`}`}>
                           <div className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center transition-all
@@ -305,9 +305,9 @@
                 <div className={`flex flex-col gap-2`}>
                   <FieldLabel>Role Permission Visibility</FieldLabel>
                   <div className={`flex gap-2 flex-wrap`}>
-                    <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-brand-primary/10
+                    <span className={`font-body font-black type-micro px-3 py-2 rounded-full bg-brand-primary/10
   text-link`}>SUPERVISOR</span>
-                    <span className={`font-body font-black text-[10px] px-3 py-2 rounded-full bg-status-warning/10
+                    <span className={`font-body font-black type-micro px-3 py-2 rounded-full bg-status-warning/10
   text-status-warning`}>DIRECTOR</span>
                   </div>
                 </div>
@@ -318,12 +318,12 @@
                     <input value={gradeAbbr} maxLength={3} onChange={e => setGradeAbbr(e.target.value.toUpperCase().slice(0,
   3))}
                       placeholder="Optional"
-                      className={`flex-1 bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold font-mono
+                      className={`flex-1 bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold font-mono
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                     <button type="button" onClick={fillFromTitle}
                       className={`bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80
-  rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm shrink-0`}>
+  rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors shadow-sm shrink-0`}>
                       Fill from title
                     </button>
                   </div>
@@ -340,7 +340,7 @@
                   <div className={`p-4 border-b border-default bg-surface-card`}>
                     <button onClick={addQuestion}
                       className={`w-full py-3 bg-brand-primary border-2 border-brand-primary text-on-brand font-body font-bold
-  text-[14px] rounded-full shadow-md hover:bg-brand-primary/80 transition-colors flex items-center justify-center gap-2`}>
+  type-body-sm rounded-full shadow-md hover:bg-brand-primary/80 transition-colors flex items-center justify-center gap-2`}>
                       <Plus size={16} /> Add Question
                     </button>
                   </div>
@@ -352,16 +352,16 @@
                           className={`w-full flex flex-col gap-2 p-3 rounded-xl transition-colors text-left border
   ${isActive ? `bg-brand-primary/5 border-brand-primary/30 shadow-sm` : `bg-transparent border-transparent hover:bg-surface-accent/50`}`}>
                           <div className={`flex items-center gap-2 w-full`}>
-                            <span className={`font-mono text-[12px] font-black shrink-0 ${isActive ? `text-link` :
+                            <span className={`font-mono type-caption font-black shrink-0 ${isActive ? `text-link` :
   `text-body`}`}>{String(idx + 1).padStart(2, '0')}</span>
-                            <span className={`font-body font-bold text-[14px] truncate flex-1 ${isActive ? `text-link` :
+                            <span className={`font-body font-bold type-body-sm truncate flex-1 ${isActive ? `text-link` :
   `text-strong`}`}>{q.text || 'Untitled question'}</span>
-                            {q.linkStart && <span className={`shrink-0 font-body font-black text-[10px] px-2 py-0.5
+                            {q.linkStart && <span className={`shrink-0 font-body font-black type-micro px-2 py-0.5
   rounded-full bg-status-success/10 text-status-success`}>Linked 1a</span>}
                           </div>
                           <div className={`flex items-center gap-2 ml-[22px]`}>
                             <span className={`shrink-0 bg-surface-accent border border-default px-2 py-0.5 rounded-full font-body
-  font-bold text-[10px] text-body whitespace-nowrap`}>{q.type}</span>
+  font-bold type-micro text-body whitespace-nowrap`}>{q.type}</span>
                           </div>
                         </button>
                       );
@@ -397,11 +397,11 @@
 
                     {/* Question text */}
                     <div className={`flex flex-col gap-2`}>
-                      <label className={`font-heading font-bold text-[10px] uppercase tracking-widest text-muted
+                      <label className={`font-heading font-bold type-micro uppercase tracking-widest text-muted
   flex items-center gap-1`}>Question Text <span className={`text-status-error`}>*</span></label>
                       <input key={`text-${activeQuestion.id}`} value={activeQuestion.text} onChange={e =>
   updateActive('text', e.target.value)}
-                        className={`w-full bg-surface-card border border-default shadow-sm rounded-[16px] px-4 py-3 text-[16px]
+                        className={`w-full bg-surface-card border border-default shadow-sm rounded-[16px] px-4 py-3 type-body
   font-black text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                     </div>
@@ -412,7 +412,7 @@
                       <textarea key={`help-${activeQuestion.id}`} value={activeQuestion.helpText} rows={2} onChange={e =>
   updateActive('helpText', e.target.value)}
                         placeholder="Instruction text"
-                        className={`w-full bg-surface-card border border-default shadow-sm rounded-[16px] px-4 py-3 text-[14px]
+                        className={`w-full bg-surface-card border border-default shadow-sm rounded-[16px] px-4 py-3 type-body-sm
   font-bold text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder resize-none`} />
                       <CheckRow checked={activeQuestion.required} onChange={() => updateActive('required',
@@ -421,18 +421,18 @@
 
                     {/* Question Linking Matrix */}
                     <div className={`flex flex-col gap-5 bg-surface-accent/40 border border-default rounded-[20px] p-6`}>
-                      <span className={`font-heading font-black text-[14px] text-strong`}>Question Linking Matrix</span>
+                      <span className={`font-heading font-black type-body-sm text-strong`}>Question Linking Matrix</span>
 
                       <div className={`grid grid-cols-2 gap-4`}>
                         <div className={`flex items-center justify-between bg-surface-card border border-default rounded-xl px-4
   py-3`}>
-                          <span className={`font-body font-bold text-[14px] text-body`}>Start Linked Set (1a)</span>
+                          <span className={`font-body font-bold type-body-sm text-body`}>Start Linked Set (1a)</span>
                           <SlideToggle on={activeQuestion.linkStart} onChange={() => updateActive('linkStart',
   !activeQuestion.linkStart)} />
                         </div>
                         <div className={`flex items-center justify-between bg-surface-card border border-default rounded-xl px-4
   py-3`}>
-                          <span className={`font-body font-bold text-[14px] text-body`}>Link to Previous</span>
+                          <span className={`font-body font-bold type-body-sm text-body`}>Link to Previous</span>
                           <SlideToggle on={activeQuestion.linkPrev} onChange={() => updateActive('linkPrev',
   !activeQuestion.linkPrev)} />
                         </div>
@@ -443,7 +443,7 @@
                           <FieldLabel>Main Number</FieldLabel>
                           <input value={activeQuestion.varMain} onChange={e => updateActive('varMain', e.target.value)}
   placeholder="1"
-                            className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-bold
+                            className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 type-body-sm font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                         </div>
@@ -451,7 +451,7 @@
                           <FieldLabel>Sub Label</FieldLabel>
                           <input value={activeQuestion.varSub} onChange={e => updateActive('varSub', e.target.value)}
   placeholder="a"
-                            className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-bold
+                            className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 type-body-sm font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                         </div>
@@ -459,7 +459,7 @@
                           <FieldLabel>3-Letter Code</FieldLabel>
                           <input value={activeQuestion.varCode} maxLength={3} onChange={e => updateActive('varCode',
   e.target.value.toUpperCase().slice(0, 3))} placeholder="TEC"
-                            className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 text-[14px] font-bold
+                            className={`w-full bg-surface-card border border-default rounded-xl px-3 py-2 type-body-sm font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                         </div>
@@ -472,7 +472,7 @@
                         </div>
                         <input type="checkbox" checked={activeQuestion.reviewColumn} onChange={() =>
   updateActive('reviewColumn', !activeQuestion.reviewColumn)} className={`hidden`} />
-                        <span className={`font-body text-[14px] font-bold text-body`}>Control whether this grade
+                        <span className={`font-body type-body-sm font-bold text-body`}>Control whether this grade
   appears as a column on Review Long / Short / Target lists.</span>
                       </label>
                     </div>
@@ -480,7 +480,7 @@
                     {/* Position Applicability accordion */}
                     <div className={`bg-surface-card border border-default rounded-[20px] overflow-hidden`}>
                       <button onClick={() => setPositionsExpanded(!positionsExpanded)}
-                        className={`w-full px-6 py-4 flex items-center justify-between font-heading font-bold text-[14px]
+                        className={`w-full px-6 py-4 flex items-center justify-between font-heading font-bold type-body-sm
   text-strong hover:bg-surface-accent/40 transition-colors`}>
                         <span className={`flex items-center gap-3`}>
                           <span className={`w-6 h-6 rounded-full flex items-center justify-center transition-all
@@ -490,7 +490,7 @@
                           </span>
                           Position Applicability
                         </span>
-                        <span className={`font-body font-medium text-[12px]
+                        <span className={`font-body font-medium type-caption
   text-muted`}>{activeQuestion.positions.length ? activeQuestion.positions.join(', ') : 'All positions'}</span>
                       </button>
                       {positionsExpanded && (
@@ -501,7 +501,7 @@
                               return (
                                 <button key={pos} type="button" onClick={() => togglePosition(pos)}
                                   className={`flex items-center justify-center px-3 py-2 rounded-lg font-body font-bold
-  text-[12px] transition-colors border ${on ? `bg-brand-primary text-on-brand border-brand-primary` : `bg-surface-accent/50
+  type-caption transition-colors border ${on ? `bg-brand-primary text-on-brand border-brand-primary` : `bg-surface-accent/50
   border-transparent text-strong hover:bg-surface-accent`}`}>
                                   {pos}
                                 </button>
@@ -518,7 +518,7 @@
                       <div className={`relative bg-surface-card border border-default shadow-sm rounded-xl px-4 py-2
   focus-within:ring-2 focus-within:ring-border-focus/20 focus-within:border-focus transition-all`}>
                         <select value={activeQuestion.type} onChange={e => updateActive('type', e.target.value)}
-                          className={`w-full bg-transparent text-[14px] font-bold text-strong focus:outline-none
+                          className={`w-full bg-transparent type-body-sm font-bold text-strong focus:outline-none
   appearance-none cursor-pointer pr-6`}>
                           {INPUT_TYPES.map(t => <option key={t} className={`bg-surface-card`}>{t}</option>)}
                         </select>
@@ -533,7 +533,7 @@
                           <FieldLabel>Placeholder Text</FieldLabel>
                           <input value={activeQuestion.placeholder} onChange={e => updateActive('placeholder',
   e.target.value)}
-                            className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
+                            className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                         </div>
@@ -542,7 +542,7 @@
                             <FieldLabel>Minimum Length</FieldLabel>
                             <input type="number" value={activeQuestion.minLen} onChange={e => updateActive('minLen',
   e.target.value)} placeholder="0"
-                              className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
+                              className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                           </div>
@@ -550,7 +550,7 @@
                             <FieldLabel>Maximum Length</FieldLabel>
                             <input type="number" value={activeQuestion.maxLen} onChange={e => updateActive('maxLen',
   e.target.value)} placeholder="500"
-                              className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
+                              className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                           </div>
@@ -569,15 +569,15 @@
                 {/* Form Behavior */}
                 <div className={`bg-surface-card rounded-[20px] border border-default shadow-sm overflow-hidden flex flex-col`}>
                   <div className={`px-6 py-4 bg-surface-accent/40 border-b border-default`}>
-                    <h3 className={`font-heading font-black text-[15px] text-heading`}>Form Behavior</h3>
+                    <h3 className={`font-heading font-black type-body text-heading`}>Form Behavior</h3>
                   </div>
                   <div className={`flex flex-col divide-y divide-border-default`}>
                     {BEHAVIOR_ROWS.map(item => (
                       <div key={item.key} className={`flex items-center justify-between gap-4 p-5 hover:bg-surface-accent/30
   transition-colors`}>
                         <div className={`flex flex-col gap-1`}>
-                          <span className={`font-body font-bold text-[14px] text-body`}>{item.label}</span>
-                          <span className={`font-body text-[12px] text-muted`}>{item.desc}</span>
+                          <span className={`font-body font-bold type-body-sm text-body`}>{item.label}</span>
+                          <span className={`font-body type-caption text-muted`}>{item.desc}</span>
                         </div>
                         <SlideToggle on={behavior[item.key]} onChange={() => setBehavior(b => ({ ...b, [item.key]:
   !b[item.key] }))} />
@@ -589,14 +589,14 @@
                 {/* Access & Limits */}
                 <div className={`bg-surface-card rounded-[20px] border border-default shadow-sm overflow-hidden flex flex-col`}>
                   <div className={`px-6 py-4 bg-surface-accent/40 border-b border-default`}>
-                    <h3 className={`font-heading font-black text-[15px] text-heading`}>Access & Limits Control</h3>
+                    <h3 className={`font-heading font-black type-body text-heading`}>Access & Limits Control</h3>
                   </div>
                   <div className={`p-6 flex flex-col gap-6`}>
                     <div className={`flex flex-col gap-2`}>
                       <FieldLabel>Template Visibility</FieldLabel>
                       <div className={`relative bg-surface-card border border-default rounded-xl px-4 py-2 focus-within:ring-2
   focus-within:ring-border-focus/20 focus-within:border-focus transition-all`}>
-                        <select className={`w-full bg-transparent text-[14px] font-bold text-strong focus:outline-none
+                        <select className={`w-full bg-transparent type-body-sm font-bold text-strong focus:outline-none
   appearance-none cursor-pointer`}>
                           <option className={`bg-surface-card`}>Public</option>
                           <option className={`bg-surface-card`}>Restricted</option>
@@ -610,14 +610,14 @@
                       <div className={`flex flex-col gap-2`}>
                         <FieldLabel>Submission Limits</FieldLabel>
                         <input type="number" placeholder="No limit"
-                          className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
+                          className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold
   font-mono text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all
   placeholder:text-placeholder`} />
                       </div>
                       <div className={`flex flex-col gap-2`}>
                         <FieldLabel>Submission Deadline</FieldLabel>
                         <input type="date"
-                          className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 text-[14px] font-bold
+                          className={`w-full bg-surface-card border border-default rounded-xl px-4 py-2 type-body-sm font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all [color-scheme:light]
   dark:[color-scheme:dark]`} />
                       </div>
@@ -628,7 +628,7 @@
                 {/* Data Execution & Advanced */}
                 <div className={`bg-surface-card rounded-[20px] border border-default shadow-sm overflow-hidden flex flex-col`}>
                   <div className={`px-6 py-4 bg-surface-accent/40 border-b border-default`}>
-                    <h3 className={`font-heading font-black text-[15px] text-heading`}>Data Execution</h3>
+                    <h3 className={`font-heading font-black type-body text-heading`}>Data Execution</h3>
                   </div>
                   <div className={`p-6 flex flex-col gap-6`}>
                     <div className={`grid grid-cols-2 gap-6`}>
@@ -636,7 +636,7 @@
                         <FieldLabel>Default Export Format</FieldLabel>
                         <div className={`relative bg-surface-card border border-default rounded-xl px-4 py-2 focus-within:ring-2
   focus-within:ring-border-focus/20 focus-within:border-focus transition-all`}>
-                          <select className={`w-full bg-transparent text-[14px] font-bold text-strong focus:outline-none
+                          <select className={`w-full bg-transparent type-body-sm font-bold text-strong focus:outline-none
   appearance-none cursor-pointer`}>
                             <option className={`bg-surface-card`}>PDF Document</option>
                             <option className={`bg-surface-card`}>Excel Spreadsheet</option>
@@ -650,7 +650,7 @@
                         <FieldLabel>Data Retention Policy</FieldLabel>
                         <div className={`relative bg-surface-card border border-default rounded-xl px-4 py-2 focus-within:ring-2
   focus-within:ring-border-focus/20 focus-within:border-focus transition-all`}>
-                          <select className={`w-full bg-transparent text-[14px] font-bold text-strong focus:outline-none
+                          <select className={`w-full bg-transparent type-body-sm font-bold text-strong focus:outline-none
   appearance-none cursor-pointer`}>
                             <option className={`bg-surface-card`}>Indefinite</option>
                             <option className={`bg-surface-card`}>Archive after 1 year</option>
@@ -664,7 +664,7 @@
 
                     <div className={`border border-default rounded-[16px] overflow-hidden`}>
                       <button onClick={() => setAdvancedExpanded(!advancedExpanded)}
-                        className={`w-full px-5 py-4 bg-surface-accent/40 flex items-center gap-3 font-heading font-bold text-[14px]
+                        className={`w-full px-5 py-4 bg-surface-accent/40 flex items-center gap-3 font-heading font-bold type-body-sm
   text-strong hover:bg-surface-accent/60 transition-colors`}>
                         <span className={`w-6 h-6 rounded-full flex items-center justify-center transition-all
   ${advancedExpanded ? `bg-brand-primary text-on-brand` : `bg-surface-card text-body`}`}>
@@ -679,14 +679,14 @@
                             <FieldLabel>Custom CSS Box</FieldLabel>
                             <div className={`bg-[var(--navy-800)] border border-[var(--blue-700)] rounded-[16px] p-4 shadow-inner`}>
                               <textarea rows={4} placeholder="/* custom CSS */"
-                                className={`w-full bg-transparent text-[var(--light-600)] font-mono text-[14px] focus:outline-none
+                                className={`w-full bg-transparent text-[var(--light-600)] font-mono type-body-sm focus:outline-none
   resize-none placeholder:text-[var(--light-600)]/50`} />
                             </div>
                           </div>
                           <div className={`flex flex-col gap-2`}>
                             <FieldLabel>Thank You Message</FieldLabel>
                             <textarea rows={2} defaultValue="Thank you for submitting your evaluation."
-                              className={`w-full bg-surface-card border border-default rounded-[16px] px-4 py-3 text-[14px] font-bold
+                              className={`w-full bg-surface-card border border-default rounded-[16px] px-4 py-3 type-body-sm font-bold
   text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all resize-none`} />
                           </div>
                         </div>
@@ -703,18 +703,18 @@
   shadow-[0_-4px_16px_rgba(6,27,46,0.06)] z-20`}>
             <button onClick={handleDelete}
               className={`border-2 border-status-error text-status-error hover:bg-status-error/10 rounded-full px-6 py-3
-  font-body font-bold text-[14px] transition-colors`}>
+  font-body font-bold type-body-sm transition-colors`}>
               Delete Template
             </button>
             <div className={`flex items-center gap-3`}>
               <button onClick={onClose}
                 className={`bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body
-  rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors`}>
+  rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors`}>
                 Cancel
               </button>
               <button onClick={onClose}
                 className={`bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6
-  py-3 font-body font-bold text-[14px] transition-colors shadow-md`}>
+  py-3 font-body font-bold type-body-sm transition-colors shadow-md`}>
                 Update Template
               </button>
             </div>

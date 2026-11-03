@@ -74,16 +74,16 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
       className={`bg-surface-card border border-default rounded-[20px] shadow-[var(--shadow-2xl)] flex flex-col overflow-hidden w-[min(640px,calc(100vw-32px))] ${className}`}>
       <div className="px-4 pt-4 pb-3 border-b border-default flex flex-col gap-3">
         <div className="flex items-center justify-between gap-3">
-          <h3 className="font-heading font-semibold text-[16px] text-heading">Grades to show</h3>
+          <h3 className="font-heading font-semibold type-body text-heading">Grades to show</h3>
           <div className="flex items-center gap-3">
-            <button onClick={() => onChange(EMPTY)} disabled={isDefault} className="font-body font-bold text-[12px] text-link hover:underline disabled:text-muted disabled:no-underline">Show all</button>
+            <button onClick={() => onChange(EMPTY)} disabled={isDefault} className="font-body font-bold type-caption text-link hover:underline disabled:text-muted disabled:no-underline">Show all</button>
             <button onClick={onClose} aria-label="Close" className="w-8 h-8 rounded-full bg-surface-accent text-body hover:text-strong flex items-center justify-center"><X size={15} /></button>
           </div>
         </div>
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
           <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search reports or grades" aria-label="Search reports or grades"
-            className="w-full bg-surface-card border border-default rounded-xl pl-9 pr-4 py-2 font-body font-bold text-[14px] text-strong placeholder:text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus" />
+            className="w-full bg-surface-card border border-default rounded-xl pl-9 pr-4 py-2 font-body font-bold type-body-sm text-strong placeholder:text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus" />
         </div>
       </div>
 
@@ -99,10 +99,10 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
                 <button onClick={() => setSelected(t.id)} aria-current={active ? 'true' : undefined}
                   className={`flex-1 min-w-0 text-left px-3 py-2 ${typeHidden(t.id) ? 'opacity-50' : ''}`}>
                   <span className="flex flex-wrap items-center gap-x-1.5 min-w-0">
-                    <span className="font-body font-bold text-[14px] text-strong">{t.name}</span>
-                    {t.archived && <span className="shrink-0 bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold text-[10px]">Archived</span>}
+                    <span className="font-body font-bold type-body-sm text-strong">{t.name}</span>
+                    {t.archived && <span className="shrink-0 bg-text-body/10 text-body rounded px-1.5 py-[1px] font-body font-bold type-micro">Archived</span>}
                   </span>
-                  <span className="font-body font-medium text-[12px] text-body tabular-nums">{typeHidden(t.id) ? 'Hidden' : `${on} of ${total} grades`}</span>
+                  <span className="font-body font-medium type-caption text-body tabular-nums">{typeHidden(t.id) ? 'Hidden' : `${on} of ${total} grades`}</span>
                 </button>
                 <button onClick={() => toggleType(t.id)} aria-label={(typeHidden(t.id) ? 'Show ' : 'Hide ') + t.name} aria-pressed={!typeHidden(t.id)}
                   title={typeHidden(t.id) ? 'Hidden — show this report' : 'Hide this report'}
@@ -112,7 +112,7 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
               </li>
             );
           })}
-          {types.length === 0 && <li className="px-3 py-4 font-body font-medium text-[12px] text-body">No report or grade matches “{query}”.</li>}
+          {types.length === 0 && <li className="px-3 py-4 font-body font-medium type-caption text-body">No report or grade matches “{query}”.</li>}
         </ul>
 
         {/* Right: grades of the selected type */}
@@ -120,10 +120,10 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
           {tpl && types.length > 0 && (
             <>
               <div className="flex items-center justify-between gap-2 px-4 py-2 border-b border-default">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted truncate">{tpl.name}</span>
+                <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted truncate">{tpl.name}</span>
                 <span className="flex items-center gap-3 shrink-0">
-                  <button onClick={() => setAll(tpl.id, true)} className="font-body font-bold text-[12px] text-link hover:underline">All</button>
-                  <button onClick={() => setAll(tpl.id, false)} className="font-body font-bold text-[12px] text-link hover:underline">None</button>
+                  <button onClick={() => setAll(tpl.id, true)} className="font-body font-bold type-caption text-link hover:underline">All</button>
+                  <button onClick={() => setAll(tpl.id, false)} className="font-body font-bold type-caption text-link hover:underline">None</button>
                 </span>
               </div>
               <ul className="overflow-y-auto p-2" aria-label={`${tpl.name} grades`}>
@@ -134,9 +134,9 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
                       <button role="checkbox" aria-checked={on} onClick={() => toggleGrade(tpl.id, gq.id)}
                         className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-surface-accent text-left">
                         <Box on={on} />
-                        <span className="flex-1 min-w-0 font-body font-bold text-[14px] text-strong truncate">{gq.label}</span>
+                        <span className="flex-1 min-w-0 font-body font-bold type-body-sm text-strong truncate">{gq.label}</span>
                         <span title={gq.autoCode ? 'Short code made by NXUS' : undefined}
-                          className="shrink-0 bg-brand-primary/10 text-strong rounded px-1.5 py-[1px] font-mono font-bold text-[10px]">{gq.code}</span>
+                          className="shrink-0 bg-brand-primary/10 text-strong rounded px-1.5 py-[1px] font-mono font-bold type-micro">{gq.code}</span>
                       </button>
                     </li>
                   );
@@ -147,7 +147,7 @@ export const GradesPicker = ({ templates, value, onChange, initialType, onClose,
         </div>
       </div>
 
-      <p className="px-4 py-2.5 border-t border-default font-body font-medium text-[12px] text-body">
+      <p className="px-4 py-2.5 border-t border-default font-body font-medium type-caption text-body">
         Hidden reports stay here — tap the eye to show them again. <span className="text-muted">Saved in this browser.</span>
       </p>
     </div>

@@ -183,18 +183,18 @@ function KitColorsModal({
       >
         <span className={`flex items-center gap-2 ${active ? 'text-link' : 'text-body'}`}>
           {icon}
-          <span className="font-heading font-semibold text-[14px] text-strong">{label}</span>
+          <span className="font-heading font-semibold type-body-sm text-strong">{label}</span>
         </span>
         <span className="flex items-center gap-2">
           <span
             className="w-6 h-6 rounded-full border-2 border-default shadow-sm shrink-0"
             style={{ backgroundColor: value }}
           />
-          <span className="font-body font-bold text-[12px] text-body truncate">
+          <span className="font-body font-bold type-caption text-body truncate">
             {colorName(value, palette)}
           </span>
           {active && (
-            <span className="ml-auto inline-flex items-center gap-1 font-heading font-bold text-[10px] uppercase tracking-widest text-link shrink-0">
+            <span className="ml-auto inline-flex items-center gap-1 font-heading font-bold type-micro uppercase tracking-widest text-link shrink-0">
               <Check size={12} className="shrink-0" />
               Selected
             </span>
@@ -216,12 +216,12 @@ function KitColorsModal({
         {/* Header */}
         <div className="px-6 py-4 bg-brand-primary rounded-t-[24px] flex items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="w-10 h-10 rounded-full bg-surface-card/10 flex items-center justify-center font-heading font-bold text-[12px] text-on-brand shrink-0">
+            <span className="w-10 h-10 rounded-full bg-surface-card/10 flex items-center justify-center font-heading font-bold type-caption text-on-brand shrink-0">
               {teamInitials(teamName)}
             </span>
             <div className="min-w-0">
-              <span className="font-heading font-semibold text-[16px] text-on-brand block truncate">Team Kit Colors</span>
-              <span className="font-body text-[12px] text-on-brand/60 block truncate">{teamName} · Current Kit</span>
+              <span className="font-heading font-semibold type-body text-on-brand block truncate">Team Kit Colors</span>
+              <span className="font-body type-caption text-on-brand/60 block truncate">{teamName} · Current Kit</span>
             </div>
           </div>
           <button
@@ -236,7 +236,7 @@ function KitColorsModal({
         <div className="p-6 flex flex-col gap-4 overflow-y-auto">
           {/* Step progress */}
           <div className="flex flex-col gap-2">
-            <span className="font-heading font-semibold text-[14px] text-strong">
+            <span className="font-heading font-semibold type-body-sm text-strong">
               {step === 1 ? 'Step 1/2: Select Jersey Color' : 'Step 2/2: Select Shorts Color'}
             </span>
             <div className="h-1 rounded-full bg-surface-accent overflow-hidden">
@@ -254,7 +254,7 @@ function KitColorsModal({
 
           {/* Palette grid */}
           <div className="flex flex-col gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
               Palette
             </span>
             <div className="grid grid-cols-6 gap-2">
@@ -276,7 +276,7 @@ function KitColorsModal({
 
           {/* Custom color */}
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
               Custom Color
             </span>
             <input
@@ -287,7 +287,7 @@ function KitColorsModal({
             />
             <button
               onClick={() => onAddToPalette(customColor)}
-              className="inline-flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-4 py-2 font-body font-bold text-[12px] transition-colors"
+              className="inline-flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-4 py-2 font-body font-bold type-caption transition-colors"
             >
               <Palette size={12} className="shrink-0" />
               Add to Palette
@@ -299,7 +299,7 @@ function KitColorsModal({
         <div className="px-6 py-4 border-t border-default flex items-center justify-between gap-2 shrink-0">
           <button
             onClick={onCancel}
-            className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
+            className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors"
           >
             Cancel
           </button>
@@ -307,7 +307,7 @@ function KitColorsModal({
             {step === 2 && (
               <button
                 onClick={() => setStep(1)}
-                className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
+                className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors"
               >
                 Back
               </button>
@@ -315,14 +315,14 @@ function KitColorsModal({
             {step === 1 ? (
               <button
                 onClick={() => setStep(2)}
-                className="bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
+                className="bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors shadow-sm"
               >
                 Next
               </button>
             ) : (
               <button
                 onClick={() => onSave({ jersey, shorts })}
-                className="inline-flex items-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors shadow-sm"
               >
                 <Check size={14} className="shrink-0" />
                 Save Kit
@@ -355,14 +355,14 @@ function PlayerRow({
 
   return (
     <div className="flex items-center gap-3 py-3 border-b border-default/40 last:border-b-0 flex-wrap">
-      <span className="w-8 h-8 rounded-full bg-surface-accent border border-default flex items-center justify-center font-mono font-bold text-[12px] text-strong shrink-0">
+      <span className="w-8 h-8 rounded-full bg-surface-accent border border-default flex items-center justify-center font-mono font-bold type-caption text-strong shrink-0">
         {player.jersey}
       </span>
       <div className="flex flex-col min-w-0 flex-1">
-        <span className="font-heading font-semibold text-[14px] text-strong truncate" title={player.name}>
+        <span className="font-heading font-semibold type-body-sm text-strong truncate" title={player.name}>
           {player.name}
         </span>
-        <span className="font-body font-medium text-[12px] text-muted">YOB {player.yob}</span>
+        <span className="font-body font-medium type-caption text-muted">YOB {player.yob}</span>
       </div>
 
       {editing ? (
@@ -378,23 +378,23 @@ function PlayerRow({
             if (e.key === 'Enter') commit();
             if (e.key === 'Escape') { setDraft(String(player.jersey)); setEditing(false); }
           }}
-          className="w-16 bg-surface-card border border-default rounded-xl px-2 py-1 font-mono font-bold text-[12px] text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shrink-0"
+          className="w-16 bg-surface-card border border-default rounded-xl px-2 py-1 font-mono font-bold type-caption text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shrink-0"
         />
       ) : (
         <button
           onClick={() => { setDraft(String(player.jersey)); setEditing(true); }}
-          className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-3 py-1 font-body font-bold text-[12px] transition-colors shrink-0"
+          className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-3 py-1 font-body font-bold type-caption transition-colors shrink-0"
         >
           Edit J. No.
         </button>
       )}
 
       <label className="flex items-center gap-2 shrink-0 cursor-pointer">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Starter</span>
+        <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Starter</span>
         <Switch checked={player.starter} onCheckedChange={v => onToggleRole('starter', v)} />
       </label>
       <label className="flex items-center gap-2 shrink-0 cursor-pointer">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Sub</span>
+        <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Sub</span>
         <Switch checked={player.sub} onCheckedChange={v => onToggleRole('sub', v)} />
       </label>
     </div>
@@ -422,11 +422,11 @@ function TeamCard({
     <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
       {/* Header */}
       <div className="flex items-center justify-between gap-3">
-        <h4 className="font-heading font-semibold text-[16px] text-heading truncate" title={name}>
+        <h4 className="font-heading font-semibold type-body text-heading truncate" title={name}>
           {name}
         </h4>
         <span
-          className={`inline-flex items-center px-3 py-1 rounded-full border font-heading font-bold text-[10px] uppercase tracking-widest shrink-0 ${
+          className={`inline-flex items-center px-3 py-1 rounded-full border font-heading font-bold type-micro uppercase tracking-widest shrink-0 ${
             side === 'home'
               ? 'bg-brand-primary/10 text-link border-brand-primary/20'
               : 'bg-status-success/10 text-status-success border-status-success/20'
@@ -449,13 +449,13 @@ function TeamCard({
             className="w-6 h-6 rounded-full border-2 border-default shadow-sm"
             style={{ backgroundColor: team.kit.shorts }}
           />
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+          <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
             Kit
           </span>
         </div>
         <button
           onClick={onEditKit}
-          className="inline-flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-4 py-1 font-body font-bold text-[12px] transition-colors"
+          className="inline-flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-4 py-1 font-body font-bold type-caption transition-colors"
         >
           <Palette size={12} className="shrink-0" />
           Edit Kit Colors
@@ -463,7 +463,7 @@ function TeamCard({
       </div>
 
       {/* Counter */}
-      <span className="font-body font-bold text-[12px] text-body">
+      <span className="font-body font-bold type-caption text-body">
         {starters} Starters &amp; {subs} Subs
       </span>
 
@@ -473,7 +473,7 @@ function TeamCard({
           <span className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center">
             <UserX size={16} className="text-body" />
           </span>
-          <span className="font-body font-medium text-[12px] text-muted">
+          <span className="font-body font-medium type-caption text-muted">
             No players registered for this team yet.
           </span>
         </div>
@@ -482,7 +482,7 @@ function TeamCard({
           <span className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center">
             <UserX size={16} className="text-body" />
           </span>
-          <span className="font-body font-medium text-[12px] text-muted">
+          <span className="font-body font-medium type-caption text-muted">
             No players match the active filter.
           </span>
         </div>
@@ -546,7 +546,7 @@ let eventSeq = 0;
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+    <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
       {children}
     </span>
   );
@@ -564,7 +564,7 @@ function SelectField({
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full appearance-none bg-surface-card border border-default rounded-xl pl-4 pr-8 py-2 font-body font-bold text-[14px] text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all cursor-pointer"
+        className="w-full appearance-none bg-surface-card border border-default rounded-xl pl-4 pr-8 py-2 font-body font-bold type-body-sm text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all cursor-pointer"
       >
         {children}
       </select>
@@ -575,7 +575,7 @@ function SelectField({
 
 function TeamAvatar({ name }: { name: string }) {
   return (
-    <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center font-heading font-bold text-[12px] text-on-brand shrink-0">
+    <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center font-heading font-bold type-caption text-on-brand shrink-0">
       {teamInitials(name)}
     </span>
   );
@@ -659,7 +659,7 @@ function MatchEventsTab({
         <span className="flex items-center justify-between gap-2">
           <span className="flex items-center gap-2 min-w-0">
             <Timer size={14} className={`shrink-0 ${active ? 'text-link' : 'text-body'}`} />
-            <span className="font-heading font-semibold text-[14px] text-strong truncate">
+            <span className="font-heading font-semibold type-body-sm text-strong truncate">
               {target === 'regular' ? 'Regular Time' : 'Extra Time'}
             </span>
           </span>
@@ -669,13 +669,13 @@ function MatchEventsTab({
             </span>
           )}
         </span>
-        <span className="font-heading font-semibold text-[24px] text-strong leading-none">{minutes}</span>
-        <span className="font-body font-medium text-[12px] text-muted">{caption}</span>
+        <span className="font-heading font-semibold type-h5 text-strong leading-none">{minutes}</span>
+        <span className="font-body font-medium type-caption text-muted">{caption}</span>
         <span className="flex items-center gap-2 flex-wrap">
           {chips.map(chip => (
             <span
               key={chip}
-              className="px-2 py-0.5 rounded-full bg-surface-accent border border-default font-body font-bold text-[10px] text-body"
+              className="px-2 py-0.5 rounded-full bg-surface-accent border border-default font-body font-bold type-micro text-body"
             >
               {chip}
             </span>
@@ -694,27 +694,27 @@ function MatchEventsTab({
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <TeamAvatar name={match.home} />
-              <span className="font-heading font-semibold text-[14px] text-strong truncate" title={match.home}>
+              <span className="font-heading font-semibold type-body-sm text-strong truncate" title={match.home}>
                 {match.home}
               </span>
             </div>
-            <span className="font-heading font-extrabold text-[36px] tracking-tight text-strong leading-none whitespace-nowrap shrink-0">
+            <span className="font-heading font-extrabold text-4xl tracking-tight text-strong leading-none whitespace-nowrap shrink-0">
               {homeGoals} – {awayGoals}
             </span>
             <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
-              <span className="font-heading font-semibold text-[14px] text-strong truncate text-right" title={match.away}>
+              <span className="font-heading font-semibold type-body-sm text-strong truncate text-right" title={match.away}>
                 {match.away}
               </span>
               <TeamAvatar name={match.away} />
             </div>
           </div>
           <div className="flex flex-col gap-1 md:items-end md:text-right md:border-l md:border-default md:pl-4 shrink-0">
-            <span className="font-heading font-semibold text-[14px] text-strong">{roundName}</span>
-            <span className="font-body font-medium text-[12px] text-muted">{competitionName}</span>
-            <span className="font-mono font-bold text-[12px] text-body">{match.date}</span>
+            <span className="font-heading font-semibold type-body-sm text-strong">{roundName}</span>
+            <span className="font-body font-medium type-caption text-muted">{competitionName}</span>
+            <span className="font-mono font-bold type-caption text-body">{match.date}</span>
             <button
               onClick={onViewLineups}
-              className="inline-flex items-center gap-1 font-body font-bold text-[12px] text-link hover:underline"
+              className="inline-flex items-center gap-1 font-body font-bold type-caption text-link hover:underline"
             >
               <ClipboardList size={12} className="shrink-0" />
               View Basic Entry
@@ -731,7 +731,7 @@ function MatchEventsTab({
             >
               <Play size={24} className="text-on-brand ml-1" />
             </button>
-            <span className="absolute bottom-4 left-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-text-on-brand/10 font-body font-bold text-[10px] uppercase tracking-widest text-on-brand/80">
+            <span className="absolute bottom-4 left-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-text-on-brand/10 font-body font-bold type-micro uppercase tracking-widest text-on-brand/80">
               <Video size={12} className="shrink-0" />
               Match Footage
             </span>
@@ -740,13 +740,13 @@ function MatchEventsTab({
             <button className="text-on-brand/60 hover:text-on-brand transition-colors shrink-0" title="Play">
               <Play size={16} />
             </button>
-            <span className="font-mono font-bold text-[12px] text-on-brand/60 shrink-0">0:00</span>
+            <span className="font-mono font-bold type-caption text-on-brand/60 shrink-0">0:00</span>
             <div className="flex-1 h-1 rounded-full bg-text-on-brand/20 relative">
               <span className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-brand-primary" />
             </div>
-            <span className="font-mono font-bold text-[12px] text-on-brand/60 shrink-0">90:00</span>
+            <span className="font-mono font-bold type-caption text-on-brand/60 shrink-0">90:00</span>
             <button
-              className="px-2 py-0.5 rounded-full bg-text-on-brand/10 font-body font-bold text-[10px] text-on-brand/80 hover:text-on-brand transition-colors shrink-0"
+              className="px-2 py-0.5 rounded-full bg-text-on-brand/10 font-body font-bold type-micro text-on-brand/80 hover:text-on-brand transition-colors shrink-0"
               title="Playback speed"
             >
               1x
@@ -766,8 +766,8 @@ function MatchEventsTab({
         {/* Match Duration selector */}
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3 flex-wrap">
-            <h4 className="font-heading font-semibold text-[16px] text-heading">Match Duration</h4>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-body font-bold text-[12px]">
+            <h4 className="font-heading font-semibold type-body text-heading">Match Duration</h4>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-body font-bold type-caption">
               <Timer size={12} className="shrink-0" />
               Current: {duration === 'extra' ? '120' : '90'} min
             </span>
@@ -776,7 +776,7 @@ function MatchEventsTab({
             {durationCard('regular', '90', '90 minutes + stoppage', ['1-90 min', '45+, 90+'])}
             {durationCard('extra', '120', '120 minutes + stoppage', ['1-120 min', '45+, 90+, 105+, 120+'])}
           </div>
-          <span className="flex items-center gap-2 font-body font-medium text-[12px] text-muted">
+          <span className="flex items-center gap-2 font-body font-medium type-caption text-muted">
             <Info size={12} className="shrink-0" />
             {duration === 'regular'
               ? 'Regular time selected — events can be logged from minute 1 to 90 plus stoppage.'
@@ -789,24 +789,24 @@ function MatchEventsTab({
           <div className="flex items-center gap-3 flex-wrap">
             <span className="flex items-center gap-2">
               <span
-                className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-bold text-[10px] shrink-0 ${
+                className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-bold type-micro shrink-0 ${
                   capturedCount > 0 ? 'bg-brand-primary text-on-brand' : 'bg-surface-accent border border-default text-body'
                 }`}
               >
                 {capturedCount === PHASES.length ? <Check size={12} /> : '1'}
               </span>
-              <span className="font-heading font-semibold text-[14px] text-strong">Phase Tracking</span>
+              <span className="font-heading font-semibold type-body-sm text-strong">Phase Tracking</span>
             </span>
-            <span className="font-body font-bold text-[14px] text-body">·</span>
+            <span className="font-body font-bold type-body-sm text-body">·</span>
             <span className="flex items-center gap-2">
               <span
-                className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-bold text-[10px] shrink-0 ${
+                className={`w-6 h-6 rounded-full flex items-center justify-center font-heading font-bold type-micro shrink-0 ${
                   events.length > 0 ? 'bg-brand-primary text-on-brand' : 'bg-surface-accent border border-default text-body'
                 }`}
               >
                 2
               </span>
-              <span className="font-heading font-semibold text-[14px] text-strong">Event Entry</span>
+              <span className="font-heading font-semibold type-body-sm text-strong">Event Entry</span>
             </span>
           </div>
           <div className="flex items-center bg-surface-accent rounded-full p-0.5">
@@ -817,7 +817,7 @@ function MatchEventsTab({
               <button
                 key={m.id}
                 onClick={() => setMode(m.id)}
-                className={`inline-flex items-center gap-2 px-4 py-1 rounded-full font-body font-bold text-[12px] transition-colors ${
+                className={`inline-flex items-center gap-2 px-4 py-1 rounded-full font-body font-bold type-caption transition-colors ${
                   mode === m.id ? 'bg-surface-card text-strong shadow-sm' : 'text-body hover:text-strong'
                 }`}
               >
@@ -836,14 +836,14 @@ function MatchEventsTab({
                 <Clock size={16} className="text-body" />
               </span>
               <div className="flex flex-col min-w-0">
-                <h4 className="font-heading font-semibold text-[16px] text-heading">Match Phase Tracking</h4>
-                <span className="font-body font-medium text-[12px] text-muted">
+                <h4 className="font-heading font-semibold type-body text-heading">Match Phase Tracking</h4>
+                <span className="font-body font-medium type-caption text-muted">
                   {capturedCount}/{PHASES.length} phases captured
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold type-caption text-body">
                 Current Phase:
                 <span className="text-strong">{currentPhase ? currentPhase.label : 'Not started'}</span>
               </span>
@@ -876,20 +876,20 @@ function MatchEventsTab({
                       }`}
                     >
                       {stampedAt ? <Check size={14} /> : (
-                        <span className="font-mono font-bold text-[12px]">{idx + 1}</span>
+                        <span className="font-mono font-bold type-caption">{idx + 1}</span>
                       )}
                     </span>
                     <div className="flex flex-col min-w-0 flex-1">
-                      <span className="font-heading font-semibold text-[14px] text-strong truncate">{ph.label}</span>
+                      <span className="font-heading font-semibold type-body-sm text-strong truncate">{ph.label}</span>
                       {stampedAt && (
-                        <span className="font-mono font-bold text-[12px] text-body">at {stampedAt}</span>
+                        <span className="font-mono font-bold type-caption text-body">at {stampedAt}</span>
                       )}
                     </div>
                     {stampedAt ? (
                       <div className="flex items-center gap-2 shrink-0">
                         <button
                           onClick={() => capturePhase(ph.id)}
-                          className="inline-flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-3 py-1 font-body font-bold text-[12px] transition-colors"
+                          className="inline-flex items-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-3 py-1 font-body font-bold type-caption transition-colors"
                         >
                           <RotateCcw size={12} className="shrink-0" />
                           Re-capture
@@ -905,7 +905,7 @@ function MatchEventsTab({
                     ) : (
                       <button
                         onClick={() => capturePhase(ph.id)}
-                        className="inline-flex items-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-1 font-body font-bold text-[12px] transition-colors shadow-sm shrink-0"
+                        className="inline-flex items-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-1 font-body font-bold type-caption transition-colors shadow-sm shrink-0"
                       >
                         <Clock size={12} className="shrink-0" />
                         Capture
@@ -921,8 +921,8 @@ function MatchEventsTab({
         {/* Add event */}
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3">
-            <h4 className="font-heading font-semibold text-[16px] text-heading">Match Events</h4>
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
+            <h4 className="font-heading font-semibold type-body text-heading">Match Events</h4>
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold type-caption text-body">
               {events.length} recorded
             </span>
           </div>
@@ -965,7 +965,7 @@ function MatchEventsTab({
                 value={formMinute}
                 onChange={e => setFormMinute(e.target.value)}
                 placeholder={`1–${maxMinute}`}
-                className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-mono font-bold text-[14px] text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-placeholder"
+                className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-mono font-bold type-body-sm text-strong focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all placeholder:text-placeholder"
               />
             </div>
           </div>
@@ -973,7 +973,7 @@ function MatchEventsTab({
             <button
               onClick={addEvent}
               disabled={!canAdd}
-              className={`inline-flex items-center gap-2 rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors shadow-sm ${
+              className={`inline-flex items-center gap-2 rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors shadow-sm ${
                 canAdd
                   ? 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'
                   : 'bg-surface-accent text-body cursor-not-allowed'
@@ -988,8 +988,8 @@ function MatchEventsTab({
         {/* Events timeline */}
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3">
-            <h4 className="font-heading font-semibold text-[16px] text-heading">Events Timeline</h4>
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
+            <h4 className="font-heading font-semibold type-body text-heading">Events Timeline</h4>
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold type-caption text-body">
               Sorted by minute
             </span>
           </div>
@@ -998,8 +998,8 @@ function MatchEventsTab({
               <span className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
                 <ClipboardList size={20} className="text-body" />
               </span>
-              <span className="font-heading font-semibold text-[14px] text-strong">No events recorded yet</span>
-              <span className="font-body font-medium text-[12px] text-muted">
+              <span className="font-heading font-semibold type-body-sm text-strong">No events recorded yet</span>
+              <span className="font-body font-medium type-caption text-muted">
                 Add your first event using the form above.
               </span>
             </div>
@@ -1010,17 +1010,17 @@ function MatchEventsTab({
                 const TypeIcon = type.icon;
                 return (
                   <div key={ev.id} className="flex items-center gap-3 py-3 border-b border-default/40 last:border-b-0">
-                    <span className="min-w-10 px-2 py-1 rounded-full bg-surface-accent border border-default font-mono font-bold text-[12px] text-strong text-center shrink-0">
+                    <span className="min-w-10 px-2 py-1 rounded-full bg-surface-accent border border-default font-mono font-bold type-caption text-strong text-center shrink-0">
                       {ev.minute}&#39;
                     </span>
                     <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${type.chipClass}`}>
                       <TypeIcon size={14} />
                     </span>
                     <div className="flex flex-col min-w-0 flex-1">
-                      <span className="font-heading font-semibold text-[14px] text-strong truncate">
+                      <span className="font-heading font-semibold type-body-sm text-strong truncate">
                         {ev.playerName} · {teamName(ev.team)}
                       </span>
-                      <span className="font-body font-medium text-[12px] text-muted">{type.label}</span>
+                      <span className="font-body font-medium type-caption text-muted">{type.label}</span>
                     </div>
                     <button
                       onClick={() => setEvents(prev => prev.filter(e => e.id !== ev.id))}
@@ -1041,7 +1041,7 @@ function MatchEventsTab({
       <div className="lg:col-span-1 flex flex-col gap-4 min-w-0">
         {/* TEAMS card */}
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+          <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
             Teams
           </span>
           <div className="grid grid-cols-2 bg-surface-accent rounded-full p-0.5">
@@ -1049,7 +1049,7 @@ function MatchEventsTab({
               <button
                 key={side}
                 onClick={() => setRailSide(side)}
-                className={`px-4 py-1 rounded-full font-body font-bold text-[12px] transition-colors ${
+                className={`px-4 py-1 rounded-full font-body font-bold type-caption transition-colors ${
                   railSide === side ? 'bg-surface-card text-strong shadow-sm' : 'text-body hover:text-strong'
                 }`}
               >
@@ -1060,10 +1060,10 @@ function MatchEventsTab({
           <div className="flex items-center gap-3 min-w-0">
             <TeamAvatar name={teamName(railSide)} />
             <div className="flex flex-col gap-1 min-w-0">
-              <span className="font-heading font-semibold text-[16px] text-strong truncate" title={teamName(railSide)}>
+              <span className="font-heading font-semibold type-body text-strong truncate" title={teamName(railSide)}>
                 {teamName(railSide)}
               </span>
-              <span className="inline-flex items-center self-start px-3 py-0.5 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-heading font-bold text-[10px] uppercase tracking-widest">
+              <span className="inline-flex items-center self-start px-3 py-0.5 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-heading font-bold type-micro uppercase tracking-widest">
                 Senior Team
               </span>
             </div>
@@ -1076,7 +1076,7 @@ function MatchEventsTab({
                   className="w-6 h-6 rounded-full border-2 border-default shadow-sm shrink-0"
                   style={{ backgroundColor: railTeam.kit.jersey }}
                 />
-                <span className="font-body font-bold text-[12px] text-body">
+                <span className="font-body font-bold type-caption text-body">
                   Jersey · {colorName(railTeam.kit.jersey, DEFAULT_PALETTE)}
                 </span>
               </span>
@@ -1085,7 +1085,7 @@ function MatchEventsTab({
                   className="w-6 h-6 rounded-full border-2 border-default shadow-sm shrink-0"
                   style={{ backgroundColor: railTeam.kit.shorts }}
                 />
-                <span className="font-body font-bold text-[12px] text-body">
+                <span className="font-body font-bold type-caption text-body">
                   Shorts · {colorName(railTeam.kit.shorts, DEFAULT_PALETTE)}
                 </span>
               </span>
@@ -1096,32 +1096,32 @@ function MatchEventsTab({
         {/* SQUAD card */}
         <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3">
           <div className="flex items-center justify-between gap-3">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
               Squad
             </span>
-            <span className="inline-flex items-center px-3 py-0.5 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-heading font-bold text-[10px] uppercase tracking-widest">
+            <span className="inline-flex items-center px-3 py-0.5 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-heading font-bold type-micro uppercase tracking-widest">
               {railActive}/{railTeam.players.length} active
             </span>
           </div>
           <div className="grid grid-cols-[32px_1fr_48px_16px] gap-2 items-center">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">#</span>
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Player</span>
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">YOB</span>
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">#</span>
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Player</span>
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">YOB</span>
             <span />
             {railTeam.players.map(pl => {
               const active = pl.starter || pl.sub;
               return (
                 <React.Fragment key={pl.id}>
-                  <span className="font-mono font-bold text-[12px] text-strong py-2 border-t border-default/40">
+                  <span className="font-mono font-bold type-caption text-strong py-2 border-t border-default/40">
                     {pl.jersey}
                   </span>
                   <span
-                    className="font-body font-bold text-[12px] text-body truncate py-2 border-t border-default/40"
+                    className="font-body font-bold type-caption text-body truncate py-2 border-t border-default/40"
                     title={pl.name}
                   >
                     {pl.name}
                   </span>
-                  <span className="font-mono font-bold text-[12px] text-body py-2 border-t border-default/40">
+                  <span className="font-mono font-bold type-caption text-body py-2 border-t border-default/40">
                     {pl.yob}
                   </span>
                   <span className="py-2 border-t border-default/40 flex items-center">
@@ -1213,7 +1213,7 @@ export function MatchEntry({
           >
             <ArrowLeft size={14} />
           </button>
-          <nav className="flex items-center gap-2 font-body font-bold text-[14px] min-w-0 flex-wrap">
+          <nav className="flex items-center gap-2 font-body font-bold type-body-sm min-w-0 flex-wrap">
             <button onClick={onBackToCompetitions} className="text-link hover:underline shrink-0">
               Competitions
             </button>
@@ -1232,18 +1232,18 @@ export function MatchEntry({
           </nav>
         </div>
 
-        <h1 className="font-heading font-semibold text-[32px] tracking-tight text-heading flex items-center gap-4 leading-none">
+        <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
           {match.home} vs {match.away}
           <span className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
             <ClipboardList size={20} className="text-on-brand" />
           </span>
         </h1>
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold type-caption text-body">
             <Calendar size={12} className="shrink-0" />
             {match.date}
           </span>
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold type-caption text-body">
             <MapPin size={12} className="shrink-0" />
             {match.venue}
           </span>
@@ -1260,7 +1260,7 @@ export function MatchEntry({
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`flex items-center gap-2 pb-2 -mb-px border-b-2 font-body font-bold text-[14px] whitespace-nowrap transition-colors ${
+              className={`flex items-center gap-2 pb-2 -mb-px border-b-2 font-body font-bold type-body-sm whitespace-nowrap transition-colors ${
                 tab === t.id ? 'border-brand-primary text-link' : 'border-transparent text-body hover:text-strong'
               }`}
             >
@@ -1273,12 +1273,12 @@ export function MatchEntry({
         {/* ── Live-presence banner ── */}
         <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-surface-accent/60 border border-default flex-wrap">
           <Info size={12} className="text-body shrink-0" />
-          <span className="font-body font-medium text-[12px] text-muted">
+          <span className="font-body font-medium type-caption text-muted">
             Another scout is viewing this page:
           </span>
           <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-status-success/10 border border-status-success/20">
             <span className="w-2 h-2 rounded-full bg-status-success animate-pulse shrink-0" />
-            <span className="font-body font-bold text-[12px] text-status-success">Vanessa Lighthouse</span>
+            <span className="font-body font-bold type-caption text-status-success">Vanessa Lighthouse</span>
           </span>
         </div>
 
@@ -1298,7 +1298,7 @@ export function MatchEntry({
             {/* ── Player filter ── */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">
+                <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted shrink-0">
                   Filter Players:
                 </span>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -1306,7 +1306,7 @@ export function MatchEntry({
                     <button
                       key={f.id}
                       onClick={() => setFilter(f.id)}
-                      className={`px-4 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
+                      className={`px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors whitespace-nowrap ${
                         filter === f.id
                           ? 'bg-brand-primary text-on-brand shadow-sm'
                           : 'bg-surface-card text-body border border-default hover:border-brand-primary hover:text-strong'
@@ -1317,7 +1317,7 @@ export function MatchEntry({
                   ))}
                 </div>
               </div>
-              <span className="font-body font-medium text-[12px] text-muted">
+              <span className="font-body font-medium type-caption text-muted">
                 {activeFilter.caption}
               </span>
             </div>
@@ -1348,20 +1348,20 @@ export function MatchEntry({
             <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={handleSave}
-                className="inline-flex items-center justify-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold text-[14px] transition-colors shadow-sm"
+                className="inline-flex items-center justify-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-3 font-body font-bold type-body-sm transition-colors shadow-sm"
               >
                 <Save size={14} className="shrink-0" />
                 Save Submission
               </button>
               <button
                 onClick={() => setTab('events')}
-                className="inline-flex items-center justify-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold text-[14px] transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary hover:text-body rounded-full px-6 py-2 font-body font-bold type-body-sm transition-colors"
               >
                 <ListChecks size={14} className="shrink-0" />
                 View Detailed Entry
               </button>
               {saved && (
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-body font-bold text-[12px]">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-body font-bold type-caption">
                   <Check size={12} className="shrink-0" />
                   Submission saved
                 </span>

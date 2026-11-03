@@ -68,7 +68,7 @@ export const TaskStatus: Story = {
       {Object.entries(TASK_STATE_META).map(([key, meta]) => (
         <span
           key={key}
-          className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black ${meta.cls}`}
+          className={`inline-block px-2 py-[2px] rounded-full font-body type-micro font-black ${meta.cls}`}
         >
           {meta.label}
         </span>
@@ -97,10 +97,10 @@ export const SemanticMeanings: Story = {
         ['bg-brand-primary/15 text-link', 'Blue', 'assigned'],
       ].map(([cls, label, meaning]) => (
         <div key={label} className="flex items-center gap-4">
-          <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black w-16 text-center ${cls}`}>
+          <span className={`inline-block px-2 py-[2px] rounded-full font-body type-micro font-black w-16 text-center ${cls}`}>
             {label}
           </span>
-          <span className="font-body text-[12px] text-muted">{meaning}</span>
+          <span className="font-body type-caption text-muted">{meaning}</span>
         </div>
       ))}
     </div>

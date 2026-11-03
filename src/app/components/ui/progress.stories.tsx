@@ -32,13 +32,13 @@ export const WithReadout: Story = {
   render: (a) => (
     <div className="w-[320px]">
       <div className="flex items-center justify-between mb-2">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+        <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
           Short List coverage
         </span>
-        <span className="font-body font-bold text-[12px] text-body tabular-nums">{a.value}%</span>
+        <span className="font-body font-bold type-caption text-body tabular-nums">{a.value}%</span>
       </div>
       <Progress {...a} />
-      <p className="font-body text-[12px] text-body mt-2">
+      <p className="font-body type-caption text-body mt-2">
         <span className="tabular-nums">14</span> of <span className="tabular-nums">37</span> still need full match footage
       </p>
     </div>

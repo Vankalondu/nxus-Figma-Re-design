@@ -154,7 +154,7 @@ export function VideoDepartmentDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body type-body-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Packages Completed
             </p>
             <div className="p-2 rounded-xl bg-[var(--green-50)] shrink-0 ml-3">
@@ -165,19 +165,19 @@ export function VideoDepartmentDashboard() {
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               485
             </div>
-            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success type-body-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +18
             </div>
           </div>
-          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             This week (+24% vs last week)
           </div>
         </div>
 
         <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body type-body-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Missing Video Packages
             </p>
             <div className="p-2 rounded-xl bg-[var(--red-50)] shrink-0 ml-3">
@@ -188,19 +188,19 @@ export function VideoDepartmentDashboard() {
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               125
             </div>
-            <div className="flex items-center gap-1 text-status-error text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-error type-body-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingDown className="w-3.5 h-3.5" strokeWidth={2.5} />
               -8
             </div>
           </div>
-          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Pending player packages
           </div>
         </div>
 
         <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body type-body-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Avg. Turnaround Time
             </p>
             <div className="p-2 rounded-xl bg-[var(--light-300)] shrink-0 ml-3">
@@ -211,18 +211,18 @@ export function VideoDepartmentDashboard() {
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               2.4
             </div>
-            <div className="text-body text-xl font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
+            <div className="text-body type-body-lg font-semibold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               days
             </div>
           </div>
-          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             From footage to upload
           </div>
         </div>
 
         <div className="bg-surface-card border border-default rounded-2xl p-6 hover:shadow-md transition-all">
           <div className="flex items-start justify-between mb-4">
-            <p className="text-body text-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-body type-body-sm font-medium" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Editor Capacity
             </p>
             <div className="p-2 rounded-xl bg-[var(--amber-50)] shrink-0 ml-3">
@@ -233,12 +233,12 @@ export function VideoDepartmentDashboard() {
             <div className="text-[var(--navy-800)] text-4xl font-bold" style={{ fontFamily: "'Figtree', sans-serif" }}>
               70%
             </div>
-            <div className="flex items-center gap-1 text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="flex items-center gap-1 text-status-success type-body-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <TrendingUp className="w-3.5 h-3.5" strokeWidth={2.5} />
               +5%
             </div>
           </div>
-          <div className="text-muted text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-muted type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Current workload utilization
           </div>
         </div>
@@ -250,7 +250,7 @@ export function VideoDepartmentDashboard() {
           <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
             Weekly Production Trends
           </h3>
-          <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="type-body-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Video packages completed vs pending over the last 4 weeks
           </p>
         </div>
@@ -260,11 +260,11 @@ export function VideoDepartmentDashboard() {
             <XAxis 
               dataKey="week" 
               stroke="#94a3b8"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '12px' }}
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'var(--fs-caption)' }}
             />
             <YAxis 
               stroke="#94a3b8"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '12px' }}
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'var(--fs-caption)' }}
             />
             <Tooltip 
               contentStyle={{ 
@@ -275,7 +275,7 @@ export function VideoDepartmentDashboard() {
               }}
             />
             <Legend 
-              wrapperStyle={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '14px' }}
+              wrapperStyle={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'var(--fs-body-sm)' }}
             />
             <Bar dataKey="completed" fill="#43A047" name="Completed" radius={[8, 8, 0, 0]} />
             <Bar dataKey="pending" fill="#E53935" name="Pending" radius={[8, 8, 0, 0]} />
@@ -291,7 +291,7 @@ export function VideoDepartmentDashboard() {
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Video Editor Performance Leaderboard
             </h3>
-            <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="type-body-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Ranked by upload completion percentage and quality scores
             </p>
           </div>
@@ -300,27 +300,27 @@ export function VideoDepartmentDashboard() {
             <table className="w-full">
               <thead className="bg-surface-card border-b border-[var(--light-200)]">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-muted uppercase tracking-wider"
+                  <th className="px-6 py-4 text-left type-caption font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Rank
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-muted uppercase tracking-wider"
+                  <th className="px-6 py-4 text-left type-caption font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Editor
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center type-caption font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Packages
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center type-caption font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Upload %
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center type-caption font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Avg. Time
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-muted uppercase tracking-wider"
+                  <th className="px-6 py-4 text-center type-caption font-semibold text-muted uppercase tracking-wider"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Quality
                   </th>
@@ -331,7 +331,7 @@ export function VideoDepartmentDashboard() {
                   <tr key={editor.rank} className="hover:bg-surface-card transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center type-body-sm font-bold ${
                           editor.rank === 1 ? 'bg-[#FFD700] text-[#8B6914]' :
                           editor.rank === 2 ? 'bg-[#C0C0C0] text-[var(--light-900)]' :
                           editor.rank === 3 ? 'bg-[#CD7F32] text-on-brand' :
@@ -343,26 +343,26 @@ export function VideoDepartmentDashboard() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-brand-primary-hover flex items-center justify-center text-on-brand font-semibold text-sm"
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-brand-primary-hover flex items-center justify-center text-on-brand font-semibold type-body-sm"
                           style={{ fontFamily: "'Figtree', sans-serif" }}>
                           {editor.avatar}
                         </div>
                         <div>
-                          <div className="text-[var(--navy-800)] font-medium text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                          <div className="text-[var(--navy-800)] font-medium type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                             {editor.name}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className="text-[var(--navy-800)] font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <span className="text-[var(--navy-800)] font-semibold type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {editor.packagesCompleted}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col items-center gap-1">
                         <div className="flex items-center gap-2">
-                          <span className={`text-sm font-bold ${
+                          <span className={`type-body-sm font-bold ${
                             editor.uploadPercentage >= 95 ? 'text-status-success' :
                             editor.uploadPercentage >= 85 ? 'text-status-warning' :
                             'text-status-error'
@@ -385,16 +385,16 @@ export function VideoDepartmentDashboard() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className="text-body text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <span className="text-body type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {editor.avgTurnaround}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-center">
                       <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[var(--green-50)]">
-                        <span className="text-status-success text-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        <span className="text-status-success type-body-sm font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                           {editor.qualityScore}
                         </span>
-                        <span className="text-status-success text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        <span className="text-status-success type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                           /5.0
                         </span>
                       </div>
@@ -406,7 +406,7 @@ export function VideoDepartmentDashboard() {
           </div>
 
           <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
-            <button className="text-link text-sm hover:underline font-medium"
+            <button className="text-link type-body-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View Full Editor Performance Details →
             </button>
@@ -419,7 +419,7 @@ export function VideoDepartmentDashboard() {
             <h3 className="text-[var(--navy-800)] font-semibold mb-1" style={{ fontFamily: "'Figtree', sans-serif" }}>
               Priority Video Queue
             </h3>
-            <p className="text-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="type-body-sm text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Players awaiting video packages
             </p>
           </div>
@@ -430,33 +430,33 @@ export function VideoDepartmentDashboard() {
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h4 className="text-[var(--navy-800)] font-semibold text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <h4 className="text-[var(--navy-800)] font-semibold type-body-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {player.name}
                       </h4>
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                      <span className={`px-2 py-0.5 rounded-full type-caption font-medium ${
                         player.priority === 'high' ? 'bg-[var(--red-50)] text-status-error' : 'bg-[var(--amber-50)] text-status-warning'
                       }`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {player.priority.toUpperCase()}
                       </span>
                     </div>
-                    <div className="text-body text-xs mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    <div className="text-body type-caption mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                       {player.position} • {player.age}y • {player.club}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center justify-between type-caption">
                   <div className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     <span className="font-medium text-status-error">{player.daysWaiting} days</span> waiting
                   </div>
                 </div>
                 <div className="mt-2 pt-2 border-t border-[var(--light-200)]">
-                  <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center justify-between type-caption">
                     <span className="text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                       Assigned to: <span className="font-medium text-[var(--navy-800)]">{player.assignedTo}</span>
                     </span>
                   </div>
                   <div className="mt-1">
-                    <span className={`text-xs font-medium ${
+                    <span className={`type-caption font-medium ${
                       player.status === 'In Progress' ? 'text-link' :
                       player.status === 'Not Started' ? 'text-status-error' :
                       'text-status-warning'
@@ -470,7 +470,7 @@ export function VideoDepartmentDashboard() {
           </div>
 
           <div className="p-4 border-t border-[var(--light-200)] bg-surface-card">
-            <button className="text-link text-sm hover:underline font-medium"
+            <button className="text-link type-body-sm hover:underline font-medium"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               View All Pending Videos ({awaitingVideoPlayers.length + 120}) →
             </button>

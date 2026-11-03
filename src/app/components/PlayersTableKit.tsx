@@ -15,14 +15,14 @@ export const PlayersPageTitle = ({ first, icon, rest, subtitle, folded = false }
   <div className={`grid transition-[grid-template-rows,opacity] duration-200 motion-reduce:transition-none ${folded ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr]'}`} aria-hidden={folded}>
     <div className="overflow-hidden">
       <div className="pt-2 pb-3">
-        <h1 className="font-heading font-semibold text-[32px] tracking-tight text-heading flex items-center gap-4 leading-none">
+        <h1 className="font-heading font-semibold type-h3 tracking-tight text-heading flex items-center gap-4 leading-none">
           {first}
           <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shadow-sm shrink-0">
             {icon}
           </div>
           {rest}
         </h1>
-        <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{subtitle}</p>
+        <p className="font-body font-medium type-body text-body mt-2 short:hidden">{subtitle}</p>
       </div>
     </div>
   </div>
@@ -131,7 +131,7 @@ export const ColumnsButton = ({ onClick }: { onClick: () => void }) => (
 );
 
 // ─── Filter toolbar primitives (light, label-above) ────────────────────────────────
-const FIELD_LABEL = 'font-heading font-bold text-[9px] uppercase tracking-wider text-muted px-1';
+const FIELD_LABEL = 'font-heading font-bold type-micro uppercase tracking-wider text-muted px-1';
 
 // Label-above dropdown. `openKey`/`setOpenKey` let a toolbar keep only one menu open.
 export const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey }: {
@@ -144,7 +144,7 @@ export const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey 
       <span className={FIELD_LABEL}>{label}</span>
       <div className="relative">
         <button onClick={() => setOpenKey(open ? null : label)}
-          className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body hover:border-brand-primary transition-colors whitespace-nowrap">
+          className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold type-caption text-body hover:border-brand-primary transition-colors whitespace-nowrap">
           <span>{value === 'All' ? 'All' : value}</span>
           <ChevronDown size={12} className={`text-body transition-transform ${open ? 'rotate-180' : ''}`} />
         </button>
@@ -152,7 +152,7 @@ export const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey 
           <div className="absolute left-0 top-full mt-1 z-50 bg-surface-card border border-default rounded-[16px] shadow-2xl py-2 min-w-[150px] max-h-[280px] overflow-y-auto">
             {['All', ...options].map(opt => (
               <button key={opt} onClick={() => { setValue(opt); setOpenKey(null); }}
-                className={`w-full text-left px-4 py-1.5 font-body font-bold text-[12px] transition-colors ${value === opt ? 'bg-surface-accent text-strong' : 'text-strong hover:bg-surface-accent'}`}>{opt}</button>
+                className={`w-full text-left px-4 py-1.5 font-body font-bold type-caption transition-colors ${value === opt ? 'bg-surface-accent text-strong' : 'text-strong hover:bg-surface-accent'}`}>{opt}</button>
             ))}
           </div>
         )}
@@ -165,13 +165,13 @@ export const LLSelect = ({ label, value, setValue, options, openKey, setOpenKey 
 export const RangePair = ({ label, minV, setMin, maxV, setMax }: {
   label: string; minV: string; setMin: (v: string) => void; maxV: string; setMax: (v: string) => void;
 }) => {
-  const num = 'w-16 px-2 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors';
+  const num = 'w-16 px-2 py-2 rounded-full bg-surface-card border border-default font-body font-bold type-caption text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors';
   return (
     <div className="flex flex-col gap-0.5 shrink-0">
       <span className={FIELD_LABEL}>{label}</span>
       <div className="flex items-center gap-1">
         <input type="number" value={minV} onChange={e => setMin(e.target.value)} placeholder="min" aria-label={`${label} min`} className={num} />
-        <span className="text-muted text-[12px]">–</span>
+        <span className="text-muted type-caption">–</span>
         <input type="number" value={maxV} onChange={e => setMax(e.target.value)} placeholder="max" aria-label={`${label} max`} className={num} />
       </div>
     </div>
@@ -187,7 +187,7 @@ export function SegmentedToggle<T extends string>({ options, value, onChange, to
     <div className={`flex items-center rounded-full p-1 gap-1 shrink-0 ${tone === 'filter' ? FILTER_SURFACE : 'bg-surface-card border border-default'}`}>
       {options.map(o => (
         <button key={o.value} onClick={() => onChange(o.value)}
-          className={`px-3 py-1.5 rounded-full font-body font-bold text-[12px] transition-colors whitespace-nowrap ${value === o.value ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
+          className={`px-3 py-1.5 rounded-full font-body font-bold type-caption transition-colors whitespace-nowrap ${value === o.value ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
           {o.label}
         </button>
       ))}
@@ -200,7 +200,7 @@ export const PlayerSearchBox = ({ value, onChange }: { value: string; onChange: 
   <div className="relative">
     <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
     <input value={value} onChange={e => onChange(e.target.value)} placeholder="Look for a player" aria-label="Look for a player"
-      className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
+      className="pl-9 pr-3 py-2 rounded-full bg-surface-card border border-default font-body font-medium type-body-sm text-body placeholder:text-placeholder outline-none focus:border-brand-primary transition-colors w-[220px]" />
   </div>
 );
 
@@ -229,8 +229,8 @@ export const PosHeader = ({ pos, count, colSpan, collapsed, onToggle }: {
   const label = (
     <span className="inline-flex items-center gap-2">
       {onToggle && <ChevronDown size={14} className={`text-on-brand transition-transform ${collapsed ? '-rotate-90' : ''}`} />}
-      <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-on-brand">{pos}</span>
-      <span className="inline-flex items-center justify-center bg-text-on-brand/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-on-brand">{count}</span>
+      <span className="font-heading font-bold type-caption tracking-widest uppercase text-on-brand">{pos}</span>
+      <span className="inline-flex items-center justify-center bg-text-on-brand/20 rounded-full px-[6px] py-[2px] font-heading font-bold type-micro leading-none text-on-brand">{count}</span>
     </span>
   );
   return (
@@ -250,7 +250,7 @@ export const PosHeader = ({ pos, count, colSpan, collapsed, onToggle }: {
 export const YobHeader = ({ yob, colSpan }: { yob: number; colSpan: number }) => (
   <tr className="border-t border-default">
     <td colSpan={colSpan} className="py-2 px-4 bg-surface-accent sticky top-[calc(var(--tbl-head-h)+var(--tbl-group-h))] z-30">
-      <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-link">{yob}</span>
+      <span className="font-heading font-bold type-caption tracking-widest uppercase text-link">{yob}</span>
     </td>
   </tr>
 );
@@ -267,7 +267,7 @@ export const FlagBadge = ({ code, label }: { code: string; label: string }) => (
 // Player avatar — tall enough to span the name line and the age/status/flag line under it
 // (Figma 728:16521). The player photo replaces the initials once players have one.
 export const PlayerAvatar = ({ initials, photo }: { initials: string; photo?: string }) => (
-  <div className="w-9 h-9 rounded-xl bg-surface-accent border border-default text-strong flex items-center justify-center font-body font-bold text-[12px] shrink-0 overflow-hidden">
+  <div className="w-9 h-9 rounded-xl bg-surface-accent border border-default text-strong flex items-center justify-center font-body font-bold type-caption shrink-0 overflow-hidden">
     {photo ? <img src={photo} alt="" className="w-full h-full object-cover" /> : initials}
   </div>
 );
@@ -311,7 +311,7 @@ export const useShowBackToTop = (ref: React.RefObject<HTMLElement | null>, dep: 
 
 export const BackToTopButton = ({ show, onClick }: { show: boolean; onClick: () => void }) => show ? (
   <button onClick={onClick}
-    className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold text-[13px] hover:bg-brand-primary/90 transition-colors">
+    className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand shadow-lg font-body font-bold type-body-sm hover:bg-brand-primary/90 transition-colors">
     <ArrowUp size={14} /> Top
   </button>
 ) : null;

@@ -15,10 +15,10 @@ const NXT: Record<string, string> = {
 };
 
 export const GradeChip = ({ value, nxt = false, title }: { value?: string; nxt?: boolean; title?: string }) => {
-  if (!value) return <span className="inline-block min-w-8 text-center font-body text-[12px] font-bold text-muted">–</span>;
+  if (!value) return <span className="inline-block min-w-8 text-center font-body type-caption font-bold text-muted">–</span>;
   const cls = (nxt ? NXT[value] : GRADE[value]) || 'bg-surface-accent text-body';
   const label = nxt ? NXT_OPTIONS.find(o => o.value === value)?.label : undefined;
   return (
-    <span title={title ?? label} className={`inline-flex items-center justify-center min-w-8 px-2 py-[2px] rounded font-body text-[12px] font-black tabular-nums ${cls}`}>{value}</span>
+    <span title={title ?? label} className={`inline-flex items-center justify-center min-w-8 px-2 py-[2px] rounded font-body type-caption font-black tabular-nums ${cls}`}>{value}</span>
   );
 };

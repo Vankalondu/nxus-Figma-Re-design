@@ -6,7 +6,7 @@ const AVATAR =
   'data:image/svg+xml;utf8,' +
   encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">
-       <rect width="96" height="96" fill="#1E88E5"/>
+       <rect width="96" height="96" fill="#1E88E5"/><!-- nxus-ignore-next-line L-TY3: avatar picture content, not UI text -->
        <text x="48" y="60" font-family="sans-serif" font-size="34" font-weight="700"
              fill="#D2E7FA" text-anchor="middle">VL</text>
      </svg>`,

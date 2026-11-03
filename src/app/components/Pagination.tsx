@@ -14,7 +14,7 @@ export const Pagination = ({ page, totalPages, onPage, showLast = false }: {
   for (let p = Math.max(2, page - 1); p <= Math.min(totalPages - 1, page + 1); p++) nums.push(p);
   if (page < totalPages - 2) nums.push('…r');
   nums.push(totalPages);
-  const pill = 'min-w-9 h-9 px-3 rounded-full font-body font-bold text-[14px] flex items-center justify-center transition-colors';
+  const pill = 'min-w-9 h-9 px-3 rounded-full font-body font-bold type-body-sm flex items-center justify-center transition-colors';
   const edge = pill + ' bg-surface-card border border-default disabled:opacity-40 disabled:cursor-not-allowed';
   return (
     <nav aria-label="Pages" className="flex items-center justify-center gap-2 pt-4 shrink-0 flex-wrap">

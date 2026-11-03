@@ -95,7 +95,7 @@ export function VideoLeaderboard() {
         <h2 className="text-[var(--navy-800)]" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 600 }}>
           Video Uploader/Editor Leaderboard
         </h2>
-        <button className="flex items-center gap-1 text-muted hover:text-link transition-colors text-sm"
+        <button className="flex items-center gap-1 text-muted hover:text-link transition-colors type-body-sm"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -124,10 +124,10 @@ export function VideoLeaderboard() {
                 {editor.badge && getBadgeIcon(editor.badge)}
               </div>
               <div className="flex items-center gap-3 mt-1">
-                <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-muted type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Pkg: {editor.packagesPercent}%
                 </span>
-                <span className="text-muted text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-muted type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Match: {editor.matchesPercent}%
                 </span>
               </div>
@@ -135,12 +135,12 @@ export function VideoLeaderboard() {
 
             {/* Score and trend */}
             <div className="text-right shrink-0">
-              <div className="text-[var(--navy-800)] text-2xl" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
+              <div className="text-[var(--navy-800)] type-h5" style={{ fontFamily: "'Figtree', sans-serif", fontWeight: 700 }}>
                 {editor.score}%
               </div>
               <div className="flex items-center gap-1 justify-end">
                 <TrendingUp className="w-3 h-3 text-status-success" />
-                <span className="text-status-success text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <span className="text-status-success type-caption" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {editor.weeklyChange}
                 </span>
               </div>

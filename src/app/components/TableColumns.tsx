@@ -143,7 +143,7 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
       <>
         {contextMenu && (
           <div 
-            className="fixed z-50 bg-surface-card border border-default shadow-lg rounded-xl overflow-hidden min-w-[200px] text-sm py-1"
+            className="fixed z-50 bg-surface-card border border-default shadow-lg rounded-xl overflow-hidden min-w-[200px] type-body-sm py-1"
             style={{ top: contextMenu.y, left: contextMenu.x }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -170,12 +170,12 @@ export const useDynamicColumns = (initialColumns: ColumnDef[]) => {
         {deletedColumnCache && (
           <div className="fixed bottom-6 right-6 z-50 bg-surface-card border border-default shadow-lg rounded-xl p-4 flex items-center space-x-4 animate-in slide-in-from-bottom-5">
             <div>
-              <p className="text-sm font-semibold text-strong">Column deleted</p>
-              <p className="text-xs text-[var(--navy-200)]">You can restore it for a short time</p>
+              <p className="type-body-sm font-semibold text-strong">Column deleted</p>
+              <p className="type-caption text-[var(--navy-200)]">You can restore it for a short time</p>
             </div>
             <button 
               onClick={undoDelete}
-              className="px-3 py-2 bg-brand-primary text-on-brand rounded-lg text-sm font-bold shadow hover:bg-brand-primary-hover transition-colors flex items-center"
+              className="px-3 py-2 bg-brand-primary text-on-brand rounded-lg type-body-sm font-bold shadow hover:bg-brand-primary-hover transition-colors flex items-center"
             >
               <Undo size={14} className="mr-1" /> Undo
             </button>

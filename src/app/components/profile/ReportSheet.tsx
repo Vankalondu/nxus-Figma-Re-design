@@ -50,7 +50,7 @@ export const ReportSheet = ({ state, templates, player, position, onPrev, onNext
     : state.mode === 'edit' && state.isNew ? `For ${player.name} · not saved yet`
     : `Submitted ${report!.submitted} · ${report!.scout}`;
 
-  const seg = (on: boolean) => `min-w-11 h-9 px-3 rounded-full font-body font-bold text-[14px] border transition-colors ${on ? 'bg-brand-primary border-brand-primary text-on-brand shadow-sm' : 'bg-surface-card border-default text-body hover:border-brand-primary hover:text-strong'}`;
+  const seg = (on: boolean) => `min-w-11 h-9 px-3 rounded-full font-body font-bold type-body-sm border transition-colors ${on ? 'bg-brand-primary border-brand-primary text-on-brand shadow-sm' : 'bg-surface-card border-default text-body hover:border-brand-primary hover:text-strong'}`;
 
   // Portalled to <body>: an animated (transformed) ancestor would otherwise trap a fixed panel.
   return createPortal(
@@ -61,15 +61,15 @@ export const ReportSheet = ({ state, templates, player, position, onPrev, onNext
         {/* Header */}
         <div className="px-6 py-4 border-b border-default flex items-start justify-between gap-3 shrink-0">
           <div className="min-w-0">
-            <h2 className="font-heading font-semibold text-[20px] text-heading leading-tight truncate">{title}</h2>
-            <p className="font-body font-medium text-[12px] text-body mt-1">{sub}</p>
+            <h2 className="font-heading font-semibold type-h6 text-heading leading-tight truncate">{title}</h2>
+            <p className="font-body font-medium type-caption text-body mt-1">{sub}</p>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {state.mode === 'view' && (
               <>
-                {report!.archived && <span className="bg-text-body/10 text-body rounded-full px-2 py-1 font-body font-bold text-[10px]">Archived</span>}
-                <button onClick={() => toast('Opens the clip this report was filed on')} className="flex items-center gap-1.5 bg-surface-card border border-default text-body hover:border-brand-primary hover:text-strong rounded-full px-3 py-1.5 font-body font-bold text-[12px]"><Video size={14} /> Video</button>
-                <button onClick={onEdit} className="flex items-center gap-1.5 bg-surface-card border border-default text-body hover:border-brand-primary hover:text-strong rounded-full px-3 py-1.5 font-body font-bold text-[12px]"><Edit2 size={13} /> Edit</button>
+                {report!.archived && <span className="bg-text-body/10 text-body rounded-full px-2 py-1 font-body font-bold type-micro">Archived</span>}
+                <button onClick={() => toast('Opens the clip this report was filed on')} className="flex items-center gap-1.5 bg-surface-card border border-default text-body hover:border-brand-primary hover:text-strong rounded-full px-3 py-1.5 font-body font-bold type-caption"><Video size={14} /> Video</button>
+                <button onClick={onEdit} className="flex items-center gap-1.5 bg-surface-card border border-default text-body hover:border-brand-primary hover:text-strong rounded-full px-3 py-1.5 font-body font-bold type-caption"><Edit2 size={13} /> Edit</button>
               </>
             )}
             <button ref={closeRef} onClick={onClose} aria-label="Close report" className="w-9 h-9 rounded-full bg-surface-accent text-body hover:text-strong flex items-center justify-center"><X size={17} /></button>
@@ -78,16 +78,16 @@ export const ReportSheet = ({ state, templates, player, position, onPrev, onNext
 
         {/* Player strip */}
         <div className="px-6 py-3 border-b border-default flex items-center gap-3 shrink-0 bg-surface-accent/40">
-          <span className="w-10 h-10 rounded-full bg-brand-primary text-on-brand flex items-center justify-center font-heading font-bold text-[14px] shrink-0">{player.initials}</span>
+          <span className="w-10 h-10 rounded-full bg-brand-primary text-on-brand flex items-center justify-center font-heading font-bold type-body-sm shrink-0">{player.initials}</span>
           <div className="min-w-0">
-            <div className="font-body font-bold text-[14px] text-strong truncate">{player.name}</div>
-            <div className="font-body font-medium text-[12px] text-body">
+            <div className="font-body font-bold type-body-sm text-strong truncate">{player.name}</div>
+            <div className="font-body font-medium type-caption text-body">
               {[player.positions, player.team, player.age ? `Age ${player.age}` : '', player.nationality].filter(Boolean).join(' · ')}
             </div>
           </div>
           {report && <div className="ml-auto text-right shrink-0">
-            <div className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Watched</div>
-            <div className="font-body font-bold text-[12px] text-strong">{report.source} · {report.dateLabel}</div>
+            <div className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Watched</div>
+            <div className="font-body font-bold type-caption text-strong">{report.source} · {report.dateLabel}</div>
           </div>}
         </div>
 
@@ -95,14 +95,14 @@ export const ReportSheet = ({ state, templates, player, position, onPrev, onNext
         <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
           {state.mode === 'choose' && (
             <div className="flex flex-col gap-2">
-              <p className="font-body font-medium text-[14px] text-body mb-2">Which report are you filing?</p>
+              <p className="font-body font-medium type-body-sm text-body mb-2">Which report are you filing?</p>
               {templates.filter(t => !t.archived).map(t => (
                 <button key={t.id} onClick={() => onChoose(t.id)}
                   className="flex items-center gap-3 text-left bg-surface-card border border-default hover:border-brand-primary rounded-[20px] px-4 py-3 transition-colors group">
                   <span className="w-10 h-10 rounded-[12px] bg-brand-primary/10 text-link flex items-center justify-center shrink-0"><FileText size={16} /></span>
                   <span className="flex-1 min-w-0">
-                    <span className="block font-body font-bold text-[14px] text-strong">{t.name}</span>
-                    <span className="block font-body font-medium text-[12px] text-body">{t.list} list · {gradeQuestions(t).length} grades, {t.questions.length - gradeQuestions(t).length} written</span>
+                    <span className="block font-body font-bold type-body-sm text-strong">{t.name}</span>
+                    <span className="block font-body font-medium type-caption text-body">{t.list} list · {gradeQuestions(t).length} grades, {t.questions.length - gradeQuestions(t).length} written</span>
                   </span>
                   <Go size={16} className="text-body group-hover:text-link" />
                 </button>
@@ -117,23 +117,23 @@ export const ReportSheet = ({ state, templates, player, position, onPrev, onNext
                   {q.kind === 'text' ? (
                     <div>
                       <div className="flex items-baseline gap-2">
-                        <span className="font-body font-bold text-[12px] text-muted tabular-nums w-5 shrink-0">{i + 1}</span>
-                        <span className="font-body font-bold text-[14px] text-strong">{q.label}</span>
+                        <span className="font-body font-bold type-caption text-muted tabular-nums w-5 shrink-0">{i + 1}</span>
+                        <span className="font-body font-bold type-body-sm text-strong">{q.label}</span>
                       </div>
                       {editing ? (
                         <textarea value={draft[q.id] ?? ''} onChange={e => setDraft(d => ({ ...d, [q.id]: e.target.value }))} rows={3}
                           aria-label={q.label} placeholder="Write your notes"
-                          className="mt-2 ml-7 w-[calc(100%-1.75rem)] bg-surface-card border border-default rounded-xl px-3 py-2 font-body font-medium text-[14px] text-strong placeholder:text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus resize-none" />
+                          className="mt-2 ml-7 w-[calc(100%-1.75rem)] bg-surface-card border border-default rounded-xl px-3 py-2 font-body font-medium type-body-sm text-strong placeholder:text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus resize-none" />
                       ) : (
-                        <p className="mt-1 ml-7 font-body font-medium text-[14px] text-body leading-relaxed">{report!.answers[q.id] || '—'}</p>
+                        <p className="mt-1 ml-7 font-body font-medium type-body-sm text-body leading-relaxed">{report!.answers[q.id] || '—'}</p>
                       )}
                     </div>
                   ) : (
                     <div className={editing ? 'flex flex-col gap-2' : 'flex items-center justify-between gap-3'}>
                       <div className="flex items-baseline gap-2 min-w-0">
-                        <span className="font-body font-bold text-[12px] text-muted tabular-nums w-5 shrink-0">{i + 1}</span>
-                        <span className="font-body font-bold text-[14px] text-strong">{q.label}</span>
-                        <span className="font-mono font-bold text-[10px] text-muted">{q.code}</span>
+                        <span className="font-body font-bold type-caption text-muted tabular-nums w-5 shrink-0">{i + 1}</span>
+                        <span className="font-body font-bold type-body-sm text-strong">{q.label}</span>
+                        <span className="font-mono font-bold type-micro text-muted">{q.code}</span>
                       </div>
                       {editing ? (
                         <div role="radiogroup" aria-label={q.label} className="flex flex-wrap gap-2 ml-7">
@@ -156,22 +156,22 @@ export const ReportSheet = ({ state, templates, player, position, onPrev, onNext
         <div className="px-6 py-4 border-t border-default flex items-center justify-between gap-3 shrink-0">
           {editing ? (
             <>
-              <span className="font-body font-medium text-[12px] text-body tabular-nums" aria-live="polite">{answered} of {grades.length} grades given</span>
+              <span className="font-body font-medium type-caption text-body tabular-nums" aria-live="polite">{answered} of {grades.length} grades given</span>
               <div className="flex items-center gap-2">
-                <button onClick={onCancelEdit} className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-strong rounded-full px-5 py-2 font-body font-bold text-[14px]">Cancel</button>
+                <button onClick={onCancelEdit} className="bg-surface-card text-body border border-default hover:border-brand-primary hover:text-strong rounded-full px-5 py-2 font-body font-bold type-body-sm">Cancel</button>
                 <button disabled={!canSave} onClick={() => onSave({ ...report!, answers: draft }, state.mode === 'edit' && state.isNew)}
                   title={canSave ? undefined : 'Give every grade to save'}
-                  className="bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold text-[14px] shadow-[var(--shadow-md)] disabled:opacity-40 disabled:cursor-not-allowed">Save report</button>
+                  className="bg-brand-primary border-2 border-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-6 py-2 font-body font-bold type-body-sm shadow-[var(--shadow-md)] disabled:opacity-40 disabled:cursor-not-allowed">Save report</button>
               </div>
             </>
           ) : state.mode === 'view' && position ? (
             <>
-              <button onClick={onPrev} disabled={!onPrev} className="flex items-center gap-1 bg-surface-card border border-default text-body hover:text-strong rounded-full px-4 py-2 font-body font-bold text-[14px] disabled:opacity-40"><ChevronLeft size={15} /> Previous</button>
-              <span className="font-body font-medium text-[12px] text-body tabular-nums">{position.index + 1} of {position.total}</span>
-              <button onClick={onNext} disabled={!onNext} className="flex items-center gap-1 bg-surface-card border border-default text-link hover:bg-surface-accent rounded-full px-4 py-2 font-body font-bold text-[14px] disabled:opacity-40">Next <ChevronRight size={15} /></button>
+              <button onClick={onPrev} disabled={!onPrev} className="flex items-center gap-1 bg-surface-card border border-default text-body hover:text-strong rounded-full px-4 py-2 font-body font-bold type-body-sm disabled:opacity-40"><ChevronLeft size={15} /> Previous</button>
+              <span className="font-body font-medium type-caption text-body tabular-nums">{position.index + 1} of {position.total}</span>
+              <button onClick={onNext} disabled={!onNext} className="flex items-center gap-1 bg-surface-card border border-default text-link hover:bg-surface-accent rounded-full px-4 py-2 font-body font-bold type-body-sm disabled:opacity-40">Next <ChevronRight size={15} /></button>
             </>
           ) : (
-            <button onClick={onClose} className="ml-auto bg-surface-card text-body border border-default hover:border-brand-primary hover:text-strong rounded-full px-5 py-2 font-body font-bold text-[14px]">Cancel</button>
+            <button onClick={onClose} className="ml-auto bg-surface-card text-body border border-default hover:border-brand-primary hover:text-strong rounded-full px-5 py-2 font-body font-bold type-body-sm">Cancel</button>
           )}
         </div>
       </aside>

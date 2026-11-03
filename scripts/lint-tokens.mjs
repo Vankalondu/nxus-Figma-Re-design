@@ -16,6 +16,8 @@
  */
 import fs from 'fs';
 import path from 'path';
+// L-TY3 is shared with the devs' rule checker, so both read the type scale the same way.
+import { TY3_ARBITRARY, TY3_PRESET, suggestTypeClass } from '../.github/actions/nxus-rule-check/rules.mjs';
 
 // src/app is the product, but it is not the only place that ships class names.
 // `.storybook/preview.tsx` carried `bg-background text-foreground` for three
@@ -88,6 +90,28 @@ const RULES = [
     re: /(?<![-a-zA-Z0-9])text-(h[1-6]|body-lg|body-sm|caption|micro)(?![-a-zA-Z0-9])/g,
   },
   {
+    // Enforced 3 Nov 2026 (D-22): the ramp is the design system, so a size from outside it
+    // fails the build. text-4xl and up stay legal for KPI display numerals (R-TY2).
+    id: 'L-TY3',
+    what: 'literal text size — use',
+    re: TY3_ARBITRARY,
+    suggest: true,
+  },
+  {
+    id: 'L-TY3',
+    what: 'Tailwind size preset (a frozen size, not the ramp) — use',
+    re: TY3_PRESET,
+    suggest: true,
+  },
+  {
+    // Inline styles and SVG attributes: fontSize: 12, fontSize="10", fontSize={11}.
+    // var(--fs-caption) passes; it reads the ramp token.
+    id: 'L-TY3',
+    what: 'literal font size in a style or attribute — use',
+    re: /\bfont-?size\s*[:=]\s*["'`{]?\s*\d+(?:\.\d+)?(?:px|rem|em|pt)?/gi,
+    suggest: true,
+  },
+  {
     id: 'L-C10',
     what: 'stuttered role name — text-text-* / border-border-* shortened at 4.3',
     re: /\b(text-text|border-border)-[a-z-]+/g,
@@ -139,14 +163,21 @@ function stripComments(src) {
 
 for (const file of files) {
   const rel = file.split(path.sep).join('/');
-  const lines = stripComments(fs.readFileSync(file, 'utf8')).split('\n');
+  const src = fs.readFileSync(file, 'utf8');
+  const raw = src.split('\n');
+  const lines = stripComments(src).split('\n');
   lines.forEach((line, i) => {
+    // Same escape hatch as the devs' checker, for a reviewed exception. The comment says why:
+    // `// nxus-ignore L-TY3: logo glyph, not text` (this line) or `// nxus-ignore-next-line …`
+    // (the line after). L-TY3 only — colour keeps its own narrow allow-lists above.
+    const ignored = /nxus-ignore(?!-next-line)/.test(raw[i]) || (i > 0 && /nxus-ignore-next-line/.test(raw[i - 1]));
     for (const rule of RULES) {
+      if (ignored && rule.id === 'L-TY3') continue;
       rule.re.lastIndex = 0;
       let m;
       while ((m = rule.re.exec(line))) {
         if (rule.allow && rule.allow(rel, line)) continue;
-        errors.push({ rel, n: i + 1, id: rule.id, what: rule.what, hit: m[0] });
+        errors.push({ rel, n: i + 1, id: rule.id, what: rule.suggest ? `${rule.what} ${suggestTypeClass(m[0])}` : rule.what, hit: m[0] });
       }
     }
     HEX_UTIL.lastIndex = 0;
@@ -166,7 +197,7 @@ if (errors.length) {
   if (errors.length > 40) console.log(`  … and ${errors.length - 40} more`);
   console.log('');
 } else {
-  console.log('PASS  L-C1 (no white/black) · L-C2 (no Tailwind palettes) · L-C10 + L-TY5 (no retired names)');
+  console.log('PASS  L-C1 (no white/black) · L-C2 (no Tailwind palettes) · L-C10 + L-TY5 (no retired names) · L-TY3 (type ramp only)');
 }
 
 const delta = hexCount - BASELINE;

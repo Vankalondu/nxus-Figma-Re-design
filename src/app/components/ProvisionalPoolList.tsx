@@ -137,7 +137,7 @@ export function ProvisionalPoolList() {
             Top 10 Provisional Pool
           </h3>
         </div>
-        <button className="text-link text-sm hover:underline font-medium flex items-center gap-1"
+        <button className="text-link type-body-sm hover:underline font-medium flex items-center gap-1"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
           <span>View All</span>
           <ArrowRight className="w-4 h-4" />
@@ -152,7 +152,7 @@ export function ProvisionalPoolList() {
             className="group flex items-center gap-4 p-3 rounded-xl hover:bg-[var(--light-50)] border border-transparent hover:border-[var(--light-200)] transition-all cursor-pointer"
           >
             {/* Rank */}
-            <div className="text-muted text-sm font-semibold w-6 shrink-0 text-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="text-muted type-body-sm font-semibold w-6 shrink-0 text-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {index + 1}
             </div>
 
@@ -163,7 +163,7 @@ export function ProvisionalPoolList() {
                 alt={player.name}
                 className="w-12 h-12 rounded-xl object-cover"
               />
-              <span className="absolute -bottom-1 -right-1 text-sm">{player.flag}</span>
+              <span className="absolute -bottom-1 -right-1 type-body-sm">{player.flag}</span>
             </div>
 
             {/* Player Info */}
@@ -172,7 +172,7 @@ export function ProvisionalPoolList() {
                 <h4 className="text-[var(--navy-800)] font-semibold truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {player.name}
                 </h4>
-                <span className={`px-2 py-0.5 rounded-md text-xs font-semibold shrink-0 ${
+                <span className={`px-2 py-0.5 rounded-md type-caption font-semibold shrink-0 ${
                   player.grade === 'A' 
                     ? 'bg-[var(--green-50)] text-[var(--green-700)]' 
                     : 'bg-[var(--light-300)] text-link-hover'
@@ -180,7 +180,7 @@ export function ProvisionalPoolList() {
                   Grade {player.grade}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-xs text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="flex items-center gap-2 type-caption text-body" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <span>{player.position}</span>
                 <span>•</span>
                 <span>{player.age} yrs</span>

@@ -180,20 +180,20 @@ const StairsIcon = ({ className }: { className?: string }) => (
 );
 
 const PosPill = ({ pos }: { pos: string }) => (
-  <span className={`inline-block px-2 py-[2px] rounded font-body text-[10px] font-bold ${POS_COLORS[pos] || 'bg-surface-accent text-body'}`}>{pos}</span>
+  <span className={`inline-block px-2 py-[2px] rounded font-body type-micro font-bold ${POS_COLORS[pos] || 'bg-surface-accent text-body'}`}>{pos}</span>
 );
 
 const TCell = ({ value, onChange, type = 'text', opts, placeholder = '' }:
   { value: string; onChange: (v: string) => void; type?: string; opts?: string[]; placeholder?: string }) => {
   if (opts) return (
     <select value={value} onChange={e => onChange(e.target.value)}
-      className="w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none cursor-pointer text-center appearance-none">
+      className="w-full bg-transparent font-body type-caption font-bold text-body focus:outline-none cursor-pointer text-center appearance-none">
       {opts.map(o => <option key={o} value={o}>{o}</option>)}
     </select>
   );
   return (
     <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-      className="w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none placeholder:text-placeholder min-w-0 text-center" />
+      className="w-full bg-transparent font-body type-caption font-bold text-body focus:outline-none placeholder:text-placeholder min-w-0 text-center" />
   );
 };
 
@@ -223,9 +223,9 @@ const EditableColHeader = ({ label, onRename, onRemove }: {
           onChange={e => setDraft(e.target.value)}
           onBlur={() => { onRename(draft); setEditing(false); }}
           onKeyDown={e => { if (e.key === 'Enter') { onRename(draft); setEditing(false); }}}
-          className="bg-transparent border-b border-text-on-brand/50 text-on-brand font-heading font-bold text-[10px] uppercase tracking-widest w-[80px] focus:outline-none" />
+          className="bg-transparent border-b border-text-on-brand/50 text-on-brand font-heading font-bold type-micro uppercase tracking-widest w-[80px] focus:outline-none" />
       ) : (
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest">{label}</span>
+        <span className="font-heading font-bold type-micro uppercase tracking-widest">{label}</span>
       )}
       <button onClick={() => setOpen(o => !o)}
         className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-on-brand/40 hover:text-on-brand/80 ml-0.5">
@@ -234,11 +234,11 @@ const EditableColHeader = ({ label, onRename, onRemove }: {
       {open && (
         <div className="absolute top-full left-0 mt-1 z-[500] bg-surface-card border border-default rounded-[10px] shadow-2xl min-w-[140px] overflow-hidden">
           <button onClick={() => { setEditing(true); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body type-caption font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
             <Edit2 size={11} />Rename
           </button>
           <button onClick={() => { onRemove(); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-status-error hover:bg-status-error/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body type-caption font-bold text-status-error hover:bg-status-error/10 flex items-center gap-2">
             <X size={11} />Remove column
           </button>
         </div>
@@ -275,7 +275,7 @@ const EditableColHeaderLight = ({ label, onRename, onRemove, onHide, onMove }: {
           onChange={e => setDraft(e.target.value)}
           onBlur={() => { onRename(draft); setEditing(false); }}
           onKeyDown={e => { if (e.key === 'Enter') { onRename(draft); setEditing(false); }}}
-          className="bg-transparent border-b border-brand-primary/50 text-strong font-heading font-bold text-[12px] uppercase tracking-widest w-[60px] focus:outline-none" />
+          className="bg-transparent border-b border-brand-primary/50 text-strong font-heading font-bold type-caption uppercase tracking-widest w-[60px] focus:outline-none" />
       ) : (
         <span>{label}</span>
       )}
@@ -286,23 +286,23 @@ const EditableColHeaderLight = ({ label, onRename, onRemove, onHide, onMove }: {
       {open && (
         <div className="absolute top-full left-0 mt-1 z-[500] bg-surface-card border border-default rounded-[10px] shadow-2xl min-w-[140px] overflow-hidden">
           <button onClick={(e) => { e.stopPropagation(); setEditing(true); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body type-caption font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
             <Edit2 size={11} />Rename
           </button>
           {onHide && (
             <button onClick={(e) => { e.stopPropagation(); onHide(); setOpen(false); }}
-              className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
+              className="w-full text-left px-3 py-2 font-body type-caption font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
               <EyeOff size={11} />Hide column
             </button>
           )}
           {onMove && (
             <button onClick={(e) => { e.stopPropagation(); onMove(); setOpen(false); }}
-              className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
+              className="w-full text-left px-3 py-2 font-body type-caption font-bold text-body hover:bg-surface-card/10 flex items-center gap-2">
               <GripHorizontal size={11} />Reorder
             </button>
           )}
           <button onClick={(e) => { e.stopPropagation(); onRemove(); setOpen(false); }}
-            className="w-full text-left px-3 py-2 font-body text-[12px] font-bold text-status-error hover:bg-status-error/10 flex items-center gap-2">
+            className="w-full text-left px-3 py-2 font-body type-caption font-bold text-status-error hover:bg-status-error/10 flex items-center gap-2">
             <Trash2 size={11} />Delete column
           </button>
         </div>
@@ -362,7 +362,7 @@ const ActionDropdown = ({ playerId, items, openId, setOpenId, primaryIcon }: {
         const fullIdx = items.indexOf(item);
         return (
           <button key={i} onClick={(e) => { e.stopPropagation(); setSelectedIdx(fullIdx); setOpenId(null); }}
-            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors
+            className={`w-full text-left px-3 py-2 font-body type-caption font-bold flex items-center gap-2 transition-colors
               ${item.danger ? 'text-status-error hover:bg-status-error/15' : 'text-strong hover:bg-surface-card/10'}`}>
             {item.icon}{item.label}
           </button>
@@ -442,7 +442,7 @@ const CellSelect = ({ value, options, onChange, placeholder = '–', renderValue
         const selected = opt === value;
         return (
           <button key={opt || '__blank'} type="button" onClick={(e) => { e.stopPropagation(); onChange(opt); setOpen(false); }}
-            className={`w-full text-left px-3 py-2 font-body text-[12px] font-bold flex items-center gap-2 transition-colors ${selected ? 'bg-surface-accent text-link' : 'text-strong hover:bg-surface-accent'}`}>
+            className={`w-full text-left px-3 py-2 font-body type-caption font-bold flex items-center gap-2 transition-colors ${selected ? 'bg-surface-accent text-link' : 'text-strong hover:bg-surface-accent'}`}>
             {renderValue ? renderValue(opt) : <span>{opt || placeholder}</span>}
           </button>
         );
@@ -452,7 +452,7 @@ const CellSelect = ({ value, options, onChange, placeholder = '–', renderValue
     <>
       <button ref={btnRef} type="button" onClick={toggle}
         className={`inline-flex items-center justify-center gap-1 cursor-pointer focus:outline-none ${triggerClass}`}>
-        {renderValue ? renderValue(value) : <span className="font-body text-[12px] font-bold text-body">{value || placeholder}</span>}
+        {renderValue ? renderValue(value) : <span className="font-body type-caption font-bold text-body">{value || placeholder}</span>}
         <ChevronDown size={10} className={`text-body pointer-events-none transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {menu}
@@ -479,15 +479,15 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
       <div className="bg-surface-card rounded-[28px] shadow-2xl w-full max-w-md border border-default max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="px-6 py-4 bg-brand-primary rounded-t-[28px] flex items-center justify-between shrink-0">
           <div>
-            <span className="font-heading font-semibold text-[16px] text-on-brand">Notes & Tasks</span>
-            <p className="font-body text-[12px] text-on-brand/40 mt-0.5">{playerName}</p>
+            <span className="font-heading font-semibold type-body text-on-brand">Notes & Tasks</span>
+            <p className="font-body type-caption text-on-brand/40 mt-0.5">{playerName}</p>
           </div>
           <button onClick={onClose} className="w-7 h-7 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={14} /></button>
         </div>
         <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
           {/* Tasks */}
           <div>
-            <h4 className="font-heading font-black text-[14px] text-heading mb-3 flex items-center gap-2">
+            <h4 className="font-heading font-black type-body-sm text-heading mb-3 flex items-center gap-2">
               <FileText size={13} /> Tasks
             </h4>
             <div className="space-y-2 mb-3">
@@ -498,17 +498,17 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
                     {t.done && <Check size={9} className="text-on-brand" />}
                   </button>
                   <div className="flex-1 min-w-0">
-                    <p className={`font-body text-[12px] font-bold ${t.done ? 'line-through text-body' : 'text-strong'}`}>{t.text}</p>
-                    <p className="font-body text-[10px] text-body">Due {t.dueDate}</p>
+                    <p className={`font-body type-caption font-bold ${t.done ? 'line-through text-body' : 'text-strong'}`}>{t.text}</p>
+                    <p className="font-body type-micro text-body">Due {t.dueDate}</p>
                   </div>
                 </div>
               ))}
             </div>
             <div className="flex gap-2">
               <input value={newTask} onChange={e => setNewTask(e.target.value)} placeholder="New task..."
-                className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[12px] font-bold text-body focus:outline-none focus:border-focus" />
+                className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-caption font-bold text-body focus:outline-none focus:border-focus" />
               <input type="date" value={newDue} onChange={e => setNewDue(e.target.value)}
-                className="w-28 bg-surface-card border border-default rounded-xl px-2 py-2 font-body text-[12px] font-bold text-body focus:outline-none" />
+                className="w-28 bg-surface-card border border-default rounded-xl px-2 py-2 font-body type-caption font-bold text-body focus:outline-none" />
               <button onClick={() => { if (newTask.trim()) { setTasks(p => [...p, { id: `t${Date.now()}`, text: newTask, dueDate: newDue || 'TBD', done: false }]); setNewTask(''); setNewDue(''); }}}
                 className="w-8 h-8 bg-brand-primary text-on-brand rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
             </div>
@@ -516,23 +516,23 @@ const NotesTasksPopup = ({ playerId, playerName, onClose }: { playerId: string; 
           <div className="h-px bg-border-default" />
           {/* Notes */}
           <div>
-            <h4 className="font-heading font-black text-[14px] text-heading mb-3 flex items-center gap-2">
+            <h4 className="font-heading font-black type-body-sm text-heading mb-3 flex items-center gap-2">
               <StickyNote size={13} /> Scout Notes
             </h4>
             <div className="space-y-2 mb-3">
               {notes.map(n => (
                 <div key={n.id} className="px-3 py-2 bg-surface-card border border-default rounded-xl">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-heading font-black text-[12px] text-strong">{n.author}</span>
-                    <span className="font-body text-[10px] text-body">{n.date}</span>
+                    <span className="font-heading font-black type-caption text-strong">{n.author}</span>
+                    <span className="font-body type-micro text-body">{n.date}</span>
                   </div>
-                  <p className="font-body text-[12px] text-body">{n.text}</p>
+                  <p className="font-body type-caption text-body">{n.text}</p>
                 </div>
               ))}
             </div>
             <div className="flex gap-2">
               <input value={newNote} onChange={e => setNewNote(e.target.value)} placeholder="Add a note..."
-                className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[12px] font-bold text-body focus:outline-none focus:border-focus" />
+                className="flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-caption font-bold text-body focus:outline-none focus:border-focus" />
               <button onClick={() => { if (newNote.trim()) { setNotes(p => [...p, { id: `n${Date.now()}`, author: 'You', text: newNote, date: 'Now' }]); setNewNote(''); }}}
                 className="w-8 h-8 bg-brand-primary text-on-brand rounded-xl flex items-center justify-center hover:bg-brand-primary/80"><Plus size={14} /></button>
             </div>
@@ -630,8 +630,8 @@ const PlayerTable = ({
   if (displayPlayers.length === 0) return (
     <div className="bg-surface-card rounded-[20px] border border-default flex flex-col items-center justify-center py-16">
       <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Archive size={16} className="text-body" /></div>
-      <div className="font-heading font-semibold text-[16px] text-strong mt-4">{archiveView === 'audit' ? 'No archived players' : 'No players here yet'}</div>
-      <p className="font-body text-[12px] text-body font-medium">{currentTab === 'database' ? 'All players matching Scope Settings appear here.' : 'Move players forward from the previous list.'}</p>
+      <div className="font-heading font-semibold type-body text-strong mt-4">{archiveView === 'audit' ? 'No archived players' : 'No players here yet'}</div>
+      <p className="font-body type-caption text-body font-medium">{currentTab === 'database' ? 'All players matching Scope Settings appear here.' : 'Move players forward from the previous list.'}</p>
     </div>
   );
 
@@ -644,33 +644,33 @@ const PlayerTable = ({
             {/* ── GROUP HEADER ROW — navy background, group names ── */}
             <tr className="bg-brand-primary">
               <th colSpan={2}
-                className="sticky left-0 z-40 bg-brand-primary px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15">
+                className="sticky left-0 z-40 bg-brand-primary px-4 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15">
                 Player ID
               </th>
-              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Bio</th>
+              <th colSpan={3} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Bio</th>
               {currentTab === 'long-list'
-                ? <th className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                ? <th className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                     Status
                   </th>
                 : <th colSpan={3}
-                    className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                    className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                     Videos
                   </th>}
               <th colSpan={2}
-                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                 Bio Data
               </th>
               <th colSpan={1}
-                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                 Scout
               </th>
               <th colSpan={currentTab === 'database' ? Math.max(1, ['app','gls','pen','ast'].filter(k => visibleStats.has(k)).length) : 4}
-                className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                 Game Stats
               </th>
               {extraCols.length > 0 && (
                 <th colSpan={extraCols.length}
-                  className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                  className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                   Custom
                 </th>
               )}
@@ -678,44 +678,44 @@ const PlayerTable = ({
 
             {/* ── COLUMN SUB-HEADER ROW — light grey background, dark text ── */}
             <tr className="bg-surface-card border-b-2 border-default">
-              <th className={`sticky left-0 z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center ${actWCls}`}></th>
+              <th className={`sticky left-0 z-40 bg-surface-card px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center ${actWCls}`}></th>
               {/* Player — vertical divider after (end of Player ID group) */}
-              <th className={`sticky z-40 bg-surface-card pl-3 pr-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[200px] border-r-2 border-default ${idLeftCls}`}><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[92px]">DOB</th>
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[56px]">POS</th>
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Team</th>
+              <th className={`sticky z-40 bg-surface-card pl-3 pr-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest w-[200px] border-r-2 border-default ${idLeftCls}`}><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[92px]">DOB</th>
+              <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[56px]">POS</th>
+              <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Team</th>
               {currentTab === 'long-list'
-                ? <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Status</th>
+                ? <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[120px] border-r-2 border-default">Status</th>
                 : <>
-                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widests text-center w-[52px]">
+                    <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widests text-center w-[52px]">
                       <div className="flex justify-center items-center gap-1"><Video size={10} /><span>Match</span></div>
                     </th>
-                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]">
+                    <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[52px]">
                       <div className="flex justify-center items-center gap-1"><Video size={10} /><span>High</span></div>
                     </th>
-                    <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[80px] border-r-2 border-default"><EditableColHeaderLight label="Added" onRename={()=>{}} onRemove={()=>{}} /></th>
+                    <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[80px] border-r-2 border-default"><EditableColHeaderLight label="Added" onRename={()=>{}} onRemove={()=>{}} /></th>
                   </>}
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]"><EditableColHeaderLight label="Ft" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[52px]"><EditableColHeaderLight label="Ft" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Ht — vertical divider after (end of Bio Data group) */}
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px] border-r-2 border-default"><EditableColHeaderLight label="Ht" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[52px] border-r-2 border-default"><EditableColHeaderLight label="Ht" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Scout — vertical divider after (end of Scout group) */}
-              <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[110px] border-r-2 border-default"><EditableColHeaderLight label="Scout" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest w-[110px] border-r-2 border-default"><EditableColHeaderLight label="Scout" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Game Stats — alternating shaded sub-headers */}
               {(currentTab !== 'database' || visibleStats.has('app')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="App" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="App" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {(currentTab !== 'database' || visibleStats.has('gls')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {(currentTab !== 'database' || visibleStats.has('pen')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Pen" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card"><EditableColHeaderLight label="Pen" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {/* Ast — vertical divider after (end of Game Stats group) */}
               {(currentTab !== 'database' || visibleStats.has('ast')) && (
-                <th className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card border-r-2 border-default"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
+                <th className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[60px] bg-surface-card border-r-2 border-default"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
               )}
               {extraCols.map(c => (
-                <th key={c.id} className="px-2 py-4 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap">{c.label}</th>
+                <th key={c.id} className="px-2 py-4 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap">{c.label}</th>
               ))}
             </tr>
           </thead>
@@ -729,7 +729,7 @@ const PlayerTable = ({
                   {isArchiveGroup ? (
                     <tr className="bg-text-body/80">
                       <td colSpan={TOTAL_COLS} className="py-2 px-4 text-center">
-                        <span className="font-heading font-bold text-[10px] tracking-widest uppercase text-on-brand">Archived — Not Visible to Scouts · {grpPlayers.length}</span>
+                        <span className="font-heading font-bold type-micro tracking-widest uppercase text-on-brand">Archived — Not Visible to Scouts · {grpPlayers.length}</span>
                       </td>
                     </tr>
                   ) : (
@@ -759,27 +759,27 @@ const PlayerTable = ({
                             <PlayerAvatar initials={player.initials} />
                             <div className="flex flex-col items-start min-w-0">
                               <div className="flex items-center gap-1">
-                                <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
-                                {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
+                                <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link type-body-sm leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
+                                {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold type-micro uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
                               <div className="flex items-center gap-2">
-                                <span className="font-body text-[12px] text-muted shrink-0">{player.age}</span>
+                                <span className="font-body type-caption text-muted shrink-0">{player.age}</span>
                                 <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} title={player.scouted ? 'Scouted' : 'Unscouted'} />
                                 <FlagBadge code={natCode} label={player.nationality} />
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-2 py-3 text-center w-[92px]"><span className="font-body text-[12px] text-muted">{player.dob}</span></td>
-                        <td className="px-2 py-3 text-center w-[56px]"><span className="font-body text-[12px] font-bold text-body">{player.posAcronym}</span></td>
-                        <td className="px-2 py-3 w-[120px] border-r-2 border-default"><span className="font-body text-[12px] text-muted truncate block max-w-[110px]">{player.team}</span></td>
+                        <td className="px-2 py-3 text-center w-[92px]"><span className="font-body type-caption text-muted">{player.dob}</span></td>
+                        <td className="px-2 py-3 text-center w-[56px]"><span className="font-body type-caption font-bold text-body">{player.posAcronym}</span></td>
+                        <td className="px-2 py-3 w-[120px] border-r-2 border-default"><span className="font-body type-caption text-muted truncate block max-w-[110px]">{player.team}</span></td>
 
                         {/* Status — long-list only (video badges + method icon + play) / Videos — database */}
                         {currentTab === 'long-list' ? (
                           <td className="px-2 py-3 w-[120px] border-r-2 border-default">
                             <div className="flex items-center justify-center gap-1">
-                              {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">F{player.matchVideos}</span>}
-                              {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1.5 py-0.5 rounded text-[11px]">H{player.highlightVideos}</span>}
+                              {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1.5 py-0.5 rounded type-caption">F{player.matchVideos}</span>}
+                              {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1.5 py-0.5 rounded type-caption">H{player.highlightVideos}</span>}
                               {isRaised
                                 ? <span title="Direct — added directly to the Long List"><UserRoundCheck size={15} className="text-status-warning" /></span>
                                 : <span title="Ladder — reached via the scouting process"><StairsIcon className="w-[15px] h-[15px] text-status-ladder" /></span>}
@@ -792,58 +792,58 @@ const PlayerTable = ({
                         ) : (
                           <>
                             <td className="px-2 py-3 text-center w-[52px]">
-                              <span className="bg-brand-primary/20 text-body font-body font-bold px-2 py-0.5 rounded text-[12px] cursor-pointer hover:opacity-80">F{player.matchVideos}</span>
+                              <span className="bg-brand-primary/20 text-body font-body font-bold px-2 py-0.5 rounded type-caption cursor-pointer hover:opacity-80">F{player.matchVideos}</span>
                             </td>
                             <td className="px-2 py-3 text-center w-[52px]">
-                              <span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded text-[12px] cursor-pointer hover:opacity-80">H{player.highlightVideos}</span>
+                              <span className="bg-brand-primary/10 text-body font-body font-bold px-2 py-0.5 rounded type-caption cursor-pointer hover:opacity-80">H{player.highlightVideos}</span>
                             </td>
                             <td className="px-2 py-3 text-center w-[80px] border-r-2 border-default">
-                              <span className="font-body text-[12px] font-medium text-muted">{player.submissionDate}</span>
+                              <span className="font-body type-caption font-medium text-muted">{player.submissionDate}</span>
                             </td>
                           </>
                         )}
                         {/* Bio Data */}
                         <td className="px-2 py-3 text-center w-[52px]">
-                          <span className={`font-body text-[12px] font-bold ${player.foot === 'Both' ? 'text-strong' : 'text-body'}`}>
+                          <span className={`font-body type-caption font-bold ${player.foot === 'Both' ? 'text-strong' : 'text-body'}`}>
                             {player.foot === 'Both' ? 'B' : player.foot[0]}
                           </span>
                         </td>
                         {/* Ht — vertical divider after (Bio Data group end) */}
                         <td className="px-2 py-3 text-center w-[52px] border-r-2 border-default">
-                          <span className="font-mono font-bold text-[12px] text-body">{player.height}</span>
+                          <span className="font-mono font-bold type-caption text-body">{player.height}</span>
                         </td>
 
                         {/* Scout — vertical divider after (Scout group end) */}
                         <td className="px-2 py-3 w-[110px] border-r-2 border-default">
-                          <span className="font-body text-[12px] font-bold text-body">{player.scout}</span>
+                          <span className="font-body type-caption font-bold text-body">{player.scout}</span>
                         </td>
 
                         {/* Game Stats — alternating shaded */}
                         {(currentTab !== 'database' || visibleStats.has('app')) && (
                           <td className="px-2 py-3 text-center w-[60px] bg-surface-accent/30 group-hover:bg-surface-accent">
-                            <span className="font-mono font-bold text-[14px] text-strong">{player.app}</span>
+                            <span className="font-mono font-bold type-body-sm text-strong">{player.app}</span>
                           </td>
                         )}
                         {(currentTab !== 'database' || visibleStats.has('gls')) && (
                           <td className="px-2 py-3 text-center w-[60px]">
-                            <span className={`font-mono font-bold text-[14px] ${player.goals >= 8 ? 'text-strong' : 'text-strong'}`}>{player.goals}</span>
+                            <span className={`font-mono font-bold type-body-sm ${player.goals >= 8 ? 'text-strong' : 'text-strong'}`}>{player.goals}</span>
                           </td>
                         )}
                         {(currentTab !== 'database' || visibleStats.has('pen')) && (
                           <td className="px-2 py-3 text-center w-[60px] bg-surface-accent/30 group-hover:bg-surface-accent">
-                            <span className="font-mono text-[14px] text-body">{player.pens}</span>
+                            <span className="font-mono type-body-sm text-body">{player.pens}</span>
                           </td>
                         )}
                         {/* Ast — vertical divider after (Game Stats group end) */}
                         {(currentTab !== 'database' || visibleStats.has('ast')) && (
                           <td className="px-2 py-3 text-center w-[60px] border-r-2 border-default">
-                            <span className="font-mono text-[14px] text-strong">{player.ass}</span>
+                            <span className="font-mono type-body-sm text-strong">{player.ass}</span>
                           </td>
                         )}
 
                         {extraCols.map(c => (
                           <td key={c.id} className="px-2 py-3 text-center w-[64px]">
-                            <span className={`text-[12px] font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : 'font-body'}`}>{c.value(player, 0)}</span>
+                            <span className={`type-caption font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : 'font-body'}`}>{c.value(player, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -916,17 +916,17 @@ const TargetSuperTable = ({
   const showTop = useShowBackToTop(scrollBoxRef, displayPlayers.length);
 
   const ColHd = ({ label, cls = '' }: { label: string; cls?: string }) => (
-    <th className={`px-2 py-2 font-heading font-bold text-[12px] text-on-brand uppercase tracking-widest text-center whitespace-nowrap ${cls}`}>{label}</th>
+    <th className={`px-2 py-2 font-heading font-bold type-caption text-on-brand uppercase tracking-widest text-center whitespace-nowrap ${cls}`}>{label}</th>
   );
   const GrpHd = ({ label, span, amber = false }: { label: string; span: number; amber?: boolean }) => (
-    <th colSpan={span} className={`px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-center border-b border-text-on-brand/10 ${amber ? 'text-strong' : 'text-on-brand/50'}`}>{label}</th>
+    <th colSpan={span} className={`px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-center border-b border-text-on-brand/10 ${amber ? 'text-strong' : 'text-on-brand/50'}`}>{label}</th>
   );
 
   if (displayPlayers.length === 0) return (
     <div className="bg-surface-card rounded-[20px] border border-default flex flex-col items-center justify-center py-16 w-full">
       <div className="w-10 h-10 rounded-full bg-surface-accent flex items-center justify-center mb-3"><Archive size={16} className="text-body" /></div>
-      <div className="font-heading font-semibold text-[16px] text-strong mt-4">No target players yet</div>
-      <p className="font-body text-[12px] font-medium text-body">Send players forward from the Short List to begin tracking.</p>
+      <div className="font-heading font-semibold type-body text-strong mt-4">No target players yet</div>
+      <p className="font-body type-caption font-medium text-body">Send players forward from the Short List to begin tracking.</p>
     </div>
   );
 
@@ -938,53 +938,53 @@ const TargetSuperTable = ({
             {/* Group header row — dark, matches Short List */}
             <tr className="bg-brand-primary">
               <th colSpan={2} className="sticky left-0 z-40 bg-brand-primary border-b border-text-on-brand/15" />
-              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Status</th>
-              <th colSpan={2} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Grades" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Links" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={4} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Match Data" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Financials" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={3} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={1} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Status</th>
+              <th colSpan={2} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={4} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Grades" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={4} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Links" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={4} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Match Data" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={3} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Financials" onRename={()=>{}} onRemove={()=>{}} /></th>
               {extraCols.length > 0 && (
-                <th colSpan={extraCols.length} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Custom</th>
+                <th colSpan={extraCols.length} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Custom</th>
               )}
             </tr>
             {/* Sub-header row — light, matches Short List */}
             <tr className="bg-surface-card border-b-2 border-default">
               {/* Action — first sticky col */}
-              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[76px] min-w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[76px] min-w-[76px]"><EditableColHeaderLight label="Act" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Player */}
-              <th className="sticky left-[76px] z-40 bg-surface-card pl-2 pr-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[180px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[76px] z-40 bg-surface-card pl-2 pr-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest w-[180px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* DOB / POS / Team */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[80px] border-l border-default">DOB</th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[48px]">POS</th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[110px]">Team</th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[80px] border-l border-default">DOB</th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[48px]">POS</th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[110px]">Team</th>
               {/* Status — N&T + F/H + video popup */}
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[120px] border-l border-default">Status</th>
+              <th className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[120px] border-l border-default">Status</th>
               {/* Lead */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[70px] border-l border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[60px]"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[70px] border-l border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[60px]"><EditableColHeaderLight label="Lead" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Grades */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px] border-l border-default"><EditableColHeaderLight label="RPT" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="PLR" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POR" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[36px] border-l border-default"><EditableColHeaderLight label="RPT" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="PLR" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POR" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Video Links */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Match Data */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="Ssn" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[50px]"><EditableColHeaderLight label="Comp" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="Ssn" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[50px]"><EditableColHeaderLight label="Comp" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Gls" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="Ast" onRename={()=>{}} onRemove={()=>{}} /></th>
               {/* Financials */}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[56px] border-l border-default"><EditableColHeaderLight label="Cost" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[56px]"><EditableColHeaderLight label="Fee" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="%" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[56px] border-l border-default"><EditableColHeaderLight label="Cost" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[56px]"><EditableColHeaderLight label="Fee" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[36px]"><EditableColHeaderLight label="%" onRename={()=>{}} onRemove={()=>{}} /></th>
               {extraCols.map(c => (
-                <th key={c.id} className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default">{c.label}</th>
+                <th key={c.id} className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default">{c.label}</th>
               ))}
             </tr>
           </thead>
@@ -997,7 +997,7 @@ const TargetSuperTable = ({
                   {isArchiveGroup ? (
                     <tr className="bg-text-body/80">
                       <td colSpan={TOTAL_COLS} className="py-2 px-4 text-center">
-                        <span className="font-heading font-bold text-[10px] tracking-widest uppercase text-on-brand">Archived — Not Visible to Scouts · {grpPlayers.length}</span>
+                        <span className="font-heading font-bold type-micro tracking-widest uppercase text-on-brand">Archived — Not Visible to Scouts · {grpPlayers.length}</span>
                       </td>
                     </tr>
                   ) : (
@@ -1024,8 +1024,8 @@ const TargetSuperTable = ({
                         <CellSelect value={(td as any)[field] || ''} options={opts} menuWidth={tint ? 140 : 88}
                           onChange={upd(player.id, field)}
                           renderValue={tint
-                            ? (v => v ? <span style={tintStyle(profileColor(v))} className="data-tint inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v}</span> : <span className="font-body text-[12px] font-bold text-body">–</span>)
-                            : (v => <span className="font-body text-[12px] font-bold text-body">{v || '–'}</span>)} />
+                            ? (v => v ? <span style={tintStyle(profileColor(v))} className="data-tint inline-block border font-body type-micro font-black px-2 py-0.5 rounded-full">{v}</span> : <span className="font-body type-caption font-bold text-body">–</span>)
+                            : (v => <span className="font-body type-caption font-bold text-body">{v || '–'}</span>)} />
                       </td>
                     );
                     return (
@@ -1039,26 +1039,26 @@ const TargetSuperTable = ({
                           <div className="flex items-center gap-2 min-w-[160px]">
                             <PlayerAvatar initials={player.initials} />
                             <div className="flex flex-col items-start min-w-0">
-                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link text-[14px] leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
+                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link type-body-sm leading-tight truncate max-w-[130px] hover:underline cursor-pointer">{player.name}</span>
                               <div className="flex items-center gap-1">
-                                <span className="font-body text-[12px] text-muted">{player.age}</span>
+                                <span className="font-body type-caption text-muted">{player.age}</span>
                                 <div className={`w-2 h-2 rounded-full shrink-0 ${player.scouted ? 'bg-status-success' : 'bg-status-error'}`} />
                                 <FlagBadge code={natCode} label={player.nationality} />
-                                {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
+                                {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold type-micro uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-1 py-2 border-b border-default text-center w-[80px]"><span className="font-body text-[12px] text-muted">{player.dob}</span></td>
-                        <td className="px-1 py-2 border-b border-default text-center w-[48px]"><span className="font-body text-[12px] font-bold text-body">{player.posAcronym}</span></td>
-                        <td className="px-1 py-2 border-b border-default text-center w-[110px]"><span className="font-body text-[12px] text-muted truncate block max-w-[100px]">{player.team}</span></td>
+                        <td className="px-1 py-2 border-b border-default text-center w-[80px]"><span className="font-body type-caption text-muted">{player.dob}</span></td>
+                        <td className="px-1 py-2 border-b border-default text-center w-[48px]"><span className="font-body type-caption font-bold text-body">{player.posAcronym}</span></td>
+                        <td className="px-1 py-2 border-b border-default text-center w-[110px]"><span className="font-body type-caption text-muted truncate block max-w-[100px]">{player.team}</span></td>
                         {/* Status — N&T, F/H video counts, video popup */}
                         <td className="px-2 py-2 border-b border-default border-l border-default text-center w-[120px]">
                           {openNotesId === player.id && <NotesTasksPopup playerId={player.id} playerName={player.name} onClose={() => setOpenNotesId(null)} />}
                           <div className="flex items-center justify-center gap-1">
                             <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-inverse text-strong flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
-                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
-                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
+                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1 py-0.5 rounded type-micro shrink-0">F{player.matchVideos}</span>}
+                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1 py-0.5 rounded type-micro shrink-0">H{player.highlightVideos}</span>}
                             <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-link hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
                           </div>
                         </td>
@@ -1071,31 +1071,31 @@ const TargetSuperTable = ({
                         {/* Video links — underlined Link text */}
                         <td className="px-1 py-2 border-b border-default border-l border-default text-center w-[56px]">
                           {td.h1
-                            ? <a href={td.h1} className="font-body text-[12px] font-bold text-body underline">Link</a>
+                            ? <a href={td.h1} className="font-body type-caption font-bold text-body underline">Link</a>
                             : <TCell value={(td as any).h1} onChange={upd(player.id, 'h1')} placeholder="url" />}
                         </td>
                         <td className="px-1 py-2 border-b border-default text-center w-[56px]">
                           {td.h2 
-                            ? <a href={td.h2} className="font-body text-[12px] font-bold text-body underline">Link</a>
+                            ? <a href={td.h2} className="font-body type-caption font-bold text-body underline">Link</a>
                             : <TCell value={(td as any).h2} onChange={upd(player.id, 'h2')} placeholder="url" />}
                         </td>
                         <td className="px-1 py-2 border-b border-default text-center w-[56px]">
                           {td.fm1 
-                            ? <a href={td.fm1} className="font-body text-[12px] font-bold text-body underline">Link</a>
+                            ? <a href={td.fm1} className="font-body type-caption font-bold text-body underline">Link</a>
                             : <TCell value={(td as any).fm1} onChange={upd(player.id, 'fm1')} placeholder="url" />}
                         </td>
                         <td className="px-1 py-2 border-b border-default text-center w-[56px]">
                           {td.fm2 
-                            ? <a href={td.fm2} className="font-body text-[12px] font-bold text-body underline">Link</a>
+                            ? <a href={td.fm2} className="font-body type-caption font-bold text-body underline">Link</a>
                             : <TCell value={(td as any).fm2} onChange={upd(player.id, 'fm2')} placeholder="url" />}
                         </td>
                         <EC field="season" ph="24/25" /><EC field="comp" ph="Comp" />
-                        <td className="px-1 py-2 border-b border-default text-center"><span className="font-mono font-bold text-[14px] text-strong">{player.goals}</span></td>
-                        <td className="px-1 py-2 border-b border-default text-center"><span className="font-mono text-[14px] text-strong">{player.ass}</span></td>
+                        <td className="px-1 py-2 border-b border-default text-center"><span className="font-mono font-bold type-body-sm text-strong">{player.goals}</span></td>
+                        <td className="px-1 py-2 border-b border-default text-center"><span className="font-mono type-body-sm text-strong">{player.ass}</span></td>
                         <EC field="cost" ph="€0" /><EC field="fee" ph="€0" /><EC field="pct" ph="%" />
                         {extraCols.map(c => (
                           <td key={c.id} className="px-2 py-2 border-b border-default text-center w-[64px] border-l border-default">
-                            <span className={`font-body text-[12px] font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(player, 0)}</span>
+                            <span className={`font-body type-caption font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(player, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1110,7 +1110,7 @@ const TargetSuperTable = ({
       {archiveView === 'active' && displayPlayers.some(p => archivedSet.has(p.id)) && (
         <div className="px-4 py-2 bg-surface-accent border-t border-default flex items-center gap-2">
           <Archive size={10} className="text-body" />
-          <span className="font-body text-[12px] font-bold text-body">{displayPlayers.filter(p => archivedSet.has(p.id)).length} archived</span>
+          <span className="font-body type-caption font-bold text-body">{displayPlayers.filter(p => archivedSet.has(p.id)).length} archived</span>
         </div>
       )}
       <BackToTopButton show={showTop} onClick={() => scrollBoxRef.current?.scrollTo({ top: 0, behavior: 'smooth' })} />
@@ -1251,22 +1251,22 @@ const ShortListTable = ({
     opts ? (
       <div className="relative inline-flex items-center w-full">
         <select value={val} onChange={e=>onChange(e.target.value)}
-          className={`w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none appearance-none text-center cursor-pointer ${chevron ? 'pr-4' : ''}`}>
+          className={`w-full bg-transparent font-body type-caption font-bold text-body focus:outline-none appearance-none text-center cursor-pointer ${chevron ? 'pr-4' : ''}`}>
           {opts.map(o=><option key={o} value={o}>{o||'–'}</option>)}
         </select>
         {chevron && <ChevronDown size={10} className="absolute right-0 text-body pointer-events-none" />}
       </div>
     ) : (
       <input value={val} onChange={e=>onChange(e.target.value)} placeholder={ph}
-        className="w-full bg-transparent font-body text-[12px] font-bold text-body focus:outline-none placeholder:text-placeholder text-center" />
+        className="w-full bg-transparent font-body type-caption font-bold text-body focus:outline-none placeholder:text-placeholder text-center" />
     )
   );
 
   if (displayPlayers.length === 0) return (
     <div className="bg-surface-card rounded-[20px] border border-default flex flex-col items-center justify-center py-16">
       <Archive size={16} className="text-body mb-3" />
-      <div className="font-heading font-semibold text-[16px] text-strong mt-2">No short-listed players yet</div>
-      <p className="font-body text-[12px] text-body font-medium">Send players forward from the Long List.</p>
+      <div className="font-heading font-semibold type-body text-strong mt-2">No short-listed players yet</div>
+      <p className="font-body type-caption text-body font-medium">Send players forward from the Long List.</p>
     </div>
   );
 
@@ -1277,40 +1277,40 @@ const ShortListTable = ({
           <thead className="sticky top-0 z-30">
             {/* Group header row */}
             <tr className="bg-brand-primary">
-              <th colSpan={3} className="sticky left-0 z-40 bg-brand-primary px-3 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15">Player ID</th>
-              <th colSpan={5} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th colSpan={1} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Status</th>
+              <th colSpan={3} className="sticky left-0 z-40 bg-brand-primary px-3 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15">Player ID</th>
+              <th colSpan={5} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Player Info" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={1} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">Status</th>
               {SCOUT_COLS.map(s => (
-                <th key={s.key} colSpan={3} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">{s.label}</th>
+                <th key={s.key} colSpan={3} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">{s.label}</th>
               ))}
-              <th colSpan={8} className="px-2 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Codes" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th colSpan={8} className="px-2 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15"><EditableColHeaderLight label="Video Codes" onRename={()=>{}} onRemove={()=>{}} /></th>
             </tr>
             {/* Sub-header row */}
             <tr className="bg-surface-card border-b-2 border-default">
-              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[108px] min-w-[108px]"></th>
-              <th className="sticky left-[108px] z-40 bg-surface-card px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center min-w-[56px] w-[56px]"><EditableColHeaderLight label="Rank" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="sticky left-[164px] z-40 bg-surface-card px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[250px] min-w-[250px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[80px]"><EditableColHeaderLight label="DOB" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="Pos" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[110px]"><EditableColHeaderLight label="Team" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[110px] border-r border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest w-[64px] border-r-2 border-default"><EditableColHeaderLight label="Pathway" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-2 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[130px] border-r-2 border-default">Status</th>
+              <th className="sticky left-0 z-40 bg-surface-card px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[108px] min-w-[108px]"></th>
+              <th className="sticky left-[108px] z-40 bg-surface-card px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center min-w-[56px] w-[56px]"><EditableColHeaderLight label="Rank" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="sticky left-[164px] z-40 bg-surface-card px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest w-[250px] min-w-[250px] border-r-2 border-default"><EditableColHeaderLight label="Player" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[80px]"><EditableColHeaderLight label="DOB" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="Pos" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest w-[110px]"><EditableColHeaderLight label="Team" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest w-[110px] border-r border-default"><EditableColHeaderLight label="Profile" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest w-[64px] border-r-2 border-default"><EditableColHeaderLight label="Pathway" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-2 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[130px] border-r-2 border-default">Status</th>
               {SCOUT_COLS.map(s => (
                 <React.Fragment key={s.key}>
-                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px] border-l border-default"><EditableColHeaderLight label="PLG" onRename={()=>{}} onRemove={()=>{}} /></th>
-                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POG" onRename={()=>{}} onRemove={()=>{}} /></th>
-                  <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[40px] border-r border-default"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
+                  <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[40px] border-l border-default"><EditableColHeaderLight label="PLG" onRename={()=>{}} onRemove={()=>{}} /></th>
+                  <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[40px]"><EditableColHeaderLight label="POG" onRename={()=>{}} onRemove={()=>{}} /></th>
+                  <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[40px] border-r border-default"><EditableColHeaderLight label="NXT" onRename={()=>{}} onRemove={()=>{}} /></th>
                 </React.Fragment>
               ))}
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l-2 border-default"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM3" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="PK1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK2" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK3" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
-              <th className="px-1 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px] border-l-2 border-default"><EditableColHeaderLight label="FM1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="FM3" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="PK1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK2" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="PK3" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px] border-l border-default"><EditableColHeaderLight label="HL1" onRename={()=>{}} onRemove={()=>{}} /></th>
+              <th className="px-1 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[32px]"><EditableColHeaderLight label="HL2" onRename={()=>{}} onRemove={()=>{}} /></th>
             </tr>
           </thead>
           <tbody>
@@ -1322,7 +1322,7 @@ const ShortListTable = ({
                   {isArchiveGroup ? (
                     <tr className="bg-text-body/80">
                       <td colSpan={TOTAL_COLS} className="py-2 px-4 text-center">
-                        <span className="font-heading font-bold text-[10px] tracking-widest uppercase text-on-brand">Archived — Not Visible to Scouts · {grpPlayers.length}</span>
+                        <span className="font-heading font-bold type-micro tracking-widest uppercase text-on-brand">Archived — Not Visible to Scouts · {grpPlayers.length}</span>
                       </td>
                     </tr>
                   ) : (
@@ -1352,8 +1352,8 @@ const ShortListTable = ({
                             onChange={v => setRankMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
                             triggerClass="h-6 mx-auto"
                             renderValue={v => v
-                              ? <span style={tintStyle(RANK_TINT[v])} className="data-tint inline-flex items-center justify-center w-6 h-6 rounded-full border font-body text-[10px] font-black">{v}</span>
-                              : <span className="font-body text-[12px] font-bold text-body">–</span>} />
+                              ? <span style={tintStyle(RANK_TINT[v])} className="data-tint inline-flex items-center justify-center w-6 h-6 rounded-full border font-body type-micro font-black">{v}</span>
+                              : <span className="font-body type-caption font-bold text-body">–</span>} />
                         </td>
                         {/* Player name + monitor pill */}
                         <td className="sticky left-[164px] z-20 bg-surface-card group-hover:bg-inherit px-2 py-2 border-r-2 border-default w-[250px] min-w-[250px]">
@@ -1361,14 +1361,14 @@ const ShortListTable = ({
                             <PlayerAvatar initials={player.initials} />
                             <div className="flex flex-col items-start min-w-0">
                             <div className="flex items-center gap-1">
-                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link text-[14px] leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
-                              {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold text-[10px] uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
+                              <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : window.location.pathname.startsWith('/senior-scout') ? '/senior-scout' : ''}/player/${player.id}`, { state: { player: { id: player.id, name: player.name, initials: player.initials, age: player.age, nationality: player.nationality, primaryPos: player.pos, preferredFoot: player.foot, height: player.height, currentTeam: player.team, matchVideos: player.matchVideos, highlightVideos: player.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: ((typeof currentTab !== 'undefined' ? ({ 'database': 'Database', 'long-list': 'Long List', 'short-list': 'Short List', 'target-list': 'Target List', 'signed-list': 'Signed List' } as any)[currentTab] : null) || 'Database'), path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })} className="font-body font-bold text-link type-body-sm leading-tight whitespace-nowrap hover:underline cursor-pointer">{player.name}</span>
+                              {isArchived && <span className="bg-text-body/15 text-muted font-heading font-bold type-micro uppercase tracking-widest px-2 py-0.5 rounded shrink-0">Archived</span>}
                               {(() => {
                                 const nxtVals = Object.values(scoutData.get(player.id) || {});
                                 const tCount = nxtVals.filter((sd:any) => sd?.nxt === 'T').length;
                                 const mCount = nxtVals.filter((sd:any) => sd?.nxt === 'M').length;
-                                if (tCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-brand-primary/10 text-body border border-brand-primary/20">Target</span>;
-                                if (mCount >= 2) return <span className="shrink-0 font-body text-[10px] font-black px-2 py-0.5 rounded-full bg-status-warning/15 text-status-warning border border-status-warning/30">Monitor</span>;
+                                if (tCount >= 2) return <span className="shrink-0 font-body type-micro font-black px-2 py-0.5 rounded-full bg-brand-primary/10 text-body border border-brand-primary/20">Target</span>;
+                                if (mCount >= 2) return <span className="shrink-0 font-body type-micro font-black px-2 py-0.5 rounded-full bg-status-warning/15 text-status-warning border border-status-warning/30">Monitor</span>;
                                 return null;
                               })()}
                             </div>
@@ -1381,15 +1381,15 @@ const ShortListTable = ({
                         </td>
                         {/* DOB */}
                         <td className="px-1 py-2 text-center w-[80px]">
-                          <span className="font-body text-[12px] text-muted">{player.dob}</span>
+                          <span className="font-body type-caption text-muted">{player.dob}</span>
                         </td>
                         {/* Pos */}
                         <td className="px-1 py-2 text-center w-[32px]">
-                          <span className="font-body text-[12px] font-bold text-body">{player.posAcronym}</span>
+                          <span className="font-body type-caption font-bold text-body">{player.posAcronym}</span>
                         </td>
                         {/* Team */}
                         <td className="px-2 py-2 w-[110px]">
-                          <span className="font-body text-[12px] font-medium text-muted truncate block max-w-[100px]">{player.team}</span>
+                          <span className="font-body type-caption font-medium text-muted truncate block max-w-[100px]">{player.team}</span>
                         </td>
                         {/* Profile — editable dropdown, muted tint pill */}
                         <td className="px-1 py-2 w-[110px] border-r border-default">
@@ -1398,7 +1398,7 @@ const ShortListTable = ({
                             return (
                               <CellSelect value={pv} options={PROFILE_OPTS} menuWidth={140}
                                 onChange={v => setProfileMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
-                                renderValue={val => <span style={tintStyle(profileColor(val))} className="data-tint inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{val}</span>} />
+                                renderValue={val => <span style={tintStyle(profileColor(val))} className="data-tint inline-block border font-body type-micro font-black px-2 py-0.5 rounded-full">{val}</span>} />
                             );
                           })()}
                         </td>
@@ -1406,15 +1406,15 @@ const ShortListTable = ({
                         <td className="px-1 py-2 w-[64px] border-r-2 border-default">
                           <CellSelect value={pathwayMap.get(player.id) || ''} options={PATHWAY_OPTS} menuWidth={120}
                             onChange={v => setPathwayMap(prev => { const n = new Map(prev); n.set(player.id, v); return n; })}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-body">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body type-caption font-bold text-body">{v || '–'}</span>} />
                         </td>
                         {/* Status — N&T, F/H video counts, video popup */}
                         <td className="px-2 py-2 border-r-2 border-default w-[130px]">
                           {openNotesId === player.id && <NotesTasksPopup playerId={player.id} playerName={player.name} onClose={() => setOpenNotesId(null)} />}
                           <div className="flex items-center justify-center gap-1">
                             <button onClick={() => setOpenNotesId(player.id)} title="Notes & Tasks" className="w-6 h-6 rounded-lg bg-surface-accent hover:bg-brand-primary/80 hover:text-inverse text-strong flex items-center justify-center transition-all shrink-0"><StickyNote size={11} /></button>
-                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">F{player.matchVideos}</span>}
-                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1 py-0.5 rounded text-[10px] shrink-0">H{player.highlightVideos}</span>}
+                            {player.matchVideos > 0 && <span className="bg-brand-primary/20 text-body font-body font-bold px-1 py-0.5 rounded type-micro shrink-0">F{player.matchVideos}</span>}
+                            {player.highlightVideos > 0 && <span className="bg-brand-primary/10 text-body font-body font-bold px-1 py-0.5 rounded type-micro shrink-0">H{player.highlightVideos}</span>}
                             <button onClick={() => onOpenVideos?.(player)} title="Watch videos" className="w-6 h-6 rounded-full bg-brand-primary/10 text-link hover:bg-brand-primary hover:text-on-brand flex items-center justify-center transition-colors shrink-0"><Play size={11} className="ml-0.5" /></button>
                           </div>
                         </td>
@@ -1424,7 +1424,7 @@ const ShortListTable = ({
                           const gcell = (val: string, field: 'plg'|'pog'|'nxt', opts: string[]) => (
                             <CellSelect value={val} options={opts} menuWidth={72}
                               onChange={v=>updSD(player.id,s.key,field,v)}
-                              renderValue={x => <span className="font-body text-[12px] font-bold text-body">{x || '–'}</span>} />
+                              renderValue={x => <span className="font-body type-caption font-bold text-body">{x || '–'}</span>} />
                           );
                           return (
                             <React.Fragment key={s.key}>
@@ -1440,7 +1440,7 @@ const ShortListTable = ({
                           ['hl1','HL1','border-l border-default'],['hl2','HL2','']].map(([field, label, cls]) => (
                           <td key={field} className={`px-1 py-2 text-center w-[32px] ${cls}`}>
                             {(vf as any)[field]
-                              ? <a href={(vf as any)[field]} className="font-body text-[12px] font-bold text-body underline">Link</a>
+                              ? <a href={(vf as any)[field]} className="font-body type-caption font-bold text-body underline">Link</a>
                               : <CI val="" onChange={v=>updVF(player.id, field, v)} ph="url" />}
                           </td>
                         ))}
@@ -1477,14 +1477,14 @@ const InlineSelect = ({ value, opts, onChange, colorMap }: {
     <select ref={ref} value={value} autoFocus
       onChange={e => { onChange(e.target.value); setEditing(false); }}
       onBlur={() => setEditing(false)}
-      className="bg-surface-card border border-default rounded-lg px-2 py-0.5 font-body text-[12px] font-bold text-body focus:outline-none cursor-pointer">
+      className="bg-surface-card border border-default rounded-lg px-2 py-0.5 font-body type-caption font-bold text-body focus:outline-none cursor-pointer">
       {opts.map(o => <option key={o} value={o}>{o}</option>)}
     </select>
   );
   return (
     <span onClick={() => setEditing(true)} title="Click to edit"
       style={color ? { backgroundColor: color, color: 'var(--text-on-brand)' } : undefined}
-      className={`inline-block font-body text-[12px] font-bold cursor-pointer hover:opacity-80 rounded px-2 py-0.5 ${!color ? 'text-strong' : ''}`}>
+      className={`inline-block font-body type-caption font-bold cursor-pointer hover:opacity-80 rounded px-2 py-0.5 ${!color ? 'text-strong' : ''}`}>
       {value || '—'}
     </span>
   );
@@ -1560,7 +1560,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
   const STATUS_TINT: Record<string, string> = { 'Success': DATA.green, 'Unsuccessful': DATA.red, 'Pending': DATA.amber };
   const StatusPill = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => (
     <CellSelect value={value} options={['Success', 'Unsuccessful', 'Pending']} menuWidth={140} onChange={onChange}
-      renderValue={v => <span style={tintStyle(STATUS_TINT[v])} className="data-tint inline-block border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{v || '–'}</span>} />
+      renderValue={v => <span style={tintStyle(STATUS_TINT[v])} className="data-tint inline-block border font-body type-micro font-black px-2 py-0.5 rounded-full">{v || '–'}</span>} />
   );
 
   const TOTAL_COLS = 14 + extraCols.length;
@@ -1575,42 +1575,42 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
             <thead className="sticky top-0 z-30">
               {/* Row 1: Group header */}
               <tr className="bg-brand-primary">
-                <th colSpan={4} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15">
+                <th colSpan={4} className="px-4 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15">
                   Player Identity
                 </th>
-                <th colSpan={3} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                <th colSpan={3} className="px-4 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                   Acquisition
                 </th>
-                <th colSpan={4} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                <th colSpan={4} className="px-4 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                   Financials
                 </th>
-                <th colSpan={3} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                <th colSpan={3} className="px-4 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                   Outcome
                 </th>
                 {extraCols.length > 0 && (
-                  <th colSpan={extraCols.length} className="px-4 py-2 font-heading font-bold text-[10px] uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
+                  <th colSpan={extraCols.length} className="px-4 py-2 font-heading font-bold type-micro uppercase tracking-widest text-on-brand text-center border-b border-text-on-brand/15 border-l border-l-white/15">
                     Custom
                   </th>
                 )}
               </tr>
               {/* Row 2: Column sub-headers */}
               <tr className="bg-surface-card border-b-2 border-default">
-                <th className="px-4 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[180px]">Name</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[90px]">DOB</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]">POS</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[100px]">Team</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[80px]">Source</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[70px]">Scout</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[90px] border-r border-default/30">Move</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[52px]">Year</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-right w-[80px]">Fee</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-right w-[90px]">Current</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-right w-[90px] border-r border-default/30">Potential</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[100px]">Scout</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[100px]">Dev</th>
-                <th className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-left w-[100px]">Note</th>
+                <th className="px-4 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-left w-[180px]">Name</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[90px]">DOB</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[52px]">POS</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-left w-[100px]">Team</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-left w-[80px]">Source</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-left w-[70px]">Scout</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-left w-[90px] border-r border-default/30">Move</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[52px]">Year</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-right w-[80px]">Fee</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-right w-[90px]">Current</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-right w-[90px] border-r border-default/30">Potential</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[100px]">Scout</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[100px]">Dev</th>
+                <th className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-left w-[100px]">Note</th>
                 {extraCols.map(c => (
-                  <th key={c.id} className="px-3 py-3 font-heading font-bold text-[12px] text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default/30">{c.label}</th>
+                  <th key={c.id} className="px-3 py-3 font-heading font-bold type-caption text-muted uppercase tracking-widest text-center w-[64px] whitespace-nowrap border-l border-default/30">{c.label}</th>
                 ))}
               </tr>
             </thead>
@@ -1621,8 +1621,8 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                   <tr className="bg-brand-primary">
                     <td colSpan={TOTAL_COLS} className="py-2 px-4">
                       <span className="inline-flex items-center gap-2">
-                        <span className="font-heading font-bold text-[11px] tracking-widest uppercase text-on-brand">{group}</span>
-                        <span className="inline-flex items-center justify-center bg-text-on-brand/20 rounded-full px-[6px] py-[2px] font-heading font-bold text-[10px] leading-none text-on-brand">{grpPlayers.length}</span>
+                        <span className="font-heading font-bold type-caption tracking-widest uppercase text-on-brand">{group}</span>
+                        <span className="inline-flex items-center justify-center bg-text-on-brand/20 rounded-full px-[6px] py-[2px] font-heading font-bold type-micro leading-none text-on-brand">{grpPlayers.length}</span>
                       </span>
                     </td>
                   </tr>
@@ -1637,54 +1637,54 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                             <PlayerAvatar initials={p.name.split(' ').map(n => n[0]).join('').substring(0, 2)} />
                             <div className="flex flex-col items-start">
                             <span onClick={() => navigate(`${window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout'}/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.pos, preferredFoot: p.foot, height: p.height, currentTeam: p.team, matchVideos: p.matchVideos, highlightVideos: p.highlightVideos }, trail: [{ label: 'Players', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }, { label: 'Signed List', path: (window.location.pathname.startsWith('/lead-scout') ? '/lead-scout' : '/senior-scout') + '/players' }] } })}
-                              className="font-body font-bold text-[14px] text-link hover:underline cursor-pointer whitespace-nowrap">{p.name}</span>
+                              className="font-body font-bold type-body-sm text-link hover:underline cursor-pointer whitespace-nowrap">{p.name}</span>
                             <FlagBadge code={flagCode} label={p.nation} />
                             </div>
                           </div>
                         </td>
                         {/* DOB */}
-                        <td className="px-3 py-2 text-center"><span className="font-body text-[12px] text-muted">{p.dob}</span></td>
+                        <td className="px-3 py-2 text-center"><span className="font-body type-caption text-muted">{p.dob}</span></td>
                         {/* POS */}
-                        <td className="px-3 py-2 text-center"><span className="font-body text-[12px] font-bold text-body">{p.pos}</span></td>
+                        <td className="px-3 py-2 text-center"><span className="font-body type-caption font-bold text-body">{p.pos}</span></td>
                         {/* Team (Club) */}
                         <td className="px-3 py-2 border-r border-default/10">
                           <CellSelect value={p.club} options={['AC Horsens','VPN']} menuWidth={140} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, club: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-body">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body type-caption font-bold text-body">{v || '–'}</span>} />
                         </td>
                         {/* Identified/Source */}
                         <td className="px-3 py-2 border-r border-default/10">
                           <CellSelect value={p.identified} options={['Scouted','Social','Agent']} menuWidth={120} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, identified: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-body">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body type-caption font-bold text-body">{v || '–'}</span>} />
                         </td>
                         {/* Scout */}
                         <td className="px-3 py-2 border-r border-default/10">
                           <CellSelect value={p.scout} options={['Tom','Mbugua','Brice','Nene','Scott','Sekou','Sall','Buba']} menuWidth={120} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, scout: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-body">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body type-caption font-bold text-body">{v || '–'}</span>} />
                         </td>
                         {/* Move */}
                         <td className="px-3 py-2 border-r border-default/30">
                           <CellSelect value={p.move} options={['Signed','Loan','Trial','Trial/Signed','Loan/Signed']} menuWidth={140} onChange={v => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, move: v} : x))}
-                            renderValue={v => <span className="font-body text-[12px] font-bold text-body">{v || '–'}</span>} />
+                            renderValue={v => <span className="font-body type-caption font-bold text-body">{v || '–'}</span>} />
                         </td>
                         {/* Year */}
                         <td className="px-3 py-2 text-center border-r border-default/10">
                           <input type="number" value={p.year} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, year: Number(e.target.value)} : x))}
-                            className="bg-transparent font-mono font-bold text-[12px] text-strong focus:outline-none w-[32px] text-center" />
+                            className="bg-transparent font-mono font-bold type-caption text-strong focus:outline-none w-[32px] text-center" />
                         </td>
                         {/* Fee */}
                         <td className="px-3 py-2 text-right border-r border-default/10">
                           <input value={p.fee} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, fee: e.target.value} : x))}
-                            className="bg-transparent font-mono text-[12px] text-body focus:outline-none w-[72px] text-right" />
+                            className="bg-transparent font-mono type-caption text-body focus:outline-none w-[72px] text-right" />
                         </td>
                         {/* Current Val */}
                         <td className="px-3 py-2 text-right border-r border-default/10">
                           <input value={p.currentValue} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, currentValue: e.target.value} : x))}
-                            className="bg-transparent font-mono text-[12px] text-body focus:outline-none w-[80px] text-right" />
+                            className="bg-transparent font-mono type-caption text-body focus:outline-none w-[80px] text-right" />
                         </td>
                         {/* Potential Val */}
                         <td className="px-3 py-2 text-right border-r border-default/30">
                           <input value={p.potentialValue} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, potentialValue: e.target.value} : x))}
-                            className="bg-transparent font-mono font-bold text-[12px] text-strong focus:outline-none w-[80px] text-right" />
+                            className="bg-transparent font-mono font-bold type-caption text-strong focus:outline-none w-[80px] text-right" />
                         </td>
                         {/* Scout Success — soft pill */}
                         <td className="px-2 py-2 text-center border-r border-default/10">
@@ -1697,11 +1697,11 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                         {/* Note */}
                         <td className="px-3 py-2">
                           <input value={p.note} onChange={e => setPlayers(prev => prev.map(x => x.id === p.id ? {...x, note: e.target.value} : x))} placeholder="Note..."
-                            className="bg-transparent font-body text-[12px] text-body focus:outline-none min-w-[80px]" />
+                            className="bg-transparent font-body type-caption text-body focus:outline-none min-w-[80px]" />
                         </td>
                         {extraCols.map(c => (
                           <td key={c.id} className="px-3 py-2 text-center border-l border-default/10">
-                            <span className={`font-body text-[12px] font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(p, 0)}</span>
+                            <span className={`font-body type-caption font-medium text-muted whitespace-nowrap ${c.mono ? 'font-mono' : ''}`}>{c.value(p, 0)}</span>
                           </td>
                         ))}
                       </tr>
@@ -1719,7 +1719,7 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAdd(false)}>
           <div className="bg-surface-card rounded-[32px] shadow-2xl w-full max-w-lg border border-default" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 bg-brand-primary rounded-t-[32px] flex items-center justify-between">
-              <span className="font-heading font-semibold text-[16px] text-on-brand">Add Signed Player</span>
+              <span className="font-heading font-semibold type-body text-on-brand">Add Signed Player</span>
               <button onClick={() => setShowAdd(false)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={16} /></button>
             </div>
             <div className="p-8 space-y-4">
@@ -1733,33 +1733,33 @@ const SignedListTab = ({ extraCols = [], showAdd, setShowAdd }: {
                   { label: 'Year Signed', key: 'year', type: 'number' },
                 ].map(field => (
                   <div key={field.key}>
-                    <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">{field.label}</label>
+                    <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">{field.label}</label>
                     <input type={field.type} value={(newPlayer as any)[field.key] || ''} onChange={e => setNewPlayer(prev => ({ ...prev, [field.key]: field.type === 'number' ? Number(e.target.value) : e.target.value }))}
-                      className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                      className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                   </div>
                 ))}
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Position</label>
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Position</label>
                   <select value={newPlayer.pos || 'ST'} onChange={e => setNewPlayer(prev => ({ ...prev, pos: e.target.value }))}
-                    className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
+                    className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none appearance-none">
                     {['ST','LW','RW','CM','CDM','CAM','FB','CB','DM','LB','RB'].map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Move Type</label>
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Move Type</label>
                   <select value={newPlayer.move || 'Signed'} onChange={e => setNewPlayer(prev => ({ ...prev, move: e.target.value }))}
-                    className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
+                    className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none appearance-none">
                     {['Signed','Loan','Trial/Signed','Loan/Signed'].map(m => <option key={m}>{m}</option>)}
                   </select>
                 </div>
               </div>
               <div>
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Note</label>
+                <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Note</label>
                 <input type="text" value={newPlayer.note || ''} onChange={e => setNewPlayer(prev => ({ ...prev, note: e.target.value }))} placeholder="Optional note..."
-                  className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                  className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
               </div>
               <button onClick={handleAdd} disabled={!newPlayer.name}
-                className="w-full bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full py-3 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                className="w-full bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full py-3 font-body font-black type-body-sm hover:bg-brand-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                 Add to Signed List
               </button>
             </div>
@@ -1823,7 +1823,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
 
   return (
     <div className="flex flex-col gap-1" ref={ref}>
-      <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{label}</label>
+      <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted">{label}</label>
       <button onClick={() => {
           if (!open) {
             const p = value ? new Date(value) : new Date();
@@ -1834,7 +1834,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
           }
           setOpen(!open);
         }} type="button"
-        className="w-full flex items-center gap-2 bg-surface-card border border-default rounded-xl px-3 py-2 text-left font-body text-[14px] font-bold text-body hover:border-brand-primary focus:outline-none focus:border-focus transition-all">
+        className="w-full flex items-center gap-2 bg-surface-card border border-default rounded-xl px-3 py-2 text-left font-body type-body-sm font-bold text-body hover:border-brand-primary focus:outline-none focus:border-focus transition-all">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-body shrink-0">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
         </svg>
@@ -1850,13 +1850,13 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
             <div className="flex items-center gap-1 relative">
               {/* Month dropdown trigger */}
               <button onClick={() => { setShowMonthGrid(!showMonthGrid); setShowYearList(false); }}
-                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-strong hover:text-link transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
+                className="flex items-center gap-0.5 font-heading font-bold type-body-sm text-strong hover:text-link transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
                 {MONTH_NAMES[viewMonth]}
                 <ChevronDown size={9} className="text-body" />
               </button>
               {/* Year dropdown trigger */}
               <button onClick={() => { setShowYearList(!showYearList); setShowMonthGrid(false); }}
-                className="flex items-center gap-0.5 font-heading font-bold text-[14px] text-strong hover:text-link transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
+                className="flex items-center gap-0.5 font-heading font-bold type-body-sm text-strong hover:text-link transition-colors px-1 py-0.5 rounded-md hover:bg-surface-accent">
                 {viewYear}
                 <ChevronDown size={9} className="text-body" />
               </button>
@@ -1867,7 +1867,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
                   <div className="grid grid-cols-3 gap-1">
                     {MONTH_SHORT.map((m, i) => (
                       <button key={m} onClick={() => { setViewMonth(i); setShowMonthGrid(false); }}
-                        className={`py-2 rounded-lg font-body font-bold text-[12px] text-center transition-all ${
+                        className={`py-2 rounded-lg font-body font-bold type-caption text-center transition-all ${
                           i === viewMonth ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-strong hover:bg-surface-accent'
                         }`}>{m}</button>
                     ))}
@@ -1880,7 +1880,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
                 <div className="absolute top-full right-0 mt-1 bg-surface-card border border-default rounded-xl shadow-[var(--shadow-2xl)] p-2 z-[60] w-[96px] max-h-[200px] overflow-y-auto">
                   {Array.from({ length: 21 }, (_, i) => viewYear - 10 + i).map(y => (
                     <button key={y} onClick={() => { setViewYear(y); setShowYearList(false); }}
-                      className={`w-full py-2 rounded-lg font-heading font-bold text-[12px] text-center transition-all ${
+                      className={`w-full py-2 rounded-lg font-heading font-bold type-caption text-center transition-all ${
                         y === viewYear ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-strong hover:bg-surface-accent'
                       }`}>{y}</button>
                   ))}
@@ -1894,7 +1894,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
           {/* Day labels */}
           <div className="grid grid-cols-7 mb-1">
             {DAY_LABELS.map(d => (
-              <span key={d} className="text-center font-heading font-bold text-[10px] uppercase tracking-wider text-muted py-1">{d}</span>
+              <span key={d} className="text-center font-heading font-bold type-micro uppercase tracking-wider text-muted py-1">{d}</span>
             ))}
           </div>
           {/* Day grid */}
@@ -1902,7 +1902,7 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
             {blanks.map(b => <span key={`b${b}`} />)}
             {days.map(d => (
               <button key={d} onClick={() => selectDay(d)}
-                className={`w-full aspect-square flex items-center justify-center font-body font-bold text-[12px] rounded-full transition-all ${
+                className={`w-full aspect-square flex items-center justify-center font-body font-bold type-caption rounded-full transition-all ${
                   isSelected(d) ? 'bg-brand-primary text-on-brand shadow-sm'
                     : isToday(d) ? 'bg-brand-primary/10 text-link font-black'
                     : 'text-strong hover:bg-surface-accent'
@@ -1914,9 +1914,9 @@ const DatePicker = ({ value, onChange, label }: { value: string; onChange: (v: s
           {/* Footer actions */}
           <div className="flex items-center justify-between mt-2 pt-2 border-t border-default/40">
             <button onClick={() => { onChange(''); setOpen(false); }}
-              className="font-body font-bold text-[12px] text-body hover:text-link transition-colors">Clear</button>
+              className="font-body font-bold type-caption text-body hover:text-link transition-colors">Clear</button>
             <button onClick={() => { const t = new Date(); selectDay(t.getDate()); setViewYear(t.getFullYear()); setViewMonth(t.getMonth()); }}
-              className="font-body font-bold text-[12px] text-link hover:text-link/80 transition-colors">Today</button>
+              className="font-body font-bold type-caption text-link hover:text-link/80 transition-colors">Today</button>
           </div>
         </div>
       )}
@@ -1929,10 +1929,10 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
   onAdd: () => void; onRemove: (i: number) => void;
 }) => (
   <div className="flex flex-col gap-2 flex-1 min-w-0">
-    <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{label}</span>
+    <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">{label}</span>
     <div className="flex flex-wrap gap-2">
       {items.map((c, i) => (
-        <span key={i} className="inline-flex items-center gap-1 bg-surface-accent border border-default rounded-full px-2 py-1 font-body font-black text-[12px] text-body">
+        <span key={i} className="inline-flex items-center gap-1 bg-surface-accent border border-default rounded-full px-2 py-1 font-body font-black type-caption text-body">
           {c}
           <button onClick={() => onRemove(i)} className="text-body hover:text-status-error transition-colors leading-none"><X size={9} /></button>
         </span>
@@ -1941,9 +1941,9 @@ const ChipStrip = ({ label, items, newVal, setNewVal, onAdd, onRemove }: {
     <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden">
       <input value={newVal} onChange={e => setNewVal(e.target.value)} placeholder="Add…"
         onKeyDown={e => e.key === 'Enter' && onAdd()}
-        className="font-body text-[12px] font-semibold text-body border-none outline-none px-2 py-1 flex-1 min-w-0 bg-transparent placeholder:text-placeholder" />
+        className="font-body type-caption font-semibold text-body border-none outline-none px-2 py-1 flex-1 min-w-0 bg-transparent placeholder:text-placeholder" />
       <button onClick={onAdd}
-        className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-2 py-1 hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0">+</button>
+        className="bg-surface-accent border-l border-default text-link font-black type-body-sm px-2 py-1 hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0">+</button>
     </div>
   </div>
 );
@@ -2058,19 +2058,19 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
       {editingId === pt.id ? (
         <>
           <input value={editName} onChange={e => setEditName(e.target.value)}
-            className="flex-1 min-w-0 bg-surface-card border border-default rounded-lg px-2 py-1 font-body text-[12px] font-bold text-body focus:outline-none focus:border-focus" />
+            className="flex-1 min-w-0 bg-surface-card border border-default rounded-lg px-2 py-1 font-body type-caption font-bold text-body focus:outline-none focus:border-focus" />
           <div className="flex gap-0.5 shrink-0">{COLOR_SWATCHES.map(c => (
             <button key={c} onClick={() => setEditColor(c)}
               className={`w-3.5 h-3.5 rounded-full hover:scale-110 transition-transform ${editColor === c ? 'ring-2 ring-text-heading ring-offset-1' : ''}`}
               style={{ backgroundColor: c }} />
           ))}</div>
           <button onClick={() => { onEditProfile(pt.id, editName, editColor); setEditingId(null); }}
-            className="px-2 py-0.5 bg-brand-primary text-on-brand rounded-lg font-body text-[10px] font-black">Ok</button>
+            className="px-2 py-0.5 bg-brand-primary text-on-brand rounded-lg font-body type-micro font-black">Ok</button>
           <button onClick={() => setEditingId(null)} className="text-body hover:text-strong"><X size={11} /></button>
         </>
       ) : (
         <>
-          <span className="flex-1 min-w-0"><span style={tintStyle(pt.color)} className="data-tint inline-block max-w-full truncate border font-body text-[10px] font-black px-2 py-0.5 rounded-full">{pt.name}</span></span>
+          <span className="flex-1 min-w-0"><span style={tintStyle(pt.color)} className="data-tint inline-block max-w-full truncate border font-body type-micro font-black px-2 py-0.5 rounded-full">{pt.name}</span></span>
           <div className="relative shrink-0">
             <button onClick={() => setActiveSwatchId(activeSwatchId === pt.id ? null : pt.id)}
               className="w-5 h-5 rounded-full border-2 border-surface-card shadow-[0_0_0_1px_var(--border-default)] hover:scale-110 transition-transform"
@@ -2105,14 +2105,14 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
       <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] flex flex-col shrink-0">
         {/* Header */}
         <div className="flex items-center gap-2 px-5 py-3 border-b border-default">
-          <h3 className="font-heading font-semibold text-[16px] text-heading shrink-0">Scope Settings</h3>
+          <h3 className="font-heading font-semibold type-body text-heading shrink-0">Scope Settings</h3>
           <div className="flex-1" />
           <button onClick={handleSaveCard1}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard1 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'}`}>
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-caption transition-all shadow-sm ${savedCard1 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'}`}>
             {savedCard1 ? <><Check size={11} /> Saved</> : <><Save size={11} /> Update</>}
           </button>
           <button onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1 px-3 py-2 rounded-full border border-default bg-surface-card font-body font-bold text-[12px] text-body hover:border-brand-primary hover:text-link transition-all">
+            className="flex items-center gap-1 px-3 py-2 rounded-full border border-default bg-surface-card font-body font-bold type-caption text-body hover:border-brand-primary hover:text-link transition-all">
             <Plus size={11} /> Add Scope
           </button>
         </div>
@@ -2121,7 +2121,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
         <div className="px-5 py-2 border-b border-default/40">
           <div className="relative inline-block">
             <select value={activeScope} onChange={e => { setActiveScope(e.target.value); setScopeName(e.target.value); }}
-              className="appearance-none bg-surface-accent border border-default rounded-full pl-4 pr-8 py-2 font-heading font-bold text-[12px] text-strong cursor-pointer focus:outline-none hover:border-brand-primary transition-all">
+              className="appearance-none bg-surface-accent border border-default rounded-full pl-4 pr-8 py-2 font-heading font-bold type-caption text-strong cursor-pointer focus:outline-none hover:border-brand-primary transition-all">
               {AVAILABLE_SCOPES.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
             <ChevronDown size={10} className="absolute right-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
@@ -2132,9 +2132,9 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
         <div className="p-5 flex flex-col gap-5 flex-1">
           {/* Scope Name */}
           <div className="flex flex-col gap-1">
-            <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Scope Name</label>
+            <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Scope Name</label>
             <input type="text" value={scopeName} onChange={e => setScopeName(e.target.value)}
-              className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus transition-all" />
+              className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:border-focus transition-all" />
           </div>
           {/* Dates inline */}
           <div className="grid grid-cols-2 gap-3">
@@ -2147,21 +2147,21 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           </div>
 
           {/* Description */}
-          <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mt-1">Description</label>
+          <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted mt-1">Description</label>
           <textarea value={description} onChange={e => setDescription(e.target.value)}
             placeholder="Enter start and end dates, then use the Scope Requirements builder below to set target positions per year…"
-            className="w-full min-h-[120px] flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-mono text-[12px] font-bold text-strong focus:outline-none focus:border-focus transition-all resize-none leading-relaxed" />
+            className="w-full min-h-[120px] flex-1 bg-surface-card border border-default rounded-xl px-3 py-2 font-mono type-caption font-bold text-strong focus:outline-none focus:border-focus transition-all resize-none leading-relaxed" />
         </div>
       </div>
 
       {/* ════════════ CARD 2 (bottom-left): Scope Requirements by Year ════════════ */}
       <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] flex flex-col flex-1 min-h-[260px]">
         <div className="flex items-center gap-4 px-5 py-3 border-b border-default shrink-0 flex-wrap">
-          <h3 className="font-heading font-semibold text-[16px] text-heading shrink-0">Scope Requirements by Year</h3>
+          <h3 className="font-heading font-semibold type-body text-heading shrink-0">Scope Requirements by Year</h3>
           <div className="flex items-center gap-1 bg-surface-accent border border-default rounded-full p-1">
             {yearBadges.map(y => (
               <button key={y} onClick={() => handleYearClick(y)}
-                className={`px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all ${
+                className={`px-4 py-2 rounded-full font-body font-bold type-caption transition-all ${
                   activeYearBadge === y ? 'bg-brand-primary text-on-brand shadow-sm'
                     : 'text-body hover:text-strong'
                 }`}>{y}</button>
@@ -2171,13 +2171,13 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
         <div className="p-5 flex-1 min-h-0 overflow-y-auto no-scrollbar">
           {activeYearBadge ? (
             <>
-              <p className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted mb-4">{activeYearBadge} — target positions</p>
+              <p className="font-heading font-bold type-micro uppercase tracking-widest text-muted mb-4">{activeYearBadge} — target positions</p>
               <div className="flex flex-wrap gap-3">
                 {ALL_POSITIONS.map(pos => {
                   const active = description.split('\n').some(l => l.startsWith(`${activeYearBadge}:`) && l.split(':')[1]?.split(',').map(s => s.trim()).includes(pos));
                   return (
                     <button key={pos} onClick={() => injectPosition(activeYearBadge, pos)}
-                      className={`px-5 py-3 rounded-full font-heading font-bold text-[14px] border transition-all ${
+                      className={`px-5 py-3 rounded-full font-heading font-bold type-body-sm border transition-all ${
                         active ? 'bg-brand-primary text-on-brand border-brand-primary shadow-sm'
                           : 'bg-surface-accent text-strong border-default hover:bg-brand-primary/10 hover:border-brand-primary hover:text-link'
                       }`}>{pos}</button>
@@ -2187,8 +2187,8 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             </>
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center gap-2">
-              <p className="font-heading font-semibold text-[16px] text-strong">Select a year to begin</p>
-              <p className="font-body text-[14px] font-medium text-body max-w-[360px]">Choose a year tab above to set the target positions your scouts should prioritise for that intake.</p>
+              <p className="font-heading font-semibold type-body text-strong">Select a year to begin</p>
+              <p className="font-body type-body-sm font-medium text-body max-w-[360px]">Choose a year tab above to set the target positions your scouts should prioritise for that intake.</p>
             </div>
           )}
         </div>
@@ -2201,10 +2201,10 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
       {/* ════════════ CARD 3 (top-right): Profile Tags ════════════ */}
       <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] flex flex-col shrink-0">
         <div className="flex items-center gap-3 px-5 py-3 border-b border-default">
-          <h3 className="font-heading font-semibold text-[16px] text-heading">Profile Tags</h3>
+          <h3 className="font-heading font-semibold type-body text-heading">Profile Tags</h3>
           <div className="flex-1" />
           <button onClick={handleSaveCard2}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold text-[12px] transition-all shadow-sm ${savedCard2 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'}`}>
+            className={`flex items-center gap-2 px-4 py-2 rounded-full font-body font-bold type-caption transition-all shadow-sm ${savedCard2 ? 'bg-status-success text-on-brand' : 'bg-brand-primary text-on-brand hover:bg-brand-primary/80'}`}>
             {savedCard2 ? <><Check size={11} /> Saved</> : <><Save size={11} /> Update</>}
           </button>
         </div>
@@ -2213,7 +2213,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
           <div className="flex items-center gap-2 px-3 py-3 mt-1 border border-dashed border-default rounded-xl">
             <input value={newProfileName} onChange={e => setNewProfileName(e.target.value)}
               placeholder="New profile…"
-              className="flex-1 min-w-0 bg-transparent font-body text-[12px] font-bold text-body outline-none placeholder:text-placeholder" />
+              className="flex-1 min-w-0 bg-transparent font-body type-caption font-bold text-body outline-none placeholder:text-placeholder" />
             <div className="flex gap-1 shrink-0">{COLOR_SWATCHES.map(c => (
               <button key={c} onClick={() => setNewProfileColor(c)}
                 className={`w-4 h-4 rounded-full hover:scale-110 transition-transform ${newProfileColor === c ? 'ring-2 ring-text-heading ring-offset-1' : ''}`}
@@ -2231,11 +2231,11 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
       {/* ════════════ CARD 4 (bottom-right): Classifications ════════════ */}
       <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] flex flex-col flex-1 min-h-[260px]">
         <div className="flex items-center gap-3 px-5 py-3 border-b border-default">
-          <h3 className="font-heading font-semibold text-[16px] text-heading shrink-0">Classifications</h3>
+          <h3 className="font-heading font-semibold type-body text-heading shrink-0">Classifications</h3>
           <div className="flex-1" />
           <div className="relative inline-block">
             <button onClick={() => setClassDropOpen(!classDropOpen)}
-              className="flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-heading font-bold text-[12px] text-strong hover:border-brand-primary transition-all">
+              className="flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-heading font-bold type-caption text-strong hover:border-brand-primary transition-all">
               Manage: {{ tags: 'Grade Scale', grades: 'Grade Scale', nxt: 'NXT Values', pathways: 'Pathways' }[classView]}
               <ChevronDown size={10} className={`text-body transition-transform ${classDropOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -2247,7 +2247,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
                   { id: 'pathways' as const, label: 'Pathways' },
                 ]).map(opt => (
                   <button key={opt.id} onClick={() => { setClassView(opt.id); setClassDropOpen(false); }}
-                    className={`flex items-center gap-2 w-full px-4 py-2 font-body font-bold text-[12px] transition-colors text-left ${classView === opt.id ? 'bg-brand-primary/10 text-link' : 'text-strong hover:bg-surface-accent'}`}>
+                    className={`flex items-center gap-2 w-full px-4 py-2 font-body font-bold type-caption transition-colors text-left ${classView === opt.id ? 'bg-brand-primary/10 text-link' : 'text-strong hover:bg-surface-accent'}`}>
                     {classView === opt.id && <Check size={11} className="text-link" />}
                     {opt.label}
                   </button>
@@ -2265,7 +2265,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2">
                 {customGrades.map((g, i) => (
-                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-body">
+                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-body font-black type-body-sm text-body">
                     {g}
                     <button onClick={() => setCustomGrades(p => p.filter((_, j) => j !== i))} className="text-body hover:text-status-error transition-colors"><X size={11} /></button>
                   </span>
@@ -2274,9 +2274,9 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newGrade} onChange={e => setNewGrade(e.target.value)} placeholder="Add grade…"
                   onKeyDown={e => e.key === 'Enter' && newGrade.trim() && (setCustomGrades(p => [...p, newGrade.trim()]), setNewGrade(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
+                  className="flex-1 font-body type-body-sm font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newGrade.trim()) { setCustomGrades(p => [...p, newGrade.trim()]); setNewGrade(''); }}}
-                  className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
+                  className="bg-surface-accent border-l border-default text-link font-black type-body-sm px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
               </div>
             </div>
           )}
@@ -2286,7 +2286,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2">
                 {customNxt.map((n, i) => (
-                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-body">
+                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-body font-black type-body-sm text-body">
                     {n}
                     <button onClick={() => setCustomNxt(p => p.filter((_, j) => j !== i))} className="text-body hover:text-status-error transition-colors"><X size={11} /></button>
                   </span>
@@ -2295,9 +2295,9 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newNxtVal} onChange={e => setNewNxtVal(e.target.value)} placeholder="Add value…"
                   onKeyDown={e => e.key === 'Enter' && newNxtVal.trim() && (setCustomNxt(p => [...p, newNxtVal.trim()]), setNewNxtVal(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
+                  className="flex-1 font-body type-body-sm font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newNxtVal.trim()) { setCustomNxt(p => [...p, newNxtVal.trim()]); setNewNxtVal(''); }}}
-                  className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
+                  className="bg-surface-accent border-l border-default text-link font-black type-body-sm px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
               </div>
             </div>
           )}
@@ -2307,7 +2307,7 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap gap-2">
                 {customPathways.map((p, i) => (
-                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-body font-black text-[14px] text-body">
+                  <span key={i} className="inline-flex items-center gap-2 bg-surface-accent border border-default rounded-full px-4 py-2 font-body font-black type-body-sm text-body">
                     {p}
                     <button onClick={() => setCustomPathways(prev => prev.filter((_, j) => j !== i))} className="text-body hover:text-status-error transition-colors"><X size={11} /></button>
                   </span>
@@ -2316,9 +2316,9 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               <div className="flex items-center border border-dashed border-default rounded-full overflow-hidden max-w-xs">
                 <input value={newPathway} onChange={e => setNewPathway(e.target.value)} placeholder="Add pathway…"
                   onKeyDown={e => e.key === 'Enter' && newPathway.trim() && (setCustomPathways(p => [...p, newPathway.trim()]), setNewPathway(''))}
-                  className="flex-1 font-body text-[14px] font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
+                  className="flex-1 font-body type-body-sm font-bold text-body border-none outline-none px-4 py-2 bg-transparent placeholder:text-placeholder" />
                 <button onClick={() => { if (newPathway.trim()) { setCustomPathways(p => [...p, newPathway.trim()]); setNewPathway(''); }}}
-                  className="bg-surface-accent border-l border-default text-link font-black text-[14px] px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
+                  className="bg-surface-accent border-l border-default text-link font-black type-body-sm px-4 py-2 hover:bg-brand-primary hover:text-on-brand transition-colors">+</button>
               </div>
             </div>
           )}
@@ -2333,15 +2333,15 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
       <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddModal(false)}>
         <div className="bg-surface-card rounded-[24px] shadow-[var(--shadow-2xl)] w-full max-w-md border border-default" onClick={e => e.stopPropagation()}>
           <div className="px-6 py-4 bg-brand-primary rounded-t-[24px] flex items-center justify-between">
-            <span className="font-heading font-semibold text-[16px] text-on-brand">Add New Scope</span>
+            <span className="font-heading font-semibold type-body text-on-brand">Add New Scope</span>
             <button onClick={() => setShowAddModal(false)} className="w-7 h-7 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={14} /></button>
           </div>
           <div className="p-6 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Scope Name</label>
+              <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Scope Name</label>
               <input type="text" value={newScope.name} onChange={e => setNewScope(p => ({ ...p, name: e.target.value }))}
                 placeholder="e.g. East Africa U17 Cycle 2026"
-                className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus" />
+                className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:border-focus" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="relative">
@@ -2352,14 +2352,14 @@ const ScopeSettingsPanel = ({ profileTypes, onAddProfile, onEditProfile, onDelet
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Description</label>
+              <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Description</label>
               <textarea value={newScope.desc} onChange={e => setNewScope(p => ({ ...p, desc: e.target.value }))}
                 placeholder="Scope description…" rows={3}
-                className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus resize-none" />
+                className="w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:border-focus resize-none" />
             </div>
             <button onClick={() => { setShowAddModal(false); setNewScope({ name: '', start: '', end: '', desc: '' }); }}
               disabled={!newScope.name.trim()}
-              className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-md">
+              className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black type-body-sm hover:bg-brand-primary/80 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-md">
               Create Scope
             </button>
           </div>
@@ -2518,15 +2518,15 @@ const DatabaseToolbar = ({
   const toggleStat = (key: string) =>
     setVisibleStats(prev => { const n = new Set(prev); if (n.has(key)) n.delete(key); else n.add(key); return n; });
   const dobTooltip = `Players born between 01/01/${scopeYearMin} to 31/12/${scopeYearMax}`;
-  const trigger = "flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold text-[12px] text-body hover:border-brand-primary transition-colors";
-  const label = "font-heading font-bold text-[9px] uppercase tracking-wider text-muted px-1";
+  const trigger = "flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default font-body font-bold type-caption text-body hover:border-brand-primary transition-colors";
+  const label = "font-heading font-bold type-micro uppercase tracking-wider text-muted px-1";
   return (
     <div className="flex items-end gap-4 flex-wrap w-full">
       {/* DOB range — read-only, driven by Scope Settings */}
       <div className="flex flex-col gap-0.5 shrink-0">
         <span className={label}>DOB range</span>
         <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-card border border-default">
-          <span className="font-body font-bold text-[12px] text-body">01/01/{scopeYearMin} – 31/12/{scopeYearMax}</span>
+          <span className="font-body font-bold type-caption text-body">01/01/{scopeYearMin} – 31/12/{scopeYearMax}</span>
           <span title={dobTooltip} className="flex items-center text-link cursor-help"><Info size={13} /></span>
         </div>
       </div>
@@ -2544,7 +2544,7 @@ const DatabaseToolbar = ({
                 const text = opt === 'All' ? 'All' : `${opt} — ${POSITION_LIST.find(p => p.pos === opt)?.name ?? ''}`;
                 return (
                   <button key={opt} onClick={() => { setFilterPos(opt); setPosOpen(false); }}
-                    className={`w-full text-left px-4 py-1.5 font-body font-bold text-[12px] transition-colors ${filterPos === opt ? 'bg-surface-accent text-strong' : 'text-strong hover:bg-surface-accent'}`}>{text}</button>
+                    className={`w-full text-left px-4 py-1.5 font-body font-bold type-caption transition-colors ${filterPos === opt ? 'bg-surface-accent text-strong' : 'text-strong hover:bg-surface-accent'}`}>{text}</button>
                 );
               })}
             </div>
@@ -2564,7 +2564,7 @@ const DatabaseToolbar = ({
               {DB_STAT_OPTIONS.map(s => (
                 <label key={s.key} className="flex items-center gap-2 py-1.5 cursor-pointer">
                   <input type="checkbox" checked={visibleStats.has(s.key)} onChange={() => toggleStat(s.key)} />
-                  <span className="font-body font-bold text-[12px] text-body">{s.label}</span>
+                  <span className="font-body font-bold type-caption text-body">{s.label}</span>
                 </label>
               ))}
             </div>

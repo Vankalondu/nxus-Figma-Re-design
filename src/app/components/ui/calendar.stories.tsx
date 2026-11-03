@@ -37,11 +37,11 @@ export const DeadlinePicker: Story = {
     const [date, setDate] = useState<Date | undefined>(new Date(2026, 7, 14))
     return (
       <div className="flex flex-col gap-3">
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+        <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
           Deadline
         </span>
         <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-xl border border-default" />
-        <span className="font-body font-bold text-[12px] text-body">
+        <span className="font-body font-bold type-caption text-body">
           {date ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}
         </span>
       </div>

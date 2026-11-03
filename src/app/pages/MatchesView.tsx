@@ -254,7 +254,7 @@ function ProgressPill({ progress }: { progress: number }) {
   return (
     <span
       title="Match upload progress"
-      className={`inline-flex items-center gap-1 px-3 py-1 rounded-full border font-mono font-bold text-[12px] ${cls}`}
+      className={`inline-flex items-center gap-1 px-3 py-1 rounded-full border font-mono font-bold type-caption ${cls}`}
     >
       {progress}%
       <Info size={12} className="opacity-60 shrink-0" />
@@ -269,7 +269,7 @@ function CompetitionCard({ comp, onOpen }: { comp: Competition; onOpen: (c: Comp
       className={`bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 text-left transition-all hover:border-brand-primary hover:shadow-[var(--shadow-xl)] hover:-translate-y-1 cursor-pointer ${comp.archived ? 'opacity-60' : ''}`}
     >
       <div className="flex items-start justify-between gap-3">
-        <h4 className="font-heading font-semibold text-[16px] text-heading leading-snug line-clamp-2">
+        <h4 className="font-heading font-semibold type-body text-heading leading-snug line-clamp-2">
           {comp.name}
         </h4>
         <span className="w-8 h-8 rounded-full bg-surface-accent flex items-center justify-center shrink-0">
@@ -278,18 +278,18 @@ function CompetitionCard({ comp, onOpen }: { comp: Competition; onOpen: (c: Comp
       </div>
 
       {comp.category && (
-        <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+        <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">
           {comp.category}
         </span>
       )}
 
       <div className="flex items-center gap-2 flex-wrap mt-auto">
-        <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
+        <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold type-caption text-body">
           {comp.season}
         </span>
         <ProgressPill progress={comp.progress} />
         {comp.archived && (
-          <span className="inline-flex items-center px-3 py-1 rounded-full bg-text-body/10 border border-default font-body font-bold text-[12px] text-body">
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-text-body/10 border border-default font-body font-bold type-caption text-body">
             Archived
           </span>
         )}
@@ -330,7 +330,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       className={`bg-surface-card rounded-[20px] border shadow-[var(--shadow-lg)] p-5 flex flex-col gap-3 transition-all hover:shadow-[var(--shadow-xl)] ${highlight ? 'border-brand-primary ring-2 ring-brand-primary ring-offset-2 ring-offset-background' : 'border-default'}`}>
       {/* Top row: date + visible icon actions */}
       <div className="flex items-center justify-between gap-3">
-        <span className="inline-flex items-center gap-2 font-body font-bold text-[12px] text-body min-w-0">
+        <span className="inline-flex items-center gap-2 font-body font-bold type-caption text-body min-w-0">
           <Calendar size={12} className="shrink-0" />
           <span className="truncate">{match.date}</span>
         </span>
@@ -355,21 +355,21 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
         <div className="flex-1 min-w-0 flex flex-col gap-1">
           <span className="inline-flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-brand-primary shrink-0" />
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Home</span>
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Home</span>
           </span>
-          <span className="font-heading font-semibold text-[16px] text-strong truncate" title={match.home}>
+          <span className="font-heading font-semibold type-body text-strong truncate" title={match.home}>
             {match.home}
           </span>
         </div>
-        <span className="shrink-0 w-8 h-8 rounded-full bg-surface-accent border border-default flex items-center justify-center font-heading font-bold text-[10px] uppercase tracking-widest text-muted">
+        <span className="shrink-0 w-8 h-8 rounded-full bg-surface-accent border border-default flex items-center justify-center font-heading font-bold type-micro uppercase tracking-widest text-muted">
           VS
         </span>
         <div className="flex-1 min-w-0 flex flex-col gap-1 items-end text-right">
           <span className="inline-flex items-center gap-2">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Away</span>
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Away</span>
             <span className="w-2 h-2 rounded-full bg-status-error shrink-0" />
           </span>
-          <span className="font-heading font-semibold text-[16px] text-strong truncate w-full" title={match.away}>
+          <span className="font-heading font-semibold type-body text-strong truncate w-full" title={match.away}>
             {match.away}
           </span>
         </div>
@@ -378,16 +378,16 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       {/* Venue */}
       <div className="flex items-center gap-2">
         <MapPin size={12} className="text-body shrink-0" />
-        <span className="font-body font-medium text-[12px] text-muted truncate">{match.venue}</span>
+        <span className="font-body font-medium type-caption text-muted truncate">{match.venue}</span>
       </div>
 
       {/* Status chips */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-body font-bold text-[12px]">
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-link border border-brand-primary/20 font-body font-bold type-caption">
           <Briefcase size={12} className="shrink-0" />
           {match.raised} Raised
         </span>
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-body font-bold text-[12px]">
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-status-success/10 text-status-success border border-status-success/20 font-body font-bold type-caption">
           <Clock size={12} className="shrink-0" />
           {match.inBracket} In Age Bracket
         </span>
@@ -397,13 +397,13 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       <div className="flex items-center gap-2 mt-auto">
         <button
           onClick={() => onEntry(match)}
-          className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm"
+          className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-primary text-on-brand hover:bg-brand-primary/80 rounded-full px-4 py-2 font-body font-bold type-body-sm transition-colors shadow-sm"
         >
           <ClipboardList size={14} className="shrink-0" />
           Match Entry
         </button>
         <button
-          className={`flex-1 inline-flex items-center justify-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold text-[14px] transition-colors shadow-sm ${match.hasVideo ? '' : 'opacity-60'}`}
+          className={`flex-1 inline-flex items-center justify-center gap-2 bg-surface-card text-body border border-default hover:border-brand-primary rounded-full px-4 py-2 font-body font-bold type-body-sm transition-colors shadow-sm ${match.hasVideo ? '' : 'opacity-60'}`}
         >
           <Video size={14} className="shrink-0" />
           Watch Video
@@ -413,7 +413,7 @@ function MatchCard({ match, onEntry, highlight = false }: { match: Match; onEntr
       {/* Footer */}
       <div className="flex items-center gap-2 pt-2 border-t border-default/40">
         <Info size={12} className="text-body/60 shrink-0" />
-        <span className="font-body font-medium text-[12px] text-muted truncate">
+        <span className="font-body font-medium type-caption text-muted truncate">
           Last updated by {match.lastUpdatedBy}
         </span>
       </div>
@@ -514,7 +514,7 @@ export function MatchesView() {
             >
               <ArrowLeft size={14} />
             </button>
-            <nav className="flex items-center gap-2 font-body font-bold text-[14px]">
+            <nav className="flex items-center gap-2 font-body font-bold type-body-sm">
               <button onClick={backToList} className="text-link hover:underline">
                 Competitions
               </button>
@@ -530,7 +530,7 @@ export function MatchesView() {
             </span>
           </h1>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold text-[12px] text-body">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-accent border border-default font-body font-bold type-caption text-body">
               {selectedComp.season}
             </span>
             <ProgressPill progress={selectedComp.progress} />
@@ -545,7 +545,7 @@ export function MatchesView() {
                 <button
                   key={round.id}
                   onClick={() => setSelectedRound(round.id)}
-                  className={`px-4 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
+                  className={`px-4 py-2 rounded-full font-body font-bold type-body-sm transition-colors whitespace-nowrap ${
                     currentRound?.id === round.id
                       ? 'bg-brand-primary text-on-brand shadow-sm'
                       : 'bg-surface-accent text-strong border border-default hover:border-brand-primary'
@@ -568,7 +568,7 @@ export function MatchesView() {
                 <span className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
                   <CalendarX size={20} className="text-body" />
                 </span>
-                <p className="font-body font-medium text-[14px] text-body">
+                <p className="font-body font-medium type-body-sm text-body">
                   No matches scheduled for this round yet.
                 </p>
               </div>
@@ -576,7 +576,7 @@ export function MatchesView() {
           </>
         ) : (
           <div className="bg-surface-card rounded-[20px] border border-default shadow-[var(--shadow-lg)] p-8 flex items-center justify-center">
-            <p className="font-body font-medium text-[14px] text-body">
+            <p className="font-body font-medium type-body-sm text-body">
               No rounds have been created for this competition yet.
             </p>
           </div>
@@ -597,7 +597,7 @@ export function MatchesView() {
             <Calendar size={28} className="text-on-brand" />
           </span>
         </h1>
-        <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">
+        <p className="font-body font-medium type-body text-body mt-2 short:hidden">
           Track upload progress across your competitions.
         </p>
         </div>
@@ -611,16 +611,16 @@ export function MatchesView() {
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search competitions…"
-            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full text-[14px] focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-placeholder text-body"
+            className="w-full pl-11 pr-4 py-2 bg-surface-card border border-default rounded-full type-body-sm focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all font-body font-bold shadow-sm placeholder:text-placeholder text-body"
           />
         </div>
 
         <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-default rounded-full hover:border-brand-primary transition-colors cursor-pointer shadow-sm">
-          <span className="font-body font-bold text-[14px] text-body">Season:</span>
+          <span className="font-body font-bold type-body-sm text-body">Season:</span>
           <select
             value={season}
             onChange={e => setSeason(e.target.value)}
-            className="appearance-none bg-transparent border-none font-body font-bold text-[14px] text-body focus:outline-none cursor-pointer pr-5"
+            className="appearance-none bg-transparent border-none font-body font-bold type-body-sm text-body focus:outline-none cursor-pointer pr-5"
           >
             {SEASONS.map(s => (
               <option key={s}>{s}</option>
@@ -637,7 +637,7 @@ export function MatchesView() {
           <span className="w-12 h-12 rounded-full bg-surface-accent flex items-center justify-center">
             <SearchX size={20} className="text-body" />
           </span>
-          <p className="font-body font-medium text-[14px] text-body">
+          <p className="font-body font-medium type-body-sm text-body">
             No competitions match your search.
           </p>
         </div>
@@ -654,7 +654,7 @@ export function MatchesView() {
           {archived.length > 0 && (
             <>
               <div className="flex items-center gap-3 pt-4">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted shrink-0">
+                <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted shrink-0">
                   Archived
                 </span>
                 <div className="flex-1 h-px bg-border-default" />

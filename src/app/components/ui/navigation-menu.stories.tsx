@@ -33,7 +33,7 @@ export const Default: Story = {
           <NavigationMenuContent>
             <div className="p-4 w-[260px] flex flex-col gap-2">
               {['Database', 'Long List', 'Short List', 'Target List'].map((l) => (
-                <NavigationMenuLink key={l} className="font-body font-bold text-[12px]">{l}</NavigationMenuLink>
+                <NavigationMenuLink key={l} className="font-body font-bold type-caption">{l}</NavigationMenuLink>
               ))}
             </div>
           </NavigationMenuContent>
@@ -42,8 +42,8 @@ export const Default: Story = {
           <NavigationMenuTrigger>Matches</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div className="p-4 w-[260px] flex flex-col gap-2">
-              <NavigationMenuLink className="font-body font-bold text-[12px]">Fixtures</NavigationMenuLink>
-              <NavigationMenuLink className="font-body font-bold text-[12px]">Footage</NavigationMenuLink>
+              <NavigationMenuLink className="font-body font-bold type-caption">Fixtures</NavigationMenuLink>
+              <NavigationMenuLink className="font-body font-bold type-caption">Footage</NavigationMenuLink>
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>

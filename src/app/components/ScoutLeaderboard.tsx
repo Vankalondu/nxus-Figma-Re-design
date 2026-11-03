@@ -91,8 +91,8 @@ export function ScoutLeaderboard() {
             <Trophy className="w-6 h-6 text-status-warning" />
           </div>
           <div>
-            <h2 className="text-on-brand text-xl font-semibold">Scout Leaderboard</h2>
-            <p className="text-body text-sm">This week's top performers 🚀</p>
+            <h2 className="text-on-brand type-body-lg font-semibold">Scout Leaderboard</h2>
+            <p className="text-body type-body-sm">This week's top performers 🚀</p>
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@ export function ScoutLeaderboard() {
                   )}
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-status-success text-sm font-medium flex items-center gap-1">
+                  <span className="text-status-success type-body-sm font-medium flex items-center gap-1">
                     <TrendingUp className="w-3 h-3" />
                     {scout.weeklyChange} this week
                   </span>
@@ -144,8 +144,8 @@ export function ScoutLeaderboard() {
 
               {/* Score */}
               <div className="text-right">
-                <div className="text-on-brand text-2xl font-bold">{scout.score}</div>
-                <div className="text-body text-xs">points</div>
+                <div className="text-on-brand type-h5 font-bold">{scout.score}</div>
+                <div className="text-body type-caption">points</div>
               </div>
             </div>
           </div>
@@ -156,8 +156,8 @@ export function ScoutLeaderboard() {
         <div className="flex items-start gap-3">
           <Award className="w-5 h-5 text-link mt-0.5" />
           <div>
-            <p className="text-link text-sm font-medium">Keep up the momentum!</p>
-            <p className="text-link/70 text-xs mt-1">
+            <p className="text-link type-body-sm font-medium">Keep up the momentum!</p>
+            <p className="text-link/70 type-caption mt-1">
               Complete your pending tasks to climb the leaderboard. Every video and match report counts! 💪
             </p>
           </div>

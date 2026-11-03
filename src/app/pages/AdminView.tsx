@@ -109,7 +109,7 @@ export function AdminView() {
           </span>
           Panel
         </h1>
-        <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">
+        <p className="font-body font-medium type-body text-body mt-2 short:hidden">
           {tabSubtitles[activeTab]}
         </p>
       </div>
@@ -126,7 +126,7 @@ export function AdminView() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`px-6 py-2 rounded-full font-body font-bold text-[14px] transition-colors whitespace-nowrap ${
+            className={`px-6 py-2 rounded-full font-body font-bold type-body-sm transition-colors whitespace-nowrap ${
               activeTab === tab.id
                 ? 'bg-brand-primary text-on-brand shadow-sm border border-brand-primary'
                 : 'bg-surface-card text-body border border-text-on-brand hover:border-brand-primary hover:text-strong'
@@ -138,7 +138,7 @@ export function AdminView() {
 
         {/* Action Corner */}
         {['bodies', 'competitions', 'teams'].includes(activeTab) && (
-          <button className="ml-auto flex items-center space-x-2 px-6 py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body font-bold text-[14px] shadow-sm transition-all">
+          <button className="ml-auto flex items-center space-x-2 px-6 py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body font-bold type-body-sm shadow-sm transition-all">
             <Plus size={16} strokeWidth={3} />
             <span>Add New {activeTab === 'bodies' ? 'Body' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1, -1)}</span>
           </button>
@@ -154,14 +154,14 @@ export function AdminView() {
             placeholder={`Search ${activeTab}...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-6 py-3 bg-surface-card border border-default rounded-xl font-body font-bold text-[14px] text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shadow-sm placeholder:text-placeholder"
+            className="w-full pl-12 pr-6 py-3 bg-surface-card border border-default rounded-xl font-body font-bold type-body-sm text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all shadow-sm placeholder:text-placeholder"
           />
         </div>
 
         <div className="flex items-center space-x-3">
           <div className="relative inline-flex items-center space-x-2 px-5 py-2 bg-surface-card border border-default rounded-[100px] hover:border-brand-primary hover:bg-brand-primary/5 transition-all cursor-pointer group shadow-sm">
-            <span className="text-body font-body font-bold text-[14px]">Sort By:</span>
-            <select className="appearance-none bg-transparent border-none text-body font-body font-bold text-[14px] focus:outline-none cursor-pointer pr-5">
+            <span className="text-body font-body font-bold type-body-sm">Sort By:</span>
+            <select className="appearance-none bg-transparent border-none text-body font-body font-bold type-body-sm focus:outline-none cursor-pointer pr-5">
               <option>Name (A-Z)</option>
               <option>Recently Added</option>
             </select>
@@ -175,14 +175,14 @@ export function AdminView() {
         <div className="flex-1 flex flex-col min-h-0">
           <div className="flex items-center gap-2 mb-4 text-body">
             <ArrowLeftRight size={14} className="text-link shrink-0" />
-            <p className="font-body text-[12px] font-medium">Click the arrow to transfer a player to the selected team; click the X on the roster to remove one.</p>
+            <p className="font-body type-caption font-medium">Click the arrow to transfer a player to the selected team; click the X on the roster to remove one.</p>
           </div>
 
           <div className="flex items-center gap-4 mb-4">
             <div className="relative inline-flex items-center space-x-2 px-4 py-2 bg-surface-card border border-default rounded-xl cursor-pointer flex-1 shadow-sm">
-              <span className="font-body font-bold text-[12px] text-muted uppercase tracking-wider">Parent Team:</span>
+              <span className="font-body font-bold type-caption text-muted uppercase tracking-wider">Parent Team:</span>
               <select
-                className="appearance-none bg-transparent border-none text-body font-body font-bold text-[14px] focus:outline-none cursor-pointer w-full pr-6"
+                className="appearance-none bg-transparent border-none text-body font-body font-bold type-body-sm focus:outline-none cursor-pointer w-full pr-6"
                 value={transferParentTeam}
                 onChange={(e) => setTransferParentTeam(e.target.value)}
               >
@@ -193,9 +193,9 @@ export function AdminView() {
               <ChevronDown size={14} className="absolute right-3 text-body pointer-events-none" />
             </div>
             <div className="relative inline-flex items-center space-x-2 px-4 py-2 bg-surface-card border border-default rounded-xl cursor-pointer flex-1 shadow-sm">
-              <span className="font-body font-bold text-[12px] text-muted uppercase tracking-wider">Specific Team:</span>
+              <span className="font-body font-bold type-caption text-muted uppercase tracking-wider">Specific Team:</span>
               <select
-                className="appearance-none bg-transparent border-none text-body font-body font-bold text-[14px] focus:outline-none cursor-pointer w-full pr-6"
+                className="appearance-none bg-transparent border-none text-body font-body font-bold type-body-sm focus:outline-none cursor-pointer w-full pr-6"
                 value={transferSpecificTeam}
                 onChange={(e) => setTransferSpecificTeam(e.target.value)}
               >
@@ -216,22 +216,22 @@ export function AdminView() {
               className={`bg-surface-card/80 backdrop-blur-md border rounded-[16px] shadow-sm flex flex-col overflow-hidden transition-colors ${dragOver === 'available' ? 'border-brand-primary ring-2 ring-brand-primary/30 bg-brand-primary/5' : 'border-default'}`}
             >
               <div className="px-4 py-3 border-b border-default flex items-center gap-2 shrink-0">
-                <h3 className="font-heading font-semibold text-[16px] text-heading">Available Players</h3>
-                <span className="bg-brand-primary/10 text-link font-heading font-bold text-[12px] px-2 py-0.5 rounded-full">{availablePlayers.length}</span>
+                <h3 className="font-heading font-semibold type-body text-heading">Available Players</h3>
+                <span className="bg-brand-primary/10 text-link font-heading font-bold type-caption px-2 py-0.5 rounded-full">{availablePlayers.length}</span>
               </div>
               <div className="flex-1 overflow-auto hide-scrollbar p-3 flex flex-col gap-2">
                 {availablePlayers.map((player) => (
                   <div key={player.id} draggable onDragStart={(e) => e.dataTransfer.setData('text/plain', String(player.id))}
                     className="flex items-center justify-between gap-2 bg-surface-card border border-default rounded-[12px] px-3 py-2 shadow-sm cursor-grab active:cursor-grabbing hover:border-brand-primary/40 hover:shadow-md transition-all">
                     <div className="min-w-0">
-                      <div className="font-body font-bold text-[14px] text-body truncate"><PlayerLink name={player.name} id={String(player.id)} tone="inherit" player={{ primaryPos: player.position }} /></div>
-                      <div className="font-body font-medium text-[12px] text-muted">{player.position}</div>
+                      <div className="font-body font-bold type-body-sm text-body truncate"><PlayerLink name={player.name} id={String(player.id)} tone="inherit" player={{ primaryPos: player.position }} /></div>
+                      <div className="font-body font-medium type-caption text-muted">{player.position}</div>
                     </div>
                     <button onClick={() => handleTransferToTeam(player)} title="Transfer to Team" className="w-8 h-8 rounded-full bg-brand-primary/10 text-link inline-flex items-center justify-center hover:bg-brand-primary hover:text-on-brand transition-colors shrink-0"><ArrowRight size={14} /></button>
                   </div>
                 ))}
                 {availablePlayers.length === 0 && (
-                  <div className="flex-1 flex items-center justify-center text-center font-body text-[14px] text-body font-medium py-8">No available players.</div>
+                  <div className="flex-1 flex items-center justify-center text-center font-body type-body-sm text-body font-medium py-8">No available players.</div>
                 )}
               </div>
             </div>
@@ -244,22 +244,22 @@ export function AdminView() {
               className={`bg-surface-card/80 backdrop-blur-md border rounded-[16px] shadow-sm flex flex-col overflow-hidden transition-colors ${dragOver === 'roster' ? 'border-brand-primary ring-2 ring-brand-primary/30 bg-brand-primary/5' : 'border-default'}`}
             >
               <div className="px-4 py-3 border-b border-default flex items-center gap-2 shrink-0">
-                <h3 className="font-heading font-semibold text-[16px] text-heading truncate">{transferParentTeam} {transferSpecificTeam} Roster</h3>
-                <span className="bg-brand-primary/10 text-link font-heading font-bold text-[12px] px-2 py-0.5 rounded-full shrink-0">{teamRoster.length}</span>
+                <h3 className="font-heading font-semibold type-body text-heading truncate">{transferParentTeam} {transferSpecificTeam} Roster</h3>
+                <span className="bg-brand-primary/10 text-link font-heading font-bold type-caption px-2 py-0.5 rounded-full shrink-0">{teamRoster.length}</span>
               </div>
               <div className="flex-1 overflow-auto hide-scrollbar p-3 flex flex-col gap-2">
                 {teamRoster.map((player) => (
                   <div key={player.id} draggable onDragStart={(e) => e.dataTransfer.setData('text/plain', String(player.id))}
                     className="flex items-center justify-between gap-2 bg-surface-card border border-default rounded-[12px] px-3 py-2 shadow-sm cursor-grab active:cursor-grabbing hover:border-brand-primary/40 hover:shadow-md transition-all">
                     <div className="min-w-0">
-                      <div className="font-body font-bold text-[14px] text-body truncate"><PlayerLink name={player.name} id={String(player.id)} tone="inherit" player={{ primaryPos: player.position }} /></div>
-                      <div className="font-body font-medium text-[12px] text-muted">{player.position}</div>
+                      <div className="font-body font-bold type-body-sm text-body truncate"><PlayerLink name={player.name} id={String(player.id)} tone="inherit" player={{ primaryPos: player.position }} /></div>
+                      <div className="font-body font-medium type-caption text-muted">{player.position}</div>
                     </div>
                     <button onClick={() => handleRemoveFromTeam(player)} title="Remove from Team" className="w-8 h-8 rounded-full bg-status-error/10 text-status-error inline-flex items-center justify-center hover:bg-status-error hover:text-on-brand transition-colors shrink-0"><X size={14} /></button>
                   </div>
                 ))}
                 {teamRoster.length === 0 && (
-                  <div className="flex-1 flex items-center justify-center text-center font-body text-[14px] text-body font-medium py-8">Drag players here, or use the arrow button.</div>
+                  <div className="flex-1 flex items-center justify-center text-center font-body type-body-sm text-body font-medium py-8">Drag players here, or use the arrow button.</div>
                 )}
               </div>
             </div>
@@ -273,7 +273,7 @@ export function AdminView() {
           <div className="flex-1 overflow-auto hide-scrollbar rounded-[24px]">
             <table className="w-full text-left whitespace-nowrap border-collapse min-w-max">
               <thead className="bg-surface-card/90 sticky top-0 z-30">
-                <tr className="font-heading font-bold text-[10px] text-muted uppercase tracking-widest border-b border-default">
+                <tr className="font-heading font-bold type-micro text-muted uppercase tracking-widest border-b border-default">
                   {/* Bodies Columns */}
                   {activeTab === 'bodies' && (
                     <>
@@ -322,10 +322,10 @@ export function AdminView() {
               <tbody className="bg-surface-card font-body">
                 {activeTab === 'bodies' && mockBodies.map((body, i) => (
                   <tr key={body.id} className="border-b border-default hover:bg-surface-accent transition-colors group">
-                    <td className="px-6 py-3 font-mono font-bold text-[14px] text-body">{i + 1}</td>
-                    <td className="px-6 py-3 font-body font-bold text-[14px] text-body">{body.name}</td>
+                    <td className="px-6 py-3 font-mono font-bold type-body-sm text-body">{i + 1}</td>
+                    <td className="px-6 py-3 font-body font-bold type-body-sm text-body">{body.name}</td>
                     <td className="px-6 py-3">
-                      <span className="inline-flex items-center justify-center bg-surface-card text-body font-body font-bold text-[12px] px-3 py-1 rounded-full">
+                      <span className="inline-flex items-center justify-center bg-surface-card text-body font-body font-bold type-caption px-3 py-1 rounded-full">
                         {body.competitionsCount}
                       </span>
                     </td>
@@ -337,16 +337,16 @@ export function AdminView() {
 
                 {activeTab === 'competitions' && mockCompetitions.map((comp, i) => (
                   <tr key={comp.id} className="border-b border-default hover:bg-surface-accent transition-colors group">
-                    <td className="px-6 py-3 font-mono font-bold text-[14px] text-body">{i + 1}</td>
-                    <td className="px-6 py-3 font-body font-bold text-[14px] text-body">{comp.name}</td>
+                    <td className="px-6 py-3 font-mono font-bold type-body-sm text-body">{i + 1}</td>
+                    <td className="px-6 py-3 font-body font-bold type-body-sm text-body">{comp.name}</td>
                     <td className="px-6 py-3">
-                      <span className={`px-2 py-1 rounded font-heading font-bold text-[10px] uppercase tracking-widest ${
+                      <span className={`px-2 py-1 rounded font-heading font-bold type-micro uppercase tracking-widest ${
                         comp.category === 'National' ? 'bg-brand-primary/10 text-strong' : 'bg-status-success/10 text-status-success-fg'
                       }`}>
                         {comp.category}
                       </span>
                     </td>
-                    <td className="px-6 py-3 font-body text-[14px] font-semibold text-body">{comp.body}</td>
+                    <td className="px-6 py-3 font-body type-body-sm font-semibold text-body">{comp.body}</td>
                     <td className="px-6 py-3 text-center">
                       <ActionMenu id={`comp-${comp.id}`} />
                     </td>
@@ -355,10 +355,10 @@ export function AdminView() {
 
                 {activeTab === 'teams' && mockTeams.map((team, i) => (
                   <tr key={team.id} className="border-b border-default hover:bg-surface-accent transition-colors group">
-                    <td className="px-6 py-3 font-mono font-bold text-[14px] text-body">{i + 1}</td>
-                    <td className="px-6 py-3 font-body font-bold text-[14px] text-body">{team.parentTeamName}</td>
-                    <td className="px-6 py-3 font-body text-[14px] font-semibold text-body">{team.country}</td>
-                    <td className="px-6 py-3 font-body text-[14px] font-semibold text-body">{team.category}</td>
+                    <td className="px-6 py-3 font-mono font-bold type-body-sm text-body">{i + 1}</td>
+                    <td className="px-6 py-3 font-body font-bold type-body-sm text-body">{team.parentTeamName}</td>
+                    <td className="px-6 py-3 font-body type-body-sm font-semibold text-body">{team.country}</td>
+                    <td className="px-6 py-3 font-body type-body-sm font-semibold text-body">{team.category}</td>
                     <td className="px-6 py-3 text-center">
                       <ActionMenu id={`team-${team.id}`} />
                     </td>
@@ -367,22 +367,22 @@ export function AdminView() {
 
                 {activeTab === 'players' && mockPlayers.map((player, i) => (
                   <tr key={player.id} className="border-b border-default hover:bg-surface-accent transition-colors group">
-                    <td className="px-6 py-3 font-mono font-bold text-[14px] text-body">{i + 1}</td>
+                    <td className="px-6 py-3 font-mono font-bold type-body-sm text-body">{i + 1}</td>
                     <td className="px-6 py-3">
                       <button
                         onClick={() => navigate(`${accountBase()}/player/${player.id}`, { state: { fromAdmin: true, player: { id: player.id, name: player.name, initials: player.name.split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase(), age: player.age, dob: player.dob, nationality: player.nationality, primaryPos: player.position, currentTeam: player.currentTeam }, trail: [{ label: 'Admin', path: window.location.pathname }] } })}
-                        className="font-body font-bold text-[14px] text-body hover:underline transition-all flex items-center gap-2 group/link"
+                        className="font-body font-bold type-body-sm text-body hover:underline transition-all flex items-center gap-2 group/link"
                       >
                         {player.name}
                         <ArrowRight size={12} className="opacity-0 group-hover/link:opacity-100 transition-opacity -translate-x-2 group-hover/link:translate-x-0" />
                       </button>
                     </td>
-                    <td className="px-6 py-3 font-heading font-bold text-[10px] uppercase tracking-widest text-strong">{player.position}</td>
-                    <td className="px-6 py-3 font-body text-[14px] font-semibold text-body">{player.currentTeam}</td>
-                    <td className="px-6 py-3 font-body text-[14px] font-semibold text-body">{player.teamCountry}</td>
-                    <td className="px-6 py-3 font-body text-[14px] font-semibold text-body">{player.dob}</td>
-                    <td className="px-6 py-3 font-mono font-bold text-[14px] text-body">{player.age}</td>
-                    <td className="px-6 py-3 font-body text-[14px] font-semibold text-body">{player.nationality}</td>
+                    <td className="px-6 py-3 font-heading font-bold type-micro uppercase tracking-widest text-strong">{player.position}</td>
+                    <td className="px-6 py-3 font-body type-body-sm font-semibold text-body">{player.currentTeam}</td>
+                    <td className="px-6 py-3 font-body type-body-sm font-semibold text-body">{player.teamCountry}</td>
+                    <td className="px-6 py-3 font-body type-body-sm font-semibold text-body">{player.dob}</td>
+                    <td className="px-6 py-3 font-mono font-bold type-body-sm text-body">{player.age}</td>
+                    <td className="px-6 py-3 font-body type-body-sm font-semibold text-body">{player.nationality}</td>
                     <td className="px-6 py-3 text-center">
                       <ActionMenu id={`player-${player.id}`} />
                     </td>

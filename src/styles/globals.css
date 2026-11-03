@@ -485,18 +485,21 @@ body {
 /* ── Responsive type ramp utilities ──
    Size + line-height only — pair with .font-heading/.font-body + a weight class.
    Each reads a token that steps per breakpoint (see :root + @media above), so a
-   single class is responsive across mobile/tablet/desktop with no call-site variants. */
-.type-h1      { font-size: var(--fs-h1);      line-height: var(--lh-h1); }
-.type-h2      { font-size: var(--fs-h2);      line-height: var(--lh-h2); }
-.type-h3      { font-size: var(--fs-h3);      line-height: var(--lh-h3); }
-.type-h4      { font-size: var(--fs-h4);      line-height: var(--lh-h4); }
-.type-h5      { font-size: var(--fs-h5);      line-height: var(--lh-h5); }
-.type-h6      { font-size: var(--fs-h6);      line-height: var(--lh-h6); }
-.type-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); }
-.type-body    { font-size: var(--fs-body);    line-height: var(--lh-body); }
-.type-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body-sm); }
-.type-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); }
-.type-micro   { font-size: var(--fs-micro);   line-height: var(--lh-micro); }
+   single class is responsive across mobile/tablet/desktop with no call-site variants.
+   Registered with @utility (3 Nov 2026, D-22) rather than as plain classes: a plain class sits
+   outside Tailwind's utilities layer, so it silently beat every leading-* written next to it,
+   and md:/lg: variants of it did not exist. As utilities they sort like text-sm does. */
+@utility type-h1      { font-size: var(--fs-h1);      line-height: var(--lh-h1); }
+@utility type-h2      { font-size: var(--fs-h2);      line-height: var(--lh-h2); }
+@utility type-h3      { font-size: var(--fs-h3);      line-height: var(--lh-h3); }
+@utility type-h4      { font-size: var(--fs-h4);      line-height: var(--lh-h4); }
+@utility type-h5      { font-size: var(--fs-h5);      line-height: var(--lh-h5); }
+@utility type-h6      { font-size: var(--fs-h6);      line-height: var(--lh-h6); }
+@utility type-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); }
+@utility type-body    { font-size: var(--fs-body);    line-height: var(--lh-body); }
+@utility type-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body-sm); }
+@utility type-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); }
+@utility type-micro   { font-size: var(--fs-micro);   line-height: var(--lh-micro); }
 
 /* ── Responsive data-table density (TABLE-LOCAL exception to the type floor) ──
    Add `rtable` to a <table>: cell padding tightens per tier so scouts keep a real
@@ -510,7 +513,7 @@ body {
 :root {
   --tbl-px: 4px;
   --tbl-py: 4px;
-  --tbl-head-h: 50px;
+  --tbl-head-h: 43px; /* 50 before D-22: the header labels now carry type-micro's 12px line height */
   --tbl-group-h: 33px;
 }
 @media (min-width: 768px) { :root { --tbl-px: 5px; } }

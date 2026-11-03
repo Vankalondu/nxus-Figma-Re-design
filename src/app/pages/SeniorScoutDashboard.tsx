@@ -137,13 +137,13 @@ const GRADE_COLORS: Record<string, string> = {
   'C+': 'bg-surface-accent text-body', 'C': 'bg-surface-accent text-body',
 };
 const PosPill = ({ pos }: { pos: string }) => (
-  <span className={`inline-block px-2 py-[2px] rounded font-body text-[10px] font-bold ${POS_COLORS[pos] || 'bg-surface-accent text-body'}`}>{pos}</span>
+  <span className={`inline-block px-2 py-[2px] rounded font-body type-micro font-bold ${POS_COLORS[pos] || 'bg-surface-accent text-body'}`}>{pos}</span>
 );
 const GradePill = ({ grade }: { grade: string }) => (
-  <span className={`inline-block px-2 py-[2px] rounded font-body text-[12px] font-black ${GRADE_COLORS[grade] || 'bg-surface-accent text-body'}`}>{grade}</span>
+  <span className={`inline-block px-2 py-[2px] rounded font-body type-caption font-black ${GRADE_COLORS[grade] || 'bg-surface-accent text-body'}`}>{grade}</span>
 );
 const PriorityPill = ({ priority }: { priority: 'High' | 'Low' }) => (
-  <span className={`inline-block px-2 py-[2px] rounded-full font-body text-[10px] font-black ${priority === 'High' ? 'bg-brand-primary/15 text-strong' : 'bg-text-body/15 text-body'}`}>{priority}</span>
+  <span className={`inline-block px-2 py-[2px] rounded-full font-body type-micro font-black ${priority === 'High' ? 'bg-brand-primary/15 text-strong' : 'bg-text-body/15 text-body'}`}>{priority}</span>
 );
 
 // ─── Circular Progress Ring ───────────────────────────────────────────────────
@@ -196,13 +196,13 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
         <div className={`px-6 py-5 flex items-start justify-between shrink-0 ${isTom ? 'bg-brand-primary' : 'bg-surface-card border-b border-default'}`}>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <PlayerLink name={report.playerName} tone="inherit" className={`font-heading font-semibold text-[16px] ${isTom ? 'text-on-brand' : 'text-strong'}`} />
+              <PlayerLink name={report.playerName} tone="inherit" className={`font-heading font-semibold type-body ${isTom ? 'text-on-brand' : 'text-strong'}`} />
               <PosPill pos={report.pos} />
               <GradePill grade={report.grade} />
             </div>
             <div className="flex items-center gap-2 flex-wrap">
-              {isTom && <span className="font-body text-[12px] font-black px-2 py-1 rounded-full bg-brand-primary text-on-brand">Lead Scout</span>}
-              <span className={`font-body text-[12px] font-medium ${isTom ? 'text-body' : 'text-body'}`}>
+              {isTom && <span className="font-body type-caption font-black px-2 py-1 rounded-full bg-brand-primary text-on-brand">Lead Scout</span>}
+              <span className={`font-body type-caption font-medium ${isTom ? 'text-body' : 'text-body'}`}>
                 {isTom ? 'Tom' : 'David (Me)'} · {report.scoutingDate}
               </span>
             </div>
@@ -212,18 +212,18 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
         <div className="px-6 py-4 border-b border-default flex items-center gap-6 bg-surface-card shrink-0">
           {[['Overall', report.grade], ['PLR', report.plr], ['POR', report.por]].map(([label, val]) => (
             <div key={label} className="flex flex-col gap-1">
-              <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{label}</span>
+              <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">{label}</span>
               <GradePill grade={val} />
             </div>
           ))}
           <div className="ml-auto flex flex-col gap-1">
-            <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">Filed</span>
-            <span className="font-body text-[14px] font-bold text-body">{report.date}</span>
+            <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">Filed</span>
+            <span className="font-body type-body-sm font-bold text-body">{report.date}</span>
           </div>
         </div>
         <div className="px-6 py-5 flex-1">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-3">Scouting Notes</span>
-          <p className="font-body text-[15px] font-medium text-body leading-relaxed">{report.notes}</p>
+          <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-3">Scouting Notes</span>
+          <p className="font-body type-body font-medium text-body leading-relaxed">{report.notes}</p>
         </div>
       </div>
     </div>
@@ -256,7 +256,7 @@ const ThisWeekModal = ({
         <div className="px-8 py-6 border-b border-default flex items-center justify-between bg-brand-primary rounded-t-[32px] shrink-0">
           <div className="flex items-center gap-3">
             <Calendar size={20} className="text-strong" />
-            <span className="font-heading font-semibold text-[16px] text-on-brand">Tasks This Week</span>
+            <span className="font-heading font-semibold type-body text-on-brand">Tasks This Week</span>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand transition-colors">
             <X size={16} />
@@ -272,7 +272,7 @@ const ThisWeekModal = ({
               onChange={e => setNewText(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleAdd()}
               placeholder="Add a task..."
-              className="flex-1 bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
+              className="flex-1 bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
             />
             <button onClick={handleAdd}
               className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-on-brand hover:bg-brand-primary/80 transition-colors shrink-0">
@@ -289,11 +289,11 @@ const ThisWeekModal = ({
               onClick={() => onToggle(task.id)}>
               <div className="w-5 h-5 rounded-full border-2 border-default group-hover:border-brand-primary shrink-0 mt-0.5 transition-colors" />
               <div className="flex-1 min-w-0">
-                <p className="font-body font-bold text-[14px] text-body">{task.text}</p>
+                <p className="font-body font-bold type-body-sm text-body">{task.text}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <PriorityPill priority={task.priority} />
-                  <span className="font-body text-[12px] text-muted font-medium">{task.dueDate}</span>
-                  {task.assignedBy !== 'Me' && <span className="font-body text-[12px] text-muted font-medium">from {task.assignedBy}</span>}
+                  <span className="font-body type-caption text-muted font-medium">{task.dueDate}</span>
+                  {task.assignedBy !== 'Me' && <span className="font-body type-caption text-muted font-medium">from {task.assignedBy}</span>}
                 </div>
               </div>
             </div>
@@ -304,7 +304,7 @@ const ThisWeekModal = ({
             <>
               <div className="flex items-center gap-2 py-2">
                 <div className="flex-1 h-px bg-surface-canvas" />
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{complete.length} completed</span>
+                <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted">{complete.length} completed</span>
                 <div className="flex-1 h-px bg-surface-canvas" />
               </div>
               {complete.map(task => (
@@ -314,7 +314,7 @@ const ThisWeekModal = ({
                   <div className="w-5 h-5 rounded-full bg-brand-primary flex items-center justify-center shrink-0 mt-0.5">
                     <CheckCircle size={12} className="text-on-brand" />
                   </div>
-                  <p className="font-body font-bold text-[14px] text-body line-through">{task.text}</p>
+                  <p className="font-body font-bold type-body-sm text-body line-through">{task.text}</p>
                 </div>
               ))}
             </>
@@ -419,7 +419,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
 
   const GradeBtn = ({ g, val, set }: { g: string; val: string; set: (v:string)=>void }) => (
     <button onClick={() => set(g)}
-      className={`px-3 py-2 rounded-full font-body text-[12px] font-black transition-all border ${
+      className={`px-3 py-2 rounded-full font-body type-caption font-black transition-all border ${
         val === g ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-body border-default hover:border-brand-primary/50'
       }`}>{g}</button>
   );
@@ -428,7 +428,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
     id: string; label: string; selected: boolean; onClick: ()=>void; icon?: React.ReactNode;
   }) => (
     <button onClick={onClick}
-      className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-3 ${
+      className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold type-body-sm transition-all border flex items-center gap-3 ${
         selected ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
       }`}>
       {icon && <span className={selected ? 'text-on-brand' : 'text-strong'}>{icon}</span>}
@@ -436,8 +436,8 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
     </button>
   );
 
-  const inputCls = 'w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus transition-all';
-  const labelCls = 'font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2';
+  const inputCls = 'w-full bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:border-focus transition-all';
+  const labelCls = 'font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2';
 
   // ── Step titles ──
   const STEP_TITLES: Record<StepNum, string> = {
@@ -456,16 +456,16 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
         {/* ── Header ── */}
         <div className="px-8 py-5 bg-brand-primary rounded-t-[32px] flex items-center justify-between shrink-0">
           <div className="flex-1 min-w-0">
-            <span className="font-heading font-semibold text-[16px] text-on-brand">Add Scouting Report</span>
+            <span className="font-heading font-semibold type-body text-on-brand">Add Scouting Report</span>
             <div className="flex items-center gap-2 mt-2">
               {Array.from({length: TOTAL_STEPS}).map((_,i) => (
                 <div key={i}
                   className={`h-1.5 rounded-full transition-all duration-300 ${i < step ? 'bg-surface-card' : 'bg-surface-card/20'}`}
                   style={{width: i < step ? 24 : 12}} />
               ))}
-              <span className="font-body text-[12px] text-on-brand/40 ml-1">Step {step} of {TOTAL_STEPS}</span>
+              <span className="font-body type-caption text-on-brand/40 ml-1">Step {step} of {TOTAL_STEPS}</span>
             </div>
-            <p className="font-body text-[12px] text-on-brand/50 mt-1 truncate">{STEP_TITLES[step]}</p>
+            <p className="font-body type-caption text-on-brand/50 mt-1 truncate">{STEP_TITLES[step]}</p>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand ml-4 shrink-0">
             <X size={16} />
@@ -478,7 +478,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {/* ══ STEP 1: Player + Date ══ */}
           {step === 1 && (
             <>
-              <h3 className="font-heading font-semibold text-[16px] text-heading">Find Player & Set Date</h3>
+              <h3 className="font-heading font-semibold type-body text-heading">Find Player & Set Date</h3>
               <div>
                 <label className={labelCls}>Search Player</label>
                 <div className="relative">
@@ -486,14 +486,14 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                   <input type="text" value={playerSearch}
                     onChange={e => { setPlayerSearch(e.target.value); setSelectedPlayer(''); setShowNewPlayer(false); }}
                     placeholder="Type player name..."
-                    className="w-full bg-surface-card border border-default rounded-xl pl-9 pr-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                    className="w-full bg-surface-card border border-default rounded-xl pl-9 pr-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                 </div>
                 {/* Search results */}
                 {searchResults.length > 0 && !selectedPlayer && (
                   <div className="mt-2 bg-surface-card border border-default rounded-xl overflow-hidden shadow-lg">
                     {searchResults.map(p => (
                       <button key={p} onClick={() => { setSelectedPlayer(p); setPlayerSearch(p); setShowNewPlayer(false); }}
-                        className="w-full text-left px-4 py-3 font-body text-[14px] font-bold border-b border-default last:border-0 transition-colors text-body hover:bg-surface-accent">
+                        className="w-full text-left px-4 py-3 font-body type-body-sm font-bold border-b border-default last:border-0 transition-colors text-body hover:bg-surface-accent">
                         {p}
                       </button>
                     ))}
@@ -503,15 +503,15 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 {selectedPlayer && (
                   <div className="mt-2 flex items-center gap-2 px-4 py-2 bg-brand-primary/5 border border-brand-primary/20 rounded-xl">
                     <Check size={14} className="text-strong shrink-0" />
-                    <span className="font-body font-bold text-[14px] text-body">{selectedPlayer}</span>
+                    <span className="font-body font-bold type-body-sm text-body">{selectedPlayer}</span>
                   </div>
                 )}
                 {/* Not found */}
                 {playerSearch.length > 2 && searchResults.length === 0 && !selectedPlayer && !showNewPlayer && (
                   <div className="mt-3 p-4 bg-surface-card rounded-xl border border-default">
-                    <p className="font-body text-[14px] font-bold text-body mb-3">Player not found in database.</p>
+                    <p className="font-body type-body-sm font-bold text-body mb-3">Player not found in database.</p>
                     <button onClick={() => setShowNewPlayer(true)}
-                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
+                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black type-body-sm hover:bg-brand-primary/80 transition-colors">
                       + Create New Player
                     </button>
                   </div>
@@ -519,7 +519,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                 {/* New player form */}
                 {showNewPlayer && (
                   <div className="mt-3 p-4 bg-surface-card rounded-xl border border-default space-y-3">
-                    <p className="font-heading font-black text-[14px] text-strong">New Player Details</p>
+                    <p className="font-heading font-black type-body-sm text-strong">New Player Details</p>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label className={labelCls}>Position</label>
@@ -533,7 +533,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                       </div>
                     </div>
                     <button onClick={() => { setSelectedPlayer(playerSearch); setShowNewPlayer(false); }}
-                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black text-[14px] hover:bg-brand-primary/80 transition-colors">
+                      className="w-full bg-brand-primary text-on-brand rounded-full py-2 font-body font-black type-body-sm hover:bg-brand-primary/80 transition-colors">
                       Create & Select
                     </button>
                   </div>
@@ -542,7 +542,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className={labelCls}>Scout</label>
-                  <div className="bg-surface-accent border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body">{scoutName}</div>
+                  <div className="bg-surface-accent border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body">{scoutName}</div>
                 </div>
                 <div>
                   <label className={labelCls}>Scouting Date</label>
@@ -556,15 +556,15 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {/* ══ STEP 2: Full or Short ══ */}
           {step === 2 && (
             <>
-              <h3 className="font-heading font-semibold text-[16px] text-heading">Report Type</h3>
-              <p className="font-body text-[14px] text-body font-medium">For: <span className="text-strong font-bold">{selectedPlayer}</span> · {scoutingDate}</p>
+              <h3 className="font-heading font-semibold type-body text-heading">Report Type</h3>
+              <p className="font-body type-body-sm text-body font-medium">For: <span className="text-strong font-bold">{selectedPlayer}</span> · {scoutingDate}</p>
               <div className="space-y-3 pt-1">
                 <button onClick={() => setReportLength('full')}
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
                     reportLength === 'full' ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
                   }`}>
-                  <div className="font-heading font-black text-[14px]">Full Report</div>
-                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'full' ? 'text-on-brand/60' : 'text-body'}`}>
+                  <div className="font-heading font-black type-body-sm">Full Report</div>
+                  <div className={`font-body type-caption mt-0.5 ${reportLength === 'full' ? 'text-on-brand/60' : 'text-body'}`}>
                     Detailed scouting report using a template. Includes structured sections and performance analysis.
                   </div>
                 </button>
@@ -572,8 +572,8 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                   className={`w-full px-5 py-4 rounded-[20px] text-left transition-all border ${
                     reportLength === 'short' ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-default hover:border-brand-primary/50'
                   }`}>
-                  <div className="font-heading font-black text-[14px]">Short Report</div>
-                  <div className={`font-body text-[12px] mt-0.5 ${reportLength === 'short' ? 'text-on-brand/60' : 'text-body'}`}>
+                  <div className="font-heading font-black type-body-sm">Short Report</div>
+                  <div className={`font-body type-caption mt-0.5 ${reportLength === 'short' ? 'text-on-brand/60' : 'text-body'}`}>
                     Quick entry. One performance note and PLR, POG, NXT grades. Fast and efficient.
                   </div>
                 </button>
@@ -584,8 +584,8 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {/* ══ STEP 3: Source Type ══ */}
           {step === 3 && (
             <>
-              <h3 className="font-heading font-semibold text-[16px] text-heading">Source</h3>
-              <p className="font-body text-[14px] text-body font-medium">How did you observe this player?</p>
+              <h3 className="font-heading font-semibold type-body text-heading">Source</h3>
+              <p className="font-body type-body-sm text-body font-medium">How did you observe this player?</p>
               <div className="space-y-3 pt-1">
                 <OptionCard id="live" label="Live Match" selected={sourceType === 'live'}
                   onClick={() => { setSourceType('live'); setSelectedSource(''); setAddingManually(false); }}
@@ -603,8 +603,8 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {/* ══ STEP 4: Select Source ══ */}
           {step === 4 && (
             <>
-              <h3 className="font-heading font-semibold text-[16px] text-heading">Select {sourceLabel}</h3>
-              <p className="font-body text-[14px] text-body font-medium">Choose from platform or add manually</p>
+              <h3 className="font-heading font-semibold type-body text-heading">Select {sourceLabel}</h3>
+              <p className="font-body type-body-sm text-body font-medium">Choose from platform or add manually</p>
               <div className="space-y-2">
                 {sourceOptions.map(s => (
                   <OptionCard key={s.id} id={s.id} label={s.label}
@@ -612,7 +612,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                     onClick={() => { setSelectedSource(s.id); setAddingManually(false); }} />
                 ))}
                 <button onClick={() => { setAddingManually(true); setSelectedSource(''); }}
-                  className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold text-[14px] transition-all border flex items-center gap-2 ${
+                  className={`w-full px-4 py-3 rounded-[16px] text-left font-body font-bold type-body-sm transition-all border flex items-center gap-2 ${
                     addingManually ? 'bg-brand-primary text-on-brand border-brand-primary' : 'bg-surface-card text-strong border-dashed border-default hover:border-brand-primary/50'
                   }`}>
                   <Plus size={14} /> Not on platform — add manually
@@ -655,15 +655,15 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {/* ══ STEP 5a: Short Report ══ */}
           {step === 5 && reportLength === 'short' && (
             <>
-              <h3 className="font-heading font-semibold text-[16px] text-heading">Quick Entry</h3>
-              <p className="font-body text-[12px] text-body font-medium">
+              <h3 className="font-heading font-semibold type-body text-heading">Quick Entry</h3>
+              <p className="font-body type-caption text-body font-medium">
                 {selectedPlayer} · {sourceLabel}: <span className="text-strong font-bold">{selectedSourceLabel}</span>
               </p>
               <div>
                 <label className={labelCls}>Performance Note</label>
                 <textarea value={perfNote} onChange={e => setPerfNote(e.target.value)} rows={4}
                   placeholder="Quick observation — key moments, standout qualities, concerns..."
-                  className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all resize-none" />
+                  className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 font-body type-body-sm font-medium text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all resize-none" />
               </div>
               <div className="grid grid-cols-3 gap-4">
                 {([['PLR', plr, setPlr, GRADES],['POG', pog, setPog, GRADES],['NXT', nxt, setNxt, NXT_VALS]] as [string,string,(v:string)=>void,string[]][]).map(([label, val, set, opts]) => (
@@ -681,8 +681,8 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {/* ══ STEP 5b: Full Report ══ */}
           {step === 5 && reportLength === 'full' && (
             <>
-              <h3 className="font-heading font-semibold text-[16px] text-heading">Fill Report</h3>
-              <p className="font-body text-[12px] text-body font-medium">
+              <h3 className="font-heading font-semibold type-body text-heading">Fill Report</h3>
+              <p className="font-body type-caption text-body font-medium">
                 {selectedPlayer} · {sourceLabel}: <span className="text-strong font-bold">{selectedSourceLabel}</span>
               </p>
               {/* Template selection */}
@@ -692,7 +692,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                   <div className="grid grid-cols-2 gap-2">
                     {TEMPLATES.map(t => (
                       <button key={t} onClick={() => setSelectedTemplate(t)}
-                        className="px-4 py-3 rounded-[14px] text-left font-body font-bold text-[12px] transition-all border bg-surface-card text-body border-default hover:border-brand-primary hover:bg-surface-accent">
+                        className="px-4 py-3 rounded-[14px] text-left font-body font-bold type-caption transition-all border bg-surface-card text-body border-default hover:border-brand-primary hover:bg-surface-accent">
                         {t}
                       </button>
                     ))}
@@ -701,15 +701,15 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
               ) : (
                 <>
                   <div className="flex items-center gap-2">
-                    <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">Template</span>
-                    <span className="font-body font-bold text-[14px] text-body">{selectedTemplate}</span>
-                    <button onClick={() => setSelectedTemplate('')} className="ml-auto text-[12px] font-bold text-body underline hover:text-strong">Change</button>
+                    <span className="font-heading font-bold type-caption uppercase tracking-widest text-muted">Template</span>
+                    <span className="font-body font-bold type-body-sm text-body">{selectedTemplate}</span>
+                    <button onClick={() => setSelectedTemplate('')} className="ml-auto type-caption font-bold text-body underline hover:text-strong">Change</button>
                   </div>
                   <div>
                     <label className={labelCls}>Performance Notes</label>
                     <textarea value={fullNotes} onChange={e => setFullNotes(e.target.value)} rows={6}
                       placeholder="Describe the player's performance, key moments, strengths and areas to develop..."
-                      className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all resize-none" />
+                      className="w-full bg-surface-card border border-default rounded-xl px-4 py-3 font-body type-body-sm font-medium text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all resize-none" />
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     {([['PLR', plr, setPlr, GRADES],['POG', pog, setPog, GRADES],['NXT', nxt, setNxt, NXT_VALS]] as [string,string,(v:string)=>void,string[]][]).map(([label, val, set, opts]) => (
@@ -729,7 +729,7 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
           {/* ══ STEP 6: Review & Submit ══ */}
           {step === 6 && (
             <>
-              <h3 className="font-heading font-semibold text-[16px] text-heading">Review & Submit</h3>
+              <h3 className="font-heading font-semibold type-body text-heading">Review & Submit</h3>
               <div className="bg-surface-card rounded-[20px] border border-default overflow-hidden">
                 {[
                   ['Player',       selectedPlayer],
@@ -741,16 +741,16 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
                   ['PLR / POG / NXT', `${plr} / ${pog} / ${nxt}`],
                 ].map(([label, val]) => (
                   <div key={label} className="flex items-center justify-between px-5 py-3 border-b border-default last:border-0">
-                    <span className="font-heading font-bold text-[12px] uppercase tracking-widest text-muted">{label}</span>
-                    <span className="font-body font-bold text-[14px] text-body text-right max-w-[55%]">{val || '—'}</span>
+                    <span className="font-heading font-bold type-caption uppercase tracking-widest text-muted">{label}</span>
+                    <span className="font-body font-bold type-body-sm text-body text-right max-w-[55%]">{val || '—'}</span>
                   </div>
                 ))}
               </div>
               <div className="bg-surface-card rounded-[16px] border border-default p-4">
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">
+                <span className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">
                   {reportLength === 'full' && selectedTemplate ? selectedTemplate + ' — ' : ''}Notes
                 </span>
-                <p className="font-body text-[14px] font-medium text-body leading-relaxed whitespace-pre-wrap">
+                <p className="font-body type-body-sm font-medium text-body leading-relaxed whitespace-pre-wrap">
                   {reportLength === 'short' ? perfNote : fullNotes}
                 </p>
               </div>
@@ -762,18 +762,18 @@ const AddReportModal = ({ onClose, scoutName = 'David' }: { onClose: () => void;
         <div className="px-8 py-5 border-t border-default flex items-center justify-between shrink-0 bg-surface-card rounded-b-[32px]">
           {step > 1
             ? <button onClick={() => setStep(s => (s - 1) as StepNum)}
-                className="px-6 py-2 border-2 border-default text-body rounded-full font-body font-bold text-[14px] hover:border-brand-primary transition-colors">
+                className="px-6 py-2 border-2 border-default text-body rounded-full font-body font-bold type-body-sm hover:border-brand-primary transition-colors">
                 ← Back
               </button>
             : <div />}
           {step < TOTAL_STEPS
             ? <button onClick={() => { if (canContinue()) setStep(s => (s + 1) as StepNum); }}
                 disabled={!canContinue()}
-                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--blue-900)]">
+                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold type-body-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--blue-900)]">
                 Continue →
               </button>
             : <button onClick={onClose}
-                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] hover:bg-[var(--blue-900)] transition-colors">
+                className="px-8 py-2 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold type-body-sm hover:bg-[var(--blue-900)] transition-colors">
                 Submit Report ✓
               </button>}
         </div>
@@ -826,14 +826,14 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
           <div className="px-5 py-4 border-b border-default flex items-center gap-3 shrink-0">
             <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><CheckCircle size={16} className="text-strong" /></div>
             <div className="min-w-0 flex-1">
-              <h3 className="font-heading font-bold text-[16px] text-heading">My Tasks</h3>
-              <p className="font-body text-[12px] text-body font-medium">{complete.length}/{tasks.length} completed</p>
+              <h3 className="font-heading font-bold type-body text-heading">My Tasks</h3>
+              <p className="font-body type-caption text-body font-medium">{complete.length}/{tasks.length} completed</p>
             </div>
           </div>
           <div className="px-5 py-3 border-b border-default flex items-center gap-3">
             <input value={newTask} onChange={e => setNewTask(e.target.value)} placeholder="Add a task..."
               onKeyDown={e => { if (e.key === 'Enter' && newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
-              className="flex-1 min-w-0 bg-surface-card border border-default rounded-xl px-3 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:border-focus" />
+              className="flex-1 min-w-0 bg-surface-card border border-default rounded-xl px-3 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:border-focus" />
             <button onClick={() => { if (newTask.trim()) { onAddTask({ text: newTask, priority: 'Low', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' }); setNewTask(''); }}}
               aria-label="Add task" className="w-9 h-9 bg-brand-primary text-on-brand rounded-full flex items-center justify-center shrink-0"><Plus size={14} /></button>
           </div>
@@ -844,8 +844,8 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                   <div className="w-5 h-5 rounded-full border-2 border-default group-hover:border-brand-primary transition-colors" />
                 </button>
                 <div className="flex-1 min-w-0">
-                  <span className="font-body text-[13px] font-bold text-body truncate block">{t.text}</span>
-                  <p className="font-body text-[12px] text-body mt-0.5">{t.assignedBy} • Due {t.dueDate}</p>
+                  <span className="font-body type-body-sm font-bold text-body truncate block">{t.text}</span>
+                  <p className="font-body type-caption text-body mt-0.5">{t.assignedBy} • Due {t.dueDate}</p>
                 </div>
                 {t.priority === 'High' && <SharedPriorityPill p="High" />}
               </div>
@@ -855,11 +855,11 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                 <button onClick={() => onToggleTask(t.id)} className="shrink-0" aria-label="Mark not done">
                   <div className="w-5 h-5 rounded-full bg-brand-primary flex items-center justify-center"><Check size={11} className="text-on-brand" /></div>
                 </button>
-                <span className="font-body text-[13px] font-bold text-body line-through truncate">{t.text}</span>
+                <span className="font-body type-body-sm font-bold text-body line-through truncate">{t.text}</span>
               </div>
             ))}
             {tasks.length === 0 && (
-              <div className="px-5 py-8 text-center font-body text-[13px] text-body">No tasks yet — add one above.</div>
+              <div className="px-5 py-8 text-center font-body type-body-sm text-body">No tasks yet — add one above.</div>
             )}
           </div>
         </div>
@@ -872,10 +872,10 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
             <div className="px-5 py-4 border-b border-default flex items-center gap-3 shrink-0">
               <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><FileText size={16} className="text-strong" /></div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-heading font-bold text-[16px] text-heading">Recent Reports</h3>
-                <p className="font-body text-[12px] text-body font-medium">From Lead & Head Scouts</p>
+                <h3 className="font-heading font-bold type-body text-heading">Recent Reports</h3>
+                <p className="font-body type-caption text-body font-medium">From Lead & Head Scouts</p>
               </div>
-              <button onClick={() => onNavigate('reports')} className="font-body font-bold text-[12px] text-link hover:underline shrink-0">View all</button>
+              <button onClick={() => onNavigate('reports')} className="font-body font-bold type-caption text-link hover:underline shrink-0">View all</button>
             </div>
             <div className="divide-y divide-border-default">
               {[
@@ -884,13 +884,13 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                 { name: 'Nene', role: 'Head Scout', count: 2, unread: 0 },
               ].map(scout => (
                 <div key={scout.name} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
-                  <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{scout.name[0]}</span>
+                  <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold type-caption shrink-0">{scout.name[0]}</span>
                   <div className="flex-1 min-w-0">
-                    <span className="font-body font-bold text-[14px] text-body truncate block">{scout.name}</span>
-                    <p className="font-body text-[12px] text-body mt-0.5">{scout.role} · {scout.count} reports</p>
+                    <span className="font-body font-bold type-body-sm text-body truncate block">{scout.name}</span>
+                    <p className="font-body type-caption text-body mt-0.5">{scout.role} · {scout.count} reports</p>
                   </div>
                   {scout.unread > 0 && (
-                    <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-error/15 text-status-error-fg shrink-0">{scout.unread} unread</span>
+                    <span className="font-body type-caption font-black px-2.5 py-1 rounded-full bg-status-error/15 text-status-error-fg shrink-0">{scout.unread} unread</span>
                   )}
                 </div>
               ))}
@@ -902,10 +902,10 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
             <div className="px-5 py-4 border-b border-default flex items-center gap-3 shrink-0">
               <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Package size={16} className="text-strong" /></div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-heading font-bold text-[16px] text-heading">Upcoming Packages</h3>
-                <p className="font-body text-[12px] text-body font-medium">Awaiting review</p>
+                <h3 className="font-heading font-bold type-body text-heading">Upcoming Packages</h3>
+                <p className="font-body type-caption text-body font-medium">Awaiting review</p>
               </div>
-              <button onClick={() => onNavigate('packages')} className="font-body font-bold text-[12px] text-link hover:underline shrink-0">View all</button>
+              <button onClick={() => onNavigate('packages')} className="font-body font-bold type-caption text-link hover:underline shrink-0">View all</button>
             </div>
             <div className="divide-y divide-border-default">
               {[
@@ -914,12 +914,12 @@ const OverviewTab = ({ tasks, onToggleTask, onAddTask, onNavigate, onOpenPlayers
                 { name: 'Amadou Sarr', list: 'Target', clips: 5 },
               ].map(pkg => (
                 <div key={pkg.name} className="px-5 py-3 flex items-center gap-3 hover:bg-surface-accent transition-colors cursor-pointer">
-                  <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{pkg.name.split(' ').map(n=>n[0]).join('')}</span>
+                  <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold type-caption shrink-0">{pkg.name.split(' ').map(n=>n[0]).join('')}</span>
                   <div className="flex-1 min-w-0">
-                    <PlayerLink name={pkg.name} className="font-body font-bold text-[14px] truncate block" />
-                    <p className="font-body text-[12px] text-body mt-0.5">{pkg.clips} clips</p>
+                    <PlayerLink name={pkg.name} className="font-body font-bold type-body-sm truncate block" />
+                    <p className="font-body type-caption text-body mt-0.5">{pkg.clips} clips</p>
                   </div>
-                  <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-brand-primary/15 text-body shrink-0">{pkg.list}</span>
+                  <span className="font-body type-caption font-black px-2.5 py-1 rounded-full bg-brand-primary/15 text-body shrink-0">{pkg.list}</span>
                 </div>
               ))}
             </div>
@@ -938,22 +938,22 @@ const PackagesTab = () => {
         <div className="px-5 py-4 border-b border-default flex items-center gap-3">
           <div className="w-10 h-10 rounded-[12px] bg-brand-primary/10 flex items-center justify-center shrink-0"><Video size={16} className="text-strong" /></div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-heading font-bold text-[16px] text-heading">Packages</h3>
-            <p className="font-body text-[12px] text-body font-medium">{MOCK_PACKAGES.length} packages · newest first</p>
+            <h3 className="font-heading font-bold type-body text-heading">Packages</h3>
+            <p className="font-body type-caption text-body font-medium">{MOCK_PACKAGES.length} packages · newest first</p>
           </div>
         </div>
         <div className="divide-y divide-border-default">
           {MOCK_PACKAGES.map(pkg => (
             <div key={pkg.id} className="px-5 py-3 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold text-[12px] shrink-0">{pkg.initials}</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-primary/10 text-link flex items-center justify-center font-body font-bold type-caption shrink-0">{pkg.initials}</span>
               <div className="min-w-0 flex-1">
-                <PlayerLink name={pkg.playerName} className="font-body font-bold text-[14px] truncate block" />
-                <p className="font-body text-[12px] text-body mt-0.5">{pkg.uploadDate} · {pkg.clipCount} clips</p>
+                <PlayerLink name={pkg.playerName} className="font-body font-bold type-body-sm truncate block" />
+                <p className="font-body type-caption text-body mt-0.5">{pkg.uploadDate} · {pkg.clipCount} clips</p>
               </div>
               {pkg.watched
-                ? <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-success/15 text-status-success-fg shrink-0">Watched</span>
-                : <span className="font-body text-[11px] font-black px-2.5 py-1 rounded-full bg-status-warning/15 text-status-warning-fg shrink-0">New</span>}
-              <button className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-default font-body font-bold text-[12px] text-strong hover:border-brand-primary transition-colors shrink-0">
+                ? <span className="font-body type-caption font-black px-2.5 py-1 rounded-full bg-status-success/15 text-status-success-fg shrink-0">Watched</span>
+                : <span className="font-body type-caption font-black px-2.5 py-1 rounded-full bg-status-warning/15 text-status-warning-fg shrink-0">New</span>}
+              <button className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-default font-body font-bold type-caption text-strong hover:border-brand-primary transition-colors shrink-0">
                 <Play size={12} />Watch
               </button>
             </div>
@@ -1079,55 +1079,55 @@ export default function SeniorScoutDashboard() {
         <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={() => setShowAddPlayer(false)}>
           <div className="bg-surface-card rounded-[32px] shadow-2xl w-full max-w-2xl border border-default max-h-[90vh] overflow-hidden flex flex-col" onClick={e => e.stopPropagation()}>
             <div className="px-8 py-6 border-b border-default flex items-center justify-between bg-brand-primary rounded-t-[32px] shrink-0">
-              <span className="font-heading font-semibold text-[20px] text-on-brand">Add New Player</span>
+              <span className="font-heading font-semibold type-h6 text-on-brand">Add New Player</span>
               <button onClick={() => setShowAddPlayer(false)} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand"><X size={16} /></button>
             </div>
             <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Full Name</label>
-                  <input type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Full Name</label>
+                  <input type="text" placeholder="e.g. Kofi Mensah" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Date of Birth</label>
-                  <input type="date" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Date of Birth</label>
+                  <input type="date" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Nationality</label>
-                  <input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Nationality</label>
+                  <input type="text" placeholder="e.g. Ghana" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Position</label>
-                  <select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Position</label>
+                  <select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none appearance-none">
                     {['ST','LW','RW','CM','CDM','CAM','FB','CB'].map(p => <option key={p}>{p}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Team</label>
-                  <input type="text" placeholder="e.g. Hawks FC" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Team</label>
+                  <input type="text" placeholder="e.g. Hawks FC" className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
                 </div>
                 <div>
-                  <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Preferred Foot</label>
-                  <select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none appearance-none">
+                  <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Preferred Foot</label>
+                  <select className="w-full bg-surface-card border border-default rounded-xl px-4 py-2 font-body type-body-sm font-bold text-body focus:outline-none appearance-none">
                     <option>Right</option><option>Left</option><option>Both</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted block mb-2">Add to Pipeline</label>
+                <label className="font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2">Add to Pipeline</label>
                 <div className="flex gap-3">
                   {['Long List','Short List','Target List'].map(list => (
                     <label key={list} className="flex items-center gap-2 cursor-pointer">
                       <input type="checkbox" className="w-4 h-4 rounded border-2 border-default checked:bg-brand-primary checked:border-brand-primary accent-brand-primary" />
-                      <span className="font-body font-bold text-[14px] text-body">{list}</span>
+                      <span className="font-body font-bold type-body-sm text-body">{list}</span>
                     </label>
                   ))}
                 </div>
               </div>
             </div>
             <div className="px-8 py-5 border-t border-default bg-surface-card flex justify-end gap-3 shrink-0">
-              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-transparent border-2 border-default text-body rounded-full font-body font-bold text-[14px] hover:border-text-body transition-colors">Cancel</button>
-              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold text-[14px] hover:bg-brand-primary/80 transition-colors">Add Player</button>
+              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-transparent border-2 border-default text-body rounded-full font-body font-bold type-body-sm hover:border-text-body transition-colors">Cancel</button>
+              <button onClick={() => setShowAddPlayer(false)} className="px-6 py-3 bg-brand-primary border-2 border-brand-primary text-on-brand rounded-full font-body font-bold type-body-sm hover:bg-brand-primary/80 transition-colors">Add Player</button>
             </div>
           </div>
         </div>
@@ -1158,7 +1158,7 @@ export default function SeniorScoutDashboard() {
           notifPanel={(
             <div className="absolute right-0 mt-3 w-80 bg-surface-card rounded-[24px] shadow-2xl border border-default z-50 overflow-hidden">
               <div className="px-6 py-4 border-b border-default flex items-center justify-between bg-brand-primary rounded-t-[24px]">
-                <span className="font-heading font-black text-[14px] text-on-brand">Notifications</span>
+                <span className="font-heading font-black type-body-sm text-on-brand">Notifications</span>
                 <button onClick={() => setShowNotifPanel(false)} className="text-on-brand/60 hover:text-on-brand"><X size={16} /></button>
               </div>
               <div className="max-h-72 overflow-y-auto divide-y divide-border-default">
@@ -1168,8 +1168,8 @@ export default function SeniorScoutDashboard() {
                       {n.type === 'nudge' ? <Zap size={12} className="text-strong" /> : n.type === 'task' ? <CheckCircle size={12} className="text-strong" /> : n.type === 'package' ? <Video size={12} className="text-strong" /> : <FileText size={12} className="text-strong" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-body text-[14px] font-bold text-body leading-snug">{n.text}</p>
-                      <p className="font-body text-[12px] text-body font-medium mt-0.5">{n.time}</p>
+                      <p className="font-body type-body-sm font-bold text-body leading-snug">{n.text}</p>
+                      <p className="font-body type-caption text-body font-medium mt-0.5">{n.time}</p>
                     </div>
                     {!n.read && <div className="w-2 h-2 rounded-full bg-brand-primary shrink-0 mt-2" />}
                   </div>
@@ -1208,7 +1208,7 @@ export default function SeniorScoutDashboard() {
                   </span>
                   David
                 </h1>
-                <p className="font-body font-medium text-[15px] text-body mt-2 short:hidden">{subtitle}</p>
+                <p className="font-body font-medium type-body text-body mt-2 short:hidden">{subtitle}</p>
               </div>
 
               {/* Tab row */}

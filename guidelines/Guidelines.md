@@ -321,7 +321,11 @@ Semibold (600). Hierarchy comes from **size**, not weight. `font-bold`, `font-ex
 competing hierarchies that disagree at different breakpoints.
 
 ### L-TY3 · Law — Use the ramp classes, not literal sizes
-Apply `.type-h1` … `.type-micro`. Do not hard-code `text-[28px]` or equivalent.
+Apply `.type-h1` … `.type-micro`. Do not hard-code `text-[28px]` or equivalent — and
+Tailwind's size presets (`text-xs` … `text-3xl`) are equivalents: each is one frozen size.
+The one carve-out is `text-4xl` and up for KPI display numerals (R-TY2). Charts: SVG
+attributes cannot read a token, so give a `<text>` a ramp class, or pass
+`style: { fontSize: 'var(--fs-caption)' }`. Enforced by `npm run lint:tokens` (D-22).
 
 **Why:** each ramp class reads a token that steps per breakpoint, so one class is responsive
 with no call-site variants. A literal size is frozen at one tier and breaks on the others.
@@ -1342,6 +1346,19 @@ was watched and when; grades sit in a grid of up to five; hidden reports come ba
 Grades picker, with a toast and a helper line saying so (P-CO21, P-CO22); (5) Photo library:
 one tile size, 5 across on desktop, no pagination, real mock photos, "Add photos" as a
 secondary button (P-CO20); (6) every player name links to the profile (P-CO24).
+
+**D-22 · L-TY3 is enforced (3 Nov 2026).** Vanessa: *"Why would we have a design system if we
+are not using it?"* `npm run lint:tokens` now fails on any size outside the ramp: arbitrary
+sizes (`text-[13px]`), Tailwind's own size presets below `text-4xl` (`text-sm` is a frozen
+14px/20px, not the ramp), and literal `fontSize` in styles and SVG attributes. No baseline:
+the sweep took the count from 2,003 to 0. Off-ramp sizes moved to the nearest step, ties
+rounding up for legibility (11→12, 13→14, 15→16, 18→20, 30→32); numerals of 36px and above
+became `text-4xl`/`text-5xl` (R-TY2). The ramp classes became Tailwind utilities (`@utility`),
+so `leading-*` written beside them now wins and `md:`/`lg:` variants exist. Everything got a
+little denser, because each step carries its own line height (12px text sits on 14px, not
+18px). The rule is shared with the devs' checker (`.github/actions/nxus-rule-check/rules.mjs`),
+so both read the scale the same way. A reviewed exception carries
+`nxus-ignore L-TY3: <reason>` on the line; today only text drawn inside images uses it.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

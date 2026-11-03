@@ -44,14 +44,14 @@ export const PhotoLightbox = ({ photos, index, onIndex, onClose }: {
       }}>
       <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-4 shrink-0" onClick={e => e.stopPropagation()}>
         <div className="min-w-0">
-          <div className="font-heading font-semibold text-[16px] text-on-brand">{index + 1} of {count}</div>
-          <div className="font-body font-medium text-[12px] text-on-brand/70 truncate">
+          <div className="font-heading font-semibold type-body text-on-brand">{index + 1} of {count}</div>
+          <div className="font-body font-medium type-caption text-on-brand/70 truncate">
             {photo.tag ? photo.tag + ' · ' : ''}Uploaded by {photo.uploadedBy} · {photo.dateLabel}
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <a href={photo.src} download={photo.fileName}
-            className="flex items-center gap-2 bg-surface-card text-strong rounded-full px-4 py-2 font-body font-bold text-[14px] hover:bg-surface-accent transition-colors">
+            className="flex items-center gap-2 bg-surface-card text-strong rounded-full px-4 py-2 font-body font-bold type-body-sm hover:bg-surface-accent transition-colors">
             <Download size={15} /> Download
           </a>
           <button ref={closeRef} onClick={onClose} aria-label="Close viewer"

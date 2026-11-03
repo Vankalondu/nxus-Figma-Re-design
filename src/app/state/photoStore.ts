@@ -46,8 +46,8 @@ const OTHERS = [
  */
 export function heicStandIn(): string {
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#DCE6F0"/>' +
-    '<text x="200" y="196" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="700" fill="#3D4F63">HEIC photo</text>' +
-    '<text x="200" y="232" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#3D4F63">Preview after upload</text></svg>';
+    '<text x="200" y="196" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="700" fill="#3D4F63">HEIC photo</text>' + // nxus-ignore L-TY3: text drawn inside a stand-in image, not UI text
+    '<text x="200" y="232" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#3D4F63">Preview after upload</text></svg>'; // nxus-ignore L-TY3: text drawn inside a stand-in image, not UI text
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
 

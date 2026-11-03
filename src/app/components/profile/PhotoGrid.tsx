@@ -18,14 +18,14 @@ const TileMenu = ({ photo, isProfile, alignLeft, onProfile, onTag, onDelete, onC
     document.addEventListener('mousedown', away); document.addEventListener('keydown', esc);
     return () => { document.removeEventListener('mousedown', away); document.removeEventListener('keydown', esc); };
   }, [onClose]);
-  const item = 'w-full flex items-center gap-2 px-3 py-2 rounded-xl font-body font-bold text-[12px] text-body hover:bg-surface-accent hover:text-strong text-left';
+  const item = 'w-full flex items-center gap-2 px-3 py-2 rounded-xl font-body font-bold type-caption text-body hover:bg-surface-accent hover:text-strong text-left';
   return (
     <div ref={ref} role="menu" onClick={e => e.stopPropagation()}
       className={(alignLeft ? "left-2" : "right-2") + " absolute top-11 z-20 w-52 bg-surface-card border border-default rounded-2xl shadow-[var(--shadow-2xl)] p-1.5"}>
       <button role="menuitem" className={item} disabled={isProfile} onClick={() => { onProfile(); onClose(); }}>
         <Star size={14} /> {isProfile ? 'Profile photo' : 'Set as profile photo'}
       </button>
-      <div className="px-3 pt-2 pb-1 font-heading font-bold text-[10px] uppercase tracking-widest text-muted flex items-center gap-1"><Tag size={11} /> Tag</div>
+      <div className="px-3 pt-2 pb-1 font-heading font-bold type-micro uppercase tracking-widest text-muted flex items-center gap-1"><Tag size={11} /> Tag</div>
       {PHOTO_TAGS.map(t => (
         <button key={t} role="menuitemradio" aria-checked={photo.tag === t} className={item} onClick={() => { onTag(t); onClose(); }}>
           <span className="w-3.5">{photo.tag === t && <Check size={13} className="text-link" />}</span>{t}
@@ -62,16 +62,16 @@ export const PhotoGrid = ({ photos, profileId, onOpen, onProfile, onTag, onDelet
               <img src={p.src} alt="" className={'w-full h-full object-contain ' + (uploading ? 'opacity-40' : '')} draggable={false} />
             </button>
             {isProfile && (
-              <span className="absolute top-2 left-2 flex items-center gap-1 bg-brand-primary text-on-brand rounded-full px-2 py-1 font-body font-bold text-[10px] shadow-sm pointer-events-none">
+              <span className="absolute top-2 left-2 flex items-center gap-1 bg-brand-primary text-on-brand rounded-full px-2 py-1 font-body font-bold type-micro shadow-sm pointer-events-none">
                 <Star size={11} fill="currentColor" /> Profile photo
               </span>
             )}
             {p.tag && !uploading && (
-              <span className="absolute bottom-2 left-2 bg-surface-card/90 backdrop-blur-md text-strong rounded-full px-2 py-0.5 font-body font-bold text-[10px] shadow-sm pointer-events-none">{p.tag}</span>
+              <span className="absolute bottom-2 left-2 bg-surface-card/90 backdrop-blur-md text-strong rounded-full px-2 py-0.5 font-body font-bold type-micro shadow-sm pointer-events-none">{p.tag}</span>
             )}
             {uploading ? (
               <div className="absolute inset-x-3 bottom-3" role="progressbar" aria-valuenow={p.progress} aria-valuemin={0} aria-valuemax={100} aria-label={`Uploading ${p.fileName}`}>
-                <div className="font-body font-bold text-[10px] text-strong mb-1 truncate">Uploading… {p.progress}%</div>
+                <div className="font-body font-bold type-micro text-strong mb-1 truncate">Uploading… {p.progress}%</div>
                 <div className="h-1.5 rounded-full bg-border-default overflow-hidden"><div className="h-full bg-brand-primary rounded-full transition-[width]" style={{ width: p.progress + '%' }} /></div>
               </div>
             ) : (

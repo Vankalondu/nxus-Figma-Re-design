@@ -23,7 +23,7 @@ export function PositionFilter() {
           <Checkbox id={position.id} />
           <label 
             htmlFor={position.id}
-            className="text-sm text-body cursor-pointer"
+            className="type-body-sm text-body cursor-pointer"
           >
             {position.label}
           </label>

@@ -8,7 +8,7 @@
  */
 export const FILTER_SURFACE = 'bg-surface-card/60 border border-brand-primary/40';
 
-const PILL_BASE = 'flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold text-[12px] transition-colors whitespace-nowrap shrink-0';
+const PILL_BASE = 'flex items-center gap-2 px-4 py-2 rounded-full border font-body font-bold type-caption transition-colors whitespace-nowrap shrink-0';
 /** A filter pill / dropdown trigger in the filter look. */
 export const FILTER_PILL = `${PILL_BASE} bg-surface-card/60 border-brand-primary/40 hover:bg-surface-card text-strong`;
 /** The same pill when its filter is on (matches the dashboard InlineSel active state). */
@@ -16,7 +16,7 @@ export const FILTER_PILL_ACTIVE = `${PILL_BASE} bg-brand-primary border-transpar
 
 /** A search field in the filter look (pair with a left-aligned 14px Search icon). */
 export const FILTER_INPUT =
-  `w-full ${FILTER_SURFACE} rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors`;
+  `w-full ${FILTER_SURFACE} rounded-full pl-9 pr-3 py-2 font-body font-medium type-body-sm text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors`;
 
 /** The top-nav secondary button ("This Week", "Add Report"): outlined brand, transparent fill. */
 export const SECONDARY_BUTTON =
@@ -24,4 +24,4 @@ export const SECONDARY_BUTTON =
 
 /** Quiet text button for actions that live inside a card header (no pill). */
 export const CARD_TEXT_BUTTON =
-  'inline-flex items-center gap-1 font-body font-bold text-[12px] text-body hover:text-strong transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded';
+  'inline-flex items-center gap-1 font-body font-bold type-caption text-body hover:text-strong transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus rounded';

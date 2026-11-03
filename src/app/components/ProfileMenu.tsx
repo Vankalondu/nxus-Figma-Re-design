@@ -56,7 +56,7 @@ export function ProfileMenu({ profile }: { profile: ProfileInfo }) {
     sessionStorage.clear();
     navigate('/login');
   };
-  const row = 'w-full text-left px-4 py-3 rounded-[16px] font-body text-[14px] font-bold transition-colors';
+  const row = 'w-full text-left px-4 py-3 rounded-[16px] font-body type-body-sm font-bold transition-colors';
 
   return (
     <div className="relative" ref={ref}>
@@ -68,19 +68,19 @@ export function ProfileMenu({ profile }: { profile: ProfileInfo }) {
       {open && (
         <div role="menu" className="absolute right-0 mt-3 w-72 bg-surface-card rounded-[24px] shadow-[var(--shadow-xl)] border border-default z-50 overflow-hidden font-body">
           <div className="px-5 py-4 border-b border-default">
-            <div className="text-[14px] text-body">Signed in as <span className="font-bold text-strong">{name}</span></div>
-            <div className="text-[12px] text-muted font-medium mt-1">{profile.role}</div>
+            <div className="type-body-sm text-body">Signed in as <span className="font-bold text-strong">{name}</span></div>
+            <div className="type-caption text-muted font-medium mt-1">{profile.role}</div>
           </div>
 
           {profile.viewSwitch && (
             <div className="px-4 py-3 border-b border-default">
-              <div className="text-[12px] text-muted font-medium mb-2">View as</div>
+              <div className="type-caption text-muted font-medium mb-2">View as</div>
               <div className="flex p-1 bg-surface-accent rounded-full">
                 {profile.viewSwitch.options.map(opt => {
                   const active = opt === profile.viewSwitch!.value;
                   return (
                     <button key={opt} onClick={() => { profile.viewSwitch!.onChange(opt); setOpen(false); }}
-                      className={`flex-1 px-3 py-2 rounded-full text-[12px] font-bold transition-colors ${active ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
+                      className={`flex-1 px-3 py-2 rounded-full type-caption font-bold transition-colors ${active ? 'bg-brand-primary text-on-brand shadow-sm' : 'text-body hover:text-strong'}`}>
                       {opt}
                     </button>
                   );
@@ -121,7 +121,7 @@ function Modal({ title, onClose, children, footer }: { title: string; onClose: (
       <div className="absolute inset-0 bg-ink-midnight/60 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-surface-page rounded-[24px] w-full max-w-md max-h-[88vh] flex flex-col shadow-2xl border border-default overflow-hidden font-body">
         <div className="shrink-0 flex items-center justify-between gap-4 px-6 py-5 border-b border-default">
-          <h2 className="font-heading font-semibold text-[20px] text-heading">{title}</h2>
+          <h2 className="font-heading font-semibold type-h6 text-heading">{title}</h2>
           <button onClick={onClose} aria-label="Close" className="w-9 h-9 rounded-full bg-surface-accent flex items-center justify-center text-body hover:text-link transition-colors">
             <X size={16} />
           </button>
@@ -134,10 +134,10 @@ function Modal({ title, onClose, children, footer }: { title: string; onClose: (
   );
 }
 
-const inputCls = 'w-full bg-surface-input border border-default rounded-[12px] px-4 py-3 text-[14px] text-strong placeholder:text-placeholder outline-none focus:border-focus transition-colors';
-const labelCls = 'block text-[12px] font-bold text-body mb-2';
-const primaryBtn = 'px-6 py-3 rounded-full bg-brand-primary text-on-brand font-bold text-[14px] hover:bg-brand-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed';
-const secondaryBtn = 'px-6 py-3 rounded-full border-2 border-default text-body font-bold text-[14px] hover:border-brand-primary hover:text-strong transition-colors';
+const inputCls = 'w-full bg-surface-input border border-default rounded-[12px] px-4 py-3 type-body-sm text-strong placeholder:text-placeholder outline-none focus:border-focus transition-colors';
+const labelCls = 'block type-caption font-bold text-body mb-2';
+const primaryBtn = 'px-6 py-3 rounded-full bg-brand-primary text-on-brand font-bold type-body-sm hover:bg-brand-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed';
+const secondaryBtn = 'px-6 py-3 rounded-full border-2 border-default text-body font-bold type-body-sm hover:border-brand-primary hover:text-strong transition-colors';
 
 function ProfileModal({ role, initial, onClose, onSave }: { role: string; initial: Required<Saved>; onClose: () => void; onSave: (s: Saved) => void }) {
   const [form, setForm] = useState(initial);
@@ -158,7 +158,7 @@ function ProfileModal({ role, initial, onClose, onSave }: { role: string; initia
         <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-default shrink-0">
           <img src={form.photo} alt="" className="w-full h-full object-cover" />
         </div>
-        <button onClick={() => fileRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-accent text-strong font-bold text-[12px] hover:bg-surface-midtone transition-colors">
+        <button onClick={() => fileRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-accent text-strong font-bold type-caption hover:bg-surface-midtone transition-colors">
           <Camera size={14} />Change photo
         </button>
         <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={pickPhoto} />
@@ -168,8 +168,8 @@ function ProfileModal({ role, initial, onClose, onSave }: { role: string; initia
       <div><label className={labelCls} htmlFor="pf-phone">Phone</label><input id="pf-phone" type="tel" className={inputCls} placeholder="+254 700 000 000" value={form.phone} onChange={set('phone')} /></div>
       <div>
         <span className={labelCls}>Role</span>
-        <div className="px-4 py-3 rounded-[12px] bg-surface-accent text-[14px] text-body">{role}</div>
-        <p className="text-[12px] text-muted mt-2">Your role is set by your organisation and can't be changed here.</p>
+        <div className="px-4 py-3 rounded-[12px] bg-surface-accent type-body-sm text-body">{role}</div>
+        <p className="type-caption text-muted mt-2">Your role is set by your organisation and can't be changed here.</p>
       </div>
     </Modal>
   );
@@ -199,14 +199,14 @@ function SecurityModal({ onClose }: { onClose: () => void }) {
   const matches = next.length > 0 && next === confirm;
   const valid = cur.length > 0 && longEnough && matches;
   const rule = (ok: boolean, text: string) => (
-    <li className={`flex items-center gap-2 text-[12px] ${ok ? 'text-status-success-fg' : 'text-muted'}`}>
+    <li className={`flex items-center gap-2 type-caption ${ok ? 'text-status-success-fg' : 'text-muted'}`}>
       <span className={`w-2 h-2 rounded-full ${ok ? 'bg-status-success' : 'bg-border-default'}`} />{text}
     </li>
   );
   return (
     <Modal title="Security" onClose={onClose}
       footer={<><button onClick={onClose} className={secondaryBtn}>Cancel</button><button disabled={!valid} onClick={() => { toast.success('Password updated'); onClose(); }} className={primaryBtn}>Update password</button></>}>
-      <h3 className="font-heading font-semibold text-[16px] text-heading">Change password</h3>
+      <h3 className="font-heading font-semibold type-body text-heading">Change password</h3>
       <PasswordField id="sec-cur" label="Current password" value={cur} onChange={setCur} />
       <PasswordField id="sec-new" label="New password" value={next} onChange={setNext} />
       <PasswordField id="sec-confirm" label="Confirm new password" value={confirm} onChange={setConfirm} />
@@ -215,8 +215,8 @@ function SecurityModal({ onClose }: { onClose: () => void }) {
         {rule(matches, 'Both new passwords match')}
       </ul>
       <div className="pt-4 border-t border-default">
-        <h3 className="font-heading font-semibold text-[16px] text-heading">Other devices</h3>
-        <p className="text-[14px] text-body mt-1 mb-3">Signed in somewhere you don't recognise? Sign out everywhere except this device.</p>
+        <h3 className="font-heading font-semibold type-body text-heading">Other devices</h3>
+        <p className="type-body-sm text-body mt-1 mb-3">Signed in somewhere you don't recognise? Sign out everywhere except this device.</p>
         <button onClick={() => toast.success('Signed out of other devices')} className={secondaryBtn}>Sign out of other devices</button>
       </div>
     </Modal>

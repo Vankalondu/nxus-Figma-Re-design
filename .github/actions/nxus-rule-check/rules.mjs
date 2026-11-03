@@ -40,6 +40,38 @@ const FONTS_OK = new Set([
 // L-S1: multiples of 4, plus the intra-atom exception (2px steps at or below 8px) and hairlines.
 const SPACING_OK = (px) => px === 0 || px === 1 || px === 2 || px === 6 || px % 4 === 0;
 
+// L-TY3: the type ramp (R-TY1), desktop px. A literal size is frozen at one tier; a ramp
+// class steps per breakpoint. Tailwind's own size presets are literal sizes too — `text-sm` is
+// a fixed 14px/20px — so the ones below text-4xl are caught. text-4xl and up stay legal for KPI
+// display numerals, which the ramp has no step for (R-TY2).
+export const TYPE_RAMP = [
+  ['type-micro', 10], ['type-caption', 12], ['type-body-sm', 14], ['type-body', 16],
+  ['type-h6', 20], ['type-h5', 24], ['type-h4', 28], ['type-h3', 32], ['type-h2', 40], ['type-h1', 48],
+];
+export const TW_SIZE_PRESETS = { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, '2xl': 24, '3xl': 30 };
+export const TY3_ARBITRARY = /(?<![-a-zA-Z0-9])text-\[\d+(?:\.\d+)?(?:px|rem|em|pt)\]/g;
+export const TY3_PRESET = /(?<![-a-zA-Z0-9])text-(?:xs|sm|base|lg|xl|2xl|3xl)(?![-a-zA-Z0-9])/g;
+
+/** Nearest ramp class for a size in px; a tie rounds up, toward legibility. */
+export function rampFor(px) {
+  let best = TYPE_RAMP[0];
+  for (const step of TYPE_RAMP) {
+    if (Math.abs(step[1] - px) <= Math.abs(best[1] - px)) best = step;
+  }
+  return best[0] === 'type-h6' ? 'type-body-lg (type-h6 for a title)' : best[0];
+}
+
+/** The fix to suggest for an L-TY3 hit, e.g. `text-[13px]` → `type-body-sm`. */
+export function suggestTypeClass(hit) {
+  const preset = hit.match(/text-(xs|sm|base|lg|xl|2xl|3xl)$/);
+  let px = preset ? TW_SIZE_PRESETS[preset[1]] : null;
+  const lit = hit.match(/(\d+(?:\.\d+)?)(px|rem|em|pt)?/);
+  if (px == null && lit) px = /r?em/.test(lit[2] || '') ? Number(lit[1]) * 16 : Number(lit[1]);
+  if (px == null) return 'a type ramp class';
+  if (px >= 36) return 'text-4xl / text-5xl for a KPI numeral (R-TY2), otherwise type-h1';
+  return rampFor(px);
+}
+
 export const RULES = {
   'L-G1': { title: 'Bind tokens, never raw values', fix: 'use an NXUS colour token (var(--…) from nxus-tokens, or the NXUS Tailwind class) instead of a literal colour' },
   'L-C1': { title: 'Light and dark come from the palette, never white or black', fix: 'use the NXUS light/dark tokens instead of white or black' },
@@ -81,7 +113,8 @@ export function checkLine(line, ctx) {
     ['L-C10', /\b(?:text-text|border-border)-[a-z-]+/g],
     ['L-TY5', /(?<![-a-zA-Z0-9])text-(?:h[1-6]|body-lg|body-sm|caption|micro)(?![-a-zA-Z0-9])/g],
     ['L-G1', new RegExp(`\\b(?:${UTIL})-\\[(?:#[0-9A-Fa-f]{3,8}|(?:rgba?|hsla?)\\([^\\]]*\\))\\]`, 'g')],
-    ['L-TY3', /(?<![-a-zA-Z0-9])text-\[\d+(?:\.\d+)?(?:px|rem|em|pt)\]/g],
+    ['L-TY3', TY3_ARBITRARY],
+    ['L-TY3', TY3_PRESET],
     ['L-TY1', /(?<![-a-zA-Z0-9])font-\[['"]?[A-Za-z][^\]]*\]/g],
   ];
   for (const [id, re] of tw) while ((m = re.exec(line))) add(id, m[0]);

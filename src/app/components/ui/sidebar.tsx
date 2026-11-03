@@ -70,7 +70,7 @@ export function Sidebar() {
           <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--light-100)] border border-[#D0E8E3] shadow-sm shrink-0">
             <Zap size={20} className="text-[var(--blue-950)]" fill="currentColor" />
           </div>
-          <span className="font-heading font-extrabold text-[var(--blue-950)] text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
+          <span className="font-heading font-extrabold text-[var(--blue-950)] type-h6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">NXUS</span>
         </div>
 
         {/* Main Menu */}
@@ -90,7 +90,7 @@ export function Sidebar() {
                   <div className="shrink-0 flex items-center justify-center w-6 ml-1">
                     <item.icon size={22} strokeWidth={active ? 2.5 : 2} />
                   </div>
-                  <span className={`ml-4 font-body font-bold text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                  <span className={`ml-4 font-body font-bold type-body-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
                     active ? 'text-[var(--light-50)]' : 'text-muted group-hover:text-[var(--blue-950)]'
                   }`}>
                     {item.label}
@@ -117,8 +117,8 @@ export function Sidebar() {
               className="w-10 h-10 rounded-full border-2 border-[#D0E8E3] object-cover shrink-0"
             />
             <div className="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden whitespace-nowrap">
-              <span className="font-body font-bold text-[14px] text-[var(--blue-950)]">{displayName}</span>
-              <span className="font-body text-[12px] font-semibold text-muted">{displayRole}</span>
+              <span className="font-body font-bold type-body-sm text-[var(--blue-950)]">{displayName}</span>
+              <span className="font-body type-caption font-semibold text-muted">{displayRole}</span>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ export function Sidebar() {
                 <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--light-100)] border border-[#D0E8E3] shadow-sm">
                   <Zap size={20} className="text-[var(--blue-950)]" fill="currentColor" />
                 </div>
-                <span className="font-heading font-extrabold text-[var(--blue-950)] text-xl">NXUS</span>
+                <span className="font-heading font-extrabold text-[var(--blue-950)] type-h6">NXUS</span>
               </div>
               <button
                 onClick={() => setMobileOpen(false)}
@@ -155,7 +155,7 @@ export function Sidebar() {
                     }`}
                   >
                     <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
-                    <span className="font-body font-bold text-[14px]">{item.label}</span>
+                    <span className="font-body font-bold type-body-sm">{item.label}</span>
                   </button>
                 );
               })}
@@ -174,8 +174,8 @@ export function Sidebar() {
                   className="w-10 h-10 rounded-full border-2 border-[#D0E8E3] object-cover"
                 />
                 <div>
-                  <div className="font-body font-bold text-[14px] text-[var(--blue-950)]">{displayName}</div>
-                  <div className="font-body text-[12px] text-muted">{displayRole}</div>
+                  <div className="font-body font-bold type-body-sm text-[var(--blue-950)]">{displayName}</div>
+                  <div className="font-body type-caption text-muted">{displayRole}</div>
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ export function Sidebar() {
           className="flex flex-col items-center gap-1 text-muted hover:text-[var(--blue-950)] transition-colors"
         >
           <Menu size={20} />
-          <span className="font-body text-[10px] font-bold uppercase tracking-wide">Menu</span>
+          <span className="font-body type-micro font-bold uppercase tracking-wide">Menu</span>
         </button>
         {mainMenuItems.map((item, i) => {
           const active = isActive(item);
@@ -201,7 +201,7 @@ export function Sidebar() {
               }`}
             >
               <item.icon size={20} strokeWidth={active ? 2.5 : 2} />
-              <span className="font-body text-[10px] font-bold uppercase tracking-wide">{item.label}</span>
+              <span className="font-body type-micro font-bold uppercase tracking-wide">{item.label}</span>
             </button>
           );
         })}

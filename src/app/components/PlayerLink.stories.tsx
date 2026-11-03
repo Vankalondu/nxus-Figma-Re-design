@@ -4,7 +4,7 @@ import { PlayerLink } from './PlayerLink'
 const meta = {
   title: 'NXUS/Navigation/PlayerLink',
   component: PlayerLink,
-  decorators: [(Story) => <div className="p-6 bg-surface-page font-body text-[14px] text-body"><Story /></div>],
+  decorators: [(Story) => <div className="p-6 bg-surface-page font-body type-body-sm text-body"><Story /></div>],
   parameters: {
     docs: {
       description: {
@@ -24,7 +24,7 @@ type Story = StoryObj<typeof meta>
 
 export const InAList: Story = {}
 export const CardTitle: Story = {
-  args: { tone: 'inherit', className: 'font-heading font-bold text-[16px] text-heading' },
+  args: { tone: 'inherit', className: 'font-heading font-bold type-body text-heading' },
   parameters: { docs: { description: { story: 'As a card title: heading colour, underline on hover.' } } },
 }
 export const InsideAClickableRow: Story = {
