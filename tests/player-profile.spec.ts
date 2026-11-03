@@ -144,7 +144,7 @@ test.describe('Player names', () => {
 test.describe('Reports Kanban (D-23)', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test('three boards per row, header on one line, two report columns, source and date under the scout name', async ({ page }) => {
+  test('three boards per row, header on one line, source and date under the scout name', async ({ page }) => {
     const errors = trackPageErrors(page);
     await openProfile(page, 'db-0', 'Reports');
     const cols = page.getByTestId('reports-kanban').locator(':scope > section');

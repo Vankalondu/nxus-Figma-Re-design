@@ -17,7 +17,7 @@ const meta = {
       description: {
         component:
           'The Reports tab as a Kanban-style board (**P-CO22**, **D-24**). Four boards, one per report type; three per row on ' +
-          'desktop (the fourth wraps), scout groups in two columns inside each board (176px floor), two on tablet, one on phone — never sideways scrolling. Not ' +
+          'desktop (the fourth wraps), one column of reports inside each board (176px floor), two on tablet, one on phone — never sideways scrolling. Not ' +
           'draggable: a report\'s type can\'t change.\n\n' +
           'Inside a column, reports are grouped by scout — the scout name is the group heading — newest first. Under the ' +
           'name, on one line, what was reported on and the date; the card below holds only the grades, with the ' +
@@ -34,7 +34,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Column: Story = {
-  parameters: { docs: { description: { story: 'One board at its desktop width (~320px): scout groups in two columns.' } } },
+  parameters: { docs: { description: { story: 'One board at its desktop width (~320px).' } } },
 }
 
 export const EmptyColumn: Story = {

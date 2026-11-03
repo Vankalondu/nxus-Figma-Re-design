@@ -94,9 +94,9 @@ export const KanbanColumn = ({ tpl, reports, grades, totalGrades, pickerOpen, on
       {groups.length === 0 ? (
         <p className="px-3 py-3 type-caption font-body font-medium text-muted">No reports yet</p>
       ) : (
-        <div className="p-2 columns-2 gap-2">
+        <div className="p-2 flex flex-col gap-3">
           {groups.map(gp => (
-            <div key={gp.scout} role="group" aria-label={gp.scout} className="flex flex-col gap-1 break-inside-avoid mb-3">
+            <div key={gp.scout} role="group" aria-label={gp.scout} className="flex flex-col gap-1">
               <h4 className="px-1 type-body-sm font-body font-bold text-strong truncate">{gp.scout}</h4>
               <ul className="flex flex-col gap-3">
                 {gp.reports.map(r => <KanbanReportCard key={r.id} report={r} typeName={tpl.name} grades={grades} onOpen={onOpen} />)}
