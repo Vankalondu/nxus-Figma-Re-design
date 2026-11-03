@@ -890,17 +890,17 @@ Toolbar   filter colour (P-CO23): segmented All · Long · Short · Target with 
           New reports come from the top-nav "Add Report" (opens the panel with this player).
 Board     Kanban layout (D-23, D-24, D-25): four boards, one per REPORT TYPE (Scout, Short,
           Long, Target) — 3 per row on desktop so the header fits one line, the fourth wraps
-          below; 2 on tablet, 1 on phone; never scrolls sideways. Inside a board, ONE column of
-          reports — not two, so nothing is squeezed (D-25). Not draggable:
+          below; 2 on tablet, 1 on phone; never scrolls sideways. Inside a board, reports sit TWO
+          TO A ROW in a grid whose rows line up; each report shows its own scout name (D-25). Not draggable:
           a report's type can't change. A type with nothing under the current list filter
           stays as a slim "No reports yet" column; archived types only with Show archived.
 Col head  "Short report" — name only, no count (D-24); beside it (wrapping under when narrow) the quiet
           "3 of 5 grades ⌄" and the underlined "Hide report" — text buttons, because they sit
           inside a card. Hiding shows a toast "Short report hidden. Show it again from
           Grades." with Undo
-Groups    reports grouped by SCOUT: the scout name is the group heading (type-body-sm, bold,
-          text-strong — the focus); the scout with the most recent report first, each
-          scout's reports newest first
+Order     reports ordered by SCOUT: the scout with the most recent report first, each
+          scout's reports newest first; every report shows the scout name (type-body-sm,
+          bold, text-strong — the focus)
 Report    under the scout name, OUTSIDE the card: "Highlight 2 · 6 Jul 2025" on ONE line
           (type-caption text-muted; a long source truncates, the date never wraps) (D-24)
 Card      grades only, as a grid of up to 5 per row with the CODE ABOVE each chip (full
@@ -1408,8 +1408,9 @@ grades; (3) column headings drop the "(3)" count.
 
 **D-25 · Three boards per row (3 Nov 2026).** Vanessa: three boards per row instead of four, so
 the type name, "5 of 5 grades" and Hide report sit on one line. Two columns of reports inside
-each board were tried the same day and dropped: the reports got squeezed (sources cut short,
-grades wrapping), so each board keeps one column of reports.
+each board: a grid, two reports per row with the rows lined up — each report a cell with its own
+scout name, "what · date" and grades (her sketch). An earlier version flowed scout groups down two
+loose newspaper-style columns that didn't line up; that was wrong.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

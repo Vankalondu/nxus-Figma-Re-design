@@ -159,7 +159,12 @@ test.describe('Reports Kanban (D-23)', () => {
 
     // Grouped by scout, code above each chip.
     const scout = page.getByRole('region', { name: 'Scout report' });
-    await expect(scout.getByRole('group', { name: 'Tom Legg' }).getByRole('listitem')).toHaveCount(2);
+    await expect(scout.getByRole('listitem', { name: /by Tom Legg/ })).toHaveCount(2);
+    // Two reports to a row, and the rows line up.
+    const cells = await scout.getByRole('listitem').evaluateAll(els => els.map(e => Math.round(e.getBoundingClientRect().top)));
+    expect(cells[0]).toBe(cells[1]);
+    expect(cells[2]).toBe(cells[3]);
+    expect(cells[2]).toBeGreaterThan(cells[0]);
     await expect(scout.getByText('MEN', { exact: true }).first()).toBeVisible();
     // Source · date is one line, above (not inside) the grades card.
     const meta = scout.getByText('vs Casa Sports').locator('xpath=..');
