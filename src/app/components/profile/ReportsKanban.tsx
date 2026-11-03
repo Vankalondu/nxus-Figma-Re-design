@@ -34,9 +34,8 @@ export const KANBAN_GRID =
   'grid gap-3 items-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(max(176px,calc((100%_-_24px)/3)),1fr))]';
 
 /**
- * One report (D-24, D-25): the scout name, then what was reported on and the date on ONE line,
- * outside the card; the card holds only the grades, code above each chip. Every report carries
- * its scout's name, because reports sit two to a row.
+ * One report (D-24): what was reported on and the date on ONE line under the scout name,
+ * outside the card; the card holds only the grades, code above each chip.
  */
 export const KanbanReportCard = ({ report, typeName, grades, onOpen }: {
   report: FiledReport; typeName: string; grades: TemplateQuestion[]; onOpen: (r: FiledReport) => void;
@@ -44,8 +43,7 @@ export const KanbanReportCard = ({ report, typeName, grades, onOpen }: {
   <li onClick={() => onOpen(report)} tabIndex={0} aria-label={`${typeName} by ${report.scout}, ${report.source}`}
     onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(report); } }}
     className="group/report cursor-pointer flex flex-col gap-1 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus">
-    <h4 className="px-1 type-body-sm font-body font-bold text-strong truncate">{report.scout}</h4>
-    <p className="-mt-1 px-1 type-caption font-body font-medium text-muted flex items-center gap-1 min-w-0 whitespace-nowrap">
+    <p className="px-1 type-caption font-body font-medium text-muted flex items-center gap-1 min-w-0 whitespace-nowrap">
       <span className="truncate min-w-0" title={report.source}>{report.source}</span><span aria-hidden>·</span><span className="shrink-0">{dayFirst(report.dateLabel)}</span>
       {report.archived && <span className="shrink-0 type-micro bg-text-body/10 text-body rounded px-1 font-body font-bold">Archived</span>}
     </p>
@@ -96,9 +94,16 @@ export const KanbanColumn = ({ tpl, reports, grades, totalGrades, pickerOpen, on
       {groups.length === 0 ? (
         <p className="px-3 py-3 type-caption font-body font-medium text-muted">No reports yet</p>
       ) : (
-        <ul className="p-2 grid grid-cols-2 items-start gap-x-2 gap-y-3">
-          {groups.flatMap(gp => gp.reports).map(r => <KanbanReportCard key={r.id} report={r} typeName={tpl.name} grades={grades} onOpen={onOpen} />)}
-        </ul>
+        <div className="p-2 flex flex-col gap-3">
+          {groups.map(gp => (
+            <div key={gp.scout} role="group" aria-label={gp.scout} className="flex flex-col gap-1">
+              <h4 className="px-1 type-body-sm font-body font-bold text-strong truncate">{gp.scout}</h4>
+              <ul className="flex flex-col gap-3">
+                {gp.reports.map(r => <KanbanReportCard key={r.id} report={r} typeName={tpl.name} grades={grades} onOpen={onOpen} />)}
+              </ul>
+            </div>
+          ))}
+        </div>
       )}
     </section>
   );
