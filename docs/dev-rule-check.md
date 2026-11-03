@@ -18,7 +18,7 @@ pull request and warns when a change breaks an NXUS rulebook rule. Decided 2 Nov
 | **L-C2** No colour from outside the system | Tailwind's own colours (`text-gray-500`, `bg-blue-600`) |
 | **L-C10** Retired token names | Old names that no longer exist (`text-foreground`, `bg-primary`) |
 | **L-TY1** Two typefaces | Any font other than Figtree and Plus Jakarta Sans |
-| **L-TY3** Use the type ramp | A fixed text size (`font-size: 15px`, `text-[28px]`) instead of a ramp class |
+| **L-TY3** Use the type ramp | A fixed text size (`font-size: 15px`, `text-[28px]`, or a Tailwind size preset like `text-sm`) instead of a ramp class. `text-4xl` and up are allowed for KPI numerals |
 | **L-TY5** Size is `type-*` | Old size class names (`text-h3`, `text-caption`) |
 | **L-S1** 4-point grid | Padding, margin or gap that is not a multiple of 4px (`padding: 10px`, `p-[13px]`) |
 

@@ -24,6 +24,10 @@ jobs:
           node-version: 20
       - name: Lint design tokens
         run: node scripts/lint-tokens.mjs
+      # The token lint now reads L-TY3 from the devs' rule checker, so a change to those
+      # shared rules has to prove itself against the checker's fixtures too.
+      - name: Rule checker self-test
+        run: node .github/actions/nxus-rule-check/test/run.mjs
 
       # Figma <-> CSS drift, plus a staleness warning. This ran only when a
       # human remembered to run it, which is exactly why the snapshot could go

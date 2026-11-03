@@ -24,7 +24,7 @@ const expected = {
   'PlayerCard.vue': ['2:L-C1', '2:L-C2', '2:L-S1', '3:L-TY3', '3:L-TY1', '4:L-G1', '4:L-TY3', '5:L-C10', '5:L-S1',
     '12:L-G1', '17:L-G1', '18:L-C1', '19:L-S1', '20:L-TY3', '21:L-TY1'],
   'legacy.scss': ['1:L-G1', '3:L-G1', '4:L-S1', '5:L-TY3', '6:L-C1'],
-  'Badge.tsx': ['2:L-C1', '2:L-TY5', '2:L-G1', '2:L-C1'],
+  'Badge.tsx': ['2:L-C1', '2:L-TY5', '2:L-G1', '2:L-C1', '4:L-TY3', '4:L-TY3'],
 };
 for (const [name, want] of Object.entries(expected)) {
   const got = ids(path.join(here, 'fixtures', 'bad', name));
