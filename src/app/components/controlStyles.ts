@@ -18,7 +18,7 @@ export const FILTER_PILL_ACTIVE = `${PILL_BASE} bg-brand-primary border-transpar
 export const FILTER_INPUT =
   `w-full ${FILTER_SURFACE} rounded-full pl-9 pr-3 py-2 font-body font-medium text-[13px] text-body placeholder:text-placeholder outline-none focus:border-brand-primary hover:bg-surface-card transition-colors`;
 
-/** The top-nav secondary button ("This Week", "Add Report"): outlined brand, transparent fill. */
+/** The top-nav secondary button ("Add Report"): outlined brand, transparent fill. */
 export const SECONDARY_BUTTON =
   'flex items-center gap-2 px-6 py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors shrink-0';
 

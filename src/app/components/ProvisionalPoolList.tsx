@@ -89,7 +89,7 @@ const provisionalPoolPlayers: Player[] = [
     flag: '🇸🇳',
     submittedBy: 'Amara Diallo',
     grade: 'A',
-    photo: 'https://images.unsplash.com/photo-1615592018519-6c5c8c3f4c8e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlZ3lwdGlhbiUyMGZvb3RiYWxsJTIwYXRobGV0ZSUyMHBvcnRyYWl0fGVufDF8fHx8MTc3MjcwNjM3NXww&ixlib=rb-4.1.0&q=80&w=1080',
+    photo: 'https://images.unsplash.com/photo-1771041564650-55f067de005d?fit=max&fm=jpg&q=80&w=1080',
   },
   {
     id: 8,

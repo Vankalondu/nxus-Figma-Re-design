@@ -41,7 +41,7 @@ const MOCK_DEFAULTS = {
   id: 'P-123',
   name: 'Mamadou Diop',
   initials: 'MD',
-  image: 'https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=400&h=400&fit=crop',
+  image: 'https://images.unsplash.com/photo-1771041564650-55f067de005d?w=400&h=400&fit=crop&crop=faces',
   dob: '12/05/2007',
   age: 18,
   nationality: ['Senegal'],
@@ -548,7 +548,6 @@ export default function PlayerProfile() {
           profile={{ name: 'Tom', role: roleLabel, avatar: AVATAR }}
           unreadCount={3}
           onNotifToggle={() => toast('Notifications - coming soon')}
-          onThisWeek={() => toast('This Week - coming soon')}
           onAddReport={() => { setActiveTab('Reports'); setNewReportRequest(n => n + 1); }}
           onAddPlayer={() => toast('Add Player - coming soon')}
         />

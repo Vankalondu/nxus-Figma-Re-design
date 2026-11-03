@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bell, Calendar, FileText, Plus, Menu, X, Moon, Sun, UploadCloud } from 'lucide-react';
+import { Search, Bell, FileText, Plus, Menu, X, Moon, Sun, UploadCloud } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { PlayerSearch } from './PlayerSearch';
 import { ProfileMenu, type ProfileInfo } from './ProfileMenu';
@@ -14,7 +14,6 @@ interface TopNavProps {
   notifOpen?: boolean;
   onNotifToggle?: () => void;
   notifPanel?: React.ReactNode;
-  onThisWeek?: () => void;
   onAddReport?: () => void; // omit to hide the button (Country Scout)
   onAddPlayer?: () => void;
   onUploadVideo?: () => void; // uploader roles (primary); Video Manager (secondary)
@@ -30,7 +29,6 @@ export function TopNav({
   notifOpen,
   onNotifToggle,
   notifPanel,
-  onThisWeek,
   onAddReport,
   onAddPlayer,
   onUploadVideo,
@@ -77,25 +75,8 @@ export function TopNav({
 
       <div className={'flex-1 ' + divCls} />
 
+      {/* Order (D-21): actions first, then theme + notifications beside the avatar */}
       <div className={'flex items-center shrink-0 ' + actionsGap}>
-        <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme"
-          className="w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm shrink-0">
-          {theme === 'dark' ? <Sun size={16} className="text-strong" /> : <Moon size={16} className="text-strong" />}
-        </button>
-        <div className="relative">
-          <button onClick={onNotifToggle} className="relative w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm">
-            <Bell size={16} className="text-strong" />
-            {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-primary rounded-full text-on-brand type-micro font-black flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
-          </button>
-          {notifOpen && notifPanel}
-        </div>
-
-        {onThisWeek && (
-          <button onClick={onThisWeek} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
-            <Calendar size={15} strokeWidth={2.5} /><span className={btnText}>This Week</span>
-          </button>
-        )}
-
         {onAddReport && (
           <button onClick={onAddReport} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
             <FileText size={15} strokeWidth={2.5} /><span className={btnText}>Add Report</span>
@@ -114,6 +95,18 @@ export function TopNav({
             <Plus size={15} strokeWidth={3} /><span className={btnText}>Add Player</span>
           </button>
         )}
+
+        <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme"
+          className="w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm shrink-0">
+          {theme === 'dark' ? <Sun size={16} className="text-strong" /> : <Moon size={16} className="text-strong" />}
+        </button>
+        <div className="relative">
+          <button onClick={onNotifToggle} aria-label="Notifications" className="relative w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm">
+            <Bell size={16} className="text-strong" />
+            {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-primary rounded-full text-on-brand type-micro font-black flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
+          </button>
+          {notifOpen && notifPanel}
+        </div>
 
         <ProfileMenu profile={profile} />
       </div>

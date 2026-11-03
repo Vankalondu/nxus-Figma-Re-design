@@ -22,21 +22,23 @@ export interface PlayerPhoto {
 }
 
 // ── Mock photos ───────────────────────────────────────────────────────────────────
-// Real football photos (Unsplash licence, credited in ATTRIBUTIONS.md) in /public/mock/photos,
-// in the shapes scouts actually upload: tall headshots, tall full-body shots, wide action and
-// team shots. Each player gets ONE headshot face, then a cycle of action / full-body / team.
+// Real football photos of African players (Unsplash licence, credited in ATTRIBUTIONS.md;
+// P-CO25) in /public/mock/photos, in the shapes scouts actually upload: headshots, tall
+// full-body shots, action and team shots. Each player gets ONE headshot face, then a cycle of
+// action / full-body / team.
 const BASE = (import.meta as any).env?.BASE_URL ?? '/';
 const mock = (name: string, w: number, h: number, tag: PhotoTag) => ({ src: `${BASE}mock/photos/${name}.jpg`, ratio: w / h, tag });
 const HEADSHOTS = [
-  mock('headshot-1', 640, 960, 'Headshot'), mock('headshot-2', 640, 960, 'Headshot'),
-  mock('headshot-3', 640, 1081, 'Headshot'), mock('headshot-4', 640, 960, 'Headshot'),
+  mock('headshot-1', 900, 506, 'Headshot'), mock('headshot-2', 900, 1350, 'Headshot'),
+  mock('headshot-3', 900, 1229, 'Headshot'), mock('headshot-4', 900, 1350, 'Headshot'),
 ];
 const OTHERS = [
-  mock('action-1', 640, 427, 'Action'), mock('fullbody-1', 640, 962, 'Full body'), mock('team-1', 640, 427, 'Team'),
-  mock('action-2', 640, 427, 'Action'), mock('fullbody-2', 640, 828, 'Full body'), mock('action-3', 640, 358, 'Action'),
-  mock('action-4', 640, 427, 'Action'), mock('fullbody-3', 640, 853, 'Full body'), mock('team-2', 640, 427, 'Team'),
-  mock('action-5', 640, 640, 'Action'), mock('action-6', 640, 374, 'Action'), mock('action-7', 640, 427, 'Action'),
-  mock('action-8', 640, 427, 'Action'),
+  mock('action-1', 900, 1332, 'Action'), mock('fullbody-1', 900, 1350, 'Full body'), mock('team-1', 900, 720, 'Team'),
+  mock('action-2', 900, 1350, 'Action'), mock('fullbody-2', 900, 1350, 'Full body'), mock('action-3', 900, 720, 'Action'),
+  mock('action-4', 900, 720, 'Action'), mock('fullbody-3', 900, 1368, 'Full body'), mock('team-2', 900, 737, 'Team'),
+  mock('action-5', 900, 1129, 'Action'), mock('fullbody-4', 900, 1200, 'Full body'), mock('action-6', 900, 1345, 'Action'),
+  mock('team-3', 900, 573, 'Team'), mock('fullbody-5', 900, 1350, 'Full body'), mock('action-7', 900, 1350, 'Action'),
+  mock('team-4', 900, 720, 'Team'),
 ];
 
 /**

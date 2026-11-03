@@ -230,101 +230,6 @@ const ReportDrawer = ({ report, onClose }: { report: Report; onClose: () => void
   );
 };
 
-// ─── This Week Modal — Google Notes style ─────────────────────────────────────
-const ThisWeekModal = ({
-  tasks, onClose, onToggle, onAdd,
-}: {
-  tasks: Task[];
-  onClose: () => void;
-  onToggle: (id: string) => void;
-  onAdd: (text: string) => void;
-}) => {
-  const [newText, setNewText] = useState('');
-  const incomplete = tasks.filter(t => !t.completed);
-  const complete   = tasks.filter(t => t.completed);
-
-  const handleAdd = () => {
-    if (!newText.trim()) return;
-    onAdd(newText.trim());
-    setNewText('');
-  };
-
-  return (
-    <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[200] p-4" onClick={onClose}>
-      <div className="bg-surface-card rounded-[32px] shadow-2xl w-full max-w-md border border-default flex flex-col max-h-[80vh]" onClick={e => e.stopPropagation()}>
-        {/* Header */}
-        <div className="px-8 py-6 border-b border-default flex items-center justify-between bg-brand-primary rounded-t-[32px] shrink-0">
-          <div className="flex items-center gap-3">
-            <Calendar size={20} className="text-strong" />
-            <span className="font-heading font-semibold text-[16px] text-on-brand">Tasks This Week</span>
-          </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-surface-card/10 flex items-center justify-center text-on-brand/60 hover:text-on-brand transition-colors">
-            <X size={16} />
-          </button>
-        </div>
-
-        {/* Add task input */}
-        <div className="px-6 py-4 border-b border-default shrink-0">
-          <div className="flex items-center gap-3">
-            <input
-              type="text"
-              value={newText}
-              onChange={e => setNewText(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleAdd()}
-              placeholder="Add a task..."
-              className="flex-1 bg-surface-card border border-default rounded-xl px-4 py-2 font-body text-[14px] font-bold text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all"
-            />
-            <button onClick={handleAdd}
-              className="w-9 h-9 rounded-full bg-brand-primary flex items-center justify-center text-on-brand hover:bg-brand-primary/80 transition-colors shrink-0">
-              <Plus size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Task list */}
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
-          {incomplete.map(task => (
-            <div key={task.id}
-              className="flex items-start gap-3 p-3 rounded-[16px] hover:bg-surface-accent transition-colors group cursor-pointer"
-              onClick={() => onToggle(task.id)}>
-              <div className="w-5 h-5 rounded-full border-2 border-default group-hover:border-brand-primary shrink-0 mt-0.5 transition-colors" />
-              <div className="flex-1 min-w-0">
-                <p className="font-body font-bold text-[14px] text-body">{task.text}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <PriorityPill priority={task.priority} />
-                  <span className="font-body text-[12px] text-muted font-medium">{task.dueDate}</span>
-                  {task.assignedBy !== 'Me' && <span className="font-body text-[12px] text-muted font-medium">from {task.assignedBy}</span>}
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Completed section */}
-          {complete.length > 0 && (
-            <>
-              <div className="flex items-center gap-2 py-2">
-                <div className="flex-1 h-px bg-surface-canvas" />
-                <span className="font-heading font-bold text-[10px] uppercase tracking-widest text-muted">{complete.length} completed</span>
-                <div className="flex-1 h-px bg-surface-canvas" />
-              </div>
-              {complete.map(task => (
-                <div key={task.id}
-                  className="flex items-start gap-3 p-3 rounded-[16px] hover:bg-surface-accent transition-colors group cursor-pointer opacity-50"
-                  onClick={() => onToggle(task.id)}>
-                  <div className="w-5 h-5 rounded-full bg-brand-primary flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle size={12} className="text-on-brand" />
-                  </div>
-                  <p className="font-body font-bold text-[14px] text-body line-through">{task.text}</p>
-                </div>
-              ))}
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // ─── Add Report Modal — 6-Step Flow ─────────────────────────────────────────
 // ─── Add Report Modal — New 6-Step Flow ───────────────────────────────────────
 // Step 1: Player + Date
@@ -982,11 +887,10 @@ export default function SeniorScoutDashboard() {
   // Dashboard tab state
   const [activeTab, setActiveTab] = useState<DashTab>('overview');
 
-  // Shared task state — used by both This Week modal and Tasks tile
+  // Shared task state — feeds the Tasks tile
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
   const toggleTask = (id: string) => setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   const addTask = (task: Omit<Task, 'id' | 'completed'>) => setTasks(prev => [...prev, { ...task, id: `t${Date.now()}`, completed: false }]);
-  const addTaskFromModal = (text: string) => addTask({ text, priority: 'High', dueDate: 'This Week', dueGroup: 'week', assignedTo: 'Me', assignedBy: 'Me' });
 
   // Lead-style task store — feeds the shared Tasks tab (distinct from the Overview task list above)
   const [leadTasks, setLeadTasks] = useState<any[]>(SHARED_MOCK_TASKS);
@@ -1017,7 +921,6 @@ export default function SeniorScoutDashboard() {
   };
 
   // Modals
-  const [showThisWeek, setShowThisWeek]     = useState(false);
   const [showAddReport, setShowAddReport]   = useState(false);
   const [showAddPlayer, setShowAddPlayer]   = useState(false);
 
@@ -1072,7 +975,6 @@ export default function SeniorScoutDashboard() {
       `}} />
 
       {/* Modals */}
-      {showThisWeek  && <ThisWeekModal tasks={tasks} onClose={() => setShowThisWeek(false)} onToggle={toggleTask} onAdd={addTaskFromModal} />}
       {showAddReport && <AddReportModal onClose={() => setShowAddReport(false)} />}
       {activeDrawer  && <ReportDrawer report={activeDrawer} onClose={() => setActiveDrawer(null)} />}
       {showAddPlayer && (
@@ -1135,7 +1037,6 @@ export default function SeniorScoutDashboard() {
 
       {/* Real Sidebar */}
       <Sidebar actions={[
-        { label: 'This Week', icon: Calendar, onClick: () => setShowThisWeek(true) },
         { label: 'Add Report', icon: FileText, onClick: () => setShowAddReport(true) },
       ]} />
 
@@ -1146,7 +1047,7 @@ export default function SeniorScoutDashboard() {
           responsive
           profile={{
             name: 'David', role: 'Senior Scout',
-            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80',
+            avatar: 'https://images.unsplash.com/photo-1715005881129-266ccdd75e43?w=100&h=100&fit=crop&crop=faces&q=80',
             viewSwitch: { options: ['Senior Scout', 'Head Scout'], value: activeRole, onChange: (v: string) => {
               if (v === 'Senior Scout') { sessionStorage.removeItem('userRole'); sessionStorage.setItem('loginRole', 'Senior Scout'); setActiveRole('Senior Scout'); }
               else { sessionStorage.setItem('userRole', 'Head Scout'); setActiveRole('Head Scout'); }
@@ -1177,7 +1078,6 @@ export default function SeniorScoutDashboard() {
               </div>
             </div>
           )}
-          onThisWeek={() => setShowThisWeek(true)}
           onAddReport={() => setShowAddReport(true)}
           onAddPlayer={() => setShowAddPlayer(true)}
         />

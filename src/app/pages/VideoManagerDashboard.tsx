@@ -592,7 +592,7 @@ export default function VideoManagerDashboard() {
     { id: 'tasks', label: 'Tasks', count: activeTasks.length, countTone: 'muted' },
   ];
 
-  const avatar = 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&h=100&fit=crop&crop=faces&q=80';
+  const avatar = 'https://images.unsplash.com/photo-1688143030645-a84f15553f9f?w=100&h=100&fit=crop&crop=faces&q=80';
 
   return (
     <div className="flex min-h-screen bg-surface-page font-body text-strong">

@@ -679,8 +679,9 @@ sticky top-6 z-50 flex items-center justify-between
 bg-surface-card/90 backdrop-blur-xl border border-default
 p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]
 ```
-Left to right: player search · role pill · notification bell with unread count · This Week ·
-Add Report · Add Player · theme toggle · avatar (`w-12 h-12 rounded-full`).
+Left to right: player search · Add Report · Add Player (or Upload Video for uploader roles) ·
+theme toggle · notification bell with unread count · avatar. Theme and notifications sit next to
+the avatar; the role shows inside the profile menu. There is no This Week button (D-21).
 
 ### P-CO8 — Sidebar
 Surface `bg-surface-sidebar`. Active item `bg-brand-primary/10 text-link border-l-[3px] border-brand-primary`.
@@ -919,6 +920,13 @@ editor and uploader names are not player links.
 **Why:** the old pop-up gave every possible answer a full-width row, so a five-question
 report was several screens long, and it covered the table you came from. Reports change
 often, so they are built from templates: a new or changed template needs no new screen.
+
+### P-CO25 — People imagery shows African players and staff
+NXUS scouts African football. Every photo of a person (mock photo-library images, avatars,
+headshots, empty-state art) shows Black African players, scouts or staff. Stock images are
+checked by eye before they ship, and credited in `ATTRIBUTIONS.md` (D-21).
+**Why:** imagery that does not look like the players and scouts who use the product tells
+them it was not made for them.
 ---
 
 ## 10. Page and dashboard layout
@@ -1342,6 +1350,13 @@ was watched and when; grades sit in a grid of up to five; hidden reports come ba
 Grades picker, with a toast and a helper line saying so (P-CO21, P-CO22); (5) Photo library:
 one tile size, 5 across on desktop, no pagination, real mock photos, "Add photos" as a
 secondary button (P-CO20); (6) every player name links to the profile (P-CO24).
+
+**D-21 · Top-nav order and African imagery (3 Nov 2026).** Vanessa: (1) the This Week
+button is removed everywhere (top nav and the mobile drawer), along with the This Week task
+pop-ups it opened; tasks live in each dashboard's Tasks tab; (2) the top-nav right side reads
+Add Report · Add Player · theme toggle · notifications · avatar, so theme and notifications sit
+next to the profile picture (P-CO7); (3) all people imagery shows Black African players and
+staff, and the mock photo library was replaced (P-CO25).
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

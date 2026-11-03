@@ -239,7 +239,7 @@ export default function CountryScoutDashboardPage() {
 
   const { theme, setTheme } = useTheme();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+
   const [isAddPlayerModalOpen, setIsAddPlayerModalOpen] = useState(false);
   const [showNotifPanel, setShowNotifPanel] = useState(false);
   const [tasks, setTasks] = useState([
@@ -448,7 +448,6 @@ export default function CountryScoutDashboardPage() {
       `}} />
 
       <Sidebar actions={[
-        { label: 'This Week', icon: Calendar, onClick: () => setIsTaskModalOpen(true) },
       ]} />
 
       <main className="flex-1 flex flex-col relative w-full min-w-0 items-center">
@@ -459,7 +458,7 @@ export default function CountryScoutDashboardPage() {
             responsive
             profile={{
               name: 'Vanessa Kalondu', role: loggedInRole,
-              avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces&q=80',
+              avatar: 'https://images.unsplash.com/photo-1743871698163-a2e470d8eac7?w=100&h=100&fit=crop&crop=faces&q=80',
               ...(loggedInRole === 'Senior Scout' ? { viewSwitch: { options: ['Senior Scout', 'Head Scout'], value: userRoleState, onChange: handleSeniorViewSwitch } } : {}),
             }}
             unreadCount={raiseNotifications.length}
@@ -488,7 +487,6 @@ export default function CountryScoutDashboardPage() {
                 )}
               </div>
             )}
-            onThisWeek={()=>setIsTaskModalOpen(true)}
             onAddPlayer={()=>setIsAddPlayerModalOpen(true)}
           />
 
@@ -1015,40 +1013,6 @@ export default function CountryScoutDashboardPage() {
         </div>
       )}
 
-      {/* Task Modal */}
-      {isTaskModalOpen && (
-        <div className="fixed inset-0 bg-ink-midnight/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4" onClick={()=>setIsTaskModalOpen(false)}>
-          <div className="bg-surface-card border border-default w-full max-w-md rounded-[32px] shadow-2xl flex flex-col max-h-[80vh] overflow-hidden" onClick={e=>e.stopPropagation()}>
-            <div className="p-6 border-b border-default flex justify-between items-center bg-surface-accent/50 shrink-0">
-              <h2 className="font-heading font-extrabold text-2xl text-heading flex items-center gap-3"><Calendar className="text-strong" size={24} />Tasks for This Week</h2>
-              <button onClick={()=>setIsTaskModalOpen(false)} className="w-8 h-8 rounded-full bg-surface-card border border-default flex items-center justify-center text-body hover:text-status-error hover:bg-status-error/10 transition-colors shadow-sm"><X size={16} /></button>
-            </div>
-            <div className="p-6 flex-1 overflow-y-auto">
-              <div className="flex items-center gap-3 mb-6">
-                <input type="text" placeholder="Add a new task..." value={newTaskText} onChange={e=>setNewTaskText(e.target.value)}
-                  onKeyDown={e=>{if(e.key==='Enter'&&newTaskText.trim()){setTasks([...tasks,{id:Date.now(),text:newTaskText,completed:false}]);setNewTaskText('');}}}
-                  className="flex-1 bg-surface-card border border-default rounded-xl px-4 py-3 font-body text-[14px] font-medium text-body focus:outline-none focus:ring-2 focus:ring-border-focus/20 focus:border-focus transition-all" />
-                <button onClick={()=>{if(newTaskText.trim()){setTasks([...tasks,{id:Date.now(),text:newTaskText,completed:false}]);setNewTaskText('');}}} className="bg-brand-primary text-on-brand p-3 rounded-xl hover:bg-brand-primary/80 transition-colors shadow-sm shrink-0"><Plus size={20} /></button>
-              </div>
-              <div className="space-y-3">
-                {tasks.map(task=>(
-                  <div key={task.id} className="group flex items-start gap-4 p-4 rounded-xl border border-default hover:border-default bg-surface-card transition-all shadow-sm">
-                    <button onClick={()=>setTasks(tasks.map(t=>t.id===task.id?{...t,completed:!t.completed}:t))} className={`mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center transition-colors ${task.completed?'bg-brand-primary text-on-brand border-brand-primary':'border-2 border-default hover:border-brand-primary'}`}>
-                      {task.completed&&<ShieldCheck size={14} strokeWidth={3} />}
-                    </button>
-                    <span className={`flex-1 font-body text-[14px] font-medium leading-relaxed ${task.completed?'text-body line-through':'text-strong'}`}>{task.text}</span>
-                    <button onClick={()=>setTasks(tasks.filter(t=>t.id!==task.id))} className="opacity-0 group-hover:opacity-100 p-2 text-body hover:text-status-error hover:bg-status-error/10 rounded-lg transition-all shrink-0"><Archive size={16} /></button>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="p-6 border-t border-default bg-surface-accent/50 flex justify-between items-center shrink-0">
-              <span className="font-body text-[14px] font-bold text-body">{tasks.filter(t=>t.completed).length}/{tasks.length} completed</span>
-              <button onClick={()=>setIsTaskModalOpen(false)} className="px-6 py-2 bg-surface-canvas text-body hover:bg-surface-canvas rounded-full font-body font-bold text-[14px] transition-colors">Close</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Add Player Modal */}
       {isAddPlayerModalOpen && (
