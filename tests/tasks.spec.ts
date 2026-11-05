@@ -40,14 +40,26 @@ test.describe('Tasks board — desktop', () => {
     const before = await countOf(page, 'In Progress');
     const mine = column(page, 'To-Do').locator('li[data-movable]').first();
     const title = await mine.getAttribute('aria-label');
-    await mine.dragTo(column(page, 'In Progress'));
+    // Hold it: the card lifts and follows the pointer, its spot stays as a placeholder.
+    const from = (await mine.boundingBox())!;
+    const to = (await column(page, 'In Progress').boundingBox())!;
+    await page.mouse.move(from.x + 40, from.y + 20);
+    await page.mouse.down();
+    await page.mouse.move(from.x + 60, from.y + 40, { steps: 5 });
+    await page.mouse.move(to.x + to.width / 2, to.y + 200, { steps: 15 });
+    const lifted = page.locator('li.rotate-2');
+    await expect(lifted).toHaveCount(1);
+    const held = (await lifted.boundingBox())!;
+    expect(Math.abs(held.x + held.width / 2 - (to.x + to.width / 2))).toBeLessThan(to.width);
+    await expect(column(page, 'To-Do').getByRole('listitem', { name: title!, exact: true })).toHaveClass(/opacity-40/);
+    await page.mouse.up();
     await expect(page.getByText('Moved to In Progress')).toBeVisible();
     await expect(column(page, 'In Progress').getByRole('listitem', { name: title!, exact: true })).toBeVisible();
     expect(await countOf(page, 'In Progress')).toBe(before + 1);
 
     // Someone else's task: not draggable and no Move to…
     const theirs = board(page).locator('li[aria-label]:not([data-movable])').first();
-    await expect(theirs).toHaveAttribute('draggable', 'false');
+    await expect(theirs).not.toHaveAttribute('aria-roledescription', /.+/);
     await expect(theirs).toHaveAttribute('title', /^Only .+ can move this task$/);
     await expect(theirs.getByRole('button', { name: /to…$/ })).toHaveCount(0);
   });

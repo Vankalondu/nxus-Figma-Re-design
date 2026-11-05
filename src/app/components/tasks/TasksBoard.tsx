@@ -2,6 +2,10 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Archive, ArchiveRestore, ArrowRight, MoveRight, Plus, Search } from 'lucide-react';
 import { toast } from 'sonner';
+import {
+  DndContext, DragOverlay, KeyboardSensor, PointerSensor, useDraggable, useDroppable, useSensor, useSensors,
+  type DragEndEvent, type DragStartEvent,
+} from '@dnd-kit/core';
 import { FILTER_PILL, FILTER_PILL_ACTIVE, FILTER_INPUT, SECONDARY_BUTTON } from '../controlStyles';
 import { FiltersButton, LLSelect, MobileFiltersButton, MobileFilterSheet, MobileTabMenu } from '../PlayersTableKit';
 import { PriorityPill } from '../dashboard/shared';
@@ -54,10 +58,15 @@ const DueLabel = ({ t }: { t: BoardTask }) => {
  * place where the work happens. Only the assigner or the assignee can drag it, or (on a phone)
  * use "Move to…".
  */
-export const TaskCard = ({ t, me, onOpen, onMove, onArchive, onDragStart, onDragEnd }: {
+export const TaskCard = ({ t, me, onOpen, onMove, onArchive, drag, lifted, placeholder }: {
   t: BoardTask; me: string;
   onOpen: (t: BoardTask) => void; onMove: (t: BoardTask, to: TaskState) => void; onArchive: (t: BoardTask) => void;
-  onDragStart?: (t: BoardTask) => void; onDragEnd?: () => void;
+  /** dnd-kit wiring from DraggableTaskCard */
+  drag?: { ref: (el: HTMLElement | null) => void; props: Record<string, unknown> };
+  /** the copy that follows the pointer while it's held (D-26) */
+  lifted?: boolean;
+  /** the card's spot in its column while it's held */
+  placeholder?: boolean;
 }) => {
   const movable = canMove(t, me);
   const [menu, setMenu] = useState(false);
@@ -70,16 +79,15 @@ export const TaskCard = ({ t, me, onOpen, onMove, onArchive, onDragStart, onDrag
   }, [menu]);
   const stop = (e: React.SyntheticEvent) => e.stopPropagation();
   return (
-    <li draggable={movable} tabIndex={0} aria-label={t.title} data-movable={movable || undefined}
-      onDragStart={e => { e.dataTransfer.setData('text/plain', t.id); e.dataTransfer.effectAllowed = 'move'; onDragStart?.(t); }}
-      onDragEnd={onDragEnd}
+    <li ref={drag?.ref} {...drag?.props} tabIndex={0} aria-label={t.title} data-movable={movable || undefined}
+      aria-roledescription={movable ? 'Draggable task' : undefined}
       onClick={() => onOpen(t)}
       onKeyDown={e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onOpen(t); } }}
       title={movable ? undefined : `Only ${t.createdBy} or ${t.assignee} can move this task`}
-      className={`group/task relative rounded-[12px] border border-default bg-surface-card px-3 py-2 flex flex-col gap-1.5 hover:border-brand-primary/60 hover:shadow-[var(--shadow-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus transition-[border-color,box-shadow] ${movable ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'} ${t.archived ? 'opacity-70' : ''}`}>
+      className={`group/task relative rounded-[12px] border bg-surface-card px-3 py-2 flex flex-col gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus transition-[border-color,box-shadow,opacity] touch-manipulation ${lifted ? 'border-brand-primary shadow-2xl rotate-2 scale-[1.03] cursor-grabbing' : placeholder ? 'border-dashed border-brand-primary/60 opacity-40' : 'border-default hover:border-brand-primary/60 hover:shadow-[var(--shadow-md)]'} ${lifted ? '' : movable ? 'cursor-grab' : 'cursor-pointer'} ${t.archived ? 'opacity-70' : ''}`}>
       <div className="flex items-start gap-2 min-w-0">
         <p className="flex-1 min-w-0 font-body font-bold type-body-sm text-strong truncate" title={t.title}>{t.title}</p>
-        <button onClick={e => { stop(e); onArchive(t); }} onKeyDown={stop} draggable={false}
+        <button onClick={e => { stop(e); onArchive(t); }} onKeyDown={stop} onPointerDown={stop}
           aria-label={t.archived ? `Restore ${t.title}` : `Archive ${t.title}`} title={t.archived ? 'Restore task' : 'Archive task'}
           className="shrink-0 -mr-1 w-6 h-6 rounded-full flex items-center justify-center text-muted hover:text-strong hover:bg-surface-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus">
           {t.archived ? <ArchiveRestore size={14} /> : <Archive size={14} />}
@@ -97,7 +105,7 @@ export const TaskCard = ({ t, me, onOpen, onMove, onArchive, onDragStart, onDrag
           <DueLabel t={t} />
           {movable && (
             <div ref={menuRef} className="relative">
-              <button onClick={e => { stop(e); setMenu(m => !m); }} onKeyDown={stop} draggable={false}
+              <button onClick={e => { stop(e); setMenu(m => !m); }} onKeyDown={stop} onPointerDown={stop}
                 aria-label={`Move ${t.title} to…`} aria-haspopup="menu" aria-expanded={menu} title="Move to…"
                 className="w-6 h-6 rounded-full flex items-center justify-center text-muted hover:text-strong hover:bg-surface-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus md:opacity-0 md:group-hover/task:opacity-100 md:group-focus-within/task:opacity-100 md:focus-visible:opacity-100">
                 <MoveRight size={14} />
@@ -119,21 +127,28 @@ export const TaskCard = ({ t, me, onOpen, onMove, onArchive, onDragStart, onDrag
   );
 };
 
+/** A card the assigner or assignee can pick up: it lifts and follows the pointer (D-26). */
+const DraggableTaskCard = (props: React.ComponentProps<typeof TaskCard> & { canDrag: boolean }) => {
+  const { canDrag, ...card } = props;
+  const { setNodeRef, listeners, attributes, isDragging } = useDraggable({ id: card.t.id, disabled: !canDrag });
+  return <TaskCard {...card} placeholder={isDragging}
+    drag={canDrag ? { ref: setNodeRef, props: { ...attributes, role: undefined, 'aria-roledescription': 'Draggable task', ...listeners } } : undefined} />;
+};
+
 /** A board column: sticky header with the count, its own scroll, 20 more as you reach the end. */
 const Column = ({ col, tasks, me, dragging, onDropTask, ...card }: {
   col: TaskColumn; tasks: BoardTask[]; me: string; dragging: BoardTask | null; onDropTask: (id: string, to: TaskState) => void;
   onOpen: (t: BoardTask) => void; onMove: (t: BoardTask, to: TaskState) => void; onArchive: (t: BoardTask) => void;
-  onDragStart: (t: BoardTask) => void; onDragEnd: () => void;
+  dragEnabled: boolean;
 }) => {
   const [limit, setLimit] = useState(PAGE);
-  const [over, setOver] = useState(false);
   const accepts = !!dragging && col !== 'overdue' && canMove(dragging, me) && dragging.status !== col;
+  const { setNodeRef, isOver } = useDroppable({ id: col, disabled: col === 'overdue' });
+  const over = isOver && accepts;
+  const { dragEnabled, ...cardProps } = card;
   const shown = tasks.slice(0, limit);
   return (
-    <section aria-label={columnLabel(col)} data-column={col}
-      onDragOver={e => { if (accepts) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setOver(true); } }}
-      onDragLeave={e => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setOver(false); }}
-      onDrop={e => { e.preventDefault(); setOver(false); const id = e.dataTransfer.getData('text/plain'); if (accepts && id) onDropTask(id, col as TaskState); }}
+    <section ref={setNodeRef} aria-label={columnLabel(col)} data-column={col}
       className={`min-w-0 flex flex-col bg-surface-card/60 border rounded-[20px] h-[calc(100dvh-280px)] min-h-[420px] overflow-hidden transition-colors ${over ? 'border-brand-primary bg-brand-primary/5' : accepts ? 'border-brand-primary/50 border-dashed' : 'border-default'}`}>
       <header className="px-4 py-3 flex items-center justify-between gap-2 border-b border-default bg-surface-card shrink-0">
         <h3 className={`font-heading font-extrabold type-body ${col === 'overdue' ? 'text-status-error' : 'text-heading'}`}>{columnLabel(col)}</h3>
@@ -141,7 +156,7 @@ const Column = ({ col, tasks, me, dragging, onDropTask, ...card }: {
       </header>
       <ul className="flex-1 min-h-0 overflow-y-auto p-2 flex flex-col gap-2"
         onScroll={e => { const el = e.currentTarget; if (el.scrollTop + el.clientHeight > el.scrollHeight - 120 && limit < tasks.length) setLimit(l => l + PAGE); }}>
-        {shown.map(t => <TaskCard key={t.id} t={t} me={me} {...card} />)}
+        {shown.map(t => <DraggableTaskCard key={t.id} t={t} me={me} canDrag={dragEnabled && canMove(t, me)} {...cardProps} />)}
         {tasks.length === 0 && <li className="px-2 py-6 text-center font-body font-medium type-caption text-muted">{col === 'overdue' ? 'Nothing late.' : 'No tasks here.'}</li>}
         {limit < tasks.length && <li className="py-2 text-center font-body font-medium type-caption text-muted">Scroll for more · {tasks.length - limit} left</li>}
       </ul>
@@ -232,6 +247,14 @@ export function TasksBoard() {
   };
   const open = (t: BoardTask) => navigate(taskTarget(t, base), { state: { trail: [{ label: 'Tasks', path: `${pathname}?tab=tasks` }] } });
   const dropTask = (id: string, toState: TaskState) => { const t = all.find(x => x.id === id); if (t) move(t, toState); };
+  // Pick up after 6px of movement, so a plain click still opens the task.
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }), useSensor(KeyboardSensor));
+  const onDragStart = (e: DragStartEvent) => setDragging(all.find(x => x.id === e.active.id) ?? null);
+  const onDragEnd = (e: DragEndEvent) => {
+    const t = dragging; setDragging(null);
+    const to = e.over?.id as TaskColumn | undefined;
+    if (t && to && to !== 'overdue' && to !== t.status && canMove(t, me)) dropTask(t.id, to as TaskState);
+  };
 
   const visible: TaskColumn[] = screen === 'desktop' ? COLUMNS.map(c => c.id) : screen === 'tablet' ? PAIRS[pair] : [mobileCol];
   const pairLabel = (p: TaskColumn[]) => p.map(c => `${columnLabel(c)} ${byCol[c].length}`).join(' · ');
@@ -313,13 +336,17 @@ export function TasksBoard() {
         </MobileTabMenu>
       )}
 
-      <div className={`grid gap-3 items-start ${visible.length === 4 ? 'grid-cols-4' : visible.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
-        {visible.map(c => (
-          <Column key={c} col={c} tasks={byCol[c]} me={me} dragging={dragging} onDropTask={dropTask}
-            onOpen={open} onMove={move} onArchive={archive}
-            onDragStart={setDragging} onDragEnd={() => setDragging(null)} />
-        ))}
-      </div>
+      <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragCancel={() => setDragging(null)}>
+        <div className={`grid gap-3 items-start ${visible.length === 4 ? 'grid-cols-4' : visible.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          {visible.map(c => (
+            <Column key={c} col={c} tasks={byCol[c]} me={me} dragging={dragging} onDropTask={dropTask}
+              onOpen={open} onMove={move} onArchive={archive} dragEnabled={screen !== 'mobile'} />
+          ))}
+        </div>
+        <DragOverlay dropAnimation={{ duration: 220, easing: 'cubic-bezier(0.2, 0, 0, 1)' }}>
+          {dragging && <ul className="list-none"><TaskCard t={dragging} me={me} lifted onOpen={() => {}} onMove={() => {}} onArchive={() => {}} /></ul>}
+        </DragOverlay>
+      </DndContext>
 
       {sheetOpen && (
         <TaskSheet base={base} players={TASK_PLAYERS} onClose={() => setSheetOpen(false)}

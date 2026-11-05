@@ -1484,6 +1484,9 @@ task name archives the task only; (8) a Tasks icon in the top nav, next to the o
 (10) every profile shows where the player is on the lists and who put them there, as pills —
 the full history, including moves back down. Every dashboard has the same structure; the
 tasks differ (P-CO26, P-CO27).
+Moving a task must feel like holding it: the card lifts out (tilted, larger, deep shadow) and
+follows the pointer, a faded dashed placeholder keeps its spot, and on drop it settles into
+the new column (dnd-kit DragOverlay; 6px before pick-up so a click still opens the task).
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was
