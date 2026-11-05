@@ -8,8 +8,9 @@ import { useHighlightsFor } from '../state/playerStore';
 import { useProfilePhoto } from '../state/photoStore';
 import { PhotoLibrary } from '../components/profile/PhotoLibrary';
 import { ReportsPanel } from '../components/profile/ReportsPanel';
-import { ListHistory } from '../components/profile/ListHistory';
-import { SegmentedToggle } from '../components/PlayersTableKit';
+import { CurrentListPill, ListHistory, useListMoveCount } from '../components/profile/ListHistory';
+import { RequestVideoButton } from '../components/profile/RequestVideoButton';
+import { MobileTabMenu, SegmentedToggle } from '../components/PlayersTableKit';
 import { accountBase } from '../components/PlayerLink';
 import { ALL_GENERATED_PLAYERS } from '../components/SeniorLeadPlayersPage';
 import { FILTER_PILL, FILTER_INPUT, SECONDARY_BUTTON } from '../components/controlStyles';
@@ -187,6 +188,7 @@ export default function PlayerProfile() {
     navigate({ search: `?${params}` }, { replace: true, state: location.state });
   };
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [tabMenuOpen, setTabMenuOpen] = useState(false);
   const [videoFilter, setVideoFilter] = useState('All');
   const [imgError, setImgError] = useState(false);
   // Top-nav "Add Report" on the profile opens the new-report flow for this player (D-20).
@@ -246,6 +248,7 @@ export default function PlayerProfile() {
     { icon: Flag, l: 'Nationality', v: nationality },
   ];
   const scoutedPct = Math.round(((player.matchesScouted || 0) / (player.seasonMatches || 16)) * 100);
+  const listMoves = useListMoveCount(player.id);
 
   // Career handlers
   const addEntry = (si: number) => {
@@ -339,10 +342,13 @@ export default function PlayerProfile() {
     );
     return (
       <div className="h-full flex flex-col gap-4 animate-fade-in">
-        {/* Its own row, top-left of the content (like the Photo Library toggle), in the filter colour (D-20). */}
-        <div className="overflow-x-auto hide-scrollbar max-w-full shrink-0 self-start">
-          <SegmentedToggle<string> tone="filter" value={videoFilter} onChange={setVideoFilter}
-            options={[['All', 'All videos'], ['Highlights', 'Only highlights'], ['Matches', 'Only matches']].map(([value, label]) => ({ value, label }))} />
+        {/* The filter on the left (filter colour, D-20); Request video on the right (D-27). */}
+        <div className="flex flex-wrap items-center justify-between gap-2 shrink-0">
+          <div className="overflow-x-auto hide-scrollbar max-w-full">
+            <SegmentedToggle<string> tone="filter" value={videoFilter} onChange={setVideoFilter}
+              options={[['All', 'All videos'], ['Highlights', 'Only highlights'], ['Matches', 'Only matches']].map(([value, label]) => ({ value, label }))} />
+          </div>
+          <RequestVideoButton player={{ id: player.id, name: player.name }} />
         </div>
         <div className={'flex-1 min-h-0 ' + (both ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : 'flex flex-col')}>
           {showMatches && column('Full Matches', matches)}
@@ -604,9 +610,82 @@ export default function PlayerProfile() {
         </div>
 
         {/* Two-column body — stacks below lg, page scrolls on mobile */}
-        <div className="flex-1 flex flex-col lg:flex-row min-h-0 lg:overflow-hidden px-[var(--pad-page)] py-4 gap-6">
-          {/* Left rail */}
-          <aside className="w-full lg:w-80 lg:shrink-0 bg-surface-card border border-default rounded-[32px] shadow-[var(--shadow-lg)] p-6 flex flex-col">
+        <div className="flex-1 flex flex-col lg:flex-row min-h-0 lg:overflow-hidden px-[var(--pad-page)] py-3 lg:py-4 gap-3 lg:gap-6">
+          {/* Below lg: a compact header instead of the tall card, so the tabs sit near the top (P-CO29, D-27).
+              Phone: avatar + name + club + current list; stats on one line; details and list history fold away.
+              Tablet: one short horizontal card — who on the left, stats and details on the right. */}
+          <section aria-label="Player" className="lg:hidden bg-surface-card border border-default rounded-[24px] shadow-[var(--shadow-lg)] p-4 md:p-5">
+            <div className="flex flex-col md:flex-row md:items-start gap-3 md:gap-6">
+              <div className="flex items-start gap-3 min-w-0 md:flex-1">
+                <div className="relative shrink-0">
+                  <div className="w-14 h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden border-2 border-brand-primary/40 bg-surface-accent flex items-center justify-center">
+                    {avatarSrc ? (
+                      <img src={avatarSrc} alt={player.name} onError={() => !profilePhoto && setImgError(true)} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="font-heading font-black type-h6 text-link">{player.initials}</span>
+                    )}
+                  </div>
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-brand-primary text-on-brand font-body font-black type-micro px-1.5 py-px rounded-full border-2 border-surface-card whitespace-nowrap">{player.primaryPos}</span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h1 className="font-heading font-semibold type-h6 text-heading leading-tight truncate">{player.name}</h1>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="font-heading font-bold type-caption text-muted uppercase tracking-widest truncate">{player.currentTeam}</span>
+                    <span className="bg-surface-accent text-muted font-body font-black type-micro px-1.5 py-px rounded uppercase shrink-0">{(Array.isArray(player.nationality) ? player.nationality[0] : (player.nationality || '')).slice(0, 2).toUpperCase()}</span>
+                  </div>
+                  <CurrentListPill playerId={player.id} className="md:hidden mt-1.5 inline-block" />
+                  <ListHistory playerId={player.id} layout="row" className="hidden md:flex mt-2" />
+                </div>
+              </div>
+              <div className="md:w-[300px] md:shrink-0 flex flex-col gap-2">
+                <p className="font-body font-bold type-body-sm text-strong tabular-nums">
+                  {player.matchesScouted || 0} matches <span className="text-muted font-medium">·</span> {player.potentialMins || 0}% mins
+                </p>
+                <dl className="hidden md:grid grid-cols-2 gap-x-4 gap-y-1">
+                  {bio.map(row => (
+                    <div key={row.l} className="flex items-baseline justify-between gap-2 min-w-0">
+                      <dt className="font-heading type-micro font-bold text-muted uppercase tracking-widest shrink-0">{row.l}</dt>
+                      <dd className="font-body font-bold type-caption text-body truncate">{row.v}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <button onClick={() => setIsEditModalOpen(true)} className="hidden md:flex self-start items-center gap-1.5 font-body font-bold type-caption text-link hover:underline">
+                  <Edit2 size={13} /> Edit Player
+                </button>
+              </div>
+            </div>
+            {/* Phone only: the rest folds away, closed by default */}
+            <div className="md:hidden mt-3 border-t border-default divide-y divide-default">
+              <details className="group/details">
+                <summary className="flex items-center justify-between py-2 cursor-pointer list-none font-body font-bold type-body-sm text-strong [&::-webkit-details-marker]:hidden">
+                  Player details <ChevronDown size={16} className="text-muted transition-transform group-open/details:rotate-180" />
+                </summary>
+                <div className="pb-3">
+                  {bio.map(row => (
+                    <div key={row.l} className="flex items-center justify-between py-1.5 border-b border-default/40 last:border-0">
+                      <span className="flex items-center gap-2 font-heading type-micro font-bold text-muted uppercase tracking-widest">
+                        <row.icon size={13} className="text-link" /> {row.l}
+                      </span>
+                      <span className="font-body font-bold type-caption text-body text-right">{row.v}</span>
+                    </div>
+                  ))}
+                  <button onClick={() => setIsEditModalOpen(true)} className="mt-3 w-full flex items-center justify-center gap-2 border-2 border-brand-primary text-link hover:bg-brand-primary/10 rounded-full py-2 font-body font-bold type-body-sm transition-colors">
+                    <Edit2 size={15} /> Edit Player
+                  </button>
+                </div>
+              </details>
+              <details className="group/history">
+                <summary className="flex items-center justify-between py-2 cursor-pointer list-none font-body font-bold type-body-sm text-strong [&::-webkit-details-marker]:hidden">
+                  <span>List history <span className="text-muted font-medium tabular-nums">({listMoves})</span></span>
+                  <ChevronDown size={16} className="text-muted transition-transform group-open/history:rotate-180" />
+                </summary>
+                <ListHistory playerId={player.id} className="pb-3" />
+              </details>
+            </div>
+          </section>
+
+          {/* Left rail (desktop) */}
+          <aside className="hidden lg:flex w-80 shrink-0 bg-surface-card border border-default rounded-[32px] shadow-[var(--shadow-lg)] p-6 flex-col">
             <div className="relative mx-auto shrink-0">
               <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-brand-primary/40 shadow-[var(--shadow-lg)] bg-surface-accent flex items-center justify-center">
                 {avatarSrc ? (
@@ -646,12 +725,22 @@ export default function PlayerProfile() {
           </aside>
 
           {/* Right column */}
-          <div className="flex-1 min-h-0 flex flex-col gap-6">
-            <div ref={tabsRef} className="scroll-mt-4 flex items-center shrink-0 min-w-0">
-              {/* White card surface (D-20) */}
-              <div className="flex items-center gap-1 bg-surface-card border border-default rounded-full p-1 shadow-[var(--shadow-lg)] overflow-x-auto hide-scrollbar max-w-full">
+          <div className="flex-1 min-h-0 flex flex-col gap-3 lg:gap-6">
+            {/* Tabs. Below lg they stay pinned at the top while the page scrolls (D-27). Phone: a
+                dropdown like the dashboard tab menu. Tablet: all six in one full-width row. */}
+            <div ref={tabsRef} className="scroll-mt-2 flex items-center shrink-0 min-w-0 max-lg:sticky max-lg:top-0 max-lg:z-30 max-lg:-mx-1 max-lg:px-1 max-lg:py-2 max-lg:bg-surface-page/90 max-lg:backdrop-blur-sm">
+              <MobileTabMenu label={activeTab} open={tabMenuOpen} onToggle={() => setTabMenuOpen(o => !o)}>
                 {tabs.map(t => (
-                  <button key={t} data-active={activeTab === t || undefined} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full px-5 py-2 font-body font-bold type-body-sm transition-colors whitespace-nowrap shrink-0'}>{t}</button>
+                  <div key={t} className="px-2">
+                    <button onClick={() => { setActiveTab(t); setTabMenuOpen(false); }} aria-current={activeTab === t ? 'page' : undefined}
+                      className={`w-full text-left px-2 py-2 rounded-lg font-body font-bold type-body-sm ${activeTab === t ? 'text-link bg-brand-primary/10' : 'text-body hover:bg-surface-accent'}`}>{t}</button>
+                  </div>
+                ))}
+              </MobileTabMenu>
+              {/* White card surface (D-20) */}
+              <div className="hidden md:flex items-center gap-1 bg-surface-card border border-default rounded-full p-1 shadow-[var(--shadow-lg)] max-lg:w-full lg:overflow-x-auto hide-scrollbar max-w-full">
+                {tabs.map(t => (
+                  <button key={t} data-active={activeTab === t || undefined} onClick={() => setActiveTab(t)} className={(activeTab === t ? 'bg-brand-primary text-on-brand shadow-sm ' : 'text-body hover:text-strong ') + 'rounded-full max-lg:flex-1 max-lg:px-2 lg:px-5 py-2 font-body font-bold type-body-sm transition-colors whitespace-nowrap shrink-0'}>{t}</button>
                 ))}
               </div>
             </div>

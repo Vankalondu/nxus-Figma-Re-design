@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { PipelineTier, TierMove, useTierHistory, useTierMap } from '../../state/playerStore';
 import { dayLabel } from '../../state/taskStore';
 
@@ -17,7 +17,11 @@ export const ListPill = ({ move, current }: { move: TierMove; current: boolean }
  * pill per move, oldest at the top, including moves back down. Kept from the moves made on the
  * Players tables.
  */
-export const ListHistory = ({ playerId, className = '' }: { playerId: string; className?: string }) => {
+export const ListHistory = ({ playerId, className = '', layout = 'column' }: {
+  playerId: string; className?: string;
+  /** column: stacked, oldest on top (desktop card, phone details); row: wrapping left to right (tablet header, D-27) */
+  layout?: 'column' | 'row';
+}) => {
   const moves = useTierHistory(playerId);
   // Taken off the lists since: no pill is 'current'.
   const onList = useTierMap().has(playerId);
@@ -25,13 +29,26 @@ export const ListHistory = ({ playerId, className = '' }: { playerId: string; cl
     return <p className={`font-body font-medium type-caption text-muted ${className}`}>Not on a list yet</p>;
   }
   return (
-    <ol aria-label="List history" className={`flex flex-col items-center ${className}`}>
+    <ol aria-label="List history" className={`flex ${layout === 'row' ? 'flex-wrap items-center gap-y-1' : 'flex-col items-center'} ${className}`}>
       {moves.map((m, i) => (
-        <li key={i} className="flex flex-col items-center" aria-current={onList && i === moves.length - 1 ? 'step' : undefined}>
-          {i > 0 && <ChevronDown size={12} aria-hidden className="text-muted my-0.5" />}
+        <li key={i} className={`flex items-center ${layout === 'row' ? '' : 'flex-col'}`} aria-current={onList && i === moves.length - 1 ? 'step' : undefined}>
+          {i > 0 && (layout === 'row'
+            ? <ChevronRight size={12} aria-hidden className="text-muted mx-0.5" />
+            : <ChevronDown size={12} aria-hidden className="text-muted my-0.5" />)}
           <ListPill move={m} current={onList && i === moves.length - 1} />
         </li>
       ))}
     </ol>
   );
 };
+
+/** Only the list the player is on now — the phone header (D-27). Nothing when not on a list. */
+export const CurrentListPill = ({ playerId, className = '' }: { playerId: string; className?: string }) => {
+  const moves = useTierHistory(playerId);
+  const onList = useTierMap().has(playerId);
+  if (!onList || moves.length === 0) return <span className={`font-body font-medium type-caption text-muted ${className}`}>Not on a list yet</span>;
+  return <span className={className}><ListPill move={moves[moves.length - 1]} current /></span>;
+};
+
+/** How many moves the player has — the "List history (n)" count. */
+export const useListMoveCount = (playerId: string) => useTierHistory(playerId).length;
