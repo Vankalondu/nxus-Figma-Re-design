@@ -1,6 +1,14 @@
 # HANDOFF — NXUS Responsive System v1
 
-_Last updated: 2026-11-03. Resume by reading this file._
+_Last updated: 2026-11-05. Resume by reading this file._
+
+## UPDATE (2026-11-05) — Tasks Kanban LIVE (D-26)
+- Every dashboard Tasks tab is a Kanban only (Overdue computed, To-Do, In Progress, Completed): no toggle, no chart. Columns scroll on their own; one-row Filters toggle; Assigned to me/by me; New task side panel. Only the assigner or assignee can drag; archive archives the task only; clicking a card opens where the work is. Code: src/app/components/tasks/, src/app/state/taskStore.ts, src/app/data/people.ts.
+- Country and Head got a Tasks tab. Top-nav Tasks icon (with open count) sits before the theme button.
+- Profile: list-history pills (full path, current filled; ListHistory.tsx, recorded from setTier) and a solid Request report button on the Reports tab.
+- Known gaps: Lead/Senior Overview task widgets still use the old mock tasks; table moves only last for the session; the browser holds all state.
+- Earlier on 2026-11-03/04: Reports board D-24/D-25 (four types, three boards per row, one report per row, headings 16px extrabold).
+
 
 ## UPDATE (2026-11-03) — release/nov-3 merged to main and LIVE
 - Merged `release/nov-3` (feature/type-scale D-22, feature/topnav-photos D-21, feature/reports-kanban D-23, plus D-24) into main; deployed on Vanessa's "make it live".
