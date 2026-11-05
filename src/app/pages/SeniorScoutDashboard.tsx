@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useMyOpenCount } from '../state/taskStore';
 import {
   Search, Calendar, Plus, Bell, ChevronDown,
   Video, FileText, TrendingUp, Target,
@@ -892,22 +893,9 @@ export default function SeniorScoutDashboard() {
   const toggleTask = (id: string) => setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   const addTask = (task: Omit<Task, 'id' | 'completed'>) => setTasks(prev => [...prev, { ...task, id: `t${Date.now()}`, completed: false }]);
 
-  // Lead-style task store — feeds the shared Tasks tab (distinct from the Overview task list above)
-  const [leadTasks, setLeadTasks] = useState<any[]>(SHARED_MOCK_TASKS);
-  const toggleLeadTask = (id: any) => setLeadTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
-  const setLeadTaskStatus = (id: any, status: any) => setLeadTasks(prev => prev.map(t => t.id === id ? { ...t, status, completed: status === 'done' } : t));
-  const addLeadTask = (input: any) => {
-    const base = typeof input === 'string' ? { text: input } : input;
-    setLeadTasks(prev => [{
-      id: `lt${Date.now()}`,
-      text: base.text, description: base.description,
-      priority: base.priority || 'Medium',
-      dueDate: base.dueDate || 'This week', deadline: base.deadline,
-      assignedDate: new Date().toISOString().slice(0, 10), status: 'pending',
-      assignedTo: base.assignedTo || 'Me',
-      allocated: 'Today', completed: false,
-    }, ...prev]);
-  };
+  // The Tasks tab is the shared Tasks board (D-26); the top-nav Tasks icon opens ?tab=tasks.
+  useEffect(() => { if (new URLSearchParams(location.search).get('tab') === 'tasks') setActiveTab('tasks'); }, [location.key]);
+  const myOpenTasks = useMyOpenCount('/senior-scout');
 
   // Deep-link to the players page section (short list / target list)
   const goToPlayers = (section: 'short-list' | 'target') => navigate(`/senior-scout/players?section=${section}`);
@@ -952,7 +940,7 @@ export default function SeniorScoutDashboard() {
     { id: 'reports',   label: 'Reports'   },
     { id: 'packages',  label: 'Packages'  },
     { id: 'analytics', label: 'Analytics' },
-    { id: 'tasks',     label: 'Tasks', count: leadTasks.filter(t => !t.completed).length, countTone: 'muted' as const },
+    { id: 'tasks',     label: 'Tasks', count: myOpenTasks, countTone: 'muted' as const },
   ];
 
   // Head Scout mode — write role to sessionStorage so CountryScoutDashboard
@@ -1119,7 +1107,7 @@ export default function SeniorScoutDashboard() {
               {activeTab === 'reports'   && <ReportsTab onAddReport={() => setShowAddReport(true)} />}
               {activeTab === 'packages'  && <PackagesTab />}
               {activeTab === 'analytics' && <AnalyticsTab />}
-              {activeTab === 'tasks'     && <TasksTab tasks={leadTasks} onToggle={toggleLeadTask} onSetStatus={setLeadTaskStatus} onAdd={addLeadTask} />}
+              {activeTab === 'tasks'     && <TasksTab />}
             </>
           )}
         </div>

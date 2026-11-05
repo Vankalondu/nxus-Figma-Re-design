@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Video, ClipboardCheck, CheckCircle, ListChecks, LogOut, Calendar, Clapperboard, ArrowRight, Play, Grid3x3 } from 'lucide-react';
 import { Sidebar } from '../components/Sidebar';
@@ -8,7 +8,8 @@ import { MatchesView, findMatchIdByTeams } from './MatchesView';
 import { AdminView } from './AdminView';
 import { KpiCard } from '../components/dashboard/KpiCard';
 import { TasksTab } from '../components/dashboard/TasksTab';
-import { MOCK_TASKS, TaskInput } from '../components/dashboard/shared';
+import { dayLabel, useTasks } from '../state/taskStore';
+import { meFor } from '../data/people';
 import { UploadVideoModal } from '../components/UploadVideoModal';
 import { VideoTrackerGrid } from '../components/VideoTrackerGrid';
 import { ALL_GENERATED_PLAYERS } from '../components/SeniorLeadPlayersPage';
@@ -61,22 +62,10 @@ export default function UploaderDashboard() {
       return s !== 'has-video' && s !== 'not-available';
     }).length, 0);
 
-  const [tasks, setTasks] = useState<any[]>(MOCK_TASKS);
-  const toggleTask = (id: any) => setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
-  const setTaskStatus = (id: any, status: any) => setTasks(prev => prev.map(t => t.id === id ? { ...t, status, completed: status === 'done' } : t));
-  const addTask = (input: any) => {
-    const b = typeof input === 'string' ? { text: input } : input;
-    setTasks(prev => [{
-      id: `ut${Date.now()}`,
-      text: b.text, description: b.description,
-      priority: b.priority || 'Medium',
-      dueDate: b.dueDate || 'This week', deadline: b.deadline,
-      assignedDate: new Date().toISOString().slice(0, 10), status: 'pending',
-      assignedTo: b.assignedTo || 'Me',
-      allocated: 'Today', completed: false,
-    }, ...prev]);
-  };
-  const activeTasks = tasks.filter(t => !t.completed);
+  // Tasks live on the shared Tasks board (D-26); the top-nav Tasks icon opens ?tab=tasks.
+  useEffect(() => { if (new URLSearchParams(location.search).get('tab') === 'tasks') setActiveTab('tasks'); }, [location.key]);
+  const me = meFor(base).name;
+  const activeTasks = useTasks(base).filter(t => !t.archived && t.status !== 'completed' && t.assignee === me);
 
   const tabs: TabItem[] = [
     { id: 'overview', label: 'Overview' },
@@ -166,8 +155,8 @@ export default function UploaderDashboard() {
                         {activeTasks.slice(0, 4).map(t => (
                           <div key={t.id} className="px-5 py-3 flex items-center gap-3">
                             <span className={`w-2 h-2 rounded-full shrink-0 ${t.priority === 'High' ? 'bg-status-error' : t.priority === 'Medium' ? 'bg-status-warning' : 'bg-text-body'}`} />
-                            <span className="font-body font-bold type-body-sm text-body truncate flex-1">{t.text}</span>
-                            <span className="font-body type-caption text-muted shrink-0">{t.dueDate}</span>
+                            <span className="font-body font-bold type-body-sm text-body truncate flex-1">{t.title}</span>
+                            <span className="font-body type-caption text-muted shrink-0">{dayLabel(t.due)}</span>
                           </div>
                         ))}
                         {activeTasks.length === 0 && <div className="px-5 py-8 text-center font-body type-body-sm text-body">No open tasks.</div>}
@@ -250,7 +239,7 @@ export default function UploaderDashboard() {
                 </div>
               )}
 
-              {activeTab === 'tasks' && <TasksTab tasks={tasks} onToggle={toggleTask} onSetStatus={setTaskStatus} onAdd={addTask} showDistribution={false} />}
+              {activeTab === 'tasks' && <TasksTab />}
             </>
           )}
         </div>

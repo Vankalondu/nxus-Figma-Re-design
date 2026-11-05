@@ -8,6 +8,7 @@ import { useHighlightsFor } from '../state/playerStore';
 import { useProfilePhoto } from '../state/photoStore';
 import { PhotoLibrary } from '../components/profile/PhotoLibrary';
 import { ReportsPanel } from '../components/profile/ReportsPanel';
+import { ListHistory } from '../components/profile/ListHistory';
 import { SegmentedToggle } from '../components/PlayersTableKit';
 import { accountBase } from '../components/PlayerLink';
 import { ALL_GENERATED_PLAYERS } from '../components/SeniorLeadPlayersPage';
@@ -622,6 +623,8 @@ export default function PlayerProfile() {
                 <span className="font-heading font-bold type-caption text-muted uppercase tracking-widest">{player.currentTeam}</span>
                 <span className="bg-surface-accent text-muted font-body font-black type-micro px-2 py-0.5 rounded uppercase">{(Array.isArray(player.nationality) ? player.nationality[0] : (player.nationality || '')).slice(0, 2).toUpperCase()}</span>
               </div>
+              {/* Which lists the player has been on, who put them there and when (D-26) */}
+              <ListHistory playerId={player.id} className="mt-3" />
             </div>
             <div className="flex items-start justify-center gap-8 mt-5">
               <Donut pct={scoutedPct} center={String(player.matchesScouted || 0)} label="Matches Scouted" />

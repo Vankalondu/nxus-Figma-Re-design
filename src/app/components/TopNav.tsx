@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Search, Bell, FileText, Plus, Menu, X, Moon, Sun, UploadCloud } from 'lucide-react';
+import { Search, Bell, FileText, Plus, Menu, X, Moon, Sun, UploadCloud, ClipboardList } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router';
+import { currentBase } from '../data/people';
+import { useMyOpenCount } from '../state/taskStore';
 import { useTheme } from 'next-themes';
 import { PlayerSearch } from './PlayerSearch';
 import { ProfileMenu, type ProfileInfo } from './ProfileMenu';
@@ -39,6 +42,10 @@ export function TopNav({
 }: TopNavProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const base = currentBase(pathname);
+  const myTasks = useMyOpenCount(base);
   const mx = responsive ? 'mx-4 md:mx-8' : 'mx-8';
   const pl = responsive ? 'pl-2 md:pl-6' : 'pl-6';
   // On mobile: full search field is hidden (a search icon expands it instead),
@@ -75,7 +82,7 @@ export function TopNav({
 
       <div className={'flex-1 ' + divCls} />
 
-      {/* Order (D-21): actions first, then theme + notifications beside the avatar */}
+      {/* Order (D-21, D-26): actions first, then Tasks, theme and notifications beside the avatar */}
       <div className={'flex items-center shrink-0 ' + actionsGap}>
         {onAddReport && (
           <button onClick={onAddReport} className={secondaryCls + ' items-center gap-2 ' + btnPad + ' py-3 bg-transparent border-2 border-brand-primary text-body hover:bg-brand-primary/10 rounded-full font-body type-body-sm font-bold transition-colors'}>
@@ -96,6 +103,12 @@ export function TopNav({
           </button>
         )}
 
+        {/* Tasks (D-26): opens this account's dashboard Tasks tab; the badge counts open tasks assigned to you */}
+        <button onClick={() => navigate(`${base || '/country-scout'}?tab=tasks`)} aria-label="Tasks" title="Tasks"
+          className="relative w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm shrink-0">
+          <ClipboardList size={16} className="text-strong" />
+          {myTasks > 0 && <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-brand-primary rounded-full text-on-brand type-micro font-black flex items-center justify-center tabular-nums">{myTasks > 99 ? '99+' : myTasks}</span>}
+        </button>
         <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label="Toggle theme"
           className="w-10 h-10 rounded-full bg-surface-card border border-default flex items-center justify-center hover:bg-surface-accent transition-colors shadow-sm shrink-0">
           {theme === 'dark' ? <Sun size={16} className="text-strong" /> : <Moon size={16} className="text-strong" />}

@@ -18,7 +18,8 @@ import { AdminView } from './AdminView';
 import { KpiCard } from '../components/dashboard/KpiCard';
 import { UploadVideoModal } from '../components/UploadVideoModal';
 import { TasksTab } from '../components/dashboard/TasksTab';
-import { MOCK_TASKS, TaskInput } from '../components/dashboard/shared';
+import { addTasks, isOverdue, isoDay, useTasks } from '../state/taskStore';
+import { meFor } from '../data/people';
 import { useTierMap, PipelineTier } from '../state/playerStore';
 import { PlayerLink } from '../components/PlayerLink';
 import {
@@ -559,28 +560,17 @@ export default function VideoManagerDashboard() {
   const [pkgFocus, setPkgFocus] = useState(0);
   const [fmFocus, setFmFocus] = useState(0);
 
-  const [tasks, setTasks] = useState<any[]>(MOCK_TASKS);
-  const toggleTask = (id: any) => setTasks(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
-  const setTaskStatus = (id: any, status: any) => setTasks(prev => prev.map(t => t.id === id ? { ...t, status, completed: status === 'done' } : t));
-  const addTask = (input: any) => {
-    const base = typeof input === 'string' ? { text: input } : input;
-    setTasks(prev => [{
-      id: `vt${Date.now()}`,
-      text: base.text, description: base.description,
-      priority: base.priority || 'Medium',
-      dueDate: base.dueDate || 'This week', deadline: base.deadline,
-      assignedDate: new Date().toISOString().slice(0, 10), status: 'pending',
-      assignedTo: base.assignedTo || 'Me',
-      allocated: 'Today', completed: false,
-    }, ...prev]);
-  };
-  const activeTasks = tasks.filter(t => !t.completed);
-  const overdueCount = activeTasks.filter(t => t.priority === 'High').length;
+  // Tasks live on the shared Tasks board (D-26); the top-nav Tasks icon opens ?tab=tasks.
+  useEffect(() => { if (new URLSearchParams(location.search).get('tab') === 'tasks') setActiveTab('tasks'); }, [location.key]);
+  const me = meFor('/video-manager').name;
+  const boardTasks = useTasks('/video-manager');
+  const activeTasks = boardTasks.filter(t => !t.archived && t.status !== 'completed' && t.assignee === me);
+  const overdueCount = activeTasks.filter(isOverdue).length;
 
   const viewPlayer = (p: any) => navigate(`/video-manager/player/${p.id}`, { state: { player: { id: p.id, name: p.name, initials: p.initials, age: p.age, nationality: p.nationality, primaryPos: p.posAcronym, currentTeam: p.team } } });
   const onMissing = (type: VideoType) => { if (type === 'package') { setActiveTab('packages'); setPkgFocus(x => x + 1); } else { setActiveTab('full-matches'); setFmFocus(x => x + 1); } };
   const onApprove = (i: ApprovalItem) => { approveVideo(i.id); toast.success(`Approved · ${i.videoName}`); };
-  const onRedo = (i: ApprovalItem, reason: string) => { const r = redoVideo(i.id, reason); if (r) addTask({ text: `Redo: ${i.videoName} — ${reason}`, assignedTo: i.uploader, priority: 'High', dueDate: 'This week' }); toast(`Sent back to ${i.uploader}`); };
+  const onRedo = (i: ApprovalItem, reason: string) => { const r = redoVideo(i.id, reason); if (r) addTasks('/video-manager', [{ title: `Redo: ${i.videoName} — ${reason}`, type: 'video-request', priority: 'High', createdBy: me, assignee: i.uploader, due: isoDay(7) }]); toast(`Sent back to ${i.uploader}`); };
 
   const pendingApprovals = vstate.approvals.length;
   const tabs: TabItem[] = [
@@ -652,7 +642,7 @@ export default function VideoManagerDashboard() {
               {activeTab === 'full-matches' && <CoverageTab key={`fm-${fmFocus}`} type="full-match" startNeeds={fmFocus > 0} onView={viewPlayer} />}
               {activeTab === 'approval' && <ApprovalTab onApprove={onApprove} onRedo={onRedo} />}
               {activeTab === 'analytics' && <VmAnalyticsTab />}
-              {activeTab === 'tasks' && <TasksTab tasks={tasks} onToggle={toggleTask} onSetStatus={setTaskStatus} onAdd={addTask} />}
+              {activeTab === 'tasks' && <TasksTab />}
             </>
           )}
         </div>

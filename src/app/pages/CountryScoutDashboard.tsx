@@ -6,6 +6,9 @@ import {
   TrendingUp, ShieldCheck, ArrowUpRight, ArrowRight, ClipboardCheck, FileText, Crown, Users, X, Star, Bookmark, Trash2
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router';
+import { TasksTab } from '../components/dashboard/TasksTab';
+import { useMyOpenCount } from '../state/taskStore';
+import { currentBase } from '../data/people';
 import { useTheme } from 'next-themes';
 import { CardView } from '../components/CardView';
 import { Sidebar } from '../components/Sidebar';
@@ -432,6 +435,13 @@ export default function CountryScoutDashboardPage() {
 
   const handleLogout = () => navigate('/');
   const [dashTab, setDashTab] = useState('Overview');
+  // Tasks board on every dashboard (D-26); the top-nav Tasks icon opens ?tab=tasks, a weekly-report task ?tab=reports.
+  useEffect(() => {
+    const t = new URLSearchParams(location.search).get('tab');
+    if (t === 'tasks') setDashTab('Tasks');
+    if (t === 'reports') setDashTab('Reports');
+  }, [location.key]);
+  const myOpenTasks = useMyOpenCount(currentBase(location.pathname));
   const isSeniorOrLead = loggedInRole==='Senior Scout'||loggedInRole==='Lead Scout';
   const tabLabel: Record<typeof activeTab,string> = {
     'players-in-scope':'Players in Scope','top-10':'Top 10',
@@ -508,8 +518,9 @@ export default function CountryScoutDashboardPage() {
                 </div>
 
                 <ResponsiveTabs className="mt-4 mb-6" activeId={dashTab} onSelect={setDashTab}
-                  tabs={['Overview','Active Players','Pending Reports','Analytics','Reports'].map(t=>({id:t,label:t}))} />
+                  tabs={['Overview','Active Players','Pending Reports','Analytics','Reports','Tasks'].map(t=>({id:t,label:t,...(t==='Tasks'?{count:myOpenTasks,countTone:'muted' as const}:{})}))} />
 
+                {dashTab==='Tasks' ? <div className="pb-8"><TasksTab /></div> : (
                 <div className="flex flex-col gap-6 pb-8">
                   {/* KPI cards — shared KpiCard (P-CO4) */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -587,6 +598,7 @@ export default function CountryScoutDashboardPage() {
                     </div>
                   </div>
                 </div>
+                )}
               </>
             )}
 

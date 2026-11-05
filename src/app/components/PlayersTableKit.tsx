@@ -77,10 +77,12 @@ export const TabPill = ({ active, count, className = '', children, ...rest }: {
 );
 
 // Mobile: the active tab as a pill; its menu lists the tabs (rows supplied by the page).
-export const MobileTabMenu = ({ label, open, onToggle, children }: {
+export const MobileTabMenu = ({ label, open, onToggle, children, className = 'md:hidden' }: {
   label: React.ReactNode; open: boolean; onToggle: () => void; children: React.ReactNode;
+  /** Where it shows; the Tasks board also uses it on tablets (D-26). */
+  className?: string;
 }) => (
-  <div className="md:hidden relative">
+  <div className={`${className} relative`}>
     <button onClick={onToggle}
       className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-on-brand font-body font-bold type-body-sm">
       <span className="truncate max-w-[160px]">{label}</span>

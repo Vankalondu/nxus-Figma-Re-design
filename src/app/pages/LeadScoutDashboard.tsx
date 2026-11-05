@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Search, Calendar, Plus, Bell, X, FileText,
   Video, TrendingUp, Target, CheckCircle, Clock,
@@ -20,6 +20,7 @@ import { AdminView } from './AdminView';
 import { Task, MOCK_TASKS } from '../components/dashboard/shared';
 import { KpiCard } from '../components/dashboard/KpiCard';
 import { TasksTab } from '../components/dashboard/TasksTab';
+import { useMyOpenCount } from '../state/taskStore';
 import { ReportsTab } from '../components/dashboard/ReportsTab';
 import { AnalyticsTab } from '../components/dashboard/AnalyticsTab';
 
@@ -1110,6 +1111,9 @@ export default function LeadScoutDashboard() {
   if (location.pathname === '/lead-scout/admin')   activePage = 'admin';
 
   const [activeTab, setActiveTab] = useState<LeadTab>('overview');
+  // The top-nav Tasks icon opens /lead-scout?tab=tasks (D-26).
+  useEffect(() => { if (new URLSearchParams(location.search).get('tab') === 'tasks') setActiveTab('target'); }, [location.key]);
+  const myOpenTasks = useMyOpenCount('/lead-scout');
   const [tasks, setTasks] = useState<Task[]>(MOCK_TASKS);
   const [notifications, setNotifications] = useState<AppNotif[]>(INITIAL_NOTIFS);
   const [showNotifPanel, setShowNotifPanel] = useState(false);
@@ -1118,7 +1122,6 @@ export default function LeadScoutDashboard() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const toggleTask = (id: string) => setTasks(prev => prev.map(t => t.id===id ? { ...t, completed:!t.completed } : t));
-  const setTaskStatus = (id: any, status: any) => setTasks(prev => prev.map(t => t.id===id ? { ...t, status, completed: status==='done' } : t));
   const addTask = (input: any) => {
     const t = typeof input === 'string' ? { text: input } : input;
     const nowLabel = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -1146,7 +1149,7 @@ export default function LeadScoutDashboard() {
     { id:'pipeline',  label:'Pipeline'  },
     { id:'reports',   label:'Reports'   },
     { id:'analytics', label:'Analytics' },
-    { id:'target',    label:'Tasks', count: tasks.filter(t => !t.completed).length, countTone: 'muted' as const },
+    { id:'target',    label:'Tasks', count: myOpenTasks, countTone: 'muted' as const },
   ];
 
   const FLAG_MAP: Record<string,string> = { "GAM":"gm","CMR":"cm","MLI":"ml","SEN":"sn","BDI":"bi","NGA":"ng","GHA":"gh","CIV":"ci","ENG":"gb-eng" };
@@ -1274,7 +1277,7 @@ export default function LeadScoutDashboard() {
               {activeTab==='pipeline'  && <PipelineTab />}
               {activeTab==='reports'   && <ReportsTab onAddReport={() => setShowAddReport(true)} />}
               {activeTab==='analytics' && <AnalyticsTab />}
-              {activeTab==='target'    && <TasksTab tasks={tasks} onToggle={toggleTask} onSetStatus={setTaskStatus} onAdd={addTask} />}
+              {activeTab==='target'    && <TasksTab />}
             </>
           )}
         </div>

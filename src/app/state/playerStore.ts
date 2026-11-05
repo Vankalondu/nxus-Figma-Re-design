@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { currentBase, meFor } from '../data/people';
 
 // Shared, session-scoped player state so the global top-nav search and the players
 // page read/write the SAME list membership + uploaded highlights (keyed by the
@@ -27,8 +28,13 @@ export function seedTiers(seed: Map<string, PipelineTier>) {
   tierMap = new Map(seed);
   tierSeeded = true;
 }
-export function setTier(id: string, tier: PipelineTier) {
+/** Move a player to a list. Every move is kept in the player's list history (D-26). */
+export function setTier(id: string, tier: PipelineTier, by: string = meFor(currentBase()).name) {
+  const before = historyFor(id);
   tierMap = new Map(tierMap).set(id, tier);
+  if (before[before.length - 1]?.tier !== tier) {
+    history = new Map(history).set(id, [...before, { tier, by, at: isoDay(0) }]);
+  }
   emitTiers();
 }
 export function clearTier(id: string) {
@@ -39,6 +45,40 @@ export function getTierMap() { return tierMap; }
 const subscribeTiers = (cb: () => void) => { tierListeners.add(cb); return () => tierListeners.delete(cb); };
 export function useTierMap(): Map<string, PipelineTier> {
   return useSyncExternalStore(subscribeTiers, getTierMap, getTierMap);
+}
+
+// ── List history (D-26): every list a player has been on, who put them there and when ──
+export interface TierMove { tier: PipelineTier; by: string; at: string /* ISO yyyy-mm-dd */ }
+const LIST_SCOUTS = ['Tom Legg', 'Kwame Asante', 'David Mbugua', 'Sanoussy Sinare'];
+const isoDay = (offset: number) => { const d = new Date(new Date().toDateString()); d.setDate(d.getDate() + offset); return d.toISOString().slice(0, 10); };
+let history: Map<string, TierMove[]> = new Map();
+
+/**
+ * The seeded path to a player's current list, deterministic per id: Long → Short → Target,
+ * and every third player has a move back down on the way so the full history shows.
+ */
+function seedHistory(id: string): TierMove[] {
+  const tier = tierMap.get(id);
+  if (!tier) return [];
+  const n = [...id].reduce((a, c) => a + c.charCodeAt(0), 0);
+  const path: PipelineTier[] = tier === 'long-list' ? ['long-list']
+    : tier === 'short-list' ? (n % 3 === 0 ? ['long-list', 'short-list', 'target-list', 'short-list'] : ['long-list', 'short-list'])
+    : (n % 3 === 0 ? ['long-list', 'short-list', 'long-list', 'short-list', 'target-list'] : ['long-list', 'short-list', 'target-list']);
+  let day = -(8 + (n % 9));
+  const moves: TierMove[] = [];
+  for (let i = path.length - 1; i >= 0; i--) {
+    moves.unshift({ tier: path[i], by: LIST_SCOUTS[(n + i) % LIST_SCOUTS.length], at: isoDay(day) });
+    day -= 9 + ((n + i * 5) % 12);
+  }
+  return moves;
+}
+export function historyFor(id: string): TierMove[] {
+  return history.get(id) ?? seedHistory(id);
+}
+/** Reactive list history for one player (empty when they've never been on a list). */
+export function useTierHistory(id: string | undefined): TierMove[] {
+  useTierMap();
+  return id ? historyFor(id) : [];
 }
 
 // ── Uploaded highlights store (playerId → highlights) ──────────────────────────
