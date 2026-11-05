@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { GraduationCap, Archive, Send } from 'lucide-react';
+import { useLocation } from 'react-router';
 import { RequestReportSheet } from '../tasks/TasksBoard';
+import { canRequest } from '../../state/taskStore';
+import { currentBase } from '../../data/people';
 import { toast } from 'sonner';
 import { SegmentedToggle } from '../PlayersTableKit';
 import { FILTER_PILL, FILTER_PILL_ACTIVE } from '../controlStyles';
@@ -33,6 +36,7 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
   const [picker, setPicker] = useState<{ type?: string; from: 'toolbar' | string } | null>(null);
   const [sheet, setSheet] = useState<SheetState | null>(null);
   const [requesting, setRequesting] = useState(false);
+  const mayRequest = canRequest('report-request', currentBase(useLocation().pathname));
 
   useEffect(() => { if (newReportRequest > 0) setSheet({ mode: 'choose' }); }, [newReportRequest]);
 
@@ -86,11 +90,12 @@ export const ReportsPanel = ({ playerId, player, newReportRequest = 0 }: {
             }))} />
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          {/* Ask a Lead or Senior scout to report on this player; it becomes a task (D-26) */}
-          <button onClick={() => setRequesting(true)}
+          {/* Ask a scout to report on this player; it becomes a task. Only accounts that may
+              request reports see it — not Lead scouts, who file them (D-26, D-27) */}
+          {mayRequest && <button onClick={() => setRequesting(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary border border-brand-primary text-on-brand hover:bg-brand-primary/80 font-body font-bold type-caption shadow-sm transition-colors whitespace-nowrap shrink-0">
             <Send size={14} /> Request report
-          </button>
+          </button>}
           <button onClick={() => setShowArchived(v => !v)} aria-pressed={showArchived}
             className={showArchived ? FILTER_PILL_ACTIVE : FILTER_PILL}>
             <Archive size={14} /> {showArchived ? 'Hide archived' : 'Show archived'}

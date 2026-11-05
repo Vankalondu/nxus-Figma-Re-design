@@ -35,6 +35,10 @@ const STAFF: Person[] = [
 
 export const meFor = (base: string): Person => ACCOUNT_ME[base] ?? ACCOUNT_ME[''];
 
+/** The account a person signs into in the demo (their Tasks board), if they have one. */
+export const baseFor = (name: string): string | undefined =>
+  Object.entries(ACCOUNT_ME).find(([b, p]) => b !== '' && p.name === name)?.[0];
+
 /** Everyone a task can go to, the signed-in person first. */
 export const directoryFor = (base: string): Person[] => {
   const me = meFor(base);

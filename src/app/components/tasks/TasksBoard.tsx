@@ -136,10 +136,12 @@ const DraggableTaskCard = (props: React.ComponentProps<typeof TaskCard> & { canD
 };
 
 /** A board column: sticky header with the count, its own scroll, 20 more as you reach the end. */
-const Column = ({ col, tasks, me, dragging, onDropTask, ...card }: {
+const Column = ({ col, tasks, me, dragging, onDropTask, bare = false, ...card }: {
   col: TaskColumn; tasks: BoardTask[]; me: string; dragging: BoardTask | null; onDropTask: (id: string, to: TaskState) => void;
   onOpen: (t: BoardTask) => void; onMove: (t: BoardTask, to: TaskState) => void; onArchive: (t: BoardTask) => void;
   dragEnabled: boolean;
+  /** Phone: the status dropdown already names the column and its count, so no header (D-27). */
+  bare?: boolean;
 }) => {
   const [limit, setLimit] = useState(PAGE);
   const accepts = !!dragging && col !== 'overdue' && canMove(dragging, me) && dragging.status !== col;
@@ -150,7 +152,7 @@ const Column = ({ col, tasks, me, dragging, onDropTask, ...card }: {
   return (
     <section ref={setNodeRef} aria-label={columnLabel(col)} data-column={col}
       className={`min-w-0 flex flex-col bg-surface-card/60 border rounded-[20px] h-[calc(100dvh-280px)] min-h-[420px] overflow-hidden transition-colors ${over ? 'border-brand-primary bg-brand-primary/5' : accepts ? 'border-brand-primary/50 border-dashed' : 'border-default'}`}>
-      <header className="px-4 py-3 flex items-center justify-between gap-2 border-b border-default bg-surface-card shrink-0">
+      <header className={`${bare ? 'hidden' : 'flex'} px-4 py-3 items-center justify-between gap-2 border-b border-default bg-surface-card shrink-0`}>
         <h3 className={`font-heading font-extrabold type-body ${col === 'overdue' ? 'text-status-error' : 'text-heading'}`}>{columnLabel(col)}</h3>
         <span className={`font-body font-black type-caption tabular-nums rounded-full px-2 py-0.5 ${col === 'overdue' ? 'bg-status-error/15 text-status-error-fg' : 'bg-brand-primary/15 text-strong'}`}>{tasks.length}</span>
       </header>
@@ -340,7 +342,7 @@ export function TasksBoard() {
         <div className={`grid gap-3 items-start ${visible.length === 4 ? 'grid-cols-4' : visible.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
           {visible.map(c => (
             <Column key={c} col={c} tasks={byCol[c]} me={me} dragging={dragging} onDropTask={dropTask}
-              onOpen={open} onMove={move} onArchive={archive} dragEnabled={screen !== 'mobile'} />
+              onOpen={open} onMove={move} onArchive={archive} dragEnabled={screen !== 'mobile'} bare={screen === 'mobile'} />
           ))}
         </div>
         <DragOverlay dropAnimation={{ duration: 220, easing: 'cubic-bezier(0.2, 0, 0, 1)' }}>

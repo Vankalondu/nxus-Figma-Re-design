@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { directoryFor, meFor, Person } from '../data/people';
+import { baseFor, directoryFor, meFor, Person, StaffRole } from '../data/people';
 
 // Tasks for the dashboard Tasks board (P-CO26, D-26). Prototype — no backend.
 // Each account sees its own board. The seed is rebuilt on every load with due dates
@@ -40,6 +40,32 @@ export const TASK_TYPES: { id: TaskType; label: string }[] = [
   { id: 'general', label: 'General' },
 ];
 export const typeLabel = (t: TaskType) => TASK_TYPES.find(x => x.id === t)!.label;
+
+// ── Who can ask whom (D-27) ──────────────────────────────────────────────────────
+// The one table to edit when the rules change. `requesters` may create that type; `assignees`
+// (given the requester's role) are the people it can go to.
+const EVERYONE: StaffRole[] = ['Country Scout', 'Head Scout', 'Lead Scout', 'Senior Scout', 'Video Manager', 'Package Uploader', 'Full Match Uploader'];
+export const REQUEST_ROUTING: Record<TaskType, { requesters: StaffRole[]; assignees: (requester: StaffRole) => StaffRole[] }> = {
+  // A player report: Country and Head ask Lead and Senior scouts; Senior asks Lead scouts.
+  'report-request': {
+    requesters: ['Country Scout', 'Head Scout', 'Senior Scout'],
+    assignees: r => (r === 'Senior Scout' ? ['Lead Scout'] : ['Lead Scout', 'Senior Scout']),
+  },
+  // Head and Senior scouts ask Country and Head scouts for their weekly report.
+  'weekly-report': { requesters: ['Head Scout', 'Senior Scout'], assignees: () => ['Country Scout', 'Head Scout'] },
+  // Anyone can ask the Video Manager for footage.
+  'video-request': { requesters: EVERYONE, assignees: () => ['Video Manager'] },
+  'general': { requesters: EVERYONE, assignees: () => EVERYONE },
+};
+/** Can the signed-in person of this account create this type? */
+export const canRequest = (type: TaskType, base: string) => REQUEST_ROUTING[type].requesters.includes(meFor(base).role);
+/** The people a task of this type can go to, from this account (the signed-in person first when allowed). */
+export const assigneesFor = (type: TaskType, base: string): Person[] => {
+  const roles = REQUEST_ROUTING[type].assignees(meFor(base).role);
+  return directoryFor(base).filter(p => roles.includes(p.role) && (type === 'general' || p.name !== meFor(base).name));
+};
+/** The Video Manager a video request goes to. */
+export const videoManagerFor = (base: string): Person => assigneesFor('video-request', base)[0];
 
 export const COLUMNS: { id: TaskColumn; label: string }[] = [
   { id: 'overdue', label: 'Overdue' },
@@ -129,7 +155,9 @@ function recipes(me: Person, dir: Person[]): Recipe[] {
       add(26, 'report-request', [me.name], leads);
       add(10, 'general', [me.name], [...by('Country Scout'), ...leads]);
       add(8, 'general', bosses.length ? bosses : leads, [me.name]);
-      if (me.role === 'Head Scout') add(6, 'weekly-report', [me.name], [me.name]);
+      // Weekly reports: Head asks Country scouts; Country scouts file them (D-27).
+      if (me.role === 'Head Scout') add(6, 'weekly-report', [me.name], by('Country Scout'));
+      else add(6, 'weekly-report', [...by('Head Scout'), ...by('Senior Scout')], [me.name]);
       add(10, 'video-request', [me.name], video);
       add(12, 'report-request', bosses, leads);
       break;
@@ -138,7 +166,7 @@ function recipes(me: Person, dir: Person[]): Recipe[] {
       add(24, 'report-request', bosses, [me.name]);
       add(14, 'video-request', [me.name], video);
       add(10, 'general', bosses, [me.name]);
-      if (me.role === 'Senior Scout') add(6, 'weekly-report', by('Head Scout'), [me.name]);
+      if (me.role === 'Senior Scout') add(6, 'weekly-report', [me.name], bosses);
       add(8, 'report-request', bosses, leads);
       add(6, 'video-request', leads, video);
       break;
@@ -224,13 +252,26 @@ export function setTaskArchived(base: string, id: string, archived: boolean) {
 
 let seq = 0;
 export type NewTask = Omit<BoardTask, 'id' | 'status' | 'created' | 'archived' | 'completedAt'>;
-/** Adds the tasks to this account's board and returns them. */
-export function addTasks(base: string, input: NewTask[]): BoardTask[] {
-  const made = input.map(t => ({ ...t, id: `new-${Date.now()}-${++seq}`, status: 'todo' as const, created: isoDay(0) }));
+function addTo(base: string, made: BoardTask[]) {
   const s = load(base);
   s.created = [...made, ...s.created];
   save(base, s);
   cache.set(base, [...made, ...getTasks(base)]);
+}
+/**
+ * Adds the tasks to this account's board and returns them. A task for someone who has their
+ * own account in the demo (e.g. the Video Manager) also lands on THEIR board, so a request
+ * really reaches them. The two copies don't sync later moves (prototype, no backend).
+ */
+export function addTasks(base: string, input: NewTask[]): BoardTask[] {
+  const made = input.map(t => ({ ...t, id: `new-${Date.now()}-${++seq}`, status: 'todo' as const, created: isoDay(0) }));
+  addTo(base, made);
+  const elsewhere = new Map<string, BoardTask[]>();
+  made.forEach(t => {
+    const theirs = baseFor(t.assignee);
+    if (theirs !== undefined && theirs !== (base || '/country-scout')) elsewhere.set(theirs, [...(elsewhere.get(theirs) ?? []), t]);
+  });
+  elsewhere.forEach((ts, b) => addTo(b, ts));
   emit();
   return made;
 }

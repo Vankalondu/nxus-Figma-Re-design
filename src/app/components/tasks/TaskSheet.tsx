@@ -1,8 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Search, Check } from 'lucide-react';
-import { directoryFor, meFor, REPORTING_ROLES, initials } from '../../data/people';
-import { NewTask, Priority, SeedPlayer, TASK_TYPES, TaskType, isoDay } from '../../state/taskStore';
+import { meFor, initials } from '../../data/people';
+import { NewTask, Priority, SeedPlayer, TASK_TYPES, TaskType, assigneesFor, canRequest, isoDay } from '../../state/taskStore';
+
+/** "Lead and Senior scouts" from the routing table, for the assignee label. */
+const rolesLabel = (type: TaskType, base: string) => {
+  const names = [...new Set(assigneesFor(type, base).map(p => p.role.replace(' Scout', '')))];
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} scouts` : `${names[0]}${names[0]?.endsWith('Manager') ? '' : ' scouts'}`;
+};
 
 const REPORT_TYPES = ['Scout report', 'Short report', 'Long report', 'Target report'];
 const LABEL = 'font-heading font-bold type-micro uppercase tracking-widest text-muted block mb-2';
@@ -16,8 +22,8 @@ export interface TaskPrefill {
 
 /**
  * New task — a right-side panel like the report panel (P-CO26, D-26). Several people make one
- * task each; nobody picked means it's for you. A report request only goes to Lead and Senior
- * scouts, the people who file reports.
+ * task each; nobody picked means it's for you. Which types this account can create, and who
+ * each can go to, come from REQUEST_ROUTING (D-27).
  */
 export const TaskSheet = ({ base, players, prefill, onCreate, onClose }: {
   base: string;
@@ -28,7 +34,8 @@ export const TaskSheet = ({ base, players, prefill, onCreate, onClose }: {
   onClose: () => void;
 }) => {
   const me = meFor(base).name;
-  const [type, setType] = useState<TaskType>(prefill?.type ?? 'general');
+  const allowedTypes = TASK_TYPES.filter(t => canRequest(t.id, base));
+  const [type, setType] = useState<TaskType>(prefill?.type && canRequest(prefill.type, base) ? prefill.type : 'general');
   const [title, setTitle] = useState('');
   const [notes, setNotes] = useState('');
   const [due, setDue] = useState(isoDay(7));
@@ -49,9 +56,11 @@ export const TaskSheet = ({ base, players, prefill, onCreate, onClose }: {
   }, [onClose]);
 
   const isReport = type === 'report-request';
-  const people = directoryFor(base).filter(p => !isReport || REPORTING_ROLES.includes(p.role));
-  // A report request can't stay assigned to someone who doesn't file reports.
-  useEffect(() => { if (isReport) setAssignees(a => a.filter(n => people.some(p => p.name === n))); }, [isReport]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Requests (report, weekly report) must name who does them; a video request defaults to the Video Manager.
+  const needsAssignee = type === 'report-request' || type === 'weekly-report';
+  const people = assigneesFor(type, base);
+  // Switching type drops anyone the new type can't go to.
+  useEffect(() => { setAssignees(a => a.filter(n => people.some(p => p.name === n))); }, [type]); // eslint-disable-line react-hooks/exhaustive-deps
   const shownPeople = people.filter(p => p.name.toLowerCase().includes(peopleQ.trim().toLowerCase()));
   const matches = useMemo(() => {
     const q = playerQ.trim().toLowerCase();
@@ -64,12 +73,12 @@ export const TaskSheet = ({ base, players, prefill, onCreate, onClose }: {
   const autoTitle = isReport && first ? `Report: ${first.name} (${reportType})`
     : type === 'video-request' && first ? `Video request: ${first.name}` : '';
   const finalTitle = title.trim() || autoTitle;
-  const canSave = !!finalTitle && (!isReport || (!!first && assignees.length > 0));
-  const blocker = !finalTitle ? 'Give the task a title' : isReport && !first ? 'Pick the player to report on' : isReport && assignees.length === 0 ? 'Pick who files the report' : '';
+  const canSave = !!finalTitle && (!isReport || !!first) && (!needsAssignee || assignees.length > 0);
+  const blocker = !finalTitle ? 'Give the task a title' : isReport && !first ? 'Pick the player to report on' : needsAssignee && assignees.length === 0 ? 'Pick who files the report' : '';
 
   const submit = () => {
     if (!canSave) return;
-    const to = assignees.length ? assignees : [me];
+    const to = assignees.length ? assignees : type === 'video-request' && people[0] ? [people[0].name] : [me];
     onCreate(to.map(a => ({
       title: finalTitle, notes: notes.trim() || (isReport && first ? `File a ${reportType.toLowerCase()} for ${first.name}.` : undefined),
       type, priority, createdBy: me, assignee: a, due,
@@ -97,8 +106,13 @@ export const TaskSheet = ({ base, players, prefill, onCreate, onClose }: {
           <div>
             <label className={LABEL} htmlFor="task-type">Type</label>
             <select id="task-type" value={type} onChange={e => setType(e.target.value as TaskType)} className={FIELD + ' cursor-pointer'}>
-              {TASK_TYPES.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
+              {allowedTypes.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
             </select>
+            {allowedTypes.length < TASK_TYPES.length && (
+              <p className="font-body font-medium type-caption text-muted mt-1.5">
+                {meFor(base).role}s can't request {TASK_TYPES.filter(t => !canRequest(t.id, base)).map(t => t.label.toLowerCase()).join(' or ')}s.
+              </p>
+            )}
           </div>
 
           {isReport && (
@@ -168,7 +182,7 @@ export const TaskSheet = ({ base, players, prefill, onCreate, onClose }: {
           </div>
 
           <div>
-            <span className={LABEL}>{isReport ? 'Who files it (Lead and Senior scouts)' : 'Assign to'}</span>
+            <span className={LABEL}>{needsAssignee ? `Who files it (${rolesLabel(type, base)})` : type === 'video-request' ? 'Assign to (Video Manager)' : 'Assign to'}</span>
             <div className="relative mb-2">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-body pointer-events-none" />
               <input value={peopleQ} onChange={e => setPeopleQ(e.target.value)} placeholder="Filter people" aria-label="Filter people" className={FIELD + ' pl-9'} />
