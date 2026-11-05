@@ -961,7 +961,8 @@ Columns   Overdue · To-Do · In Progress · Completed, each with its count in a
           Overdue is worked out from the due date (not done and past due) — never chosen, so
           nothing can be dropped into it. Each column scrolls on its own and loads 20 more as
           you reach the end. Desktop: four in one row. Tablet: two at a time, picked from a
-          dropdown. Phone: one, picked from the status dropdown (MobileTabMenu).
+          dropdown. Phone: one, picked from the status dropdown (MobileTabMenu) — and no
+          column header there, since the dropdown already names it and its count (D-27).
 Toolbar   Assigned to me · Assigned by me (filter pills, P-CO23) · summary · Filters · New task
           (top-nav secondary look). Filters shows/hides ONE row, like the Players tables:
           search, priority, type, assignee, creator, due from–to, player, Show (Active only
@@ -982,8 +983,16 @@ Move      drag between To-Do / In Progress / Completed — ONLY the person who a
 Archive   archives the task only, never the player. Archived tasks show under Show: Archived.
 New task  right-side panel like the report panel: type, players, title, description, due date,
           priority, assign to (several people = one task each; nobody = you), match. Types:
-          Report request · Scout weekly report · Video request · General. A report request
-          needs a player and only goes to Lead and Senior scouts.
+          Report request · Scout weekly report · Video request · General. Who may create
+          each type and who it can go to come from ONE table, REQUEST_ROUTING in
+          taskStore.ts (D-27):
+            Report request   Country, Head, Senior → Lead scouts (+ Senior scouts when
+                             Country or Head asks). Needs a player.
+            Weekly report    Head, Senior → Country and Head scouts
+            Video request    anyone → the Video Manager (nobody picked = the Video Manager)
+            General          anyone → anyone (nobody picked = you)
+          Types the account can't create are left out of the Type list, with a one-line
+          reason. A task for someone with their own demo account also lands on THEIR board.
 ```
 **Why:** a board answers "what's late, what's next, what's moving" at a glance; one board
 with filters replaces a separate list page, and opening the task where the work lives saves
@@ -998,8 +1007,40 @@ history shows, including moves back down. The list the player is on now is fille
 (brand primary); earlier ones are outlined. A player never put on a list shows "Not on a list
 yet". The Request report button (solid primary, beside Show archived on the Reports tab)
 opens the New task panel filled in as a report request for this player (D-26).
+Request report shows only for accounts that may request reports (REQUEST_ROUTING) — not for
+Lead scouts, who file them (D-27).
+On the tablet header the pills run in a row; on a phone only the current list shows, and the
+full path sits under "List history (n)" (P-CO29).
 **Why:** the Lead and Senior tables are where the final decisions happen; the profile should
 say where a player stands and who moved them, without opening the tables.
+
+### P-CO28 — Request video (player profile)
+Canonical implementation: `src/app/components/profile/RequestVideoButton.tsx`.
+On the Videos & Highlights tab, right of the All videos / Only highlights / Only matches
+filter: a solid primary button (same look as Request report) with a chevron. It opens three
+choices — Package · Full match · Both. Picking one sends the request at once: a Video
+request task to the account's Video Manager (medium priority, due in 3 days, the player
+attached), on their board and in your "Assigned by me", and a success toast "Video request
+sent to <name>" · "<choice> · <player>" with Open tasks. No form. Keyboard: arrows move
+through the choices, Esc or a click outside closes.
+**Why:** asking for footage is one decision (what kind), so it's one tap, not a form.
+
+### P-CO29 — Player profile on tablet and phone
+Canonical implementation: `src/app/pages/PlayerProfile.tsx` (desktop unchanged: the left card).
+```
+Phone     compact header: 56px avatar (position badge) · name · club + nationality · the
+(<768)    CURRENT list pill; one line "12 matches · 82% mins"; then two fold-away rows,
+          closed by default — "Player details ⌄" (foot … nationality + Edit Player) and
+          "List history (n) ⌄" (the full pill path). Tabs are a dropdown (MobileTabMenu)
+          showing the current tab.
+Tablet    one short horizontal card: avatar + name + club + list pills (in a row) on the
+(768–1023) left; stats line, the six details in a two-column grid and Edit Player on the
+          right. All six tabs in ONE full-width row — nothing hidden, no sideways scroll.
+Both      the tab control is pinned to the top while the page scrolls, so any tab is one tap
+          away from anywhere.
+```
+**Why:** the tall desktop card pushed the tabs ~900px down and hid Photo Library off the edge;
+the tabs are how people move around a profile, so they come first.
 ---
 
 ## 10. Page and dashboard layout
@@ -1487,6 +1528,17 @@ tasks differ (P-CO26, P-CO27).
 Moving a task must feel like holding it: the card lifts out (tilted, larger, deep shadow) and
 follows the pointer, a faded dashed placeholder keeps its spot, and on drop it settles into
 the new column (dnd-kit DragOverlay; 6px before pick-up so a click still opens the task).
+
+**D-27 · Profile on tablet and phone, Request video, who can ask whom (5 Nov 2026).** Vanessa:
+(1) on tablet the profile hid Photo Library and on a phone you scrolled past the whole card to
+reach the tabs — the profile gets a compact header and pinned tabs: a dropdown on phone, one
+full row on tablet; details and list history fold away on a phone (P-CO29); (2) a Request
+video button on Videos & Highlights with Package / Full match / Both, going straight to the
+Video Manager with a success message (P-CO28); Request report stays as it is; (3) Head and
+Senior scouts request weekly reports from Country and Head scouts, and Head and Senior scouts
+request reports from Lead scouts (Country and Head can also ask Senior scouts, from D-26) —
+one routing table (P-CO26); Lead scouts therefore get no Request report button; (4) on a
+phone the tasks column drops its header, since the status dropdown already names it.
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

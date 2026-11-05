@@ -24,3 +24,10 @@ type Story = StoryObj<typeof meta>
 export const OnTargetList: Story = { args: { playerId: 'tl-0' } }
 export const MovedBackDown: Story = { args: { playerId: 'sl-2' } }
 export const NotOnAList: Story = { args: { playerId: 'db-0' } }
+
+export const RowOnTablet: Story = {
+  name: 'Row (tablet header, D-27)',
+  args: { playerId: 'tl-0', layout: 'row' },
+  parameters: { docs: { description: { story: 'In the tablet header the pills run left to right and wrap, so the short card stays short.' } } },
+  render: args => <div className="w-[420px] p-4 bg-surface-card rounded-[20px]"><ListHistory {...args} /></div>,
+}

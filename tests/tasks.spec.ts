@@ -13,6 +13,12 @@ async function asLead(page: Page) {
     sessionStorage.setItem('userRole', 'Lead Scout');
   });
 }
+async function asSenior(page: Page) {
+  await page.addInitScript(() => {
+    sessionStorage.setItem('loginRole', 'Senior Scout');
+    sessionStorage.setItem('userRole', 'Senior Scout');
+  });
+}
 const board = (page: Page) => page.getByTestId('tasks-board');
 const column = (page: Page, name: string) => board(page).getByRole('region', { name, exact: true });
 const countOf = async (page: Page, name: string) => Number(await column(page, name).locator('header span').innerText());
@@ -149,16 +155,18 @@ test.describe('Player profile — Request report and list history', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
   test('Request report opens the task panel filled in for this player', async ({ page }) => {
-    await asLead(page);
-    await page.goto('/lead-scout/player/tl-0?tab=reports');
+    // Senior scouts request reports from Lead scouts (D-27).
+    await asSenior(page);
+    await page.goto('/senior-scout/player/tl-0?tab=reports');
     const name = await page.getByRole('heading', { level: 1 }).innerText();
     await page.getByRole('button', { name: 'Request report' }).click();
     const sheet = page.getByRole('dialog', { name: 'Request report' });
     await expect(sheet.getByLabel('Type', { exact: true })).toHaveValue('report-request');
     await expect(sheet.getByRole('button', { name: `Remove ${name}` })).toBeVisible();
-    // Only Lead and Senior scouts file reports.
+    // From a Senior scout, a report request goes to Lead scouts only.
     const people = sheet.getByRole('group', { name: 'Assign to' });
     await expect(people.getByText('Kwame Asante')).toBeVisible();
+    await expect(people.getByText('Sanoussy Sinare')).toHaveCount(0);
     await expect(people.getByText('Amara Diallo')).toHaveCount(0);
     await expect(sheet.getByRole('button', { name: 'Send request' })).toBeDisabled();
     await people.getByText('Kwame Asante').click();
@@ -166,8 +174,15 @@ test.describe('Player profile — Request report and list history', () => {
     await sheet.getByRole('button', { name: 'Send request' }).click();
     await expect(page.getByText('Report requested from Kwame Asante')).toBeVisible();
 
-    await page.goto('/lead-scout?tab=tasks');
+    await page.goto('/senior-scout?tab=tasks');
     await expect(board(page).getByRole('listitem', { name: `Report: ${name} (Short report)` }).first()).toBeVisible();
+  });
+
+  test('Lead scouts file reports, so they get no Request report button', async ({ page }) => {
+    await asLead(page);
+    await page.goto('/lead-scout/player/tl-0?tab=reports');
+    await expect(page.getByRole('button', { name: 'Show archived' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Request report' })).toHaveCount(0);
   });
 
   test('list history pills run oldest to newest, the current list filled', async ({ page }) => {
@@ -182,6 +197,6 @@ test.describe('Player profile — Request report and list history', () => {
 
     // A database-only player has no history yet.
     await page.goto('/lead-scout/player/db-0');
-    await expect(page.getByText('Not on a list yet')).toBeVisible();
+    await expect(page.getByText('Not on a list yet').locator('visible=true')).toBeVisible();
   });
 });
