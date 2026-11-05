@@ -684,8 +684,10 @@ bg-surface-card/90 backdrop-blur-xl border border-default
 p-2 pl-6 rounded-[24px] shadow-[var(--shadow-lg)]
 ```
 Left to right: player search · Add Report · Add Player (or Upload Video for uploader roles) ·
-theme toggle · notification bell with unread count · avatar. Theme and notifications sit next to
-the avatar; the role shows inside the profile menu. There is no This Week button (D-21).
+Tasks icon · theme toggle · notification bell with unread count · avatar. Theme and notifications sit next to
+the avatar; the role shows inside the profile menu. There is no This Week button (D-21). The
+Tasks icon (clipboard with a checklist, same round icon button as the bell) opens the account's
+dashboard Tasks tab; its badge counts open tasks assigned to you (D-26).
 
 ### P-CO8 — Sidebar
 Surface `bg-surface-sidebar`. Active item `bg-brand-primary/10 text-link border-l-[3px] border-brand-primary`.
@@ -947,6 +949,57 @@ headshots, empty-state art) shows Black African players, scouts or staff. Stock 
 checked by eye before they ship, and credited in `ATTRIBUTIONS.md` (D-21).
 **Why:** imagery that does not look like the players and scouts who use the product tells
 them it was not made for them.
+
+### P-CO26 — Tasks board (dashboard Tasks tab)
+Canonical implementation: `src/app/components/tasks/TasksBoard.tsx` + `TaskSheet.tsx`; data and
+rules in `src/app/state/taskStore.ts`; people in `src/app/data/people.ts`.
+```
+Where     every dashboard's Tasks tab — same structure everywhere, only the tasks differ
+          (Country, Head, Lead, Senior, Video Manager, uploaders). One Kanban board: no list
+          view, no distribution chart (D-26).
+Columns   Overdue · To-Do · In Progress · Completed, each with its count in a sticky header.
+          Overdue is worked out from the due date (not done and past due) — never chosen, so
+          nothing can be dropped into it. Each column scrolls on its own and loads 20 more as
+          you reach the end. Desktop: four in one row. Tablet: two at a time, picked from a
+          dropdown. Phone: one, picked from the status dropdown (MobileTabMenu).
+Toolbar   Assigned to me · Assigned by me (filter pills, P-CO23) · summary · Filters · New task
+          (top-nav secondary look). Filters shows/hides ONE row, like the Players tables:
+          search, priority, type, assignee, creator, due from–to, player, Show (Active only
+          by default / Archived). On a phone the filters open in the bottom sheet.
+Card      three compact lines so a column shows as many as possible:
+          1  task name, bold, cut with "…" (full name on hover) · Archive button
+          2  assigner avatar + name → assignee avatar + name ("You" for you)
+          3  priority pill (P-CO6) · type · due date — red "21 Oct · 13d late" when late,
+             "Due today", "Due 7 Nov", or "Done 4 Nov"
+Open      clicking a card goes where the work happens: report request → the player's
+          Reports tab; scout weekly report → the reports area; video request → the player's
+          videos (Video Manager: the video tracker; uploaders: their dashboard); general → the
+          player's profile on the tab the task names.
+Move      drag between To-Do / In Progress / Completed — ONLY the person who assigned the task
+          or the person it's for; others can open it but not move it (no drag, no Move to…).
+          "Move to…" button: always on a phone, on hover/focus elsewhere. Every move and
+          archive shows a toast with Undo.
+Archive   archives the task only, never the player. Archived tasks show under Show: Archived.
+New task  right-side panel like the report panel: type, players, title, description, due date,
+          priority, assign to (several people = one task each; nobody = you), match. Types:
+          Report request · Scout weekly report · Video request · General. A report request
+          needs a player and only goes to Lead and Senior scouts.
+```
+**Why:** a board answers "what's late, what's next, what's moving" at a glance; one board
+with filters replaces a separate list page, and opening the task where the work lives saves
+the user from hunting for it.
+
+### P-CO27 — List history pills (player profile)
+Canonical implementation: `src/app/components/profile/ListHistory.tsx`; moves kept in
+`src/app/state/playerStore.ts` (`setTier` records who and when).
+Under the player name on every profile: one pill per list move, oldest at the top, each
+reading "List · scout who put them there · date" ("Short · Kwame Asante · 20 Sep"). The FULL
+history shows, including moves back down. The list the player is on now is filled
+(brand primary); earlier ones are outlined. A player never put on a list shows "Not on a list
+yet". The Request report button (solid primary, beside Show archived on the Reports tab)
+opens the New task panel filled in as a report request for this player (D-26).
+**Why:** the Lead and Senior tables are where the final decisions happen; the profile should
+say where a player stands and who moved them, without opening the tables.
 ---
 
 ## 10. Page and dashboard layout
@@ -1413,6 +1466,24 @@ each board were tried the same day and dropped: the reports got squeezed (source
 grades wrapping), so each board keeps one column of reports. The type heading is 16px
 extrabold, bigger and bolder than the 14px bold scout names; 20px was tried and pushed the
 grades control and Hide report onto a second line.
+
+**D-26 · Tasks board, Tasks icon, Request report, list history (5 Nov 2026).** Vanessa: (1) the
+dashboard Tasks tab becomes ONE Kanban board like the current platform — no Board/List toggle,
+and everything the old task list showed is on the board, with its filters in one row behind a
+Filters button; the Task distribution chart is dropped for now; (2) cards show the task name,
+assigned by → to, the due date (red with days late) and the priority pill, using the space so
+as many tasks as possible are visible; (3) only the person who assigned a task and the person
+it's for can move it; drag between columns like a Kanban board; (4) tablet and phone pick
+columns from a dropdown, like the tables on mobile; (5) opening a task goes to where the task
+is — a report task to the report, a general task to where the action is (e.g. the player's
+profile for missing details); (6) task types: scout reports (Country and Head scouts request
+them from Lead and Senior scouts), scout weekly reports (Head and Senior scouts), video
+requests (scouts to the video team), general tasks; (7) the archive button at the end of a
+task name archives the task only; (8) a Tasks icon in the top nav, next to the other icons;
+(9) a Request report button on the profile Reports tab next to Show archived, primary-ish;
+(10) every profile shows where the player is on the lists and who put them there, as pills —
+the full history, including moves back down. Every dashboard has the same structure; the
+tasks differ (P-CO26, P-CO27).
 
 **D-12 · The heading/body split was derived, not hand-assigned.** 918 usages classified by
 their own font and size classes: 117 titles, 444 strong, 357 retinted to body. The retint was

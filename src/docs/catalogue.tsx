@@ -66,7 +66,7 @@ export const NXUS_COMPONENTS: Entry[] = [
   { title: 'NXUS/Data Display/CardView', name: 'Card view', rule: 'P-CO3', blurb: 'The player card grid, the alternative to the dense table.' },
   { title: 'NXUS/Inputs/PlayerSearch', name: 'Player search', rule: 'P-CO12', blurb: 'Live search off the top nav, with keyboard navigation.' },
   { title: 'NXUS/Data Display/VideoTrackerGrid', name: 'Video tracker', rule: 'P-CO9', blurb: 'The coverage spreadsheet. Cyan marks uploaded — the fourth state (L-C3).' },
-  { title: 'NXUS/Dashboard/TasksTab', name: 'Tasks tab', rule: 'P-CO17', blurb: 'Shared across all four dashboards: five status tabs, search, pagination.' },
+  { title: 'NXUS/Dashboard/TasksTab', name: 'Tasks board', rule: 'P-CO26', blurb: 'One Kanban board on every dashboard: Overdue, To-Do, In Progress, Completed; drag to move.' },
   { title: 'NXUS/Dashboard/AnalyticsTab', name: 'Analytics tab', rule: 'P-CO10', blurb: 'Charts and leaderboards. Chart colour is data, so L-G2 applies.' },
   { title: 'NXUS/Dashboard/ReportsTab', name: 'Reports tab', rule: 'P-CO10', blurb: 'Scouting reports list with filters.' },
   { title: 'NXUS/Modals/EditColumnsModal', name: 'Edit columns', rule: 'P-CO17', blurb: 'Column visibility and order for the player tables.' },

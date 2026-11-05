@@ -8,7 +8,7 @@ const LIST: Record<PipelineTier, string> = { 'long-list': 'Long', 'short-list': 
 /** One move: "Short · Kwame Asante · 20 Sep". The list the player is on now is filled. */
 export const ListPill = ({ move, current }: { move: TierMove; current: boolean }) => (
   <span className={`inline-flex items-center rounded-full px-2.5 py-1 font-body type-caption whitespace-nowrap border ${current ? 'bg-brand-primary border-brand-primary text-on-brand font-bold' : 'bg-surface-card border-brand-primary/40 text-body font-medium'}`}>
-    <span className="font-bold">{LIST[move.tier]}</span>&nbsp;· {move.by} · {dayLabel(move.at)}
+    <span className="font-bold">{LIST[move.tier]}</span>{' · '}{move.by}{' · '}{dayLabel(move.at)}
   </span>
 );
 
